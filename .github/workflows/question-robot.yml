@@ -1,6 +1,9 @@
 name: NEXO Question Robot
 
 on:
+  push:
+    paths:
+      - "robot/kick.txt"
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
