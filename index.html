@@ -229,6 +229,31 @@ body.logged-out .landing-page{display:block}
 @media(max-width:980px){.landing-links{display:none}.landing-hero{grid-template-columns:1fr;padding-top:70px}.product-preview{min-height:480px;max-width:650px}.feature-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:650px){.landing-nav{padding:0 16px;height:68px}.landing-brand small{display:none}.landing-actions .landing-btn:first-child{display:none}.landing-btn{padding:9px 11px}.landing-hero{padding:48px 20px 45px;gap:35px}.landing-copy h1{letter-spacing:-1.7px}.landing-proof{gap:14px}.product-preview{min-height:390px}.preview-shell{inset:5px 0 0 0;transform:none}.preview-body{grid-template-columns:92px 1fr}.preview-side{padding:15px 10px}.preview-main{padding:18px 13px}.preview-grid{grid-template-columns:1fr}.preview-card:nth-child(n+3){display:none}.floating-note{right:8px;bottom:4px}.landing-features{padding:35px 20px 70px}.feature-grid{grid-template-columns:1fr}.landing-footer{padding:22px 16px}}
 
+
+/* NEXO v29 — filtros avançados de questões */
+.practice-filter-shell{background:#fff;border:1px solid #dfe6e3;border-radius:18px;padding:18px;color:#253b35;box-shadow:0 12px 32px rgba(26,49,40,.06);margin:0 0 18px}
+.practice-filter-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.practice-filter-top h2{margin:0;font-size:20px}.practice-filter-top p{margin:4px 0 0;color:#71837c;font-size:13px}
+.practice-status-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.practice-status-tabs button{border:1px solid #d9e3df;background:#f6f9f7;color:#40544d;border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer}
+.practice-status-tabs button.active{background:#1f7a60;color:#fff;border-color:#1f7a60}
+.practice-filter-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px}
+.practice-field{display:flex;flex-direction:column;gap:6px}.practice-field label{font-size:11px;font-weight:900;color:#6c7f78;text-transform:uppercase;letter-spacing:.45px}
+.practice-field input,.practice-field select{width:100%;height:42px;border:1px solid #d9e3df;border-radius:10px;background:#fff;color:#243c34;padding:0 11px;font:inherit}
+.practice-checks{display:flex;gap:18px;flex-wrap:wrap;margin:16px 0 4px;padding-top:14px;border-top:1px solid #edf1ef}
+.practice-checks label{display:flex;align-items:center;gap:8px;font-size:13px;color:#4d625a}.practice-checks input{accent-color:#1f7a60}
+.practice-filter-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px}
+.practice-filter-actions .left,.practice-filter-actions .right{display:flex;gap:9px;flex-wrap:wrap}
+.pf-btn{border:1px solid #d6e0dc;border-radius:10px;padding:10px 14px;background:#fff;color:#2c463d;font-weight:850;cursor:pointer}
+.pf-btn.primary{background:#1f7a60;color:#fff;border-color:#1f7a60}.pf-btn.soft{background:#eef7f3}
+.practice-results-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 12px;color:#4d625a}.practice-results-head b{color:#213a31}
+.practice-question-card{background:#fff;color:#223a32;border:1px solid #dfe6e3;border-radius:15px;padding:17px;margin-bottom:12px}
+.practice-question-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.practice-question-meta span{font-size:11px;font-weight:850;background:#eef5f2;border-radius:999px;padding:5px 8px;color:#527068}
+.practice-question-card .opt{background:#f8faf9;border:1px solid #e0e7e4;color:#263d35}
+.practice-empty{background:#fff;border:1px dashed #ccd9d4;border-radius:14px;padding:28px;text-align:center;color:#71837c}
+@media(max-width:980px){.practice-filter-grid{grid-template-columns:repeat(2,minmax(140px,1fr))}}
+@media(max-width:620px){.practice-filter-grid{grid-template-columns:1fr}.practice-filter-shell{padding:14px}.practice-status-tabs{overflow:auto;flex-wrap:nowrap;padding-bottom:3px}.practice-status-tabs button{white-space:nowrap}}
+
 </style>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
@@ -1046,6 +1071,7 @@ function checkOfficialQuestion(prefix,i){
   finishQuestion(card);
   solved++;
   const ok=sel.value===q.answer;
+  savePracticeAnswer(key,ok);
   if(ok) correct++;
   q.options.forEach((_,j)=>{
     const letter='ABCDE'[j];
@@ -1462,6 +1488,137 @@ function syncAccess() {
   }
 }
 
+
+let practiceStatus='all';
+let practiceFilteredPool=[];
+function practiceAnswerState(){try{return JSON.parse(localStorage.getItem('nexo_practice_answers')||'{}')}catch(e){return {}}}
+function savePracticeAnswer(key,ok){const s=practiceAnswerState();s[key]={done:true,ok:!!ok,at:Date.now()};localStorage.setItem('nexo_practice_answers',JSON.stringify(s))}
+function practicePool(){
+  const pool=[];
+  modules.forEach(m=>{
+    (m.official_questions||[]).forEach((q,i)=>pool.push({kind:'official',m,q,i,key:'official_'+m.id+'_'+i}));
+    (m.questions||[]).forEach((q,i)=>pool.push({kind:'caderno',m,q,i,key:'q_'+m.id+'_'+i}));
+  });
+  return pool;
+}
+function questionBank(item){
+  const raw=String(item.q.source||item.q.collection||'').toUpperCase();
+  if(raw.includes('AOCP')) return 'AOCP';
+  if(raw.includes('CEBRASPE')||raw.includes('CESPE')) return 'CEBRASPE';
+  if(raw.includes('FGV')) return 'FGV';
+  if(raw.includes('FCC')) return 'FCC';
+  return item.q.source||'Não informada';
+}
+function questionYear(item){
+  const raw=String(item.q.source||'')+' '+String(item.q.collection||'')+' '+String(item.q.text||'');
+  const y=(raw.match(/20\d{2}/)||[])[0]; return y||'Não informado';
+}
+function questionDifficulty(item){
+  const p=item.m.priority||'';
+  if(p==='MUITO ALTA') return 'Muito difícil';
+  if(p==='ALTA') return 'Difícil';
+  if(p==='MÉDIA') return 'Média';
+  return 'Fácil';
+}
+function practiceUnique(pool,fn){return [...new Set(pool.map(fn).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'pt-BR'))}
+function practiceOption(values,label){return '<option value="">'+label+'</option>'+values.map(v=>'<option>'+String(v).replace(/</g,'&lt;')+'</option>').join('')}
+function renderPracticeQuestionsPage(){
+  activeResource='quest'; current='library'; closeMobileNav(); renderNav(); syncAccess();
+  document.getElementById('head').textContent='Praticar questões / Filtros';
+  const pool=practicePool();
+  const disciplines=practiceUnique(pool,x=>x.m.discipline||'Direito Constitucional');
+  const subjects=practiceUnique(pool,x=>x.m.title);
+  const banks=practiceUnique(pool,questionBank);
+  const years=practiceUnique(pool,questionYear).filter(x=>x!=='Não informado');
+  const difficulties=['Fácil','Média','Difícil','Muito difícil'];
+  document.getElementById('view').innerHTML=`
+    <div class="library-heading"><div><span class="eyebrow">BANCO DE QUESTÕES NEXO</span><h1>Praticar questões<span>.</span></h1><p>Monte seu treino com filtros por matéria, assunto, banca, ano e desempenho.</p></div><span class="library-count">${pool.length} questões no acervo</span></div>
+    <section class="practice-filter-shell">
+      <div class="practice-filter-top"><div><h2>Filtros de questões</h2><p>Combine os critérios abaixo para montar seu caderno.</p></div><button class="pf-btn soft" onclick="applyLastPracticeFilter()">Aplicar último filtro usado</button></div>
+      <div class="practice-status-tabs">
+        ${[['all','Todas'],['solved','Resolvidas'],['unsolved','Não resolvidas'],['correct','Acertei'],['wrong','Errei']].map(x=>`<button data-qstatus="${x[0]}" class="${practiceStatus===x[0]?'active':''}" onclick="setPracticeStatus('${x[0]}')">${x[1]}</button>`).join('')}
+      </div>
+      <div class="practice-filter-grid">
+        <div class="practice-field"><label>Palavra-chave</label><input id="pf-keyword" placeholder="Enunciado, termo ou artigo"></div>
+        <div class="practice-field"><label>Disciplina</label><select id="pf-discipline">${practiceOption(disciplines,'Todas as disciplinas')}</select></div>
+        <div class="practice-field"><label>Assunto</label><select id="pf-subject">${practiceOption(subjects,'Todos os assuntos')}</select></div>
+        <div class="practice-field"><label>Banca</label><select id="pf-bank">${practiceOption(banks,'Todas as bancas')}</select></div>
+        <div class="practice-field"><label>Instituição / fonte</label><input id="pf-institution" placeholder="Ex.: PCBA, MPU, prova oficial"></div>
+        <div class="practice-field"><label>Ano</label><select id="pf-year">${practiceOption(years,'Todos os anos')}</select></div>
+        <div class="practice-field"><label>Cargo</label><input id="pf-role" placeholder="Ex.: Investigador, Delegado"></div>
+        <div class="practice-field"><label>Nível</label><select id="pf-level"><option value="">Todos</option><option>Superior</option><option>Médio</option></select></div>
+        <div class="practice-field"><label>Modalidade</label><select id="pf-mode"><option value="">Todas</option><option>Objetiva</option><option>Certo / Errado</option></select></div>
+        <div class="practice-field"><label>Dificuldade</label><select id="pf-difficulty">${practiceOption(difficulties,'Todas as dificuldades')}</select></div>
+      </div>
+      <div class="practice-checks">
+        <label><input type="checkbox" id="pf-comments"> Somente com comentário</label>
+        <label><input type="checkbox" id="pf-notes"> Minhas anotações</label>
+        <label><input type="checkbox" id="pf-exclude-annulled" checked> Excluir anuladas</label>
+        <label><input type="checkbox" id="pf-exclude-outdated" checked> Excluir desatualizadas</label>
+      </div>
+      <div class="practice-filter-actions">
+        <div class="left"><button class="pf-btn" onclick="clearPracticeFilters()">Limpar</button><button class="pf-btn" onclick="savePracticeFilter()">Salvar filtros</button></div>
+        <div class="right"><button class="pf-btn soft" onclick="generatePracticeNotebook()">Gerar caderno</button><button class="pf-btn primary" onclick="applyPracticeFilters()">Filtrar</button></div>
+      </div>
+    </section>
+    <div class="practice-results-head"><b id="practice-count">0 questões encontradas</b><span>Resultados do filtro</span></div>
+    <div id="practice-results"></div>`;
+  const saved=localStorage.getItem('nexo_last_practice_filter'); if(saved) applyLastPracticeFilter(false); else applyPracticeFilters();
+  document.getElementById('view').scrollTop=0;
+}
+function collectPracticeFilter(){
+  const id=x=>document.getElementById(x);
+  return {keyword:id('pf-keyword').value,discipline:id('pf-discipline').value,subject:id('pf-subject').value,bank:id('pf-bank').value,institution:id('pf-institution').value,year:id('pf-year').value,role:id('pf-role').value,level:id('pf-level').value,mode:id('pf-mode').value,difficulty:id('pf-difficulty').value,comments:id('pf-comments').checked,notes:id('pf-notes').checked,excludeAnnulled:id('pf-exclude-annulled').checked,excludeOutdated:id('pf-exclude-outdated').checked,status:practiceStatus};
+}
+function applyPracticeFilters(){
+  const f=collectPracticeFilter(); localStorage.setItem('nexo_last_practice_filter',JSON.stringify(f));
+  const state=practiceAnswerState(), kw=normalizeSearch(f.keyword), inst=normalizeSearch(f.institution), role=normalizeSearch(f.role);
+  practiceFilteredPool=practicePool().filter(item=>{
+    const q=item.q,m=item.m,s=state[item.key]||{};
+    const searchable=normalizeSearch([q.text,(q.options||[]).join(' '),q.source,q.collection,m.title,m.focus].join(' '));
+    if(kw&&!searchable.includes(kw))return false;
+    if(f.discipline&&(m.discipline||'Direito Constitucional')!==f.discipline)return false;
+    if(f.subject&&m.title!==f.subject)return false;
+    if(f.bank&&questionBank(item)!==f.bank)return false;
+    if(inst&&!normalizeSearch((q.source||'')+' '+(q.collection||'')).includes(inst))return false;
+    if(f.year&&questionYear(item)!==f.year)return false;
+    if(role&&!searchable.includes(role))return false;
+    if(f.difficulty&&questionDifficulty(item)!==f.difficulty)return false;
+    if(f.comments&&!q.comment)return false;
+    if(f.excludeAnnulled&&(q.annulled||q.cancelled))return false;
+    if(f.excludeOutdated&&q.outdated)return false;
+    if(f.status==='solved'&&!s.done)return false;
+    if(f.status==='unsolved'&&s.done)return false;
+    if(f.status==='correct'&&(!s.done||!s.ok))return false;
+    if(f.status==='wrong'&&(!s.done||s.ok))return false;
+    return true;
+  });
+  renderPracticeResults();
+}
+function renderPracticeResults(){
+  const el=document.getElementById('practice-results'), count=document.getElementById('practice-count');
+  if(!el||!count)return; count.textContent=practiceFilteredPool.length+' questões encontradas';
+  if(!practiceFilteredPool.length){el.innerHTML='<div class="practice-empty"><b>Nenhuma questão encontrada.</b><br>Ajuste os filtros e tente novamente.</div>';return;}
+  el.innerHTML=practiceFilteredPool.slice(0,80).map(item=>{
+    const q=item.q,m=item.m;
+    const meta=`<div class="practice-question-meta"><span>${m.discipline||'Direito Constitucional'}</span><span>${m.title}</span><span>${questionBank(item)}</span><span>${questionYear(item)}</span><span>${questionDifficulty(item)}</span></div>`;
+    if(item.kind==='official')return '<div class="practice-question-card">'+meta+officialQuestionHTML(q,item.i,m.id)+'</div>';
+    return '<div class="practice-question-card">'+meta+questionHTML(q,item.i,m.id)+'</div>';
+  }).join('')+(practiceFilteredPool.length>80?'<div class="practice-empty">Exibindo as primeiras 80 questões. Refine o filtro para reduzir os resultados.</div>':'');
+}
+function setPracticeStatus(status){practiceStatus=status;document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus===status));applyPracticeFilters()}
+function clearPracticeFilters(){practiceStatus='all';['pf-keyword','pf-institution','pf-role'].forEach(x=>document.getElementById(x).value='');['pf-discipline','pf-subject','pf-bank','pf-year','pf-level','pf-mode','pf-difficulty'].forEach(x=>document.getElementById(x).value='');document.getElementById('pf-comments').checked=false;document.getElementById('pf-notes').checked=false;document.getElementById('pf-exclude-annulled').checked=true;document.getElementById('pf-exclude-outdated').checked=true;document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus==='all'));applyPracticeFilters()}
+function savePracticeFilter(){localStorage.setItem('nexo_saved_practice_filter',JSON.stringify(collectPracticeFilter()));showNexoMessage?.('Filtros salvos para usar depois.')}
+function applyLastPracticeFilter(run=true){
+  let f;try{f=JSON.parse(localStorage.getItem('nexo_last_practice_filter')||'null')}catch(e){}
+  if(!f)return;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e&&v!==undefined)e.value=v||''};
+  set('pf-keyword',f.keyword);set('pf-discipline',f.discipline);set('pf-subject',f.subject);set('pf-bank',f.bank);set('pf-institution',f.institution);set('pf-year',f.year);set('pf-role',f.role);set('pf-level',f.level);set('pf-mode',f.mode);set('pf-difficulty',f.difficulty);
+  ['comments','notes','excludeAnnulled','excludeOutdated'].forEach(k=>{const e=document.getElementById('pf-'+k.replace(/[A-Z]/g,m=>'-'+m.toLowerCase()));if(e)e.checked=!!f[k]});
+  practiceStatus=f.status||'all';document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus===practiceStatus));if(run)applyPracticeFilters();else applyPracticeFilters();
+}
+function generatePracticeNotebook(){applyPracticeFilters();if(!practiceFilteredPool.length)return;const shuffled=[...practiceFilteredPool].sort(()=>Math.random()-.5).slice(0,30);practiceFilteredPool=shuffled;renderPracticeResults();document.getElementById('practice-count').textContent=shuffled.length+' questões no caderno';}
+
 function openLibrary(resource = 'resumo') {
   activeResource = resourceOptions[resource] ? resource : 'resumo';
   libraryPriority = 'all';
@@ -1469,6 +1626,7 @@ function openLibrary(resource = 'resumo') {
   closeMobileNav();
   renderNav();
   const settings = resourceOptions[activeResource];
+  if (activeResource === 'quest') { renderPracticeQuestionsPage(); return; }
   document.getElementById('head').textContent = `Biblioteca / ${settings.short}`;
   const available = resourceModules();
   document.getElementById('view').innerHTML = `
