@@ -3,17 +3,19 @@
 <html lang="pt-BR">
 <head>
 <script>
-function nexoLogout(){
-  sessionStorage.removeItem('nexo_role');
-  window.location.href='./';
-}
-
 (function(){
   const role=sessionStorage.getItem('nexo_role');
-  if(role!=='student'){
+  const token=sessionStorage.getItem('nexo_auth_token');
+  if(role!=='student' || !token){
     window.location.replace('./');
   }
 })();
+function nexoLogout(){
+  sessionStorage.removeItem('nexo_role');
+  sessionStorage.removeItem('nexo_auth_token');
+  sessionStorage.removeItem('nexo_user_email');
+  window.location.href='./';
+}
 </script>
 
 <meta charset="utf-8"/>
