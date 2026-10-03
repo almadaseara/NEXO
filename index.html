@@ -238,8 +238,13 @@ body.logged-out .landing-page{display:block}
 .practice-status-tabs button{border:1px solid #d9e3df;background:#f6f9f7;color:#40544d;border-radius:999px;padding:9px 14px;font-weight:800;cursor:pointer}
 .practice-status-tabs button.active{background:#1f7a60;color:#fff;border-color:#1f7a60}
 .practice-filter-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px}
-.practice-field{display:flex;flex-direction:column;gap:6px}.practice-field label{font-size:11px;font-weight:900;color:#6c7f78;text-transform:uppercase;letter-spacing:.45px}
-.practice-field input,.practice-field select{width:100%;height:42px;border:1px solid #d9e3df;border-radius:10px;background:#fff;color:#243c34;padding:0 11px;font:inherit}
+.practice-field{display:flex;flex-direction:column;gap:0}
+.practice-field label{display:none}
+.practice-field input,.practice-field select{width:100%;height:46px;border:1px solid #d9e3df;border-radius:8px;background:#fff;color:#243c34;padding:0 14px;font:inherit}
+.practice-field input::placeholder{color:#75857f;opacity:1}
+.practice-search-wrap{display:grid;grid-template-columns:1fr 48px;align-items:stretch}
+.practice-search-wrap input{border-radius:8px 0 0 8px}
+.practice-search-button{border:0;border-radius:0 8px 8px 0;background:#37aeca;color:#fff;font-size:20px;cursor:pointer}
 .practice-checks{display:flex;gap:18px;flex-wrap:wrap;margin:16px 0 4px;padding-top:14px;border-top:1px solid #edf1ef}
 .practice-checks label{display:flex;align-items:center;gap:8px;font-size:13px;color:#4d625a}.practice-checks input{accent-color:#1f7a60}
 .practice-filter-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px}
@@ -1539,16 +1544,18 @@ function renderPracticeQuestionsPage(){
         ${[['all','Todas'],['solved','Resolvidas'],['unsolved','Não resolvidas'],['correct','Acertei'],['wrong','Errei']].map(x=>`<button data-qstatus="${x[0]}" class="${practiceStatus===x[0]?'active':''}" onclick="setPracticeStatus('${x[0]}')">${x[1]}</button>`).join('')}
       </div>
       <div class="practice-filter-grid">
-        <div class="practice-field"><label>Palavra-chave</label><input id="pf-keyword" placeholder="Enunciado, termo ou artigo"></div>
-        <div class="practice-field"><label>Disciplina</label><select id="pf-discipline">${practiceOption(disciplines,'Todas as disciplinas')}</select></div>
-        <div class="practice-field"><label>Assunto</label><select id="pf-subject">${practiceOption(subjects,'Todos os assuntos')}</select></div>
-        <div class="practice-field"><label>Banca</label><select id="pf-bank">${practiceOption(banks,'Todas as bancas')}</select></div>
-        <div class="practice-field"><label>Instituição / fonte</label><input id="pf-institution" placeholder="Ex.: PCBA, MPU, prova oficial"></div>
-        <div class="practice-field"><label>Ano</label><select id="pf-year">${practiceOption(years,'Todos os anos')}</select></div>
-        <div class="practice-field"><label>Cargo</label><input id="pf-role" placeholder="Ex.: Investigador, Delegado"></div>
-        <div class="practice-field"><label>Nível</label><select id="pf-level"><option value="">Todos</option><option>Superior</option><option>Médio</option></select></div>
-        <div class="practice-field"><label>Modalidade</label><select id="pf-mode"><option value="">Todas</option><option>Objetiva</option><option>Certo / Errado</option></select></div>
-        <div class="practice-field"><label>Dificuldade</label><select id="pf-difficulty">${practiceOption(difficulties,'Todas as dificuldades')}</select></div>
+        <div class="practice-field"><div class="practice-search-wrap"><input id="pf-keyword" placeholder="Palavra-chave"><button class="practice-search-button" type="button" onclick="applyPracticeFilters()" aria-label="Buscar">⌕</button></div></div>
+        <div class="practice-field"><select id="pf-discipline">${practiceOption(disciplines,'Disciplina')}</select></div>
+        <div class="practice-field"><select id="pf-subject">${practiceOption(subjects,'Assunto')}</select></div>
+        <div class="practice-field"><select id="pf-bank">${practiceOption(banks,'Banca')}</select></div>
+        <div class="practice-field"><input id="pf-institution" placeholder="Instituição / fonte"></div>
+        <div class="practice-field"><select id="pf-year">${practiceOption(years,'Ano')}</select></div>
+        <div class="practice-field"><input id="pf-role" placeholder="Cargo"></div>
+        <div class="practice-field"><select id="pf-level"><option value="">Nível</option><option>Superior</option><option>Médio</option></select></div>
+        <div class="practice-field"><select id="pf-formation"><option value="">Área de Formação</option><option>Direito</option><option>Qualquer formação</option></select></div>
+        <div class="practice-field"><select id="pf-activity"><option value="">Área de Atuação</option><option>Policial</option><option>Administrativa</option><option>Jurídica</option></select></div>
+        <div class="practice-field"><select id="pf-mode"><option value="">Modalidade</option><option>Objetiva</option><option>Certo / Errado</option></select></div>
+        <div class="practice-field"><select id="pf-difficulty">${practiceOption(difficulties,'Dificuldade')}</select></div>
       </div>
       <div class="practice-checks">
         <label><input type="checkbox" id="pf-comments"> Somente com comentário</label>
@@ -1568,7 +1575,7 @@ function renderPracticeQuestionsPage(){
 }
 function collectPracticeFilter(){
   const id=x=>document.getElementById(x);
-  return {keyword:id('pf-keyword').value,discipline:id('pf-discipline').value,subject:id('pf-subject').value,bank:id('pf-bank').value,institution:id('pf-institution').value,year:id('pf-year').value,role:id('pf-role').value,level:id('pf-level').value,mode:id('pf-mode').value,difficulty:id('pf-difficulty').value,comments:id('pf-comments').checked,notes:id('pf-notes').checked,excludeAnnulled:id('pf-exclude-annulled').checked,excludeOutdated:id('pf-exclude-outdated').checked,status:practiceStatus};
+  return {keyword:id('pf-keyword').value,discipline:id('pf-discipline').value,subject:id('pf-subject').value,bank:id('pf-bank').value,institution:id('pf-institution').value,year:id('pf-year').value,role:id('pf-role').value,level:id('pf-level').value,formation:id('pf-formation').value,activity:id('pf-activity').value,mode:id('pf-mode').value,difficulty:id('pf-difficulty').value,comments:id('pf-comments').checked,notes:id('pf-notes').checked,excludeAnnulled:id('pf-exclude-annulled').checked,excludeOutdated:id('pf-exclude-outdated').checked,status:practiceStatus};
 }
 function applyPracticeFilters(){
   const f=collectPracticeFilter(); localStorage.setItem('nexo_last_practice_filter',JSON.stringify(f));
@@ -1607,13 +1614,13 @@ function renderPracticeResults(){
   }).join('')+(practiceFilteredPool.length>80?'<div class="practice-empty">Exibindo as primeiras 80 questões. Refine o filtro para reduzir os resultados.</div>':'');
 }
 function setPracticeStatus(status){practiceStatus=status;document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus===status));applyPracticeFilters()}
-function clearPracticeFilters(){practiceStatus='all';['pf-keyword','pf-institution','pf-role'].forEach(x=>document.getElementById(x).value='');['pf-discipline','pf-subject','pf-bank','pf-year','pf-level','pf-mode','pf-difficulty'].forEach(x=>document.getElementById(x).value='');document.getElementById('pf-comments').checked=false;document.getElementById('pf-notes').checked=false;document.getElementById('pf-exclude-annulled').checked=true;document.getElementById('pf-exclude-outdated').checked=true;document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus==='all'));applyPracticeFilters()}
+function clearPracticeFilters(){practiceStatus='all';['pf-keyword','pf-institution','pf-role'].forEach(x=>document.getElementById(x).value='');['pf-discipline','pf-subject','pf-bank','pf-year','pf-level','pf-formation','pf-activity','pf-mode','pf-difficulty'].forEach(x=>document.getElementById(x).value='');document.getElementById('pf-comments').checked=false;document.getElementById('pf-notes').checked=false;document.getElementById('pf-exclude-annulled').checked=true;document.getElementById('pf-exclude-outdated').checked=true;document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus==='all'));applyPracticeFilters()}
 function savePracticeFilter(){localStorage.setItem('nexo_saved_practice_filter',JSON.stringify(collectPracticeFilter()));showNexoMessage?.('Filtros salvos para usar depois.')}
 function applyLastPracticeFilter(run=true){
   let f;try{f=JSON.parse(localStorage.getItem('nexo_last_practice_filter')||'null')}catch(e){}
   if(!f)return;
   const set=(id,v)=>{const e=document.getElementById(id);if(e&&v!==undefined)e.value=v||''};
-  set('pf-keyword',f.keyword);set('pf-discipline',f.discipline);set('pf-subject',f.subject);set('pf-bank',f.bank);set('pf-institution',f.institution);set('pf-year',f.year);set('pf-role',f.role);set('pf-level',f.level);set('pf-mode',f.mode);set('pf-difficulty',f.difficulty);
+  set('pf-keyword',f.keyword);set('pf-discipline',f.discipline);set('pf-subject',f.subject);set('pf-bank',f.bank);set('pf-institution',f.institution);set('pf-year',f.year);set('pf-role',f.role);set('pf-level',f.level);set('pf-formation',f.formation);set('pf-activity',f.activity);set('pf-mode',f.mode);set('pf-difficulty',f.difficulty);
   ['comments','notes','excludeAnnulled','excludeOutdated'].forEach(k=>{const e=document.getElementById('pf-'+k.replace(/[A-Z]/g,m=>'-'+m.toLowerCase()));if(e)e.checked=!!f[k]});
   practiceStatus=f.status||'all';document.querySelectorAll('[data-qstatus]').forEach(b=>b.classList.toggle('active',b.dataset.qstatus===practiceStatus));if(run)applyPracticeFilters();else applyPracticeFilters();
 }
