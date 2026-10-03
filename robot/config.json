@@ -2,7 +2,9 @@
   "enabled": true,
   "interval_minutes": 15,
   "priority_boards": [
-    "Instituto AOCP"
+    "Instituto AOCP",
+    "CEBRASPE",
+    "Demais bancas"
   ],
   "careers": [
     "Polícia Civil",
@@ -24,7 +26,18 @@
     "oficial",
     "polícia penal",
     "bombeiro",
-    "guarda municipal"
+    "guarda municipal",
+    "cebraspe",
+    "cespe",
+    "instituto aocp",
+    "fgv",
+    "fcc",
+    "vunesp",
+    "ibade",
+    "idecan",
+    "quadrix",
+    "consulplan",
+    "fundatec"
   ],
   "document_keywords": {
     "prova": [
@@ -46,8 +59,38 @@
     "https://www.institutoaocp.org.br/concursos/status/inscricoes-abertas",
     "https://www.pciconcursos.com.br/provas/",
     "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-    "https://www.pciconcursos.com.br/pesquisa/policia-militar"
+    "https://www.pciconcursos.com.br/pesquisa/policia-militar",
+    "https://www.cebraspe.org.br/concursos/"
   ],
   "max_pages_per_run": 60,
-  "max_depth": 1
+  "max_depth": 1,
+  "board_priority": {
+    "Instituto AOCP": 1,
+    "CEBRASPE": 2,
+    "Demais bancas": 3
+  },
+  "year_priority": [
+    2026,
+    2025,
+    2024,
+    "demais anos"
+  ],
+  "priority_rules": {
+    "order": [
+      "banca",
+      "ano"
+    ],
+    "board_order": [
+      "Instituto AOCP",
+      "CEBRASPE",
+      "Demais bancas"
+    ],
+    "year_order": [
+      2026,
+      2025,
+      2024,
+      "demais anos"
+    ],
+    "note": "Dentro de cada banca, priorizar 2026, depois 2025, depois 2024 e somente depois anos anteriores."
+  }
 }
