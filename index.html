@@ -595,6 +595,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 }
 
 </style>
+<meta name="nexo-build" content="2026-10-03-penal-v1">
 </head>
 <body>
 <aside>
@@ -714,7 +715,7 @@ function renderNav(){
   admItems.forEach(m=>{h+=`<button onclick="openModule('${m.id}')" class="module-nav ${current===m.id?'active':''}"><span class="module-dot"></span><span>${m.title}</span></button>`;});
   if(!admItems.length) h+='<p class="nav-empty">Nenhum assunto encontrado.</p>';
   h+='</div></div>';
-  h+=`<div class="folder-wrap" id="pen-folder"><button class="folder-btn" onclick="togglePenFolder()" aria-expanded="false"><span>${icon('book')} Direito Penal</span><span class="arrow">›</span></button><div class="folder-list">`;
+  h+=`<div class="folder-wrap" id="pen-folder"><button class="folder-btn" onclick="togglePenFolder()" aria-expanded="false"><span>${icon('book')} <b>Direito Penal</b></span><span class="arrow">›</span></button><div class="folder-list">`;
   penItems.forEach(m=>{h+=`<button onclick="openModule('${m.id}')" class="module-nav ${current===m.id?'active':''}"><span class="module-dot"></span><span>${m.title}</span></button>`;});
   if(!penItems.length) h+='<p class="nav-empty">Nenhum assunto encontrado.</p>';
   h+='</div></div>';
