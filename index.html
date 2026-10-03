@@ -677,6 +677,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 </dialog>
 <div class="workspace-message" id="workspace-message" role="status" aria-live="polite"></div>
 <script>
+/* PADRÃO ENXUTO DE GRIFO: em Lei Seca, destacar apenas verbo nuclear e palavra-chave central; condições/exceções permanecem no contexto textual. */
 /* PADRÃO PERMANENTE NEXO: toda nova disciplina deve usar Lei Seca com literalidade/trechos identificados + marca-texto; jurisprudência com enunciado/tese oficial, foco de prova separado e link oficial quando disponível. */
 const nexoSourceNotices = {
   executivo: "O caderno enviado contém 20 itens numerados, porém a Questão 03 não apresenta bloco de gabarito/comentário no arquivo-fonte. Ela não foi inserida para evitar inventar uma resposta."
@@ -993,33 +994,36 @@ function highlightLiteral(text){
     ['4 anos','exam-mark'],
     ['prescreve em 8 (oito) anos','exam-mark-red'],
     ['180 dias corridos','exam-mark-green'],
-    ['não há crime sem lei anterior','exam-mark-red'],
-    ['lei posterior, que de qualquer modo favorecer o agente','exam-mark-green'],
-    ['momento da ação ou omissão','exam-mark-red'],
-    ['no todo ou em parte','exam-mark'],
-    ['circunstâncias alheias à vontade do agente','exam-mark-red'],
-    ['diminuída de um a dois terços','exam-mark'],
-    ['ineficácia absoluta do meio','exam-mark-red'],
-    ['absoluta impropriedade do objeto','exam-mark-red'],
-    ['quis o resultado ou assumiu o risco','exam-mark-red'],
-    ['imprudência, negligência ou imperícia','exam-mark-red'],
-    ['exclui o dolo','exam-mark-red'],
-    ['se inevitável, isenta de pena','exam-mark-green'],
-    ['se evitável, poderá diminuí-la','exam-mark'],
-    ['estado de necessidade','exam-mark'],
-    ['legítima defesa','exam-mark-red'],
-    ['usando moderadamente dos meios necessários','exam-mark-green'],
-    ['injusta agressão, atual ou iminente','exam-mark-red'],
-    ['menores de 18 (dezoito) anos','exam-mark-red'],
-    ['na medida de sua culpabilidade','exam-mark-red'],
-    ['salvo quando elementares do crime','exam-mark-green'],
-    ['violência ou grave ameaça','exam-mark-red'],
-    ['menor de 14 (catorze) anos','exam-mark-red'],
+    // Direito Penal — padrão enxuto: verbo nuclear + palavra-chave central
+    ['apropriar-se','exam-mark-red'],
+    ['desviá-lo','exam-mark-red'],
     ['funcionário público','exam-mark'],
-    ['vantagem indevida','exam-mark-red'],
-    ['fora das hipóteses previstas em lei','exam-mark-red'],
-    ['caráter competitivo','exam-mark-red']
-  ];
+    ['posse em razão do cargo','exam-mark'],
+    ['exigir','exam-mark-red'],
+    ['vantagem indevida','exam-mark'],
+    ['solicitar','exam-mark-red'],
+    ['receber','exam-mark-red'],
+    ['aceitar promessa','exam-mark-red'],
+    ['retardar','exam-mark-red'],
+    ['deixar de praticar','exam-mark-red'],
+    ['ato de ofício','exam-mark'],
+    ['interesse ou sentimento pessoal','exam-mark'],
+    ['subtrair','exam-mark-red'],
+    ['grave ameaça','exam-mark'],
+    ['violência','exam-mark'],
+    ['obter','exam-mark-red'],
+    ['vantagem ilícita','exam-mark'],
+    ['prejuízo alheio','exam-mark'],
+    ['induzindo ou mantendo alguém em erro','exam-mark-red'],
+    ['atribuir-se','exam-mark-red'],
+    ['falsa identidade','exam-mark'],
+    ['oferecer','exam-mark-red'],
+    ['prometer','exam-mark-red'],
+    ['ato libidinoso','exam-mark'],
+    ['menor de 14 (catorze) anos','exam-mark'],
+    ['falsificar','exam-mark-red'],
+    ['documento público','exam-mark'],
+    ['documento particular','exam-mark'],];
 
   // Avoid matching inside HTML tags by temporarily protecting tags.
   const tags=[];
@@ -1054,9 +1058,8 @@ function lawLiteralBlock(item,idx){
         <div class="title">${label}</div>
       </div>
       <div class="exam-legend">
-        <span><i class="exam-dot red"></i><b>MUITO COBRADO</b></span>
-        <span><i class="exam-dot yellow"></i><b>IMPORTANTE</b></span>
-        <span><i class="exam-dot green"></i><b>EXCEÇÃO / CONDIÇÃO</b></span>
+        <span><i class="exam-dot red"></i><b>VERBO NUCLEAR</b></span>
+        <span><i class="exam-dot yellow"></i><b>PALAVRA-CHAVE</b></span>
       </div>
       <div class="constitution-text">${highlightLiteral(literal)}</div>
       <div class="constitution-source">${isAdm?"Redação literal incorporada ao NEXO a partir da legislação indicada no módulo. Itens identificados como 'trechos' exibem apenas os dispositivos de maior incidência, sem paráfrase.":isPen?"Redação legal do Código Penal incorporada ao NEXO. Blocos extensos são identificados expressamente como trechos ou dispositivos selecionados; a íntegra permanece vinculada à fonte oficial do Planalto.":"Texto constitucional incorporado ao NEXO para leitura de revisão."}</div>
@@ -1143,7 +1146,7 @@ function renderTab(m,tab){
       <p class="muted"><b>Selecione um artigo ou bloco</b> para consultar o texto legal relacionado diretamente na plataforma, sem interromper sua revisão.</p>
       ${m.law_items.map((it,idx)=>lawLiteralBlock(it,idx)).join('')}
       <div class="footer-note">
-        <b>Modo Lei Seca:</b> primeiro aparece a síntese de revisão; ao expandir, aparece a redação literal do dispositivo, com marca-texto nos prazos, exceções, competências, vedações e expressões de maior incidência, em formato de leitura semelhante ao texto da Constituição.
+        <b>Modo Lei Seca:</b> primeiro aparece a síntese de revisão; ao expandir, aparece a redação literal do dispositivo. O NEXO destaca apenas o <b>verbo nuclear</b> e a <b>palavra-chave central</b>, mantendo condições, exceções e requisitos conectados no próprio texto para evitar excesso visual.
       </div>
     </div>`;
   }
