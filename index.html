@@ -251,6 +251,93 @@ header{height:66px;border-bottom:1px solid var(--line);display:flex;align-items:
 .juris-legacy b{color:#ffffff!important}
 .juris-legacy mark{background:#ffe46b!important;color:#111!important}
 
+
+/* NEXO — JURISPRUDÊNCIA ALTO CONTRASTE v26.5 */
+.juris-card{
+  background:#111a24 !important;
+  color:#eef4f8 !important;
+  border:1px solid #243241 !important;
+  border-radius:14px !important;
+  padding:18px !important;
+}
+.juris-card h4{
+  color:#ffffff !important;
+  margin-bottom:12px !important;
+}
+.juris-official{
+  color:#eef4f8 !important;
+}
+.official-stamp{
+  display:inline-block !important;
+  background:#0f4d3a !important;
+  color:#b8ffd9 !important;
+  border:1px solid #1f7a5d !important;
+  padding:6px 12px !important;
+  border-radius:999px !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  letter-spacing:.3px !important;
+  margin-bottom:12px !important;
+}
+.juris-official blockquote{
+  margin:12px 0 14px 0 !important;
+  padding:18px 18px !important;
+  background:#16212b !important;
+  color:#f8fbfd !important;
+  border:1px solid #2a3948 !important;
+  border-left:5px solid #22c55e !important;
+  border-radius:12px !important;
+  line-height:1.75 !important;
+  font-size:16px !important;
+  font-weight:500 !important;
+}
+.juris-note{
+  margin-top:10px !important;
+  padding:14px 16px !important;
+  background:#0b1622 !important;
+  color:#f2f7fb !important;
+  border-left:4px solid #facc15 !important;
+  border-radius:10px !important;
+  line-height:1.65 !important;
+  font-size:15px !important;
+}
+.juris-note b{
+  color:#ffffff !important;
+}
+.juris-official a,
+.juris-card a,
+.stf-link{
+  color:#7cc7ff !important;
+  font-weight:700 !important;
+  text-decoration:underline !important;
+  text-underline-offset:3px !important;
+}
+.juris-official a:hover,
+.juris-card a:hover,
+.stf-link:hover{
+  color:#a5dcff !important;
+}
+.juris-legacy{
+  color:#eef4f8 !important;
+  line-height:1.7 !important;
+}
+.juris-legacy b{
+  color:#ffffff !important;
+}
+.juris-legacy mark{
+  background:#ffe066 !important;
+  color:#111 !important;
+  padding:1px 4px !important;
+  border-radius:4px !important;
+}
+/* Corrige qualquer estilo claro herdado dentro da aba de jurisprudência */
+.juris-card div,
+.juris-card p,
+.juris-card span:not(.official-stamp),
+.juris-card li{
+  color:inherit;
+}
+
 </style>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
