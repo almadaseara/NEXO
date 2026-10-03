@@ -1,0 +1,13 @@
+{
+  "updated_at": "2026-10-03T20:21:36.616Z",
+  "enabled": true,
+  "runs": 0,
+  "pages_scanned_last_run": 0,
+  "candidates_total": 0,
+  "provas": 0,
+  "gabaritos": 0,
+  "pdfs_unclassified": 0,
+  "pairs_pending_validation": 0,
+  "errors_last_run": 0,
+  "note": "Robô instalado; aguardando primeira execução do workflow."
+}
