@@ -1,0 +1,52 @@
+name: NEXO Question Robot
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Ação administrativa"
+        required: true
+        default: "collect"
+        type: choice
+        options:
+          - collect
+          - pause
+          - resume
+          - status
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nexo-question-robot
+  cancel-in-progress: false
+
+jobs:
+  robot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run question robot
+        run: python robot/collector.py --action "${{ github.event.inputs.action || 'collect' }}"
+
+      - name: Commit robot state
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "NEXO Question Robot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/robot-state.json data/robot-status.json data/question-candidates.json
+          git commit -m "robot: update question discovery state"
+          git push
