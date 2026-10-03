@@ -3,51 +3,96 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NEXO — Acesso</title>
-<meta name="theme-color" content="#f5f8f6">
+<title>NEXO — Plataforma de Revisão</title>
+<meta name="theme-color" content="#f6f9f7">
 <style>
-:root{--bg:#f4f7f5;--panel:#fff;--text:#18342b;--muted:#73847e;--line:#dce6e1;--green:#1f7a60;--green2:#eaf5f0}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#f7faf8,#edf4f0);color:var(--text);min-height:100vh;display:grid;place-items:center;padding:24px}
-.shell{width:min(920px,100%);display:grid;grid-template-columns:1.05fr .95fr;background:var(--panel);border:1px solid var(--line);border-radius:24px;overflow:hidden;box-shadow:0 24px 70px rgba(32,71,58,.12)}
-.hero{padding:44px;background:linear-gradient(160deg,#173f33,#216b55);color:#fff}.logo{font-size:28px;font-weight:900;letter-spacing:.5px}.logo b{color:#7ce3bb}
-.hero h1{font-size:34px;line-height:1.08;margin:48px 0 14px}.hero p{color:#d8ebe3;line-height:1.65;max-width:48ch}.pill{display:inline-block;margin-top:18px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.1);font-size:12px;font-weight:800}
-.login{padding:40px}.login h2{margin:0 0 8px;font-size:26px}.sub{color:var(--muted);margin-bottom:24px;line-height:1.55}
-.role{display:grid;gap:12px}.role button{width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:18px;text-align:left;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:space-between}
-.role button:hover{border-color:#9fcbb9;background:#f8fbf9;transform:translateY(-1px)}.role strong{display:block;font-size:16px}.role span{display:block;color:var(--muted);font-size:13px;margin-top:4px}.arrow{font-size:22px;color:var(--green)}
-.security{margin-top:20px;padding:12px 14px;border-radius:12px;background:var(--green2);color:#356556;font-size:12px;line-height:1.5}
-@media(max-width:760px){.shell{grid-template-columns:1fr}.hero{padding:30px}.hero h1{margin-top:26px;font-size:28px}.login{padding:28px}}
+:root{--bg:#f5f8f6;--panel:#fff;--text:#17372c;--muted:#71837c;--line:#dbe6e0;--green:#1f7a60;--green2:#eaf5f0;--danger:#b54747}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#f9fbfa,#eef4f1);color:var(--text);min-height:100vh}
+.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,70px);position:sticky;top:0;z-index:20}
+.logo{font-size:23px;font-weight:900;letter-spacing:.6px}.logo b{color:var(--green)}
+.actions{display:flex;align-items:center;gap:10px}.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:800;cursor:pointer}.btn-login{background:var(--green);color:#fff}.btn-ghost{background:#fff;color:var(--text);border:1px solid var(--line)}
+.hero{min-height:calc(100vh - 72px);display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:48px;padding:clamp(34px,7vw,90px);max-width:1260px;margin:auto}
+.eyebrow{display:inline-block;background:var(--green2);color:var(--green);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.4px}
+h1{font-size:clamp(38px,5vw,68px);line-height:1.02;margin:22px 0 18px;max-width:760px}.lead{font-size:18px;line-height:1.65;color:var(--muted);max-width:680px}
+.cards{display:grid;gap:14px}.feature{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 15px 40px rgba(31,77,60,.06)}.feature strong{font-size:17px}.feature p{color:var(--muted);line-height:1.5;margin:7px 0 0}
+.backdrop{position:fixed;inset:0;background:rgba(14,31,25,.48);display:none;align-items:center;justify-content:center;padding:20px;z-index:100}.backdrop.open{display:flex}
+.modal{width:min(430px,100%);background:#fff;border-radius:20px;padding:26px;box-shadow:0 30px 90px rgba(0,0,0,.18);position:relative}.close{position:absolute;right:16px;top:14px;border:0;background:transparent;font-size:25px;cursor:pointer;color:#65766f}
+.modal h2{margin:0 0 7px}.modal .sub{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:20px}.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:13px;font-weight:800}.field input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font:inherit;outline:none}.field input:focus{border-color:#78b69f;box-shadow:0 0 0 3px rgba(31,122,96,.09)}
+.submit{width:100%;margin-top:5px;background:var(--green);color:#fff;padding:12px 14px}.msg{min-height:20px;margin-top:12px;font-size:13px;line-height:1.45}.msg.error{color:var(--danger)}.msg.ok{color:var(--green)}.tiny{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.45}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:38px 22px}.cards{grid-template-columns:1fr}.topbar{padding:0 18px}}
 </style>
 </head>
 <body>
-<div class="shell">
-  <section class="hero">
-    <div class="logo">NEXO <b>REVISÃO</b></div>
-    <h1>Entre no ambiente correto.</h1>
-    <p>Alunos acessam diretamente a plataforma de revisão. Administradores são direcionados ao painel protegido de operação do Robô de Questões.</p>
-    <span class="pill">ACESSO POR PERFIL</span>
+<header class="topbar">
+  <div class="logo">NEXO <b>REVISÃO</b></div>
+  <div class="actions">
+    <button class="btn btn-login" onclick="openLogin()">Login</button>
+  </div>
+</header>
+
+<main class="hero">
+  <section>
+    <span class="eyebrow">PLATAFORMA DE REVISÃO PARA CONCURSOS</span>
+    <h1>Estudo organizado, questões oficiais e revisão em um só lugar.</h1>
+    <p class="lead">Acesse seus conteúdos do NEXO Revisão com a conta cadastrada. O perfil do usuário define automaticamente o destino após o login.</p>
   </section>
-  <section class="login">
-    <h2>Selecione seu acesso</h2>
-    <div class="sub">Escolha o perfil para continuar.</div>
-    <div class="role">
-      <button type="button" onclick="enterStudent()">
-        <div><strong>Aluno</strong><span>Acessar o NEXO Revisão</span></div><div class="arrow">→</div>
-      </button>
-      <button type="button" onclick="enterAdmin()">
-        <div><strong>Administrador</strong><span>Acessar painel administrativo protegido</span></div><div class="arrow">→</div>
-      </button>
-    </div>
-    <div class="security">O acesso administrativo não usa senha armazenada no site público. A autenticação e a autorização são verificadas pelo GitHub.</div>
+  <section class="cards">
+    <div class="feature"><strong>Questões oficiais</strong><p>Resolva questões organizadas por disciplina e assunto.</p></div>
+    <div class="feature"><strong>Revisão direcionada</strong><p>Resumo, lei seca, jurisprudência e mapas mentais no mesmo fluxo.</p></div>
+    <div class="feature"><strong>Acesso por perfil</strong><p>Aluno entra no NEXO Revisão; administrador acessa a área administrativa.</p></div>
   </section>
+</main>
+
+<div id="loginBackdrop" class="backdrop" onclick="backdropClose(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <button class="close" onclick="closeLogin()" aria-label="Fechar">×</button>
+    <h2 id="loginTitle">Entrar no NEXO</h2>
+    <div class="sub">Use o e-mail e a senha cadastrados na base de usuários.</div>
+    <form id="loginForm" onsubmit="doLogin(event)">
+      <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="password">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+      <button id="submitBtn" class="btn submit" type="submit">Entrar</button>
+      <div id="loginMsg" class="msg" aria-live="polite"></div>
+    </form>
+    <div class="tiny">As senhas não são armazenadas nesta página. A validação deve ser feita por um serviço de autenticação/banco de usuários independente.</div>
+  </div>
 </div>
+
+<script src="auth-config.js"></script>
 <script>
-function enterStudent(){
-  sessionStorage.setItem('nexo_role','student');
-  location.href='revisao.html';
-}
-function enterAdmin(){
-  sessionStorage.setItem('nexo_role','admin');
-  location.href='admin.html';
+function openLogin(){document.getElementById('loginBackdrop').classList.add('open');setTimeout(()=>document.getElementById('email').focus(),50)}
+function closeLogin(){document.getElementById('loginBackdrop').classList.remove('open');document.getElementById('loginMsg').textContent=''}
+function backdropClose(e){if(e.target.id==='loginBackdrop')closeLogin()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLogin()})
+
+async function doLogin(e){
+  e.preventDefault();
+  const msg=document.getElementById('loginMsg');
+  const btn=document.getElementById('submitBtn');
+  const email=document.getElementById('email').value.trim();
+  const password=document.getElementById('password').value;
+  msg.className='msg';msg.textContent='Validando acesso...';btn.disabled=true;
+  try{
+    if(!window.NEXO_AUTH || !NEXO_AUTH.endpoint){
+      throw new Error('O banco de usuários ainda não foi conectado ao NEXO.');
+    }
+    const res=await fetch(NEXO_AUTH.endpoint,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,password})
+    });
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok || !data.ok || !data.role) throw new Error(data.message || 'E-mail ou senha inválidos.');
+    sessionStorage.setItem('nexo_auth_token',data.token||'');
+    sessionStorage.setItem('nexo_role',data.role);
+    sessionStorage.setItem('nexo_user_email',email);
+    msg.className='msg ok';msg.textContent='Acesso autorizado.';
+    if(data.role==='admin') location.href='admin.html';
+    else if(data.role==='student') location.href='revisao.html';
+    else throw new Error('Perfil de usuário inválido.');
+  }catch(err){
+    msg.className='msg error';msg.textContent=err.message||'Não foi possível entrar.';
+  }finally{btn.disabled=false}
 }
 </script>
 </body>
