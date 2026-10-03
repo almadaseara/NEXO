@@ -66,11 +66,42 @@ def classify_doc(url, text, cfg):
         return "pdf"
     return "page"
 
+def detect_board(url, text):
+    hay=(url+" "+text).lower()
+    if "institutoaocp" in hay or "instituto aocp" in hay:
+        return "Instituto AOCP"
+    if "cebraspe" in hay or "cespe" in hay:
+        return "CEBRASPE"
+    return "Demais bancas"
+
+def detect_year(url, text):
+    hay=url+" "+text
+    years=[int(y) for y in re.findall(r"\b20(?:1\d|2\d)\b", hay)]
+    return max(years) if years else None
+
+def year_rank(year, cfg):
+    pref=cfg.get("year_priority",[2026,2025,2024,"demais anos"])
+    if year in pref:
+        return pref.index(year)
+    return len(pref)-1
+
+def board_rank(board, cfg):
+    order=cfg.get("board_priority",{"Instituto AOCP":1,"CEBRASPE":2,"Demais bancas":3})
+    return order.get(board,99)
+
 def score_candidate(url, text, cfg):
     hay=(url+" "+text).lower()
     score=0
-    if "institutoaocp" in url.lower(): score += 35
+    board=detect_board(url,text)
+    year=detect_year(url,text)
+    if board=="Instituto AOCP": score += 35
+    elif board=="CEBRASPE": score += 30
+    else: score += 12
     if "pciconcursos" in url.lower(): score += 18
+    if year==2026: score += 24
+    elif year==2025: score += 18
+    elif year==2024: score += 12
+    elif year: score += 4
     if url.lower().endswith(".pdf"): score += 20
     if any(k.lower() in hay for k in cfg["keywords"]): score += 20
     if "gabarito definitivo" in hay or "pós-recursos" in hay: score += 15
@@ -79,7 +110,12 @@ def score_candidate(url, text, cfg):
 
 def allowed_domain(url):
     host=urlparse(url).netloc.lower()
-    return host.endswith("institutoaocp.org.br") or host.endswith("pciconcursos.com.br") or host.endswith("arquivos.qconcursos.com")
+    return (
+        host.endswith("institutoaocp.org.br")
+        or host.endswith("cebraspe.org.br")
+        or host.endswith("pciconcursos.com.br")
+        or host.endswith("arquivos.qconcursos.com")
+    )
 
 def discover(cfg):
     queue=[(u,0) for u in cfg["seeds"]]
@@ -102,7 +138,10 @@ def discover(cfg):
             out.append({
                 "id":hashlib.sha1(final.encode()).hexdigest()[:16],
                 "url":final,"title":final.rsplit("/",1)[-1],"kind":"pdf",
-                "score":score_candidate(final,"",cfg),"source_page":url,
+                "score":score_candidate(final,"",cfg),
+                "board":detect_board(final,""),
+                "year":detect_year(final,""),
+                "source_page":url,
                 "discovered_at":now()
             })
             continue
@@ -133,7 +172,10 @@ def discover(cfg):
                     out.append({
                         "id":hashlib.sha1(target.encode()).hexdigest()[:16],
                         "url":target,"title":label or target.rsplit("/",1)[-1],
-                        "kind":kind,"score":score,"source_page":final,
+                        "kind":kind,"score":score,
+                        "board":detect_board(target,label),
+                        "year":detect_year(target,label),
+                        "source_page":final,
                         "discovered_at":now()
                     })
             elif depth < cfg.get("max_depth",1) and allowed_domain(target):
@@ -195,7 +237,15 @@ def main():
     merged={x["id"]:x for x in existing.get("candidates",[]) if "id" in x}
     for x in items:
         merged[x["id"]]=x
-    all_items=sorted(merged.values(),key=lambda x:(-x.get("score",0),x.get("title","")))
+    all_items=sorted(
+        merged.values(),
+        key=lambda x:(
+            board_rank(x.get("board","Demais bancas"),cfg),
+            year_rank(x.get("year"),cfg),
+            -x.get("score",0),
+            x.get("title","")
+        )
+    )
     pairs=pair_candidates(all_items)
     save_json(CANDIDATES_PATH,{
         "updated_at":now(),
@@ -221,7 +271,22 @@ def main():
         "pdfs_unclassified":sum(1 for x in all_items if x.get("kind")=="pdf"),
         "pairs_pending_validation":len(pairs),
         "errors_last_run":len(errors),
-        "note":"Descoberta automática ativa. Publicação no banco de questões permanece bloqueada até validação prova↔gabarito e extração estruturada."
+        "priority_order":{
+            "boards":["Instituto AOCP","CEBRASPE","Demais bancas"],
+            "years":[2026,2025,2024,"demais anos"]
+        },
+        "by_board":{
+            "Instituto AOCP":sum(1 for x in all_items if x.get("board")=="Instituto AOCP"),
+            "CEBRASPE":sum(1 for x in all_items if x.get("board")=="CEBRASPE"),
+            "Demais bancas":sum(1 for x in all_items if x.get("board")=="Demais bancas")
+        },
+        "by_year":{
+            "2026":sum(1 for x in all_items if x.get("year")==2026),
+            "2025":sum(1 for x in all_items if x.get("year")==2025),
+            "2024":sum(1 for x in all_items if x.get("year")==2024),
+            "demais anos":sum(1 for x in all_items if x.get("year") not in (2026,2025,2024))
+        },
+        "note":"Descoberta automática ativa. Prioridade: AOCP → CEBRASPE → demais bancas; dentro de cada banca: 2026 → 2025 → 2024 → demais anos. Publicação segue bloqueada até validação prova↔gabarito e extração estruturada."
     }
     save_json(STATUS_PATH,status)
     print(json.dumps(status,ensure_ascii=False,indent=2))
