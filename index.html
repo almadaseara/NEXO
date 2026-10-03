@@ -207,6 +207,28 @@ header{height:66px;border-bottom:1px solid var(--line);display:flex;align-items:
 
 .law-note{margin-top:14px;padding:10px 12px;border-left:3px solid #c79d4b;background:#fff8df;color:#4a4028;border-radius:6px;font-family:Arial,sans-serif;font-size:12px;line-height:1.5}
 
+
+/* ===== NEXO v28 · Landing pública e autenticação multicanal ===== */
+body.logged-out{display:block;overflow:auto;background:#081210;color:#eef8f3}
+body.logged-out>aside,body.logged-out>main{display:none!important}
+.landing-page{display:none;min-height:100vh;background:
+  radial-gradient(circle at 78% 25%,rgba(37,209,138,.18),transparent 28%),
+  radial-gradient(circle at 14% 70%,rgba(85,183,255,.10),transparent 25%),
+  linear-gradient(140deg,#07100e 0%,#0b1714 48%,#0f201b 100%);color:#edf8f2}
+body.logged-out .landing-page{display:block}
+.landing-nav{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,6vw,92px);border-bottom:1px solid rgba(255,255,255,.08);background:rgba(6,15,13,.72);backdrop-filter:blur(14px);position:sticky;top:0;z-index:30}
+.landing-brand{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:900;letter-spacing:.2px}.landing-brand .brand-mark{background:#e9fff5;color:#0e3328}.landing-brand b{color:#77eab7}.landing-brand small{display:block;font-size:8px;letter-spacing:1.3px;color:#829b92;margin-top:2px}
+.landing-links{display:flex;align-items:center;gap:28px}.landing-links a{color:#bfd0ca;text-decoration:none;font-size:12px;font-weight:700}.landing-links a:hover{color:#fff}
+.landing-actions{display:flex;gap:9px}.landing-btn{border:1px solid rgba(255,255,255,.16);background:transparent;color:#eaf5f0;border-radius:9px;padding:10px 16px;font-size:11px;font-weight:800;cursor:pointer}.landing-btn:hover{background:rgba(255,255,255,.06)}.landing-btn.primary{background:#49c98c;color:#062017;border-color:#49c98c}.landing-btn.primary:hover{background:#5bd69a}
+.landing-hero{max-width:1500px;margin:0 auto;padding:clamp(64px,9vw,130px) clamp(24px,7vw,110px) 70px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(420px,.95fr);gap:72px;align-items:center}
+.landing-copy .eyebrow{color:#77eab7;font-size:10px;letter-spacing:2px;font-weight:900}.landing-copy h1{font-size:clamp(42px,5vw,76px);line-height:1.02;letter-spacing:-2.8px;margin:18px 0 22px;max-width:800px}.landing-copy h1 span{color:#72e7b3}.landing-copy>p{font-size:clamp(16px,1.5vw,21px);line-height:1.7;color:#a9beb6;max-width:700px;margin:0 0 30px}.landing-cta{display:flex;gap:12px;flex-wrap:wrap}.landing-cta .landing-btn{padding:14px 22px;font-size:12px}.landing-proof{display:flex;gap:25px;margin-top:36px;flex-wrap:wrap}.landing-proof div{border-left:1px solid rgba(255,255,255,.13);padding-left:13px}.landing-proof strong{display:block;color:#fff;font-size:17px}.landing-proof span{display:block;color:#78938a;font-size:10px;margin-top:3px}
+.product-preview{position:relative;min-height:530px}.preview-shell{position:absolute;inset:26px 0 0 30px;background:#f7faf8;color:#24443a;border-radius:22px;box-shadow:0 40px 90px rgba(0,0,0,.42);overflow:hidden;border:1px solid rgba(255,255,255,.15);transform:perspective(1100px) rotateY(-5deg) rotateX(2deg)}.preview-top{height:55px;background:#fff;border-bottom:1px solid #e6ede9;display:flex;align-items:center;gap:8px;padding:0 18px}.preview-dot{width:8px;height:8px;border-radius:50%;background:#dfe6e2}.preview-body{display:grid;grid-template-columns:145px 1fr;min-height:430px}.preview-side{background:#14322d;padding:21px 15px}.preview-logo{font-weight:900;color:#fff;font-size:15px;margin-bottom:28px}.preview-side span{display:block;color:#94afa5;font-size:9px;padding:9px 4px;border-bottom:1px solid rgba(255,255,255,.05)}.preview-side span.on{color:#bdf2d3}.preview-main{padding:26px;background:#f6f8f7}.preview-main small{color:#7c8d87;font-size:9px;letter-spacing:1px}.preview-main h3{font-size:23px;margin:8px 0 18px}.preview-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.preview-card{background:#fff;border:1px solid #e4ebe7;border-radius:12px;padding:15px}.preview-card b{font-size:11px}.preview-card p{font-size:9px;color:#7d8c87;line-height:1.6}.preview-card strong{font-size:25px;color:#2f7968}.preview-progress{height:6px;border-radius:99px;background:#eaf0ed;overflow:hidden;margin-top:10px}.preview-progress i{display:block;height:100%;width:72%;background:#55c58c}.floating-note{position:absolute;right:-20px;bottom:35px;background:#133d32;color:#dcf9eb;padding:15px 17px;border-radius:13px;box-shadow:0 18px 45px rgba(0,0,0,.3);font-size:11px;line-height:1.55}.floating-note b{display:block;color:#7ce4b6;margin-bottom:4px}
+.landing-features{max-width:1400px;margin:0 auto;padding:40px clamp(24px,7vw,110px) 100px}.section-kicker{color:#6fdbab;font-size:10px;font-weight:900;letter-spacing:1.8px}.landing-features h2{font-size:clamp(28px,3vw,44px);margin:10px 0 26px}.feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.feature-card{border:1px solid rgba(255,255,255,.09);background:rgba(255,255,255,.035);border-radius:15px;padding:21px}.feature-card strong{font-size:14px}.feature-card p{color:#8fa69e;font-size:11px;line-height:1.7;margin-bottom:0}.feature-icon{width:34px;height:34px;border-radius:9px;background:#143d32;color:#7ce5b6;display:grid;place-items:center;font-weight:900;margin-bottom:17px}
+.landing-footer{text-align:center;border-top:1px solid rgba(255,255,255,.07);padding:28px;color:#607a71;font-size:10px}
+.social-login{display:grid;gap:9px;margin-bottom:15px}.social-btn{width:100%;border:1px solid #dce5e1;background:#fff;color:#344b44;border-radius:10px;padding:11px 13px;font:800 12px 'DM Sans',Inter,sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}.social-btn:hover{background:#f8faf9;border-color:#c7d7cf}.social-icon{width:21px;height:21px;border-radius:50%;display:grid;place-items:center;font:900 13px Arial}.social-icon.google{background:conic-gradient(from -45deg,#4285f4 0 25%,#34a853 0 50%,#fbbc05 0 75%,#ea4335 0);color:#fff;border:2px solid #fff;box-shadow:0 0 0 1px #e4e8e6}.social-icon.facebook{background:#1877f2;color:#fff;font-family:Arial;font-size:16px}.auth-divider{display:flex;align-items:center;gap:12px;color:#95a49f;font-size:10px;margin:4px 0 2px}.auth-divider:before,.auth-divider:after{content:"";height:1px;flex:1;background:#e5ebe8}.auth-name-wrap[hidden]{display:none!important}.auth-dialog{width:min(470px,calc(100vw - 28px))}.auth-card{padding:26px}.auth-head h2{font-size:26px}.auth-form{gap:11px}.auth-form label{text-transform:none;font-size:11px;letter-spacing:0;color:#425d54}.auth-foot{font-size:10px}.auth-switch-copy{text-align:center;color:#6f817a;font-size:11px;margin-top:13px}.auth-switch-copy button{border:0;background:transparent;color:#2f7968;font-weight:900;cursor:pointer}.auth-switch-copy button:hover{text-decoration:underline}
+@media(max-width:980px){.landing-links{display:none}.landing-hero{grid-template-columns:1fr;padding-top:70px}.product-preview{min-height:480px;max-width:650px}.feature-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:650px){.landing-nav{padding:0 16px;height:68px}.landing-brand small{display:none}.landing-actions .landing-btn:first-child{display:none}.landing-btn{padding:9px 11px}.landing-hero{padding:48px 20px 45px;gap:35px}.landing-copy h1{letter-spacing:-1.7px}.landing-proof{gap:14px}.product-preview{min-height:390px}.preview-shell{inset:5px 0 0 0;transform:none}.preview-body{grid-template-columns:92px 1fr}.preview-side{padding:15px 10px}.preview-main{padding:18px 13px}.preview-grid{grid-template-columns:1fr}.preview-card:nth-child(n+3){display:none}.floating-note{right:8px;bottom:4px}.landing-features{padding:35px 20px 70px}.feature-grid{grid-template-columns:1fr}.landing-footer{padding:22px 16px}}
+
 </style>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
@@ -559,7 +581,31 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 @media(max-width:600px){.mode-switch{position:fixed;right:12px;bottom:70px;z-index:50}.admin-kpis{grid-template-columns:1fr 1fr}.auth-user.visible{gap:4px}.auth-btn{padding:7px 8px}.auth-actions{gap:4px}.pills{display:none}}
 </style>
 </head>
-<body>
+<body class="logged-out">
+
+<section id="landing-page" class="landing-page" aria-label="Página inicial do NEXO Revisão">
+  <nav class="landing-nav">
+    <div class="landing-brand"><span class="brand-mark">N</span><span>NEXO <b>revisão</b><small>PREPARAÇÃO PARA CONCURSOS</small></span></div>
+    <div class="landing-links"><a href="#recursos">Recursos</a><a href="#metodo">Como funciona</a><a href="#recursos">Para concursos policiais</a></div>
+    <div class="landing-actions"><button class="landing-btn" type="button" onclick="openAuthDialog('login')">Entrar</button><button class="landing-btn primary" type="button" onclick="openAuthDialog('signup')">Criar conta</button></div>
+  </nav>
+  <div class="landing-hero">
+    <div class="landing-copy">
+      <span class="eyebrow">NEXO REVISÃO · ESTUDO ORIENTADO POR INCIDÊNCIA</span>
+      <h1>Revise o que importa. <span>Conecte tudo.</span></h1>
+      <p>Resumos, lei seca, jurisprudência, mapas mentais, flashcards e questões oficiais em uma plataforma única para transformar revisão em desempenho.</p>
+      <div class="landing-cta"><button class="landing-btn primary" type="button" onclick="openAuthDialog('signup')">Criar minha conta</button><button class="landing-btn" type="button" onclick="openAuthDialog('login')">Já tenho uma conta</button></div>
+      <div class="landing-proof"><div><strong>Conteúdo integrado</strong><span>Revisão sem trocar de ferramenta</span></div><div><strong>Questões oficiais</strong><span>Treino ligado ao assunto estudado</span></div><div><strong>Foco em prova</strong><span>Prioridade por incidência e banca</span></div></div>
+    </div>
+    <div class="product-preview" aria-hidden="true">
+      <div class="preview-shell"><div class="preview-top"><span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span></div><div class="preview-body"><div class="preview-side"><div class="preview-logo">NEXO revisão</div><span class="on">Painel</span><span>Módulos</span><span>Questões</span><span>Lei seca</span><span>Mapas mentais</span><span>Jurisprudência</span></div><div class="preview-main"><small>PAINEL DE ESTUDOS</small><h3>Seu próximo passo, claro.</h3><div class="preview-grid"><div class="preview-card"><b>Revisão de hoje</b><p>Direitos e garantias fundamentais</p><div class="preview-progress"><i></i></div></div><div class="preview-card"><b>Questões respondidas</b><strong>124</strong><p>Desempenho acumulado</p></div><div class="preview-card"><b>Lei seca</b><p>Trechos prioritários separados por assunto.</p></div><div class="preview-card"><b>Mapa mental</b><p>Conexões rápidas para revisar antes da prova.</p></div></div></div></div></div>
+      <div class="floating-note"><b>Assistente NEXO</b>Comece pelo assunto de maior prioridade e feche o ciclo com questões.</div>
+    </div>
+  </div>
+  <section id="recursos" class="landing-features"><span class="section-kicker">UMA PLATAFORMA, UM FLUXO</span><h2>Do conteúdo à questão, sem perder o contexto.</h2><div class="feature-grid"><div class="feature-card"><div class="feature-icon">01</div><strong>Resumo estratégico</strong><p>Pontos-chave, exceções e pegadinhas organizados para revisão rápida.</p></div><div class="feature-card"><div class="feature-icon">02</div><strong>Lei seca conectada</strong><p>Dispositivos legais vinculados diretamente ao assunto que você está estudando.</p></div><div class="feature-card"><div class="feature-icon">03</div><strong>Questões oficiais</strong><p>Prática com enunciado, alternativas, gabarito e organização por tópico.</p></div><div class="feature-card"><div class="feature-icon">04</div><strong>Revisão visual</strong><p>Mapas mentais, flashcards e jurisprudência para consolidar memória e raciocínio.</p></div></div></section>
+  <footer class="landing-footer">NEXO Revisão · Plataforma privada de preparação para concursos.</footer>
+</section>
+
 <aside>
   <a class="brand" href="#" onclick="home();return false" aria-label="NEXO Revisão — início"><span class="brand-mark">N</span><span>NEXO <b>revisão</b><small>PREPARAÇÃO PARA CONCURSOS</small></span></a>
   <div class="search"><span aria-hidden="true">⌕</span><input id="search" aria-label="Buscar matéria ou tema" placeholder="Buscar um assunto..." oninput="renderNav()"></div>
@@ -951,8 +997,7 @@ function lawLiteralBlock(item,idx){
         <div style="margin-top:7px;line-height:1.55">${summary}</div>
       </div>
       <span class="expand-hint">▾ ABRIR TEXTO LEGAL</span>
-    </summary>
-    <div class="constitution-sheet">
+    </summary>    <div class="constitution-sheet">
       <div class="constitution-head">
         <div class="republic">${isAdm?"LEGISLAÇÃO ADMINISTRATIVA — TEXTO LITERAL":"Constituição da República Federativa do Brasil de 1988"}</div>
         <div class="title">${label}</div>
@@ -997,7 +1042,8 @@ function checkOfficialQuestion(prefix,i){
   const card=document.getElementById('card_'+key);
   const box=document.getElementById('ans_'+key);
   if(!card || !box || card.dataset.done==='1') return;
-  card.dataset.done='1';  finishQuestion(card);
+  card.dataset.done='1';
+  finishQuestion(card);
   solved++;
   const ok=sel.value===q.answer;
   if(ok) correct++;
@@ -1182,21 +1228,20 @@ function setAuthMode(mode){
   authUiMode = mode === 'signup' ? 'signup' : mode === 'recovery' ? 'recovery' : 'login';
   const signup = authUiMode === 'signup';
   const recovery = authUiMode === 'recovery';
-  document.getElementById('auth-tab-login').classList.toggle('active', !signup && !recovery);
-  document.getElementById('auth-tab-signup').classList.toggle('active', signup || recovery);
-  document.getElementById('auth-tab-signup').textContent = recovery ? 'Nova senha' : 'Criar minha conta';
-  document.getElementById('auth-title').textContent = recovery ? 'Definir nova senha' : signup ? 'Criar minha conta' : 'Entrar no NEXO';
+  document.getElementById('auth-title').textContent = recovery ? 'Definir nova senha' : signup ? 'Crie sua conta' : 'Entrar na sua conta';
   document.getElementById('auth-subtitle').textContent = recovery
     ? 'Digite e confirme a nova senha da sua conta.'
     : signup
-      ? 'Seu e-mail já foi autorizado? Crie sua senha agora e ative seu acesso.'
-      : 'Use o e-mail e a senha que você já criou.';
+      ? 'Cadastre-se com uma plataforma digital ou crie sua conta por e-mail.'
+      : 'Entre com Google, Facebook ou com seu e-mail e senha.';
+  document.getElementById('auth-name-wrap').hidden = !signup;
   document.getElementById('auth-email-wrap').hidden = recovery;
   document.getElementById('auth-confirm-wrap').hidden = !(signup || recovery);
   document.getElementById('auth-password-label').textContent = recovery ? 'Nova senha' : signup ? 'Criar senha' : 'Senha';
   document.getElementById('auth-password-input').autocomplete = (signup || recovery) ? 'new-password' : 'current-password';
   document.getElementById('auth-submit').textContent = recovery ? 'Salvar nova senha' : signup ? 'Criar conta e senha' : 'Entrar';
   document.getElementById('auth-login-help').hidden = signup || recovery;
+  document.getElementById('auth-switch-copy').innerHTML = recovery ? 'Lembrou sua senha? <button type="button" onclick="setAuthMode(\'login\')">Voltar ao login</button>' : signup ? 'Já tem uma conta? <button type="button" onclick="setAuthMode(\'login\')">Fazer login</button>' : 'Não tem uma conta? <button type="button" onclick="setAuthMode(\'signup\')">Criar uma conta</button>'; 
   document.getElementById('auth-signup-tip').hidden = !signup;
   setAuthStatus('');
 }
@@ -1210,9 +1255,26 @@ function closeAuthDialog(){document.getElementById('auth-dialog').close();}
 function setAuthStatus(message,type=''){
   const el=document.getElementById('auth-status'); el.textContent=message; el.className='auth-status'+(type?' '+type:'');
 }
+async function signInWithSocial(provider){
+  const name = provider === 'google' ? 'Google' : 'Facebook';
+  setAuthStatus(`Abrindo ${name}...`);
+  try{
+    const redirectTo = window.location.origin + window.location.pathname;
+    const {error} = await nexoSupabase.auth.signInWithOAuth({provider, options:{redirectTo}});
+    if(error) throw error;
+  }catch(err){
+    const raw=String(err?.message||err||`Não foi possível entrar com ${name}.`);
+    const msg=/provider.*not.*enabled|unsupported provider/i.test(raw)
+      ? `${name} ainda precisa ser ativado nas configurações de autenticação do NEXO.`
+      : raw;
+    setAuthStatus(msg,'error');
+  }
+}
+
 async function submitNexoAuth(event){
   event.preventDefault();
   const email=document.getElementById('auth-email-input').value.trim().toLowerCase();
+  const fullName=document.getElementById('auth-name-input').value.trim();
   const password=document.getElementById('auth-password-input').value;
   const confirm=document.getElementById('auth-confirm-input').value;
   const btn=document.getElementById('auth-submit');
@@ -1228,7 +1290,8 @@ async function submitNexoAuth(event){
       const {data:{user}}=await nexoSupabase.auth.getUser();
       if(user){await loadNexoProfile(user);setTimeout(()=>closeAuthDialog(),500);}
     }else if(authUiMode==='signup'){
-      const {data,error}=await nexoSupabase.auth.signUp({email,password,options:{data:{full_name:''}}});
+      if(!fullName){setAuthStatus('Informe seu nome completo.','error');btn.disabled=false;return;}
+      const {data,error}=await nexoSupabase.auth.signUp({email,password,options:{data:{full_name:fullName}}});
       if(error) throw error;
       if(data.session){
         await loadNexoProfile(data.user);
@@ -1288,9 +1351,10 @@ function updateAuthUI(){
   document.getElementById('mode-switch').classList.toggle('visible',!!canSwitch);
   document.getElementById('mode-admin').classList.toggle('active',nexoMode==='admin');
   document.getElementById('mode-student').classList.toggle('active',nexoMode==='student');
-  const gate=document.getElementById('auth-gate');
-  gate.classList.toggle('visible',!logged);
-  gate.setAttribute('aria-hidden',String(logged));
+  document.body.classList.toggle('logged-out',!logged);
+  document.body.classList.toggle('logged-in',logged);
+  const landing=document.getElementById('landing-page');
+  if(landing) landing.setAttribute('aria-hidden',String(logged));
 }
 function switchNexoMode(mode){
   if(!nexoProfile?.active)return;
@@ -1315,7 +1379,10 @@ async function initNexoAuth(){
   try{
     const {data:{session}}=await nexoSupabase.auth.getSession();
     if(session?.user){
-      try{await loadNexoProfile(session.user);}catch(e){console.error(e);nexoProfile=null;updateAuthUI();}
+      try{
+        await loadNexoProfile(session.user);
+        if(!nexoProfile?.active){await nexoSupabase.auth.signOut();nexoProfile=null;updateAuthUI();openAuthDialog('login');setAuthStatus('Sua conta foi criada, mas ainda aguarda liberação do administrador.','error');}
+      }catch(e){console.error(e);nexoProfile=null;updateAuthUI();}
     }else updateAuthUI();
   }catch(e){console.error(e);updateAuthUI();}
 }
@@ -1611,22 +1678,29 @@ syncAccess();
 
 </script>
 
+
 <dialog id="auth-dialog" class="auth-dialog" aria-labelledby="auth-title">
   <div class="auth-card">
-    <div class="auth-head"><div><span class="eyebrow">ACESSO NEXO</span><h2 id="auth-title">Entrar</h2><p id="auth-subtitle">Use seu e-mail e senha cadastrados.</p></div><button class="auth-close" type="button" onclick="closeAuthDialog()" aria-label="Fechar">×</button></div>
-    <div class="auth-tabs"><button id="auth-tab-login" class="active" type="button" onclick="setAuthMode('login')">Entrar</button><button id="auth-tab-signup" type="button" onclick="setAuthMode('signup')">Criar minha conta</button></div>
+    <div class="auth-head"><div><span class="eyebrow">ACESSO NEXO</span><h2 id="auth-title">Entrar na sua conta</h2><p id="auth-subtitle">Escolha como deseja acessar o NEXO Revisão.</p></div><button class="auth-close" type="button" onclick="closeAuthDialog()" aria-label="Fechar">×</button></div>
+    <div class="social-login">
+      <button class="social-btn" type="button" onclick="signInWithSocial('google')"><span class="social-icon google">G</span><span>Continuar com Google</span></button>
+      <button class="social-btn" type="button" onclick="signInWithSocial('facebook')"><span class="social-icon facebook">f</span><span>Continuar com Facebook</span></button>
+    </div>
+    <div class="auth-divider"><span>ou continue com e-mail</span></div>
     <form id="auth-form" class="auth-form" onsubmit="submitNexoAuth(event)">
+      <label id="auth-name-wrap" class="auth-name-wrap" hidden>Nome completo<input id="auth-name-input" type="text" autocomplete="name" placeholder="Seu nome completo"></label>
       <label id="auth-email-wrap">E-mail<input id="auth-email-input" type="email" autocomplete="email" required placeholder="seuemail@exemplo.com"></label>
       <label><span id="auth-password-label">Senha</span><input id="auth-password-input" type="password" autocomplete="current-password" required minlength="6" placeholder="Mínimo de 6 caracteres"></label>
       <label id="auth-confirm-wrap" hidden>Confirmar senha<input id="auth-confirm-input" type="password" autocomplete="new-password" minlength="6" placeholder="Repita a senha"></label>
-      <div id="auth-signup-tip" class="auth-tip" hidden>Se seu e-mail já foi autorizado no NEXO, você não precisa esperar aprovação novamente: crie sua senha aqui e prossiga.</div>
+      <div id="auth-signup-tip" class="auth-tip" hidden>Cadastros novos podem ficar aguardando liberação. E-mails já autorizados entram com as permissões previamente definidas.</div>
       <button id="auth-submit" class="auth-submit" type="submit">Entrar</button>
-      <div id="auth-login-help" class="auth-help"><button class="auth-linkbtn" type="button" onclick="setAuthMode('signup')">Ainda não criei minha senha</button><button class="auth-linkbtn" type="button" onclick="requestPasswordReset()">Esqueci minha senha / definir nova senha por e-mail</button></div>
+      <div id="auth-login-help" class="auth-help"><button class="auth-linkbtn" type="button" onclick="requestPasswordReset()">Esqueci minha senha</button></div>
       <div id="auth-status" class="auth-status" role="status" aria-live="polite"></div>
     </form>
-    <div class="auth-foot"><b>Como acessar pela primeira vez:</b> abra “Criar minha conta”, informe o e-mail autorizado e escolha sua senha. O acesso ao Robô de Questões continua exclusivo do administrador.</div>
+    <div id="auth-switch-copy" class="auth-switch-copy">Não tem uma conta? <button type="button" onclick="setAuthMode('signup')">Criar uma conta</button></div>
+    <div class="auth-foot">O NEXO usa autenticação segura pelo Supabase. Sua senha não fica armazenada no código da plataforma.</div>
   </div>
 </dialog>
-<div id="auth-gate" class="auth-gate" aria-hidden="true"><div class="auth-gate-card"><span class="brand-mark">N</span><div class="eyebrow">NEXO REVISÃO</div><h1>Acesso necessário</h1><p>Entre com sua conta para acessar seus materiais de revisão, questões e progresso.</p><button class="auth-btn primary" type="button" onclick="openAuthDialog('login')">Entrar no NEXO</button></div></div>
+
 </body>
 </html>
