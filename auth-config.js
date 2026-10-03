@@ -1,6 +1,4 @@
-// NEXO — configuração do serviço independente de autenticação.
-// Preencha "endpoint" somente com a URL HTTPS do backend de autenticação.
-// Nunca coloque senha de usuário, service-role key ou outro segredo neste arquivo público.
 window.NEXO_AUTH = {
-  endpoint: ""
+  supabaseUrl: "https://dkpgsvssyszrwmkutcyt.supabase.co",
+  publishableKey: "sb_publishable_2qL44_1BYZxwyvYlQ_BQag_m6XhWMML"
 };
