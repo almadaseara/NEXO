@@ -1,0 +1,53 @@
+{
+  "enabled": true,
+  "interval_minutes": 15,
+  "priority_boards": [
+    "Instituto AOCP"
+  ],
+  "careers": [
+    "Polícia Civil",
+    "Polícia Militar",
+    "Polícia Penal",
+    "Corpo de Bombeiros",
+    "Polícia Federal",
+    "Polícia Rodoviária Federal",
+    "Guarda Municipal"
+  ],
+  "keywords": [
+    "polícia",
+    "policial",
+    "agente de polícia",
+    "investigador",
+    "escrivão",
+    "delegado",
+    "soldado",
+    "oficial",
+    "polícia penal",
+    "bombeiro",
+    "guarda municipal"
+  ],
+  "document_keywords": {
+    "prova": [
+      "caderno de questões",
+      "caderno",
+      "prova objetiva",
+      "prova"
+    ],
+    "gabarito": [
+      "gabarito definitivo",
+      "gabarito pós-recursos",
+      "gabarito preliminar",
+      "gabarito"
+    ]
+  },
+  "seeds": [
+    "https://www.institutoaocp.org.br/",
+    "https://www.institutoaocp.org.br/concursos/status/i",
+    "https://www.institutoaocp.org.br/concursos/status/inscricoes-abertas",
+    "https://www.pciconcursos.com.br/provas/",
+    "https://www.pciconcursos.com.br/pesquisa/policia-civil",
+    "https://www.pciconcursos.com.br/pesquisa/policia-militar"
+  ],
+  "max_pages_per_run": 60,
+  "max_depth": 1
+}
