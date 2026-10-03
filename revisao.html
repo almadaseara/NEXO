@@ -2,6 +2,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+<script>
+function nexoLogout(){
+  sessionStorage.removeItem('nexo_role');
+  window.location.href='./';
+}
+
+(function(){
+  const role=sessionStorage.getItem('nexo_role');
+  if(role!=='student'){
+    window.location.replace('./');
+  }
+})();
+</script>
+
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>NEXO Revisão — Sua preparação para concursos</title>
@@ -680,7 +694,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
       <span class="pill context-pill">Foco na banca <b>AOCP</b></span>
       <span class="pill" id="score">0 acertos</span>
     </div>
-  </header>
+  <button type="button" onclick="nexoLogout()" style="border:1px solid #d7e3de;background:#fff;color:#315c4e;padding:8px 12px;border-radius:9px;font-weight:800;cursor:pointer;margin-left:10px">Sair</button></header>
   <nav class="access-bar" aria-label="Acesso rápido">
     <button type="button" data-area="home" onclick="home()"><span data-icon="home"></span><span>Painel</span></button>
     <button type="button" data-area="library" onclick="openLibrary()"><span data-icon="book"></span><span>Módulos</span></button>
