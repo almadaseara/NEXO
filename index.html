@@ -1291,7 +1291,8 @@ async function submitNexoAuth(event){
       if(user){await loadNexoProfile(user);setTimeout(()=>closeAuthDialog(),500);}
     }else if(authUiMode==='signup'){
       if(!fullName){setAuthStatus('Informe seu nome completo.','error');btn.disabled=false;return;}
-      const {data,error}=await nexoSupabase.auth.signUp({email,password,options:{data:{full_name:fullName}}});
+      const emailRedirectTo='https://almadaseara.github.io/NEXO/';
+      const {data,error}=await nexoSupabase.auth.signUp({email,password,options:{data:{full_name:fullName},emailRedirectTo}});
       if(error) throw error;
       if(data.session){
         await loadNexoProfile(data.user);
