@@ -692,6 +692,7 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 </dialog>
 <div class="workspace-message" id="workspace-message" role="status" aria-live="polite"></div>
 <script>
+/* QUESTÕES OFICIAIS: nunca exibir placeholders. Só publicar para resolução quando enunciado e alternativas estiverem integralmente incorporados e o gabarito estiver associado. */
 /* RESUMO PENAL: incluir mnemônicos existentes do material-base (sem inventar) e destacar verbos nucleares dos tipos penais. */
 /* PADRÃO ENXUTO DE GRIFO: em Lei Seca, destacar apenas verbo nuclear e palavra-chave central; condições/exceções permanecem no contexto textual. */
 /* PADRÃO PERMANENTE NEXO: toda nova disciplina deve usar Lei Seca com literalidade/trechos identificados + marca-texto; jurisprudência com enunciado/tese oficial, foco de prova separado e link oficial quando disponível. */
@@ -1199,15 +1200,21 @@ function renderTab(m,tab){
 
   
   if(tab==='oficiais') {
-    const qs=m.official_questions || [];
+    const allQs=m.official_questions || [];
+    const qs=allQs.filter(q=>{
+      const opts=q.options||[];
+      const placeholder = /^Questão oficial\s+\d+\s+—/.test(String(q.text||'')) &&
+        opts.length===5 && opts.every((o,j)=>String(o||'').trim()===`Alternativa ${'ABCDE'[j]}`);
+      return !placeholder;
+    });
     const sourceNotice = (typeof nexoSourceNotices !== 'undefined' && nexoSourceNotices[m.id])
       ? `<div class="warn" style="margin-bottom:12px"><b>Nota sobre o caderno:</b><br>${nexoSourceNotices[m.id]}</div>`
       : '';
     if(qs.length){
-      body=sourceNotice+`<div class="official-banner"><b>Questões oficiais do material de estudo</b><br><span class="muted">${qs.length} questões deste assunto, com enunciado, alternativas, gabarito e comentário dos cadernos fornecidos.</span></div>
-      <div>${qs.map((q,i)=>officialQuestionHTML(q,i,m.id)).join('')}</div>`;
+      body=sourceNotice+`<div class="official-banner"><b>Questões oficiais do material de estudo</b><br><span class="muted">${qs.length} questões deste assunto, com <b>enunciado completo, alternativas completas e gabarito</b>, sem necessidade de abrir link externo para resolver.</span></div>
+      <div>${qs.map((q)=>officialQuestionHTML(q,allQs.indexOf(q),m.id)).join('')}</div>`;
     } else {
-      body=sourceNotice+`<div class="warn"><b>Ainda não há caderno oficial anexado para este assunto.</b><br><br>Quando você enviar um PDF correspondente, as questões serão adicionadas aqui sem misturar com as demais abas.</div>`;
+      body=sourceNotice+`<div class="warn"><b>Ainda não há questão oficial integralmente incorporada neste assunto.</b><br><br>O padrão NEXO exige enunciado completo + alternativas completas + gabarito. Registros incompletos não são exibidos como questões de resolução.</div>`;
     }
   }
   if(tab==='mapa') {
