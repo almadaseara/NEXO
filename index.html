@@ -50,11 +50,12 @@ h1{font-size:clamp(38px,5vw,68px);line-height:1.02;margin:22px 0 18px;max-width:
     <div class="sub">Use o e-mail e a senha cadastrados na base de usuários.</div>
     <form id="loginForm" onsubmit="doLogin(event)">
       <div class="field"><label for="email">E-mail</label><input id="email" name="email" type="email" autocomplete="username" required></div>
-      <div class="field"><label for="password">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required></div>
+      <div class="field"><label for="password">Senha</label><input id="password" name="password" type="password" autocomplete="current-password" required minlength="6"></div>
       <button id="submitBtn" class="btn submit" type="submit">Entrar</button>
       <div id="loginMsg" class="msg" aria-live="polite"></div>
     </form>
-    <div class="tiny">As senhas não são armazenadas nesta página. A validação deve ser feita por um serviço de autenticação/banco de usuários independente.</div>
+    <button type="button" id="requestAccessBtn" class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="requestAccess()">Solicitar cadastro</button>
+    <div class="tiny">Novos cadastros ficam <b>inativos</b> até serem liberados pelo administrador. As senhas são tratadas pelo Supabase Auth e não ficam armazenadas no código do NEXO.</div>
   </div>
 </div>
 
@@ -77,6 +78,42 @@ async function getProfile(userId){
   if(error) throw error;
   if(!data || data.active===false) throw new Error('Usuário sem acesso ativo.');
   return data;
+}
+
+async function requestAccess(){
+  const msg=document.getElementById('loginMsg');
+  const email=document.getElementById('email').value.trim();
+  const password=document.getElementById('password').value;
+  if(!email || !password){
+    msg.className='msg error';
+    msg.textContent='Informe e-mail e senha para solicitar o cadastro.';
+    return;
+  }
+  if(password.length<6){
+    msg.className='msg error';
+    msg.textContent='A senha deve ter pelo menos 6 caracteres.';
+    return;
+  }
+  const btn=document.getElementById('requestAccessBtn');
+  btn.disabled=true;
+  msg.className='msg';
+  msg.textContent='Criando solicitação de acesso...';
+  try{
+    const {data,error}=await nexoSupabase.auth.signUp({
+      email,
+      password,
+      options:{data:{full_name:''}}
+    });
+    if(error) throw error;
+    await nexoSupabase.auth.signOut().catch(()=>{});
+    msg.className='msg ok';
+    msg.textContent='Cadastro recebido. Sua conta ficará aguardando liberação do administrador.';
+  }catch(err){
+    msg.className='msg error';
+    msg.textContent=err.message || 'Não foi possível solicitar o cadastro.';
+  }finally{
+    btn.disabled=false;
+  }
 }
 
 async function doLogin(e){
@@ -120,7 +157,15 @@ function updateTopbar(session){
 
 (async()=>{
   const {data:{session}}=await nexoSupabase.auth.getSession();
-  updateTopbar(session);
+  if(!session){ updateTopbar(null); return; }
+  try{
+    const profile=await getProfile(session.user.id);
+    if(profile.role==='student' || profile.role==='admin') updateTopbar(session);
+    else throw new Error('Perfil inválido');
+  }catch(_){
+    await nexoSupabase.auth.signOut().catch(()=>{});
+    updateTopbar(null);
+  }
 })();
 nexoSupabase.auth.onAuthStateChange((_event,session)=>updateTopbar(session));
 </script>
