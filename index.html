@@ -1400,11 +1400,42 @@ async function signOutNexo(){
   nexoProfile=null; nexoMode='student'; localStorage.removeItem('nexo_mode');
   updateAuthUI(); renderNav(); home();
 }
-function openAdminRobot(){
+async function openAdminRobot(){
   if(!nexoProfile?.active||!nexoProfile?.can_admin||nexoMode!=='admin'){home();return;}
   closeMobileNav(); current='admin-robot'; renderNav(); document.getElementById('head').textContent='Administração / Robô de Questões';
-  const state=JSON.parse(localStorage.getItem('nexo_robot_metrics')||'{"found":0,"validated":0,"added":0,"rejected":0,"lastRun":"Aguardando primeira sincronização"}');
-  document.getElementById('view').innerHTML=`<div class="admin-dashboard"><section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Acompanhe a captação, validação e entrada de questões no acervo. Prioridade configurada: Instituto AOCP → CEBRASPE/CESPE → demais bancas; anos 2026 → 2025 → 2024 → demais.</p></section><section class="admin-kpis"><div class="admin-kpi"><span>Encontradas</span><strong>${state.found||0}</strong></div><div class="admin-kpi"><span>Validadas</span><strong>${state.validated||0}</strong></div><div class="admin-kpi"><span>Adicionadas</span><strong>${state.added||0}</strong></div><div class="admin-kpi"><span>Rejeitadas</span><strong>${state.rejected||0}</strong></div></section><section class="admin-panel"><h2>Status operacional</h2><table class="admin-table"><tbody><tr><th>Última execução</th><td>${esc(state.lastRun||'—')}</td></tr><tr><th>Prioridade de bancas</th><td>Instituto AOCP → CEBRASPE/CESPE → demais bancas</td></tr><tr><th>Prioridade de anos</th><td>2026 → 2025 → 2024 → demais</td></tr><tr><th>Validação</th><td>Prova + gabarito oficial correspondente antes de publicar</td></tr></tbody></table></section><section class="admin-panel"><h2>Acesso protegido</h2><p class="muted">Esta página só é renderizada quando o perfil autenticado possui <b>can_admin = true</b> e está em <b>Modo ADM</b>. Alunos comuns não recebem o item de navegação.</p></section></div>`;
+  document.getElementById('view').innerHTML=`<div class="admin-dashboard"><section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Carregando métricas reais do coletor...</p></section><section class="admin-panel"><p class="muted">Consultando Supabase.</p></section></div>`;
+  try{
+    const [sourcesQ,validQ,totalQ,rejectedQ,runsQ]=await Promise.all([
+      nexoSupabase.from('exam_sources').select('*',{count:'exact',head:true}),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).in('status',['validated','annulled']),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','rejected'),
+      nexoSupabase.from('collector_runs').select('started_at,finished_at,status,discovered_count,extracted_count,validated_count,rejected_count,inserted_count,error').order('started_at',{ascending:false}).limit(8)
+    ]);
+    const latest=(runsQ.data||[])[0]||null;
+    const fmt=d=>d?new Date(d).toLocaleString('pt-BR'):'—';
+    const runRows=(runsQ.data||[]).map(r=>`<tr><td>${fmt(r.started_at)}</td><td>${esc(r.status||'—')}</td><td>${r.discovered_count||0}</td><td>${r.validated_count||0}</td><td>${r.inserted_count||0}</td><td>${r.rejected_count||0}</td></tr>`).join('');
+    document.getElementById('view').innerHTML=`<div class="admin-dashboard">
+      <section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Métricas reais do backend. O coletor prioriza concursos policiais, anos recentes e validação antes de disponibilizar a questão.</p></section>
+      <section class="admin-kpis">
+        <div class="admin-kpi"><span>Provas encontradas</span><strong>${sourcesQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Questões validadas</span><strong>${validQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Questões no banco</span><strong>${totalQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Rejeitadas</span><strong>${rejectedQ.count||0}</strong></div>
+      </section>
+      <section class="admin-panel"><h2>Status operacional</h2><table class="admin-table"><tbody>
+        <tr><th>Última execução</th><td>${latest?fmt(latest.started_at):'—'}</td></tr>
+        <tr><th>Status</th><td>${latest?esc(latest.status):'—'}</td></tr>
+        <tr><th>Agendamento</th><td>A cada 15 minutos</td></tr>
+        <tr><th>Fonte inicial</th><td>PCI Concursos + gabarito estruturado da própria página quando disponível</td></tr>
+        <tr><th>Validação</th><td>Questão só entra como validada quando número, alternativas e gabarito conseguem ser associados com segurança</td></tr>
+      </tbody></table></section>
+      <section class="admin-panel"><h2>Últimas execuções</h2><div style="overflow:auto"><table class="admin-table"><thead><tr><th>Início</th><th>Status</th><th>Provas encontradas</th><th>Validadas</th><th>Inseridas</th><th>Rejeitadas</th></tr></thead><tbody>${runRows||'<tr><td colspan="6">Nenhuma execução registrada.</td></tr>'}</tbody></table></div></section>
+      <section class="admin-panel"><h2>Acesso protegido</h2><p class="muted">Os dados acima são lidos do Supabase e esta página só aparece para perfis com <b>can_admin = true</b> em <b>Modo ADM</b>.</p></section>
+    </div>`;
+  }catch(e){
+    document.getElementById('view').innerHTML=`<div class="admin-dashboard"><section class="admin-hero"><h1>Robô de Questões</h1><p>Não foi possível carregar as métricas reais.</p></section><section class="admin-panel"><p class="muted">${esc(String(e?.message||e))}</p></section></div>`;
+  }
   document.getElementById('view').scrollTop=0;
 }
 async function initNexoAuth(){
