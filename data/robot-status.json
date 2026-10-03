@@ -1,13 +1,37 @@
 {
-  "updated_at": "2026-10-03T20:21:36.616Z",
+  "updated_at": "2026-10-03T20:28:27.027679+00:00",
   "enabled": true,
-  "runs": 0,
-  "pages_scanned_last_run": 0,
-  "candidates_total": 0,
-  "provas": 0,
+  "runs": 1,
+  "pages_scanned_last_run": 60,
+  "candidates_total": 396,
+  "provas": 395,
   "gabaritos": 0,
-  "pdfs_unclassified": 0,
+  "pdfs_unclassified": 1,
   "pairs_pending_validation": 0,
-  "errors_last_run": 0,
-  "note": "Robô instalado; aguardando primeira execução do workflow."
+  "errors_last_run": 1,
+  "priority_order": {
+    "boards": [
+      "Instituto AOCP",
+      "CEBRASPE",
+      "Demais bancas"
+    ],
+    "years": [
+      2026,
+      2025,
+      2024,
+      "demais anos"
+    ]
+  },
+  "by_board": {
+    "Instituto AOCP": 1,
+    "CEBRASPE": 0,
+    "Demais bancas": 395
+  },
+  "by_year": {
+    "2026": 0,
+    "2025": 0,
+    "2024": 0,
+    "demais anos": 396
+  },
+  "note": "Descoberta automática ativa. Prioridade: AOCP → CEBRASPE → demais bancas; dentro de cada banca: 2026 → 2025 → 2024 → demais anos. Publicação segue bloqueada até validação prova↔gabarito e extração estruturada."
 }
