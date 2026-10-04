@@ -1405,32 +1405,72 @@ async function openAdminRobot(){
   closeMobileNav(); current='admin-robot'; renderNav(); document.getElementById('head').textContent='Administração / Robô de Questões';
   document.getElementById('view').innerHTML=`<div class="admin-dashboard"><section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Carregando métricas reais do coletor...</p></section><section class="admin-panel"><p class="muted">Consultando Supabase.</p></section></div>`;
   try{
-    const [sourcesQ,validQ,totalQ,rejectedQ,runsQ]=await Promise.all([
+    const [sourcesQ,validQ,totalQ,rejectedQ,bankedQ,bankedListQ,runsQ]=await Promise.all([
       nexoSupabase.from('exam_sources').select('*',{count:'exact',head:true}),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).in('status',['validated','annulled']),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','rejected'),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('publication_status','banked').in('status',['validated','annulled']),
+      nexoSupabase.from('question_bank')
+        .select('id,question_number,statement,answer,board,year,institution,role_name,discipline,discipline_key,subject,status,publication_status,classification_status,created_at')
+        .eq('publication_status','banked')
+        .in('status',['validated','annulled'])
+        .order('created_at',{ascending:false})
+        .limit(60),
       nexoSupabase.from('collector_runs').select('started_at,finished_at,status,discovered_count,extracted_count,validated_count,rejected_count,inserted_count,error').order('started_at',{ascending:false}).limit(8)
     ]);
     const latest=(runsQ.data||[])[0]||null;
     const fmt=d=>d?new Date(d).toLocaleString('pt-BR'):'—';
+    const shortText=(v,n=110)=>{const s=String(v||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s||'—'};
     const runRows=(runsQ.data||[]).map(r=>`<tr><td>${fmt(r.started_at)}</td><td>${esc(r.status||'—')}</td><td>${r.discovered_count||0}</td><td>${r.validated_count||0}</td><td>${r.inserted_count||0}</td><td>${r.rejected_count||0}</td></tr>`).join('');
+    const bankedRows=(bankedListQ.data||[]).map(q=>{
+      const disciplina=q.discipline||q.discipline_key||'A classificar';
+      const statusClass=q.classification_status==='classified'?'Classificada':q.classification_status==='review_needed'?'Revisar':'Pendente';
+      const origem=[q.board,q.year,q.institution,q.role_name].filter(Boolean).join(' · ')||'Origem não informada';
+      return `<tr>
+        <td><b>#${q.question_number||'—'}</b></td>
+        <td><b>${esc(disciplina)}</b><br><span class="muted small">${esc(statusClass)}</span></td>
+        <td>${esc(origem)}</td>
+        <td style="min-width:320px">${esc(shortText(q.statement,150))}</td>
+        <td><b>${esc(q.answer||'—')}</b></td>
+        <td>${esc(q.status||'—')}</td>
+      </tr>`;
+    }).join('');
+
     document.getElementById('view').innerHTML=`<div class="admin-dashboard">
       <section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Métricas reais do backend. O coletor prioriza concursos policiais, anos recentes e validação antes de disponibilizar a questão.</p></section>
+
       <section class="admin-kpis">
         <div class="admin-kpi"><span>Provas encontradas</span><strong>${sourcesQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Questões validadas</span><strong>${validQ.count||0}</strong></div>
-        <div class="admin-kpi"><span>Questões no banco</span><strong>${totalQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>No acervo aguardando implementação</span><strong>${bankedQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Rejeitadas</span><strong>${rejectedQ.count||0}</strong></div>
       </section>
+
       <section class="admin-panel"><h2>Status operacional</h2><table class="admin-table"><tbody>
         <tr><th>Última execução</th><td>${latest?fmt(latest.started_at):'—'}</td></tr>
         <tr><th>Status</th><td>${latest?esc(latest.status):'—'}</td></tr>
         <tr><th>Agendamento</th><td>A cada 15 minutos</td></tr>
+        <tr><th>Questões validadas no banco</th><td>${totalQ.count||0}</td></tr>
+        <tr><th>Aguardando integração de matéria</th><td>${bankedQ.count||0}</td></tr>
         <tr><th>Fonte inicial</th><td>PCI Concursos + gabarito estruturado da própria página quando disponível</td></tr>
         <tr><th>Validação</th><td>Questão só entra como validada quando número, alternativas e gabarito conseguem ser associados com segurança</td></tr>
       </tbody></table></section>
+
+      <section class="admin-panel">
+        <h2>Acervo aguardando implementação</h2>
+        <p class="muted">Questões já armazenadas e validadas no banco, mas ainda não publicadas na área do aluno. Elas serão liberadas conforme as respectivas disciplinas forem integradas ao NEXO.</p>
+        <div style="overflow:auto">
+          <table class="admin-table">
+            <thead><tr><th>Questão</th><th>Disciplina</th><th>Origem</th><th>Enunciado</th><th>Gabarito</th><th>Status</th></tr></thead>
+            <tbody>${bankedRows||'<tr><td colspan="6">Nenhuma questão aguardando implementação neste momento.</td></tr>'}</tbody>
+          </table>
+        </div>
+        ${(bankedQ.count||0)>60?'<p class="muted small" style="margin-top:10px">Exibindo as 60 mais recentes. O contador acima considera todo o acervo.</p>':''}
+      </section>
+
       <section class="admin-panel"><h2>Últimas execuções</h2><div style="overflow:auto"><table class="admin-table"><thead><tr><th>Início</th><th>Status</th><th>Provas encontradas</th><th>Validadas</th><th>Inseridas</th><th>Rejeitadas</th></tr></thead><tbody>${runRows||'<tr><td colspan="6">Nenhuma execução registrada.</td></tr>'}</tbody></table></div></section>
+
       <section class="admin-panel"><h2>Acesso protegido</h2><p class="muted">Os dados acima são lidos do Supabase e esta página só aparece para perfis com <b>can_admin = true</b> em <b>Modo ADM</b>.</p></section>
     </div>`;
   }catch(e){
