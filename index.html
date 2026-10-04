@@ -1405,12 +1405,13 @@ async function openAdminRobot(){
   closeMobileNav(); current='admin-robot'; renderNav(); document.getElementById('head').textContent='Administração / Robô de Questões';
   document.getElementById('view').innerHTML=`<div class="admin-dashboard"><section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Carregando métricas reais do coletor...</p></section><section class="admin-panel"><p class="muted">Consultando Supabase.</p></section></div>`;
   try{
-    const [sourcesQ,validQ,totalQ,rejectedQ,bankedQ,bankedListQ,runsQ]=await Promise.all([
+    const [sourcesQ,validQ,totalQ,rejectedQ,bankedQ,new24Q,bankedListQ,runsQ]=await Promise.all([
       nexoSupabase.from('exam_sources').select('*',{count:'exact',head:true}),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).in('status',['validated','annulled']),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','rejected'),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('publication_status','banked').in('status',['validated','annulled']),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).gte('created_at',new Date(Date.now()-24*60*60*1000).toISOString()),
       nexoSupabase.from('question_bank')
         .select('id,question_number,statement,answer,board,year,institution,role_name,discipline,discipline_key,subject,status,publication_status,classification_status,created_at')
         .eq('publication_status','banked')
@@ -1443,6 +1444,7 @@ async function openAdminRobot(){
       <section class="admin-kpis">
         <div class="admin-kpi"><span>Provas encontradas</span><strong>${sourcesQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Questões validadas</span><strong>${validQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Novas nas últimas 24h</span><strong>${new24Q.count||0} <small style="font-size:12px;font-weight:700;color:inherit">/ 500</small></strong></div>
         <div class="admin-kpi"><span>No acervo aguardando implementação</span><strong>${bankedQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Rejeitadas</span><strong>${rejectedQ.count||0}</strong></div>
       </section>
