@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-10-06T04:07:27.094761+00:00",
+  "updated_at": "2026-10-06T04:27:22.709544+00:00",
   "enabled": true,
-  "runs": 99,
+  "runs": 100,
   "pages_scanned_last_run": 60,
-  "candidates_total": 415,
-  "provas": 414,
+  "candidates_total": 424,
+  "provas": 423,
   "gabaritos": 0,
   "pdfs_unclassified": 1,
   "pairs_pending_validation": 0,
@@ -25,13 +25,13 @@
   "by_board": {
     "Instituto AOCP": 1,
     "CEBRASPE": 1,
-    "Demais bancas": 413
+    "Demais bancas": 422
   },
   "by_year": {
     "2026": 0,
     "2025": 0,
     "2024": 0,
-    "demais anos": 415
+    "demais anos": 424
   },
   "note": "Descoberta automática ativa. Prioridade: AOCP → CEBRASPE → demais bancas; dentro de cada banca: 2026 → 2025 → 2024 → demais anos. Publicação segue bloqueada até validação prova↔gabarito e extração estruturada."
 }
