@@ -1,8 +1,8 @@
 {
   "enabled": true,
-  "runs": 239,
-  "last_run": "2026-10-07T20:55:59.675124+00:00",
+  "runs": 240,
+  "last_run": "2026-10-07T21:06:21.990251+00:00",
   "updated_at": "2026-10-03T20:21:36.613Z",
   "last_pages_scanned": 60,
-  "last_errors": 2
+  "last_errors": 1
 }

@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-07T20:55:59.675389+00:00",
+  "updated_at": "2026-10-07T21:06:21.990336+00:00",
   "enabled": true,
-  "runs": 239,
+  "runs": 240,
   "pages_scanned_last_run": 60,
   "candidates_total": 425,
   "provas": 424,
   "gabaritos": 0,
   "pdfs_unclassified": 1,
   "pairs_pending_validation": 0,
-  "errors_last_run": 2,
+  "errors_last_run": 1,
   "priority_order": {
     "boards": [
       "Instituto AOCP",
