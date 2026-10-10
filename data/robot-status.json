@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-10-10T23:03:58.598497+00:00",
+  "updated_at": "2026-10-10T23:23:58.570171+00:00",
   "enabled": true,
-  "runs": 500,
+  "runs": 501,
   "pages_scanned_last_run": 60,
   "candidates_total": 426,
   "provas": 425,
