@@ -1439,7 +1439,7 @@ async function openAdminRobot(){
     }).join('');
 
     document.getElementById('view').innerHTML=`<div class="admin-dashboard">
-      <section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Métricas reais do backend. O coletor prioriza concursos policiais, anos recentes e validação antes de disponibilizar a questão.</p></section>
+      <section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Métricas reais do backend. A captação e a classificação agora funcionam em pipelines independentes: o coletor busca questões de qualquer banca, exclusivamente de 2018 a 2026, e a classificação/publicação ocorre depois.</p></section>
 
       <section class="admin-kpis">
         <div class="admin-kpi"><span>Provas encontradas</span><strong>${sourcesQ.count||0}</strong></div>
@@ -1452,10 +1452,13 @@ async function openAdminRobot(){
       <section class="admin-panel"><h2>Status operacional</h2><table class="admin-table"><tbody>
         <tr><th>Última execução</th><td>${latest?fmt(latest.started_at):'—'}</td></tr>
         <tr><th>Status</th><td>${latest?esc(latest.status):'—'}</td></tr>
-        <tr><th>Agendamento</th><td>A cada 15 minutos</td></tr>
+        <tr><th>Captação</th><td>A cada 15 minutos · independente da classificação</td></tr>
+        <tr><th>Classificação</th><td>A cada 15 minutos, em ciclo separado da captação</td></tr>
+        <tr><th>Janela obrigatória</th><td>2018 a 2026</td></tr>
+        <tr><th>Bancas</th><td>Todas as bancas encontradas — sem filtro por organizadora</td></tr>
         <tr><th>Questões validadas no banco</th><td>${totalQ.count||0}</td></tr>
         <tr><th>Aguardando integração de matéria</th><td>${bankedQ.count||0}</td></tr>
-        <tr><th>Fonte inicial</th><td>PCI Concursos + gabarito estruturado da própria página quando disponível</td></tr>
+        <tr><th>Fontes</th><td>PCI Concursos e páginas de provas/gabaritos estruturados disponíveis no pipeline</td></tr>
         <tr><th>Validação</th><td>Questão só entra como validada quando número, alternativas e gabarito conseguem ser associados com segurança</td></tr>
       </tbody></table></section>
 
