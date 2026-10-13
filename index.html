@@ -1470,22 +1470,22 @@ async function openAdminRobot(){
     const [sourcesQ,validQ,totalQ,rejectedQ,bankedQ,new24Q,bankedListQ,runsQ]=await Promise.all([
       nexoSupabase.from('exam_sources').select('*',{count:'exact',head:true}),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
-      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).in('status',['validated','annulled']),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','rejected'),
-      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('publication_status','banked').in('status',['validated','annulled']),
-      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).gte('created_at',new Date(Date.now()-24*60*60*1000).toISOString()),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('publication_status','banked').eq('status','validated'),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated').gte('created_at',new Date(Date.now()-24*60*60*1000).toISOString()),
       nexoSupabase.from('question_bank')
         .select('id,question_number,statement,answer,board,year,institution,role_name,discipline,discipline_key,subject,status,publication_status,classification_status,created_at')
         .eq('publication_status','banked')
-        .in('status',['validated','annulled'])
+        .eq('status','validated')
         .order('created_at',{ascending:false})
         .limit(60),
-      nexoSupabase.from('collector_runs').select('started_at,finished_at,status,discovered_count,extracted_count,validated_count,rejected_count,inserted_count,error').order('started_at',{ascending:false}).limit(8)
+      nexoSupabase.from('collector_runs').select('started_at,finished_at,status,pages_scanned,new_sources_discovered,discovered_count,extracted_count,validated_count,annulled_count,rejected_count,inserted_count,deferred_count,error').order('started_at',{ascending:false}).limit(8)
     ]);
     const latest=(runsQ.data||[])[0]||null;
     const fmt=d=>d?new Date(d).toLocaleString('pt-BR'):'—';
     const shortText=(v,n=110)=>{const s=String(v||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s||'—'};
-    const runRows=(runsQ.data||[]).map(r=>`<tr><td>${fmt(r.started_at)}</td><td>${esc(r.status||'—')}</td><td>${r.discovered_count||0}</td><td>${r.validated_count||0}</td><td>${r.inserted_count||0}</td><td>${r.rejected_count||0}</td></tr>`).join('');
+    const runRows=(runsQ.data||[]).map(r=>`<tr><td>${fmt(r.started_at)}</td><td>${esc(r.status||'—')}</td><td>${r.pages_scanned||0}</td><td>${r.new_sources_discovered||0}</td><td>${r.validated_count||0}</td><td>${r.inserted_count||0}</td><td>${r.annulled_count||0}</td><td>${r.rejected_count||0}</td></tr>`).join('');
     const bankedRows=(bankedListQ.data||[]).map(q=>{
       const disciplina=q.discipline||q.discipline_key||'A classificar';
       const statusClass=q.classification_status==='classified'?'Classificada':q.classification_status==='review_needed'?'Revisar':'Pendente';
@@ -1514,13 +1514,13 @@ async function openAdminRobot(){
       <section class="admin-panel"><h2>Status operacional</h2><table class="admin-table"><tbody>
         <tr><th>Última execução</th><td>${latest?fmt(latest.started_at):'—'}</td></tr>
         <tr><th>Status</th><td>${latest?esc(latest.status):'—'}</td></tr>
-        <tr><th>Captação</th><td>A cada 15 minutos · independente da classificação</td></tr>
+        <tr><th>Captação</th><td>Watchdog a cada 2 horas · modo contínuo temporariamente pausado para evitar revarredura/bloqueio</td></tr>
         <tr><th>Classificação</th><td>A cada 15 minutos, em ciclo separado da captação</td></tr>
         <tr><th>Janela obrigatória</th><td>2018 a 2026</td></tr>
         <tr><th>Bancas</th><td>Todas as bancas encontradas — sem filtro por organizadora</td></tr>
         <tr><th>Questões validadas no banco</th><td>${totalQ.count||0}</td></tr>
         <tr><th>Aguardando integração de matéria</th><td>${bankedQ.count||0}</td></tr>
-        <tr><th>Fontes</th><td>PCI Concursos e páginas de provas/gabaritos estruturados disponíveis no pipeline</td></tr>
+        <tr><th>Fontes</th><td>PCI estabilizado; arquitetura preparada para expansão por provedores oficiais e espelhos confiáveis</td></tr>
         <tr><th>Validação</th><td>Questão só entra como validada quando número, alternativas e gabarito conseguem ser associados com segurança</td></tr>
       </tbody></table></section>
 
@@ -1536,7 +1536,7 @@ async function openAdminRobot(){
         ${(bankedQ.count||0)>60?'<p class="muted small" style="margin-top:10px">Exibindo as 60 mais recentes. O contador acima considera todo o acervo.</p>':''}
       </section>
 
-      <section class="admin-panel"><h2>Últimas execuções</h2><div style="overflow:auto"><table class="admin-table"><thead><tr><th>Início</th><th>Status</th><th>Provas encontradas</th><th>Validadas</th><th>Inseridas</th><th>Rejeitadas</th></tr></thead><tbody>${runRows||'<tr><td colspan="6">Nenhuma execução registrada.</td></tr>'}</tbody></table></div></section>
+      <section class="admin-panel"><h2>Últimas execuções</h2><div style="overflow:auto"><table class="admin-table"><thead><tr><th>Início</th><th>Status</th><th>Páginas varridas</th><th>Fontes novas</th><th>Validadas</th><th>Inseridas</th><th>Anuladas</th><th>Rejeitadas</th></tr></thead><tbody>${runRows||'<tr><td colspan="8">Nenhuma execução registrada.</td></tr>'}</tbody></table></div></section>
 
       <section class="admin-panel"><h2>Acesso protegido</h2><p class="muted">Os dados acima são lidos do Supabase e esta página só aparece para perfis com <b>can_admin = true</b> em <b>Modo ADM</b>.</p></section>
     </div>`;
