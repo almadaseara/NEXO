@@ -1033,7 +1033,7 @@ function lawLiteralBlock(item,idx){
   const isMed=mod && mod.discipline==='Medicina Legal';
   const level=idx<2?'MUITO COBRADO':'IMPORTANTE';
   const cls=idx<2?'tag-important':'tag-very';
-  const literal=isMed ? (item[2] || '<p>Texto literal não disponível; confira a norma oficial.</p>') : literalFor(label, summary);
+  const literal=isMed ? item[2] : literalFor(label, summary);
   return `<details class="law-details">
     <summary>
       <div class="law-summary-text">
@@ -1132,25 +1132,14 @@ function renderTab(m,tab){
     </div>`;
   }
   if(tab==='lei') {
-    body = `<div class="card">
-      <h3>Lei seca relacionada</h3>
-      <p class="muted"><b>Selecione um artigo ou bloco</b> para consultar o texto legal relacionado diretamente na plataforma, sem interromper sua revisão.</p>
-      ${m.law_items.map((it,idx)=>lawLiteralBlock(it,idx)).join('')}
-      <div class="footer-note">
-        <b>Modo Lei Seca:</b> primeiro aparece a síntese de revisão; ao expandir, aparece a <b>redação literal do dispositivo</b>, com marca-texto nos prazos, exceções, competências, vedações e expressões de maior incidência. Quando o dispositivo é muito extenso, o próprio título informa que o NEXO está exibindo os trechos literais de maior relevância.
-      </div>
-    </div>`;
+    const validItems = (m.law_items||[]).filter(it=>m.discipline!=='Medicina Legal'||(it[2] && /^<(p|div)>\s*<b>Art\./.test(it[2])));
+    body = `<div class="card"><h3>Lei seca — dispositivos literais</h3><p class="muted">Redação do artigo e marcações de estudo. Quando não há dispositivo conferido, ele não é apresentado como lei seca.</p>${validItems.length?validItems.map((it,idx)=>lawLiteralBlock(it,idx)).join(''):'<div class="warn">Ainda não há artigo literal conferido para este assunto. Nenhuma síntese será apresentada como transcrição legal.</div>'}</div>`;
   }
   if(tab==='juris') {
-    body = `<div class="card juris">
-      <h3>Jurisprudência escrita, decisão e Súmula Vinculante</h3>
-      <div class="juris-alert"><b>Como estudar:</b> cada bloco informa o <u>processo ou súmula</u>, explica o que o STF decidiu e destaca a forma mais provável de cobrança em prova.</div>
-      ${m.juris.map(j=>`<div class="juris-card"><h4>${j[0]}</h4><div>${j[1]}</div></div>`).join('')}
-      <div class="footer-note">Quando existir Súmula Vinculante ou tese de repercussão geral diretamente relacionada, ela é priorizada. Os links abrem a referência oficial do STF.</div>
-    </div>`;
+    body = (m.juris && m.juris.length)
+      ? `<div class="card juris"><h3>Jurisprudência específica do assunto</h3>${m.juris.map(j=>`<div class="juris-card"><h4>${j[0]}</h4><div>${j[1]}</div></div>`).join('')}</div>`
+      : '<div class="card"><h3>Jurisprudência do assunto</h3><p class="muted">Sem jurisprudência específica cadastrada e verificada para este assunto. Não serão exibidos textos genéricos ou decisões não conferidas.</p></div>';
   }
-
-  
   if(tab==='oficiais') {
     const qs=m.official_questions || [];
     const sourceNotice = (typeof nexoSourceNotices !== 'undefined' && nexoSourceNotices[m.id])
@@ -1164,7 +1153,9 @@ function renderTab(m,tab){
     }
   }
   if(tab==='mapa') {
-    body = `<div class="card"><h3>Mapa mental dinâmico</h3><div class="minddyn"><div class="node center"><b>${m.title}</b><div class="muted" style="margin-top:8px">${m.focus}</div></div>${m.highlights.slice(0,5).map((p,i)=>`<div class="node"><b>Tópico ${i+1}</b><br>${p}</div>`).join('')}</div></div>`;
+    body = m.discipline==='Medicina Legal'
+      ? `<div class="card"><h3>Mapas mentais ilustrados</h3><p class="muted">Os mapas ilustrados anteriores estão em preparação para publicação neste repositório. A versão provisória em caixas dinâmicas foi desativada para Medicina Legal.</p><div class="warn">Mapa ilustrado deste assunto ainda não publicado. Não será substituído por um diagrama genérico.</div></div>`
+      : `<div class="card"><h3>Mapa mental dinâmico</h3><div class="minddyn"><div class="node center"><b>${m.title}</b><div class="muted" style="margin-top:8px">${m.focus}</div></div>${m.highlights.slice(0,5).map((p,i)=>`<div class="node"><b>Tópico ${i+1}</b><br>${p}</div>`).join('')}</div></div>`;
   }
   if(tab==='quest') {
     if(m.questions && m.questions.length){
