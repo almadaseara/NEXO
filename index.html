@@ -1122,7 +1122,7 @@ const mindmapCache = new Map();
 function canManageMindmaps(){return !!(nexoProfile&&nexoProfile.can_admin&&nexoMode==='admin');}
 function mindmapGalleryHTML(m){
  const imgs=mindmapCache.get(m.id)||[];
- const upload=canManageMindmaps()?`<div class="card" style="margin-top:16px"><h3>Adicionar mapa ilustrado</h3><p class="muted small">Imagem PNG, JPG ou WebP, até 10 MB. Permitido somente para administradores.</p><input type="file" id="mindmap-upload" accept="image/png,image/jpeg,image/webp" aria-label="Selecionar imagem de mapa mental"><input type="text" id="mindmap-title" placeholder="Título do mapa" maxlength="160" style="width:100%;padding:10px;margin:10px 0"><button class="cta" onclick="uploadNexoMindmap('${m.id}')">Enviar imagem</button><p id="mindmap-upload-status" class="muted" role="status"></p></div>`:'';
+ const upload=canManageMindmaps()?`<div class="card" style="margin-top:16px"><h3>Adicionar mapa ilustrado</h3><p class="muted small">Selecione várias imagens PNG, JPG ou WebP (até 10 MB cada). Envio exclusivo do administrador.</p><input type="file" id="mindmap-upload" multiple accept="image/png,image/jpeg,image/webp" aria-label="Selecionar imagem de mapa mental"><input type="text" id="mindmap-title" placeholder="Título do mapa" maxlength="160" style="width:100%;padding:10px;margin:10px 0"><button class="cta" onclick="uploadNexoMindmap('${m.id}')">Enviar imagem</button><p id="mindmap-upload-status" class="muted" role="status"></p></div>`:'';
  return `<div class="card"><h3>Mapas mentais ilustrados</h3><p class="muted">Imagens reais vinculadas ao assunto. Toque para ampliar.</p>${imgs.length?`<div class="mindmap-gallery">${imgs.map(im=>`<figure class="mindmap-figure"><button class="mindmap-thumb" onclick="openNexoMindmap('${im.id}')" aria-label="Ampliar mapa: ${esc(im.title)}"><img src="${im.url}" alt="${esc(im.title)}" loading="lazy"></button><figcaption>${esc(im.title)}</figcaption>${canManageMindmaps()?`<button class="cta" onclick="deleteNexoMindmap('${im.id}','${m.id}')">Excluir</button>`:''}</figure>`).join('')}</div>`:'<div class="warn">Mapa mental ilustrado ainda não disponível para este assunto.</div>'}</div>${upload}`;
 }
 async function loadNexoMindmaps(moduleId){
@@ -1139,18 +1139,24 @@ async function loadNexoMindmaps(moduleId){
 }
 async function uploadNexoMindmap(moduleId){
  if(!canManageMindmaps())return;
- const file=document.getElementById('mindmap-upload')?.files?.[0],status=document.getElementById('mindmap-upload-status');
- if(!file||!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>10485760){if(status)status.textContent='Selecione PNG, JPG ou WebP com até 10 MB.';return;}
- const title=(document.getElementById('mindmap-title')?.value||'Mapa ilustrado').trim().slice(0,160);
- const ext=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg';
- const path=moduleId+'/'+crypto.randomUUID()+'.'+ext;
- try{
-  status.textContent='Enviando imagem...';
-  const {error}=await nexoSupabase.storage.from('nexo-mindmaps').upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;
-  const {error:dbError}=await nexoSupabase.from('mind_map_assets').insert({module_id:moduleId,title,storage_path:path});
-  if(dbError){await nexoSupabase.storage.from('nexo-mindmaps').remove([path]);throw dbError;}
-  await loadNexoMindmaps(moduleId);
- }catch(e){if(status)status.textContent='Falha ao enviar: '+(e.message||e);}
+ const files=[...(document.getElementById('mindmap-upload')?.files||[])],status=document.getElementById('mindmap-upload-status');
+ if(!files.length){if(status)status.textContent='Selecione uma ou mais imagens.';return;}
+ const valid=['image/png','image/jpeg','image/webp'];let done=0;let failures=[];
+ for(const file of files){
+  if(!valid.includes(file.type)||file.size>10485760){failures.push(file.name+': formato ou tamanho inválido');continue;}
+  const ext=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg';
+  const path=moduleId+'/'+crypto.randomUUID()+'.'+ext;
+  const title=(files.length===1?(document.getElementById('mindmap-title')?.value||file.name):file.name.replace(/\.[^.]+$/,'')).trim().slice(0,160)||'Mapa ilustrado';
+  try{
+   status.textContent='Enviando '+(done+failures.length+1)+' de '+files.length+'...';
+   const {error}=await nexoSupabase.storage.from('nexo-mindmaps').upload(path,file,{upsert:false,contentType:file.type});if(error)throw error;
+   const {error:dbError}=await nexoSupabase.from('mind_map_assets').insert({module_id:moduleId,title,storage_path:path});
+   if(dbError){await nexoSupabase.storage.from('nexo-mindmaps').remove([path]);throw dbError;}
+   done++;
+  }catch(e){failures.push(file.name+': '+(e.message||e));}
+ }
+ await loadNexoMindmaps(moduleId);
+ alert(done+' imagem(ns) cadastrada(s).'+(failures.length?' Falhas: '+failures.join('; '):''));
 }
 async function deleteNexoMindmap(id,moduleId){
  if(!canManageMindmaps()||!confirm('Excluir este mapa mental?'))return;
