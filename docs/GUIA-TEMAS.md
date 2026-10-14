@@ -2,7 +2,7 @@
 
 Este guia explica como criar, revisar e publicar os temas aprofundados do NEXO, para qualquer pessoa ou assistente de IA (Claude, ChatGPT, Codex) que continue o projeto. Leia inteiro antes de mexer.
 
-Situação em 14/10/2026: **66 módulos completos** — Direito Penal (26), Medicina Legal (10), Direito Constitucional (18) e Direito Administrativo (12).
+Situação em 14/10/2026: **68 módulos completos** — Direito Penal (28), Medicina Legal (10), Direito Constitucional (18) e Direito Administrativo (12).
 
 ---
 
@@ -20,7 +20,7 @@ Situação em 14/10/2026: **66 módulos completos** — Direito Penal (26), Medi
 
 | Disciplina | Arquivos |
 |---|---|
-| Penal | `crimes-contra-o-patrimonio.js`, `penal-geral.js`, `penal-pessoa-a.js` a `-d.js`, `penal-sexual.js`, `penal-fe-publica.js`, `penal-adm-func.js`, `penal-adm-particular.js`, `penal-adm-justica.js` |
+| Penal | `crimes-contra-o-patrimonio.js`, `penal-geral.js`, `penal-pessoa-a.js` a `-d.js`, `penal-sexual.js`, `penal-fe-publica.js`, `penal-adm-func.js`, `penal-adm-particular.js`, `penal-adm-justica.js`, `penal-incolumidade.js`, `penal-punibilidade.js` |
 | Medicina Legal | `ml-a.js` (introdução, perícias, documentos, identificação), `ml-b.js` (traumatologia, tanatologia, lesões), `ml-c.js` (sexologia, asfixiologia, psicopatologia) |
 | Constitucional | `const-a.js` a `const-e.js` |
 | Administrativo | `adm-a.js` a `adm-c.js` |
@@ -146,6 +146,8 @@ Tipos: `caso` (situação concreta), `numero` (prazos, penas, quóruns), `distin
 
 ## 6. Próximos passos sugeridos
 
-- Processo Penal e Legislação Especial (aguardando PDFs da usuária).
+- Direito Penal — faltam, pelo edital SAEB 02/2026 (Investigador PC-BA): concurso de crimes (arts. 69 a 71); penas (espécies, regimes, restritivas de direitos, sursis, livramento condicional); crimes contra a paz pública (arts. 286 a 288-A); crimes contra o Estado Democrático de Direito (arts. 359-I a 359-T). Para Delegado, também: propriedade imaterial, organização do trabalho, sentimento religioso e respeito aos mortos, família, multa, medidas de segurança, efeitos da condenação.
+- Processo Penal e Legislação Penal Extravagante (prioridade 1 para Investigador PC-BA e Delegado PCPE).
+- Legislação Geral da Bahia (Lei 6.677/94, Lei 14.634/23, Lei 12.209/11, Lei 11.370/09) e Igualdade Racial e de Gênero (todos os cargos da PC-BA).
 - Ligar questões reais do banco aos temas (`questoes`), sem alterar gabaritos.
 - Revisar cada tema quando sair lei nova ou tese nova relevante.
