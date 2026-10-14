@@ -1467,7 +1467,7 @@ async function openAdminRobot(){
   closeMobileNav(); current='admin-robot'; renderNav(); document.getElementById('head').textContent='Administração / Robô de Questões';
   document.getElementById('view').innerHTML=`<div class="admin-dashboard"><section class="admin-hero"><div class="eyebrow" style="color:#b9d6cb">ÁREA EXCLUSIVA DO ADMINISTRADOR</div><h1>Robô de Questões</h1><p>Carregando métricas reais do coletor...</p></section><section class="admin-panel"><p class="muted">Consultando Supabase.</p></section></div>`;
   try{
-    const [sourcesQ,validQ,totalQ,rejectedQ,bankedQ,new24Q,bankedListQ,runsQ]=await Promise.all([
+    const [sourcesQ,validQ,totalQ,rejectedQ,bankedQ,new24Q,bankedListQ,runsQ,officialQ,mirrorQ,annulledQ,resolverPendingQ,resolverResolvedQ]=await Promise.all([
       nexoSupabase.from('exam_sources').select('*',{count:'exact',head:true}),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
       nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated'),
@@ -1480,7 +1480,12 @@ async function openAdminRobot(){
         .eq('status','validated')
         .order('created_at',{ascending:false})
         .limit(60),
-      nexoSupabase.from('collector_runs').select('started_at,finished_at,status,pages_scanned,new_sources_discovered,discovered_count,extracted_count,validated_count,annulled_count,rejected_count,inserted_count,deferred_count,error').order('started_at',{ascending:false}).limit(8)
+      nexoSupabase.from('collector_runs').select('started_at,finished_at,status,pages_scanned,new_sources_discovered,discovered_count,extracted_count,validated_count,annulled_count,rejected_count,inserted_count,deferred_count,error').order('started_at',{ascending:false}).limit(8),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated').eq('validation_source_type','official'),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','validated').eq('validation_source_type','mirror'),
+      nexoSupabase.from('question_bank').select('*',{count:'exact',head:true}).eq('status','annulled'),
+      nexoSupabase.from('source_resolution_queue').select('*',{count:'exact',head:true}).eq('status','pending'),
+      nexoSupabase.from('source_resolution_queue').select('*',{count:'exact',head:true}).eq('status','resolved')
     ]);
     const latest=(runsQ.data||[])[0]||null;
     const fmt=d=>d?new Date(d).toLocaleString('pt-BR'):'—';
@@ -1506,8 +1511,13 @@ async function openAdminRobot(){
       <section class="admin-kpis">
         <div class="admin-kpi"><span>Provas encontradas</span><strong>${sourcesQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Questões validadas</span><strong>${validQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Validadas por fonte oficial</span><strong>${officialQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Validadas por espelho</span><strong>${mirrorQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Novas nas últimas 24h</span><strong>${new24Q.count||0} <small style="font-size:12px;font-weight:700;color:inherit">/ 500</small></strong></div>
         <div class="admin-kpi"><span>No acervo aguardando implementação</span><strong>${bankedQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Anuladas (auditoria)</span><strong>${annulledQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Resolver pendentes</span><strong>${resolverPendingQ.count||0}</strong></div>
+        <div class="admin-kpi"><span>Resolver concluídas</span><strong>${resolverResolvedQ.count||0}</strong></div>
         <div class="admin-kpi"><span>Rejeitadas</span><strong>${rejectedQ.count||0}</strong></div>
       </section>
 
@@ -1520,7 +1530,9 @@ async function openAdminRobot(){
         <tr><th>Bancas</th><td>Todas as bancas encontradas — sem filtro por organizadora</td></tr>
         <tr><th>Questões validadas no banco</th><td>${totalQ.count||0}</td></tr>
         <tr><th>Aguardando integração de matéria</th><td>${bankedQ.count||0}</td></tr>
-        <tr><th>Fontes</th><td>PCI estabilizado; arquitetura preparada para expansão por provedores oficiais e espelhos confiáveis</td></tr>
+        <tr><th>Fontes</th><td>CEBRASPE e FGV oficiais ativos · PCI estabilizado · fila multi-provider para novas bancas e espelhos confiáveis</td></tr>
+        <tr><th>Resolver multi-provider</th><td>${resolverResolvedQ.count||0} fontes resolvidas · ${resolverPendingQ.count||0} aguardando resolução</td></tr>
+        <tr><th>Origem dos gabaritos válidos</th><td>${officialQ.count||0} oficiais · ${mirrorQ.count||0} por espelho confiável</td></tr>
         <tr><th>Validação</th><td>Questão só entra como validada quando número, alternativas e gabarito conseguem ser associados com segurança</td></tr>
       </tbody></table></section>
 
