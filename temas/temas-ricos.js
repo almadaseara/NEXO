@@ -186,6 +186,8 @@
     initTema(m);
     original(m, tab);
     if(!m || !m.rich || !RICH[tab]) return;
+    /* não esconder questões já existentes no módulo quando o tema ainda não tem questões ligadas */
+    if(tab==='quest' && !(m.rich.questoes||[]).length && m.questions && m.questions.length) return;
     if(lastModule !== m.id){ UI.sec='todas'; UI.deck=null; UI.custom=false; }
     lastModule = m.id; lastTab = tab;
     var rc = document.querySelector('#view .reading-content');
