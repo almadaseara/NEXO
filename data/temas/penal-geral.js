@@ -11,7 +11,7 @@ var STFRG = "https://portal.stf.jus.br/jurisprudenciaRepercussao/pagina.asp";
 /* ============================ PRINCÍPIOS ============================ */
 T.penal_principios = {
 meta:{ tema:"Princípios e Fundamentos do Direito Penal", atualizado:AT,
-  foco:"Legalidade, anterioridade, culpabilidade, intervenção mínima, lesividade, insignificância, presunção de inocência e fontes do Direito Penal." },
+  foco:"Legalidade, anterioridade, culpabilidade, intervenção mínima, lesividade, insignificância, presunção de inocência, fontes do Direito Penal e vedações constitucionais (art. 5º, XLII a XLIV)." },
 secoes:[
 { id:"legalidade", titulo:"Legalidade e anterioridade", curto:"Legalidade",
   rapido:["Não há crime sem lei anterior que o defina, nem pena sem prévia cominação legal (CF, art. 5º, XXXIX; CP, art. 1º).",
@@ -67,7 +67,28 @@ secoes:[
     "Jurisprudência, doutrina e tratados ajudam a interpretar; tratados de direitos humanos podem limitar o poder punitivo."],
   teoria:[{ h:"Direito Penal objetivo e subjetivo", p:[
     "Direito Penal objetivo é o conjunto de normas; subjetivo é o direito de punir (<i>jus puniendi</i>) do Estado, que nasce com a prática do crime. Direito Penal do fato (adotado) se opõe ao Direito Penal do autor (vedado).",
-    "Velocidades do Direito Penal (Silva Sánchez): 1ª — pena de prisão com todas as garantias; 2ª — penas alternativas com flexibilização de garantias; 3ª — prisão com garantias reduzidas (Direito Penal do inimigo, de Jakobs)."]}]}
+    "Velocidades do Direito Penal (Silva Sánchez): 1ª — pena de prisão com todas as garantias; 2ª — penas alternativas com flexibilização de garantias; 3ª — prisão com garantias reduzidas (Direito Penal do inimigo, de Jakobs)."]}]},
+{ id:"constitucionais", titulo:"Vedações constitucionais (CF, art. 5º, XLII a XLIV)", curto:"Vedações da CF",
+  rapido:["Racismo: <b>inafiançável e imprescritível</b>, sujeito a reclusão (XLII).",
+    "Tortura, tráfico de drogas, terrorismo e hediondos (<b>3TH</b>): inafiançáveis e <b>insuscetíveis de graça ou anistia</b> — mas <b>prescrevem</b> (XLIII).",
+    "Ação de grupos armados, civis ou militares, contra a ordem constitucional e o Estado Democrático: <b>inafiançável e imprescritível</b> (XLIV).",
+    "Só dois crimes são imprescritíveis na CF: <b>racismo</b> e <b>ação de grupos armados</b>."],
+  teoria:[
+    { h:"Mandados constitucionais de criminalização", p:[
+      "Nesses incisos a Constituição não cria crimes: ela obriga o legislador a criá-los e já fixa o tratamento mais duro que devem receber (proibição de fiança, de graça, de anistia ou de prescrição). Por isso são chamados de mandados de criminalização. Outros exemplos: retenção dolosa do salário (art. 7º, X), condutas lesivas ao meio ambiente (art. 225, §3º) e abuso, violência e exploração sexual de criança e adolescente (art. 227, §4º).",
+      "Inafiançável não quer dizer que o preso fica sempre preso. A vedação atinge só a fiança: a liberdade provisória <b>sem fiança</b> continua possível quando não estão presentes os requisitos da prisão preventiva.",
+      "A Lei dos Crimes Hediondos (Lei 8.072/90, art. 2º) foi além da CF e também proibiu o <b>indulto</b>. No inciso XLIII, a CF manda punir não só mandantes e executores, mas também quem, <b>podendo evitar</b> o crime, se omite."]},
+    { h:"Racismo, injúria racial e homotransfobia", p:[
+      "Em 2021 o STF decidiu que a injúria racial é uma espécie de racismo e, por isso, também é imprescritível (HC 154.248). Em 2023, a Lei 14.532 transferiu a injúria racial do Código Penal para a Lei 7.716/89 (art. 2º-A), com pena de reclusão de 2 a 5 anos e multa.",
+      "Na ADO 26 (2019), o STF enquadrou as condutas homofóbicas e transfóbicas nos crimes da Lei 7.716/89, até que o Congresso aprove lei específica."]}
+  ],
+  quadro:{ titulo:"O que a CF veda para cada grupo", head:["Crime","Fiança","Prescrição","Graça e anistia"], rows:[
+    ["Racismo (XLII)","Vedada","Imprescritível","CF não veda"],
+    ["Tortura, tráfico, terrorismo e hediondos (XLIII)","Vedada","Prescreve","Vedadas (a Lei 8.072 veda também o indulto)"],
+    ["Ação de grupos armados (XLIV)","Vedada","Imprescritível","CF não veda"]]},
+  pegadinhas:["Tráfico de drogas, tortura, terrorismo e hediondos <b>prescrevem</b>: imprescritíveis são só racismo e ação de grupos armados.",
+    "Inafiançabilidade não impede a liberdade provisória sem fiança.",
+    "A CF veda graça e anistia aos 3TH; a proibição do indulto vem da Lei 8.072/90, não da CF."]}
 ],
 lei:[
 { art:"CF, art. 5º", nome:"Garantias penais", sec:"legalidade", itens:[
@@ -77,6 +98,11 @@ lei:[
 ]},
 { art:"CP, art. 1º", nome:"Anterioridade da lei", sec:"legalidade", itens:[
   { id:"cp1", rot:"Art. 1º", t:"<b class='g1'>Não há crime sem lei anterior</b> que o defina. <b class='g1'>Não há pena sem prévia cominação legal</b>.", c:["pp1","pp3"] }
+]},
+{ art:"CF, art. 5º, XLII a XLIV", nome:"Vedações constitucionais", sec:"constitucionais", itens:[
+  { id:"cf5-42", rot:"inc. XLII", t:"XLII - a prática do <b class='g1'>racismo</b> constitui crime <b class='g3'>inafiançável e imprescritível</b>, sujeito à pena de <b class='g2'>reclusão</b>, nos termos da lei;", j:["stf-hc154248","stf-ado26"], c:["pp15","pp18","pp19"] },
+  { id:"cf5-43", rot:"inc. XLIII", t:"XLIII - a lei considerará crimes <b class='g3'>inafiançáveis e insuscetíveis de graça ou anistia</b> a prática da <b class='g1'>tortura</b>, o <b class='g1'>tráfico ilícito de entorpecentes e drogas afins</b>, o <b class='g1'>terrorismo</b> e os definidos como <b class='g1'>crimes hediondos</b>, por eles respondendo os mandantes, os executores e <b class='g3'>os que, podendo evitá-los, se omitirem</b>;", c:["pp15","pp16","pp17"] },
+  { id:"cf5-44", rot:"inc. XLIV", t:"XLIV - constitui crime <b class='g3'>inafiançável e imprescritível</b> a <b class='g1'>ação de grupos armados, civis ou militares</b>, contra a ordem constitucional e o Estado Democrático;", c:["pp19"] }
 ]}
 ],
 juris:[
@@ -96,7 +122,13 @@ juris:[
 { id:"stj-s502", trib:"STJ", tipo:"Súmula", num:"502", sec:"limitadores", status:"vigente", data:"",
   titulo:"Pirataria não é adequação social", texto:"Presentes a materialidade e a autoria, afigura-se típica, em relação ao crime previsto no art. 184, § 2º, do CP, a conduta de expor à venda CDs e DVDs piratas.", explica:"O STJ rejeita a adequação social nesse caso.", lei:[], fonte:STJS },
 { id:"stj-s444", trib:"STJ", tipo:"Súmula", num:"444", sec:"insignificancia", status:"vigente", data:"",
-  titulo:"Inquéritos em curso não agravam a pena-base", texto:"É vedada a utilização de inquéritos policiais e ações penais em curso para agravar a pena-base.", explica:"Decorre da presunção de inocência.", lei:["cf5-57"], fonte:STJS }
+  titulo:"Inquéritos em curso não agravam a pena-base", texto:"É vedada a utilização de inquéritos policiais e ações penais em curso para agravar a pena-base.", explica:"Decorre da presunção de inocência.", lei:["cf5-57"], fonte:STJS },
+{ id:"stf-hc154248", trib:"STF", tipo:"Plenário", num:"HC 154.248", sec:"constitucionais", status:"vigente", data:"28/10/2021",
+  titulo:"Injúria racial é imprescritível", texto:"(Síntese) A injúria racial é espécie do gênero racismo e, por isso, é imprescritível, nos termos do art. 5º, XLII, da Constituição.",
+  explica:"Texto resumido, não é a ementa literal. Depois do julgado, a Lei 14.532/2023 levou a injúria racial para o art. 2º-A da Lei 7.716/89.", lei:["cf5-42"], fonte:"https://jurisprudencia.stf.jus.br/pages/search?base=acordaos&queryString=HC%20154248" },
+{ id:"stf-ado26", trib:"STF", tipo:"Plenário", num:"ADO 26", sec:"constitucionais", status:"vigente", data:"13/06/2019",
+  titulo:"Homotransfobia e Lei do Racismo", texto:"(Síntese) Até que o Congresso edite lei específica, as condutas homofóbicas e transfóbicas enquadram-se nos tipos penais da Lei 7.716/89 (racismo, na dimensão social).",
+  explica:"Texto resumido, não é a tese literal. Julgada com o MI 4.733.", lei:["cf5-42"], fonte:"https://jurisprudencia.stf.jus.br/pages/search?base=acordaos&queryString=ADO%2026" }
 ],
 cards:[
 { id:"pp1", tipo:"ce", sec:"legalidade", f:"Certo ou errado: medida provisória pode criar crime, desde que convertida em lei.", v:"<b>Errado.</b> A CF veda MP sobre Direito Penal (art. 62, §1º, I, b). O STF só admitiu MP que beneficie o réu.", lei:["cp1"] },
@@ -112,14 +144,19 @@ cards:[
 { id:"pp11", tipo:"juris", sec:"insignificancia", f:"Condenado pelo júri a 8 anos pode começar a cumprir a pena antes do trânsito em julgado?", v:"<b>Sim.</b> Tema 1068 do STF: a soberania dos veredictos autoriza a execução imediata, qualquer que seja a pena.", lei:["cf5-57"], j:["stf-t1068"] },
 { id:"pp12", tipo:"ce", sec:"insignificancia", f:"Certo ou errado: a insignificância exclui a ilicitude do fato.", v:"<b>Errado.</b> Exclui a <b>tipicidade material</b>.", lei:[] },
 { id:"pp13", tipo:"caso", sec:"insignificancia", f:"Marido subtrai R$ 20 da esposa com ameaça, no contexto de violência doméstica. Cabe insignificância?", v:"<b>Não.</b> Súmula 589: inaplicável nos crimes e contravenções contra a mulher no âmbito doméstico (e há grave ameaça).", lei:[], j:["stj-s589"] },
-{ id:"pp14", tipo:"ce", sec:"limitadores", f:"Certo ou errado: a autolesão é punida, em regra, por violar a integridade física.", v:"<b>Errado.</b> Pelo princípio da alteridade, a autolesão não é crime — salvo quando atinge bem de terceiro (ex.: fraude contra seguro, art. 171, §2º, V).", lei:[] }
+{ id:"pp14", tipo:"ce", sec:"limitadores", f:"Certo ou errado: a autolesão é punida, em regra, por violar a integridade física.", v:"<b>Errado.</b> Pelo princípio da alteridade, a autolesão não é crime — salvo quando atinge bem de terceiro (ex.: fraude contra seguro, art. 171, §2º, V).", lei:[] },
+{ id:"pp15", tipo:"ce", sec:"constitucionais", f:"Certo ou errado: por força da Constituição, o tráfico de drogas é crime imprescritível.", v:"<b>Errado.</b> O tráfico é inafiançável e insuscetível de graça ou anistia, mas <b>prescreve</b>. Imprescritíveis são só o racismo e a ação de grupos armados.", lei:["cf5-43","cf5-42"] },
+{ id:"pp16", tipo:"lacuna", sec:"constitucionais", f:"CF, art. 5º, XLIII: tortura, tráfico, terrorismo e hediondos são inafiançáveis e insuscetíveis de ______ ou ______.", v:"<b>graça</b> · <b>anistia</b> (o indulto é vedado pela Lei 8.072/90)", lei:["cf5-43"] },
+{ id:"pp17", tipo:"caso", sec:"constitucionais", f:"Preso em flagrante por roubo com emprego de arma de fogo (hediondo). Como o crime é inafiançável, o delegado informa que ele não pode ser solto antes do julgamento. Está certo?", v:"<b>Não.</b> A vedação é só da <b>fiança</b>. O juiz pode conceder liberdade provisória sem fiança se não houver requisitos para a preventiva.", lei:["cf5-43"] },
+{ id:"pp18", tipo:"juris", sec:"constitucionais", f:"Injúria racial cometida em 2015 (então no art. 140, §3º, do CP). Prescreve?", v:"<b>Não.</b> O STF (HC 154.248, 2021) considerou a injúria racial espécie de racismo, logo imprescritível.", lei:["cf5-42"], j:["stf-hc154248"] },
+{ id:"pp19", tipo:"distincao", sec:"constitucionais", f:"Quais crimes a CF declara imprescritíveis?", v:"Só dois: <b>racismo</b> (XLII) e <b>ação de grupos armados</b>, civis ou militares, contra a ordem constitucional e o Estado Democrático (XLIV).", lei:["cf5-42","cf5-44"] }
 ],
 questoes:[]
 };
 
 /* ====================== APLICAÇÃO DA LEI PENAL ====================== */
 T.penal_aplicacao = {
-meta:{ tema:"Aplicação da Lei Penal", atualizado:AT, foco:"Lei penal no tempo, no espaço e em relação às pessoas; tempo e lugar do crime; contagem de prazo." },
+meta:{ tema:"Aplicação da Lei Penal e Infração Penal", atualizado:AT, foco:"Lei penal no tempo, no espaço e em relação às pessoas; tempo e lugar do crime; disposições preliminares do CP (arts. 8º a 12); infração penal (crime e contravenção) e seus sujeitos; conflito aparente de normas." },
 secoes:[
 { id:"tempo", titulo:"Lei penal no tempo", curto:"Tempo",
   rapido:["Regra: aplica-se a lei vigente na data do fato (<i>tempus regit actum</i>).","Lei mais benéfica <b>retroage</b>, inclusive após o trânsito em julgado; lei mais grave não retroage.",
@@ -160,7 +197,60 @@ secoes:[
   teoria:[{ h:"Imunidades parlamentares (CF, art. 53)", p:[
     "Deputados e senadores são invioláveis, civil e penalmente, por quaisquer opiniões, palavras e votos (imunidade material). Desde a diplomação, não podem ser presos, salvo em flagrante de crime inafiançável, caso em que os autos vão em 24 horas à Casa, que resolve sobre a prisão pelo voto da maioria de seus membros.",
     "Recebida a denúncia por crime ocorrido após a diplomação, o STF dá ciência à Casa, que pode sustar o andamento da ação, por iniciativa de partido político e voto da maioria; a sustação suspende a prescrição.",
-    "Deputados estaduais têm as mesmas imunidades (art. 27, §1º). Vereadores: só a material, nos limites do Município (art. 29, VIII)."]}]}
+    "Deputados estaduais têm as mesmas imunidades (art. 27, §1º). Vereadores: só a material, nos limites do Município (art. 29, VIII)."]}]},
+{ id:"infracao", titulo:"Infração penal: crime, contravenção e sujeitos", curto:"Infração penal",
+  rapido:["O Brasil adota o sistema <b>bipartido</b>: infração penal é o gênero; <b>crime</b> (ou delito) e <b>contravenção</b> são as espécies.",
+    "O critério é a pena (Lei de Introdução ao CP, art. 1º): crime tem <b>reclusão ou detenção</b>; contravenção tem só <b>prisão simples e/ou multa</b>.",
+    "Contravenção: tentativa <b>não é punível</b>, a lei brasileira só se aplica no <b>território nacional</b> e a prisão simples não passa de <b>5 anos</b>.",
+    "Sujeito passivo <b>formal</b> (constante) é sempre o Estado; o <b>material</b> (eventual) é o titular do bem jurídico atingido."],
+  teoria:[
+    { h:"Crime × contravenção", p:[
+      "A diferença é de grau, não de natureza: o legislador decide quais condutas são mais graves. O critério legal está no art. 1º da Lei de Introdução ao Código Penal: se a lei comina reclusão ou detenção (sozinhas ou com multa), é crime; se comina apenas prisão simples ou multa, isoladas ou em conjunto, é contravenção. Por isso a contravenção é chamada de \"crime anão\".",
+      "Pelo conceito analítico majoritário (tripartido), crime é fato <b>típico, ilícito e culpável</b>. Os elementos do fato típico (conduta, resultado, nexo causal e tipicidade) estão no módulo Teoria do Delito I.",
+      "Regras próprias da Lei das Contravenções Penais (DL 3.688/41): basta a ação ou omissão voluntária (art. 3º); a tentativa não é punível (art. 4º); não há extraterritorialidade (art. 2º); o erro escusável sobre a lei permite deixar de aplicar a pena (art. 8º); a ação penal é sempre pública incondicionada (art. 17); a prisão simples tem limite de 5 anos (art. 10). No restante, aplicam-se as regras gerais do CP (LCP, art. 1º; CP, art. 12).",
+      "Contravenções são infrações de menor potencial ofensivo (Lei 9.099/95, art. 61) e são julgadas pela <b>Justiça Estadual</b>, ainda que atinjam bens ou interesses da União, porque o art. 109, IV, da CF exclui as contravenções da competência federal (Súmula 38 do STJ). A ressalva fica por conta do foro por prerrogativa de função."]},
+    { h:"Sujeito ativo", p:[
+      "Sujeito ativo é quem pratica a infração penal: o autor que realiza o verbo do tipo e também quem concorre para o crime sem realizá-lo (partícipe), pelas regras do concurso de pessoas (art. 29).",
+      "Crime <b>comum</b> pode ser praticado por qualquer pessoa. Crime <b>próprio</b> exige uma qualidade especial do agente (peculato exige funcionário público) e admite coautoria e participação de quem não tem a qualidade, se ela for conhecida (art. 30). Crime <b>de mão própria</b> exige atuação pessoal (falso testemunho) e, em regra, não admite coautoria, só participação.",
+      "<b>Pessoa jurídica</b>: a CF (art. 225, §3º) e a Lei 9.605/98 (art. 3º) admitem sua responsabilidade penal nos crimes ambientais. O STF (RE 548.181, 2013) afastou a teoria da dupla imputação: a empresa pode ser processada mesmo que a pessoa física responsável não seja identificada ou denunciada, entendimento depois seguido pelo STJ."]},
+    { h:"Sujeito passivo e objeto do crime", p:[
+      "Sujeito passivo <b>formal</b> (mediato ou constante) é o Estado, titular do interesse em ver a lei cumprida — está presente em todo crime. Sujeito passivo <b>material</b> (imediato ou eventual) é o titular do bem jurídico lesado: o dono do celular furtado, a vítima da lesão corporal. O Estado também pode ser sujeito passivo material, como no peculato.",
+      "<b>Crimes vagos</b> têm como sujeito passivo um ente sem personalidade jurídica, como a coletividade ou a família (ex.: tráfico de drogas, vilipêndio a cadáver). Morto e animais não são sujeitos passivos: o cadáver é <b>objeto material</b> do crime.",
+      "<b>Objeto material</b> é a pessoa ou coisa sobre a qual recai a conduta (o celular, no furto); <b>objeto jurídico</b> é o bem jurídico protegido (o patrimônio). Pela alteridade, ninguém é sujeito ativo e passivo do mesmo crime: quem se autolesiona para receber o seguro comete estelionato contra a seguradora (art. 171, §2º, V)."]}
+  ],
+  quadro:{ titulo:"Crime × contravenção", head:["Ponto","Crime","Contravenção"], rows:[
+    ["Pena","Reclusão ou detenção (com ou sem multa)","Prisão simples e/ou multa"],
+    ["Tentativa","Punível (art. 14, II, do CP)","Não punível (LCP, art. 4º)"],
+    ["Extraterritorialidade","Possível (art. 7º do CP)","Não há (LCP, art. 2º)"],
+    ["Ação penal","Pública ou privada, conforme o tipo","Sempre pública incondicionada (LCP, art. 17)"],
+    ["Limite de cumprimento","40 anos (art. 75 do CP)","5 anos (LCP, art. 10)"],
+    ["Competência","Estadual ou Federal","Estadual, mesmo contra a União (Súmula 38 do STJ)"]]},
+  pegadinhas:["A tentativa de contravenção existe na realidade, mas a lei não a pune.",
+    "Contravenção contra bens da União vai para a Justiça <b>Estadual</b> (CF, art. 109, IV, e Súmula 38 do STJ).",
+    "Pessoa jurídica pode ser denunciada por crime ambiental sem que a pessoa física seja denunciada junto (STF, RE 548.181).",
+    "O cadáver não é vítima: é objeto material. A vítima do vilipêndio é a coletividade (crime vago)."]},
+{ id:"conflito", titulo:"Conflito aparente de normas", curto:"Conflito aparente",
+  rapido:["Há conflito <b>aparente</b> quando um único fato parece se encaixar em vários tipos penais, mas só um deve ser aplicado.",
+    "Requisitos: <b>unidade de fato</b> e <b>pluralidade de normas</b> vigentes que parecem incidir sobre ele.",
+    "Princípios de solução: <b>especialidade</b>, <b>subsidiariedade</b>, <b>consunção</b> e <b>alternatividade</b>.",
+    "Súmula 17 do STJ: o falso que se esgota no estelionato é absorvido por ele."],
+  teoria:[
+    { h:"Especialidade e subsidiariedade", p:[
+      "<b>Especialidade</b>: a norma especial contém todos os elementos da norma geral e mais algum elemento que a especializa, e por isso prevalece, tenha pena maior ou menor. A comparação é feita entre os tipos, em abstrato. Exemplos: infanticídio (art. 123) × homicídio; homicídio culposo na direção de veículo (CTB, art. 302) × homicídio culposo do CP.",
+      "<b>Subsidiariedade</b>: a norma principal, mais grave, afasta a subsidiária, que funciona como um \"soldado de reserva\" e só é aplicada se a principal não incidir. É <b>expressa</b> quando o próprio tipo avisa que só se aplica se o fato não constituir crime mais grave (ex.: perigo para a vida ou a saúde de outrem, art. 132). É <b>tácita</b> quando o crime menos grave integra a execução do mais grave (o constrangimento ilegal dentro do roubo). A análise depende do caso concreto."]},
+    { h:"Consunção e alternatividade", p:[
+      "<b>Consunção</b> (absorção): o crime-meio, ou o crime que é etapa normal de outro, é absorvido pelo crime-fim. Aparece no crime progressivo (as lesões causadas para matar ficam absorvidas pelo homicídio), na progressão criminosa (o agente queria lesionar e, no meio da execução, decide matar), no antefato impunível (a violação de domicílio cometida só para furtar dentro da casa) e no pós-fato impunível (o ladrão que destrói a coisa furtada não responde por dano).",
+      "A consunção pode até levar à absorção de crime com pena maior. É o caso da Súmula 17 do STJ: a falsificação de documento é absorvida pelo estelionato quando se esgota na fraude e não tem mais potencial para enganar ninguém. Se o documento falso continua apto a ser usado em outras fraudes, há concurso de crimes.",
+      "<b>Alternatividade</b>: nos tipos mistos alternativos (vários verbos no mesmo tipo), praticar mais de um verbo contra o mesmo objeto, no mesmo contexto, configura um <b>crime único</b>. Ex.: importar, guardar e vender a mesma porção de droga é um só tráfico (Lei 11.343/06, art. 33)."]}
+  ],
+  quadro:{ titulo:"Como identificar cada princípio", head:["Princípio","Pergunta-chave","Exemplo"], rows:[
+    ["Especialidade","Um tipo tem todos os elementos do outro e mais algum?","Infanticídio × homicídio"],
+    ["Subsidiariedade","Um tipo só se aplica se não houver crime mais grave?","Art. 132 do CP; constrangimento ilegal no roubo"],
+    ["Consunção","Um crime foi meio, etapa ou exaurimento de outro?","Falso absorvido pelo estelionato (Súmula 17 do STJ)"],
+    ["Alternatividade","Vários verbos do mesmo tipo, mesmo objeto e mesmo contexto?","Importar, guardar e vender a mesma droga"]]},
+  pegadinhas:["A especialidade não depende da pena: a norma especial pode ser mais branda (infanticídio).",
+    "Conflito aparente não é concurso de crimes: no conflito incide uma só norma; no concurso, várias.",
+    "A Súmula 17 só se aplica se o falso se <b>esgota</b> no estelionato; se o documento pode enganar de novo, há concurso."]}
 ],
 lei:[
 { art:"CP, arts. 2º a 4º", nome:"Lei penal no tempo", sec:"tempo", itens:[
@@ -172,10 +262,27 @@ lei:[
   { id:"cp5", rot:"Art. 5º", t:"Aplica-se a lei brasileira, sem prejuízo de convenções, tratados e regras de direito internacional, ao crime cometido no <b class='g1'>território nacional</b>.<br>§ 1º - Para os efeitos penais, consideram-se como extensão do território nacional as embarcações e aeronaves brasileiras, <b class='g1'>de natureza pública ou a serviço do governo brasileiro onde quer que se encontrem</b>, bem como as aeronaves e as embarcações brasileiras, mercantes ou de propriedade privada, que se achem, respectivamente, no espaço aéreo correspondente ou <b class='g3'>em alto-mar</b>.<br>§ 2º - É também aplicável a lei brasileira aos crimes praticados a bordo de aeronaves ou embarcações estrangeiras de propriedade privada, achando-se aquelas em pouso no território nacional ou em vôo no espaço aéreo correspondente, e estas em porto ou mar territorial do Brasil.", c:["ap6","ap7"] },
   { id:"cp6", rot:"Art. 6º", t:"Considera-se praticado o crime no lugar em que ocorreu a <b class='g1'>ação ou omissão</b>, no todo ou em parte, bem como onde se produziu ou deveria produzir-se o <b class='g1'>resultado</b>.", c:["ap5"] },
   { id:"cp7", rot:"Art. 7º", t:"Ficam sujeitos à lei brasileira, embora cometidos no estrangeiro:<br>I - os crimes: a) contra a <b class='g1'>vida ou a liberdade do Presidente da República</b>; b) contra o patrimônio ou a fé pública da União, do Distrito Federal, de Estado, de Território, de Município, de empresa pública, sociedade de economia mista, autarquia ou fundação instituída pelo Poder Público; c) contra a administração pública, por quem está a seu serviço; d) de <b class='g1'>genocídio</b>, quando o agente for brasileiro ou domiciliado no Brasil;<br>II - os crimes: a) que, por tratado ou convenção, o Brasil se obrigou a reprimir; b) praticados por brasileiro; c) praticados em aeronaves ou embarcações brasileiras, mercantes ou de propriedade privada, quando em território estrangeiro e aí não sejam julgados.<br>§ 1º - Nos casos do inciso I, o agente é punido segundo a lei brasileira, <b class='g3'>ainda que absolvido ou condenado no estrangeiro</b>.<br>§ 2º - Nos casos do inciso II, a aplicação da lei brasileira depende do concurso das seguintes condições: a) entrar o agente no território nacional; b) ser o fato punível também no país em que foi praticado; c) estar o crime incluído entre aqueles pelos quais a lei brasileira autoriza a extradição; d) não ter sido o agente absolvido no estrangeiro ou não ter aí cumprido a pena; e) não ter sido o agente perdoado no estrangeiro ou, por outro motivo, não estar extinta a punibilidade, segundo a lei mais favorável.<br>§ 3º - A lei brasileira aplica-se também ao crime cometido por estrangeiro contra brasileiro fora do Brasil, se, reunidas as condições previstas no parágrafo anterior: a) não foi pedida ou foi negada a extradição; b) houve requisição do Ministro da Justiça.", c:["ap8","ap9","ap10"] },
-  { id:"cp8", rot:"Art. 8º", t:"A pena cumprida no estrangeiro <b class='g1'>atenua</b> a pena imposta no Brasil pelo mesmo crime, quando diversas, ou nela é <b class='g1'>computada</b>, quando idênticas.", c:["ap11"] }
+  { id:"cp8", rot:"Art. 8º", t:"A pena cumprida no estrangeiro <b class='g1'>atenua</b> a pena imposta no Brasil pelo mesmo crime, quando diversas, ou nela é <b class='g1'>computada</b>, quando idênticas.", c:["ap11"] },
+  { id:"cp9", rot:"Art. 9º", t:"A sentença estrangeira, quando a aplicação da lei brasileira produz na espécie as mesmas conseqüências, pode ser <b class='g1'>homologada no Brasil</b> para:<br>I - obrigar o condenado à <b class='g1'>reparação do dano</b>, a restituições e a outros efeitos civis;<br>II - sujeitá-lo a <b class='g1'>medida de segurança</b>.<br>Parágrafo único - A homologação depende:<br>a) para os efeitos previstos no inciso I, de <b class='g3'>pedido da parte interessada</b>;<br>b) para os outros efeitos, da existência de <b class='g3'>tratado de extradição</b> com o país de cuja autoridade judiciária emanou a sentença, ou, na falta de tratado, de <b class='g3'>requisição do Ministro da Justiça</b>.", nota:"A homologação de sentença estrangeira compete ao STJ (CF, art. 105, I, i).", c:["ap31"] }
 ]},
-{ art:"CP, art. 10", nome:"Contagem de prazo", sec:"momento-lugar", itens:[
-  { id:"cp10", rot:"Art. 10", t:"O dia do começo <b class='g1'>inclui-se no cômputo do prazo</b>. Contam-se os dias, os meses e os anos pelo <b class='g1'>calendário comum</b>.", c:["ap12"] }
+{ art:"CP, arts. 10 a 12", nome:"Prazos, frações e legislação especial", sec:"momento-lugar", itens:[
+  { id:"cp10", rot:"Art. 10", t:"O dia do começo <b class='g1'>inclui-se no cômputo do prazo</b>. Contam-se os dias, os meses e os anos pelo <b class='g1'>calendário comum</b>.", c:["ap12"] },
+  { id:"cp11", rot:"Art. 11", t:"<b class='g1'>Desprezam-se</b>, nas penas privativas de liberdade e nas restritivas de direitos, as <b class='g2'>frações de dia</b>, e, na pena de multa, as <b class='g2'>frações de cruzeiro</b>.", nota:"\"Cruzeiro\" é a moeda da época; entende-se como a fração da moeda atual (centavos).", c:["ap32"] },
+  { id:"cp12", rot:"Art. 12", t:"As <b class='g1'>regras gerais deste Código</b> aplicam-se aos fatos incriminados por <b class='g1'>lei especial</b>, <b class='g3'>se esta não dispuser de modo diverso</b>.", c:["ap33"] }
+]},
+{ art:"Lei de Introdução ao CP (DL 3.914/41), art. 1º", nome:"Crime e contravenção", sec:"infracao", itens:[
+  { id:"licp1", rot:"Art. 1º", t:"Considera-se <b class='g1'>crime</b> a infração penal que a lei comina pena de <b class='g2'>reclusão ou de detenção</b>, quer isoladamente, quer alternativa ou cumulativamente com a pena de multa; <b class='g1'>contravenção</b>, a infração penal a que a lei comina, isoladamente, pena de <b class='g2'>prisão simples ou de multa</b>, ou ambas, alternativa ou cumulativamente.", c:["ap20"] }
+]},
+{ art:"Lei das Contravenções Penais (DL 3.688/41)", nome:"Regras próprias das contravenções", sec:"infracao", itens:[
+  { id:"lcp2", rot:"Art. 2º", t:"A lei brasileira <b class='g3'>só é aplicável</b> à contravenção praticada no <b class='g1'>território nacional</b>.", c:["ap18"] },
+  { id:"lcp3", rot:"Art. 3º", t:"Para a existência da contravenção, <b class='g1'>basta a ação ou omissão voluntária</b>. Deve-se, todavia, ter em conta o dolo ou a culpa, se a lei faz depender, de um ou de outra, qualquer efeito jurídico." },
+  { id:"lcp4", rot:"Art. 4º", t:"<b class='g1'>Não é punível a tentativa</b> de contravenção.", c:["ap17"] },
+  { id:"lcp8", rot:"Art. 8º", t:"No caso de ignorância ou de errada compreensão da lei, <b class='g3'>quando escusáveis</b>, a pena <b class='g1'>pode deixar de ser aplicada</b>." },
+  { id:"lcp10", rot:"Art. 10", t:"A duração da pena de prisão simples não pode, em caso algum, ser superior a <b class='g2'>cinco anos</b>, nem a importância das multas ultrapassar cinquenta contos.", nota:"O valor em \"contos\" está superado; a multa segue as regras do CP.", c:["ap16"] },
+  { id:"lcp17", rot:"Art. 17", t:"A ação penal é <b class='g1'>pública</b>, devendo a autoridade <b class='g1'>proceder de ofício</b>." }
+]},
+{ art:"Lei 9.605/98, art. 3º", nome:"Pessoa jurídica como sujeito ativo", sec:"infracao", itens:[
+  { id:"l9605-3", rot:"Art. 3º", t:"As <b class='g1'>pessoas jurídicas serão responsabilizadas administrativa, civil e penalmente</b> conforme o disposto nesta Lei, nos casos em que a infração seja cometida <b class='g3'>por decisão de seu representante legal ou contratual, ou de seu órgão colegiado, no interesse ou benefício da sua entidade</b>.<br>Parágrafo único. A responsabilidade das pessoas jurídicas <b class='g3'>não exclui</b> a das pessoas físicas, autoras, co-autoras ou partícipes do mesmo fato.", j:["stf-re548181"], c:["ap22"] }
 ]},
 { art:"CF, art. 53", nome:"Imunidades parlamentares", sec:"pessoas", itens:[
   { id:"cf53", rot:"caput e § 2º", t:"Os Deputados e Senadores são <b class='g1'>invioláveis, civil e penalmente, por quaisquer de suas opiniões, palavras e votos</b>.<br>(...) § 2º Desde a expedição do diploma, os membros do Congresso Nacional não poderão ser presos, <b class='g3'>salvo em flagrante de crime inafiançável</b>. Nesse caso, os autos serão remetidos dentro de <b class='g2'>vinte e quatro horas</b> à Casa respectiva, para que, pelo voto da <b class='g2'>maioria de seus membros</b>, resolva sobre a prisão.", c:["ap13"] }
@@ -189,7 +296,16 @@ juris:[
 { id:"stj-s501", trib:"STJ", tipo:"Súmula", num:"501", sec:"tempo", status:"vigente", data:"", titulo:"Vedada a combinação de leis",
   texto:"É cabível a aplicação retroativa da Lei n. 11.343/2006, desde que o resultado da incidência das suas disposições, na íntegra, seja mais favorável ao réu do que o advindo da aplicação da Lei n. 6.368/1976, sendo vedada a combinação de leis.", explica:"Aplica-se uma lei inteira, a mais favorável no conjunto.", lei:["cp2"], fonte:STJS },
 { id:"stf-vereador", trib:"STF", tipo:"Repercussão geral", num:"RE 600.063 (Tema 469)", sec:"pessoas", status:"vigente", data:"", titulo:"Imunidade material do vereador",
-  texto:"Nos limites da circunscrição do Município e havendo pertinência com o exercício do mandato, garante-se a imunidade prevista no art. 29, VIII, da Constituição aos vereadores.", explica:"Vereador não tem imunidade formal.", lei:["cf53"], fonte:STFRG }
+  texto:"Nos limites da circunscrição do Município e havendo pertinência com o exercício do mandato, garante-se a imunidade prevista no art. 29, VIII, da Constituição aos vereadores.", explica:"Vereador não tem imunidade formal.", lei:["cf53"], fonte:STFRG },
+{ id:"stj-s38", trib:"STJ", tipo:"Súmula", num:"38", sec:"infracao", status:"vigente", data:"",
+  titulo:"Contravenção: Justiça Estadual", texto:"Compete à Justiça Estadual Comum, na vigência da Constituição de 1988, o processo por contravenção penal, ainda que praticada em detrimento de bens, serviços ou interesse da União ou de suas entidades.",
+  explica:"Decorre do art. 109, IV, da CF, que exclui as contravenções da competência federal. Ressalva: foro por prerrogativa de função.", lei:["licp1"], fonte:STJS },
+{ id:"stf-re548181", trib:"STF", tipo:"1ª Turma (Info 714)", num:"RE 548.181", sec:"infracao", status:"vigente", data:"06/08/2013",
+  titulo:"Pessoa jurídica sem dupla imputação", texto:"(Síntese) O art. 225, §3º, da CF não condiciona a responsabilização penal da pessoa jurídica por crime ambiental à simultânea persecução penal da pessoa física em tese responsável.",
+  explica:"Texto resumido, não é a ementa literal. Julgado de Turma; o STJ passou a seguir o mesmo entendimento a partir de 2015.", lei:["l9605-3"], fonte:"https://jurisprudencia.stf.jus.br/pages/search?base=acordaos&queryString=RE%20548181" },
+{ id:"stj-s17", trib:"STJ", tipo:"Súmula", num:"17", sec:"conflito", status:"vigente", data:"28/11/1990",
+  titulo:"Falso absorvido pelo estelionato", texto:"Quando o falso se exaure no estelionato, sem mais potencialidade lesiva, é por este absorvido.",
+  explica:"Aplicação do princípio da consunção, mesmo sendo a pena do falso maior que a do estelionato.", lei:[], fonte:STJS }
 ],
 cards:[
 { id:"ap1", tipo:"distincao", sec:"tempo", f:"Abolitio criminis × novatio legis in mellius.", v:"<b>Abolitio</b>: o fato deixa de ser crime — extingue a punibilidade e apaga efeitos penais. <b>In mellius</b>: o fato continua crime, mas a lei nova é mais branda — retroage no que beneficiar.", lei:["cp2"] },
@@ -206,7 +322,25 @@ cards:[
 { id:"ap12", tipo:"ce", sec:"momento-lugar", f:"Certo ou errado: nos prazos penais (art. 10), exclui-se o dia do começo.", v:"<b>Errado.</b> No Direito Penal, o dia do começo <b>inclui-se</b>. A exclusão é regra do prazo processual.", lei:["cp10"] },
 { id:"ap13", tipo:"numero", sec:"pessoas", f:"Deputado federal preso em flagrante de crime inafiançável: prazo para enviar os autos à Casa e quórum para decidir.", v:"<b>24 horas</b>; decisão pelo voto da <b>maioria de seus membros</b> (absoluta).", lei:["cf53"] },
 { id:"ap14", tipo:"juris", sec:"pessoas", f:"Vereador tem imunidade formal (prisão e processo)?", v:"<b>Não.</b> Só imunidade material, na circunscrição do Município e com pertinência ao mandato.", lei:["cf53"], j:["stf-vereador"] },
-{ id:"ap15", tipo:"juris", sec:"tempo", f:"Extorsão mediante sequestro começou antes e terminou depois de lei mais grave. Qual se aplica?", v:"A <b>mais grave</b>, porque vigente antes de cessar a permanência (Súmula 711 do STF).", lei:["cp2"], j:["stf-s711"] }
+{ id:"ap15", tipo:"juris", sec:"tempo", f:"Extorsão mediante sequestro começou antes e terminou depois de lei mais grave. Qual se aplica?", v:"A <b>mais grave</b>, porque vigente antes de cessar a permanência (Súmula 711 do STF).", lei:["cp2"], j:["stf-s711"] },
+{ id:"ap16", tipo:"numero", sec:"infracao", f:"Limite máximo de cumprimento: pena de crime × prisão simples de contravenção.", v:"Crime: <b>40 anos</b> (CP, art. 75). Contravenção: <b>5 anos</b> (LCP, art. 10).", lei:["lcp10"] },
+{ id:"ap17", tipo:"ce", sec:"infracao", f:"Certo ou errado: a tentativa de contravenção é punida com a pena reduzida de 1/3 a 2/3.", v:"<b>Errado.</b> A tentativa de contravenção <b>não é punível</b> (LCP, art. 4º).", lei:["lcp4"] },
+{ id:"ap18", tipo:"caso", sec:"infracao", f:"Brasileiro pratica vias de fato contra outro brasileiro em Buenos Aires e volta ao Brasil. Aplica-se a lei brasileira?", v:"<b>Não.</b> Vias de fato é contravenção, e a lei brasileira só se aplica à contravenção praticada no território nacional (LCP, art. 2º). Não há extraterritorialidade.", lei:["lcp2"] },
+{ id:"ap19", tipo:"juris", sec:"infracao", f:"Contravenção praticada contra bem de uma autarquia federal. Qual Justiça julga?", v:"A <b>Justiça Estadual</b> (Súmula 38 do STJ; CF, art. 109, IV, exclui as contravenções).", lei:["licp1"], j:["stj-s38"] },
+{ id:"ap20", tipo:"lacuna", sec:"infracao", f:"LICP, art. 1º: crime é a infração a que a lei comina ______ ou ______; contravenção, a que comina isoladamente ______ ou multa.", v:"<b>reclusão</b> · <b>detenção</b> · <b>prisão simples</b>", lei:["licp1"] },
+{ id:"ap21", tipo:"distincao", sec:"infracao", f:"Sujeito passivo formal × sujeito passivo material.", v:"<b>Formal</b> (mediato, constante): o <b>Estado</b>, presente em todo crime. <b>Material</b> (imediato, eventual): o <b>titular do bem jurídico</b> lesado — a vítima. O Estado pode ser os dois (peculato).", lei:[] },
+{ id:"ap22", tipo:"caso", sec:"infracao", f:"Empresa despeja resíduos em um rio. A investigação não consegue identificar qual diretor decidiu. O MP pode denunciar só a pessoa jurídica?", v:"<b>Sim.</b> O STF (RE 548.181) afastou a dupla imputação: a responsabilidade penal da PJ por crime ambiental não depende da denúncia simultânea da pessoa física.", lei:["l9605-3"], j:["stf-re548181"] },
+{ id:"ap23", tipo:"ce", sec:"infracao", f:"Certo ou errado: no vilipêndio a cadáver, o morto é o sujeito passivo do crime.", v:"<b>Errado.</b> O cadáver é <b>objeto material</b>. O sujeito passivo é a coletividade e a família do morto (crime vago).", lei:[] },
+{ id:"ap24", tipo:"distincao", sec:"infracao", f:"Crime próprio × crime de mão própria.", v:"<b>Próprio</b>: exige qualidade especial do agente (peculato), mas admite <b>coautoria</b> e participação. <b>Mão própria</b>: exige atuação pessoal (falso testemunho); em regra só admite <b>participação</b>.", lei:[] },
+{ id:"ap25", tipo:"caso", sec:"conflito", f:"Mãe, sob a influência do estado puerperal, mata o filho logo após o parto. Homicídio ou infanticídio?", v:"<b>Infanticídio</b> (art. 123), pelo princípio da <b>especialidade</b>. Não importa que a pena seja menor que a do homicídio.", lei:[] },
+{ id:"ap26", tipo:"juris", sec:"conflito", f:"Agente falsifica um cheque e o entrega para comprar uma TV; o cheque fica com a loja e não pode mais ser usado. Quantos crimes?", v:"Só <b>estelionato</b>. O falso se esgotou na fraude e foi absorvido (Súmula 17 do STJ, consunção).", lei:[], j:["stj-s17"] },
+{ id:"ap27", tipo:"distincao", sec:"conflito", f:"Especialidade × subsidiariedade.", v:"<b>Especialidade</b>: comparação em abstrato; a norma especial prevalece, tenha pena maior ou menor. <b>Subsidiariedade</b>: análise no caso concreto; a norma principal (mais grave) afasta a subsidiária (\"soldado de reserva\").", lei:[] },
+{ id:"ap28", tipo:"caso", sec:"conflito", f:"Traficante importa, guarda e depois vende a mesma porção de cocaína, no mesmo contexto. Quantos crimes de tráfico?", v:"<b>Um só.</b> O art. 33 da Lei 11.343/06 é tipo misto alternativo (princípio da <b>alternatividade</b>).", lei:[] },
+{ id:"ap29", tipo:"ce", sec:"conflito", f:"Certo ou errado: o conflito aparente de normas pressupõe pluralidade de fatos.", v:"<b>Errado.</b> Pressupõe <b>unidade de fato</b> e pluralidade de normas. Pluralidade de fatos leva ao concurso de crimes.", lei:[] },
+{ id:"ap30", tipo:"caso", sec:"conflito", f:"Ladrão furta um celular e, irritado por estar bloqueado, o destrói. Responde também por dano?", v:"<b>Não.</b> A destruição é <b>pós-fato impunível</b>, absorvido pelo furto (consunção): o patrimônio da vítima já tinha sido atingido.", lei:[] },
+{ id:"ap31", tipo:"lacuna", sec:"espaco", f:"CP, art. 9º: a sentença estrangeira pode ser homologada no Brasil para obrigar o condenado à ______ do dano e para sujeitá-lo a ______.", v:"<b>reparação</b> · <b>medida de segurança</b> (a homologação é feita pelo STJ)", lei:["cp9"] },
+{ id:"ap32", tipo:"ce", sec:"momento-lugar", f:"Certo ou errado: calculada a pena em 1 ano, 2 meses e 10 dias e meio, a fração de dia é arredondada para cima.", v:"<b>Errado.</b> As frações de dia são <b>desprezadas</b> (art. 11): 1 ano, 2 meses e 10 dias.", lei:["cp11"] },
+{ id:"ap33", tipo:"caso", sec:"momento-lugar", f:"Uma lei penal especial não diz nada sobre legítima defesa. As regras do CP se aplicam aos crimes dessa lei?", v:"<b>Sim.</b> As regras gerais do CP valem para a legislação especial, se esta não dispuser de modo diverso (art. 12). Exemplo de disposição diversa: a LCP não pune a tentativa.", lei:["cp12"] }
 ],
 questoes:[]
 };
