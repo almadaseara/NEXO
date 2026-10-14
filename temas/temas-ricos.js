@@ -4,7 +4,6 @@
    Este arquivo só substitui as abas Resumo, Lei seca, Jurisprudência, Flashcards e Questões do caderno
    dos módulos que têm tema aprofundado; os demais módulos continuam como antes. */
 (function(){
-  var TEMAS = window.NEXO_TEMAS || {};
   if (typeof modules === 'undefined' || typeof renderTab !== 'function') return;
 
   var css = ''
@@ -61,28 +60,31 @@
   function gx(html){return String(html).replace(/class='g([123])'/g,"class='tr-g$1'")}
 
   // Índices e compatibilidade com o formato antigo dos módulos
-  Object.keys(TEMAS).forEach(function(id){
-    var T = TEMAS[id], m = modules.find(function(x){return x.id===id}); if(!m) return;
-    T.leiIdx = {}; T.lei.forEach(function(a){a.itens.forEach(function(i){T.leiIdx[i.id]={art:a,item:i}})});
-    T.jIdx = {}; T.juris.forEach(function(j){T.jIdx[j.id]=j});
+  function initTema(m){
+    if(!m || m.rich) return;
+    var T = (window.NEXO_TEMAS||{})[m.id]; if(!T) return;
+    T.leiIdx = {}; (T.lei||[]).forEach(function(a){a.itens.forEach(function(i){T.leiIdx[i.id]={art:a,item:i}})});
+    T.jIdx = {}; (T.juris||[]).forEach(function(j){T.jIdx[j.id]=j});
     T.secName = {}; T.secoes.forEach(function(s){T.secName[s.id]=s.curto});
+    T.lei=T.lei||[]; T.juris=T.juris||[]; T.cards=T.cards||[]; T.questoes=T.questoes||[];
     m.rich = T;
-    m.focus = T.meta.artigos + ' — furto, roubo, extorsão, dano, apropriação indébita, estelionato, receptação e disposições gerais. Conferido em ' + T.meta.atualizado + '.';
+    if(T.meta.foco) m.focus = T.meta.foco + ' Conferido em ' + T.meta.atualizado + '.';
     m.summary = T.secoes.map(function(s){return '<b>'+s.titulo+'.</b> '+s.rapido.join(' ')});
     m.highlights = []; T.secoes.forEach(function(s){ m.highlights.push(strip(s.rapido[0])) });
     m.pegadinhas = []; T.secoes.forEach(function(s){ (s.pegadinhas||[]).forEach(function(p){ m.pegadinhas.push(p) }) });
-    m.law_items = []; T.lei.forEach(function(a){a.itens.forEach(function(i){
-      var rot = i.rot.indexOf('Art')===0 ? i.rot : a.art+', '+i.rot;
-      m.law_items.push(['CP, '+rot.replace(/^Arts?\. /,'art. '), strip(i.t).slice(0,160)+'…', '<p>'+gx(i.t)+'</p>']);
-    })});
-    m.juris = T.juris.map(function(j){return [j.trib+' — '+j.tipo+' '+j.num, esc(j.texto)+' <a href="'+j.fonte+'" target="_blank" rel="noopener noreferrer">Conferir na fonte ↗</a>']});
-    if (typeof nexoFlashcards !== 'undefined') {
+    if(T.lei.length){ m.law_items = []; T.lei.forEach(function(a){a.itens.forEach(function(i){
+      var rot = i.rot.indexOf('Art')===0 || i.rot.indexOf('Lei')===0 ? i.rot : a.art+', '+i.rot;
+      m.law_items.push([rot, strip(i.t).slice(0,160)+'…', '<p>'+gx(i.t)+'</p>']);
+    })}); }
+    if(T.juris.length) m.juris = T.juris.map(function(j){return [j.trib+' — '+j.tipo+' '+j.num, esc(j.texto)+' <a href="'+j.fonte+'" target="_blank" rel="noopener noreferrer">Conferir na fonte ↗</a>']});
+    if (typeof nexoFlashcards !== 'undefined' && T.cards.length) {
       for (var k = nexoFlashcards.length - 1; k >= 0; k--) if (nexoFlashcards[k].topic === m.title) nexoFlashcards.splice(k, 1);
-      T.cards.forEach(function(c){ nexoFlashcards.push({ id:'PAT-'+c.id, discipline:m.discipline, topic:m.title, question:strip(c.f), answer:strip(c.v), mnemonic:(T.tipoNome||{})[c.tipo]||c.tipo }) });
+      T.cards.forEach(function(c){ nexoFlashcards.push({ id:'T-'+m.id+'-'+c.id, discipline:m.discipline||'Direito Constitucional', topic:m.title, question:strip(c.f), answer:strip(c.v), mnemonic:tipoNome[c.tipo]||c.tipo }) });
     }
-  });
-
+  }
   var tipoNome={caso:'Caso prático',numero:'Números e prazos',distincao:'Distinção',lacuna:'Complete a lei',ce:'Certo ou errado',juris:'Jurisprudência'};
+  modules.forEach(initTema);
+
   var stNome={vigente:'Vigente',atencao:'Atenção',divergencia:'Divergência',pendente:'Em julgamento'};
   var UI = { sec:'todas', novo:false, grifos:true, js:'todos', deck:null, di:0, flip:false };
   var box = {}; try { box = JSON.parse(localStorage.getItem('nexo-fc-box')||'{}') } catch(e) {}
@@ -99,7 +101,7 @@
   }
 
   function rResumo(T){
-    var h='<div class="tr-notice"><b>Atualizado em '+T.meta.atualizado+'.</b> '+esc(T.meta.aviso)+'</div>';
+    var h=T.meta.aviso?'<div class="tr-notice"><b>Atualizado em '+T.meta.atualizado+'.</b> '+esc(T.meta.aviso)+'</div>':'';
     h+='<div class="tr-bar">'+T.secoes.map(function(s){return '<button class="tr-pill" type="button" data-trjump="tr-s-'+s.id+'">'+s.curto+'</button>'}).join('')+'</div>';
     T.secoes.forEach(function(s){
       h+='<section class="tr-card" id="tr-s-'+s.id+'"><h2>'+s.titulo+'</h2>';
@@ -138,7 +140,7 @@
     if(!list.length)h+='<div class="warn">Nada com esse filtro.</div>';
     list.forEach(function(j){
       h+='<article class="tr-card" id="tr-j-'+j.id+'"><div class="tr-bar"><b>'+j.trib+'</b><span>'+esc(j.tipo)+' · '+esc(j.num)+'</span><span class="tr-badge tr-st-'+j.status+'">'+stNome[j.status]+'</span></div>';
-      h+='<h3 style="margin:0">'+esc(j.titulo)+'</h3><blockquote class="tr-quote">'+esc(j.texto)+'</blockquote>'+(j.explica?'<div>'+esc(j.explica)+'</div>':'');
+      h+='<h3 style="margin:0">'+esc(j.titulo)+'</h3><blockquote class="tr-quote">'+(j.sintese?'<b>Em síntese:</b> ':'')+esc(j.texto)+'</blockquote>'+(j.explica?'<div>'+esc(j.explica)+'</div>':'');
       h+='<div class="muted small">'+(j.data?esc(j.data)+' · ':'')+'<a href="'+j.fonte+'" target="_blank" rel="noopener noreferrer">Conferir na fonte ↗</a></div>';
       h+='<div class="tr-links">'+(j.lei||[]).map(function(l){return chip('lei','tr-l-'+l,esc(leiRot(T,l)))}).join('')+chip('resumo','tr-s-'+j.sec,'Resumo')+'</div></article>';
     });
@@ -181,6 +183,7 @@
   var original = renderTab;
   var lastModule = null, lastTab = null;
   window.renderTab = function(m, tab){
+    initTema(m);
     original(m, tab);
     if(!m || !m.rich || !RICH[tab]) return;
     if(lastModule !== m.id){ UI.sec='todas'; UI.deck=null; UI.custom=false; }

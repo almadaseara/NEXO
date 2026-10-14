@@ -11,6 +11,7 @@ NEXO.meta = {
   atualizado: "14/10/2026",
   alvo: "PCBA 2026 (Instituto AOCP) · PCPE 2026 (Cebraspe)",
   incidencia: "Prioridade muito alta",
+  foco: "CP, arts. 155 a 183-A — furto, roubo, extorsão, dano, apropriação indébita, estelionato, receptação e disposições gerais.",
   aviso: "Leis de 2025 e 2026 mudaram penas, qualificadoras e a ação penal do estelionato. Fatos anteriores seguem a lei da época (irretroatividade da lei mais grave)."
 };
 
