@@ -1158,14 +1158,6 @@ async function uploadNexoMindmap(moduleId){
  await loadNexoMindmaps(moduleId);
  alert(done+' imagem(ns) cadastrada(s).'+(failures.length?' Falhas: '+failures.join('; '):''));
 }
-async function deleteNexoMindmap(id,moduleId){
- if(!canManageMindmaps()||!confirm('Excluir este mapa mental?'))return;
- const item=(mindmapCache.get(moduleId)||[]).find(x=>x.id===id);if(!item)return;
- const {error}=await nexoSupabase.from('mind_map_assets').delete().eq('id',id);
- if(error){alert('Não foi possível excluir o registro.');return;}
- await nexoSupabase.storage.from('nexo-mindmaps').remove([item.storage_path]);
- await loadNexoMindmaps(moduleId);
-}
 function openNexoMindmap(id){
  const item=[...mindmapCache.values()].flat().find(x=>x.id===id);if(!item)return;
  const d=document.createElement('dialog');d.className='nexo-map-dialog';
