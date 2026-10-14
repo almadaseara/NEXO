@@ -777,6 +777,8 @@ for(const m of modules.filter(x=>x.discipline==='Direito Penal')){
   item[2]=html;
  }
 }
+
+for(const [id,title,summary,url] of [["penal_sexual","Súmula 593/STJ","Para estupro de vulnerável com menor de 14 anos, consentimento, experiência sexual ou relacionamento com o agente não afastam o crime.","https://processo.stj.jus.br/SCON/sumstj/toc.jsp?sumula=593"],["penal_adm_func","Súmula 599/STJ","Em regra, o princípio da insignificância é inaplicável aos crimes contra a administração pública, conforme o enunciado; verificar precedentes excepcionais.","https://processo.stj.jus.br/SCON/sumstj/toc.jsp?sumula=599.num."],["penal_patrimonio","Súmula 610/STF","Latrocínio consuma-se com a morte, ainda que a subtração patrimonial não tenha sido concluída.","https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=30&sumula=2562"]]){const m=modules.find(x=>x.id===id);if(m)m.juris.push([title,summary+' <a href="'+url+'" target="_blank" rel="noopener noreferrer">Fonte oficial ↗</a>']);}
 function togglePenalFolder(){toggleFolder('penal-folder');}
 function toggleMedFolder(){toggleFolder('med-folder');}
 function renderNav(){
