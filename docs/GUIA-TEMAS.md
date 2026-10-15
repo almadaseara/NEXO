@@ -29,6 +29,8 @@ Situação em 14/10/2026: **68 módulos completos** — Direito Penal (28), Medi
 
 - `ui/nexo-ui.js` cuida da barra lateral em árvore, da barra retrátil, do tema escuro, do cronômetro, do **Fichário** (flashcards com caixas de revisão) e da página **Desempenho**. Os dados de estudo ficam no navegador (`localStorage`: `nexo_eventos`, `nexo_fichario`, `nexo_cronometro`).
 - **Ao criar um módulo novo, inclua o `id` dele na constante `ARVORE` de `ui/nexo-ui.js`**, no grupo certo (disciplina > parte > grupo). Se não incluir, ele aparece no fim da disciplina (ou no grupo de `parent_subject`, se houver). Rótulos curtos ficam em `ROTULOS`.
+- `ui/nexo-questoes.js` liga as questões do banco aos módulos, refaz a página **Praticar questões** (filtros por disciplina, assunto, banca, ano, cargo, modalidade e origem), põe a **tesoura** (eliminar alternativa) em todas as questões e mostra a faixa "Suas disciplinas" no painel.
+- **Questões do banco nos temas:** o `module_id` gravado pelo robô tem muitos erros, então o site usa `data/banco-classificacao.json` (id da questão → id do módulo), revisado à mão. Só as questões listadas ali, publicadas e validadas, aparecem na aba "Questões oficiais", e só para quem entrou na conta (regra de acesso do Supabase). O site **só lê** o banco: não grava nada nem muda gabarito. Para incluir mais questões, confira o enunciado e acrescente o id no arquivo.
 - `ui/nexo-ui.css` tem os estilos dessas partes. `ui/nexo-escuro.css` é **gerado**: depois de mudar cores no `index.html` ou em `temas/temas-ricos.js`, rode `python3 tools/gerar-tema-escuro.py`.
 
 ---
@@ -155,5 +157,5 @@ Tipos: `caso` (situação concreta), `numero` (prazos, penas, quóruns), `distin
 - Direito Penal — faltam, pelo edital SAEB 02/2026 (Investigador PC-BA): concurso de crimes (arts. 69 a 71); penas (espécies, regimes, restritivas de direitos, sursis, livramento condicional); crimes contra a paz pública (arts. 286 a 288-A); crimes contra o Estado Democrático de Direito (arts. 359-I a 359-T). Para Delegado, também: propriedade imaterial, organização do trabalho, sentimento religioso e respeito aos mortos, família, multa, medidas de segurança, efeitos da condenação.
 - Processo Penal e Legislação Penal Extravagante (prioridade 1 para Investigador PC-BA e Delegado PCPE).
 - Legislação Geral da Bahia (Lei 6.677/94, Lei 14.634/23, Lei 12.209/11, Lei 11.370/09) e Igualdade Racial e de Gênero (todos os cargos da PC-BA).
-- Ligar questões reais do banco aos temas (`questoes`), sem alterar gabaritos.
+- Classificar mais questões do banco em `data/banco-classificacao.json` (hoje 145 das 298 publicadas; as demais são de outras matérias, repetidas ou com texto colado de várias provas).
 - Revisar cada tema quando sair lei nova ou tese nova relevante.

@@ -53,7 +53,7 @@ async def main():
         pg.on('pageerror', lambda e: erros.append(str(e)))
         await pg.goto(f'http://127.0.0.1:{PORTA}/index.html')
         await pg.wait_for_timeout(1500)
-        # páginas da camada de interface (ui/nexo-ui.js): fichário, sessão de fichas e desempenho
+        # páginas da camada de interface (ui/): fichário, fichas, desempenho, filtro de questões, tesoura e painel
         extra = await pg.evaluate("""() => {
           const out = {};
           try { showFlashcards(); out.fichario = document.querySelectorAll('.fx-deck').length; out.sw1 = document.documentElement.scrollWidth;
@@ -61,10 +61,13 @@ async def main():
             out.notas = document.querySelectorAll('.fx-grade').length; document.querySelector('.fx-grade.g2').click();
             nexoDesempenho('30'); out.desempenho = document.querySelector('#view').textContent.length; out.sw2 = document.documentElement.scrollWidth;
             out.arvore = document.querySelectorAll('#nav .nx-leaf').length + document.querySelectorAll('#nav .nx-group').length;
+            nexoPraticar({}); out.praticar = document.querySelectorAll('.practice-question-card').length; out.sw3 = document.documentElement.scrollWidth;
+            const t = document.querySelector('.nx-cut'); t.click(); out.tesoura = t.closest('label.opt').classList.contains('nx-cortada'); t.click();
+            home(); out.painel = document.querySelectorAll('.nx-pd').length;
           } catch (e) { out.erro = String(e); }
           return out;
         }""")
-        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and max(extra.get('sw1', 0), extra.get('sw2', 0)) <= 400
+        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and extra.get('praticar', 0) >= 1 and extra.get('tesoura') is True and extra.get('painel') == 4 and max(extra.get('sw1', 0), extra.get('sw2', 0), extra.get('sw3', 0)) <= 400
         falhas += 0 if ok_extra else 1
         print('✓' if ok_extra else '✗', 'interface'.ljust(30), extra)
         await pg.evaluate("() => { try { localStorage.clear(); } catch (e) {} }")
