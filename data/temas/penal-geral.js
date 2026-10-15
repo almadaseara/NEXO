@@ -364,7 +364,7 @@ secoes:[
   pegadinhas:["A culpabilidade integra o crime para a tripartida; para a bipartida, é pressuposto de aplicação da pena.","Contravenção nunca é punida na forma tentada, ainda que a tentativa ocorra."]},
 
 { id:"conduta", titulo:"Conduta: teorias, ação e omissão", curto:"Conduta",
-  rapido:["Fato típico = <b>conduta</b> + <b>resultado naturalístico</b> + <b>nexo causal</b> + <b>tipicidade</b> (os três do meio só são exigidos por inteiro nos crimes materiais consumados).",
+  rapido:["Fato típico = <b>conduta</b> + <b>resultado naturalístico</b> + <b>nexo causal</b> + <b>tipicidade</b> (<b>resultado</b> e <b>nexo</b> só são exigidos por inteiro nos crimes materiais consumados).",
     "O CP segue a teoria <b>finalista</b> (Welzel): conduta é a ação ou omissão voluntária dirigida a um fim. Por isso <b>dolo e culpa estão no fato típico</b>, não na culpabilidade.",
     "Omissão <b>própria</b>: o tipo descreve um não fazer (omissão de socorro). Omissão <b>imprópria</b>: o <b>garantidor</b> que devia e podia agir responde pelo resultado (art. 13, §2º)."],
   teoria:[

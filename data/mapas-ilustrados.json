@@ -3,39 +3,39 @@
 "mapas": {
 "penal_aplicacao": [
 {
-"arquivo": "assets/mapas/penal_aplicacao-1.webp",
+"arquivo": "assets/mapas/penal_aplicacao-1.webp?v=2",
 "titulo": "Aplicação da Lei Penal e Infração Penal — parte 1 de 3: Lei penal no tempo + Tempo e lugar do crime"
 },
 {
-"arquivo": "assets/mapas/penal_aplicacao-2.webp",
+"arquivo": "assets/mapas/penal_aplicacao-2.webp?v=2",
 "titulo": "Aplicação da Lei Penal e Infração Penal — parte 2 de 3: Lei penal no espaço + Lei penal em relação às pessoas"
 },
 {
-"arquivo": "assets/mapas/penal_aplicacao-3.webp",
+"arquivo": "assets/mapas/penal_aplicacao-3.webp?v=2",
 "titulo": "Aplicação da Lei Penal e Infração Penal — parte 3 de 3: Infração penal: crime, contravenção e sujeitos + Conflito aparente de normas"
 }
 ],
 "penal_fato_tipico": [
 {
-"arquivo": "assets/mapas/penal_fato_tipico-1.webp",
+"arquivo": "assets/mapas/penal_fato_tipico-1.webp?v=2",
 "titulo": "Fato Típico — parte 1 de 4: Conceito de crime; crime e contravenção + Conduta: teorias, ação e omissão"
 },
 {
-"arquivo": "assets/mapas/penal_fato_tipico-2.webp",
+"arquivo": "assets/mapas/penal_fato_tipico-2.webp?v=2",
 "titulo": "Fato Típico — parte 2 de 4: Resultado naturalístico e jurídico + Nexo de causalidade e imputação objetiva"
 },
 {
-"arquivo": "assets/mapas/penal_fato_tipico-3.webp",
+"arquivo": "assets/mapas/penal_fato_tipico-3.webp?v=2",
 "titulo": "Fato Típico — parte 3 de 4: Tipicidade e tipo penal + Classificação dos crimes"
 },
 {
-"arquivo": "assets/mapas/penal_fato_tipico-4.webp",
+"arquivo": "assets/mapas/penal_fato_tipico-4.webp?v=2",
 "titulo": "Fato Típico — parte 4 de 4: Iter criminis, consumação e tentativa + Desistência voluntária e arrependimentos"
 }
 ],
 "penal_dolo_culpa": [
 {
-"arquivo": "assets/mapas/penal_dolo_culpa-1.webp",
+"arquivo": "assets/mapas/penal_dolo_culpa-1.webp?v=2",
 "titulo": "Dolo e Culpa — parte 1 de 2: Dolo: teorias e espécies + Culpa: elementos, modalidades e espécies"
 },
 {
