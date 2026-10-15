@@ -682,6 +682,7 @@ function graficoBarras(id, bins, passo, series, fmtVal, tip){
 function desenharGrafico(id){
   var box = document.getElementById(id), cfg = GRAFICOS[id]; if(!box || !cfg) return;
   if(cfg.q) return desenharQuestoes(box, cfg);
+  if(cfg.rosca){ if(box.offsetParent !== null) desenharRosca(box, cfg); return; }
   var bins = cfg.bins, passo = cfg.passo, series = cfg.series;
   var W = Math.max(280, Math.round(box.clientWidth || 600)), H = W < 420 ? 190 : 230, L = 34, R = 6, Tp = 10, B = 26, pw = W - L - R, ph = H - Tp - B;
   var tot = bins.map(function(b){ return series.reduce(function(s, se){ return s + se.val(b); }, 0); });
@@ -877,6 +878,88 @@ function desenharQuestoes(box, cfg){
   fim(g + eixoX(bins, passo, L, bw, H, pw) + hits());
   ligarDica(box, '.hit', function(el){ return dicaQ(bins[+el.dataset.i], nomeBin(bins[+el.dataset.i], passo)); });
 }
+
+/* ---------- rosca 3D: quantidade de questões por disciplina ---------- */
+var vistaDisc = LS.get('nexo_dz_disc_vista', 'tabela');
+window.nexoVistaDisc = function(v){
+  vistaDisc = v; LS.set('nexo_dz_disc_vista', v);
+  $$('[data-dzv]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.dzv === v)); });
+  var t = document.getElementById('dz-vt'), r = document.getElementById('dz-vr');
+  if(t) t.hidden = v !== 'tabela';
+  var sub = document.getElementById('dz-dsub'); if(sub) sub.textContent = v === 'rosca' ? 'Quantas questões você fez em cada disciplina.' : 'Clique na disciplina para ver os assuntos e no assunto para abrir o módulo.';
+  if(r){ r.hidden = v !== 'rosca'; if(v === 'rosca') desenharGrafico('dz-d'); }
+};
+document.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('[data-dzv]'); if(b) window.nexoVistaDisc(b.dataset.dzv); });
+function escurecer(hex, f){
+  var m = /^#?([0-9a-f]{6})$/i.exec(hex); if(!m) return hex;
+  var n = parseInt(m[1], 16), r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return 'rgb(' + Math.round(r * f) + ',' + Math.round(g * f) + ',' + Math.round(b * f) + ')';
+}
+function corDisc(nome){
+  var escuro = temaAtual() === 'dark';
+  var mapa = { 'Direito Constitucional':['#2a78d6', '#3987e5'], 'Direito Administrativo':['#eb6834', '#d95926'], 'Medicina Legal':['#6250d6', '#9085e9'], 'Direito Penal':['#1baf7a', '#199e70'] };
+  var c = mapa[nome]; return c ? c[escuro ? 1 : 0] : (escuro ? '#8e8e96' : '#8a9694');
+}
+function desenharRosca(box, cfg){
+  var dados = cfg.dados.filter(function(d){ return d.n > 0; }), tot = dados.reduce(function(s, d){ return s + d.n; }, 0);
+  if(!tot){ box.innerHTML = ''; return; }
+  var W = Math.max(300, Math.round(box.clientWidth || 600)), estreito = W < 520;
+  var R = Math.min(estreito ? W * .36 : W * .24, 150), k = .5, r = R * .52, maxH = R * .42, minH = R * .14;
+  var H = Math.round(R * k * 2 + maxH + (estreito ? 60 : 100)), cx = W / 2, cy = 40 + maxH + R * k;
+  var maxN = Math.max.apply(null, dados.map(function(d){ return d.n; }));
+  var P = function(a, rad, y0){ return [cx + rad * Math.cos(a), y0 + rad * k * Math.sin(a)]; };
+  var f2 = function(p){ return p[0].toFixed(1) + ' ' + p[1].toFixed(1); };
+  var arc = function(rad, a1, a2, y0, dir){ return 'A' + rad + ' ' + (rad * k) + ' 0 ' + (Math.abs(a2 - a1) > Math.PI ? 1 : 0) + ' ' + dir + ' ' + f2(P(a2, rad, y0)); };
+  function cortes(b1, b2, lo, hi){ /* partes de [b1,b2] dentro de [lo,hi] (+2π) */
+    var res = [];
+    for(var t = -1; t <= 2; t++){ var a = Math.max(b1, lo + t * 2 * Math.PI), b = Math.min(b2, hi + t * 2 * Math.PI); if(b > a) res.push([a, b]); }
+    return res;
+  }
+  var a = -Math.PI / 2, segs = [];
+  dados.forEach(function(d){
+    var ang = d.n / tot * Math.PI * 2, gap = dados.length > 1 ? .025 : 0;
+    var h = minH + (maxH - minH) * Math.sqrt(d.n / maxN);
+    segs.push({ d:d, b1:a + gap, b2:a + ang - gap, meio:a + ang / 2, h:h, cor:corDisc(d.nome) });
+    a += ang;
+  });
+  var ordem = segs.slice().sort(function(x, y){ return Math.sin(x.meio) - Math.sin(y.meio); });
+  var g = '<ellipse cx="' + cx + '" cy="' + (cy + R * k * .25) + '" rx="' + (R * 1.02) + '" ry="' + (R * k * .95) + '" class="pz-sh"/>';
+  ordem.forEach(function(s, idx){
+    var yT = cy - s.h, base = /^#/.test(s.cor) ? s.cor : '#8a9694', lado = escurecer(base, .72), dentro = escurecer(base, .55), corte = escurecer(base, .62);
+    var partes = '';
+    /* parede interna (aparece no fundo do furo) */
+    cortes(s.b1, s.b2, Math.PI, 2 * Math.PI).forEach(function(c){
+      partes += '<path d="M' + f2(P(c[0], r, yT)) + ' ' + arc(r, c[0], c[1], yT, 1) + ' L' + f2(P(c[1], r, cy)) + ' ' + arc(r, c[1], c[0], cy, 0) + ' Z" style="fill:' + dentro + '"/>';
+    });
+    /* faces do corte */
+    [s.b1, s.b2].forEach(function(bb){
+      partes += '<path d="M' + f2(P(bb, r, yT)) + ' L' + f2(P(bb, R, yT)) + ' L' + f2(P(bb, R, cy)) + ' L' + f2(P(bb, r, cy)) + ' Z" style="fill:' + corte + '"/>';
+    });
+    /* parede externa (frente) */
+    cortes(s.b1, s.b2, 0, Math.PI).forEach(function(c){
+      partes += '<path d="M' + f2(P(c[0], R, yT)) + ' ' + arc(R, c[0], c[1], yT, 1) + ' L' + f2(P(c[1], R, cy)) + ' ' + arc(R, c[1], c[0], cy, 0) + ' Z" style="fill:' + lado + '"/>';
+    });
+    /* topo */
+    var pct = Math.round(s.d.n / tot * 100), ti = segs.indexOf(s);
+    partes += '<path class="rs" data-k="' + ti + '" data-tx="' + P(s.meio, (R + r) / 2, yT)[0].toFixed(1) + '" data-ty="' + P(s.meio, (R + r) / 2, yT)[1].toFixed(1) + '" d="M' + f2(P(s.b1, r, yT)) + ' L' + f2(P(s.b1, R, yT)) + ' ' + arc(R, s.b1, s.b2, yT, 1) + ' L' + f2(P(s.b2, r, yT)) + ' ' + arc(r, s.b2, s.b1, yT, 0) + ' Z" style="fill:' + base + '"/>';
+    g += '<g>' + partes + '</g>';
+  });
+  /* rótulos com linha de chamada, como num infográfico */
+  var rot = '';
+  if(!estreito) segs.forEach(function(s){
+    var yT = cy - s.h, p0 = P(s.meio, R, yT), dirx = Math.cos(s.meio) >= 0 ? 1 : -1;
+    var yL = Math.sin(s.meio) < 0 ? Math.min(p0[1] - 14, cy - maxH - 6) : Math.max(p0[1] + 14, cy + R * k + 22);
+    if(estreito) yL = Math.sin(s.meio) < 0 ? p0[1] - 18 : Math.max(p0[1] + 22, cy + R * k + 26);
+    var xL = estreito ? p0[0] + dirx * 14 : cx + dirx * (R + 40), xT = estreito ? xL : xL + dirx * 6;
+    var pct = Math.round(s.d.n / tot * 100), anc = dirx > 0 ? 'start' : 'end';
+    rot += '<path class="rs-lead" d="M' + f2(p0) + ' L' + xL.toFixed(1) + ' ' + yL.toFixed(1) + (estreito ? '' : ' L' + (xL + dirx * 4).toFixed(1) + ' ' + yL.toFixed(1)) + '" style="stroke:' + s.cor + '"/><circle cx="' + p0[0].toFixed(1) + '" cy="' + p0[1].toFixed(1) + '" r="3" style="fill:' + s.cor + '"/>';
+    rot += '<text class="pz-l" x="' + xT.toFixed(1) + '" y="' + (yL - 4).toFixed(1) + '" text-anchor="' + anc + '"><tspan class="rs-n">' + s.d.n + '</tspan><tspan dx="5">' + pct + '%</tspan><tspan x="' + xT.toFixed(1) + '" dy="15">' + escH(s.d.nome) + '</tspan></text>';
+  });
+  var centro = '<text x="' + (estreito ? 8 : 4) + '" y="18" class="pz-l"><tspan class="rs-n">' + tot + '</tspan><tspan dx="6">questões no período</tspan></text>';
+  box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" width="' + W + '" height="' + H + '" role="img" aria-label="Rosca 3D com a quantidade de questões por disciplina">' + g + centro + rot + '</svg><div class="dz-tip" role="status"></div>'
+    + (estreito ? '<div class="rs-leg">' + segs.map(function(sg){ return '<span><i style="background:' + sg.cor + '"></i>' + escH(sg.d.nome) + ' <b>' + sg.d.n + '</b> <small>' + Math.round(sg.d.n / tot * 100) + '%</small></span>'; }).join('') + '</div>' : '');
+  ligarDica(box, '.rs', function(el){ var s = segs[+el.dataset.k]; return '<b>' + escH(s.d.nome) + '</b><br>' + s.d.n + ' questões (' + Math.round(s.d.n / tot * 100) + '% do total)<br>' + s.d.ok + ' acertos · ' + (s.d.n - s.d.ok) + ' erros'; });
+}
 function desenharGraficos(){ Object.keys(GRAFICOS).forEach(desenharGrafico); }
 var redimT = null;
 window.addEventListener('resize', function(){ if(cur() !== 'desempenho') return; clearTimeout(redimT); redimT = setTimeout(desenharGraficos, 120); });
@@ -953,6 +1036,14 @@ window.nexoDesempenho = function(p){
     var t2 = a2.ok + a2.err, p2 = Math.round(a2.ok / t2 * 100);
     linhas += '<tr class="disc"><td>Banco de questões (outros assuntos)</td><td class="n">' + t2 + '</td><td class="n dz-hide-sm">' + a2.ok + '</td><td class="n dz-hide-sm">' + a2.err + '</td><td class="n"><span class="dz-pct">' + p2 + '%</span></td><td><div class="dz-bar"><i style="width:' + p2 + '%;background:var(--nx-good)"></i><i style="width:' + (100 - p2) + '%;background:var(--nx-bad)"></i></div></td></tr>';
   }
+  var porDisc = listaDisciplinas().map(function(nome){
+    var ids = folhas(['', arvoreDe(nome)]), r = { nome:nome, n:0, ok:0 };
+    ids.forEach(function(id){ if(porMod[id]){ r.n += porMod[id].ok + porMod[id].err; r.ok += porMod[id].ok; } });
+    return r;
+  });
+  var outros = Object.keys(porMod).filter(function(id){ return !moduloPorId(id); }).reduce(function(r, id){ r.n += porMod[id].ok + porMod[id].err; r.ok += porMod[id].ok; return r; }, { nome:'Outros assuntos', n:0, ok:0 });
+  if(outros.n) porDisc.push(outros);
+  GRAFICOS['dz-d'] = { rosca:true, dados:porDisc };
   var tabela = linhas ? '<div class="dz-tablewrap"><table class="dz-table"><thead><tr><th>Disciplina e assunto</th><th class="n">Total</th><th class="n dz-hide-sm">Acertos</th><th class="n dz-hide-sm">Erros</th><th class="n">Acerto</th><th><span class="sr-only">Proporção</span></th></tr></thead><tbody>' + linhas + '</tbody></table></div>'
     : '<div class="nx-empty">A tabela aparece quando houver questões respondidas no período.</div>';
 
@@ -974,7 +1065,10 @@ window.nexoDesempenho = function(p){
     + stats
     + '<div class="dz-grid"><section class="nx-panel"><div class="dz-phead"><div><h2>Questões por ' + (cx.passo === 1 ? 'dia' : cx.passo === 7 ? 'semana' : 'mês') + '</h2><p class="nx-sub">Acertos e erros no período. Troque o modelo do gráfico ao lado.</p></div></div>' + gQ + '</section>'
     + '<section class="nx-panel"><h2>Tempo de estudo</h2><p class="nx-sub">Minutos medidos pelo cronômetro.</p>' + gT + '</section></div>'
-    + '<div class="dz-grid"><section class="nx-panel"><h2>Por disciplina e assunto</h2><p class="nx-sub">Clique na disciplina para ver os assuntos e no assunto para abrir o módulo.</p>' + tabela + '</section>'
+    + '<div class="dz-grid"><section class="nx-panel"><div class="dz-phead2"><div><h2>Por disciplina e assunto</h2><p class="nx-sub" id="dz-dsub">' + (vistaDisc === 'rosca' ? 'Quantas questões você fez em cada disciplina.' : 'Clique na disciplina para ver os assuntos e no assunto para abrir o módulo.') + '</p></div>'
+    + (q.length ? '<div class="nx-seg" role="group" aria-label="Forma de ver"><button type="button" data-dzv="tabela" aria-pressed="' + (vistaDisc === 'tabela') + '">Tabela</button><button type="button" data-dzv="rosca" aria-pressed="' + (vistaDisc === 'rosca') + '">Rosca 3D</button></div>' : '') + '</div>'
+    + '<div id="dz-vt"' + (vistaDisc === 'tabela' || !q.length ? '' : ' hidden') + '>' + tabela + '</div>'
+    + (q.length ? '<div id="dz-vr"' + (vistaDisc === 'rosca' ? '' : ' hidden') + '><div class="dz-chart" id="dz-d"></div><p class="dz-cap">Altura e tamanho de cada fatia mostram quantas questões você respondeu na disciplina. Passe o mouse para ver acertos e erros.</p></div>' : '') + '</section>'
     + '<div style="display:grid;gap:16px;align-content:start"><section class="nx-panel"><h2>Onde focar</h2><p class="nx-sub">Assuntos com menor taxa de acerto no período.</p>' + foco + '</section>'
     + '<section class="nx-panel"><h2>Fichário</h2><p class="nx-sub">Fichas em cada caixa de revisão.</p>' + fichMini + '</section></div></div>'
     + '<p class="nx-sub" style="font-size:12px;color:var(--nx-muted);margin-top:4px">Os dados ficam salvos neste navegador. Em outro aparelho, o histórico começa do zero.</p>'
