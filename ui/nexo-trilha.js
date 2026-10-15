@@ -295,6 +295,7 @@ var aba = 'semana', aberta = null, editando = false, vendoSemana = null;
 
 /* ---------- telas ---------- */
 var ICON = {
+  lista:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9"/></svg>',
   cal:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4m8-4v4"/><path d="m8.5 15 2 2 4-4"/></svg>',
   ok:'<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg>',
   esq:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>',
@@ -420,21 +421,45 @@ function telaPlano(s){
   }).join('') + '</ol>';
 }
 
+var soFalta = false;
 function telaEdital(s){
-  var prog = progresso(s), dc = discsDoCargo(s.plan.cargo), lista = dc.gerais.concat(dc.especificos).filter(function(x){ return s.plan.discs.indexOf(x) >= 0; });
-  return '<p class="nx-sub nt-legenda">Ordem de estudo de cada disciplina do edital. Assuntos com livro digital mostram os capítulos; marque "já estudei" no que você domina para o plano pular.</p>'
-    + lista.map(function(id){
-      var d = ED.disciplinas[id], us = unidades(id), feitos = us.filter(function(u){ return (prog[ch(u.id)] || {}).e; }).length;
-      var porTop = {}; us.forEach(function(u){ (porTop[u.top] = porTop[u.top] || []).push(u); });
-      return '<details class="nt-ed" style="--c:' + d.cor + '"><summary><span class="nt-sig">' + d.sigla + '</span><b>' + escH(d.nome) + '</b><span class="nt-edn">' + feitos + '/' + us.length + '</span><span class="nt-bar sm"><i style="width:' + Math.round(feitos / Math.max(1, us.length) * 100) + '%"></i></span></summary><ol>'
-        + topicos(id).map(function(t){
-          var uu = porTop[t.id] || [], todos = uu.length && uu.every(function(u){ return (prog[ch(u.id)] || {}).e; }), algum = uu.some(function(u){ return (prog[ch(u.id)] || {}).e; });
-          var ja = s.plan.ja && s.plan.ja[t.id];
-          var caps = uu.filter(function(u){ return u.mod; }).map(function(u){ var x = prog[u.id] || {}; return '<button type="button" class="nt-capl' + (x.e ? ' feito' : '') + '" data-nt="modulo" data-mod="' + u.mod + '">' + (x.e ? '✓ ' : '') + 'Cap. ' + (numCap(u.mod) || '') + ' · ' + escH(u.nome) + '</button>'; }).join('');
-          return '<li class="' + (todos ? 'feito' : '') + '"><span class="nt-pdot p' + t.prio + '" title="' + PRIO_NOME[t.prio] + (t.estimada ? ' (estimativa)' : '') + '"></span><span class="nt-edt">' + escH(t.nome) + (caps ? '<span class="nt-caps">' + caps + '</span>' : '<small class="nt-semmat">sem material no NEXO</small>') + '</span>'
-            + '<label class="nt-ja"><input type="checkbox" data-nt="ja" data-top="' + t.id + '"' + (todos || ja ? ' checked' : '') + (algum && !ja ? ' disabled' : '') + '> já estudei</label></li>';
-        }).join('') + '</ol></details>';
-    }).join('');
+  var semPlano = !s.plan, plan = s.plan || { cargo:Object.keys(ED.cargos)[0], discs:null, ja:{} };
+  var prog = progresso(semPlano ? { weeks:{}, plan:plan, progress:s.progress } : s), dc = discsDoCargo(plan.cargo);
+  var lista = dc.gerais.concat(dc.especificos).filter(function(x){ return !plan.discs || plan.discs.indexOf(x) >= 0; });
+  var feitoTop = function(t, porTop){ var uu = porTop[t.id] || []; return !!((plan.ja && plan.ja[t.id]) || (uu.length && uu.every(function(u){ return (prog[ch(u.id)] || {}).e; }))); };
+  /* resumo geral */
+  var tot = 0, ok = 0, semMat = 0, grupo = { gerais:[0, 0], especificos:[0, 0] }, dados = {};
+  lista.forEach(function(id){
+    var us = unidades(id), porTop = {}; us.forEach(function(u){ (porTop[u.top] = porTop[u.top] || []).push(u); });
+    var ts = topicos(id), f = ts.filter(function(t){ return feitoTop(t, porTop); }).length;
+    dados[id] = { porTop:porTop, ts:ts, f:f };
+    tot += ts.length; ok += f; semMat += ts.filter(function(t){ return !(porTop[t.id] || []).some(function(u){ return u.mod; }); }).length;
+    var g = dc.gerais.indexOf(id) >= 0 ? 'gerais' : 'especificos'; grupo[g][0] += f; grupo[g][1] += ts.length;
+  });
+  var pc = function(a, b){ return b ? Math.round(a / b * 100) : 0; };
+  var cargoNome = (ED.cargos[plan.cargo] || {}).nome || '';
+  var h = '<section class="nt-edres" aria-label="Resumo do edital"><div class="nt-edres-main"><b>' + pc(ok, tot) + '%</b><span>do edital concluído<br><small>' + ok + ' de ' + tot + ' assuntos · ' + escH(cargoNome) + '</small></span></div>'
+    + '<div class="nt-edres-g"><span>Conhecimentos gerais <b>' + pc(grupo.gerais[0], grupo.gerais[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.gerais[0], grupo.gerais[1]) + '%"></i></span>'
+    + '<span>Conhecimentos específicos <b>' + pc(grupo.especificos[0], grupo.especificos[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.especificos[0], grupo.especificos[1]) + '%"></i></span></div></section>';
+  if(semPlano) h += '<p class="nt-aviso">Você ainda não montou seu plano. O progresso abaixo vem dos capítulos que você já leu no livro digital. Para marcar assuntos como estudados e receber a trilha semana a semana, <button type="button" class="nx-btn primary small" data-nt="editar">monte seu plano</button>.</p>';
+  h += '<div class="nt-edtools"><p class="nx-sub nt-legenda">Assuntos na ordem de estudo. Cada capítulo mostra quanto você já leu; "Questões" abre as questões daquele capítulo.' + (semMat ? ' ' + semMat + ' assuntos ainda não têm material no NEXO.' : '') + '</p>'
+    + '<label class="nt-ja nt-sofalta"><input type="checkbox" data-nt="sofalta"' + (soFalta ? ' checked' : '') + '> Mostrar só o que falta</label></div>';
+  return h + lista.map(function(id){
+    var d = ED.disciplinas[id], x = dados[id], porTop = x.porTop;
+    var itens = x.ts.filter(function(t){ return !soFalta || !feitoTop(t, porTop); });
+    return '<details class="nt-ed" style="--c:' + d.cor + '"' + (soFalta && itens.length ? ' open' : '') + '><summary><span class="nt-sig">' + d.sigla + '</span><b>' + escH(d.nome) + '</b><span class="nt-edn">' + x.f + '/' + x.ts.length + ' · ' + pc(x.f, x.ts.length) + '%</span><span class="nt-bar sm"><i style="width:' + pc(x.f, x.ts.length) + '%"></i></span></summary><ol>'
+      + (itens.length ? itens.map(function(t){
+        var uu = porTop[t.id] || [], todos = feitoTop(t, porTop), algum = uu.some(function(u){ return (prog[ch(u.id)] || {}).e; });
+        var ja = plan.ja && plan.ja[t.id];
+        var caps = uu.filter(function(u){ return u.mod; }).map(function(u){
+          var xx = prog[ch(u.id)] || {}, pl = LV() ? LV().pctModulo(u.mod) : 0, q = abaQuestoes(u.mod);
+          return '<span class="nt-capw"><button type="button" class="nt-capl' + (xx.e ? ' feito' : '') + '" data-nt="modulo" data-mod="' + u.mod + '">' + (xx.e ? '✓ ' : '') + 'Cap. ' + (numCap(u.mod) || '') + ' · ' + escH(u.nome) + (pl && !xx.e ? ' <small>' + pl + '% lido</small>' : '') + '</button>'
+            + (q ? '<button type="button" class="nt-capq" data-nt="questoes" data-mod="' + u.mod + '">Questões</button>' : '') + '</span>';
+        }).join('');
+        return '<li class="' + (todos ? 'feito' : '') + '"><span class="nt-pdot p' + t.prio + '" title="' + PRIO_NOME[t.prio] + (t.estimada ? ' (estimativa)' : '') + '"></span><span class="nt-edt">' + escH(t.nome) + (caps ? '<span class="nt-caps">' + caps + '</span>' : '<small class="nt-semmat">sem material no NEXO</small>') + '</span>'
+          + (semPlano ? (todos ? '<span class="nt-ja">✓ lido</span>' : '<span></span>') : '<label class="nt-ja"><input type="checkbox" data-nt="ja" data-top="' + t.id + '"' + (todos || ja ? ' checked' : '') + (algum && !ja ? ' disabled' : '') + '> já estudei</label>') + '</li>';
+      }).join('') : '<li class="nt-edvazio">Tudo concluído nesta disciplina.</li>') + '</ol></details>';
+  }).join('');
 }
 
 window.nexoCronograma = function(a){
@@ -448,8 +473,9 @@ window.nexoCronograma = function(a){
   var topo = '<div class="nx-head"><div><h1>Minha trilha</h1><p>' + (s.plan ? (ED.cargos[s.plan.cargo] || {}).nome + ' · ' : '') + ED.nome + ' · ' + ED.banca + '</p></div>'
     + '<div class="nt-prova"><b>' + (faltam > 0 ? faltam : 0) + '</b><span>dias para a prova<br>' + dma(deIso(ED.prova)) + '</span></div></div>';
   var conta = E().conectado() ? '' : '<p class="nt-aviso">Seu plano está salvo neste navegador. Entre na sua conta para guardar o plano, o progresso dos livros e as marcações e usar em outros aparelhos.</p>';
+  if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<h2 class="nt-edtit">Edital verticalizado</h2>' + telaEdital(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
-  var abas = '<div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital por assunto']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>'
+  var abas = '<div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>'
     + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>';
   v.innerHTML = '<div class="nx-page nt">' + topo + conta + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEdital(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
 };
@@ -482,6 +508,7 @@ document.addEventListener('change', function(e){
     }
     totalForm(); return;
   }
+  if(el.dataset && el.dataset.nt === 'sofalta'){ soFalta = !!el.checked; window.nexoCronograma('edital'); return; }
   if(el.dataset && el.dataset.nt === 'ja'){
     var s2 = st(); s2.plan.ja = s2.plan.ja || {};
     if(el.checked) s2.plan.ja[el.dataset.top] = Date.now(); else delete s2.plan.ja[el.dataset.top];
@@ -520,6 +547,7 @@ document.addEventListener('click', function(e){
   }
   if(a === 'abrirCard'){ aberta = aberta === b.dataset.id ? null : b.dataset.id; window.nexoCronograma('semana'); return; }
   if(a === 'modulo'){ window.nexoTarefaAtiva = null; if(LV()) LV().abrir(b.dataset.mod, 'resumo'); return; }
+  if(a === 'questoes'){ if(window.nexoPraticar) window.nexoPraticar({ mod:b.dataset.mod, status:'unsolved' }); return; }
   var r = b.dataset.id && tarefaPorId(s, b.dataset.id); if(!r) return;
   if(a === 'feito'){ alternarFeito(s, r.t); if(curAtual() === 'cronograma') window.nexoCronograma('semana'); else marcarBanner(); return; }
   if(a === 'estudar'){ window.nexoTarefaAtiva = { id:r.t.id, mod:r.t.mod }; if(LV()) LV().abrir(r.t.mod, b.dataset.tab || 'resumo'); return; }
@@ -560,7 +588,9 @@ if(typeof rn === 'function'){
     try{
       var nav = document.getElementById('nav'); if(!nav || nav.querySelector('.nt-nav')) return r;
       var ref = nav.querySelector('.primary-nav');
-      var html = '<button type="button" class="primary-nav nx-nav-extra nt-nav' + (curAtual() === 'cronograma' ? ' active' : '') + '" onclick="nexoCronograma()">' + ICON.cal + ' Cronograma e trilha</button>';
+      var naEd = curAtual() === 'cronograma' && aba === 'edital';
+      var html = '<button type="button" class="primary-nav nx-nav-extra nt-nav' + (curAtual() === 'cronograma' && !naEd ? ' active' : '') + '" onclick="nexoCronograma(\'semana\')">' + ICON.cal + ' Cronograma e trilha</button>'
+        + '<button type="button" class="primary-nav nx-nav-extra nt-nav-ed' + (naEd ? ' active' : '') + '" onclick="nexoCronograma(\'edital\')">' + ICON.lista + ' Edital verticalizado</button>';
       if(ref) ref.insertAdjacentHTML('afterend', html); else nav.insertAdjacentHTML('afterbegin', html);
       if(curAtual() === 'cronograma') Array.prototype.forEach.call(nav.querySelectorAll('.primary-nav.active:not(.nt-nav)'), function(x){ x.classList.remove('active'); });
     }catch(e){}
