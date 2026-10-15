@@ -454,8 +454,31 @@ function fichas(){
       }
     });
   });
+  minhasFichas().forEach(function(c){
+    var m = moduloPorId(c.m);
+    lista.push({ id:'u:' + c.id, m:c.m, d:m ? disciplinaDe(m) : 'Minhas fichas', f:escH(c.f).replace(/\n/g, '<br>'), v:escH(c.v).replace(/\n/g, '<br>'), tipo:'Minha ficha', sec:'', u:true });
+  });
   cacheFichas = lista; return lista;
 }
+/* ---------- fichas criadas pelo aluno (guardadas no plano de estudos: sincronizam com a conta) ---------- */
+function planoEstudo(){ try{ return window.nexoEstudo ? window.nexoEstudo.plano() : null; }catch(e){ return null; } }
+function minhasFichas(){ var s = planoEstudo(); return (s && s.progress && s.progress.minhas) || LS.get('nexo_minhas_fichas', []); }
+function gravarMinhas(lista){
+  var s = planoEstudo();
+  if(s && window.nexoEstudo){ s.progress = s.progress || {}; s.progress.minhas = lista; window.nexoEstudo.salvarPlano(s); }
+  else LS.set('nexo_minhas_fichas', lista);
+  cacheFichas = null;
+}
+window.nexoFichas = {
+  listar:minhasFichas,
+  criar:function(m, f, v){
+    f = String(f || '').trim().slice(0, 600); v = String(v || '').trim().slice(0, 1200); if(!f || !v) return null;
+    var c = { id:Date.now().toString(36) + Math.random().toString(36).slice(2, 6), m:m || '', f:f, v:v, criado:Date.now() };
+    var l = minhasFichas().slice(); l.push(c); gravarMinhas(l); return c;
+  },
+  remover:function(id){ gravarMinhas(minhasFichas().filter(function(c){ return c.id !== id; })); var st = estado(); delete st['u:' + id]; LS.set(FK, st); }
+};
+document.addEventListener('nexo:estudo', function(e){ if(e.detail === 'sincronizado'){ cacheFichas = null; if(cur() === 'flashcards' && !S) window.showFlashcards(); } });
 function estado(){ return LS.get(FK, {}); }
 function caixa(st, id){ var r = st[id]; return r ? r.b : 0; }
 function fimDeHoje(){ return inicioDoDia(Date.now()) + DIA; }
@@ -518,13 +541,39 @@ window.showFlashcards = function(){
     + '<div class="fx-actions"><button type="button" class="nx-btn primary" data-fx-scope="all">' + (r.hoje ? 'Começar a revisão do dia' : 'Estudar fichas novas') + '</button>'
     + '<label class="nx-sub" style="font-size:12px;color:var(--nx-muted)">Novas por sessão <select id="fx-novas">' + [10, 20, 30, 50].map(function(n){ return '<option' + (n === novasPorSessao ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label></div></section>'
     + '<section class="fx-box" aria-label="Caixas de revisão"><h2>Caixas de revisão</h2><p class="nx-sub">Onde cada ficha está agora. Quanto mais à direita, mais tempo ela fica guardada até a próxima revisão.</p><div class="fx-slots">' + slots + '</div></section></div>'
+    + secaoMinhas()
     + '<div class="fx-decks">' + decks + '</div></div>';
   var sel = document.getElementById('fx-novas');
   if(sel) sel.addEventListener('change', function(){ LS.set(FX_NOVAS, +sel.value); });
   view().scrollTop = 0;
 };
+function secaoMinhas(){
+  var l = minhasFichas(), u = {}; fichas().forEach(function(c){ if(c.u) u[c.id] = c; });
+  var st = estado(), lim = fimDeHoje(), hoje = 0; Object.keys(u).forEach(function(id){ var x = st[id]; if(!x || x.due <= lim) hoje++; });
+  var opts = '<option value="">Sem assunto</option>' + listaDisciplinas().map(function(nome){ return '<optgroup label="' + escH(nome) + '">' + folhas(['', arvoreDe(nome)]).map(function(id){ return '<option value="' + id + '">' + escH(rotulo(id)) + '</option>'; }).join('') + '</optgroup>'; }).join('');
+  return '<section class="nx-panel fx-minhas" aria-label="Minhas fichas"><div class="fx-minhas-h"><div><h2>Minhas fichas</h2><p class="nx-sub">Crie fichas com suas palavras. Também dá para criar a partir de um trecho do livro: selecione o texto e toque em <b>+ Ficha</b>.</p></div>'
+    + (l.length ? '<button type="button" class="nx-btn primary small" data-fx-scope="u">Revisar minhas fichas (' + hoje + ')</button>' : '') + '</div>'
+    + '<details class="fx-nova"' + (l.length ? '' : ' open') + '><summary>Criar ficha</summary><form id="fx-nova-form" class="fx-nova-form">'
+    + '<label>Frente (pergunta)<textarea name="f" rows="2" maxlength="600" required placeholder="Ex.: Qual a redução de pena no erro de proibição evitável?"></textarea></label>'
+    + '<label>Verso (resposta)<textarea name="v" rows="3" maxlength="1200" required placeholder="Ex.: De 1/6 a 1/3 (CP, art. 21)."></textarea></label>'
+    + '<label>Assunto<select name="m">' + opts + '</select></label>'
+    + '<div><button type="submit" class="nx-btn primary small">Salvar ficha</button> <span class="fx-nova-msg" role="status" aria-live="polite"></span></div></form></details>'
+    + (l.length ? '<ul class="fx-lista">' + l.slice().reverse().map(function(c){ return '<li><div><b>' + escH(c.f) + '</b><span>' + escH(c.v) + '</span>' + (c.m ? '<small>' + escH(rotulo(c.m)) + '</small>' : '') + '</div><button type="button" class="nx-btn small ghost" data-fx-apagar="' + c.id + '" aria-label="Apagar esta ficha">Apagar</button></li>'; }).join('') + '</ul>' : '')
+    + '</section>';
+}
+document.addEventListener('submit', function(e){
+  if(e.target.id !== 'fx-nova-form') return; e.preventDefault();
+  var f = e.target, c = window.nexoFichas.criar(f.m.value, f.f.value, f.v.value);
+  if(c){ window.showFlashcards(); var msg = document.querySelector('.fx-nova-msg'); if(msg) msg.textContent = 'Ficha salva. Ela entra na revisão de hoje.'; var d = document.querySelector('.fx-nova'); if(d) d.open = true; }
+});
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('[data-fx-apagar]'); if(!b) return;
+  if(b.dataset.confirma){ window.nexoFichas.remover(b.dataset.fxApagar); window.showFlashcards(); return; }
+  b.dataset.confirma = '1'; b.textContent = 'Confirmar'; b.classList.add('perigo');
+});
 function idsDoEscopo(esc){
   if(esc === 'all') return { rot:'Todas as disciplinas', ids:null };
+  if(esc === 'u') return { rot:'Minhas fichas', ids:null, u:true };
   var tipo = esc.slice(0, 1), val = esc.slice(2);
   if(tipo === 'm') return { rot:rotulo(val), sub:disciplinaDe(moduloPorId(val)), ids:conjunto([val]) };
   if(tipo === 'd') return { rot:val, ids:conjunto(folhas(['', arvoreDe(val)])) };
@@ -537,7 +586,7 @@ function idsDoEscopo(esc){
 }
 function iniciarSessao(esc, livre){
   var e = idsDoEscopo(esc), st = estado(), agora = Date.now(), lim = fimDeHoje();
-  var doEscopo = fichas().filter(function(c){ return !e.ids || e.ids[c.m]; });
+  var doEscopo = fichas().filter(function(c){ return (!e.ids || e.ids[c.m]) && (!e.u || c.u); });
   var vencidas = doEscopo.filter(function(c){ var x = st[c.id]; return x && x.due <= lim; }).sort(function(a, b){ return st[a.id].due - st[b.id].due; });
   var novas = doEscopo.filter(function(c){ return !st[c.id]; }).slice(0, LS.get(FX_NOVAS, 20));
   var fila = vencidas.concat(novas);

@@ -219,7 +219,13 @@ function abrirPop(rect, html){
 function popSelecao(sel){
   pendente = sel;
   abrirPop(sel.rect, '<div class="nx-pop-row">' + CORES.map(function(c){ return '<button type="button" class="nx-cor nx-c-' + c[0] + '" data-mkp="hl" data-c="' + c[0] + '" aria-label="Marcar de ' + c[1].toLowerCase() + '" title="' + c[1] + '"></button>'; }).join('')
-    + '<span class="nx-tsep v"></span><button type="button" class="nx-pbtn" data-mkp="ul" aria-label="Sublinhar" title="Sublinhar">' + IC.ul + '</button><button type="button" class="nx-pbtn" data-mkp="st" aria-label="Tachar" title="Tachar">' + IC.st + '</button><button type="button" class="nx-pbtn" data-mkp="nota" aria-label="Anotar" title="Anotar">' + IC.nota + '</button></div>');
+    + '<span class="nx-tsep v"></span><button type="button" class="nx-pbtn" data-mkp="ul" aria-label="Sublinhar" title="Sublinhar">' + IC.ul + '</button><button type="button" class="nx-pbtn" data-mkp="st" aria-label="Tachar" title="Tachar">' + IC.st + '</button><button type="button" class="nx-pbtn" data-mkp="nota" aria-label="Anotar" title="Anotar">' + IC.nota + '</button>'
+    + (window.nexoFichas ? '<button type="button" class="nx-pbtn nx-pbtn-txt" data-mkp="ficha" title="Criar ficha de revisão com este trecho">+ Ficha</button>' : '') + '</div>');
+}
+function popFicha(rect, trecho){
+  abrirPop(rect, '<form class="nx-pop-nota nx-pop-ficha"><label>Frente (pergunta)<textarea name="f" rows="2" maxlength="600" placeholder="Escreva a pergunta que este trecho responde"></textarea></label>'
+    + '<label>Verso (resposta)<textarea name="v" rows="3" maxlength="1200">' + escH(trecho || '') + '</textarea></label>'
+    + '<div class="nx-pop-row end"><button type="button" class="nx-btn small ghost" data-mkp="fechar">Cancelar</button><button type="submit" class="nx-btn small primary">Salvar ficha</button></div></form>');
 }
 function popNota(rect, texto, alvo){
   abrirPop(rect, '<form class="nx-pop-nota" data-alvo="' + (alvo || '') + '"><label>Sua nota<textarea rows="3" maxlength="600">' + escH(texto || '') + '</textarea></label><div class="nx-pop-row end"><button type="button" class="nx-btn small ghost" data-mkp="fechar">Cancelar</button><button type="submit" class="nx-btn small primary">Salvar nota</button></div></form>');
@@ -285,6 +291,7 @@ document.addEventListener('click', function(e){
     if(ap === 'limparsim'){ var d0 = dados(); d0.marks = []; guardar(d0, 'Apagar marcações'); fecharPop(); return; }
     if(!pendente){ fecharPop(); return; }
     if(ap === 'nota'){ popNota(pendente.rect, '', ''); return; }
+    if(ap === 'ficha'){ popFicha(pendente.rect, pendente.q); return; }
     criar(pendente, ap, p.dataset.c || cor); pendente = null; fecharPop(); return;
   }
   /* janelinha da marcação */
@@ -317,6 +324,14 @@ var escondendo = null;
 document.addEventListener('submit', function(e){
   var f = e.target; if(!f.classList || !f.classList.contains('nx-pop-nota')) return;
   e.preventDefault();
+  if(f.classList.contains('nx-pop-ficha')){
+    var fr = f.f.value.trim(), vs = f.v.value.trim();
+    if(!fr){ f.f.focus(); f.f.setAttribute('aria-invalid', 'true'); return; }
+    var ok = window.nexoFichas && window.nexoFichas.criar(pag.mod, fr, vs);
+    pendente = null;
+    if(ok){ abrirPop(f.getBoundingClientRect(), '<p class="nx-pop-txt">Ficha salva. Ela aparece no Fichário, em "Minhas fichas".</p>'); setTimeout(fecharPop, 2200); } else fecharPop();
+    return;
+  }
   var txt = f.querySelector('textarea').value.trim(), alvo = f.dataset.alvo;
   if(alvo){ var d = dados(), m = (d.marks || []).find(function(x){ return x.id === alvo; }); if(m){ if(txt) m.n = txt; else delete m.n; guardar(d, 'Nota'); } }
   else if(pendente){ criar(pendente, 'hl', cor, txt); pendente = null; }

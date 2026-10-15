@@ -703,3 +703,22 @@ html[data-theme="dark"]{--rd-key:#7fd6bb;--rd-ref:#8dbcf3;--rd-ref-bg:#1d2a3b;--
 @media (max-width:560px){.nt-edres{grid-template-columns:1fr}.nt-ed li{grid-template-columns:auto 1fr;}.nt-ed li .nt-ja{grid-column:2}}
 .nt-edtools .nt-legenda{font-size:13.5px;line-height:1.5;color:var(--nx-ink-2)}
 .nt-edres-g .nt-bar{width:100%;max-width:none;min-width:120px}
+
+/* ---------- Minhas fichas ---------- */
+.fx-minhas{margin:14px 0}
+.fx-minhas-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:10px}
+.fx-minhas h2{margin:0 0 4px;font-size:17px}
+.fx-nova{margin-top:10px}
+.fx-nova summary{cursor:pointer;font-weight:700;color:var(--nx-accent);font-size:14px}
+.fx-nova-form{display:grid;gap:10px;margin-top:10px}
+.fx-nova-form label{display:grid;gap:4px;font-size:13px;color:var(--nx-ink-2)}
+.fx-nova-form textarea,.fx-nova-form select{font:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid var(--nx-line);background:var(--nx-surface);color:var(--nx-ink);width:100%;box-sizing:border-box}
+.fx-nova-msg{font-size:13px;color:var(--nx-good,#15803d)}
+.fx-lista{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px}
+.fx-lista li{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;border:1px solid var(--nx-line);border-radius:10px;padding:10px 12px;background:var(--nx-surface)}
+.fx-lista li div{display:grid;gap:3px;font-size:13.5px;min-width:0}
+.fx-lista li span{color:var(--nx-ink-2);white-space:pre-line}
+.fx-lista li small{color:var(--nx-muted);font-size:11.5px}
+.nx-btn.perigo{color:var(--nx-bad)!important;border-color:var(--nx-bad)!important}
+.nx-pbtn-txt{width:auto!important;padding:0 8px!important;font-size:12px;font-weight:700;white-space:nowrap}
+.nx-pop-ficha label{display:grid;gap:4px;margin-bottom:6px}
