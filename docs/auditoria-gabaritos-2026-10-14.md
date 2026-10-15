@@ -29,3 +29,9 @@ Nada foi alterado no banco nem nos gabaritos. Esta auditoria só verifica e regi
 1. Localizar o gabarito oficial das 76 questões publicadas sem link (robô).
 2. Conferir os 24 itens do "Bloco Consolidado de Fixação".
 3. Se a usuária encontrar uma questão sem gabarito no site, registrar o módulo e o número aqui para rastrear a origem.
+
+## Atualização 15/10/2026 — alternativas sem texto
+
+- Varredura das 194 questões publicadas (múltipla escolha) no `question_bank`: **1** questão tem alternativas só com as letras ("A", "B", "C", "D", "E") e o enunciado é, na verdade, o texto de uma das alternativas. Id `92418631-ff0e-41e4-8f51-1518fa779a21` (FGV 2022, nº 29, Medicina Legal — exame complementar de lesões corporais).
+- Questões locais dos módulos: nenhuma nesse formato.
+- Correção no site (sem alterar o banco): `ui/nexo-questoes.js` deixa de exibir questões cujas alternativas sejam só letras. Para recuperar a questão, é preciso reimportar enunciado e alternativas da prova original no banco (tarefa do robô/curadoria).

@@ -43,6 +43,8 @@ function montarQuestao(r){
   }else{
     ops = ops.map(function(o){ return escH(limpa(o)); });
     if(ops.length < 2 || ops.length > 5 || 'ABCDE'.indexOf(resp) < 0 || 'ABCDE'.indexOf(resp) >= ops.length) return null;
+    /* alternativas que vieram só com a letra ("A", "B"...) = questão importada quebrada: não exibe */
+    if(ops.every(function(o){ return semTags(o).replace(/[\s.)]/g, '').length <= 1; })) return null;
   }
   var texto = limpa(r.statement); if(texto.length < 15) return null;
   /* "instituição" às vezes veio com lixo da página de origem ("Organizadora: X Verificação de segurança ...") */
