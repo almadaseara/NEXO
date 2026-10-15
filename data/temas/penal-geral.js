@@ -641,44 +641,123 @@ questoes:[]
 
 /* ====================== ILICITUDE E CULPABILIDADE ====================== */
 T.penal_ilicitude = {
-meta:{ tema:"Ilicitude e Culpabilidade", atualizado:AT, foco:"Excludentes de ilicitude (estado de necessidade, legítima defesa, estrito cumprimento do dever legal, exercício regular de direito), excesso, imputabilidade, potencial consciência da ilicitude e exigibilidade de conduta diversa." },
+meta:{ tema:"Ilicitude e Culpabilidade", atualizado:"15/10/2026", foco:"Excludentes de ilicitude (estado de necessidade, legítima defesa, estrito cumprimento do dever legal, exercício regular de direito), excesso, imputabilidade, potencial consciência da ilicitude e exigibilidade de conduta diversa." },
 secoes:[
-{ id:"ilicitude", titulo:"Excludentes de ilicitude", curto:"Ilicitude",
-  rapido:["Não há crime quando o fato é praticado em estado de necessidade, legítima defesa, estrito cumprimento de dever legal ou exercício regular de direito (art. 23).",
-    "Em todas, o agente responde pelo <b>excesso</b> doloso ou culposo (parágrafo único).","Consentimento do ofendido: excludente <b>supralegal</b> quando o bem é disponível e o ofendido é capaz.",
-    "Pacote Anticrime: legítima defesa do agente de segurança pública que repele agressão a refém (art. 25, parágrafo único)."],
+{ id:"ilicitude", titulo:"Ilicitude: conceito e causas de exclusão", curto:"Ilicitude",
+  rapido:["Ilicitude (antijuridicidade) é a contrariedade do fato típico ao ordenamento jurídico como um todo.",
+    "O fato típico é <b>indício</b> de ilicitude (<i>ratio cognoscendi</i>): presume-se ilícito até que se demonstre uma excludente.",
+    "Excludentes <b>legais</b> (art. 23): estado de necessidade, legítima defesa, estrito cumprimento de dever legal e exercício regular de direito. <b>Supralegal</b>: consentimento do ofendido.",
+    "Toda excludente exige o <b>elemento subjetivo</b>: o agente precisa saber que age amparado por ela."],
   teoria:[
-    { h:"Estado de necessidade (art. 24)", p:[
-      "Requisitos: <b>perigo atual</b>; não provocado <b>voluntariamente</b> pelo agente; inevitável de outro modo; para salvar direito próprio ou alheio; sacrifício do outro bem razoável. Não pode alegar quem tem o <b>dever legal de enfrentar o perigo</b> (bombeiro, policial).",
-      "O CP adota a teoria <b>unitária</b>: só há estado de necessidade justificante (bem sacrificado de valor igual ou menor). Se o bem sacrificado vale mais, o juiz pode reduzir a pena de 1/3 a 2/3 (§2º). O CPM adota a teoria diferenciadora.",
-      "Ex.: furto famélico; náufragos que disputam a tábua."]},
-    { h:"Legítima defesa (art. 25)", p:[
-      "Requisitos: <b>injusta agressão</b> (humana), <b>atual ou iminente</b>, a direito próprio ou de terceiro, repelida com <b>uso moderado dos meios necessários</b>. Não há legítima defesa contra agressão futura ou passada (vingança).",
-      "Cabe legítima defesa contra inimputável (agressão injusta não exige culpabilidade), mas não contra quem age em legítima defesa real (não cabe legítima defesa recíproca). Cabe legítima defesa real contra legítima defesa putativa.",
-      "O STF (ADPF 779, 2023) declarou inconstitucional a tese da \"legítima defesa da honra\" em feminicídio e agressões contra mulheres, inclusive no júri.",
-      "Ofendículos (cerca elétrica, cacos de vidro): prevalece que são exercício regular de direito quando instalados e legítima defesa preordenada quando atuam."]},
-    { h:"Estrito cumprimento do dever legal e exercício regular de direito", p:[
-      "<b>Dever legal</b>: imposto por lei em sentido amplo (ex.: policial que prende em flagrante com uso da força necessária; oficial de justiça que arromba porta por ordem judicial). Não abrange matar para cumprir dever, salvo em legítima defesa.",
-      "<b>Exercício regular de direito</b>: lutas esportivas dentro das regras, intervenções médicas consentidas, correção moderada (hoje limitada pela Lei Menino Bernardo), prisão em flagrante por qualquer do povo."]}
-  ],
-  quadro:{ titulo:"Estado de necessidade × legítima defesa", head:["","Estado de necessidade","Legítima defesa"], rows:[["Situação","Perigo atual (de qualquer origem)","Injusta agressão humana, atual ou iminente"],["Conduta","Ataque a bem jurídico de terceiro inocente","Reação contra o agressor"],["Perigo iminente","Não basta (exige atual)","Basta agressão iminente"],["Dever legal de enfrentar","Afasta a excludente","Não se aplica"]]},
-  pegadinhas:["Estado de necessidade exige perigo <b>atual</b>; legítima defesa admite agressão <b>iminente</b>.","Não cabe legítima defesa contra ataque de animal (salvo se açulado por alguém) — é estado de necessidade."]},
-{ id:"culpabilidade", titulo:"Culpabilidade", curto:"Culpabilidade",
-  rapido:["Elementos (teoria normativa pura): <b>imputabilidade</b>, <b>potencial consciência da ilicitude</b> e <b>exigibilidade de conduta diversa</b>.",
-    "Inimputáveis: doença mental ou desenvolvimento incompleto que retire inteiramente a capacidade (art. 26) → absolvição imprópria com medida de segurança; menores de 18 anos (art. 27).",
-    "Emoção e paixão não excluem a imputabilidade; embriaguez voluntária ou culposa também não (<i>actio libera in causa</i>).","Só a embriaguez completa por caso fortuito ou força maior isenta de pena."],
+   { h:"O que a ilicitude acrescenta ao fato típico", p:[
+    "Depois de confirmar que o fato é típico, pergunta-se se ele é permitido pelo Direito. Quase sempre a resposta é não, e por isso a tipicidade funciona como um <b>indício</b> da ilicitude: o fato típico se presume ilícito, e quem alega uma excludente precisa demonstrá-la — ou, pelo menos, gerar dúvida razoável no juiz.",
+    "Quando há uma causa de justificação, o fato continua típico, mas deixa de ser ilícito: não há crime (art. 23, caput). A consequência prática é grande, porque a conduta justificada não gera sequer responsabilidade civil, em regra, e quem colabora com ela também é alcançado — a excludente se <b>comunica</b> aos demais participantes.",
+    "A doutrina exige, em todas as excludentes, o <b>conhecimento da situação justificante</b>: quem atira no desafeto por vingança e, por acaso, impede que ele mate alguém não age em legítima defesa, porque não sabia da agressão que estava repelindo."]}],
+  pegadinhas:["Excludente de ilicitude não torna o fato atípico: o fato é típico, mas lícito.","Sem conhecimento da situação justificante, não há excludente."]},
+
+{ id:"necessidade", titulo:"Estado de necessidade", curto:"Necessidade",
+  rapido:["Art. 24: salvar de <b>perigo atual</b>, que o agente <b>não provocou por sua vontade</b> nem podia evitar de outro modo, direito próprio ou alheio, cujo sacrifício não era razoável exigir.",
+    "O CP adota a teoria <b>unitária</b>: o estado de necessidade é sempre justificante. Se o bem sacrificado valia mais, há crime, com redução de <b>1/3 a 2/3</b> (§2º).",
+    "Não pode alegar quem tinha o <b>dever legal</b> de enfrentar o perigo (§1º)."],
   teoria:[
-    { h:"Imputabilidade", p:[
-      "O CP adota o critério <b>biopsicológico</b> para a doença mental (art. 26): exige a causa biológica e a incapacidade de entender ou de se determinar. Para menores de 18, critério <b>biológico</b> puro.",
-      "Semi-imputável (parágrafo único do art. 26): pena reduzida de 1/3 a 2/3, ou substituída por medida de segurança se precisar de tratamento (sistema vicariante).",
-      "Embriaguez: <b>voluntária ou culposa</b> não exclui (art. 28, II); <b>preordenada</b> é agravante (art. 61, II, l); <b>patológica</b> pode equivaler a doença mental (art. 26); <b>acidental completa</b> (caso fortuito ou força maior) isenta; incompleta reduz de 1/3 a 2/3."]},
-    { h:"Inexigibilidade de conduta diversa", p:[
-      "<b>Coação moral irresistível</b>: só o coator responde (art. 22). Se a coação é física, não há sequer conduta. Coação resistível: atenuante (art. 65, III, c).",
-      "<b>Obediência hierárquica</b>: ordem não manifestamente ilegal de superior, em relação de direito público — só o superior responde. Ordem manifestamente ilegal: ambos respondem (subordinado com atenuante).",
-      "A inexigibilidade de conduta diversa pode ser aplicada como causa <b>supralegal</b> em casos excepcionais."]}
-  ],
+   { h:"Requisitos", p:[
+    "Quanto à <b>situação de perigo</b>: ele deve ser <b>atual</b> (o perigo apenas futuro não autoriza); não pode ter sido criado <b>voluntariamente</b> pelo agente — quem provoca o naufrágio não pode matar outro náufrago para ficar com o último colete; deve ameaçar bem jurídico do agente ou de terceiro; e o agente não pode ter o dever legal de enfrentá-lo.",
+    "Quanto à <b>conduta</b>: deve ser <b>inevitável</b> (não havia outro modo de salvar o bem) e <b>proporcional</b> (sacrificar bem de valor igual ou menor que o protegido). Na teoria unitária, adotada pelo CP, sacrificar uma vida para salvar outra é justificado: no avião que cai com um só paraquedas, quem o toma à força não comete crime.",
+    "Quando o bem sacrificado vale mais que o protegido, o fato é ilícito, mas o juiz pode reduzir a pena de um a dois terços (§2º). O Código Penal Militar, ao contrário, adota a teoria <b>diferenciadora</b>, que admite um estado de necessidade exculpante."]},
+   { h:"Espécies e pontos de prova", p:[
+    "<b>Agressivo</b>: o agente sacrifica bem de terceiro que nada tem a ver com o perigo. <b>Defensivo</b>: sacrifica bem de quem causou o perigo. <b>Real</b>: a situação de perigo existe. <b>Putativo</b>: existe apenas na cabeça do agente — se o erro era inevitável, ele fica isento de pena; se evitável, responde por crime culposo, se houver (art. 20, §1º).",
+    "É possível estado de necessidade <b>recíproco</b> (dois náufragos disputando a mesma tábua), desde que nenhum tenha provocado o perigo. A excludente se comunica aos coautores. E, se o agente erra na execução e atinge outra pessoa, continua amparado, porque se consideram as condições da vítima visada (art. 73).",
+    "A simples alegação de dificuldade financeira não caracteriza estado de necessidade; em casos excepcionais, a miséria extrema pode afastar a culpabilidade por inexigibilidade de conduta diversa. O furto famélico — subtrair alimento para matar a fome imediata — é o exemplo clássico de estado de necessidade."]}],
+  quadro:{ titulo:"Estado de necessidade × legítima defesa", head:["","Estado de necessidade","Legítima defesa"], rows:[["Situação","Perigo atual (de qualquer origem)","Injusta agressão humana, atual ou iminente"],["Conduta","Ataque a bem jurídico, muitas vezes de terceiro inocente","Reação contra o agressor"],["Perigo/agressão iminente","Não basta (exige atual)","Basta agressão iminente"],["Possibilidade de fuga","Se podia fugir, deve fugir (inevitabilidade)","Não precisa fugir (commodus discessus)"],["Dever legal de enfrentar","Afasta a excludente","Não se aplica"]]},
+  pegadinhas:["Estado de necessidade exige perigo atual; legítima defesa admite agressão iminente.","Ataque de animal gera estado de necessidade, salvo se alguém açulou o animal — aí é legítima defesa contra o dono."]},
+
+{ id:"legitima", titulo:"Legítima defesa", curto:"Legítima defesa",
+  rapido:["Art. 25: repelir <b>injusta agressão, atual ou iminente</b>, a direito próprio ou alheio, usando <b>moderadamente os meios necessários</b>.",
+    "O agredido não é obrigado a fugir, mesmo que pudesse.",
+    "Não cabe legítima defesa real contra legítima defesa real; cabe contra a putativa e contra o excesso (legítima defesa <b>sucessiva</b>).",
+    "Pacote Anticrime: também está em legítima defesa o agente de segurança pública que repele agressão a <b>vítima mantida refém</b> (parágrafo único)."],
+  teoria:[
+   { h:"Requisitos", p:[
+    "<b>Agressão injusta</b>: contrária ao Direito. O preso que agride o carcereiro ao ser colocado na cela não se defende de agressão injusta, porque o carcereiro age licitamente. A agressão de um inimputável é injusta (é fato típico e ilícito, só não é culpável), por isso cabe legítima defesa contra o doente mental ou o menor.",
+    "<b>Atual ou iminente</b>: em curso ou prestes a começar. Ninguém precisa esperar o primeiro tiro: se a ex-companheira que prometeu matá-lo saca a arma, a agressão é iminente. Agressão passada é vingança; agressão futura e incerta não autoriza reação.",
+    "<b>Direito próprio ou alheio</b>: qualquer bem jurídico pode ser defendido, inclusive a honra. Na defesa de bem <b>disponível</b> de terceiro, exige-se a concordância dele; se o bem é <b>indisponível</b> (vida), pode-se defendê-lo mesmo contra a vontade do titular.",
+    "<b>Meios necessários usados com moderação</b>: o meio deve ser suficiente para repelir a agressão e usado na medida necessária. Cinco tiros no peito de quem dá tapas, sem condições de causar lesão grave, não é legítima defesa. Diferentemente do estado de necessidade, o agredido não precisa fugir (a chamada saída cômoda, <i>commodus discessus</i>)."]},
+   { h:"Espécies e situações de prova", p:[
+    "<b>Agressiva</b> (a reação configura um fato típico, como lesão corporal) × <b>defensiva</b> (o agente só se protege); <b>própria</b> × <b>de terceiro</b>; <b>real</b> × <b>putativa</b> (a agressão existe só na imaginação do agente, com o mesmo tratamento do estado de necessidade putativo).",
+    "<b>Legítima defesa sucessiva</b>: o agredido que se excede passa a ser agressor injusto, e o agressor inicial pode se defender do excesso. <b>Legítima defesa recíproca</b> (real contra real) é impossível, porque quem se defende legitimamente pratica agressão justa. Cabe, porém, legítima defesa real contra quem age em legítima defesa putativa ou amparado só por excludente de culpabilidade.",
+    "Se, ao se defender, o agente erra o alvo e atinge um inocente (o policial que, em troca de tiros, atinge uma moradora), continua em legítima defesa, porque o fato é analisado como se tivesse atingido a vítima visada (art. 73). A legítima defesa não se presume: quem a alega deve demonstrá-la.",
+    "Ataque de <b>animal</b> gera estado de necessidade; se alguém atiça o cão contra a vítima, o animal é instrumento e há legítima defesa contra o dono. <b>Ofendículos</b> (cerca elétrica, cacos de vidro no muro) são vistos como exercício regular de direito quando instalados e como legítima defesa preordenada quando atuam; o dono responde pelo excesso se o aparato for desproporcional."]},
+   { h:"Legítima defesa da honra", p:[
+    "O STF, na ADPF 779 (2023), declarou inconstitucional a tese da \"legítima defesa da honra\" em feminicídios e agressões contra mulheres, em qualquer fase da investigação ou do processo, inclusive no júri. A razão é que matar alguém por causa de traição não preenche nenhum requisito da legítima defesa: não há agressão injusta atual e a reação seria desproporcional.",
+    "A decisão não diz que a honra não pode ser defendida. Quem arranca o megafone de alguém que, numa reunião de condomínio, o chama de ladrão diante de dezenas de pessoas usa meio moderado contra agressão atual à honra e pode estar em legítima defesa."]}],
+  pegadinhas:["Cabe legítima defesa contra inimputável.","Legítima defesa recíproca (real × real) não existe; sucessiva existe.","O §único do art. 25 (refém) exige todos os requisitos do caput."]},
+
+{ id:"outras", titulo:"Dever legal, exercício de direito e consentimento", curto:"Outras excludentes",
+  rapido:["<b>Estrito cumprimento do dever legal</b>: o agente cumpre obrigação imposta por lei (oficial de justiça que arromba a porta por ordem judicial). Particulares também podem invocá-lo.",
+    "<b>Exercício regular de direito</b>: quem exerce um direito previsto no ordenamento não comete crime (castigo moderado dos pais, intervenção médica consentida, esporte dentro das regras).",
+    "<b>Consentimento do ofendido</b>: excludente supralegal — bem <b>disponível</b>, ofendido <b>capaz</b> e consentimento <b>prévio ou simultâneo</b>."],
+  teoria:[
+   { h:"Estrito cumprimento do dever legal", p:[
+    "Age amparado quem pratica fato típico para cumprir dever imposto por lei: o policial que usa a força necessária para prender alguém em flagrante, o oficial de justiça que arromba a porta para cumprir mandado. O excesso, como sempre, é punido — socos no preso já algemado não são dever de ninguém.",
+    "Atenção: o policial que fere ou mata alguém numa troca de tiros não age em estrito cumprimento do dever, mas em <b>legítima defesa</b>, porque nenhuma lei impõe o dever de matar. A excludente se comunica a quem colabora com o agente e não é exclusiva de servidores: o advogado que se recusa a depor sobre fato que soube no exercício da profissão cumpre o dever legal de sigilo."]},
+   { h:"Exercício regular de direito", p:[
+    "O ordenamento precisa ser coerente: o que é direito de alguém não pode ser crime. A mãe que deixa o filho de castigo no quarto não comete cárcere privado, porque exerce o poder familiar — desde que de forma moderada; a lei que proíbe castigos físicos e tratamentos cruéis (Lei Menino Bernardo) limita esse direito. Prevalece que o direito deve ter base no ordenamento; costumes locais não bastam.",
+    "Também são exemplos as lesões nas lutas esportivas praticadas dentro das regras, as intervenções médicas consentidas e a prisão em flagrante feita por qualquer pessoa do povo."]},
+   { h:"Consentimento do ofendido", p:[
+    "Não está no CP, mas a doutrina o aceita como causa <b>supralegal</b> de exclusão da ilicitude. Requisitos: consentimento <b>válido</b> (pessoa capaz, sem coação ou fraude), bem jurídico <b>próprio e disponível</b> (não vale para a vida) e consentimento dado <b>antes ou durante</b> a conduta — o perdão posterior não exclui a ilicitude.",
+    "Quando a discordância da vítima é elemento do tipo (\"contra a vontade de quem de direito\", na violação de domicílio), o consentimento afasta a própria tipicidade, e não a ilicitude."]}],
+  pegadinhas:["Policial que mata em troca de tiros: legítima defesa, não estrito cumprimento do dever.","Consentimento posterior ao fato não exclui a ilicitude.","Vida é bem indisponível: o consentimento não exclui o homicídio."]},
+
+{ id:"excesso", titulo:"Excesso punível", curto:"Excesso",
+  rapido:["Art. 23, parágrafo único: em qualquer excludente, o agente responde pelo <b>excesso doloso ou culposo</b>.",
+    "Excesso <b>intensivo</b>: meio desproporcional (metralhadora contra tapa). <b>Extensivo</b>: a reação continua depois que a situação justificante acabou.",
+    "Excesso <b>exculpante</b> (medo, pânico) pode afastar a culpabilidade; o <b>acidental</b> é penalmente irrelevante."],
+  teoria:[
+   { h:"Espécies de excesso", p:[
+    "Há excesso quando o agente usa irregularmente uma excludente: porque o meio foi desproporcional desde o início (<b>intensivo</b>) ou porque a reação seguiu depois de cessada a agressão ou o perigo (<b>extensivo</b>) — quem desarma e imobiliza o agressor e continua a espancá-lo.",
+    "O <b>doloso</b> (o agente quis ou aceitou exceder-se) e o <b>culposo</b> (exceder-se por descuido) são puníveis. O <b>acidental</b> ou fortuito, imprevisível e inevitável, não gera responsabilidade. O <b>inconsciente</b> decorre de erro — o agente não percebe que a necessidade acabou: se o erro era inevitável, fica isento; se evitável, responde por culpa.",
+    "O excesso <b>exculpante</b> nasce de uma perturbação emocional intensa, como medo ou pânico: a senhora idosa que, aterrorizada, continua golpeando o assaltante já desacordado pode ter a culpabilidade afastada por inexigibilidade de conduta diversa. Não está expresso no CP comum, mas é aceito pela doutrina."]}],
+  pegadinhas:["O parágrafo único do art. 23 vale para todas as excludentes, não só para a legítima defesa.","Excesso exculpante afasta a culpabilidade, não a ilicitude."]},
+
+{ id:"culpabilidade", titulo:"Culpabilidade: conceito e teorias", curto:"Culpabilidade",
+  rapido:["Culpabilidade é o juízo de <b>reprovação</b> sobre o agente que praticou um fato típico e ilícito.",
+    "Elementos, pela teoria <b>normativa pura</b> (finalista): <b>imputabilidade</b>, <b>potencial consciência da ilicitude</b> e <b>exigibilidade de conduta diversa</b>.",
+    "O CP adota a teoria <b>limitada</b> da culpabilidade: o erro sobre a situação de fato de uma excludente é tratado como erro de tipo (art. 20, §1º)."],
+  teoria:[
+   { h:"Da teoria psicológica à normativa pura", p:[
+    "Na ilicitude se analisa o fato; na culpabilidade, o <b>agente</b>: se ele, nas circunstâncias, podia ser censurado por ter agido como agiu. Por isso parte da doutrina a vê como pressuposto da pena, e não como elemento do crime.",
+    "A teoria <b>psicológica</b>, dos causalistas, via a culpabilidade como o vínculo psíquico do agente com o fato: imputabilidade mais dolo ou culpa. A teoria <b>psicológico-normativa</b> acrescentou a exigibilidade de conduta diversa e manteve o dolo, carregado da consciência da ilicitude, na culpabilidade.",
+    "A teoria <b>normativa pura</b>, ligada ao finalismo, levou dolo e culpa para a conduta e deixou na culpabilidade apenas elementos de valoração: imputabilidade, potencial consciência da ilicitude e exigibilidade de conduta diversa. Ela se divide em <b>extremada</b> (todo erro sobre causa de justificação é erro de proibição) e <b>limitada</b> (o erro sobre os fatos que a fundamentam é tratado como erro de tipo permissivo; o erro sobre a existência ou os limites dela é erro de proibição indireto). A Exposição de Motivos do CP indica a teoria limitada."]}],
+  pegadinhas:["Teoria extremada × limitada: só divergem sobre as descriminantes putativas.","Para o finalismo, dolo e culpa não estão na culpabilidade."]},
+
+{ id:"imputabilidade", titulo:"Imputabilidade e embriaguez", curto:"Imputabilidade",
+  rapido:["Imputável é quem, ao tempo da conduta, consegue <b>entender</b> o caráter ilícito do fato e <b>determinar-se</b> conforme esse entendimento. É a regra; a inimputabilidade é que precisa ser provada.",
+    "Critério <b>biopsicológico</b> para a doença mental (art. 26); critério <b>biológico</b> para os menores de 18 (art. 27).",
+    "Embriaguez voluntária ou culposa <b>não</b> exclui a imputabilidade (<i>actio libera in causa</i>); só a <b>completa e acidental</b> isenta de pena."],
+  teoria:[
+   { h:"Doença mental e menoridade", p:[
+    "O art. 26 exige uma causa biológica (doença mental ou desenvolvimento mental incompleto ou retardado) e uma consequência psicológica (incapacidade de entender ou de se determinar). Se a incapacidade é <b>total</b>, o agente é inimputável: é absolvido, mas recebe <b>medida de segurança</b> — a chamada <b>absolvição imprópria</b>. Se é <b>parcial</b>, é semi-imputável: tem culpabilidade, é condenado com redução de 1/3 a 2/3 e o juiz pode substituir a pena por medida de segurança se houver periculosidade concreta (sistema <b>vicariante</b>: pena <i>ou</i> medida, nunca as duas).",
+    "Para o menor de 18 anos o critério é puramente <b>biológico</b>: não importa o grau de maturidade; ele responde perante o ECA. A idade se verifica no momento da <b>conduta</b> (art. 4º): quem atira aos 17 anos responde pelo ECA ainda que a vítima morra depois de ele completar 18. No crime <b>permanente</b>, porém, se a permanência continua após os 18 anos, ele responde como adulto. A menoridade se prova por documento hábil (Súmula 74 do STJ).",
+    "O sonâmbulo não é tratado como doente mental: falta-lhe vontade e, portanto, conduta — o fato é atípico."]},
+   { h:"Emoção, paixão e embriaguez", p:[
+    "Emoção e paixão não excluem a imputabilidade (art. 28, I), embora possam reduzir a pena (homicídio privilegiado, atenuantes).",
+    "A embriaguez <b>voluntária</b> (o agente quis se embriagar) ou <b>culposa</b> (bebeu sem querer se embriagar, mas se embriagou) não exclui a imputabilidade. A justificativa é a teoria da <b>actio libera in causa</b>: o agente era livre quando decidiu beber. A classificação depende da embriaguez, não do crime — é possível cometer crime doloso em embriaguez culposa.",
+    "A embriaguez <b>preordenada</b> (beber para ter coragem de cometer o crime) não exclui a imputabilidade e ainda agrava a pena (art. 61, II, l). A embriaguez <b>acidental</b>, por caso fortuito ou força maior (alguém põe álcool no copo da vítima sem ela saber), isenta de pena se for <b>completa</b>; se incompleta, reduz de 1/3 a 2/3. Nesses casos não cabe medida de segurança, porque o agente é sadio. A embriaguez <b>patológica</b> (doentia) pode ser tratada como doença mental, nos termos do art. 26."]}],
   quadro:{ titulo:"Embriaguez", head:["Espécie","Efeito"], rows:[["Voluntária ou culposa (completa ou não)","Não exclui a imputabilidade"],["Preordenada","Agravante (art. 61, II, l)"],["Acidental completa (caso fortuito/força maior)","Isenta de pena (art. 28, §1º)"],["Acidental incompleta","Redução de 1/3 a 2/3 (art. 28, §2º)"],["Patológica","Pode ser tratada como doença mental (art. 26)"]]},
-  pegadinhas:["Inimputável por doença mental: absolvição <b>imprópria</b>, com medida de segurança.","A prova do menor de 18 anos para fins penais exige documento hábil (Súmula 74 do STJ)."]}
+  pegadinhas:["Inimputável por doença mental: absolvição imprópria, com medida de segurança.","Semi-imputável é culpável: é condenado.","Embriaguez acidental não gera medida de segurança."]},
+
+{ id:"exigibilidade", titulo:"Consciência da ilicitude e exigibilidade de conduta diversa", curto:"Exigibilidade",
+  rapido:["<b>Potencial consciência da ilicitude</b>: basta que o agente <b>pudesse</b> saber que a conduta é contrária ao Direito. Faltando, há erro de proibição (art. 21).",
+    "<b>Inexigibilidade de conduta diversa</b>: <b>coação moral irresistível</b> e <b>obediência hierárquica</b> a ordem não manifestamente ilegal — só responde o coator ou quem deu a ordem (art. 22).",
+    "Coação <b>física</b> irresistível exclui a conduta; coação <b>moral</b> irresistível exclui a culpabilidade."],
+  teoria:[
+   { h:"Potencial consciência da ilicitude", p:[
+    "Não se exige que o agente saiba qual artigo violou, nem que conheça a lei: basta que tivesse a possibilidade de perceber que a conduta é reprovada pelo Direito. A análise leva em conta a pessoa concreta, e não o homem médio — o bacharel em Direito e o morador de uma comunidade isolada não estão na mesma posição. Para o STJ, ser indígena não significa, por si só, falta de consciência da ilicitude: isso deve ser verificado caso a caso."]},
+   { h:"Coação moral e obediência hierárquica", p:[
+    "Na <b>coação moral irresistível</b> (<i>vis compulsiva</i>), o coagido age com vontade, mas viciada por ameaça grave: a mãe que furta um carro porque ameaçaram matar seu filho. O fato é típico e ilícito, mas não culpável; responde o coator, inclusive com a agravante do art. 62, II. Se a coação era <b>resistível</b>, o coagido responde, com atenuante (art. 65, III, c).",
+    "Na <b>obediência hierárquica</b>, o subordinado cumpre ordem <b>não manifestamente ilegal</b> de superior. Prevalece que a relação deve ser de <b>direito público</b> — não se aplica entre patrão e empregado. Se a ordem era claramente ilegal, os dois respondem, com atenuante para o subordinado.",
+    "Na coação <b>física</b> irresistível (<i>vis absoluta</i>) não há vontade: quem tem o dedo forçado contra o gatilho não age. Exclui-se o fato típico, não a culpabilidade. A doutrina admite ainda a inexigibilidade de conduta diversa como causa <b>supralegal</b>, em situações excepcionais."]}],
+  pegadinhas:["Obediência hierárquica não vale nas relações privadas.","Coação moral resistível: atenuante, não isenção."]}
 ],
 lei:[
 { art:"CP, arts. 23 a 25", nome:"Exclusão de ilicitude", sec:"ilicitude", itens:[
@@ -694,61 +773,123 @@ lei:[
 ]}
 ],
 juris:[
-{ id:"stf-adpf779", trib:"STF", tipo:"ADPF", num:"779", sec:"ilicitude", status:"vigente", data:"Julgamento finalizado em 01/08/2023 (Inf. 1105)", titulo:"Legítima defesa da honra é inconstitucional",
+{ id:"stf-adpf779", trib:"STF", tipo:"ADPF", num:"779", sec:"legitima", status:"vigente", data:"Julgamento finalizado em 01/08/2023 (Inf. 1105)", titulo:"Legítima defesa da honra é inconstitucional",
   texto:"É inconstitucional o uso da tese da legítima defesa da honra em crimes de feminicídio ou de agressão contra mulheres, na fase pré-processual, processual ou no julgamento do júri.", sintese:true,
   explica:"Se a defesa usar a tese, o julgamento pode ser anulado.", lei:["cp25"], fonte:"https://portal.stf.jus.br/processos/detalhe.asp?incidente=6081690" },
-{ id:"stj-s74", trib:"STJ", tipo:"Súmula", num:"74", sec:"culpabilidade", status:"vigente", data:"", titulo:"Prova da menoridade", texto:"Para efeitos penais, o reconhecimento da menoridade do réu requer prova por documento hábil.", explica:"", lei:["cp27"], fonte:STJS }
+{ id:"stj-s74", trib:"STJ", tipo:"Súmula", num:"74", sec:"imputabilidade", status:"vigente", data:"", titulo:"Prova da menoridade", texto:"Para efeitos penais, o reconhecimento da menoridade do réu requer prova por documento hábil.", explica:"", lei:["cp27"], fonte:STJS }
 ],
 cards:[
 { id:"il1", tipo:"lacuna", sec:"ilicitude", f:"Art. 23: excludentes de ilicitude — estado de ______, legítima ______, estrito cumprimento de ______ e exercício regular de ______.", v:"<b>necessidade</b> · <b>defesa</b> · <b>dever legal</b> · <b>direito</b>", lei:["cp23"] },
-{ id:"il2", tipo:"ce", sec:"ilicitude", f:"Certo ou errado: o bombeiro pode alegar estado de necessidade para não entrar no prédio em chamas.", v:"<b>Errado.</b> Quem tem o dever legal de enfrentar o perigo não pode alegá-lo (art. 24, §1º) — dentro dos limites razoáveis do dever.", lei:["cp24"] },
-{ id:"il3", tipo:"distincao", sec:"ilicitude", f:"Teoria unitária × diferenciadora do estado de necessidade.", v:"<b>Unitária</b> (CP): só justificante; se o bem sacrificado vale mais, só reduz a pena (§2º). <b>Diferenciadora</b> (CPM): justificante (bem menor) e exculpante (bem igual ou maior).", lei:["cp24"] },
-{ id:"il4", tipo:"distincao", sec:"ilicitude", f:"Perigo atual × agressão iminente.", v:"Estado de necessidade exige perigo <b>atual</b>. Legítima defesa admite agressão <b>atual ou iminente</b>.", lei:["cp24","cp25"] },
-{ id:"il5", tipo:"ce", sec:"ilicitude", f:"Certo ou errado: cabe legítima defesa contra agressão de doente mental.", v:"<b>Certo.</b> A agressão é injusta mesmo que o agressor seja inimputável.", lei:["cp25"] },
-{ id:"il6", tipo:"juris", sec:"ilicitude", f:"A defesa pode sustentar \"legítima defesa da honra\" no júri de um feminicídio?", v:"<b>Não.</b> O STF declarou a tese inconstitucional (ADPF 779).", lei:["cp25"], j:["stf-adpf779"] },
-{ id:"il7", tipo:"caso", sec:"ilicitude", f:"Após desarmar e imobilizar o agressor, a vítima o espanca até a morte. Qual a consequência?", v:"<b>Excesso</b>: a agressão já cessou. Responde pelo excesso doloso ou culposo (art. 23, parágrafo único).", lei:["cp23"] },
-{ id:"il8", tipo:"distincao", sec:"culpabilidade", f:"Coação física irresistível × coação moral irresistível.", v:"<b>Física</b>: não há conduta (exclui o fato típico). <b>Moral</b>: exclui a culpabilidade (inexigibilidade); só o coator responde (art. 22).", lei:["cp22"] },
-{ id:"il9", tipo:"distincao", sec:"culpabilidade", f:"Inimputável × semi-imputável por doença mental.", v:"<b>Inimputável</b> (inteiramente incapaz): isento de pena, absolvição imprópria com medida de segurança. <b>Semi-imputável</b>: condenado com redução de 1/3 a 2/3 ou medida de segurança (vicariante).", lei:["cp26"] },
-{ id:"il10", tipo:"caso", sec:"culpabilidade", f:"Jovem atira na véspera dos 18 anos; a vítima morre uma semana depois. Responde pelo CP?", v:"<b>Não.</b> Teoria da atividade (art. 4º): era menor no momento da conduta — responde pelo ECA.", lei:["cp27"] },
-{ id:"il11", tipo:"caso", sec:"culpabilidade", f:"Agente bebe para ter coragem de matar o desafeto. Qual a consequência da embriaguez?", v:"Embriaguez <b>preordenada</b>: não exclui a imputabilidade e é <b>agravante</b> (art. 61, II, l).", lei:["cp28"] },
-{ id:"il12", tipo:"caso", sec:"culpabilidade", f:"Vítima de \"boa noite, Cinderela\" fica completamente embriagada e, sem discernimento, agride alguém. Responde?", v:"<b>Isento de pena</b>: embriaguez completa por caso fortuito ou força maior (art. 28, §1º).", lei:["cp28"] },
-{ id:"il13", tipo:"ce", sec:"culpabilidade", f:"Certo ou errado: a emoção e a paixão excluem a imputabilidade.", v:"<b>Errado</b> (art. 28, I). Podem, porém, atenuar a pena ou gerar privilégio (homicídio sob violenta emoção).", lei:["cp28"] }
+{ id:"il2", tipo:"ce", sec:"necessidade", f:"Certo ou errado: o bombeiro pode alegar estado de necessidade para não entrar no prédio em chamas.", v:"<b>Errado.</b> Quem tem o dever legal de enfrentar o perigo não pode alegá-lo (art. 24, §1º) — dentro dos limites razoáveis do dever.", lei:["cp24"] },
+{ id:"il3", tipo:"distincao", sec:"necessidade", f:"Teoria unitária × diferenciadora do estado de necessidade.", v:"<b>Unitária</b> (CP): só justificante; se o bem sacrificado vale mais, só reduz a pena (§2º). <b>Diferenciadora</b> (CPM): justificante (bem menor) e exculpante (bem igual ou maior).", lei:["cp24"] },
+{ id:"il4", tipo:"distincao", sec:"legitima", f:"Perigo atual × agressão iminente.", v:"Estado de necessidade exige perigo <b>atual</b>. Legítima defesa admite agressão <b>atual ou iminente</b>.", lei:["cp24","cp25"] },
+{ id:"il5", tipo:"ce", sec:"legitima", f:"Certo ou errado: cabe legítima defesa contra agressão de doente mental.", v:"<b>Certo.</b> A agressão é injusta mesmo que o agressor seja inimputável.", lei:["cp25"] },
+{ id:"il6", tipo:"juris", sec:"legitima", f:"A defesa pode sustentar \"legítima defesa da honra\" no júri de um feminicídio?", v:"<b>Não.</b> O STF declarou a tese inconstitucional (ADPF 779).", lei:["cp25"], j:["stf-adpf779"] },
+{ id:"il7", tipo:"caso", sec:"excesso", f:"Após desarmar e imobilizar o agressor, a vítima o espanca até a morte. Qual a consequência?", v:"<b>Excesso</b>: a agressão já cessou. Responde pelo excesso doloso ou culposo (art. 23, parágrafo único).", lei:["cp23"] },
+{ id:"il8", tipo:"distincao", sec:"exigibilidade", f:"Coação física irresistível × coação moral irresistível.", v:"<b>Física</b>: não há conduta (exclui o fato típico). <b>Moral</b>: exclui a culpabilidade (inexigibilidade); só o coator responde (art. 22).", lei:["cp22"] },
+{ id:"il9", tipo:"distincao", sec:"imputabilidade", f:"Inimputável × semi-imputável por doença mental.", v:"<b>Inimputável</b> (inteiramente incapaz): isento de pena, absolvição imprópria com medida de segurança. <b>Semi-imputável</b>: condenado com redução de 1/3 a 2/3 ou medida de segurança (vicariante).", lei:["cp26"] },
+{ id:"il10", tipo:"caso", sec:"imputabilidade", f:"Jovem atira na véspera dos 18 anos; a vítima morre uma semana depois. Responde pelo CP?", v:"<b>Não.</b> Teoria da atividade (art. 4º): era menor no momento da conduta — responde pelo ECA.", lei:["cp27"] },
+{ id:"il11", tipo:"caso", sec:"imputabilidade", f:"Agente bebe para ter coragem de matar o desafeto. Qual a consequência da embriaguez?", v:"Embriaguez <b>preordenada</b>: não exclui a imputabilidade e é <b>agravante</b> (art. 61, II, l).", lei:["cp28"] },
+{ id:"il12", tipo:"caso", sec:"imputabilidade", f:"Vítima de \"boa noite, Cinderela\" fica completamente embriagada e, sem discernimento, agride alguém. Responde?", v:"<b>Isento de pena</b>: embriaguez completa por caso fortuito ou força maior (art. 28, §1º).", lei:["cp28"] },
+{ id:"il13", tipo:"ce", sec:"imputabilidade", f:"Certo ou errado: a emoção e a paixão excluem a imputabilidade.", v:"<b>Errado</b> (art. 28, I). Podem, porém, atenuar a pena ou gerar privilégio (homicídio sob violenta emoção).", lei:["cp28"] },
+{ id:"il14", tipo:"ce", sec:"ilicitude", f:"Certo ou errado: quem atira no desafeto por vingança e, sem saber, impede que ele mate alguém age em legítima defesa de terceiro.", v:"<b>Errado.</b> Falta o elemento subjetivo: o conhecimento da situação justificante.", lei:["cp23"] },
+{ id:"il15", tipo:"caso", sec:"necessidade", f:"O agente provoca dolosamente um incêndio no barco e, para se salvar, toma à força o último colete de outro passageiro, que morre. Estado de necessidade?", v:"<b>Não.</b> Quem provocou o perigo por sua vontade não pode alegá-lo (art. 24).", lei:["cp24"] },
+{ id:"il16", tipo:"distincao", sec:"necessidade", f:"Estado de necessidade agressivo × defensivo.", v:"<b>Agressivo</b>: sacrifica bem de terceiro alheio ao perigo. <b>Defensivo</b>: sacrifica bem de quem causou o perigo.", lei:["cp24"] },
+{ id:"il17", tipo:"ce", sec:"legitima", f:"Certo ou errado: a legítima defesa exige que o agredido não tenha como fugir.", v:"<b>Errado.</b> Não se exige fuga (commodus discessus). A inevitabilidade é requisito do estado de necessidade.", lei:["cp25"] },
+{ id:"il18", tipo:"distincao", sec:"legitima", f:"Legítima defesa recíproca × sucessiva.", v:"<b>Recíproca</b> (real contra real): impossível. <b>Sucessiva</b>: o agressor inicial se defende do <b>excesso</b> de quem se defendia — possível.", lei:["cp25"] },
+{ id:"il19", tipo:"caso", sec:"legitima", f:"Policial, em troca de tiros com criminosos, erra o disparo e mata uma moradora. Qual a situação jurídica?", v:"Continua em <b>legítima defesa</b>: erro na execução (art. 73) — considera-se a vítima visada.", lei:["cp25"] },
+{ id:"il20", tipo:"caso", sec:"outras", f:"Policial mata o suspeito que atirava contra a equipe. Estrito cumprimento do dever legal?", v:"<b>Não.</b> É <b>legítima defesa</b>: nenhuma lei impõe o dever de matar.", lei:["cp23"] },
+{ id:"il21", tipo:"lacuna", sec:"outras", f:"Consentimento do ofendido (excludente supralegal): bem jurídico ______, ofendido ______ e consentimento ______ ou simultâneo.", v:"<b>disponível</b> · <b>capaz</b> · <b>prévio</b>", lei:[] },
+{ id:"il22", tipo:"distincao", sec:"excesso", f:"Excesso intensivo × extensivo.", v:"<b>Intensivo</b>: meio desproporcional desde o início. <b>Extensivo</b>: a reação continua após cessar a situação justificante.", lei:["cp23"] },
+{ id:"il23", tipo:"lacuna", sec:"culpabilidade", f:"Teoria normativa pura: culpabilidade = ______ + potencial consciência da ______ + exigibilidade de conduta ______.", v:"<b>imputabilidade</b> · <b>ilicitude</b> · <b>diversa</b>", lei:[] },
+{ id:"il24", tipo:"distincao", sec:"culpabilidade", f:"Teoria extremada × limitada da culpabilidade.", v:"Divergem só nas descriminantes putativas. <b>Limitada</b> (CP): erro sobre a situação de fato = erro de tipo permissivo; erro sobre existência/limites = erro de proibição indireto. <b>Extremada</b>: tudo é erro de proibição.", lei:[] },
+{ id:"il25", tipo:"caso", sec:"imputabilidade", f:"Aos 17 anos, o agente sequestra a vítima; o cativeiro dura seis meses e ele completa 18 durante esse período. Responde pelo CP?", v:"<b>Sim.</b> Crime permanente: a conduta continuou após a maioridade.", lei:["cp27"] },
+{ id:"il26", tipo:"ce", sec:"exigibilidade", f:"Certo ou errado: o empregado que cumpre ordem não manifestamente ilegal do patrão é beneficiado pela obediência hierárquica.", v:"<b>Errado.</b> Prevalece que a obediência hierárquica exige relação de direito público.", lei:["cp22"] }
 ],
 questoes:[]
 };
 
 /* ============================ ERRO ============================ */
 T.penal_erros = {
-meta:{ tema:"Erro de Tipo e Erro de Proibição", atualizado:AT, foco:"Erro de tipo essencial e acidental, descriminantes putativas, erro determinado por terceiro, erro sobre a pessoa, na execução e no resultado, e erro de proibição." },
+meta:{ tema:"Erro de Tipo e Erro de Proibição", atualizado:"15/10/2026", foco:"Erro de tipo essencial e acidental, descriminantes putativas, erro determinado por terceiro, erro sobre a pessoa, na execução e no resultado, e erro de proibição." },
 secoes:[
-{ id:"erro-tipo", titulo:"Erro de tipo", curto:"Erro de tipo",
-  rapido:["Erro sobre elemento do tipo <b>exclui o dolo</b>; se evitável, permite punição por culpa, se prevista (art. 20).",
-    "Escusável (inevitável): exclui dolo e culpa → fato atípico. Inescusável (evitável): exclui o dolo, pune a culpa.","Ex.: caçador atira em pessoa pensando ser animal."],
-  teoria:[{ h:"Descriminantes putativas e erro provocado", p:[
-    "Art. 20, §1º: quem, por erro plenamente justificado, supõe situação de fato que tornaria a ação legítima (ex.: pensa que vai ser atacado) é <b>isento de pena</b>; se o erro deriva de culpa, responde por crime culposo (culpa imprópria). O CP adota a teoria <b>limitada</b> da culpabilidade: erro sobre os pressupostos fáticos da excludente é tratado como erro de tipo; erro sobre a existência ou limites da excludente, como erro de proibição.",
-    "Erro determinado por terceiro (§2º): responde pelo crime o terceiro que provocou o erro (autoria mediata)."]}],
-  pegadinhas:["Erro de tipo essencial inevitável: fato atípico (sem dolo e sem culpa).","Teoria limitada da culpabilidade: erro de fato na excludente = erro de tipo permissivo."]},
-{ id:"erro-acidental", titulo:"Erros acidentais", curto:"Acidental",
-  rapido:["Erro sobre a pessoa (art. 20, §3º): consideram-se as qualidades da vítima <b>visada</b>.","Erro na execução — <i>aberratio ictus</i> (art. 73): atinge pessoa diversa por acidente ou erro no uso dos meios; responde como se tivesse atingido a visada.",
-    "Resultado diverso — <i>aberratio criminis</i> (art. 74): atinge bem jurídico diverso; responde por culpa, se prevista.","Erro sobre o objeto e sobre o nexo causal não afastam o crime."],
-  teoria:[{ h:"Diferenças práticas", p:[
-    "No <b>erro sobre a pessoa</b> não há falha na execução: o agente confunde a vítima (mata o sósia do pai pensando ser o pai → responde como parricida, com a agravante do art. 61, II, e). Na <b>aberratio ictus</b>, a pontaria falha e outra pessoa é atingida; se atinge as duas, aplica-se o concurso formal (art. 70).",
-    "<b>Aberratio criminis</b>: queria quebrar a vitrine e atinge uma pessoa → lesão culposa. Se atinge a coisa e a pessoa, concurso formal. Se queria atingir a pessoa e atinge a coisa, responde por tentativa contra a pessoa (dano culposo não é crime)."]}],
-  pegadinhas:["Erro sobre a pessoa e aberratio ictus: consideram-se as condições da vítima <b>pretendida</b>, não da efetiva."]},
+{ id:"erro-tipo", titulo:"Erro de tipo essencial", curto:"Erro de tipo",
+  rapido:["Erro de tipo é a falsa percepção da realidade sobre um <b>elemento do tipo</b>: o agente não sabe que está realizando a conduta descrita na lei.",
+    "Sempre <b>exclui o dolo</b>. Se <b>inevitável</b> (escusável), exclui também a culpa: o fato é atípico. Se <b>evitável</b> (inescusável), pune-se a forma culposa, se prevista (art. 20).",
+    "Ex.: o caçador que atira num vulto achando ser um animal; quem desacata funcionário público sem saber que ele é funcionário."],
+  teoria:[
+   { h:"Como funciona", p:[
+    "O dolo precisa abranger todos os elementos do tipo. Quem leva a bolsa alheia pensando que é a sua não sabe que a coisa é \"alheia\": falta-lhe o dolo de furtar. Por isso o art. 20 diz que o erro sobre elemento constitutivo do tipo exclui o dolo.",
+    "Para medir se o erro era evitável, pergunta-se se uma pessoa prudente, com um esforço razoável de atenção, teria percebido a realidade. A cliente que volta à loja e encontra, no mesmo lugar, uma bolsa idêntica à que esqueceu ali instantes antes comete erro <b>inevitável</b>: não há crime. Quem, numa repartição, ofende alguém de crachá atrás do balcão sem perceber que é servidor comete erro <b>evitável</b> — mas, como não existe desacato culposo, também não responde por desacato.",
+    "O erro de tipo também pode recair sobre a condição de <b>garantidor</b> nos crimes omissivos impróprios: a mãe que não socorre uma criança por não perceber que é o próprio filho erra sobre um elemento que fundamentaria seu dever de agir.",
+    "Quando o erro recai sobre um <b>elemento normativo</b> (\"sem justa causa\", \"indevidamente\"), há divergência: prevalece que é erro de tipo, mas parte da doutrina vê erro de proibição, porque o agente erra sobre a licitude da conduta."]}],
+  quadro:{ titulo:"Erro de tipo essencial", head:["","Inevitável (escusável)","Evitável (inescusável)"], rows:[["Dolo","Excluído","Excluído"],["Culpa","Excluída","Permanece, se houver forma culposa"],["Resultado","Fato atípico","Crime culposo ou fato atípico (se não há forma culposa)"]]},
+  pegadinhas:["Erro de tipo evitável não gera punição se o crime não tiver forma culposa.","Erro de tipo sempre exclui o dolo, seja evitável ou inevitável."]},
+
+{ id:"putativas", titulo:"Descriminantes putativas, erro provocado e delito putativo", curto:"Putativas",
+  rapido:["Descriminante putativa: o agente imagina uma situação que, se existisse, tornaria a ação legítima (legítima defesa putativa, estado de necessidade putativo).",
+    "Erro sobre a <b>situação de fato</b>: erro de tipo permissivo (art. 20, §1º) — inevitável isenta de pena; evitável gera punição por culpa (<b>culpa imprópria</b>).",
+    "Erro <b>determinado por terceiro</b> (§2º): responde quem provocou o erro.",
+    "<b>Delito putativo</b> é o inverso: o agente acha que comete crime, mas o fato é atípico."],
+  teoria:[
+   { h:"Erro de tipo permissivo × erro de proibição indireto", p:[
+    "Nas descriminantes putativas o agente sabe o que faz, mas acredita estar amparado por uma excludente. O CP, seguindo a teoria <b>limitada</b> da culpabilidade, separa duas hipóteses.",
+    "Se o erro está nos <b>fatos</b> — o pai ouve barulho de madrugada, vê um vulto e atira pensando ser um ladrão, mas era o filho —, há erro de tipo permissivo: erro plenamente justificado isenta de pena; erro que deriva de culpa gera punição por crime culposo.",
+    "Se o erro está na <b>regra</b> — o agente sabe exatamente o que acontece, mas acha que a excludente permite mais do que permite —, há erro de proibição indireto, com as consequências do art. 21. Exemplo: no naufrágio, impedir à força que outro passageiro use o segundo bote para salvar a vida, porque se queria usá-lo para salvar bagagens. O estado de necessidade não autoriza sacrificar uma vida para salvar bens."]},
+   { h:"Erro provocado e delito putativo", p:[
+    "No erro <b>determinado por terceiro</b>, alguém induz o agente ao erro e o usa como instrumento: o médico que entrega veneno à enfermeira dizendo ser sedativo responde pelo homicídio doloso, como autor mediato. A enfermeira só responderia, por culpa, se tivesse como perceber o engano.",
+    "No <b>delito putativo</b> ocorre o contrário: quem bate no carro alheio sem querer e foge achando que cometeu \"dano culposo\" não cometeu crime algum, porque o dano culposo não existe no CP. O delito putativo também aparece no erro sobre os fatos (transportar farinha achando que é cocaína) e no flagrante preparado (Súmula 145 do STF)."]}],
+  quadro:{ titulo:"Descriminante putativa × delito putativo", head:["","Descriminante putativa","Delito putativo"], rows:[["O agente pensa","Que age licitamente","Que comete crime"],["Na realidade","Pratica fato típico e ilícito","Pratica fato atípico"],["Exemplo","Atira no filho pensando ser ladrão","Foge após \"dano culposo\""]]},
+  pegadinhas:["Culpa imprópria: o agente quis o resultado, mas responde por culpa (art. 20, §1º, parte final).","No erro provocado, quem provoca responde; quem erra, só se o erro for culposo."]},
+
+{ id:"erro-acidental", titulo:"Erros acidentais: pessoa, objeto e nexo causal", curto:"Acidental",
+  rapido:["Erros acidentais não excluem dolo nem culpa: o agente responde pelo crime.",
+    "Erro sobre a <b>pessoa</b> (art. 20, §3º): consideram-se as condições da vítima <b>visada</b>, não da atingida.",
+    "Erro sobre o <b>nexo causal</b>: o resultado querido ocorre por caminho diferente do planejado — responde pelo crime consumado (inclui o dolo geral).",
+    "Erro sobre o <b>objeto</b>: não está no CP; prevalece que o agente responde pelo que efetivamente fez."],
+  teoria:[
+   { h:"Erro sobre a pessoa e sobre o objeto", p:[
+    "No erro sobre a pessoa (<i>error in persona</i>) não há falha de execução: o tiro acerta exatamente quem o agente mirou, mas ele <b>confundiu</b> a vítima. Quem quer matar o pai e mata o irmão, achando que era o pai, responde como se tivesse matado o pai, com a agravante de crime contra ascendente (teoria da equivalência).",
+    "No erro sobre o objeto (<i>error in objecto</i>), o agente se engana sobre a coisa: entra na casa para furtar uma obra valiosa e leva um quadro barato, achando que era aquele. O erro é irrelevante para o dolo; prevalece que ele responde pelo furto do que efetivamente subtraiu."]},
+   { h:"Erro sobre o nexo causal", p:[
+    "O agente alcança o resultado que queria, mas por um curso causal diferente. No erro em sentido estrito, há um só ato: os tiros fazem a vítima cair na piscina, e ela morre afogada — homicídio consumado.",
+    "No <b>dolo geral</b> (<i>aberratio causae</i>, erro sucessivo) há dois atos: o agente atira, pensa que matou, joga o \"corpo\" no rio para ocultá-lo, e a vítima morre afogada. Prevalece que responde por um só homicídio doloso consumado (princípio unitário), considerando-se o nexo causal que efetivamente ocorreu."]}],
+  pegadinhas:["Erro sobre a pessoa: condições da vítima visada (inclusive para agravantes e qualificadoras).","Dolo geral: um só crime, homicídio doloso consumado."]},
+
+{ id:"aberratio", titulo:"Erro na execução e resultado diverso do pretendido", curto:"Aberratio",
+  rapido:["<b>Aberratio ictus</b> (art. 73): por erro ou acidente na execução, atinge <b>pessoa</b> diversa da visada — responde como se tivesse atingido a visada. Atingindo as duas: concurso formal (art. 70).",
+    "<b>Aberratio criminis</b> (art. 74): atinge <b>bem jurídico de outra natureza</b> (coisa × pessoa) — responde pelo resultado produzido, a título de culpa, se previsto. Atingindo os dois: concurso formal.",
+    "Ictus: pessoa × pessoa. Criminis: coisa × pessoa."],
+  teoria:[
+   { h:"Aberratio ictus", p:[
+    "Aqui o agente não confunde a vítima: ele mira na pessoa certa, mas erra a pontaria ou um acidente desvia o resultado. Quem atira em Pedro e acerta Ricardo, que passava, responde como se tivesse acertado Pedro. O mesmo vale quando não há falha alguma, só acidente: a bomba posta no carro da vítima mata o marido dela, que usou o carro naquele dia.",
+    "Como no erro sobre a pessoa, contam as condições da vítima <b>visada</b>: se o alvo era um menino de 13 anos e o tiro atingiu um rapaz de 19, incide o tratamento mais grave que o art. 121 reserva à vítima menor de 14 anos.",
+    "Na <b>unidade simples</b> (só o terceiro é atingido), há um crime. Na <b>unidade complexa</b> (a vítima visada e o terceiro são atingidos), aplicam-se as regras do concurso formal: por exemplo, lesão dolosa contra a vítima visada e lesão culposa contra o terceiro."]},
+   { h:"Aberratio criminis", p:[
+    "O agente queria atingir uma coisa e atinge uma pessoa, ou o contrário. Quem atira uma pedra no carro para danificá-lo e acaba matando o dono responde só por homicídio culposo. Na situação inversa — atira na pessoa e acerta uma planta —, responde pela tentativa contra a pessoa, porque o dano culposo não é crime.",
+    "Se atinge os dois (a pessoa visada e uma coisa), não há \"lesão dolosa + dano culposo\": como o dano culposo não existe, responde apenas pela lesão dolosa. Havendo dois crimes, aplica-se o concurso formal."]}],
+  quadro:{ titulo:"Erros acidentais na execução", head:["","Erro sobre a pessoa","Aberratio ictus","Aberratio criminis"], rows:[["Base legal","Art. 20, §3º","Art. 73","Art. 74"],["O que ocorre","Confunde a vítima","Erra a execução e atinge outra pessoa","Atinge bem de natureza diversa"],["Consequência","Condições da vítima visada","Condições da vítima visada; se atinge ambas, concurso formal","Culpa pelo resultado produzido, se prevista; se atinge ambos, concurso formal"]]},
+  pegadinhas:["Erro sobre a pessoa não tem falha de execução; aberratio ictus tem.","Pessoa visada, coisa atingida: tentativa contra a pessoa (dano culposo não é crime)."]},
+
 { id:"erro-proibicao", titulo:"Erro de proibição", curto:"Proibição",
-  rapido:["Desconhecer a lei é inescusável; o erro sobre a <b>ilicitude</b> do fato, se inevitável, isenta de pena; se evitável, reduz de <b>1/6 a 1/3</b> (art. 21).",
-    "Exclui a <b>potencial consciência da ilicitude</b> (culpabilidade), não o dolo.","Ex.: estrangeiro que, por costume do seu país, acredita ser lícita determinada conduta."],
-  teoria:[{ h:"Erro de proibição direto e indireto", p:[
-    "<b>Direto</b>: o agente acha a conduta lícita. <b>Indireto</b> (descriminante putativa por erro de proibição): sabe que é ilícita em geral, mas acha que existe uma excludente ou erra sobre seus limites (ex.: pensa que pode matar o ladrão que já fugiu). <b>Mandamental</b>: erro nos crimes omissivos sobre o dever de agir.",
-    "Evitável é o erro de quem, nas circunstâncias, podia atingir a consciência da ilicitude (art. 21, parágrafo único)."]}],
-  quadro:{ titulo:"Erro de tipo × erro de proibição", head:["","Erro de tipo","Erro de proibição"], rows:[["Sobre o quê","Elementos do tipo (a realidade)","A ilicitude (a regra)"],["Fórmula","\"Não sei o que faço\"","\"Sei o que faço, acho que é permitido\""],["Inevitável","Exclui dolo e culpa (atípico)","Isenta de pena"],["Evitável","Pune a culpa, se prevista","Reduz de 1/6 a 1/3"]]}}
+  rapido:["O agente conhece a realidade, mas acredita que sua conduta é <b>permitida</b>.",
+    "Inevitável: <b>isenta de pena</b> (exclui a culpabilidade). Evitável: reduz de <b>1/6 a 1/3</b> (art. 21).",
+    "O <b>desconhecimento da lei</b> é inescusável — no máximo, atenuante (art. 65, II). O que isenta é o erro inevitável sobre a <b>ilicitude</b> do fato."],
+  teoria:[
+   { h:"Conceito e espécies", p:[
+    "No erro de proibição o agente sabe exatamente o que faz; erra sobre a regra. O morador simples do interior que acha um relógio de ouro e fica com ele, sem saber que reter coisa achada é crime (art. 169, parágrafo único, II), sabe que o relógio não é seu e foi perdido por alguém — só não sabe que isso é proibido. Se ele pensasse que o relógio era o que <b>ele próprio</b> tinha perdido, o erro seria sobre a realidade: erro de tipo.",
+    "O erro de proibição atinge a <b>potencial consciência da ilicitude</b>, elemento da culpabilidade; o dolo permanece. Por isso a consequência é isenção ou redução de pena, e não atipicidade.",
+    "Espécies: <b>direto</b> (acha a conduta lícita), <b>indireto</b> (acha que uma excludente a autoriza ou erra sobre seus limites) e <b>mandamental</b> (nos crimes omissivos, erra sobre o dever de agir).",
+    "O erro é <b>evitável</b> quando, nas circunstâncias, o agente podia atingir a consciência da ilicitude (art. 21, parágrafo único). A análise considera a pessoa concreta: escolaridade, meio social, acesso à informação."]}],
+  quadro:{ titulo:"Erro de tipo × erro de proibição", head:["","Erro de tipo","Erro de proibição"], rows:[["Sobre o quê","Elementos do tipo (a realidade)","A ilicitude (a regra)"],["Fórmula","\"Não sei o que faço\"","\"Sei o que faço, acho que é permitido\""],["Elemento atingido","Dolo (fato típico)","Potencial consciência da ilicitude (culpabilidade)"],["Inevitável","Exclui dolo e culpa (atípico)","Isenta de pena"],["Evitável","Pune a culpa, se prevista","Reduz de 1/6 a 1/3"]]},
+  pegadinhas:["Erro de proibição evitável: 1/6 a 1/3 (não confundir com 1/3 a 2/3).","Desconhecimento da lei ≠ erro sobre a ilicitude."]}
 ],
 lei:[
 { art:"CP, arts. 20 e 21", nome:"Erro", sec:"erro-tipo", itens:[
   { id:"cp20", rot:"Art. 20", t:"O erro sobre <b class='g1'>elemento constitutivo do tipo legal</b> de crime <b class='g1'>exclui o dolo</b>, mas permite a punição por crime culposo, <b class='g3'>se previsto em lei</b>.<br>§ 1º - É isento de pena quem, por erro plenamente justificado pelas circunstâncias, <b class='g1'>supõe situação de fato que, se existisse, tornaria a ação legítima</b>. Não há isenção de pena quando o erro deriva de culpa e o fato é punível como crime culposo.<br>§ 2º - Responde pelo crime o <b class='g1'>terceiro que determina o erro</b>.<br>§ 3º - O erro quanto à pessoa contra a qual o crime é praticado não isenta de pena. Não se consideram, neste caso, as condições ou qualidades da vítima, <b class='g3'>senão as da pessoa contra quem o agente queria praticar o crime</b>.", c:["er1","er2","er3","er4"] },
   { id:"cp21", rot:"Art. 21", t:"O <b class='g1'>desconhecimento da lei é inescusável</b>. O erro sobre a ilicitude do fato, se <b class='g1'>inevitável, isenta de pena</b>; se evitável, poderá diminuí-la de <b class='g2'>um sexto a um terço</b>.<br>Parágrafo único - Considera-se evitável o erro se o agente atua ou se omite sem a consciência da ilicitude do fato, quando lhe era possível, nas circunstâncias, ter ou atingir essa consciência.", c:["er5","er6"] }
 ]},
-{ art:"CP, arts. 73 e 74", nome:"Erro na execução e resultado diverso", sec:"erro-acidental", itens:[
+{ art:"CP, arts. 73 e 74", nome:"Erro na execução e resultado diverso", sec:"aberratio", itens:[
   { id:"cp73", rot:"Art. 73", t:"Quando, por <b class='g1'>acidente ou erro no uso dos meios de execução</b>, o agente, ao invés de atingir a pessoa que pretendia ofender, atinge pessoa diversa, responde <b class='g3'>como se tivesse praticado o crime contra aquela</b>, atendendo-se ao disposto no § 3º do art. 20 deste Código. No caso de ser também atingida a pessoa que o agente pretendia ofender, aplica-se a regra do art. 70 deste Código.", c:["er7"] },
   { id:"cp74", rot:"Art. 74", t:"Fora dos casos do artigo anterior, quando, por acidente ou erro na execução do crime, sobrevém <b class='g1'>resultado diverso do pretendido</b>, o agente responde por culpa, se o fato é previsto como crime culposo; se ocorre também o resultado pretendido, aplica-se a regra do art. 70 deste Código.", c:["er8"] }
 ]}
@@ -756,15 +897,24 @@ lei:[
 juris:[],
 cards:[
 { id:"er1", tipo:"caso", sec:"erro-tipo", f:"Caçador atira num vulto achando ser um javali; era uma pessoa. O erro era evitável. Qual o crime?", v:"<b>Homicídio culposo</b>: erro de tipo evitável exclui o dolo e permite a punição por culpa (art. 20).", lei:["cp20"] },
-{ id:"er2", tipo:"caso", sec:"erro-tipo", f:"À noite, alguém vê o vizinho com algo na mão vindo em sua direção, acha que é uma arma e atira. Era um celular. Erro plenamente justificado. Consequência?", v:"<b>Isento de pena</b> — legítima defesa putativa por erro de tipo permissivo (art. 20, §1º). Se o erro fosse evitável: homicídio culposo.", lei:["cp20"] },
-{ id:"er3", tipo:"caso", sec:"erro-tipo", f:"Médico entrega à enfermeira seringa com veneno dizendo ser remédio; ela aplica e o paciente morre. Quem responde?", v:"O <b>médico</b> (terceiro que determinou o erro — art. 20, §2º; autoria mediata). A enfermeira, se não havia como perceber, não responde.", lei:["cp20"] },
+{ id:"er2", tipo:"caso", sec:"putativas", f:"À noite, alguém vê o vizinho com algo na mão vindo em sua direção, acha que é uma arma e atira. Era um celular. Erro plenamente justificado. Consequência?", v:"<b>Isento de pena</b> — legítima defesa putativa por erro de tipo permissivo (art. 20, §1º). Se o erro fosse evitável: homicídio culposo.", lei:["cp20"] },
+{ id:"er3", tipo:"caso", sec:"putativas", f:"Médico entrega à enfermeira seringa com veneno dizendo ser remédio; ela aplica e o paciente morre. Quem responde?", v:"O <b>médico</b> (terceiro que determinou o erro — art. 20, §2º; autoria mediata). A enfermeira, se não havia como perceber, não responde.", lei:["cp20"] },
 { id:"er4", tipo:"caso", sec:"erro-acidental", f:"Quer matar o pai e mata, por engano, um desconhecido muito parecido com ele. Incide a agravante de crime contra ascendente?", v:"<b>Sim.</b> Erro sobre a pessoa: consideram-se as qualidades da vítima visada (art. 20, §3º).", lei:["cp20"] },
 { id:"er5", tipo:"numero", sec:"erro-proibicao", f:"Erro de proibição evitável: qual a redução?", v:"<b>1/6 a 1/3</b> (art. 21). Inevitável: isenta de pena.", lei:["cp21"] },
 { id:"er6", tipo:"distincao", sec:"erro-proibicao", f:"Erro de tipo × erro de proibição.", v:"<b>Tipo</b>: erro sobre a realidade (\"não sei o que faço\") — exclui o dolo. <b>Proibição</b>: erro sobre a ilicitude (\"sei o que faço, acho permitido\") — atinge a culpabilidade.", lei:["cp20","cp21"] },
-{ id:"er7", tipo:"caso", sec:"erro-acidental", f:"Atira no desafeto, erra e mata quem estava ao lado. Qual o crime? E se atingir os dois?", v:"<b>Aberratio ictus</b>: responde como se tivesse atingido o desafeto (art. 73). Atingindo os dois: <b>concurso formal</b> (art. 70).", lei:["cp73"] },
-{ id:"er8", tipo:"caso", sec:"erro-acidental", f:"Atira pedra para quebrar a vitrine e acerta um pedestre. Qual o crime?", v:"<b>Aberratio criminis</b>: lesão corporal <b>culposa</b> (art. 74). Se quebra a vitrine e fere a pessoa: concurso formal.", lei:["cp74"] },
+{ id:"er7", tipo:"caso", sec:"aberratio", f:"Atira no desafeto, erra e mata quem estava ao lado. Qual o crime? E se atingir os dois?", v:"<b>Aberratio ictus</b>: responde como se tivesse atingido o desafeto (art. 73). Atingindo os dois: <b>concurso formal</b> (art. 70).", lei:["cp73"] },
+{ id:"er8", tipo:"caso", sec:"aberratio", f:"Atira pedra para quebrar a vitrine e acerta um pedestre. Qual o crime?", v:"<b>Aberratio criminis</b>: lesão corporal <b>culposa</b> (art. 74). Se quebra a vitrine e fere a pessoa: concurso formal.", lei:["cp74"] },
 { id:"er9", tipo:"ce", sec:"erro-proibicao", f:"Certo ou errado: o desconhecimento da lei isenta de pena quando o agente é pessoa simples.", v:"<b>Errado.</b> O desconhecimento da lei é inescusável (art. 21); pode, no máximo, ser atenuante (art. 65, II). Isenta o erro inevitável sobre a <b>ilicitude</b>.", lei:["cp21"] },
-{ id:"er10", tipo:"distincao", sec:"erro-tipo", f:"Teoria limitada da culpabilidade (adotada pelo CP): como trata a descriminante putativa?", v:"Erro sobre os <b>pressupostos fáticos</b> da excludente = erro de tipo permissivo. Erro sobre a <b>existência ou limites</b> da excludente = erro de proibição indireto.", lei:["cp20","cp21"] }
+{ id:"er10", tipo:"distincao", sec:"putativas", f:"Teoria limitada da culpabilidade (adotada pelo CP): como trata a descriminante putativa?", v:"Erro sobre os <b>pressupostos fáticos</b> da excludente = erro de tipo permissivo. Erro sobre a <b>existência ou limites</b> da excludente = erro de proibição indireto.", lei:["cp20","cp21"] },
+{ id:"er11", tipo:"caso", sec:"erro-tipo", f:"Cidadão ofende, numa repartição, servidor uniformizado atrás do balcão sem perceber que ele é funcionário público. Erro evitável. Responde por desacato?", v:"<b>Não.</b> Erro de tipo evitável exclui o dolo e só permite punir a culpa — e não existe desacato culposo.", lei:["cp20"] },
+{ id:"er12", tipo:"ce", sec:"erro-tipo", f:"Certo ou errado: o erro de tipo evitável mantém o dolo e reduz a pena.", v:"<b>Errado.</b> Todo erro de tipo essencial exclui o dolo; o evitável permite punição por culpa, se prevista. Redução de pena é do erro de proibição evitável.", lei:["cp20"] },
+{ id:"er13", tipo:"distincao", sec:"putativas", f:"Descriminante putativa × delito putativo.", v:"<b>Descriminante putativa</b>: pensa agir licitamente, mas o fato é típico e ilícito. <b>Delito putativo</b>: pensa cometer crime, mas o fato é atípico.", lei:["cp20"] },
+{ id:"er14", tipo:"caso", sec:"putativas", f:"No naufrágio, José sabe de tudo o que acontece, mas impede à força Marcelo de usar o segundo bote, porque quer salvar suas malas. Que erro há?", v:"<b>Erro de proibição indireto</b>: erro sobre os limites do estado de necessidade (não se sacrifica vida para salvar bens).", lei:["cp21"] },
+{ id:"er15", tipo:"distincao", sec:"erro-acidental", f:"Erro sobre a pessoa × aberratio ictus.", v:"<b>Erro sobre a pessoa</b>: confunde a vítima, execução perfeita. <b>Aberratio ictus</b>: mira a pessoa certa, mas erra a execução ou um acidente desvia o golpe.", lei:["cp20","cp73"] },
+{ id:"er16", tipo:"caso", sec:"erro-acidental", f:"O agente atira na vítima, pensa que ela morreu e joga o corpo no rio; ela morre afogada. Quantos crimes?", v:"<b>Um homicídio doloso consumado</b> (dolo geral, princípio unitário).", lei:["cp20"] },
+{ id:"er17", tipo:"caso", sec:"aberratio", f:"Atira para matar um menino de 13 anos, erra e mata um rapaz de 19. Incide o tratamento mais grave do homicídio contra menor de 14 anos?", v:"<b>Sim.</b> Na aberratio ictus consideram-se as condições da vítima visada (art. 73 c/c art. 20, §3º).", lei:["cp73"] },
+{ id:"er18", tipo:"caso", sec:"aberratio", f:"Atira na pessoa para matá-la, erra e acerta apenas uma vidraça. Por qual crime responde?", v:"<b>Tentativa de homicídio.</b> Dano culposo não é crime.", lei:["cp74"] },
+{ id:"er19", tipo:"caso", sec:"erro-proibicao", f:"Homem simples acha um relógio de ouro na rua e fica com ele, sem saber que isso é crime. Que erro há?", v:"<b>Erro de proibição</b>: conhece a realidade (coisa alheia perdida), mas acha a conduta lícita. Se inevitável, isenta; se evitável, reduz de 1/6 a 1/3.", lei:["cp21"] }
 ],
 questoes:[]
 };

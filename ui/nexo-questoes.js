@@ -249,7 +249,7 @@ window.renderPracticeQuestionsPage = function(){
     + '<div class="nxq-rodape"><div class="practice-checks"><label><input type="checkbox" data-nxf="com"' + (filtro.com ? ' checked' : '') + '> Só com comentário do caderno</label><label><input type="checkbox" data-nxf="anul"' + (filtro.anul ? ' checked' : '') + '> Excluir anuladas</label></div>'
     + '<div class="nxq-acoes"><button type="button" class="pf-btn" data-nxq="limpar">Limpar</button><button type="button" class="pf-btn soft" data-nxq="caderno">Sortear 20 questões</button></div></div>'
     + aviso + '</section>'
-    + '<div class="practice-results-head"><b id="nxq-count"></b><span>A tesoura ao lado de cada alternativa risca as que você já eliminou.</span></div><div id="nxq-res"></div>';
+    + '<div class="practice-results-head"><b id="nxq-count"></b><span>A tesoura à esquerda de cada alternativa risca as que você já eliminou.</span></div><div id="nxq-res"></div>';
   rodar();
   var v = document.getElementById('view'); if(v) v.scrollTop = 0;
 };
@@ -294,7 +294,7 @@ function porTesoura(raiz){
     t.className = 'nx-cut'; t.setAttribute('role', 'button'); t.tabIndex = 0;
     t.setAttribute('aria-pressed', 'false'); t.setAttribute('aria-label', 'Eliminar esta alternativa'); t.title = 'Eliminar alternativa';
     t.innerHTML = TESOURA;
-    op.appendChild(t);
+    op.insertBefore(t, op.firstChild);
   });
 }
 function cortar(t){
