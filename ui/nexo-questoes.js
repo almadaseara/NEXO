@@ -108,7 +108,19 @@ function iniciarBanco(tentativa){
   try{ sb.auth.onAuthStateChange(function(ev, sess){ if(sess) setTimeout(carregarBanco, 50); }); }catch(e){}
 }
 
-/* correção: C/E mostra "Certo/Errado" e o texto deixa de chamar o banco de "caderno" */
+/* correção: C/E mostra "Certo/Errado" (e não "A/B") e o texto deixa de chamar o banco de "caderno" */
+function ehCE(q){ var o = (q && q.options) || []; return !!(q && (q.ce || (o.length === 2 && /^\s*certo\s*$/i.test(semTags(o[0])) && /^\s*errado\s*$/i.test(semTags(o[1]))))); }
+var corrigirCaderno = window.checkQuestion;
+if(typeof corrigirCaderno === 'function'){
+  window.checkQuestion = function(prefix, i){
+    var r = corrigirCaderno.apply(this, arguments);
+    try{
+      var m = mods().find(function(x){ return x.id === prefix; }), q = m && m.questions && m.questions[i], box = document.getElementById('ans_' + prefix + '_' + i);
+      if(q && box && ehCE(q)) box.innerHTML = box.innerHTML.replace(/Gabarito: [A-E]/, 'Gabarito: ' + (q.answer === 'A' ? 'Certo' : 'Errado'));
+    }catch(e){}
+    return r;
+  };
+}
 var corrigirOficial = window.checkOfficialQuestion;
 if(typeof corrigirOficial === 'function'){
   window.checkOfficialQuestion = function(prefix, i){
@@ -116,10 +128,9 @@ if(typeof corrigirOficial === 'function'){
     try{
       var m = mods().find(function(x){ return x.id === prefix; }), q = m && m.official_questions && m.official_questions[i];
       var box = document.getElementById('ans_official_' + prefix + '_' + i);
-      if(q && q.banco && box){
-        box.innerHTML = box.innerHTML
-          .replace(/Gabarito: [A-E]/, 'Gabarito: ' + (q.ce ? (q.answer === 'A' ? 'Certo' : 'Errado') : q.answer))
-          .replace('Comentário do caderno:', 'Fonte:');
+      if(q && box){
+        if(ehCE(q)) box.innerHTML = box.innerHTML.replace(/Gabarito: [A-E]/, 'Gabarito: ' + (q.answer === 'A' ? 'Certo' : 'Errado'));
+        if(q.banco) box.innerHTML = box.innerHTML.replace('Comentário do caderno:', 'Fonte:');
       }
     }catch(e){}
     return r;

@@ -237,7 +237,7 @@ function fecharPainel(){ var p = document.querySelector('.nx-painel-mk'); if(p) 
 function abrirPainel(){
   fecharPainel();
   var d = E().marcas(chave()), lista = (d.marks || []).slice().sort(function(a, b){ return a.t - b.t; }), rc = caixa();
-  var p = document.createElement('aside'); p.className = 'nx-painel-mk'; p.setAttribute('data-nx-skip', ''); p.setAttribute('aria-label', 'Marcações desta página');
+  var p = document.createElement('div'); p.className = 'nx-painel-mk'; p.setAttribute('role', 'complementary'); p.setAttribute('data-nx-skip', ''); p.setAttribute('aria-label', 'Marcações desta página');
   p.innerHTML = '<div class="nx-pmh"><b>Meus grifos desta página</b><button type="button" class="nx-pbtn" data-mkpainel="fechar" aria-label="Fechar">' + IC.x + '</button></div>'
     + (lista.length ? '<ol>' + lista.map(function(m){
       var ok = rc && rc.querySelector('.nx-mk[data-mk="' + m.id + '"]');

@@ -64,6 +64,8 @@ async def main():
             nexoPraticar({}); out.praticar = document.querySelectorAll('.practice-question-card').length; out.sw3 = document.documentElement.scrollWidth;
             const t = document.querySelector('.nx-cut'); t.click(); out.tesoura = t.closest('label.opt').classList.contains('nx-cortada'); t.click();
             home(); out.painel = document.querySelectorAll('.nx-pd').length;
+            nexoLivros(); out.livros = document.querySelectorAll('.lv-livro').length;
+            nexoLivro.abrir('penal_aplicacao'); out.capitulo = document.querySelectorAll('.lv-lateral .lv-parte').length;
             nexoCronograma(); document.querySelector('#nt-form').requestSubmit();
             const st = nexoEstudo.plano(), wk = st.weeks[Object.keys(st.weeks)[0]];
             out.trilha = wk.tarefas.length;
@@ -82,7 +84,7 @@ async def main():
             renderTab(modules.find(m => m.id === 'penal_principios'), 'resumo'); o.marcaFica = document.querySelectorAll('.reading-content .nx-mk').length;
             document.querySelector('[data-mkt="undo"]').click(); o.desfeita = document.querySelectorAll('.reading-content .nx-mk').length;
           } catch (e) { o.erro = String(e); } return o; }"""))
-        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and extra.get('praticar', 0) >= 1 and extra.get('tesoura') is True and extra.get('painel') == 4 and extra.get('trilha', 0) >= 5 and extra.get('trilhaCabe') is True and extra.get('marca', 0) >= 1 and extra.get('marcaFica', 0) >= 1 and extra.get('desfeita') == 0 and max(extra.get('sw1', 0), extra.get('sw2', 0), extra.get('sw3', 0), extra.get('sw4', 0)) <= 400
+        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and extra.get('praticar', 0) >= 1 and extra.get('tesoura') is True and extra.get('painel') == 4 and extra.get('livros') == 4 and extra.get('capitulo', 0) >= 3 and extra.get('trilha', 0) >= 5 and extra.get('trilhaCabe') is True and extra.get('marca', 0) >= 1 and extra.get('marcaFica', 0) >= 1 and extra.get('desfeita') == 0 and max(extra.get('sw1', 0), extra.get('sw2', 0), extra.get('sw3', 0), extra.get('sw4', 0)) <= 400
         falhas += 0 if ok_extra else 1
         print('✓' if ok_extra else '✗', 'interface'.ljust(30), extra)
         await pg.evaluate("() => { try { localStorage.clear(); } catch (e) {} }")
