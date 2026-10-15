@@ -61,7 +61,7 @@ async function sincronizar(){
     var local = plano();
     if(r && !r.error && r.data && r.data.updated_at && (!local.updated_at || r.data.updated_at > local.updated_at)){
       gravar(KP, { plan:r.data.plan && Object.keys(r.data.plan).length ? r.data.plan : null, progress:r.data.progress || {}, weeks:r.data.weeks || {}, updated_at:r.data.updated_at });
-    }else if(local.plan){ await enviarPlano(); }
+    }else if(local.plan || (local.progress && Object.keys(local.progress).length)){ await enviarPlano(); }
     /* marcações: por módulo e aba, vale a mais recente */
     var rm = await sb.from('study_highlights').select('module_id,tab,marks,settings,updated_at').eq('user_id', usuario.id);
     if(rm && !rm.error){

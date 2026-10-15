@@ -471,15 +471,28 @@ function gravarMinhas(lista){
 }
 window.nexoFichas = {
   listar:minhasFichas,
+  estado:function(){ return estado(); },
   criar:function(m, f, v){
     f = String(f || '').trim().slice(0, 600); v = String(v || '').trim().slice(0, 1200); if(!f || !v) return null;
     var c = { id:Date.now().toString(36) + Math.random().toString(36).slice(2, 6), m:m || '', f:f, v:v, criado:Date.now() };
     var l = minhasFichas().slice(); l.push(c); gravarMinhas(l); return c;
   },
-  remover:function(id){ gravarMinhas(minhasFichas().filter(function(c){ return c.id !== id; })); var st = estado(); delete st['u:' + id]; LS.set(FK, st); }
+  remover:function(id){ gravarMinhas(minhasFichas().filter(function(c){ return c.id !== id; })); var st = estado(); delete st['u:' + id]; LS.set(FK, st); var s0 = planoEstudo(); if(s0 && s0.progress && s0.progress.fx){ delete s0.progress.fx['u:' + id]; window.nexoEstudo.salvarPlano(s0); } }
 };
 document.addEventListener('nexo:estudo', function(e){ if(e.detail === 'sincronizado'){ cacheFichas = null; if(cur() === 'flashcards' && !S) window.showFlashcards(); } });
-function estado(){ return LS.get(FK, {}); }
+/* andamento da revisão: fica no aparelho (rápido) e no plano de estudos (sincroniza com a conta).
+   Na leitura, junta os dois e vale a revisão mais recente de cada ficha. */
+function estado(){
+  var a = LS.get(FK, {}), s = planoEstudo(), b = (s && s.progress && s.progress.fx) || {};
+  Object.keys(b).forEach(function(id){ if(!a[id] || (b[id].ult || 0) > (a[id].ult || 0)) a[id] = b[id]; });
+  return a;
+}
+var tFx = null;
+function salvarEstado(st){
+  LS.set(FK, st);
+  clearTimeout(tFx);
+  tFx = setTimeout(function(){ var s = planoEstudo(); if(s && window.nexoEstudo){ s.progress = s.progress || {}; s.progress.fx = estado(); window.nexoEstudo.salvarPlano(s); } }, 800);
+}
 function caixa(st, id){ var r = st[id]; return r ? r.b : 0; }
 function fimDeHoje(){ return inicioDoDia(Date.now()) + DIA; }
 function resumoFichas(ids){
@@ -657,7 +670,7 @@ function avaliar(g){
   if(g === 0){ x.b = 1; x.due = agora; if(!S.refeitas[id]){ S.refeitas[id] = 1; S.fila.push(id); } }
   else if(g === 1){ x.b = Math.max(1, x.b); x.due = agora + Math.max(.5, INTERVALOS[x.b] / 2) * DIA; }
   else { x.b = Math.min(5, x.b + 1); x.due = agora + INTERVALOS[x.b] * DIA; }
-  x.n = (x.n || 0) + 1; x.ult = agora; st[id] = x; LS.set(FK, st);
+  x.n = (x.n || 0) + 1; x.ult = agora; st[id] = x; salvarEstado(st);
   S.res[g]++; registrar({ k:'f', m:c ? c.m : null, g:g });
   S.i++; S.virada = false; desenharSessao();
 }

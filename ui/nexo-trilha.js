@@ -355,6 +355,17 @@ function cartao(t){
     + '<b>' + escH(tituloTarefa(t)) + '</b><small>' + escH(subTarefa(t)) + '</small></button>'
     + (exp ? detalhe(t, d) : '') + '</article>';
 }
+/* aquecimento: o essencial do capítulo antes de ler (estudo) ou para revisar (revisão) */
+function aquecimento(mod, antes){
+  var T = (window.NEXO_TEMAS || {})[mod]; if(!T || !(T.secoes || []).length) return '';
+  var ess = T.secoes.filter(function(x){ return x.rapido && x.rapido.length; }).slice(0, 8).map(function(x){ return '<li><b class="nt-aq-sec">' + x.curto + '</b> ' + x.rapido[0] + '</li>'; }).join('');
+  var peg = []; T.secoes.forEach(function(x){ (x.pegadinhas || []).slice(0, 1).forEach(function(p){ peg.push(p); }); });
+  peg = peg.slice(0, 4).map(function(p){ return '<li>' + p + '</li>'; }).join('');
+  if(!ess && !peg) return '';
+  return '<details class="nt-aquec"' + (antes ? ' open' : '') + '><summary>' + (antes ? 'Aquecimento · 2 minutos antes de ler' : 'Pontos-chave para revisar') + '</summary>'
+    + (ess ? '<p class="nt-aq-lbl">' + (antes ? 'O que você vai encontrar no capítulo' : 'O essencial de cada parte') + '</p><ul>' + ess + '</ul>' : '')
+    + (peg ? '<p class="nt-aq-lbl nt-aq-peg">Pegadinhas que mais caem</p><ul class="nt-aq-pegl">' + peg + '</ul>' : '') + '</details>';
+}
 function detalhe(t, d){
   var u = unidade(t.un), m = t.mod && modulo(t.mod), h = '<div class="nt-det">', abaQ = t.mod && abaQuestoes(t.mod);
   if(u) h += '<p class="nt-prio p' + u.prio + '">' + PRIO_NOME[u.prio] + (u.estimada ? ' (estimativa NEXO; a banca não publica estatística por assunto)' : '') + '</p>';
@@ -368,6 +379,7 @@ function detalhe(t, d){
   }else{
     h += '<p>Este assunto ainda não tem livro digital no NEXO. Estude pelo seu material (livro, PDF ou videoaula), faça um resumo curto e resolva cerca de 10 questões da banca.</p><p class="nt-ed-txt">Do edital: ' + escH((topico(t.top) || {}).nome || '') + '</p>';
   }
+  if(m && (t.tipo === 'estudo' || t.tipo === 'revisao' || t.tipo === 'reforco')) h += aquecimento(t.mod, t.tipo === 'estudo');
   h += '<div class="nt-btns">';
   if(m){
     if(t.tipo !== 'questoes') h += '<button type="button" class="nx-btn small primary" data-nt="estudar" data-id="' + t.id + '" data-tab="resumo">Abrir conteúdo</button>';

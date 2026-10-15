@@ -722,3 +722,13 @@ html[data-theme="dark"]{--rd-key:#7fd6bb;--rd-ref:#8dbcf3;--rd-ref-bg:#1d2a3b;--
 .nx-btn.perigo{color:var(--nx-bad)!important;border-color:var(--nx-bad)!important}
 .nx-pbtn-txt{width:auto!important;padding:0 8px!important;font-size:12px;font-weight:700;white-space:nowrap}
 .nx-pop-ficha label{display:grid;gap:4px;margin-bottom:6px}
+
+/* ---------- Aquecimento na trilha ---------- */
+.nt-aquec{margin:10px 0;border:1px solid var(--nx-line);border-left:3px solid var(--rd-h,var(--nx-accent));border-radius:10px;background:var(--nx-surface-2);padding:10px 12px}
+.nt-aquec summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--rd-h,var(--nx-accent))}
+.nt-aquec ul{margin:4px 0 6px;padding-left:18px;display:grid;gap:5px;font-size:13.5px;line-height:1.5;color:var(--nx-ink)}
+.nt-aquec b{color:var(--rd-key,var(--nx-accent))}
+.nt-aq-sec{display:inline-block;font-size:11px;font-weight:800;padding:0 6px;border-radius:5px;background:var(--nx-surface);border:1px solid var(--nx-line);color:var(--nx-ink-2)!important;margin-right:2px}
+.nt-aq-lbl{margin:10px 0 2px;font-size:11.5px;font-weight:700;color:var(--nx-muted)}
+.nt-aq-peg{color:var(--rd-trap,#b4372f)}
+.nt-aq-pegl b{color:var(--rd-trap,#b4372f)}

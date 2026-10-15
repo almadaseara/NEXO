@@ -333,7 +333,7 @@ function melhorarPainel(){
   var ev = LS.get('nexo_eventos', []).filter(function(e){ return e && e.k === 'q'; });
   var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
   var evHoje = ev.filter(function(e){ return e.t >= hoje.getTime(); }), okHoje = evHoje.filter(function(e){ return e.ok; }).length;
-  var fich = LS.get('nexo_fichario', {}), agora = Date.now();
+  var fich = window.nexoFichas && window.nexoFichas.estado ? window.nexoFichas.estado() : LS.get('nexo_fichario', {}), agora = Date.now();
   var vencidas = Object.keys(fich).filter(function(k){ return fich[k] && fich[k].due != null && fich[k].due <= agora; }).length;
 
   /* 4º cartão: hoje, a partir do registro de estudo */
