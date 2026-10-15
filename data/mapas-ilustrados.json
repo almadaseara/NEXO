@@ -95,49 +95,53 @@
 ],
 "penal_adm_func": [
 {
-"arquivo": "assets/mapas/penal_adm_func-1.webp",
+"arquivo": "assets/mapas/penal_adm_visao_geral.webp?v=1",
+"titulo": "Crimes contra a Administração Pública — visão geral (arts. 312 a 337-A)"
+},
+{
+"arquivo": "assets/mapas/penal_adm_func-1.webp?v=2",
 "titulo": "Crimes contra a Administração I — Funcionário Público — parte 1 de 2: Funcionário público e regras gerais + Peculatos e crimes de sistema"
 },
 {
-"arquivo": "assets/mapas/penal_adm_func-2.webp",
+"arquivo": "assets/mapas/penal_adm_func-2.webp?v=2",
 "titulo": "Crimes contra a Administração I — Funcionário Público — parte 2 de 2: Concussão, corrupção passiva e prevaricação + Demais crimes funcionais"
 }
 ],
 "penal_principios": [
 {
-"arquivo": "assets/mapas/penal_principios-1.webp",
+"arquivo": "assets/mapas/penal_principios-1.webp?v=2",
 "titulo": "Princípios e Fundamentos do Direito Penal — parte 1 de 3: Legalidade e anterioridade + Princípios limitadores do poder de punir"
 },
 {
-"arquivo": "assets/mapas/penal_principios-2.webp",
+"arquivo": "assets/mapas/penal_principios-2.webp?v=2",
 "titulo": "Princípios e Fundamentos do Direito Penal — parte 2 de 3: Princípio da insignificância + Conceito e fontes do Direito Penal"
 },
 {
-"arquivo": "assets/mapas/penal_principios-3.webp",
+"arquivo": "assets/mapas/penal_principios-3.webp?v=2",
 "titulo": "Princípios e Fundamentos do Direito Penal — parte 3 de 3: Vedações constitucionais (CF, art. 5º, XLII a XLIV)"
 }
 ],
 "penal_erros": [
 {
-"arquivo": "assets/mapas/penal_erros-1.webp",
+"arquivo": "assets/mapas/penal_erros-1.webp?v=2",
 "titulo": "Erro de Tipo e Erro de Proibição — parte 1 de 3: Erro de tipo essencial + Descriminantes putativas, erro provocado e delito putativo"
 },
 {
-"arquivo": "assets/mapas/penal_erros-2.webp",
+"arquivo": "assets/mapas/penal_erros-2.webp?v=2",
 "titulo": "Erro de Tipo e Erro de Proibição — parte 2 de 3: Erros acidentais: pessoa, objeto e nexo causal + Erro na execução e resultado diverso do pretendido"
 },
 {
-"arquivo": "assets/mapas/penal_erros-3.webp",
+"arquivo": "assets/mapas/penal_erros-3.webp?v=2",
 "titulo": "Erro de Tipo e Erro de Proibição — parte 3 de 3: Erro de proibição"
 }
 ],
 "penal_concurso": [
 {
-"arquivo": "assets/mapas/penal_concurso-1.webp",
+"arquivo": "assets/mapas/penal_concurso-1.webp?v=2",
 "titulo": "Concurso de Pessoas — parte 1 de 4: Conceito, teorias e espécies + Requisitos do concurso de pessoas"
 },
 {
-"arquivo": "assets/mapas/penal_concurso-2.webp",
+"arquivo": "assets/mapas/penal_concurso-2.webp?v=2",
 "titulo": "Concurso de Pessoas — parte 2 de 4: Autoria, coautoria e autoria colateral + Autoria mediata"
 },
 {
