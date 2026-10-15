@@ -815,3 +815,15 @@ html[data-theme="dark"] .rv-bloco{border-color:#2c3e55}
 @media (max-width:760px){.rv{padding:10px}.rv-grade,.rv-rodape{grid-template-columns:1fr}.rv-comp.rv-c3{grid-template-columns:1fr}}
 @media (max-width:420px){.rv-pontos,.rv-comp.rv-c2{grid-template-columns:1fr}.rv-selo{display:none}}
 .rv-topo>div{flex:1;min-width:0;text-align:left}
+/* ilustrações da revisão visual */
+.rv .nx-ilu{display:block;width:100%;height:100%}
+.rv-fig{display:block;width:88px;height:88px;margin:2px auto 6px}
+.rv-comp .rv-fig{width:96px;height:96px}
+.rv-selo{width:64px!important;height:64px!important;padding:6px;box-sizing:border-box}
+.rv-selo .nx-ilu{width:100%;height:100%}
+.rv-pilha{flex:none;width:70px;height:70px}
+.rv-lamp .nx-ilu{width:34px;height:34px}
+.rv-card p{text-align:left}
+html[data-theme="dark"] .rv-fig,html[data-theme="dark"] .rv-pilha{filter:drop-shadow(0 0 0 transparent)}
+html[data-theme="dark"] .rv-card .rv-fig{background:rgba(255,255,255,.92);border-radius:12px;padding:4px;box-sizing:border-box}
+@media (max-width:420px){.rv-pilha{display:none}.rv-fig{width:64px;height:64px}}

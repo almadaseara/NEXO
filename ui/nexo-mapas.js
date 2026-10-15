@@ -13,6 +13,12 @@ function curto(h, n){
   if(ponto > n * .55) return p.slice(0, ponto + 1);
   return p.slice(0, p.lastIndexOf(' ')) + '…';
 }
+function ILU(){ return window.NEXO_ILUSTRA; }
+function figura(texto, i, usados){
+  var L = ILU(); if(!L) return '';
+  var n = L.escolher(texto, i, usados); if(usados) usados.push(n);
+  return '<span class="rv-fig">' + L.desenho(n) + '</span>';
+}
 function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
 
 /* ícones simples (traço), escolhidos pelo assunto do bloco */
@@ -47,15 +53,16 @@ var TONS = ['azul', 'laranja', 'verde', 'roxo'];
 
 function blocoQuadro(q){
   /* quadro com 2 ou 3 colunas de comparação vira cartões lado a lado */
-  var cols = q.head.slice(1), linhas = q.rows.slice(0, 5);
+  var cols = q.head.slice(1), linhas = q.rows.slice(0, 5), usados = [];
   return '<div class="rv-comp rv-c' + cols.length + '">' + cols.map(function(c, j){
-    return '<div class="rv-card rv-' + TONS[j % TONS.length] + '"><b class="rv-card-h">' + esc(txt(c)) + '</b><ul>'
+    var tudo = txt(c) + ' ' + linhas.map(function(r){ return txt(r[j + 1]); }).join(' ');
+    return '<div class="rv-card rv-' + TONS[j % TONS.length] + '"><b class="rv-card-h">' + esc(txt(c)) + '</b>' + figura(tudo, j, usados) + '<ul>'
       + linhas.map(function(r){ return '<li><span>' + esc(txt(r[0])) + '</span>' + esc(curto(r[j + 1], 110)) + '</li>'; }).join('') + '</ul></div>';
   }).join('') + '</div>';
 }
 function blocoPontos(s){
-  var it = (s.rapido || []).slice(0, 4);
-  return '<div class="rv-pontos">' + it.map(function(r, j){ return '<div class="rv-card rv-' + TONS[j % TONS.length] + '"><p>' + r + '</p></div>'; }).join('') + '</div>';
+  var it = (s.rapido || []).slice(0, 4), usados = [];
+  return '<div class="rv-pontos">' + it.map(function(r, j){ return '<div class="rv-card rv-' + TONS[j % TONS.length] + '">' + figura(txt(r), j, usados) + '<p>' + r + '</p></div>'; }).join('') + '</div>';
 }
 function bloco(s, i){
   var usaQuadro = s.quadro && s.quadro.head && s.quadro.head.length >= 3 && s.quadro.head.length <= 4 && s.quadro.rows && s.quadro.rows.length;
@@ -68,14 +75,14 @@ function bloco(s, i){
 function macete(T){
   var ds = (T.cards || []).filter(function(c){ return c.tipo === 'distincao' || c.tipo === 'numero'; }).slice(0, 3);
   if(!ds.length) return '';
-  return '<section class="rv-macete"><h3><span class="rv-lamp">' + IC.lampada + '</span>Macete</h3><ul>'
+  return '<section class="rv-macete"><h3><span class="rv-lamp">' + (ILU() ? ILU().desenho('lampada') : IC.lampada) + '</span>Macete</h3><ul>'
     + ds.map(function(c){ return '<li><span class="rv-ok">' + IC.check + '</span><span><b>' + esc(curto(c.f, 90)) + '</b> ' + esc(curto(c.v, 150)) + '</span></li>'; }).join('')
     + '</ul><span class="rv-nota">Não confunda!</span></section>';
 }
 function revisaoRapida(T){
   var it = []; (T.secoes || []).forEach(function(s){ if(s.rapido && s.rapido[0]) it.push(s.rapido[0]); });
   it = it.slice(0, 7); if(!it.length) return '';
-  return '<section class="rv-rapida"><h3><span class="rv-lamp">' + IC.foguete + '</span>Revisão rápida</h3><ul>'
+  return '<section class="rv-rapida"><h3><span class="rv-lamp">' + (ILU() ? ILU().desenho('foguete') : IC.foguete) + '</span>Revisão rápida</h3><ul>'
     + it.map(function(r){ return '<li><span class="rv-ok">' + IC.check + '</span><span>' + esc(curto(r, 140)) + '</span></li>'; }).join('') + '</ul></section>';
 }
 function disciplina(m){
@@ -88,7 +95,7 @@ function revisaoVisual(m){
   var d = disciplina(m).toUpperCase(), p = d.split(' '), ult = p.pop();
   var tom = /MEDICINA/.test(d) ? 'ml' : /PENAL/.test(d) ? 'dp' : /ADMINISTRATIVO/.test(d) ? 'da' : 'dc';
   return '<div class="rv rv-' + tom + '" role="region" aria-label="Revisão visual do capítulo">'
-    + '<div class="rv-topo"><span class="rv-selo">' + icone(T.meta && T.meta.tema || m.title, 0) + '</span><div><h2>' + esc(p.join(' ')) + ' <em>' + esc(ult) + '</em> — Revisão visual</h2><p>' + esc(txt((T.meta && T.meta.tema) || m.title)) + '</p></div></div>'
+    + '<div class="rv-topo"><span class="rv-selo">' + (ILU() ? ILU().desenho({ ml:'caduceu', dp:'balanca', da:'predio', dc:'livro' }[tom]) : icone(T.meta && T.meta.tema || m.title, 0)) + '</span><div><h2>' + esc(p.join(' ')) + ' <em>' + esc(ult) + '</em> — Revisão visual</h2><p>' + esc(txt((T.meta && T.meta.tema) || m.title)) + '</p></div>' + (ILU() ? '<span class="rv-pilha">' + ILU().desenho('livros') + '</span>' : '') + '</div>'
     + '<div class="rv-grade">' + T.secoes.map(bloco).join('') + '</div>'
     + '<div class="rv-rodape">' + macete(T) + revisaoRapida(T) + '</div>'
     + '<p class="rv-fonte">Gerado a partir do capítulo do livro digital (conferido em ' + esc((T.meta && T.meta.atualizado) || '') + '). Os detalhes e a lei seca estão nas outras abas.</p></div>';
