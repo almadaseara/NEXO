@@ -681,6 +681,7 @@ function graficoBarras(id, bins, passo, series, fmtVal, tip){
 }
 function desenharGrafico(id){
   var box = document.getElementById(id), cfg = GRAFICOS[id]; if(!box || !cfg) return;
+  if(cfg.q) return desenharQuestoes(box, cfg);
   var bins = cfg.bins, passo = cfg.passo, series = cfg.series;
   var W = Math.max(280, Math.round(box.clientWidth || 600)), H = W < 420 ? 190 : 230, L = 34, R = 6, Tp = 10, B = 26, pw = W - L - R, ph = H - Tp - B;
   var tot = bins.map(function(b){ return series.reduce(function(s, se){ return s + se.val(b); }, 0); });
@@ -717,10 +718,178 @@ function desenharGrafico(id){
   });
   svg.addEventListener('mouseleave', function(){ tipEl.classList.remove('on'); });
 }
+
+/* ---------- gráfico de questões: 5 modelos, com troca ---------- */
+var TIPOS_Q = [['barras', 'Barras'], ['linha', 'Linhas'], ['area', 'Área'], ['taxa', 'Taxa de acerto'], ['pizza', 'Pizza 3D']];
+var tipoQ = LS.get('nexo_dz_grafico', 'barras');
+function graficoQuestoes(bins, passo){
+  GRAFICOS['dz-q'] = { q:true, bins:bins, passo:passo };
+  return '<div class="dz-switch nx-seg" role="group" aria-label="Modelo do gráfico">' + TIPOS_Q.map(function(t){
+      return '<button type="button" data-dzq="' + t[0] + '" aria-pressed="' + (t[0] === tipoQ) + '">' + t[1] + '</button>';
+    }).join('') + '</div><div class="dz-legend" id="dz-q-leg"></div><div class="dz-chart" id="dz-q"></div><p class="dz-cap" id="dz-q-cap"></p>';
+}
+window.nexoGraficoQ = function(t){
+  tipoQ = t; LS.set('nexo_dz_grafico', t);
+  $$('[data-dzq]').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.dzq === t)); });
+  desenharGrafico('dz-q');
+};
+document.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('[data-dzq]'); if(b) window.nexoGraficoQ(b.dataset.dzq); });
+function legendaQ(tipo){
+  if(tipo === 'taxa') return '<span><i style="background:var(--nx-accent)"></i>Taxa de acerto</span><span><i class="dz-dash"></i>Nota mínima da PC-BA (70%)</span>';
+  return '<span><i style="background:var(--nx-good)"></i>Acertos</span><span><i style="background:var(--nx-bad)"></i>Erros</span>';
+}
+function eixoX(bins, passo, L, bw, H, pw){
+  var g = '', cada = Math.max(1, Math.ceil(bins.length / Math.max(2, Math.floor(pw / 58))));
+  bins.forEach(function(b, i){
+    if(i === bins.length - 1 || (i % cada === 0 && bins.length - 1 - i >= cada * .7))
+      g += '<text class="ax" x="' + (L + i * bw + bw / 2).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle">' + rotuloEixo(b, passo) + '</text>';
+  });
+  return g;
+}
+function grade(L, R, W, Tp, ph, max, fmt){
+  var g = '';
+  [0, .5, 1].forEach(function(f){
+    var y = Tp + ph - f * ph;
+    g += '<line class="' + (f === 0 ? 'base' : 'grid') + '" x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '"/>';
+    g += '<text class="ax" x="' + (L - 6) + '" y="' + (y + 3.5) + '" text-anchor="end">' + fmt(max * f) + '</text>';
+  });
+  return g;
+}
+function dicaQ(b, nome){ var t = b.ok + b.err; return '<b>' + nome + '</b><br>' + b.ok + ' acertos · ' + b.err + ' erros' + (t ? '<br>' + Math.round(b.ok / t * 100) + '% de acerto' : '<br>sem questões'); }
+function ligarDica(box, alvo, texto){
+  var svg = box.querySelector('svg'), tipEl = box.querySelector('.dz-tip'), xh = box.querySelector('.xh');
+  svg.addEventListener('mousemove', function(e){
+    var r = e.target.closest(alvo); if(!r){ tipEl.classList.remove('on'); if(xh) xh.style.opacity = 0; return; }
+    var br = box.getBoundingClientRect(), rr = r.getBoundingClientRect();
+    tipEl.innerHTML = texto(r);
+    var x = (r.dataset.tx ? +r.dataset.tx * br.width / +svg.getAttribute('width') : rr.left - br.left + rr.width / 2);
+    var y = (r.dataset.ty ? +r.dataset.ty * br.width / +svg.getAttribute('width') : rr.top - br.top + 8);
+    tipEl.style.left = Math.min(Math.max(x, 80), br.width - 80) + 'px'; tipEl.style.top = y + 'px';
+    tipEl.classList.add('on');
+    if(xh && r.dataset.cx){ xh.setAttribute('x1', r.dataset.cx); xh.setAttribute('x2', r.dataset.cx); xh.style.opacity = 1; }
+  });
+  svg.addEventListener('mouseleave', function(){ tipEl.classList.remove('on'); if(xh) xh.style.opacity = 0; });
+}
+function desenharQuestoes(box, cfg){
+  var bins = cfg.bins, passo = cfg.passo, tipo = tipoQ;
+  var leg = document.getElementById('dz-q-leg'), cap = document.getElementById('dz-q-cap');
+  if(leg) leg.innerHTML = legendaQ(tipo);
+  var W = Math.max(280, Math.round(box.clientWidth || 600)), H = W < 420 ? 210 : 250, L = 36, R = 8, Tp = 12, B = 26, pw = W - L - R, ph = H - Tp - B;
+  var bw = pw / bins.length, g = '', okT = 0, errT = 0;
+  bins.forEach(function(b){ okT += b.ok; errT += b.err; });
+  var cxs = bins.map(function(b, i){ return L + i * bw + bw / 2; });
+  var hits = function(){ return bins.map(function(b, i){ return '<rect class="hit" data-i="' + i + '" data-cx="' + cxs[i].toFixed(1) + '" x="' + (L + i * bw).toFixed(1) + '" y="' + Tp + '" width="' + bw.toFixed(1) + '" height="' + ph + '" fill="transparent"/>'; }).join(''); };
+  var fim = function(svgInner, h){
+    box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + (h || H) + '" width="' + W + '" height="' + (h || H) + '" role="img" aria-label="Gráfico de questões: ' + okT + ' acertos e ' + errT + ' erros no período">' + svgInner + '</svg><div class="dz-tip" role="status"></div>';
+  };
+  if(cap) cap.textContent = '';
+
+  if(tipo === 'pizza'){
+    var tot = okT + errT, H2 = W < 420 ? 260 : 290;
+    var rx = Math.min(W * .3, 170), ry = rx * .52, dep = Math.max(16, rx * .15), cx = W < 420 ? W / 2 : W * .4, cy = H2 / 2 - dep / 2 - 4;
+    var fatias = [{ n:okT, cor:'var(--nx-good)', lado:'#087a08', nome:'Acertos' }, { n:errT, cor:'var(--nx-bad)', lado:'#9a2a2a', nome:'Erros' }].filter(function(f){ return f.n; });
+    var fOk = okT / tot, a0 = Math.PI / 3 - 2 * Math.PI * fOk - Math.PI * (1 - fOk); /* gira para a fatia de erros ficar à frente, à direita */
+    while(a0 < 0) a0 += 2 * Math.PI;
+    var P = function(a, ox, oy, dy){ return [(cx + ox + rx * Math.cos(a)).toFixed(2), (cy + oy + (dy || 0) + ry * Math.sin(a)).toFixed(2)]; };
+    var arco = function(a1, a2, ox, oy, dy){ var p = P(a2, ox, oy, dy); return 'A' + rx + ' ' + ry + ' 0 ' + (a2 - a1 > Math.PI ? 1 : 0) + ' 1 ' + p[0] + ' ' + p[1]; };
+    var arcoVolta = function(a2, a1, ox, oy, dy){ var p = P(a1, ox, oy, dy); return 'A' + rx + ' ' + ry + ' 0 ' + (a2 - a1 > Math.PI ? 1 : 0) + ' 0 ' + p[0] + ' ' + p[1]; };
+    var paredes = '', topos = '', rotulos = '', a = a0;
+    fatias.forEach(function(f, k){
+      var ang = f.n / tot * Math.PI * 2, b1 = a, b2 = a + ang, meio = (b1 + b2) / 2;
+      var ex = fatias.length > 1 ? 7 : 0, ox = Math.cos(meio) * ex, oy = Math.sin(meio) * ex * .55;
+      /* parede frontal: só a parte do arco voltada para baixo (sen > 0) aparece */
+      var segs = [];
+      for(var t = 0; t < 2; t++){
+        var lo = Math.max(b1, t * 2 * Math.PI), hi = Math.min(b2, t * 2 * Math.PI + Math.PI);
+        if(hi > lo) segs.push([lo, hi]);
+      }
+      segs.forEach(function(sg){
+        var p1 = P(sg[0], ox, oy), q2 = P(sg[1], ox, oy, dep);
+        paredes += '<path d="M' + p1.join(' ') + ' ' + arco(sg[0], sg[1], ox, oy) + ' L' + q2.join(' ') + ' ' + arcoVolta(sg[1], sg[0], ox, oy, dep) + ' Z" style="fill:' + f.lado + '"/>';
+      });
+      /* paredes laterais do corte (visíveis quando a fatia está separada) */
+      if(fatias.length > 1){
+        [b1, b2].forEach(function(bb){
+          var c0 = [cx + ox, cy + oy], pe = P(bb, ox, oy);
+          paredes += '<path d="M' + c0.join(' ') + ' L' + pe.join(' ') + ' L' + pe[0] + ' ' + (+pe[1] + dep) + ' L' + c0[0] + ' ' + (c0[1] + dep) + ' Z" style="fill:' + f.lado + '"/>';
+        });
+      }
+      var s1 = P(b1, ox, oy), topo = fatias.length > 1
+        ? 'M' + (cx + ox) + ' ' + (cy + oy) + ' L' + s1.join(' ') + ' ' + arco(b1, b2, ox, oy) + ' Z'
+        : 'M' + P(0, 0, 0).join(' ') + ' ' + arco(0, Math.PI, 0, 0) + ' ' + arco(Math.PI, 2 * Math.PI, 0, 0) + ' Z';
+      var pct = Math.round(f.n / tot * 100);
+      topos += '<path class="pz" d="' + topo + '" data-k="' + k + '" data-tx="' + (cx + ox + Math.cos(meio) * rx * .55).toFixed(1) + '" data-ty="' + (cy + oy + Math.sin(meio) * ry * .55).toFixed(1) + '" style="fill:' + f.cor + ';stroke:var(--nx-surface);stroke-width:2"/>';
+      var lx = cx + ox + Math.cos(meio) * (rx + 22), ly = cy + oy + Math.sin(meio) * (ry + 18) + (Math.sin(meio) > 0 ? dep : 0);
+      rotulos += '<text class="pz-l" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + (Math.cos(meio) >= 0 ? 'start' : 'end') + '"><tspan class="pz-v">' + pct + '%</tspan><tspan x="' + lx.toFixed(1) + '" dy="15">' + f.n + ' ' + f.nome.toLowerCase() + '</tspan></text>';
+      a = b2;
+    });
+    var lado = W >= 420 ? '<g class="pz-side"><text x="' + (W * .74) + '" y="' + (cy - 14) + '" class="pz-big">' + Math.round(okT / tot * 100) + '%</text><text x="' + (W * .74) + '" y="' + (cy + 10) + '" class="ax">de acerto em ' + tot + ' questões</text><text x="' + (W * .74) + '" y="' + (cy + 30) + '" class="ax">' + (okT / tot >= .7 ? 'acima' : 'abaixo') + ' dos 70% da PC-BA</text></g>' : '';
+    fim('<ellipse cx="' + cx + '" cy="' + (cy + dep + ry * .55) + '" rx="' + (rx * .92) + '" ry="' + (ry * .32) + '" class="pz-sh"/>' + paredes + topos + rotulos + lado, H2);
+    ligarDica(box, '.pz', function(el){ var f = fatias[+el.dataset.k]; return '<b>' + f.nome + '</b><br>' + f.n + ' de ' + tot + ' questões (' + Math.round(f.n / tot * 100) + '%)'; });
+    if(cap) cap.textContent = 'Total do período: ' + okT + ' acertos e ' + errT + ' erros.';
+    return;
+  }
+
+  if(tipo === 'taxa'){
+    var pts = [], dots = '';
+    bins.forEach(function(b, i){ var t = b.ok + b.err; if(t) pts.push([cxs[i], Tp + ph - (b.ok / t) * ph, i, Math.round(b.ok / t * 100)]); });
+    g += grade(L, R, W, Tp, ph, 100, function(v){ return Math.round(v) + '%'; });
+    var y70 = Tp + ph - .7 * ph;
+    g += '<line class="ref" x1="' + L + '" x2="' + (W - R) + '" y1="' + y70 + '" y2="' + y70 + '"/><text class="ax ref-t" x="' + (W - R) + '" y="' + (y70 - 5) + '" text-anchor="end">70%</text>';
+    g += '<line class="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + (Tp + ph) + '"/>';
+    if(pts.length > 1) g += '<path class="ln" d="M' + pts.map(function(p){ return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L') + '" style="stroke:var(--nx-accent)"/>';
+    pts.forEach(function(p){ dots += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="4" class="dt" style="fill:' + (p[3] >= 70 ? 'var(--nx-accent)' : 'var(--nx-bad)') + '"/>'; });
+    fim(g + dots + eixoX(bins, passo, L, bw, H, pw) + hits());
+    ligarDica(box, '.hit', function(el){ return dicaQ(bins[+el.dataset.i], nomeBin(bins[+el.dataset.i], passo)); });
+    var acima = pts.filter(function(p){ return p[3] >= 70; }).length;
+    if(cap) cap.textContent = pts.length ? acima + ' de ' + pts.length + ' ' + (passo === 1 ? 'dias' : 'períodos') + ' ficaram em 70% ou mais. Pontos vermelhos ficaram abaixo.' : '';
+    return;
+  }
+
+  var tot2 = bins.map(function(b){ return tipo === 'area' || tipo === 'barras' ? b.ok + b.err : Math.max(b.ok, b.err); });
+  var max = niceMax(Math.max.apply(null, tot2.concat([0])) || 1);
+  var Y = function(v){ return Tp + ph - v / max * ph; };
+  g += grade(L, R, W, Tp, ph, max, function(v){ return Math.round(v); });
+
+  if(tipo === 'barras'){
+    var barW = Math.max(3, Math.min(30, bw * .62));
+    bins.forEach(function(b, i){
+      var x = L + i * bw + (bw - barW) / 2, y = Tp + ph;
+      [[b.ok, 'var(--nx-good)'], [b.err, 'var(--nx-bad)']].forEach(function(sv){
+        if(!sv[0]) return; var h = Math.max(2, sv[0] / max * ph); y -= h;
+        g += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + Math.max(1, h - 2).toFixed(1) + '" rx="2.5" style="fill:' + sv[1] + '"/>';
+      });
+    });
+  }else if(tipo === 'linha'){
+    g += '<line class="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + (Tp + ph) + '"/>';
+    [['ok', 'var(--nx-good)'], ['err', 'var(--nx-bad)']].forEach(function(sv){
+      g += '<path class="ln" d="M' + bins.map(function(b, i){ return cxs[i].toFixed(1) + ' ' + Y(b[sv[0]]).toFixed(1); }).join(' L') + '" style="stroke:' + sv[1] + '"/>';
+      if(bins.length <= 45) bins.forEach(function(b, i){ g += '<circle cx="' + cxs[i].toFixed(1) + '" cy="' + Y(b[sv[0]]).toFixed(1) + '" r="3.5" class="dt" style="fill:' + sv[1] + '"/>'; });
+    });
+  }else if(tipo === 'area'){
+    g += '<line class="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + (Tp + ph) + '"/>';
+    var base = Tp + ph, topoOk = bins.map(function(b, i){ return [cxs[i], Y(b.ok)]; }), topoTot = bins.map(function(b, i){ return [cxs[i], Y(b.ok + b.err)]; });
+    var caminho = function(pts){ return pts.map(function(p){ return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L'); };
+    g += '<path d="M' + cxs[0].toFixed(1) + ' ' + base + ' L' + caminho(topoOk) + ' L' + cxs[cxs.length - 1].toFixed(1) + ' ' + base + ' Z" style="fill:var(--nx-good);fill-opacity:.85"/>';
+    g += '<path d="M' + caminho(topoOk) + ' L' + caminho(topoTot.slice().reverse()) + ' Z" style="fill:var(--nx-bad);fill-opacity:.8"/>';
+    g += '<path d="M' + caminho(topoOk) + '" style="fill:none;stroke:var(--nx-surface);stroke-width:2"/>';
+  }
+  fim(g + eixoX(bins, passo, L, bw, H, pw) + hits());
+  ligarDica(box, '.hit', function(el){ return dicaQ(bins[+el.dataset.i], nomeBin(bins[+el.dataset.i], passo)); });
+}
 function desenharGraficos(){ Object.keys(GRAFICOS).forEach(desenharGrafico); }
 var redimT = null;
 window.addEventListener('resize', function(){ if(cur() !== 'desempenho') return; clearTimeout(redimT); redimT = setTimeout(desenharGraficos, 120); });
 
+var dzAbertas = LS.get('nexo_dz_abertas', {});
+document.addEventListener('click', function(e){
+  var b = e.target.closest && (e.target.closest('[data-dztog]') || ((e.target.closest('tr.disc') || {}).querySelector || function(){ return null; }).call(e.target.closest('tr.disc'), '[data-dztog]')); if(!b) return;
+  var k = b.dataset.dztog, abrir = b.getAttribute('aria-expanded') !== 'true';
+  b.setAttribute('aria-expanded', String(abrir));
+  $$('tr[data-dzg="' + k + '"]').forEach(function(tr){ tr.hidden = !abrir; });
+  if(abrir) dzAbertas[k] = 1; else delete dzAbertas[k];
+  LS.set('nexo_dz_abertas', dzAbertas);
+});
 window.nexoDesempenho = function(p){
   GRAFICOS = {};
   if(p) { periodo = p; LS.set('nexo_dz_periodo', p); }
@@ -751,10 +920,7 @@ window.nexoDesempenho = function(p){
     + '<div class="dz-stat"><div class="v">' + f.length + '</div><div class="k">Fichas revisadas</div><div class="d">' + fg[2] + ' acertei · ' + fg[1] + ' hesitei · ' + fg[0] + ' errei</div></div>'
     + '<div class="dz-stat"><div class="v">' + (ms ? fmtTempo(ms) : '0 min') + '</div><div class="k">Tempo cronometrado</div><div class="d">' + (seq ? 'Sequência de ' + seq + (seq === 1 ? ' dia' : ' dias') + ' com estudo' : 'Use o cronômetro do topo para medir') + '</div></div></div>';
 
-  var gQ = q.length ? '<div class="dz-legend"><span><i style="background:var(--nx-good)"></i>Acertos</span><span><i style="background:var(--nx-bad)"></i>Erros</span></div>'
-    + graficoBarras('dz-q', cx.bins, cx.passo, [{ cor:'var(--nx-good)', val:function(b){ return b.ok; } }, { cor:'var(--nx-bad)', val:function(b){ return b.err; } }],
-      function(v){ return Math.round(v); },
-      function(b, nome){ var t = b.ok + b.err; return '<b>' + nome + '</b><br>' + b.ok + ' acertos · ' + b.err + ' erros' + (t ? '<br>' + Math.round(b.ok / t * 100) + '% de acerto' : ''); })
+  var gQ = q.length ? graficoQuestoes(cx.bins, cx.passo)
     : '<div class="nx-empty"><b>Nenhuma questão respondida neste período</b>Responda questões dentro dos módulos ou em Praticar questões e o resultado aparece aqui.<br><button type="button" class="nx-btn primary" onclick="openLibrary(\'quest\')">Praticar questões</button></div>';
   var gT = ms ? graficoBarras('dz-t', cx.bins, cx.passo, [{ cor:'var(--nx-accent)', val:function(b){ return b.ms / 60000; } }],
       function(v){ return v >= 60 ? Math.round(v / 60) + 'h' : Math.round(v) + 'm'; },
@@ -769,9 +935,12 @@ window.nexoDesempenho = function(p){
     var d = discInfo(nome), ids = folhas(['', arvoreDe(nome)]).filter(function(id){ return porMod[id]; });
     if(!ids.length) return;
     var a = ids.reduce(function(s, id){ s.ok += porMod[id].ok; s.err += porMod[id].err; return s; }, { ok:0, err:0 });
+    var dk = d.id, aberto = !!dzAbertas[dk];
     var linha = function(cls, nomeL, r, id){
-      var t = r.ok + r.err, p = Math.round(r.ok / t * 100);
-      return '<tr class="' + cls + '"' + (cls === 'disc' ? ' style="--disc:' + d.cor + '"' : '') + '><td>' + (id ? '<button type="button" class="lk" onclick="openModule(\'' + id + '\')">' + escH(nomeL) + '</button>' : escH(nomeL)) + '</td>'
+      var t = r.ok + r.err, p = Math.round(r.ok / t * 100), nome1;
+      if(cls === 'disc') nome1 = '<button type="button" class="dz-toggle" data-dztog="' + dk + '" aria-expanded="' + aberto + '" aria-controls="dzg-' + dk + '"><span class="nx-caret"></span>' + escH(nomeL) + ' <small>' + ids.length + (ids.length === 1 ? ' assunto' : ' assuntos') + '</small></button>';
+      else nome1 = '<button type="button" class="lk" onclick="openModule(\'' + id + '\')">' + escH(nomeL) + '</button>';
+      return '<tr class="' + cls + '"' + (cls === 'disc' ? ' style="--disc:' + d.cor + '"' : ' data-dzg="' + dk + '"' + (aberto ? '' : ' hidden')) + '><td>' + nome1 + '</td>'
         + '<td class="n">' + t + '</td><td class="n dz-hide-sm">' + r.ok + '</td><td class="n dz-hide-sm">' + r.err + '</td><td class="n"><span class="dz-pct">' + p + '%</span></td>'
         + '<td style="width:24%"><div class="dz-bar" role="img" aria-label="' + p + '% de acerto"><i style="width:' + p + '%;background:var(--nx-good)"></i><i style="width:' + (100 - p) + '%;background:var(--nx-bad)"></i></div></td></tr>';
     };
@@ -803,9 +972,9 @@ window.nexoDesempenho = function(p){
   view().innerHTML = '<div class="nx-page">'
     + '<div class="nx-head"><div><h1>Desempenho</h1><p>Seu histórico de questões, fichas e tempo de estudo neste navegador.</p></div>' + seg + '</div>'
     + stats
-    + '<div class="dz-grid"><section class="nx-panel"><h2>Questões por ' + (cx.passo === 1 ? 'dia' : cx.passo === 7 ? 'semana' : 'mês') + '</h2><p class="nx-sub">Acertos e erros em cada ' + (cx.passo === 1 ? 'dia' : cx.passo === 7 ? 'semana' : 'mês') + ' do período.</p>' + gQ + '</section>'
+    + '<div class="dz-grid"><section class="nx-panel"><div class="dz-phead"><div><h2>Questões por ' + (cx.passo === 1 ? 'dia' : cx.passo === 7 ? 'semana' : 'mês') + '</h2><p class="nx-sub">Acertos e erros no período. Troque o modelo do gráfico ao lado.</p></div></div>' + gQ + '</section>'
     + '<section class="nx-panel"><h2>Tempo de estudo</h2><p class="nx-sub">Minutos medidos pelo cronômetro.</p>' + gT + '</section></div>'
-    + '<div class="dz-grid"><section class="nx-panel"><h2>Por disciplina e assunto</h2><p class="nx-sub">Clique no assunto para abrir o módulo.</p>' + tabela + '</section>'
+    + '<div class="dz-grid"><section class="nx-panel"><h2>Por disciplina e assunto</h2><p class="nx-sub">Clique na disciplina para ver os assuntos e no assunto para abrir o módulo.</p>' + tabela + '</section>'
     + '<div style="display:grid;gap:16px;align-content:start"><section class="nx-panel"><h2>Onde focar</h2><p class="nx-sub">Assuntos com menor taxa de acerto no período.</p>' + foco + '</section>'
     + '<section class="nx-panel"><h2>Fichário</h2><p class="nx-sub">Fichas em cada caixa de revisão.</p>' + fichMini + '</section></div></div>'
     + '<p class="nx-sub" style="font-size:12px;color:var(--nx-muted);margin-top:4px">Os dados ficam salvos neste navegador. Em outro aparelho, o histórico começa do zero.</p>'
