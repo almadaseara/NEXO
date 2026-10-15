@@ -52,7 +52,7 @@ function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt
 async function carregarReportes(){
   const box=document.getElementById('reportes');
   const {data,error}=await nexoSupabase.from('question_reports').select('id,question_ref,bank_id,module_id,motivo,mensagem,trecho,status,created_at').order('created_at',{ascending:false}).limit(200);
-  if(error){box.textContent='Os avisos ainda não estão disponíveis (a tabela question_reports precisa ser criada no Supabase).';return}
+  if(error){box.textContent='Não foi possível carregar os avisos agora. Recarregue a página.';return}
   if(!data.length){box.textContent='Nenhum aviso até agora.';return}
   box.innerHTML=data.map(r=>`<div class="rep ${r.status}"><b>${esc(MOTIVO[r.motivo]||r.motivo)} · ${esc(r.question_ref)}</b>
     <small>${new Date(r.created_at).toLocaleString('pt-BR')} · módulo ${esc(r.module_id||'—')}${r.bank_id?' · banco '+esc(r.bank_id):''} · ${esc(r.status)}</small>
