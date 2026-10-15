@@ -19,4 +19,6 @@ node tools/validar-temas.js          # tem que terminar com "OK"
 python3 tools/testar-site.py         # tem que terminar com "OK" (requer playwright + chromium)
 ```
 
+Módulo novo: inclua o `id` na constante `ARVORE` de `ui/nexo-ui.js` (árvore da barra lateral). Mudou cores no `index.html`? Rode `python3 tools/gerar-tema-escuro.py`.
+
 Sempre rode `git pull --rebase origin main` antes de enviar (o robô faz commits automáticos).

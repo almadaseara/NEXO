@@ -25,6 +25,12 @@ Situação em 14/10/2026: **68 módulos completos** — Direito Penal (28), Medi
 | Constitucional | `const-a.js` a `const-e.js` |
 | Administrativo | `adm-a.js` a `adm-c.js` |
 
+### Interface (ui/)
+
+- `ui/nexo-ui.js` cuida da barra lateral em árvore, da barra retrátil, do tema escuro, do cronômetro, do **Fichário** (flashcards com caixas de revisão) e da página **Desempenho**. Os dados de estudo ficam no navegador (`localStorage`: `nexo_eventos`, `nexo_fichario`, `nexo_cronometro`).
+- **Ao criar um módulo novo, inclua o `id` dele na constante `ARVORE` de `ui/nexo-ui.js`**, no grupo certo (disciplina > parte > grupo). Se não incluir, ele aparece no fim da disciplina (ou no grupo de `parent_subject`, se houver). Rótulos curtos ficam em `ROTULOS`.
+- `ui/nexo-ui.css` tem os estilos dessas partes. `ui/nexo-escuro.css` é **gerado**: depois de mudar cores no `index.html` ou em `temas/temas-ricos.js`, rode `python3 tools/gerar-tema-escuro.py`.
+
 ---
 
 ## 2. Regras de conteúdo (obrigatórias)

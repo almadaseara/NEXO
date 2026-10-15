@@ -53,6 +53,21 @@ async def main():
         pg.on('pageerror', lambda e: erros.append(str(e)))
         await pg.goto(f'http://127.0.0.1:{PORTA}/index.html')
         await pg.wait_for_timeout(1500)
+        # páginas da camada de interface (ui/nexo-ui.js): fichário, sessão de fichas e desempenho
+        extra = await pg.evaluate("""() => {
+          const out = {};
+          try { showFlashcards(); out.fichario = document.querySelectorAll('.fx-deck').length; out.sw1 = document.documentElement.scrollWidth;
+            document.querySelector('[data-fx-scope="all"]').click(); document.getElementById('fx-virar').click();
+            out.notas = document.querySelectorAll('.fx-grade').length; document.querySelector('.fx-grade.g2').click();
+            nexoDesempenho('30'); out.desempenho = document.querySelector('#view').textContent.length; out.sw2 = document.documentElement.scrollWidth;
+            out.arvore = document.querySelectorAll('#nav .nx-leaf').length + document.querySelectorAll('#nav .nx-group').length;
+          } catch (e) { out.erro = String(e); }
+          return out;
+        }""")
+        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and max(extra.get('sw1', 0), extra.get('sw2', 0)) <= 400
+        falhas += 0 if ok_extra else 1
+        print('✓' if ok_extra else '✗', 'interface'.ljust(30), extra)
+        await pg.evaluate("() => { try { localStorage.clear(); } catch (e) {} }")
         for r in await pg.evaluate(JS, ids):
             if 'erro' in r:
                 falhas += 1; print('✗', r['id'], '-', r['erro']); continue
