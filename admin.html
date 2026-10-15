@@ -6,10 +6,11 @@
 <title>NEXO Admin</title>
 <style>
 body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f7faf8;color:#16312a;display:grid;place-items:center;min-height:100vh}
-.card{width:min(560px,92vw);background:#fff;border:1px solid #d9e5df;border-radius:18px;padding:28px;box-shadow:0 18px 55px rgba(28,70,56,.08)}
+.card{width:min(760px,92vw);background:#fff;border:1px solid #d9e5df;border-radius:18px;padding:28px;box-shadow:0 18px 55px rgba(28,70,56,.08)}
 h1{margin:0 0 10px}.muted{color:#6f817a;line-height:1.55}.btn{display:inline-block;margin-top:14px;padding:11px 15px;border-radius:10px;background:#1f7a60;color:#fff;text-decoration:none;font-weight:800;border:0;cursor:pointer}
 .badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf5f0;color:#246a55;font-size:12px;font-weight:800}
 #adminContent{display:none}.error{color:#a94442}
+.rep{border:1px solid #d9e5df;border-radius:12px;padding:12px 14px;margin:8px 0;color:#16312a}.rep b{display:block}.rep small{color:#6f817a}.rep p{margin:6px 0}.rep button{font:inherit;font-size:12px;padding:5px 10px;border-radius:8px;border:1px solid #d7e3de;background:#fff;cursor:pointer;margin-right:6px}.rep.resolvido{opacity:.55}
 </style>
 </head>
 <body>
@@ -21,6 +22,9 @@ h1{margin:0 0 10px}.muted{color:#6f817a;line-height:1.55}.btn{display:inline-blo
   <p class="muted">Acesso administrativo confirmado. O controle operacional do Robô de Questões continua protegido também pelas permissões do GitHub.</p>
   <a class="btn" href="https://github.com/almadaseara/NEXO/actions/workflows/question-robot.yml">Abrir painel do Robô de Questões</a>
   <button class="btn" style="margin-left:8px;background:#fff;color:#315c4e;border:1px solid #d7e3de" onclick="logout()">Sair</button>
+  <h2 style="margin:26px 0 6px;font-size:18px">Erros reportados pelos alunos</h2>
+  <p class="muted" style="margin:0 0 10px">Avisos enviados pelo botão "Reportar erro" das questões. Marque como resolvido depois de corrigir.</p>
+  <div id="reportes" class="muted">Carregando...</div>
 </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -41,7 +45,21 @@ async function logout(){await nexoSupabase.auth.signOut();sessionStorage.clear()
   }
   status.textContent='Administrador autenticado.';
   document.getElementById('adminContent').style.display='block';
+  carregarReportes();
 })();
+const MOTIVO={sem_enunciado:'Enunciado faltando',alternativas:'Alternativas',gabarito:'Gabarito',comentario:'Comentário',outro:'Outro'};
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+async function carregarReportes(){
+  const box=document.getElementById('reportes');
+  const {data,error}=await nexoSupabase.from('question_reports').select('id,question_ref,bank_id,module_id,motivo,mensagem,trecho,status,created_at').order('created_at',{ascending:false}).limit(200);
+  if(error){box.textContent='Os avisos ainda não estão disponíveis (a tabela question_reports precisa ser criada no Supabase).';return}
+  if(!data.length){box.textContent='Nenhum aviso até agora.';return}
+  box.innerHTML=data.map(r=>`<div class="rep ${r.status}"><b>${esc(MOTIVO[r.motivo]||r.motivo)} · ${esc(r.question_ref)}</b>
+    <small>${new Date(r.created_at).toLocaleString('pt-BR')} · módulo ${esc(r.module_id||'—')}${r.bank_id?' · banco '+esc(r.bank_id):''} · ${esc(r.status)}</small>
+    ${r.mensagem?`<p>${esc(r.mensagem)}</p>`:''}${r.trecho?`<p><small>“${esc(r.trecho)}”</small></p>`:''}
+    <button onclick="marcar(${r.id},'visto')">Visto</button><button onclick="marcar(${r.id},'resolvido')">Resolvido</button></div>`).join('');
+}
+async function marcar(id,status){const {error}=await nexoSupabase.from('question_reports').update({status}).eq('id',id);if(error)alert(error.message);else carregarReportes()}
 </script>
 </body>
 </html>
