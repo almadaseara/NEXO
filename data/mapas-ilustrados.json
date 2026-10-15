@@ -1,0 +1,365 @@
+{
+"gerado": "15/10/2026",
+"mapas": {
+"penal_aplicacao": [
+{
+"arquivo": "assets/mapas/penal_aplicacao-1.webp",
+"titulo": "Aplicação da Lei Penal e Infração Penal — parte 1 de 3: Lei penal no tempo + Tempo e lugar do crime"
+},
+{
+"arquivo": "assets/mapas/penal_aplicacao-2.webp",
+"titulo": "Aplicação da Lei Penal e Infração Penal — parte 2 de 3: Lei penal no espaço + Lei penal em relação às pessoas"
+},
+{
+"arquivo": "assets/mapas/penal_aplicacao-3.webp",
+"titulo": "Aplicação da Lei Penal e Infração Penal — parte 3 de 3: Infração penal: crime, contravenção e sujeitos + Conflito aparente de normas"
+}
+],
+"penal_fato_tipico": [
+{
+"arquivo": "assets/mapas/penal_fato_tipico-1.webp",
+"titulo": "Fato Típico — parte 1 de 4: Conceito de crime; crime e contravenção + Conduta: teorias, ação e omissão"
+},
+{
+"arquivo": "assets/mapas/penal_fato_tipico-2.webp",
+"titulo": "Fato Típico — parte 2 de 4: Resultado naturalístico e jurídico + Nexo de causalidade e imputação objetiva"
+},
+{
+"arquivo": "assets/mapas/penal_fato_tipico-3.webp",
+"titulo": "Fato Típico — parte 3 de 4: Tipicidade e tipo penal + Classificação dos crimes"
+},
+{
+"arquivo": "assets/mapas/penal_fato_tipico-4.webp",
+"titulo": "Fato Típico — parte 4 de 4: Iter criminis, consumação e tentativa + Desistência voluntária e arrependimentos"
+}
+],
+"penal_dolo_culpa": [
+{
+"arquivo": "assets/mapas/penal_dolo_culpa-1.webp",
+"titulo": "Dolo e Culpa — parte 1 de 2: Dolo: teorias e espécies + Culpa: elementos, modalidades e espécies"
+},
+{
+"arquivo": "assets/mapas/penal_dolo_culpa-2.webp",
+"titulo": "Dolo e Culpa — parte 2 de 2: Crime preterdoloso e qualificado pelo resultado"
+}
+],
+"penal_ilicitude": [
+{
+"arquivo": "assets/mapas/penal_ilicitude-1.webp",
+"titulo": "Ilicitude e Culpabilidade — parte 1 de 4: Ilicitude: conceito e causas de exclusão + Estado de necessidade"
+},
+{
+"arquivo": "assets/mapas/penal_ilicitude-2.webp",
+"titulo": "Ilicitude e Culpabilidade — parte 2 de 4: Legítima defesa + Dever legal, exercício de direito e consentimento"
+},
+{
+"arquivo": "assets/mapas/penal_ilicitude-3.webp",
+"titulo": "Ilicitude e Culpabilidade — parte 3 de 4: Excesso punível + Culpabilidade: conceito e teorias"
+},
+{
+"arquivo": "assets/mapas/penal_ilicitude-4.webp",
+"titulo": "Ilicitude e Culpabilidade — parte 4 de 4: Imputabilidade e embriaguez + Consciência da ilicitude e exigibilidade de conduta diversa"
+}
+],
+"penal_pessoa": [
+{
+"arquivo": "assets/mapas/penal_pessoa-1.webp",
+"titulo": "Crimes contra a Pessoa — visão geral — parte 1 de 2: Mapa do Título I + Leis recentes (2024–2026)"
+},
+{
+"arquivo": "assets/mapas/penal_pessoa-2.webp",
+"titulo": "Crimes contra a Pessoa — visão geral — parte 2 de 2: Conceitos que se repetem"
+}
+],
+"penal_patrimonio": [
+{
+"arquivo": "assets/mapas/penal_patrimonio-1.webp",
+"titulo": "Crimes contra o patrimônio — parte 1 de 5: Visão geral e mudanças de 2025–2026 + Furto (arts. 155 e 156)"
+},
+{
+"arquivo": "assets/mapas/penal_patrimonio-2.webp",
+"titulo": "Crimes contra o patrimônio — parte 2 de 5: Roubo e latrocínio (art. 157) + Extorsão e extorsão mediante sequestro (arts. 158 a 160)"
+},
+{
+"arquivo": "assets/mapas/penal_patrimonio-3.webp",
+"titulo": "Crimes contra o patrimônio — parte 3 de 5: Usurpação e dano (arts. 161 a 167) + Apropriação indébita (arts. 168 a 170)"
+},
+{
+"arquivo": "assets/mapas/penal_patrimonio-4.webp",
+"titulo": "Crimes contra o patrimônio — parte 4 de 5: Estelionato e outras fraudes (arts. 171 a 179) + Receptação (arts. 180 e 180-A)"
+},
+{
+"arquivo": "assets/mapas/penal_patrimonio-5.webp",
+"titulo": "Crimes contra o patrimônio — parte 5 de 5: Disposições gerais e crimes hediondos (arts. 181 a 183-A)"
+}
+],
+"penal_adm_func": [
+{
+"arquivo": "assets/mapas/penal_adm_func-1.webp",
+"titulo": "Crimes contra a Administração I — Funcionário Público — parte 1 de 2: Funcionário público e regras gerais + Peculatos e crimes de sistema"
+},
+{
+"arquivo": "assets/mapas/penal_adm_func-2.webp",
+"titulo": "Crimes contra a Administração I — Funcionário Público — parte 2 de 2: Concussão, corrupção passiva e prevaricação + Demais crimes funcionais"
+}
+],
+"penal_principios": [
+{
+"arquivo": "assets/mapas/penal_principios-1.webp",
+"titulo": "Princípios e Fundamentos do Direito Penal — parte 1 de 3: Legalidade e anterioridade + Princípios limitadores do poder de punir"
+},
+{
+"arquivo": "assets/mapas/penal_principios-2.webp",
+"titulo": "Princípios e Fundamentos do Direito Penal — parte 2 de 3: Princípio da insignificância + Conceito e fontes do Direito Penal"
+},
+{
+"arquivo": "assets/mapas/penal_principios-3.webp",
+"titulo": "Princípios e Fundamentos do Direito Penal — parte 3 de 3: Vedações constitucionais (CF, art. 5º, XLII a XLIV)"
+}
+],
+"penal_erros": [
+{
+"arquivo": "assets/mapas/penal_erros-1.webp",
+"titulo": "Erro de Tipo e Erro de Proibição — parte 1 de 3: Erro de tipo essencial + Descriminantes putativas, erro provocado e delito putativo"
+},
+{
+"arquivo": "assets/mapas/penal_erros-2.webp",
+"titulo": "Erro de Tipo e Erro de Proibição — parte 2 de 3: Erros acidentais: pessoa, objeto e nexo causal + Erro na execução e resultado diverso do pretendido"
+},
+{
+"arquivo": "assets/mapas/penal_erros-3.webp",
+"titulo": "Erro de Tipo e Erro de Proibição — parte 3 de 3: Erro de proibição"
+}
+],
+"penal_concurso": [
+{
+"arquivo": "assets/mapas/penal_concurso-1.webp",
+"titulo": "Concurso de Pessoas — parte 1 de 4: Conceito, teorias e espécies + Requisitos do concurso de pessoas"
+},
+{
+"arquivo": "assets/mapas/penal_concurso-2.webp",
+"titulo": "Concurso de Pessoas — parte 2 de 4: Autoria, coautoria e autoria colateral + Autoria mediata"
+},
+{
+"arquivo": "assets/mapas/penal_concurso-3.webp",
+"titulo": "Concurso de Pessoas — parte 3 de 4: Participação e acessoriedade + Comunicabilidade das circunstâncias"
+},
+{
+"arquivo": "assets/mapas/penal_concurso-4.webp",
+"titulo": "Concurso de Pessoas — parte 4 de 4: Cooperação dolosamente distinta, culpa e multidão"
+}
+],
+"penal_sexual": [
+{
+"arquivo": "assets/mapas/penal_sexual-1.webp",
+"titulo": "Crimes contra a Dignidade Sexual — parte 1 de 3: Estupro, fraude, importunação e assédio + Exposição da intimidade sexual (216-B e 218-C)"
+},
+{
+"arquivo": "assets/mapas/penal_sexual-2.webp",
+"titulo": "Crimes contra a Dignidade Sexual — parte 2 de 3: Crimes sexuais contra vulnerável + Ação penal, majorantes e segredo de justiça"
+},
+{
+"arquivo": "assets/mapas/penal_sexual-3.webp",
+"titulo": "Crimes contra a Dignidade Sexual — parte 3 de 3: Lenocínio, migração ilegal e ultraje ao pudor"
+}
+],
+"penal_fe_publica": [
+{
+"arquivo": "assets/mapas/penal_fe_publica-1.webp",
+"titulo": "Crimes contra a Fé Pública — parte 1 de 2: Moeda falsa e papéis públicos + Falsidade documental (296 a 305)"
+},
+{
+"arquivo": "assets/mapas/penal_fe_publica-2.webp",
+"titulo": "Crimes contra a Fé Pública — parte 2 de 2: Outras falsidades: identidade, estrangeiro e veículo"
+}
+],
+"penal_adm_particular": [
+{
+"arquivo": "assets/mapas/penal_adm_particular-1.webp",
+"titulo": "Crimes contra a Administração II — Particular — parte 1 de 2: Usurpação, resistência, desobediência e desacato + Tráfico de influência e corrupção ativa"
+},
+{
+"arquivo": "assets/mapas/penal_adm_particular-2.webp",
+"titulo": "Crimes contra a Administração II — Particular — parte 2 de 2: Descaminho e contrabando + Sonegação previdenciária e outros crimes de particular"
+}
+],
+"penal_adm_justica": [
+{
+"arquivo": "assets/mapas/penal_adm_justica-1.webp",
+"titulo": "Crimes contra a Administração III — Administração da Justiça — parte 1 de 2: Imputações falsas e falso testemunho + Coação, exercício arbitrário e fraude processual"
+},
+{
+"arquivo": "assets/mapas/penal_adm_justica-2.webp",
+"titulo": "Crimes contra a Administração III — Administração da Justiça — parte 2 de 2: Favorecimentos, fuga e crimes de advogado"
+}
+],
+"penal_dosimetria": [
+{
+"arquivo": "assets/mapas/penal_dosimetria-1.webp",
+"titulo": "Aplicação e Dosimetria da Pena — parte 1 de 1: Sistema trifásico"
+}
+],
+"penal_incolumidade": [
+{
+"arquivo": "assets/mapas/penal_incolumidade-1.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 1 de 7: Tutela coletiva e leitura dos tipos + Incêndio (art. 250)"
+},
+{
+"arquivo": "assets/mapas/penal_incolumidade-2.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 2 de 7: Explosão, gás e materiais (arts. 251 a 253) + Inundação, desabamento e salvamento (arts. 254 a 257)"
+},
+{
+"arquivo": "assets/mapas/penal_incolumidade-3.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 3 de 7: Resultados agravadores e difusão de praga (arts. 258 e 259) + Ferrovias, navegação e demais transportes (arts. 260 a 263)"
+},
+{
+"arquivo": "assets/mapas/penal_incolumidade-4.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 4 de 7: Projétil, utilidades e comunicações (arts. 264 a 266) + Epidemia (art. 267)"
+},
+{
+"arquivo": "assets/mapas/penal_incolumidade-5.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 5 de 7: Medida sanitária e notificação (arts. 268 e 269) + Água e alimentos (arts. 270 a 272)"
+},
+{
+"arquivo": "assets/mapas/penal_incolumidade-6.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 6 de 7: Produtos terapêuticos e controle constitucional (art. 273) + Processos, rótulos, substâncias e receitas (arts. 274 a 281)"
+},
+{
+"arquivo": "assets/mapas/penal_incolumidade-7.webp",
+"titulo": "Crimes contra a Incolumidade Pública — parte 7 de 7: Exercício ilegal, charlatanismo e curandeirismo (arts. 282 a 284) + Art. 285 e mapa de remissões"
+}
+],
+"penal_punibilidade": [
+{
+"arquivo": "assets/mapas/penal_punibilidade-1.webp",
+"titulo": "Extinção da Punibilidade e Prescrição — parte 1 de 6: Causas de extinção e seus efeitos (arts. 107 e 108) + Decadência, perempção, renúncia, perdão e retratação"
+},
+{
+"arquivo": "assets/mapas/penal_punibilidade-2.webp",
+"titulo": "Extinção da Punibilidade e Prescrição — parte 2 de 6: Prescrição da pretensão punitiva em abstrato (art. 109) + PPP retroativa e limite da Lei 12.234/2010"
+},
+{
+"arquivo": "assets/mapas/penal_punibilidade-3.webp",
+"titulo": "Extinção da Punibilidade e Prescrição — parte 3 de 6: PPP superveniente ou intercorrente + Prescrição da pretensão executória e Tema 788/STF"
+},
+{
+"arquivo": "assets/mapas/penal_punibilidade-4.webp",
+"titulo": "Extinção da Punibilidade e Prescrição — parte 4 de 6: Redução por idade e ressalva de 2025 (art. 115) + Termos iniciais da PPP (art. 111)"
+},
+{
+"arquivo": "assets/mapas/penal_punibilidade-5.webp",
+"titulo": "Extinção da Punibilidade e Prescrição — parte 5 de 6: Impedimento e suspensão (art. 116 e CPP, art. 366) + Interrupção e extensão entre autores e crimes (art. 117)"
+},
+{
+"arquivo": "assets/mapas/penal_punibilidade-6.webp",
+"titulo": "Extinção da Punibilidade e Prescrição — parte 6 de 6: Multa, penas leves, concurso e continuidade (arts. 114, 118 e 119) + Perdão judicial: cabimento, sentença e efeitos"
+}
+],
+"penal_pessoa_01": [
+{
+"arquivo": "assets/mapas/penal_pessoa_01-1.webp",
+"titulo": "Homicídio simples, privilegiado, qualificado e culposo — parte 1 de 2: Homicídio simples e privilegiado + Qualificadoras (§2º e §2º-D)"
+},
+{
+"arquivo": "assets/mapas/penal_pessoa_01-2.webp",
+"titulo": "Homicídio simples, privilegiado, qualificado e culposo — parte 2 de 2: Majorantes e homicídio culposo"
+}
+],
+"penal_pessoa_02": [
+{
+"arquivo": "assets/mapas/penal_pessoa_02-1.webp",
+"titulo": "Feminicídio (art. 121-A) — parte 1 de 1: Tipo autônomo e elementares + Majorantes do §2º"
+}
+],
+"penal_pessoa_03": [
+{
+"arquivo": "assets/mapas/penal_pessoa_03-1.webp",
+"titulo": "Vicaricídio (art. 121-B) — parte 1 de 1: Tipo penal + Majorantes"
+}
+],
+"penal_pessoa_04": [
+{
+"arquivo": "assets/mapas/penal_pessoa_04-1.webp",
+"titulo": "Induzimento, instigação ou auxílio a suicídio ou a automutilação (art. 122) — parte 1 de 1: Condutas e consumação + Resultados, vítima vulnerável e majorantes"
+}
+],
+"penal_pessoa_05": [
+{
+"arquivo": "assets/mapas/penal_pessoa_05-1.webp",
+"titulo": "Infanticídio (art. 123) — parte 1 de 1: Elementares e consumação"
+}
+],
+"penal_pessoa_06": [
+{
+"arquivo": "assets/mapas/penal_pessoa_06-1.webp",
+"titulo": "Aborto (arts. 124 a 128) — parte 1 de 1: As figuras do aborto + Aborto legal e a jurisprudência do STF"
+}
+],
+"penal_pessoa_07": [
+{
+"arquivo": "assets/mapas/penal_pessoa_07-1.webp",
+"titulo": "Lesão corporal (art. 129) — parte 1 de 2: Leve, grave, gravíssima e seguida de morte + Violência doméstica e de gênero"
+},
+{
+"arquivo": "assets/mapas/penal_pessoa_07-2.webp",
+"titulo": "Lesão corporal (art. 129) — parte 2 de 2: Funcional, ensino, antifacção e privilégio"
+}
+],
+"penal_pessoa_08": [
+{
+"arquivo": "assets/mapas/penal_pessoa_08-1.webp",
+"titulo": "Periclitação da vida e da saúde, omissão de socorro e rixa (arts. 130 a 137) — parte 1 de 2: Contágio e perigo para a vida + Abandono de incapaz, de recém-nascido e maus-tratos"
+},
+{
+"arquivo": "assets/mapas/penal_pessoa_08-2.webp",
+"titulo": "Periclitação da vida e da saúde, omissão de socorro e rixa (arts. 130 a 137) — parte 2 de 2: Omissão de socorro e art. 135-A + Rixa"
+}
+],
+"penal_pessoa_09": [
+{
+"arquivo": "assets/mapas/penal_pessoa_09-1.webp",
+"titulo": "Crimes contra a honra (arts. 138 a 145) — parte 1 de 1: Calúnia, difamação e injúria + Exceção da verdade, majorantes e disposições comuns"
+}
+],
+"penal_pessoa_10": [
+{
+"arquivo": "assets/mapas/penal_pessoa_10-1.webp",
+"titulo": "Crimes contra a liberdade individual (arts. 146 a 154-B) — parte 1 de 2: Constrangimento, bullying, ameaça e perseguição + Violência psicológica contra a mulher (147-B)"
+},
+{
+"arquivo": "assets/mapas/penal_pessoa_10-2.webp",
+"titulo": "Crimes contra a liberdade individual (arts. 146 a 154-B) — parte 2 de 2: Sequestro, trabalho escravo e tráfico de pessoas + Domicílio, correspondência, segredos e dispositivo informático"
+}
+],
+"ml_documentos": [
+{
+"arquivo": "assets/mapas/ml_documentos-1.webp",
+"titulo": "Documentos médico-legais — parte 1 de 2: Espécies de documentos + Relatório médico-legal: auto, laudo e suas partes"
+},
+{
+"arquivo": "assets/mapas/ml_documentos-2.webp",
+"titulo": "Documentos médico-legais — parte 2 de 2: Declaração de óbito e sigilo"
+}
+],
+"ml_traumatologia": [
+{
+"arquivo": "assets/mapas/ml_traumatologia-1.webp",
+"titulo": "Traumatologia forense: energias, instrumentos e lesões — parte 1 de 2: Energias vulnerantes e classificação dos instrumentos + Feridas punctórias, incisas e contusas"
+},
+{
+"arquivo": "assets/mapas/ml_traumatologia-2.webp",
+"titulo": "Traumatologia forense: energias, instrumentos e lesões — parte 2 de 2: Projéteis de arma de fogo + Energias físicas e químicas"
+}
+],
+"ml_tanatologia": [
+{
+"arquivo": "assets/mapas/ml_tanatologia-1.webp",
+"titulo": "Tanatologia: morte, fenômenos cadavéricos e cronotanatognose — parte 1 de 2: Conceito, espécies e diagnóstico da morte + Fenômenos cadavéricos e cronotanatognose"
+},
+{
+"arquivo": "assets/mapas/ml_tanatologia-2.webp",
+"titulo": "Tanatologia: morte, fenômenos cadavéricos e cronotanatognose — parte 2 de 2: Lesões intra vitam × post mortem; comoriência + Necropsia, exumação e direitos sobre o cadáver"
+}
+]
+}
+}

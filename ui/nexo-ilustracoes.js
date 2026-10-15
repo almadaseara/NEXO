@@ -50,18 +50,18 @@ var D = {
 /* escolha pelo texto: o primeiro padrão que bater define o desenho */
 var REGRAS = [
   [/laudo|perito|per[ií]cia|necr[oó]psia|exame de corpo/i, 'laudo'], [/m[eé]dic|atestado|sa[uú]de|hospital|enfermi/i, 'medico'],
-  [/auto\b|escriv[aã]o|delegad|inqu[eé]rito|autoridade policial/i, 'delegado'], [/juiz|magistrad|judicial|senten[cç]a|tribunal|j[uú]ri|STF|STJ|s[uú]mula/i, 'juiz'],
-  [/pol[ií]cia|policial|agente de seguran[cç]a|flagrante|pris[aã]o em flagrante/i, 'policial'], [/pris[aã]o|reclus[aã]o|deten[cç][aã]o|regime|pena privativa|cumprimento/i, 'cela'],
-  [/algema|preso|captura/i, 'algemas'], [/pena|dosimetr|culpabilidade|ilicitude|justi[cç]a|equival|propor/i, 'balanca'],
-  [/prescri|prazo|tempo|dias|anos|decad|cronotanat|iter criminis|tentativa/i, 'ampulheta'], [/prova|investiga|identifica|vest[ií]gio|cust[oó]dia|lupa|digital/i, 'lupa'],
-  [/morte|cad[aá]ver|[oó]bito|homic[ií]dio|tanatolog|exuma/i, 'caveira'], [/vida|les[aã]o|corp|integridade|asfixia|trauma|sangue/i, 'coracao'],
-  [/arma|disparo|proj[eé]til|tiro/i, 'arma'], [/droga|t[oó]xic|veneno|embriaguez|subst[aâ]ncia/i, 'seringa'],
-  [/patrim[oô]nio|furto|roubo|estelionato|dinheiro|vantagem|valor|fazenda|tribut|peculato|corrup/i, 'dinheiro'], [/tr[aâ]nsito|ve[ií]culo|dire[cç][aã]o|CTB/i, 'carro'],
-  [/domic[ií]lio|casa|resid[eê]ncia/i, 'casa'], [/fam[ií]lia|filho|crian[cç]a|mulher|vulner[aá]vel|idoso|m[aã]e/i, 'familia'],
+  [/auto\b|escriv[aã]o|delegad|inqu[eé]rito|autoridade policial/i, 'delegado'], [/juiz|magistrad|judicial|senten[cç]a|tribunal|\bj[uú]ri\b|\bSTF\b|\bSTJ\b|s[uú]mula/i, 'juiz'],
+  [/pol[ií]cia|policial|agente de seguran[cç]a|flagrante|pris[aã]o em flagrante/i, 'policial'], [/pris[aã]o|reclus[aã]o|deten[cç][aã]o|regime (fechado|semiaberto|aberto|inicial)|pena privativa|cumprimento da pena/i, 'cela'],
+  [/algema|preso|captura/i, 'algemas'], [/\bpenas?\b|dosimetr|culpabilidade|ilicitude|justi[cç]a|equival|propor|retroag|abolitio/i, 'balanca'],
+  [/prescri|\bprazo|\btempo\b|\bdias\b|\banos\b|decad|cronotanat|iter criminis|tentativa/i, 'ampulheta'], [/prova|investiga|identifica|vest[ií]gio|cust[oó]dia|lupa|digital/i, 'lupa'],
+  [/\bmorte|cad[aá]ver|[oó]bito|homic[ií]dio|tanatolog|exuma/i, 'caveira'], [/\bvida\b|\bles[aã]o|\bcorpo|\bcorporal|integridade f|asfixia|trauma|\bsangue/i, 'coracao'],
+  [/\barmas?\b|disparo|proj[eé]til|\btiros?\b/i, 'arma'], [/droga|t[oó]xic|veneno|embriaguez|subst[aâ]ncia/i, 'seringa'],
+  [/patrim[oô]nio|furto|roubo|estelionato|dinheiro|vantagem|valor|fazenda|tribut|peculato|corrup/i, 'dinheiro'], [/tr[aâ]nsito(?! em julgado)|ve[ií]culo|dire[cç][aã]o de ve|\bCTB\b/i, 'carro'],
+  [/domic[ií]lio|\bcasa\b|resid[eê]ncia/i, 'casa'], [/fam[ií]lia|filho|crian[cç]a|mulher|vulner[aá]vel|idoso|m[aã]e/i, 'familia'],
   [/v[ií]tima|ofendid|sujeito passivo/i, 'vitima'], [/autor|agente|r[eé]u|acusado|criminos|sujeito ativo|part[ií]cipe|coautor/i, 'criminoso'],
-  [/servidor|funcion[aá]rio|administra|[oó]rg[aã]o|entidade|estado|uni[aã]o|munic|poder p[uú]blico/i, 'predio'], [/garantia|direito|defesa|prote[cç]|seguran[cç]a/i, 'escudo'],
-  [/lei|princ[ií]pio|norma|c[oó]digo|constitui|artigo|fonte/i, 'livro'], [/documento|declara|relat[oó]rio|parecer|registro|certid/i, 'documento'],
-  [/requisito|elemento|lista|espécie|classifica|tipos/i, 'prancheta'], [/objetivo|finalidade|dolo|inten[cç]/i, 'alvo']
+  [/servidor|funcion[aá]rio|administra|[oó]rg[aã]o|entidade|estado|uni[aã]o|munic|poder p[uú]blico/i, 'predio'], [/garantia|\bdireitos?\b|defesa|prote[cç]|seguran[cç]a/i, 'escudo'],
+  [/\blei\b|princ[ií]pio|\bnorma|c[oó]digo|constitui|\bartigo|\bfonte/i, 'livro'], [/documento|declara|relat[oó]rio|parecer|registro|certid/i, 'documento'],
+  [/requisito|elemento|\blista|esp[eé]cie|classifica|\btipos\b|mnem[oô]nico/i, 'prancheta'], [/objetivo|finalidade|\bdolo|inten[cç]/i, 'alvo']
 ];
 var ROTA = ['prancheta', 'documento', 'lupa', 'balanca', 'livro', 'escudo', 'estudante', 'alvo'];
 window.NEXO_ILUSTRA = {

@@ -827,3 +827,4 @@ html[data-theme="dark"] .rv-bloco{border-color:#2c3e55}
 html[data-theme="dark"] .rv-fig,html[data-theme="dark"] .rv-pilha{filter:drop-shadow(0 0 0 transparent)}
 html[data-theme="dark"] .rv-card .rv-fig{background:rgba(255,255,255,.92);border-radius:12px;padding:4px;box-sizing:border-box}
 @media (max-width:420px){.rv-pilha{display:none}.rv-fig{width:64px;height:64px}}
+.rv-galeria{margin-bottom:16px}

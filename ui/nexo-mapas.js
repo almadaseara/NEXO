@@ -103,10 +103,31 @@ function revisaoVisual(m){
 window.nexoRevisaoVisual = revisaoVisual;
 
 /* aba "Mapa mental": revisão visual + mapas em imagem (se houver) */
+/* mapas ilustrados gerados pela NEXO (imagens no próprio site: assets/mapas) */
+var MAN = null;
+fetch('data/mapas-ilustrados.json', { cache:'no-cache' }).then(function(r){ return r.json(); }).then(function(j){
+  MAN = (j && j.mapas) || {};
+  try{ var a = document.getElementById('mindmap-content'); if(a && typeof current !== 'undefined'){ var m = modules.find(function(x){ return x.id === current; }); if(m) a.innerHTML = window.mindmapGalleryHTML(m); } }catch(e){}
+}).catch(function(){ MAN = {}; });
+function galeriaNexo(m){
+  var l = (MAN && MAN[m.id]) || []; if(!l.length) return '';
+  return '<div class="card rv-galeria"><h3>Mapas ilustrados</h3><p class="muted">' + l.length + (l.length > 1 ? ' imagens' : ' imagem') + ' de revisão deste capítulo. Toque para ampliar.</p><div class="mindmap-gallery">'
+    + l.map(function(im){ return '<figure class="mindmap-figure"><button type="button" class="mindmap-thumb" data-rvimg="' + esc(im.arquivo) + '" data-rvtit="' + esc(im.titulo) + '" aria-label="Ampliar mapa: ' + esc(im.titulo) + '"><img src="' + esc(im.arquivo) + '" alt="' + esc(im.titulo) + '" loading="lazy" width="1536" height="1024"></button><figcaption>' + esc(im.titulo) + '</figcaption></figure>'; }).join('') + '</div></div>';
+}
+document.addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('[data-rvimg]'); if(!b) return;
+  var d = document.createElement('dialog'); d.className = 'nexo-map-dialog';
+  d.innerHTML = '<button type="button" class="nexo-map-close" aria-label="Fechar imagem">×</button><img alt="">';
+  d.querySelector('img').src = b.dataset.rvimg; d.querySelector('img').alt = b.dataset.rvtit;
+  d.querySelector('button').onclick = function(){ d.close(); };
+  d.addEventListener('close', function(){ d.remove(); });
+  d.addEventListener('click', function(ev){ if(ev.target === d) d.close(); });
+  document.body.appendChild(d); d.showModal();
+});
 var original = window.mindmapGalleryHTML;
 if(typeof original === 'function'){
   window.mindmapGalleryHTML = function(m){
-    var rv = ''; try{ rv = revisaoVisual(m); }catch(e){}
+    var rv = ''; try{ rv = galeriaNexo(m) + revisaoVisual(m); }catch(e){}
     var temImg = false; try{ temImg = typeof mindmapCache !== 'undefined' && (mindmapCache.get(m.id) || []).length > 0; }catch(e){}
     var gal = original.apply(this, arguments);
     if(rv && !temImg){
