@@ -310,10 +310,12 @@ function fmt(ms){
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
 }
 function registrarTempo(ms){ if(ms >= 5000) registrar({ k:'t', ms:Math.round(ms) }); }
+var audioCtx = null;
+function liberarSom(){ try{ var C = window.AudioContext || window.webkitAudioContext; if(!C) return; if(!audioCtx) audioCtx = new C(); if(audioCtx.state === 'suspended') audioCtx.resume(); }catch(e){} }
 function bip(){
+  try{ if(navigator.vibrate) navigator.vibrate([200, 120, 200]); }catch(e){}
   try{
-    var C = window.AudioContext || window.webkitAudioContext; if(!C) return;
-    var ctx = new C(), t0 = ctx.currentTime;
+    liberarSom(); var ctx = audioCtx; if(!ctx) return; var t0 = ctx.currentTime;
     [0, .32, .64].forEach(function(dt){
       var o = ctx.createOscillator(), g = ctx.createGain();
       o.frequency.value = 880; o.connect(g); g.connect(ctx.destination);
@@ -349,7 +351,7 @@ function alternarTimer(){
   if(T.rodando){ var seg = Date.now() - T.inicio; T.acum += seg; T.rodando = false; registrarTempo(seg); }
   else{
     if(T.modo !== 'up' && T.acum >= T.dur) T.acum = 0;
-    T.inicio = Date.now(); T.rodando = true; avisado = false;
+    T.inicio = Date.now(); T.rodando = true; avisado = false; liberarSom();
   }
   salvarT(); desenharTimer();
 }
@@ -416,15 +418,25 @@ function montarFerramentas(){
     + '<button type="button" class="nx-iconbtn" id="nx-theme"></button></div>';
   if(ref) ref.insertAdjacentHTML('beforebegin', html); else header.insertAdjacentHTML('beforeend', html);
   var el = document.getElementById('nx-timer');
+  var tempo = $('.nx-time', el);
+  tempo.setAttribute('role', 'button'); tempo.tabIndex = 0;
+  function expandir(sim){ var abrir = sim == null ? !el.classList.contains('expandido') : sim; el.classList.toggle('expandido', abrir); tempo.setAttribute('aria-expanded', String(abrir)); tempo.setAttribute('aria-label', abrir ? 'Fechar opções do cronômetro' : 'Abrir opções do cronômetro'); }
+  tempo.addEventListener('click', function(){ if(window.matchMedia('(max-width:1150px)').matches && !el.classList.contains('floating')) expandir(); });
+  tempo.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tempo.click(); } });
+  document.addEventListener('click', function(e){ if(el.classList.contains('expandido') && !el.contains(e.target)) expandir(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && el.classList.contains('expandido')) expandir(false); });
   $('.nx-play', el).addEventListener('click', alternarTimer);
   $('.nx-reset', el).addEventListener('click', zerarTimer);
-  $('.nx-float', el).addEventListener('click', function(){ soltar(!T.solto); });
+  $('.nx-float', el).addEventListener('click', function(){ el.classList.remove('expandido'); soltar(!T.solto); });
   $('.nx-mode', el).addEventListener('change', function(e){ mudarModo(e.target.value); });
   document.getElementById('nx-theme').addEventListener('click', function(){ window.nexoSetTheme(temaAtual() === 'dark' ? 'light' : 'dark'); });
   arrastavel(el); aplicarTema(temaAtual()); soltar(T.solto); desenharTimer();
-  window.addEventListener('beforeunload', function(){
-    if(T.rodando){ var seg = Date.now() - T.inicio; registrarTempo(seg); T.acum += seg; T.inicio = Date.now(); salvarT(); }
-  });
+  /* iPhone não dispara beforeunload: registra o tempo também ao sair/ocultar o app */
+  function fecharTrecho(){ if(T.rodando){ var seg = Date.now() - T.inicio; if(T.modo !== 'up') seg = Math.min(seg, Math.max(0, T.dur - T.acum)); registrarTempo(seg); T.acum += seg; T.inicio = Date.now(); salvarT(); } }
+  window.addEventListener('beforeunload', fecharTrecho);
+  window.addEventListener('pagehide', fecharTrecho);
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) fecharTrecho(); else desenharTimer(); });
+  window.addEventListener('pageshow', function(){ desenharTimer(); });
   var pill = document.getElementById('score');
   if(pill){ pill.style.cursor = 'pointer'; pill.setAttribute('role', 'button'); pill.tabIndex = 0;
     pill.addEventListener('click', function(){ window.nexoDesempenho(); });

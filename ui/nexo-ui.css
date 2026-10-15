@@ -739,3 +739,15 @@ html[data-theme="dark"]{--rd-key:#7fd6bb;--rd-ref:#8dbcf3;--rd-ref-bg:#1d2a3b;--
 .nx-app b{font-size:14.5px;color:var(--nx-ink)}
 .nx-app p{margin:3px 0 8px;font-size:13px;line-height:1.5;color:var(--nx-ink-2)}
 .nx-app-acoes{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ---------- Cronômetro no celular/tablet: toque no tempo abre as opções ---------- */
+@media (max-width:1150px){
+  .nx-timer:not(.floating) .nx-time{cursor:pointer;border-radius:7px}
+  .nx-timer.expandido:not(.floating){position:fixed;left:12px;right:12px;top:70px;z-index:140;flex-wrap:wrap;justify-content:center;gap:10px;padding:14px;border-radius:14px;box-shadow:0 14px 40px rgba(10,24,26,.28)}
+  .nx-timer.expandido:not(.floating) .nx-time{flex:1 0 100%;font-size:30px;padding:4px 0 2px}
+  .nx-timer.expandido:not(.floating) .nx-mode{display:block;max-width:none;font-size:14px;padding:10px 12px;flex:1 1 160px}
+  .nx-timer.expandido:not(.floating) .nx-reset,.nx-timer.expandido:not(.floating) .nx-float{display:inline-grid}
+  .nx-timer.expandido:not(.floating) .nx-tb{width:44px;height:44px;border:1px solid var(--nx-line)}
+  .nx-timer.expandido:not(.floating) .nx-tb svg{width:20px;height:20px}
+}
+@media (max-width:700px){.nx-timer .nx-tb.nx-play{width:34px;height:34px}}
