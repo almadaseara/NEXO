@@ -7,7 +7,10 @@ ficam sob html[data-theme="dark"], então o tema claro não muda.
 Rode de novo sempre que mudar cores no index.html:  python3 tools/gerar-tema-escuro.py
 Ajustes finos ficam em ui/nexo-ui.css (seção "Tema escuro — ajustes manuais").
 """
-import re, colorsys, os
+import re, colorsys, os, sys
+# matiz e saturação dos fundos escuros (padrão: carvão neutro). Uso opcional: --matiz 0.54 --sat 0.37 --saida arquivo.css
+ARGS = dict(zip(sys.argv[1::2], sys.argv[2::2]))
+MATIZ = float(ARGS.get("--matiz", 0.66)); SAT = float(ARGS.get("--sat", 0.04))
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = ':where(html[data-theme="dark"])'  # :where() não aumenta a especificidade: estados (:hover, .active) continuam valendo
 
@@ -45,7 +48,7 @@ def mapear(r, g, b, papel):
     if papel == 'fundo':
         if L < 0.55: return None
         nl = 0.105 + (1 - L) * 0.85
-        if neutro: h, s, nl = 0.533, 0.31, 0.125 + (1 - L) * 0.9  # branco vira a superfície #16262a
+        if max(r, g, b) - min(r, g, b) < 0.12: h, s, nl = MATIZ, SAT, 0.125 + (1 - L) * 0.9  # tons claros pálidos viram a superfície da paleta
         ns = min(s, 0.32) * (0.75 if s > 0.2 else 1)
         # fundos com matiz forte (avisos, badges) ficam um pouco mais claros e saturados
         if s > 0.45: nl, ns = 0.17 + (1-L)*0.5, min(s, 0.55)
@@ -55,7 +58,7 @@ def mapear(r, g, b, papel):
         ns = min(s, 0.55)
     else:  # borda
         if L < 0.55: return None
-        if neutro: h, s = 0.48, 0.18
+        if max(r, g, b) - min(r, g, b) < 0.12: h, s = MATIZ, SAT * 0.7
         nl = 0.20 + (1 - L) * 0.6
         ns = min(s, 0.25)
     nl = max(0, min(1, nl))
@@ -157,5 +160,5 @@ def processar(css, forte=False):
 # o CSS dos temas é injetado depois, em tempo de execução; por isso usa o prefixo mais forte
 css = processar(css_do_index()) + '\n' + processar(css_dos_temas(), True)
 cab = '/* GERADO por tools/gerar-tema-escuro.py — não edite à mão. Ajustes manuais: ui/nexo-ui.css */\n'
-open(os.path.join(RAIZ, 'ui', 'nexo-escuro.css'), 'w', encoding='utf-8').write(cab + css + '\n')
+open(ARGS.get('--saida', os.path.join(RAIZ, 'ui', 'nexo-escuro.css')), 'w', encoding='utf-8').write(cab + css + '\n')
 print('ui/nexo-escuro.css:', css.count('{'), 'regras')

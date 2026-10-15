@@ -14,15 +14,16 @@
 }
 html[data-theme="dark"]{
   color-scheme:dark;
-  --nx-bg:#0f1a1c; --nx-surface:#16262a; --nx-surface-2:#1c3035; --nx-line:#2a4246;
-  --nx-ink:#e3ecea; --nx-ink-2:#b5c6c3; --nx-muted:#8ea4a0;
-  --nx-accent:#57b8a5; --nx-accent-ink:#0b1f1b; --nx-accent-soft:#1d3a36; --nx-gold:#e2bd74;
-  --nx-paper:#1b2b2f; --nx-rule:#29434d; --nx-margin:#7a3c42;
+  /* paleta "carvão neutro": fundos cinza sem tom de cor; o verde-água fica só nos destaques */
+  --nx-bg:#141416; --nx-surface:#1e1e21; --nx-surface-2:#27272b; --nx-line:#36363c;
+  --nx-ink:#ececee; --nx-ink-2:#b9b9c0; --nx-muted:#8e8e96;
+  --nx-accent:#62c3a6; --nx-accent-ink:#0a1d17; --nx-accent-soft:#1f3a32; --nx-gold:#e2bd74;
+  --nx-paper:#1e1e21; --nx-rule:#323238; --nx-margin:#7a3c42;
   --nx-d1:#3987e5; --nx-d2:#d95926; --nx-d3:#9085e9; --nx-d4:#199e70;
-  --nx-shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.25);
+  --nx-shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.3);
   /* variáveis já usadas pelo site e pelos temas aprofundados */
-  --bg:#0f1a1c; --panel:#16262a; --panel2:#1c3035; --line:#2a4246; --text:#e3ecea; --muted:#9fb4b0;
-  --green:#57b8a5; --workspace-ink:#d7e6e2; --workspace-accent:#57b8a5;
+  --bg:#141416; --panel:#1e1e21; --panel2:#27272b; --line:#36363c; --text:#ececee; --muted:#9a9aa2;
+  --green:#62c3a6; --workspace-ink:#e2e2e6; --workspace-accent:#62c3a6;
 }
 
 /* ---------- Barra lateral: árvore de assuntos ---------- */
@@ -254,9 +255,19 @@ html[data-theme="dark"]{
 
 /* ---------- Tema escuro — ajustes manuais ---------- */
 html[data-theme="dark"] body{background:var(--nx-bg);color:var(--nx-ink)}
-html[data-theme="dark"] header,html[data-theme="dark"] .access-bar{background:#132226;border-color:var(--nx-line)}
+html[data-theme="dark"] header,html[data-theme="dark"] .access-bar{background:#18181b;border-color:var(--nx-line)}
 html[data-theme="dark"] #view{background:var(--nx-bg)}
-html[data-theme="dark"] header strong{color:#9fb4b0}
+html[data-theme="dark"] header strong{color:#a5a5ad}
+/* barra lateral acompanha o tema escuro */
+html[data-theme="dark"] aside{background:#18181b!important;border-color:var(--nx-line)!important;color:#dcdce0}
+html[data-theme="dark"] aside .brand,html[data-theme="dark"] .sidebar-footer{border-color:var(--nx-line)!important}
+html[data-theme="dark"] aside .search input{background:var(--nx-surface-2)!important;border-color:var(--nx-line)!important;color:var(--nx-ink)!important}
+html[data-theme="dark"] .nav .folder-btn{background:var(--nx-surface)!important;border-color:var(--nx-line)!important}
+html[data-theme="dark"] .nav button:hover,html[data-theme="dark"] .nav button.active{background:var(--nx-surface-2)!important}
+html[data-theme="dark"] .nav .primary-nav.active{box-shadow:inset 3px 0 var(--nx-accent)}
+html[data-theme="dark"] .nx-tree summary{color:#d9d9de}
+html[data-theme="dark"] .nav .nx-leaf{color:#b4b4bc!important}
+html[data-theme="dark"] .nx-branch,html[data-theme="dark"] .nx-branch>.nx-leaf::before,html[data-theme="dark"] .nx-branch>details::before{border-color:rgba(255,255,255,.12)}
 html[data-theme="dark"] input,html[data-theme="dark"] select,html[data-theme="dark"] textarea{color-scheme:dark}
 html[data-theme="dark"] .opt[style*="background"]{color:#e3ecea}
 html[data-theme="dark"] [style*="background:#edf5ed"],html[data-theme="dark"] [style*="background: #edf5ed"]{background:#163a24!important}
