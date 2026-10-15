@@ -413,6 +413,7 @@ function montarFerramentas(){
     + '<span class="nx-time" aria-live="off">00:00:00</span>'
     + '<button type="button" class="nx-tb nx-play"></button>'
     + '<button type="button" class="nx-tb nx-reset" aria-label="Zerar" title="Zerar">' + I.reset + '</button>'
+    + '<button type="button" class="nx-tb nx-mais" aria-label="Opções do cronômetro" aria-expanded="false" title="Opções"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>'
     + '<button type="button" class="nx-tb nx-float"></button>'
     + '</div><span id="nx-timer-slot" class="nx-dock-slot"></span>'
     + '<button type="button" class="nx-iconbtn" id="nx-theme"></button></div>';
@@ -420,7 +421,9 @@ function montarFerramentas(){
   var el = document.getElementById('nx-timer');
   var tempo = $('.nx-time', el);
   tempo.setAttribute('role', 'button'); tempo.tabIndex = 0;
-  function expandir(sim){ var abrir = sim == null ? !el.classList.contains('expandido') : sim; el.classList.toggle('expandido', abrir); tempo.setAttribute('aria-expanded', String(abrir)); tempo.setAttribute('aria-label', abrir ? 'Fechar opções do cronômetro' : 'Abrir opções do cronômetro'); }
+  var mais = $('.nx-mais', el);
+  function expandir(sim){ var abrir = sim == null ? !el.classList.contains('expandido') : sim; el.classList.toggle('expandido', abrir); tempo.setAttribute('aria-expanded', String(abrir)); mais.setAttribute('aria-expanded', String(abrir)); tempo.setAttribute('aria-label', abrir ? 'Fechar opções do cronômetro' : 'Abrir opções do cronômetro'); }
+  mais.addEventListener('click', function(e){ e.stopPropagation(); expandir(); });
   tempo.addEventListener('click', function(){ if(window.matchMedia('(max-width:1150px)').matches && !el.classList.contains('floating')) expandir(); });
   tempo.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tempo.click(); } });
   document.addEventListener('click', function(e){ if(el.classList.contains('expandido') && !el.contains(e.target)) expandir(false); });

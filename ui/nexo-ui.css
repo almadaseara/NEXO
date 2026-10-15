@@ -751,3 +751,11 @@ html[data-theme="dark"]{--rd-key:#7fd6bb;--rd-ref:#8dbcf3;--rd-ref-bg:#1d2a3b;--
   .nx-timer.expandido:not(.floating) .nx-tb svg{width:20px;height:20px}
 }
 @media (max-width:700px){.nx-timer .nx-tb.nx-play{width:34px;height:34px}}
+.nx-timer .nx-mais{display:none}
+@media (max-width:1150px){
+  .nx-timer:not(.floating) .nx-mais{display:inline-grid}
+  .nx-timer.expandido:not(.floating) .nx-mais{order:9;border-color:transparent}
+}
+@media (max-width:700px){.nx-time{min-width:58px!important;font-size:13px!important;padding:0 2px}.nx-timer.expandido .nx-time{font-size:30px!important}}
+.mobile-wordmark{white-space:nowrap}
+@media (max-width:420px){.mobile-wordmark span{display:none}}
