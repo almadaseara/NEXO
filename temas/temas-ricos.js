@@ -100,15 +100,33 @@
     return '<div class="tr-links">'+(nl?chip('lei','','Lei seca <b>'+nl+'</b>',' data-trsec2="'+sec+'"'):'')+(f(T.juris)?chip('juris','','Julgados <b>'+f(T.juris)+'</b>',' data-trsec2="'+sec+'"'):'')+(f(T.cards)?chip('flashcard_topico','','Flashcards <b>'+f(T.cards)+'</b>',' data-trsec2="'+sec+'"'):'')+(f(T.questoes)?chip('quest','','Questões <b>'+f(T.questoes)+'</b>',' data-trsec2="'+sec+'"'):'')+'</div>';
   }
 
+  /* Cores de leitura: destaca referências legais, números/frações/prazos e termos em latim.
+     Só embrulha texto (não muda nenhuma letra), então os grifos do aluno continuam ancorados. */
+  var RX_REF=/((?:arts?\.|Art\.)\s*\d+[º°]?(?:-[A-Z])?(?:,\s*(?:§\s*\d+[º°]?|parágrafo único|caput|[IVXL]+\b|[a-z]\)))*(?:\s*(?:e|a)\s*\d+[º°]?(?:-[A-Z])?)?(?:\s+d[oa]s?\s+(?:CP|CPP|CF|CTB|ECA|LCP|CPM|Lei de Drogas))?|Súmulas?(?:\s+Vinculantes?)?\s+(?:n[º°]\s*)?\d+(?:\s+do\s+(?:STF|STJ))?|Lei\s+(?:n[º°]\s*)?\d{1,2}\.?\d{3}(?:\/\d{2,4})?|\b(?:ADPF|ADI|RE|HC|REsp|AgRg)\s+(?:n[º°]\s*)?\d[\d.]*|§\s*\d+[º°]?)/g;
+  var RX_NUM=/(\b\d+\/\d+\b(?:\s+(?:a|até)\s+\d+\/\d+\b)?|\b\d+\s+(?:a\s+\d+\s+)?(?:dias|meses|anos|horas)\b|\bum\s+(?:sexto|terço)\s+a\s+(?:um|dois)\s+terços?\b|\bmetade\b)/g;
+  function colorir(html){
+    if(!html) return html;
+    var partes=String(html).split(/(<[^>]+>)/), dentroI=0;
+    for(var k=0;k<partes.length;k++){
+      var t=partes[k]; if(!t) continue;
+      if(t.charAt(0)==='<'){ if(/^<i[\s>]/i.test(t)) dentroI++; else if(/^<\/i>/i.test(t)) dentroI=Math.max(0,dentroI-1); continue; }
+      t=t.replace(RX_REF,'<span class="tr-ref">$1</span>');
+      t=t.replace(/(<span class="tr-ref">[^<]*<\/span>)|([^<]+)/g,function(m,ref,txt){ return ref||txt.replace(RX_NUM,'<span class="tr-num">$1</span>'); });
+      partes[k]=t;
+    }
+    return partes.join('');
+  }
+
   function rResumo(T){
     var h=T.meta.aviso?'<div class="tr-notice"><b>Atualizado em '+T.meta.atualizado+'.</b> '+esc(T.meta.aviso)+'</div>':'';
     h+='<div class="tr-bar">'+T.secoes.map(function(s){return '<button class="tr-pill" type="button" data-trjump="tr-s-'+s.id+'">'+s.curto+'</button>'}).join('')+'</div>';
+    h+='<div class="tr-legenda" aria-label="Legenda das cores"><span><b style="color:var(--rd-key)">Conceito-chave</b></span><span><span class="tr-ref">art. 1º</span>lei, súmula, julgado</span><span><span class="tr-num">1/3</span>número, fração, prazo</span><span><i style="color:var(--rd-lat)">latim</i></span></div>';
     T.secoes.forEach(function(s){
       h+='<section class="tr-card" id="tr-s-'+s.id+'"><h2>'+s.titulo+'</h2>';
-      h+='<div class="tr-quick"><div class="tr-lbl">Em 30 segundos</div><ul>'+s.rapido.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>';
-      h+='<div class="tr-read">'+s.teoria.map(function(t){return '<h3>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+p+'</p>'}).join('')}).join('')+'</div>';
+      h+='<div class="tr-quick"><div class="tr-lbl">Em 30 segundos</div><ul>'+s.rapido.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
+      h+='<div class="tr-read tr-cor">'+s.teoria.map(function(t){return '<h3>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+colorir(p)+'</p>'}).join('')}).join('')+'</div>';
       if(s.quadro)h+='<div class="tr-tbl"><table><caption>'+s.quadro.titulo+'</caption><thead><tr>'+s.quadro.head.map(function(c){return '<th scope="col">'+c+'</th>'}).join('')+'</tr></thead><tbody>'+s.quadro.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';
-      if(s.pegadinhas&&s.pegadinhas.length)h+='<div class="tr-traps"><div class="tr-lbl">Pegadinhas</div><ul>'+s.pegadinhas.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div>';
+      if(s.pegadinhas&&s.pegadinhas.length)h+='<div class="tr-traps"><div class="tr-lbl">Pegadinhas</div><ul>'+s.pegadinhas.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
       h+=counts(T,s.id)+'</section>';
     });
     return h;
