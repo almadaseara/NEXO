@@ -53,7 +53,7 @@ async def main():
         pg.on('pageerror', lambda e: erros.append(str(e)))
         await pg.goto(f'http://127.0.0.1:{PORTA}/index.html')
         await pg.wait_for_timeout(1500)
-        # páginas da camada de interface (ui/): fichário, fichas, desempenho, filtro de questões, tesoura e painel
+        # páginas da camada de interface (ui/): fichário, fichas, desempenho, filtro de questões, tesoura, painel, trilha e marca-texto
         extra = await pg.evaluate("""() => {
           const out = {};
           try { showFlashcards(); out.fichario = document.querySelectorAll('.fx-deck').length; out.sw1 = document.documentElement.scrollWidth;
@@ -64,10 +64,25 @@ async def main():
             nexoPraticar({}); out.praticar = document.querySelectorAll('.practice-question-card').length; out.sw3 = document.documentElement.scrollWidth;
             const t = document.querySelector('.nx-cut'); t.click(); out.tesoura = t.closest('label.opt').classList.contains('nx-cortada'); t.click();
             home(); out.painel = document.querySelectorAll('.nx-pd').length;
+            nexoCronograma(); document.querySelector('#nt-form').requestSubmit();
+            const st = nexoEstudo.plano(), wk = st.weeks[Object.keys(st.weeks)[0]];
+            out.trilha = wk.tarefas.length;
+            out.trilhaCabe = [0,1,2,3,4,5,6].every(d => wk.tarefas.filter(t => t.d === d).reduce((a, t) => a + t.min, 0) <= (st.plan.minutos[new Date(Date.now() + d * 864e5).getDay()] || 0) + 1);
+            out.sw4 = document.documentElement.scrollWidth;
+            openModule('penal_principios');
+            const rc = document.querySelector('.reading-content'), alvo = [...rc.querySelectorAll('p')].find(p => p.textContent.length > 80).firstChild;
+            const r = document.createRange(); r.setStart(alvo, 0); r.setEnd(alvo, 25); getSelection().removeAllRanges(); getSelection().addRange(r);
+            document.querySelector('[data-mkt="hl"]').click(); document.dispatchEvent(new MouseEvent('mouseup', { bubbles:true }));
           } catch (e) { out.erro = String(e); }
           return out;
         }""")
-        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and extra.get('praticar', 0) >= 1 and extra.get('tesoura') is True and extra.get('painel') == 4 and max(extra.get('sw1', 0), extra.get('sw2', 0), extra.get('sw3', 0)) <= 400
+        await pg.wait_for_timeout(300)
+        extra.update(await pg.evaluate("""() => { const o = {}; try {
+            o.marca = document.querySelectorAll('.reading-content .nx-mk').length;
+            renderTab(modules.find(m => m.id === 'penal_principios'), 'resumo'); o.marcaFica = document.querySelectorAll('.reading-content .nx-mk').length;
+            document.querySelector('[data-mkt="undo"]').click(); o.desfeita = document.querySelectorAll('.reading-content .nx-mk').length;
+          } catch (e) { o.erro = String(e); } return o; }"""))
+        ok_extra = not extra.get('erro') and extra.get('fichario', 0) >= 4 and extra.get('notas') == 3 and extra.get('desempenho', 0) > 300 and extra.get('praticar', 0) >= 1 and extra.get('tesoura') is True and extra.get('painel') == 4 and extra.get('trilha', 0) >= 5 and extra.get('trilhaCabe') is True and extra.get('marca', 0) >= 1 and extra.get('marcaFica', 0) >= 1 and extra.get('desfeita') == 0 and max(extra.get('sw1', 0), extra.get('sw2', 0), extra.get('sw3', 0), extra.get('sw4', 0)) <= 400
         falhas += 0 if ok_extra else 1
         print('✓' if ok_extra else '✗', 'interface'.ljust(30), extra)
         await pg.evaluate("() => { try { localStorage.clear(); } catch (e) {} }")
