@@ -96,8 +96,8 @@ E.pcba = {
       ['ml-sexo', 'Crimes contra a dignidade sexual: aspectos médico-legais e vestígios', ['ml_sexologia'], 2, 1.5],
       ['ml-psico', 'Imputabilidade penal, capacidade civil e perturbações mentais', ['ml_psicopatologia'], 2, 1.5],
       ['ml-custodia', 'Cadeia de custódia, vestígios e evidências', ['ml_pericias'], 3, 1],
-      ['ml-local', 'Local de crime; toxicomanias e embriaguez; energias térmica, elétrica e química', [], 2, 1.5],
-      ['ml-aborto', 'Aborto, infanticídio e abandono de recém-nascido', [], 1, 1],
+      ['ml-local', 'Local de crime; toxicomanias e embriaguez; energias térmica, elétrica e química', ['ml_traumatologia', 'ml_psicopatologia'], 2, 1.5],
+      ['ml-aborto', 'Aborto, infanticídio e abandono de recém-nascido', ['ml_sexologia'], 1, 1],
       ['ml-testemunho', 'Testemunho, confissão e acareação', [], 1, 0.5],
       ['ml-violencia', 'Violência doméstica e contra vulneráveis', [], 2, 1]
     ]},
