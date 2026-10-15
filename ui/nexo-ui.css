@@ -317,3 +317,12 @@ html[data-theme="dark"] mark{background:#5f5a1c;color:#fff7c2}
 .rs-leg i{width:10px;height:10px;border-radius:3px;flex-shrink:0}
 .rs-leg b{color:var(--nx-ink);margin-left:auto}
 .rs-leg small{color:var(--nx-muted);min-width:34px;text-align:right}
+
+/* gráfico de questões: rosca de acertos x erros */
+.dz-chart .pz-pct{font:800 12.5px 'Manrope',sans-serif;fill:#fff;paint-order:stroke;stroke:#0003;stroke-width:2px;pointer-events:none}
+.dz-chart .pz-n{font-weight:800;fill:var(--nx-ink)}
+.dz-chart .pz{stroke:var(--nx-surface);stroke-width:2}
+
+/* barra de acesso rápido do topo retirada no computador (tudo está na barra lateral);
+   no celular ela continua como navegação inferior */
+@media (min-width:701px){ .access-bar{display:none!important} }

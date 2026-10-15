@@ -721,7 +721,7 @@ function desenharGrafico(id){
 }
 
 /* ---------- gráfico de questões: 5 modelos, com troca ---------- */
-var TIPOS_Q = [['barras', 'Barras'], ['linha', 'Linhas'], ['area', 'Área'], ['taxa', 'Taxa de acerto'], ['pizza', 'Pizza 3D']];
+var TIPOS_Q = [['barras', 'Barras'], ['linha', 'Linhas'], ['area', 'Área'], ['taxa', 'Taxa de acerto'], ['pizza', 'Pizza']];
 var tipoQ = LS.get('nexo_dz_grafico', 'barras');
 function graficoQuestoes(bins, passo){
   GRAFICOS['dz-q'] = { q:true, bins:bins, passo:passo };
@@ -736,8 +736,30 @@ window.nexoGraficoQ = function(t){
 };
 document.addEventListener('click', function(e){ var b = e.target.closest && e.target.closest('[data-dzq]'); if(b) window.nexoGraficoQ(b.dataset.dzq); });
 function legendaQ(tipo){
+  if(tipo === 'pizza') return '';
   if(tipo === 'taxa') return '<span><i style="background:var(--nx-accent)"></i>Taxa de acerto</span><span><i class="dz-dash"></i>Nota mínima da PC-BA (70%)</span>';
-  return '<span><i style="background:var(--nx-good)"></i>Acertos</span><span><i style="background:var(--nx-bad)"></i>Erros</span>';
+  return '<span><i style="background:' + QC().ok[0] + '"></i>Acertei</span><span><i style="background:' + QC().err[0] + '"></i>Errei</span>';
+}
+/* cores do gráfico de questões (azul = acertei, vermelho = errei), como na referência */
+function QC(){ return temaAtual() === 'dark' ? { ok:['#4a9df0', '#2f7fd6'], err:['#f0506a', '#c93a52'] } : { ok:['#2f84e0', '#1f6cc4'], err:['#e0435c', '#bd2f47'] }; }
+/* curva suave que não passa do valor real (interpolação monotônica de Fritsch–Carlson) */
+function curva(pts){
+  var n = pts.length; if(n < 2) return n ? 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1) : '';
+  var dx = [], m = [], t = [];
+  for(var i = 0; i < n - 1; i++){ dx[i] = pts[i + 1][0] - pts[i][0]; m[i] = (pts[i + 1][1] - pts[i][1]) / dx[i]; }
+  t[0] = m[0]; t[n - 1] = m[n - 2];
+  for(i = 1; i < n - 1; i++) t[i] = m[i - 1] * m[i] <= 0 ? 0 : (m[i - 1] + m[i]) / 2;
+  for(i = 0; i < n - 1; i++){
+    if(m[i] === 0){ t[i] = 0; t[i + 1] = 0; continue; }
+    var al = t[i] / m[i], be = t[i + 1] / m[i], h = al * al + be * be;
+    if(h > 9){ var k = 3 / Math.sqrt(h); t[i] = k * al * m[i]; t[i + 1] = k * be * m[i]; }
+  }
+  var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+  for(i = 0; i < n - 1; i++){
+    var c = dx[i] / 3;
+    d += ' C' + (pts[i][0] + c).toFixed(1) + ' ' + (pts[i][1] + t[i] * c).toFixed(1) + ' ' + (pts[i + 1][0] - c).toFixed(1) + ' ' + (pts[i + 1][1] - t[i + 1] * c).toFixed(1) + ' ' + pts[i + 1][0].toFixed(1) + ' ' + pts[i + 1][1].toFixed(1);
+  }
+  return d;
 }
 function eixoX(bins, passo, L, bw, H, pw){
   var g = '', cada = Math.max(1, Math.ceil(bins.length / Math.max(2, Math.floor(pw / 58))));
@@ -786,48 +808,29 @@ function desenharQuestoes(box, cfg){
   if(cap) cap.textContent = '';
 
   if(tipo === 'pizza'){
-    var tot = okT + errT, H2 = W < 420 ? 260 : 290;
-    var rx = Math.min(W * .3, 170), ry = rx * .52, dep = Math.max(16, rx * .15), cx = W < 420 ? W / 2 : W * .4, cy = H2 / 2 - dep / 2 - 4;
-    var fatias = [{ n:okT, cor:'var(--nx-good)', lado:'#087a08', nome:'Acertos' }, { n:errT, cor:'var(--nx-bad)', lado:'#9a2a2a', nome:'Erros' }].filter(function(f){ return f.n; });
-    var fOk = okT / tot, a0 = Math.PI / 3 - 2 * Math.PI * fOk - Math.PI * (1 - fOk); /* gira para a fatia de erros ficar à frente, à direita */
-    while(a0 < 0) a0 += 2 * Math.PI;
-    var P = function(a, ox, oy, dy){ return [(cx + ox + rx * Math.cos(a)).toFixed(2), (cy + oy + (dy || 0) + ry * Math.sin(a)).toFixed(2)]; };
-    var arco = function(a1, a2, ox, oy, dy){ var p = P(a2, ox, oy, dy); return 'A' + rx + ' ' + ry + ' 0 ' + (a2 - a1 > Math.PI ? 1 : 0) + ' 1 ' + p[0] + ' ' + p[1]; };
-    var arcoVolta = function(a2, a1, ox, oy, dy){ var p = P(a1, ox, oy, dy); return 'A' + rx + ' ' + ry + ' 0 ' + (a2 - a1 > Math.PI ? 1 : 0) + ' 0 ' + p[0] + ' ' + p[1]; };
-    var paredes = '', topos = '', rotulos = '', a = a0;
+    /* rosca de acertos x erros, no estilo da imagem de referência: anel largo com degradê,
+       percentuais sobre o anel, legenda no canto e o total no centro */
+    var tot = okT + errT, H2 = W < 420 ? 250 : 300;
+    var cx = W < 420 ? W / 2 : Math.min(W * .45, W - 190), cy = H2 / 2 + 4, Re = Math.min(H2 / 2 - 14, W < 420 ? W / 2 - 16 : 140), Ri = Re * .64;
+    var fatias = [{ n:okT, c:QC().ok, nome:'Acertei' }, { n:errT, c:QC().err, nome:'Errei' }].filter(function(f){ return f.n; });
+    var defs = '<defs>' + fatias.map(function(f, k){ return '<linearGradient id="pzg' + k + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="' + f.c[0] + '"/><stop offset="1" stop-color="' + f.c[1] + '"/></linearGradient>'; }).join('') + '</defs>';
+    var Pp = function(ang, rad){ return (cx + rad * Math.sin(ang)).toFixed(2) + ' ' + (cy - rad * Math.cos(ang)).toFixed(2); };
+    var a = 0, partes = '', rot = '';
     fatias.forEach(function(f, k){
-      var ang = f.n / tot * Math.PI * 2, b1 = a, b2 = a + ang, meio = (b1 + b2) / 2;
-      var ex = fatias.length > 1 ? 7 : 0, ox = Math.cos(meio) * ex, oy = Math.sin(meio) * ex * .55;
-      /* parede frontal: só a parte do arco voltada para baixo (sen > 0) aparece */
-      var segs = [];
-      for(var t = 0; t < 2; t++){
-        var lo = Math.max(b1, t * 2 * Math.PI), hi = Math.min(b2, t * 2 * Math.PI + Math.PI);
-        if(hi > lo) segs.push([lo, hi]);
-      }
-      segs.forEach(function(sg){
-        var p1 = P(sg[0], ox, oy), q2 = P(sg[1], ox, oy, dep);
-        paredes += '<path d="M' + p1.join(' ') + ' ' + arco(sg[0], sg[1], ox, oy) + ' L' + q2.join(' ') + ' ' + arcoVolta(sg[1], sg[0], ox, oy, dep) + ' Z" style="fill:' + f.lado + '"/>';
-      });
-      /* paredes laterais do corte (visíveis quando a fatia está separada) */
-      if(fatias.length > 1){
-        [b1, b2].forEach(function(bb){
-          var c0 = [cx + ox, cy + oy], pe = P(bb, ox, oy);
-          paredes += '<path d="M' + c0.join(' ') + ' L' + pe.join(' ') + ' L' + pe[0] + ' ' + (+pe[1] + dep) + ' L' + c0[0] + ' ' + (c0[1] + dep) + ' Z" style="fill:' + f.lado + '"/>';
-        });
-      }
-      var s1 = P(b1, ox, oy), topo = fatias.length > 1
-        ? 'M' + (cx + ox) + ' ' + (cy + oy) + ' L' + s1.join(' ') + ' ' + arco(b1, b2, ox, oy) + ' Z'
-        : 'M' + P(0, 0, 0).join(' ') + ' ' + arco(0, Math.PI, 0, 0) + ' ' + arco(Math.PI, 2 * Math.PI, 0, 0) + ' Z';
-      var pct = Math.round(f.n / tot * 100);
-      topos += '<path class="pz" d="' + topo + '" data-k="' + k + '" data-tx="' + (cx + ox + Math.cos(meio) * rx * .55).toFixed(1) + '" data-ty="' + (cy + oy + Math.sin(meio) * ry * .55).toFixed(1) + '" style="fill:' + f.cor + ';stroke:var(--nx-surface);stroke-width:2"/>';
-      var lx = cx + ox + Math.cos(meio) * (rx + 22), ly = cy + oy + Math.sin(meio) * (ry + 18) + (Math.sin(meio) > 0 ? dep : 0);
-      rotulos += '<text class="pz-l" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + (Math.cos(meio) >= 0 ? 'start' : 'end') + '"><tspan class="pz-v">' + pct + '%</tspan><tspan x="' + lx.toFixed(1) + '" dy="15">' + f.n + ' ' + f.nome.toLowerCase() + '</tspan></text>';
-      a = b2;
+      var ang = f.n / tot * Math.PI * 2, a2 = a + ang;
+      var d = fatias.length === 1
+        ? 'M' + Pp(0, Re) + ' A' + Re + ' ' + Re + ' 0 1 1 ' + Pp(Math.PI, Re) + ' A' + Re + ' ' + Re + ' 0 1 1 ' + Pp(0, Re) + ' Z M' + Pp(0, Ri) + ' A' + Ri + ' ' + Ri + ' 0 1 0 ' + Pp(Math.PI, Ri) + ' A' + Ri + ' ' + Ri + ' 0 1 0 ' + Pp(0, Ri) + ' Z'
+        : 'M' + Pp(a, Re) + ' A' + Re + ' ' + Re + ' 0 ' + (ang > Math.PI ? 1 : 0) + ' 1 ' + Pp(a2, Re) + ' L' + Pp(a2, Ri) + ' A' + Ri + ' ' + Ri + ' 0 ' + (ang > Math.PI ? 1 : 0) + ' 0 ' + Pp(a, Ri) + ' Z';
+      var meio = (a + a2) / 2, rm = (Re + Ri) / 2, tx = cx + rm * Math.sin(meio), ty = cy - rm * Math.cos(meio);
+      partes += '<path class="pz" fill-rule="evenodd" data-k="' + k + '" data-tx="' + tx.toFixed(1) + '" data-ty="' + ty.toFixed(1) + '" d="' + d + '" style="fill:url(#pzg' + k + ')"/>';
+      if(ang > .35) rot += '<text class="pz-pct" x="' + tx.toFixed(1) + '" y="' + (ty + 4).toFixed(1) + '" text-anchor="middle">' + (f.n / tot * 100).toFixed(1).replace('.', ',') + '%</text>';
+      a = a2;
     });
-    var lado = W >= 420 ? '<g class="pz-side"><text x="' + (W * .74) + '" y="' + (cy - 14) + '" class="pz-big">' + Math.round(okT / tot * 100) + '%</text><text x="' + (W * .74) + '" y="' + (cy + 10) + '" class="ax">de acerto em ' + tot + ' questões</text><text x="' + (W * .74) + '" y="' + (cy + 30) + '" class="ax">' + (okT / tot >= .7 ? 'acima' : 'abaixo') + ' dos 70% da PC-BA</text></g>' : '';
-    fim('<ellipse cx="' + cx + '" cy="' + (cy + dep + ry * .55) + '" rx="' + (rx * .92) + '" ry="' + (ry * .32) + '" class="pz-sh"/>' + paredes + topos + rotulos + lado, H2);
-    ligarDica(box, '.pz', function(el){ var f = fatias[+el.dataset.k]; return '<b>' + f.nome + '</b><br>' + f.n + ' de ' + tot + ' questões (' + Math.round(f.n / tot * 100) + '%)'; });
-    if(cap) cap.textContent = 'Total do período: ' + okT + ' acertos e ' + errT + ' erros.';
+    var centro = '<text class="pz-big" x="' + cx + '" y="' + (cy + 6) + '" text-anchor="middle">' + Math.round(okT / tot * 100) + '%</text><text class="ax" x="' + cx + '" y="' + (cy + 26) + '" text-anchor="middle">de acerto · ' + tot + ' questões</text>';
+    var lg = W >= 420 ? fatias.map(function(f, k){ var y = 34 + k * 24, x = W - 120; return '<circle cx="' + x + '" cy="' + y + '" r="7" style="fill:' + f.c[0] + '"/><text class="pz-l" x="' + (x + 13) + '" y="' + (y + 4.5) + '">' + f.nome + ' <tspan class="pz-n">' + f.n + '</tspan></text>'; }).join('') : '';
+    fim(defs + partes + rot + centro + lg, H2);
+    ligarDica(box, '.pz', function(el){ var f = fatias[+el.dataset.k]; return '<b>' + f.nome + '</b><br>' + f.n + ' de ' + tot + ' questões (' + (f.n / tot * 100).toFixed(1).replace('.', ',') + '%)'; });
+    if(cap) cap.textContent = 'Total do período: ' + okT + ' acertos e ' + errT + ' erros. ' + (okT / tot >= .7 ? 'Acima' : 'Abaixo') + ' dos 70% exigidos na PC-BA.';
     return;
   }
 
@@ -847,7 +850,7 @@ function desenharQuestoes(box, cfg){
     return;
   }
 
-  var tot2 = bins.map(function(b){ return tipo === 'area' || tipo === 'barras' ? b.ok + b.err : Math.max(b.ok, b.err); });
+  var tot2 = bins.map(function(b){ return tipo === 'barras' ? b.ok + b.err : Math.max(b.ok, b.err); });
   var max = niceMax(Math.max.apply(null, tot2.concat([0])) || 1);
   var Y = function(v){ return Tp + ph - v / max * ph; };
   g += grade(L, R, W, Tp, ph, max, function(v){ return Math.round(v); });
@@ -856,24 +859,25 @@ function desenharQuestoes(box, cfg){
     var barW = Math.max(3, Math.min(30, bw * .62));
     bins.forEach(function(b, i){
       var x = L + i * bw + (bw - barW) / 2, y = Tp + ph;
-      [[b.ok, 'var(--nx-good)'], [b.err, 'var(--nx-bad)']].forEach(function(sv){
+      [[b.ok, QC().ok[0]], [b.err, QC().err[0]]].forEach(function(sv){
         if(!sv[0]) return; var h = Math.max(2, sv[0] / max * ph); y -= h;
         g += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + barW.toFixed(1) + '" height="' + Math.max(1, h - 2).toFixed(1) + '" rx="2.5" style="fill:' + sv[1] + '"/>';
       });
     });
-  }else if(tipo === 'linha'){
-    g += '<line class="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + (Tp + ph) + '"/>';
-    [['ok', 'var(--nx-good)'], ['err', 'var(--nx-bad)']].forEach(function(sv){
-      g += '<path class="ln" d="M' + bins.map(function(b, i){ return cxs[i].toFixed(1) + ' ' + Y(b[sv[0]]).toFixed(1); }).join(' L') + '" style="stroke:' + sv[1] + '"/>';
-      if(bins.length <= 45) bins.forEach(function(b, i){ g += '<circle cx="' + cxs[i].toFixed(1) + '" cy="' + Y(b[sv[0]]).toFixed(1) + '" r="3.5" class="dt" style="fill:' + sv[1] + '"/>'; });
+  }else if(tipo === 'linha' || tipo === 'area'){
+    /* duas curvas suaves sobrepostas (acertei e errei), não empilhadas, como na referência;
+       em "Área" cada curva ganha um degradê que some em direção à base */
+    var base = Tp + ph, cc = QC(), defs = '<defs>';
+    [['ok', cc.ok[0]], ['err', cc.err[0]]].forEach(function(sv){
+      defs += '<linearGradient id="qg-' + sv[0] + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + sv[1] + '" stop-opacity="' + (sv[0] === 'ok' ? .55 : .6) + '"/><stop offset="1" stop-color="' + sv[1] + '" stop-opacity="0"/></linearGradient>';
     });
-  }else if(tipo === 'area'){
-    g += '<line class="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + (Tp + ph) + '"/>';
-    var base = Tp + ph, topoOk = bins.map(function(b, i){ return [cxs[i], Y(b.ok)]; }), topoTot = bins.map(function(b, i){ return [cxs[i], Y(b.ok + b.err)]; });
-    var caminho = function(pts){ return pts.map(function(p){ return p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' L'); };
-    g += '<path d="M' + cxs[0].toFixed(1) + ' ' + base + ' L' + caminho(topoOk) + ' L' + cxs[cxs.length - 1].toFixed(1) + ' ' + base + ' Z" style="fill:var(--nx-good);fill-opacity:.85"/>';
-    g += '<path d="M' + caminho(topoOk) + ' L' + caminho(topoTot.slice().reverse()) + ' Z" style="fill:var(--nx-bad);fill-opacity:.8"/>';
-    g += '<path d="M' + caminho(topoOk) + '" style="fill:none;stroke:var(--nx-surface);stroke-width:2"/>';
+    g = defs + '</defs>' + g + '<line class="xh" x1="0" x2="0" y1="' + Tp + '" y2="' + base + '"/>';
+    [['ok', cc.ok[0]], ['err', cc.err[0]]].forEach(function(sv){
+      var pts = bins.map(function(b, i){ return [cxs[i], Y(b[sv[0]])]; }), d = curva(pts);
+      if(tipo === 'area') g += '<path d="' + d + ' L' + cxs[cxs.length - 1].toFixed(1) + ' ' + base + ' L' + cxs[0].toFixed(1) + ' ' + base + ' Z" style="fill:url(#qg-' + sv[0] + ')"/>';
+      g += '<path class="ln" d="' + d + '" style="stroke:' + sv[1] + ';stroke-width:' + (tipo === 'area' ? 2 : 2.4) + '"/>';
+      if(tipo === 'linha' && bins.length <= 20) pts.forEach(function(p){ g += '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.5" class="dt" style="fill:' + sv[1] + '"/>'; });
+    });
   }
   fim(g + eixoX(bins, passo, L, bw, H, pw) + hits());
   ligarDica(box, '.hit', function(el){ return dicaQ(bins[+el.dataset.i], nomeBin(bins[+el.dataset.i], passo)); });
