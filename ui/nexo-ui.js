@@ -1158,6 +1158,42 @@ window.nexoDesempenho = function(p){
   desenharGraficos();
 };
 
+/* ============ celular: barra inferior presa no lugar certo ============
+   No iPhone (sobretudo com o NEXO instalado na tela inicial), depois que o teclado
+   fecha a área visível às vezes não volta ao tamanho certo e a barra fixa fica
+   parada onde o teclado terminava, no meio da tela. Aqui: a barra some enquanto se
+   digita, a rolagem é "cutucada" quando o teclado fecha para o iOS recalcular, e,
+   se ainda sobrar diferença, a barra é deslocada até a borda da área visível. */
+(function(){
+  var CAMPO = 'input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=button]):not([type=submit]):not([type=reset]),textarea,select,[contenteditable="true"]';
+  function ehCampo(el){ return !!(el && el.matches && el.matches(CAMPO)); }
+  function barra(){ return document.querySelector('.access-bar'); }
+  function ajustar(){
+    var b = barra(), vv = window.visualViewport; if(!b) return;
+    if(!vv || window.innerWidth > 700 || document.body.classList.contains('nx-teclado') || Math.abs(vv.scale - 1) > 0.01){ b.style.transform = ''; return; }
+    var desvio = Math.round(vv.offsetTop + vv.height - window.innerHeight);
+    b.style.transform = Math.abs(desvio) > 1 ? 'translateY(' + desvio + 'px)' : '';
+  }
+  function cutucar(){
+    var x = window.scrollX, y = window.scrollY;
+    window.scrollTo(x, y + 1); window.scrollTo(x, y);
+    ajustar();
+  }
+  document.addEventListener('focusin', function(e){ if(ehCampo(e.target)) document.body.classList.add('nx-teclado'); });
+  document.addEventListener('focusout', function(e){
+    if(!ehCampo(e.target)) return;
+    setTimeout(function(){
+      if(ehCampo(document.activeElement)) return;
+      document.body.classList.remove('nx-teclado');
+      cutucar(); setTimeout(cutucar, 350);
+    }, 80);
+  });
+  if(window.visualViewport){ window.visualViewport.addEventListener('resize', ajustar); window.visualViewport.addEventListener('scroll', ajustar); }
+  window.addEventListener('orientationchange', function(){ setTimeout(cutucar, 300); });
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden) setTimeout(cutucar, 100); });
+  window.addEventListener('pageshow', function(){ setTimeout(cutucar, 100); });
+})();
+
 /* ======================= início ======================= */
 function iniciar(){
   montarFerramentas(); prepararBarraAcesso(); atualizarPill();
