@@ -1633,7 +1633,8 @@ nexoSupabase.auth.onAuthStateChange((event,session)=>{
 });
 
 renderNav(); home();
-initNexoAuth();
+// O diálogo de login (#auth-title etc.) fica mais abaixo no HTML: espera o DOM terminar.
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initNexoAuth);else initNexoAuth();
 </script>
 <script>
 let activeResource = 'resumo';
