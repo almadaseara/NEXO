@@ -4,7 +4,8 @@
      botão na barra de acesso do celular e atalho na busca (Ctrl K).
    - O app roda num iframe da mesma origem, isolado do CSS/JS do NEXO, que fica vivo enquanto a
      página estiver aberta: dá para ir à lei seca e voltar ao caderno exatamente onde estava.
-   - Só para aluno logado e ativo no modo aluno; ao sair da conta, o iframe é descartado.
+   - Para conta ativa com permissão de aluno (can_student), no modo Aluno ou ADM; ao sair da conta,
+     o iframe é descartado.
    - #acervo e #acervo/caderno/ID reabrem o Acervo (e o caderno) depois de recarregar.
    Os cadernos ficam no navegador (IndexedDB "nexo-acervo"). Nada aqui toca o Supabase. */
 (function(){
@@ -26,8 +27,8 @@ var hashInicial = /^#acervo/.test(location.hash) ? location.hash : '';
 /* Perfil já validado pelo NEXO no login (loadNexoProfile). Também usado pelo guarda de acervo/index.html. */
 function perfil(){
   try{
-    var p = nexoProfile, modo = nexoMode;
-    if(!p || p.active !== true || modo !== 'student') return null;
+    var p = nexoProfile;
+    if(!p || p.active !== true) return null;
     if(p.can_student === false || (p.can_student == null && p.role !== 'student')) return null;
     return { id:p.id, active:true };
   }catch(e){ return null; }
@@ -195,14 +196,16 @@ window.addEventListener('message', function(e){
   if(cur() === 'acervo'){ try{ renderNav(); }catch(err){} cabecalho(); }
 });
 
-/* ---------- abrir pelo endereço (#acervo) depois que o login carregar ---------- */
-var homeOriginal = window.home;
-if(typeof homeOriginal === 'function'){
-  window.home = function(){
+/* ---------- abrir pelo endereço (#acervo) depois que o login carregar ----------
+   O login termina em home() (modo Aluno) ou em openAdminRobot() (modo ADM). */
+['home', 'openAdminRobot'].forEach(function(nome){
+  var original = window[nome];
+  if(typeof original !== 'function') return;
+  window[nome] = function(){
     if(hashInicial && perfil()) return abrir();
-    return homeOriginal.apply(this, arguments);
+    return original.apply(this, arguments);
   };
-}
+});
 
 function iniciar(){ host(); prepararBarraAcesso(); try{ syncAccess(); }catch(e){} }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
