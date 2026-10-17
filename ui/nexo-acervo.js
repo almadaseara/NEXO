@@ -1,7 +1,7 @@
 /* NEXO — Acervo Digital Pessoal: cadernos do aluno (escrita à mão, PDFs anotados, quadro
    branco, flashcards, IA com a chave do próprio aluno), app em acervo/.
-   - Abre como uma view do NEXO: item na barra lateral (com as seções e pastas como subitens),
-     botão na barra de acesso do celular e atalho na busca (Ctrl K).
+   - Abre como uma view do NEXO: item na barra lateral (as seções e pastas ficam nas abas do
+     próprio Acervo), botão na barra de acesso do celular e atalho na busca (Ctrl K).
    - O app roda num iframe da mesma origem, isolado do CSS/JS do NEXO, que fica vivo enquanto a
      página estiver aberta: dá para ir à lei seca e voltar ao caderno exatamente onde estava.
    - Para conta ativa com permissão de aluno (can_student), no modo Aluno ou ADM; ao sair da conta,
@@ -13,7 +13,6 @@
 
 function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
-function escH(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function cur(){ try{ return current; }catch(e){ return null; } }
 function setCur(v){ try{ current = v; }catch(e){} }
 function setHead(t){ var h = document.getElementById('head'); if(h) h.textContent = t; }
@@ -92,26 +91,17 @@ function cabecalho(){
 }
 
 /* ---------- barra lateral ---------- */
+/* Só o item principal: as seções (Todos, Favoritos, Estudar, Páginas marcadas) e as pastas
+   ficam nas abas dentro do próprio Acervo. */
 function navHTML(){
   var on = cur() === 'acervo';
-  var h = '<button type="button" class="primary-nav nx-acervo-nav' + (on ? ' active' : '') + '" onclick="nexoAbrirAcervo()"' + (on ? ' aria-current="page"' : '') + '>' + ICONE + ' Acervo Digital Pessoal</button>';
-  if(!on) return h;
-  function sub(nav, rotulo, extra){
-    var ativo = !A.editor && A.nav === nav;
-    return '<button type="button" class="module-nav nx-acervo-sub' + (ativo ? ' active' : '') + '" onclick="nexoAbrirAcervo(\'' + escH(nav) + '\')"><span class="module-dot"></span><span class="nx-acervo-rotulo">' + rotulo + '</span>' + (extra || '') + '</button>';
-  }
-  h += '<div class="nx-acervo-subnav">';
-  SECOES.forEach(function(s){ h += sub(s[0], s[1], s[0] === 'study' && A.due ? '<span class="nx-acervo-due">' + A.due + '</span>' : ''); });
-  A.pastas.forEach(function(f){
-    h += sub('folder:' + f.id, (f.depth ? '<span style="display:inline-block;width:' + f.depth * 12 + 'px"></span>' : '') + escH((f.emoji ? f.emoji + ' ' : '') + f.name), '<span class="nx-acervo-count">' + f.count + '</span>');
-  });
-  return h + '</div>';
+  return '<button type="button" class="primary-nav nx-acervo-nav' + (on ? ' active' : '') + '" onclick="nexoAbrirAcervo()"' + (on ? ' aria-current="page"' : '') + '>' + ICONE + ' Acervo Digital Pessoal</button>';
 }
 var renderNavOriginal = window.renderNav;
 window.renderNav = function(){
   var r; try{ if(typeof renderNavOriginal === 'function') r = renderNavOriginal.apply(this, arguments); }catch(e){}
   var nav = document.getElementById('nav'); if(!nav) return r;
-  $$('.nx-acervo-nav, .nx-acervo-subnav', nav).forEach(function(x){ x.remove(); });
+  $$('.nx-acervo-nav', nav).forEach(function(x){ x.remove(); });
   if(!perfil()) return r;
   /* junto das áreas pessoais do aluno: depois de "Meus grifos", "Desempenho" ou "Flashcards" */
   var botoes = $$('.primary-nav', nav), achar = function(re){ return botoes.filter(function(b){ return re.test(b.getAttribute('onclick') || '') || re.test(b.textContent); }).pop(); };
