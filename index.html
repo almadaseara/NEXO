@@ -1382,7 +1382,7 @@ function setAuthMode(mode){
     ? 'Digite e confirme a nova senha da sua conta.'
     : signup
       ? 'Cadastre-se com uma plataforma digital ou crie sua conta por e-mail.'
-      : 'Entre com Google, Facebook ou com seu e-mail e senha.';
+      : 'Entre com Google ou com seu e-mail e senha.';
   document.getElementById('auth-name-wrap').hidden = !signup;
   document.getElementById('auth-email-wrap').hidden = recovery;
   document.getElementById('auth-confirm-wrap').hidden = !(signup || recovery);
@@ -2057,7 +2057,6 @@ syncAccess();
     <div class="auth-head"><div><span class="eyebrow">ACESSO NEXO</span><h2 id="auth-title">Entrar na sua conta</h2><p id="auth-subtitle">Escolha como deseja acessar o NEXO Revisão.</p></div><button class="auth-close" type="button" onclick="closeAuthDialog()" aria-label="Fechar">×</button></div>
     <div class="social-login">
       <button class="social-btn" type="button" onclick="signInWithSocial('google')"><span class="social-icon google">G</span><span>Continuar com Google</span></button>
-      <button class="social-btn" type="button" onclick="signInWithSocial('facebook')"><span class="social-icon facebook">f</span><span>Continuar com Facebook</span></button>
     </div>
     <div class="auth-divider"><span>ou continue com e-mail</span></div>
     <form id="auth-form" class="auth-form" onsubmit="submitNexoAuth(event)">
