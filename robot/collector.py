@@ -103,9 +103,7 @@ def score_candidate(url, text, cfg):
     score=0
     board=detect_board(url,text,cfg)
     year=detect_year(url,text)
-    if board=="Instituto AOCP": score += 35
-    elif board=="CEBRASPE": score += 30
-    else: score += 12
+    score += 30 if board!="Demais bancas" else 12  # mesmo peso para toda banca identificada
     if "pciconcursos" in url.lower(): score += 18
     if year==2026: score += 24
     elif year==2025: score += 18
@@ -293,7 +291,7 @@ def main():
             "2024":sum(1 for x in all_items if x.get("year")==2024),
             "demais anos":sum(1 for x in all_items if x.get("year") not in (2026,2025,2024))
         },
-        "note":"Descoberta automática ativa. Prioridade: AOCP → CEBRASPE → demais bancas; dentro de cada banca: 2026 → 2025 → 2024 → demais anos. Publicação segue bloqueada até validação prova↔gabarito e extração estruturada."
+        "note":"Descoberta automática ativa. Todas as bancas identificadas têm o mesmo nível; bancas não identificadas vêm por último; dentro de cada banca: 2026 → 2025 → 2024 → demais anos. Publicação segue bloqueada até validação prova↔gabarito e extração estruturada."
     }
     save_json(STATUS_PATH,status)
     print(json.dumps(status,ensure_ascii=False,indent=2))

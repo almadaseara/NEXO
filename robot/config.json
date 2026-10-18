@@ -82,19 +82,19 @@
     "https://www.consulplan.net/",
     "https://www.fundatec.org.br/portal/concursos/"
   ],
-  "max_pages_per_run": 60,
+  "max_pages_per_run": 120,
   "max_depth": 1,
   "board_priority": {
     "Instituto AOCP": 1,
-    "CEBRASPE": 2,
-    "FGV": 3,
-    "FCC": 3,
-    "Vunesp": 3,
-    "IBADE": 3,
-    "Quadrix": 3,
-    "Consulplan": 3,
-    "Fundatec": 3,
-    "Demais bancas": 4
+    "CEBRASPE": 1,
+    "FGV": 1,
+    "FCC": 1,
+    "Vunesp": 1,
+    "IBADE": 1,
+    "Quadrix": 1,
+    "Consulplan": 1,
+    "Fundatec": 1,
+    "Demais bancas": 2
   },
   "year_priority": [
     2026,
@@ -125,7 +125,7 @@
       2024,
       "demais anos"
     ],
-    "note": "Dentro de cada banca, priorizar 2026, depois 2025, depois 2024 e somente depois anos anteriores."
+    "note": "Todas as bancas identificadas têm o mesmo nível; dentro de cada banca: 2026, depois 2025, depois 2024 e somente depois anos anteriores. Bancas não identificadas vêm por último."
   },
   "allowed_domains": [
     "institutoaocp.org.br",
