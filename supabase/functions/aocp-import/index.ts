@@ -106,6 +106,26 @@ function parseMultipleChoice(text: string, answers: Map<number, string>) {
   }
   return rows;
 }
+/**
+ * Controle fail-closed antes de gravar qualquer questão da importação AOCP.
+ * Nunca assume que texto do PDF preserva quadros, tabelas, figuras ou comandos
+ * compartilhados. Arquivo ambíguo é retido para revisão humana.
+ */
+function auditarImportacao(texto: string, respostas: Map<number,string>, questoes: any[]) {
+  const problemas: string[] = [];
+  const elegiveis = [...respostas.entries()].filter(([,a]) => a !== "ANULADA");
+  const numeros = new Set(questoes.map(q => q.question_number));
+  const ausentes = elegiveis.map(([n]) => n).filter(n => !numeros.has(n));
+  if (ausentes.length) problemas.push("Numeração incompleta (" + ausentes.length + " questões não extraídas): " + ausentes.slice(0,12).join(", "));
+  const duplicadas = questoes.map(q => q.question_number).filter((n,i,arr) => arr.indexOf(n)!==i);
+  if (duplicadas.length) problemas.push("Questões duplicadas no caderno: " + [...new Set(duplicadas)].join(", "));
+  const tabelaOuFigura = /\\b(?:tabela|quadro|figura|gr[aá]fico|diagrama|imagem)\\b|com base nos dados precedentes/i.test(texto);
+  if (tabelaOuFigura) problemas.push("Há referência a tabela/figura ou contexto compartilhado: revisão visual obrigatória antes da importação.");
+  const semAlternativas = questoes.filter(q => !Array.isArray(q.options) || q.options.length !== 5 || q.options.some((v:string)=>!String(v).trim()));
+  if (semAlternativas.length) problemas.push("Há questões sem cinco alternativas válidas.");
+  return { apta: problemas.length===0, problemas, ausentes, suspeita_visual:tabelaOuFigura, total_gabarito:respostas.size, total_extraidas:questoes.length };
+}
+
 async function hashStatement(s: string) {
   const bytes = new TextEncoder().encode(s.toLowerCase().replace(/\s+/g, " ").trim());
   const digest = await crypto.subtle.digest("SHA-256", bytes);
@@ -152,6 +172,12 @@ Deno.serve(async (req) => {
         : "Não consegui separar as questões do caderno. Confira se é o caderno do cargo e do tipo de prova informados.";
       await finalizar(src.id, "rejected", msg, src.raw_metadata, { respostas: respostas.size, questoes: 0, nota });
       return json({ status: "rejected", error: msg });
+    }
+    const integridade = auditarImportacao(cad.text, respostas, qs);
+    if(!integridade.apta) {
+      const msg = "Importação retida por integridade: " + integridade.problemas.join(" | ");
+      await finalizar(src.id, "rejected", msg, src.raw_metadata, { respostas:respostas.size, questoes:qs.length, integridade, nota });
+      return json({status:"rejected",error:msg,integridade});
     }
     const paginaConcurso = /^https:\/\//.test(String(src.raw_metadata?.concurso_url || "")) ? src.raw_metadata.concurso_url : null;
     const gabaritoUrl = /^https:\/\//.test(src.answer_key_pdf_url) ? src.answer_key_pdf_url : null;
