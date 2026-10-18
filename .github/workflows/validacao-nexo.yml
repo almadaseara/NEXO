@@ -10,6 +10,7 @@ on:
       - 'ui/**'
       - 'tools/validar-temas.js'
       - 'tools/auditar-acervo.js'
+      - 'tools/diagnosticar-robo.js'
       - 'data/mapas-ilustrados.json'
       - 'data/banco-classificacao.json'
       - 'assets/mapas/**'
@@ -44,6 +45,8 @@ jobs:
         run: node tools/validar-temas.js
       - name: Auditar mapas e classificacoes
         run: node tools/auditar-acervo.js
+      - name: Diagnosticar coleta de documentos
+        run: node tools/diagnosticar-robo.js
       - name: Instalar Playwright
         run: |
           python -m pip install playwright
