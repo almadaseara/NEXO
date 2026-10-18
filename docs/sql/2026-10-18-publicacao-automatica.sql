@@ -6,7 +6,7 @@
 
 alter table public.collector_control
   add column if not exists auto_publish boolean not null default true,
-  add column if not exists auto_publish_min_confidence numeric not null default 0.7,
+  add column if not exists auto_publish_min_confidence numeric not null default 0.9,  -- só confiança alta
   add column if not exists auto_publish_per_run integer not null default 500;
 
 -- Alertas que impedem a publicação automática (o administrador ainda pode publicar pela revisão).
@@ -31,6 +31,7 @@ begin
       and q.reviewed_at is null                                   -- o que o administrador já mexeu fica como ele deixou
       and not (q.review_flags ?| public.nexo_auto_publicar_bloqueios())
       and length(btrim(coalesce(q.statement, ''))) >= 15
+      and q.statement !~* '\mjulgue\M[^.!?]*[.:]?\s*$'          -- comando do bloco seguinte colado no fim do item
       and jsonb_typeof(q.options) = 'array'
       and (case when jsonb_array_length(q.options) = 2 then q.answer in ('C', 'E')
                 when jsonb_array_length(q.options) between 4 and 5 then position(q.answer in left('ABCDE', jsonb_array_length(q.options))) > 0

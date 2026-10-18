@@ -3,8 +3,8 @@
 //   1. rotinas do Claude Code (assinatura, sem custo de API): depositam o resultado em ai_external_extractions;
 //   2. Gemini, camada gratuita (segredo GEMINI_API_KEY): lê só as questões que o extrator por posição não resolveu;
 //   3. API paga da Anthropic (segredo ANTHROPIC_API_KEY, opcional): Message Batches; desligada sem a chave.
-// Leituras entram como "banked". Ao fim de cada "tick" o Gemini sugere o módulo e nexo_auto_publicar() publica
-// o que passa nas travas (gabarito oficial conferido, sem alertas graves, módulo com confiança alta/média);
+// Leituras entram como "banked". Em "gemini_classify" (cron próprio, 10 min depois do tick) o Gemini sugere o módulo e nexo_auto_publicar() publica
+// o que passa nas travas (gabarito oficial conferido, sem alertas graves, módulo com confiança alta);
 // o resto fica na revisão. Desligar: collector_control.auto_publish = false.
 //
 // POST {action}: "tick" (padrão) | "ingest_external" | "gemini" | "gemini_classify" | "auto_publish" | "collect" | "submit_extract" | "submit_classify" | "status" | "pdf"
@@ -457,7 +457,7 @@ Deno.serve(async (req) => {
       result.extract = await submitExtract(client, ids?.length ? ids.length : cfg.extractPerTick, ids);
     }
     if (client && (action === "tick" || action === "submit_classify")) result.classify = await submitClassify(client, Number(body?.limit) || cfg.classifyPerTick);
-    if (action === "tick" || action === "auto_publish") {
+    if (action === "tick" || action === "gemini_classify" || action === "auto_publish") {
       const { data, error } = await db.rpc("nexo_auto_publicar", {});
       result.auto_publish = error ? { error: error.message } : data;
     }
