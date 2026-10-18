@@ -231,7 +231,7 @@ async function baixarHistorico(){
   });
   gravar('nexo_practice_answers', st); gravar('nexo_caderno_resolvidas', res);
   var eventos = await paginar(function(a, b){
-    return sb.from('study_events').select('ev_id,t,k,m,ok,g,ms').eq('user_id', usuario.id).order('t', { ascending:false }).range(a, b);
+    return sb.from('study_events').select('ev_id,t,k,m,ok,g,ms').eq('user_id', usuario.id).order('ev_id').range(a, b);
   });
   var porId = {};
   ler('nexo_eventos', []).forEach(function(e){ if(e && e.id) porId[e.id] = e; });
