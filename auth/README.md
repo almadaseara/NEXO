@@ -1,35 +1,37 @@
-# Banco de usuários do NEXO
+# Login e permissões do NEXO
 
-O front-end do GitHub Pages não deve armazenar usuários ou senhas.
+O login é feito pelo **Supabase Auth** (projeto `dkpgsvssyszrwmkutcyt`). O site guarda só a chave
+pública (`sb_publishable_…` em `auth-config.js` e no `index.html`); senhas e chaves secretas nunca
+ficam no GitHub.
 
-## Contrato esperado do backend
+## Como entrar
 
-POST /login
-Content-Type: application/json
+- E-mail e senha (com confirmação por e-mail) ou Google.
+- Toda conta nova ganha uma linha em `public.profiles` pelo gatilho `handle_new_user`, com
+  `active = false` ("aguardando liberação"), a menos que o e-mail esteja em
+  `app_private.authorized_users`, que define as permissões de antemão.
+- O administrador libera ou bloqueia contas em **Administração → Cadastros** (`ui/nexo-cadastros.js`,
+  funções `nexo_admin_listar_cadastros` e `nexo_admin_definir_acesso`).
 
-Entrada:
-{"email":"aluno@exemplo.com","password":"senha"}
+## Permissões (`public.profiles`)
 
-Resposta válida para aluno:
-{"ok":true,"role":"student","token":"TOKEN_DE_SESSAO"}
+| Campo | Significado |
+| --- | --- |
+| `active` | Conta liberada. Sem isso a pessoa não entra e o banco não entrega nada. |
+| `can_student` | Pode usar o modo Aluno. |
+| `can_admin` | Pode usar o modo ADM. |
+| `default_mode` | Modo ao entrar (`student` ou `admin`). |
+| `role` | Campo antigo; as regras atuais usam `can_student` e `can_admin`. |
 
-Resposta válida para administrador:
-{"ok":true,"role":"admin","token":"TOKEN_DE_SESSAO"}
+## Quem lê o quê no banco
 
-Falha:
-{"ok":false,"message":"E-mail ou senha inválidos."}
+Regras em `docs/sql/` (a mais recente é `2026-10-18-auditoria-acesso.sql`):
 
-## Tabela sugerida
+- `is_nexo_aluno()`: conta ativa com `can_student` ou `can_admin`. Lê questões **validadas e
+  publicadas**, a classificação (`question_module_map`) e os mapas mentais.
+- `is_nexo_admin()`: conta ativa com `can_admin`. Lê tudo, inclusive as tabelas do robô.
+- Plano, marcações e avisos de erro: cada aluno só vê e altera as próprias linhas.
+- O robô usa `service_role` nas edge functions e não depende dessas regras.
 
-users
-- id (uuid)
-- email (unique)
-- password_hash
-- role: student | admin
-- active (boolean)
-- created_at
-- last_login_at
-
-A senha deve ser armazenada apenas como hash seguro no backend (Argon2id ou bcrypt), nunca em texto puro e nunca no GitHub Pages.
-
-O endpoint HTTPS deve ser configurado em auth-config.js.
+O conteúdo dos resumos (`index.html`, `data/temas/`) é público, como todo o repositório: o login
+protege o que está no Supabase.

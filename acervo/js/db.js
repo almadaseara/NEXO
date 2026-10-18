@@ -1,29 +1,87 @@
 // Armazenamento local (IndexedDB). Tudo fica no aparelho.
-const DB_NAME = 'nexo-acervo';
+// Um banco por conta do NEXO (auditoria N-02): quem entra depois de outra pessoa no mesmo navegador
+// não vê os cadernos dela. O banco antigo, sem conta, passa uma única vez para o dono dos dados do aparelho.
+const LEGADO = 'nexo-acervo';
+function contaId() {
+  try {
+    const p = window.parent !== window && window.parent.nexoAcervoPerfil && window.parent.nexoAcervoPerfil();
+    if (p && p.id) return p.id;
+  } catch { /* fora do NEXO */ }
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && /^sb-[a-z0-9]+-auth-token$/.test(k)) { const s = JSON.parse(localStorage.getItem(k)); if (s?.user?.id) return s.user.id; }
+    }
+  } catch { /* sem sessão */ }
+  return null;
+}
+const CONTA = contaId();
+const DB_NAME = CONTA ? LEGADO + ':' + CONTA : LEGADO;
 const DB_VERSION = 2;
 // v2: baralhos e cartões de estudo, figurinhas (elementos salvos) e modelos personalizados.
 const STORES = ['folders', 'notebooks', 'pages', 'assets', 'decks', 'cards', 'elements', 'templates'];
 
 let dbPromise = null;
 
+function criarStores(db) {
+  for (const name of STORES) {
+    if (!db.objectStoreNames.contains(name)) {
+      const store = db.createObjectStore(name, { keyPath: 'id' });
+      if (name === 'pages') store.createIndex('notebookId', 'notebookId');
+      if (name === 'notebooks') store.createIndex('folderId', 'folderId');
+      if (name === 'cards') store.createIndex('deckId', 'deckId');
+    }
+  }
+}
+
+// Copia o banco antigo (sem conta) para o banco desta conta, se ela é a dona dos dados do aparelho.
+async function migrarLegado(db) {
+  const FLAG = 'acervo_legado_migrado';
+  if (!CONTA || localStorage.getItem(FLAG)) return;
+  const dono = localStorage.getItem('nexo_dono');
+  if (dono && dono !== CONTA) return; // os cadernos antigos são de outra pessoa
+  if (indexedDB.databases) {
+    const nomes = (await indexedDB.databases()).map((d) => d.name);
+    if (!nomes.includes(LEGADO)) { localStorage.setItem(FLAG, CONTA); return; }
+  }
+  const antigo = await new Promise((resolve) => {
+    const req = indexedDB.open(LEGADO, DB_VERSION);
+    req.onupgradeneeded = () => criarStores(req.result);
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => resolve(null);
+  });
+  if (!antigo) return;
+  const dados = {};
+  for (const s of STORES) {
+    dados[s] = await new Promise((resolve) => {
+      const r = antigo.transaction(s).objectStore(s).getAll();
+      r.onsuccess = () => resolve(r.result || []);
+      r.onerror = () => resolve([]);
+    });
+  }
+  antigo.close();
+  const total = STORES.reduce((n, s) => n + dados[s].length, 0);
+  if (total) {
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction(STORES, 'readwrite');
+      for (const s of STORES) for (const v of dados[s]) tx.objectStore(s).put(v);
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+  localStorage.setItem(FLAG, CONTA);
+  indexedDB.deleteDatabase(LEGADO); // já copiado: não fica disponível para outra conta
+}
+
 function open() {
   if (dbPromise) return dbPromise;
   dbPromise = new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = () => {
-      const db = req.result;
-      for (const name of STORES) {
-        if (!db.objectStoreNames.contains(name)) {
-          const store = db.createObjectStore(name, { keyPath: 'id' });
-          if (name === 'pages') store.createIndex('notebookId', 'notebookId');
-          if (name === 'notebooks') store.createIndex('folderId', 'folderId');
-          if (name === 'cards') store.createIndex('deckId', 'deckId');
-        }
-      }
-    };
-    req.onsuccess = () => {
+    req.onupgradeneeded = () => criarStores(req.result);
+    req.onsuccess = async () => {
       // Outra aba abriu uma versão mais nova: fecha esta conexão.
       req.result.onversionchange = () => req.result.close();
+      try { await migrarLegado(req.result); } catch { /* migração falhou: o banco antigo continua intacto */ }
       resolve(req.result);
     };
     req.onerror = () => reject(req.error);

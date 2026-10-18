@@ -27,7 +27,7 @@ h1{margin:0 0 10px}.muted{color:#6f817a;line-height:1.55}.btn{display:inline-blo
   <div id="reportes" class="muted">Carregando...</div>
 </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
 <script src="auth-config.js"></script>
 <script>
 const nexoSupabase=window.supabase.createClient(NEXO_AUTH.supabaseUrl,NEXO_AUTH.publishableKey,{auth:{persistSession:true,autoRefreshToken:true}});
@@ -36,8 +36,8 @@ async function logout(){await nexoSupabase.auth.signOut();sessionStorage.clear()
   const status=document.getElementById('status');
   const {data:{session}}=await nexoSupabase.auth.getSession();
   if(!session){location.replace('./');return}
-  const {data:profile,error}=await nexoSupabase.from('profiles').select('role,active').eq('id',session.user.id).single();
-  if(error || !profile || profile.active===false || profile.role!=='admin'){
+  const {data:profile,error}=await nexoSupabase.from('profiles').select('role,active,can_admin').eq('id',session.user.id).single();
+  if(error || !profile || profile.active!==true || !(profile.can_admin===true || profile.role==='admin')){
     status.className='error';
     status.textContent='Acesso administrativo não autorizado.';
     setTimeout(()=>location.replace('./'),1200);

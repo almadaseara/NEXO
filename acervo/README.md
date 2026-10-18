@@ -1,6 +1,6 @@
 # Acervo Digital Pessoal
 
-Seção do NEXO Revisão para cadernos digitais: escreva à mão, anote PDFs, estude com flashcards e peça ajuda à IA. Os dados ficam **só no aparelho do aluno** (IndexedDB, banco `nexo-acervo`); ainda não há sincronização com o Supabase.
+Seção do NEXO Revisão para cadernos digitais: escreva à mão, anote PDFs, estude com flashcards e peça ajuda à IA. Os dados ficam **só no aparelho do aluno** (IndexedDB, um banco por conta: `nexo-acervo:<id da conta>`); ainda não há sincronização com o Supabase.
 
 ## Como se integra ao NEXO
 

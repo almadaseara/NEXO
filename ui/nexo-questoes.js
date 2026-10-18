@@ -1,7 +1,8 @@
 /* NEXO Revisão — questões do banco ligadas aos temas, filtro de questões, tesoura e painel.
    - Questões: só leitura no Supabase. Carrega, para quem está logado, as questões publicadas e
-     validadas que aparecem em data/banco-classificacao.json (classificação revisada à mão) e as
-     coloca na aba "Questões oficiais" do módulo certo. Não grava nada no banco, não muda gabarito.
+     validadas que têm módulo na tabela question_module_map (classificação revisada pelo administrador
+     em Administração → Classificar questões; reserva: data/banco-classificacao.json) e as coloca na aba
+     "Questões oficiais" do módulo certo. Não grava nada no banco, não muda gabarito.
    - Filtro: refaz a página "Praticar questões" com filtros que existem de verdade nos dados.
    - Tesoura: elimina (risca) alternativas em qualquer questão do site.
    - Painel: números reais por disciplina na página inicial. */
@@ -43,8 +44,8 @@ function montarQuestao(r){
   }else{
     ops = ops.map(function(o){ return escH(limpa(o)); });
     if(ops.length < 2 || ops.length > 5 || 'ABCDE'.indexOf(resp) < 0 || 'ABCDE'.indexOf(resp) >= ops.length) return null;
-    /* alternativas que vieram só com a letra ("A", "B"...) = questão importada quebrada: não exibe */
-    if(ops.every(function(o){ return semTags(o).replace(/[\s.)]/g, '').length <= 1; })) return null;
+    /* alternativa que veio vazia ou só com a letra ("A", "B"...) = questão importada quebrada: não exibe */
+    if(ops.some(function(o, i){ var t = semTags(o).replace(/[\s.)]/g, '').toUpperCase(); return t === '' || t === 'ABCDE'[i]; })) return null;
   }
   var texto = limpa(r.statement); if(texto.length < 15) return null;
   /* "instituição" às vezes veio com lixo da página de origem ("Organizadora: X Verificação de segurança ...") */
@@ -55,6 +56,7 @@ function montarQuestao(r){
   var oficial = r.answer_source_type === 'official';
   var com = 'Questão de prova do banco NEXO' + (banca ? ' (' + escH(banca) + (ano ? ', ' + ano : '') + ')' : '') + '. '
     + (oficial ? 'Gabarito conferido no documento oficial da banca.' : 'Gabarito conferido em fonte de apoio; confira no documento oficial.')
+    + (!prova && !gab ? ' Ainda sem link para a prova e o gabarito originais.' : '')
     + (prova || gab ? '<br>' + (prova ? '<a href="' + escH(prova) + '" target="_blank" rel="noopener">Abrir a prova ↗</a>' : '') + (prova && gab ? ' · ' : '') + (gab ? '<a href="' + escH(gab) + '" target="_blank" rel="noopener">Abrir o gabarito ↗</a>' : '') : '');
   return {
     num:'Q' + (r.question_number || ''), source:[banca, ano].filter(Boolean).join(' · '),
@@ -71,8 +73,8 @@ async function carregarBanco(){
   try{
     var s = await sb.auth.getSession();
     if(!s || !s.data || !s.data.session){ estadoBanco.carregando = false; return; }
-    var mapa = await fetch('data/banco-classificacao.json', { cache:'no-cache' }).then(function(r){ return r.json(); });
-    var ids = Object.keys(mapa.questoes || {}), linhas = [];
+    var mapa = await lerClassificacao(sb);
+    var ids = Object.keys(mapa.questoes || {}).filter(function(id){ return mapa.questoes[id] !== '-'; }), linhas = [];
     for(var i = 0; i < ids.length; i += 60){
       var res = await sb.from('question_bank')
         .select('id,question_number,statement,options,answer,question_type,board,year,institution,role_name,exam_source_url,answer_source_url,answer_source_type,status,publication_status')
@@ -81,12 +83,17 @@ async function carregarBanco(){
       linhas = linhas.concat(res.data || []);
     }
     linhas.sort(function(a, b){ return a.id < b.id ? -1 : 1; }); /* ordem fixa: o índice guarda o que você já respondeu */
+    /* duplicatas: mesma prova e número (banca, ano, cargo, nº) ou o mesmo enunciado inteiro */
     var vistos = {}, n = 0;
-    mods().forEach(function(m){ (m.official_questions || []).forEach(function(q){ vistos[norm(semTags(q.text)).slice(0, 160)] = 1; }); });
+    function chaveTexto(q){ return 't:' + norm(semTags(q.text)).replace(/[^a-z0-9]+/g, ' ').trim(); }
+    function chaveProva(q){ return q.board && q.year && q.num && q.num !== 'Q' ? 'p:' + norm([q.board, q.year, q.role, q.num].join('|')) : ''; }
+    mods().forEach(function(m){ (m.official_questions || []).forEach(function(q){ vistos[chaveTexto(q)] = 1; }); });
     linhas.forEach(function(r){
       var m = mods().find(function(x){ return x.id === mapa.questoes[r.id]; }); if(!m) return;
       var q = montarQuestao(r); if(!q) return;
-      var chave = norm(semTags(q.text)).slice(0, 160); if(vistos[chave]) return; vistos[chave] = 1;
+      var kt = chaveTexto(q), kp = chaveProva(q);
+      if(vistos[kt] || (kp && vistos[kp])) return;
+      vistos[kt] = 1; if(kp) vistos[kp] = 1;
       m.official_questions = m.official_questions || [];
       if(m.official_questions.some(function(x){ return x.bancoId === q.bancoId; })) return;
       m.official_questions.push(q); n++;
@@ -96,6 +103,16 @@ async function carregarBanco(){
   }catch(e){ estadoBanco.erro = String(e && e.message || e); }
   estadoBanco.carregando = false;
 }
+/* classificação revisada (question_module_map); se a tabela ainda não existir, usa o arquivo de 14/10 */
+async function lerClassificacao(sb){
+  var r = await sb.from('question_module_map').select('question_id,module_id').limit(5000);
+  if(!r.error && r.data && r.data.length){
+    var q = {}; r.data.forEach(function(x){ q[x.question_id] = x.module_id; });
+    return { questoes:q };
+  }
+  return fetch('data/banco-classificacao.json', { cache:'no-cache' }).then(function(x){ return x.json(); });
+}
+window.nexoLerClassificacao = lerClassificacao;
 function atualizarTela(){
   try{
     if(document.getElementById('nxq-res')) return window.renderPracticeQuestionsPage();
