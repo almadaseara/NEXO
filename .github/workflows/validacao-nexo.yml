@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'admin.html'
+      - 'tools/testar-fila-fase2.js'
       - 'data/temas/**'
       - 'temas/**'
       - 'ui/**'
@@ -15,6 +17,7 @@ on:
       - 'tools/fixtures/**'
       - 'docs/rotinas/**'
       - 'supabase/functions/**'
+      - 'tools/testar-integridade-aocp.js'
       - 'data/mapas-ilustrados.json'
       - 'data/banco-classificacao.json'
       - 'assets/mapas/**'
@@ -49,6 +52,10 @@ jobs:
         run: node tools/validar-temas.js
       - name: Testar extrator Cebraspe
         run: node tools/testar-extrator-cebraspe.js
+      - name: Testar integridade AOCP
+        run: node tools/testar-integridade-aocp.js
+      - name: Testar fila de excecoes
+        run: node tools/testar-fila-fase2.js
       - name: Auditar mapas e classificacoes
         run: node tools/auditar-acervo.js
       - name: Testar pipeline oficial (Cebraspe e IA)
