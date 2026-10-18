@@ -11,6 +11,8 @@ on:
       - 'tools/validar-temas.js'
       - 'tools/auditar-acervo.js'
       - 'tools/diagnosticar-robo.js'
+      - 'tools/testar-extrator-cebraspe.js'
+      - 'supabase/functions/question-collector/**'
       - 'data/mapas-ilustrados.json'
       - 'data/banco-classificacao.json'
       - 'assets/mapas/**'
@@ -43,6 +45,8 @@ jobs:
           python-version: '3.12'
       - name: Validar temas
         run: node tools/validar-temas.js
+      - name: Testar extrator Cebraspe
+        run: node tools/testar-extrator-cebraspe.js
       - name: Auditar mapas e classificacoes
         run: node tools/auditar-acervo.js
       - name: Diagnosticar coleta de documentos
