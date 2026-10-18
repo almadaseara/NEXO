@@ -647,6 +647,13 @@ Deno.serve(async (req)=>{
   if(busyErr) return Response.json({status:"error",error:busyErr.message},{status:500});
   if(isBusy) return Response.json({status:"busy"});
   await loadSettings();
+  // Fonte que ficou em "processing" porque a execução anterior foi encerrada pelo limite de CPU volta para a fila
+  // (até 3 tentativas; depois fica em erro para revisão), em vez de ficar presa para sempre.
+  const stale=new Date(Date.now()-10*60*1000).toISOString();
+  await db.from("exam_sources").update({status:"error",last_error:"Leitura interrompida pelo limite de CPU da função 3 vezes.",updated_at:new Date().toISOString()})
+    .eq("status","processing").lt("last_attempt_at",stale).gte("attempt_count",3);
+  await db.from("exam_sources").update({status:"queued",updated_at:new Date().toISOString()})
+    .eq("status","processing").lt("last_attempt_at",stale).lt("attempt_count",3);
   const {data:run,error:runErr}=await db.from("collector_runs").insert({status:"running"}).select().single();
   if(runErr) return Response.json({error:runErr.message},{status:500});
   let stats={discovered_count:0,new_sources_discovered:0,pages_scanned:0,extracted_count:0,validated_count:0,rejected_count:0,inserted_count:0,deferred_count:0,annulled_count:0};
@@ -678,9 +685,12 @@ Deno.serve(async (req)=>{
       const official=String(s.provider||"").includes("OFICIAL")?-1000:0;
       return official+(st[s.status]??5)*100+(s.attempt_count||0);
     };
-    const maxSources=officialMode?2:30;
+    // Leitura com posição custa CPU: uma prova oficial por execução, e a próxima vem encadeada
+    // (enqueue_official_question_collector), para não estourar o limite de CPU da Edge Function.
+    const chain=officialMode||!ALLOW_MIRROR;
+    const maxSources=chain?1:30;
     const sources=(candidates||[]).filter((s:any)=>!s.next_attempt_at||new Date(s.next_attempt_at).getTime()<=now).sort((a:any,b:any)=>priority(a)-priority(b)).slice(0,maxSources);
-    const batchSize=officialMode?2:6;
+    const batchSize=chain?1:6;
     for(let i=0;i<sources.length;i+=batchSize){
       const batch=sources.slice(i,i+batchSize);
       const results=await Promise.allSettled(batch.map((src:any)=>processSource(src)));
@@ -710,7 +720,7 @@ Deno.serve(async (req)=>{
     await db.from("collector_runs").update({...stats,status,finished_at:new Date().toISOString(),details:{errors,processed_sources:sources.length,new_unique_questions:stats.inserted_count,eligible_sources:sources.length,pipeline:officialMode?"official_extraction_validation":"extraction_validation",year_window:`${YEAR_MIN}-${YEAR_MAX}`,official_mode:officialMode}}).eq("id",run.id);
 
     let next_official_request_id:any=null;
-    if(officialMode){
+    if(chain&&sources.length){
       const {count}=await db.from("exam_sources").select("id",{count:"exact",head:true}).like("provider","%OFICIAL%").eq("status","queued");
       if((count||0)>0){
         const {data:nextId,error:nextErr}=await db.rpc("enqueue_official_question_collector");

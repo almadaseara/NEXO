@@ -366,7 +366,7 @@ update public.question_bank set review_flags = review_flags || '["rodape_colado"
 where (statement || ' ' || options::text) ~* '((19|20)[0-9]{2} FGV|tipo (branca|amarela|verde|azul|rosa) *[–-] *p[áa]gina [0-9]+|--- PAGE [0-9]+ ---|espa[çc]o livre)'
   and not review_flags ? 'rodape_colado';
 update public.question_bank set review_flags = review_flags || '["texto_com_simbolos"]'::jsonb
-where (statement || ' ' || options::text) ~ '[᠀-᣿㐀-䶿一-鿿---�]'
+where (statement || ' ' || options::text) ~ '[\u1800-\u18ff\u3400-\u4dbf\u4e00-\u9fff\ue000-\uf01f\uf021-\uf0b6\uf0b8-\uf8ff\ufffd]'
   and not review_flags ? 'texto_com_simbolos';
 
 -- 12. Agendamentos ----------------------------------------------------------------------------
