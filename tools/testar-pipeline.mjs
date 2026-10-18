@@ -178,6 +178,37 @@ assert.equal(mcqN[2].context, null, 'Questão que não cita o texto não herda o
 assert.equal(mcqN[3].context, null, 'Título de matéria encerra o texto-base anterior');
 assert.equal(mcqN[3].options.length, 5);
 
+// Cebraspe múltipla escolha: gabarito A–E (X = anulada) e alternativas com letra solta na margem.
+const gabMC = parseCebraspeAnswerTable('1 2 3 4 5 6 D D B B X E 0 0 0 0 0 0 Gabarito Questão');
+assert.equal(gabMC.get(1), 'D');
+assert.equal(gabMC.get(5), 'ANULADA');
+assert.equal(gabMC.size, 6);
+const cmc = segmentMultipleChoice({ pages: pag, images: [], lines: [
+  linha(1, 0, 790, 43, 'Questão 14'),
+  linha(1, 0, 780, 43, 'Considerando a Lei n.º 9.784/1999, assinale a opção correta.'),
+  linha(1, 0, 770, 43, 'A Os autos devem receber identificação própria'), linha(1, 0, 760, 52, 'que evidencie a tramitação.'),
+  linha(1, 0, 750, 43, 'B A autoridade não é obrigada.'),
+  linha(1, 0, 740, 43, 'C O benefício é garantido.'), linha(1, 0, 730, 43, 'D O rol é limitado.'),
+  linha(1, 0, 720, 43, 'Questão 15'),
+  linha(1, 0, 710, 43, 'Um delegado foi condenado por ato culposo e'),
+  linha(1, 0, 700, 43, 'A conduta foi praticada antes da lei. Assinale a opção correta.'),
+  linha(1, 0, 690, 43, 'A Apenas o item I está certo.'), linha(1, 0, 680, 43, 'B Apenas o item II está certo.'),
+  linha(1, 0, 670, 43, 'C Apenas I e III.'), linha(1, 0, 660, 43, 'D Apenas II e III.'),
+  linha(1, 0, 650, 60, 'Questão 16'),
+  linha(1, 0, 640, 43, 'III Emílio nomeou seu cônjuge para cargo em comissão.'),
+  linha(1, 0, 630, 43, 'A partir das informações apresentadas, é correto afirmar que são'),
+  linha(1, 0, 620, 43, 'previstas como infrações as condutas de'),
+  linha(1, 0, 610, 43, 'A Frederico e Josias.'), linha(1, 0, 600, 43, 'B Josias.'), linha(1, 0, 590, 43, 'C Emílio.'),
+  linha(1, 0, 580, 43, 'D Frederico.'), linha(1, 0, 570, 43, 'E ninguém.'),
+] }, new Map([[14, 'A'], [15, 'B'], [16, 'E']]));
+const cmcN = Object.fromEntries(cmc.items.map((i) => [i.n, i]));
+assert.deepEqual(cmcN[14].options, ['Os autos devem receber identificação própria que evidencie a tramitação.', 'A autoridade não é obrigada.', 'O benefício é garantido.', 'O rol é limitado.']);
+assert.match(cmcN[15].text, /antes da lei\. Assinale/, 'Linha do enunciado que começa com o artigo "A" não vira alternativa');
+assert.equal(cmcN[15].options.length, 4);
+assert.match(cmcN[16].text, /A partir das informações.*condutas de$/, '"A partir..." depois de item romano continua no enunciado');
+assert.equal(cmcN[16].options[0], 'Frederico e Josias.');
+assert.equal(cmcN[16].options.length, 5);
+
 // Decisão por número: fórmula, figura citada sem imagem e questão não achada vão para a segunda leitura.
 const plano = planCollect(ce, [{ question_number: 63, statement: 'Item recuperado pelo extrator antigo, sem contexto pendente.', options: ['Certo', 'Errado'], answer: 'C', question_type: 'true_false' }],
   new Map([[59, 'C'], [60, 'E'], [61, 'E'], [62, 'C'], [63, 'C'], [64, 'E']]));

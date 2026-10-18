@@ -152,7 +152,7 @@ export function parseCebraspeAnswerTable(text: string) {
     const nums: number[] = []; let j = i;
     while (j < tokens.length && /^\d{1,3}$/.test(tokens[j]) && nums.length < 60) { nums.push(Number(tokens[j])); j++; }
     const ans: string[] = []; let k = j;
-    while (k < tokens.length && /^(C|E|X)$/i.test(tokens[k]) && ans.length < 60) { ans.push(tokens[k].toUpperCase()); k++; }
+    while (k < tokens.length && (/^(C|E|X)$/i.test(tokens[k]) || /^[ABD]$/.test(tokens[k])) && ans.length < 60) { ans.push(tokens[k].toUpperCase()); k++; }
     if (nums.length >= 5 && ans.length >= 5) {
       const n = Math.min(nums.length, ans.length);
       for (let z = 0; z < n; z++) { const q = nums[z]; if (q >= 1 && q <= 250) out.set(q, ans[z] === "X" ? "ANULADA" : ans[z]); }

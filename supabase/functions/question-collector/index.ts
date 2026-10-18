@@ -108,7 +108,7 @@ function parseCebraspeAnswerTable(text:string){
     }
     const ans:string[]=[];
     let k=j;
-    while(k<tokens.length&&/^(C|E|X)$/i.test(tokens[k])&&ans.length<60){
+    while(k<tokens.length&&(/^(C|E|X)$/i.test(tokens[k])||/^[ABD]$/.test(tokens[k]))&&ans.length<60){
       ans.push(tokens[k].toUpperCase());k++;
     }
     if(nums.length>=5&&ans.length>=5){
@@ -517,8 +517,10 @@ async function processSource(src:any){
           :parseAnswers(answer.text)));
 
     // 1º leitura com posição (layout.ts); 2º o extrator antigo, só para números que a primeira não achou.
-    const seg=src.board==="CEBRASPE"?segmentCebraspe(layout,answers):segmentMultipleChoice(layout,answers);
-    const legacy=src.board==="CEBRASPE"
+    // Cebraspe também aplica provas de múltipla escolha (gabarito A–E): essas seguem o leitor de alternativas.
+    const certoErrado=src.board==="CEBRASPE"&&![...answers.values()].some(a=>/^[ABD]$/.test(a));
+    const seg=certoErrado?segmentCebraspe(layout,answers):segmentMultipleChoice(layout,answers);
+    const legacy=certoErrado
       ?parseTrueFalse(examText,answers)
       :(src.board==="IBFC"?parseIbfcMultipleChoice(examText,answers):parseMultipleChoice(examText,answers));
     const plan=planCollect(seg,legacy,answers);

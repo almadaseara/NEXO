@@ -31,8 +31,14 @@ export async function extractLayout(pdfjs: any, data: Uint8Array, opts: { column
       .map((i) => ({ x: i.transform[4], y: i.transform[5], w: i.width, h: Math.abs(i.transform[3]) || i.height || 8, s: i.str as string }))
       .filter((i) => i.y < H * (1 - HEADER) && i.y > H * FOOTER);
     const twoCols = opts.columns !== false && isTwoColumns(items, W); // gabaritos: tabela larga, nunca dividir
-    lines.push(...buildLines(items, p, W, twoCols));
-    images.push(...await pageImages(pdfjs, page, p, W, H, twoCols));
+    const pageLines = buildLines(items, p, W, twoCols);
+    lines.push(...pageLines);
+    // imagem pequena com texto por cima é rótulo ou fundo (o "Questão n" do Cebraspe), não figura da questão
+    const labels = (im: PdfImage) => im.box[3] - im.box[1] < 0.05 && pageLines.some((l) => {
+      const top = 1 - l.y / H, x = l.x0 / W;
+      return top >= im.box[1] - 0.005 && top <= im.box[3] + 0.005 && x >= im.box[0] - 0.01 && x <= im.box[2];
+    });
+    images.push(...(await pageImages(pdfjs, page, p, W, H, twoCols)).filter((im) => !labels(im)));
   }
   lines.sort(readingOrder);
   return { pages, lines, images, doc };
@@ -180,6 +186,8 @@ const isTitleLine = (t: string) => t.length < 70 && t.split(/\s+/).length <= 10 
   && !/[,.:;?!)]/.test(t.replace(/^[-–—\s]+|[-–—\s]+$/g, ""));
 // bloco inteiro é título quando todas as suas linhas (até 3) são títulos
 const looksLikeTitle = (lines: string[]) => lines.length > 0 && lines.length <= 3 && lines.every(isTitleLine);
+// instruções do caderno impressas antes das questões, na mesma página da primeira
+const INSTRUCTIONS = /^[•\s]*(Nas quest[õo]es a seguir,? marque|Leia (com aten[çc][ãa]o|atentamente) as instru[çc][õo]es)/i;
 
 class Blocks {
   contexts: Block[] = [];
@@ -205,7 +213,7 @@ class Blocks {
     if (!b) return;
     b.text = b.text.trim();
     const header = !b.figures.length && looksLikeTitle(b.parts);
-    if (header) { this.ctx = null; return; }
+    if (header || INSTRUCTIONS.test(b.text)) { this.ctx = null; return; }
     if (itemsSoFar === 0 && b.page < nextPage) return; // capa
     if (!b.text && !b.figures.length) return;
     this.contexts.push({ key: b.key, text: b.text, figures: b.figures });
@@ -262,6 +270,10 @@ export function segmentCebraspe(layout: Layout, answers: Map<number, string>): {
 // ---------------------------------------------------------------- múltipla escolha (FGV, AOCP, FCC, Vunesp...)
 const QNUM = /^(?:QUEST[ÃA]O\s+)?(\d{1,3})(?:\s*[.)–-])?(?:\s+(\S.*))?$/i;
 const OPT = /^\(?([A-Ea-e])\)\s*(.*)$/; // "(A)", "A)" e o "a)" minúsculo do IBFC
+// Cebraspe múltipla escolha: letra solta na margem ("A Os autos..."); a regra que a separa do artigo "A" no início
+// de uma linha do enunciado está em segmentMultipleChoice.
+const BARE_OPT = /^([A-E])\s+(\S.*)$/;
+const ENDS_SENTENCE = /[.:?!)…”"]$/;
 // Questão que não é a primeira depois do texto-base só herda o texto se fizer referência a ele.
 const REFERS = /\b(texto|textos|trecho|fragmento|passagem|poema|tirinha|charge|cartaz|imagem|gr[aá]fico|tabela|quadro|figura|acima|anterior|autor|autora|narrador|enunciado|situa[cç][aã]o hipot[eé]tica|caso)\b/i;
 
@@ -272,7 +284,9 @@ export function segmentMultipleChoice(layout: Layout, answers: Map<number, strin
   const B = new Blocks();
   const firstAfter = new Set<Item>();
   let cur: Item | null = null, last = 0, state: "none" | "stmt" | "opts" = "none";
-  for (const s of sequence(layout)) {
+  const seq = sequence(layout);
+  for (let si = 0; si < seq.length; si++) {
+    const s = seq[si];
     if (s.kind === "image") {
       if (cur && state === "stmt") cur.figures.push(figureOf(s)); else { B.figure(s.page, figureOf(s), items.length); cur = null; state = "none"; }
       continue;
@@ -280,7 +294,9 @@ export function segmentMultipleChoice(layout: Layout, answers: Map<number, strin
     const m0 = marg.get(s.page + ":" + s.col) ?? s.x0;
     const q = s.text.match(QNUM);
     const n = q ? Number(q[1]) : NaN;
-    if (q && want.has(n) && n > last && s.x0 <= m0 + 6 && (q[2] === undefined || /^QUEST/i.test(s.text) || n === last + 1)) {
+    // "Questão n" vale em qualquer recuo (o Cebraspe centraliza o título); número solto só na margem
+    const titled = /^QUEST/i.test(s.text);
+    if (q && want.has(n) && n > last && (s.x0 <= m0 + 6 || titled) && (q[2] === undefined || titled || n === last + 1)) {
       const hadOpen = !!B.open;
       B.close(s.page, items.length);
       cur = { n, text: q[2] || "", options: [], context: B.ctx?.key ?? null, figures: [], page: s.page, table: false };
@@ -290,6 +306,20 @@ export function segmentMultipleChoice(layout: Layout, answers: Map<number, strin
     }
     const o = s.text.match(OPT);
     if (cur && o && "ABCDE".indexOf(o[1].toUpperCase()) === cur.options.length) { cur.options.push(o[2]); state = "opts"; continue; }
+    const bo = cur && !o && s.x0 <= m0 + 6 ? s.text.match(BARE_OPT) : null;
+    if (cur && bo && "ABCDE".indexOf(bo[1]) === cur.options.length) {
+      // é alternativa se o texto anterior fechou a frase, ou se a linha seguinte é a continuação recuada,
+      // a próxima letra ou a próxima questão (alternativas que completam o enunciado não têm pontuação antes)
+      const nx = seq.slice(si + 1, si + 3).find((x) => x.kind === "line") as Line | undefined;
+      const nextLetter = "ABCDE"[cur.options.length + 1];
+      const prevText = (cur.options.length ? cur.options[cur.options.length - 1] : cur.text).trim();
+      const sameBox = !!nx && nx.page === s.page && nx.col === s.col;
+      const geometric = sameBox && (nx!.x0 > m0 + 6 || /^QUEST/i.test(nx!.text) || (!!nextLetter && nx!.text.startsWith(nextLetter + " ")));
+      // a letra A abre as alternativas: exige a evidência da linha seguinte (uma linha do enunciado também pode
+      // começar com o artigo "A" depois de um ponto); B a E já estão dentro das alternativas
+      const isOpt = geometric || (ENDS_SENTENCE.test(prevText) && (cur.options.length > 0 || !sameBox));
+      if (isOpt) { cur.options.push(bo[2]); state = "opts"; continue; }
+    }
     if (cur && state === "opts" && s.x0 > m0 + 6 && cur.options.length) { cur.options[cur.options.length - 1] += " " + s.text; continue; }
     if (cur && state === "stmt") {
       cur.text += (cur.text && !cur.text.endsWith("-") ? (isTableRow(s.text) ? "\n" : " ") : "") + s.text;
