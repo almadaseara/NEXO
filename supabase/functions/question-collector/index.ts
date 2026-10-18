@@ -282,10 +282,11 @@ function parseTrueFalse(text:string,answers:Map<number,string>){
     const lastShared=earlier.toLowerCase().lastIndexOf("com base nos dados precedentes");
     const lastNext=earlier.toLowerCase().lastIndexOf("julgue os itens a seguir");
     const sharedContext=lastShared>=0&&lastShared>lastNext;
+    const nearbyTable=/(?:tabela|quadro|figura|gr[aá]fico)/i.test(earlier.slice(-350));
     const needsContext=/(?:tabela|quadro|figura|gr[aá]fico|balancete|dados a seguir|informa[cç][oõ]es a seguir)/i.test(
       statement);
     rows.push({question_number:n,statement,options:["Certo","Errado"],answer:answers.get(n),question_type:"true_false",
-      needs_context_review:needsContext||sharedContext||Boolean(nextCommand&&nextCommand.index>25)||Boolean(tableStart)});
+      needs_context_review:needsContext||sharedContext||nearbyTable||Boolean(nextCommand&&nextCommand.index>25)||Boolean(tableStart)});
   }
   return rows;
 }
