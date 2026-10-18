@@ -27,9 +27,11 @@ assert.equal(qs.find(q=>q.question_number===110).statement.includes('Julgue os i
 assert.equal(qs.find(q=>q.question_number===110).needs_context_review,true,'Marcar bloco de transição para revisão');
 assert.equal(qs.find(q=>q.question_number===107).needs_context_review,true,'Marcar dependência da tabela compartilhada');
 assert.equal(qs.find(q=>q.question_number===111).answer,'ANULADA');
-assert.match(src,/if\(q\.needs_context_review\)\s*\{\s*heldForAi\+\+;\s*continue;/,'Retenção obrigatória antes da gravação');
-assert.match(src,/ai_status:"queued"/,'Item retido encaminha a fonte para a extração por IA');
-assert.match(src,/if\(existingSet\.has\(q\.question_number\)\)\{keptExisting\+\+;continue;\}/,'Reprocessar não pode sobrescrever registro existente');
+const layoutSrc=fs.readFileSync(path.join(__dirname,'../supabase/functions/question-collector/layout.ts'),'utf8');
+assert.match(layoutSrc,/if \(lg && !lg\.needs_context_review/,'Retenção obrigatória antes da gravação (extrator antigo só sem contexto pendente)');
+assert.match(src,/const plan=planCollect\(seg,legacy,answers\)/,'Gravação decidida por planCollect');
+assert.match(src,/ai_status:"queued"/,'Item retido encaminha a fonte para a segunda leitura');
+assert.match(src,/if\(prev\)\{[\s\S]{0,200}keptExisting\+\+;/,'Reprocessar não pode sobrescrever registro existente');
 assert.doesNotMatch(src,/\b2018\s*&&|<2018|>2026/,'Janela de anos não pode ser fixa no código');
 
 // Múltipla escolha com 4 alternativas (AOCP, Consulplan) e gabarito fora das letras.

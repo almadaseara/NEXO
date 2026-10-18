@@ -1,13 +1,15 @@
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { extractLayout, plainText, segmentCebraspe, segmentMultipleChoice, planCollect, cleanReplacement, type FigureRef } from "./layout.ts";
+import { figurePng } from "./figures.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const db = createClient(SUPABASE_URL, SERVICE_KEY);
 
-const UA = "Mozilla/5.0 (compatible; NEXO-QuestionCollector/1.2; +https://almadaseara.github.io/NEXO/)";
-const EXTRACTION_METHOD = "pdfjs_regex_v27";
+const UA = "Mozilla/5.0 (compatible; NEXO-QuestionCollector/1.3; +https://almadaseara.github.io/NEXO/)";
+const EXTRACTION_METHOD = "pdf_layout_v28";
 
 // Janela de anos e uso de site espelho vêm de collector_control (nexo_year_window); carregados a cada chamada.
 let YEAR_MIN = 2018;
@@ -74,12 +76,17 @@ async function getText(url:string){
   }
   return text;
 }
+async function pdfBytes(url:string){
+  const r=await fetch(url,{headers:{"user-agent":UA}});
+  if(!r.ok) throw new Error("PDF HTTP "+r.status);
+  return new Uint8Array(await r.arrayBuffer());
+}
 async function extractPdfText(url:string){
   const r=await fetch(url,{headers:{"user-agent":UA}});
   if(!r.ok) throw new Error("PDF HTTP "+r.status);
   const data=new Uint8Array(await r.arrayBuffer());
   const pdfjs = await import("npm:pdfjs-dist@4.10.38/legacy/build/pdf.mjs");
-  const doc=await pdfjs.getDocument({data,disableWorker:true}).promise;
+  const doc=await pdfjs.getDocument({data,disableWorker:true} as any).promise;
   let text="";
   for(let p=1;p<=Math.min(doc.numPages,220);p++){
     const page=await doc.getPage(p);
@@ -479,19 +486,22 @@ async function processSource(src:any){
       await db.from("exam_sources").update({status:"deferred",next_attempt_at:new Date(Date.now()+12*60*60*1000).toISOString(),last_error:"Sem links diretos de prova e gabarito oficiais.",updated_at:new Date().toISOString()}).eq("id",src.id);
       return {extracted:0,validated:0,rejected:0,inserted:0};
     }
-    const [exam,answer]=await Promise.all([extractPdfText(src.exam_pdf_url),extractPdfText(src.answer_key_pdf_url)]);
+    const pdfjs = await import("npm:pdfjs-dist@4.10.38/legacy/build/pdf.mjs");
+    const [examBytes,answer]=await Promise.all([pdfBytes(src.exam_pdf_url),extractPdfText(src.answer_key_pdf_url)]);
+    const layout=await extractLayout(pdfjs,examBytes);
+    const examText=plainText(layout);
     await db.from("exam_documents").upsert([
-      {source_id:src.id,document_type:"exam",url:src.exam_pdf_url,extracted_text:exam.text,extraction_status:"done",page_count:exam.pageCount,updated_at:new Date().toISOString()},
+      {source_id:src.id,document_type:"exam",url:src.exam_pdf_url,extracted_text:examText,extraction_status:"done",page_count:layout.pages.length,updated_at:new Date().toISOString()},
       {source_id:src.id,document_type:"answer_key",url:src.answer_key_pdf_url,extracted_text:answer.text,extraction_status:"done",page_count:answer.pageCount,updated_at:new Date().toISOString()}
     ],{onConflict:"source_id,document_type,url"});
     const bookletTypes=[...new Set([...answer.text.matchAll(/(?:tipo|caderno)\s*([1-4])/gi)].map(m=>m[1]))];
     const fgvScoped=src.board==="FGV"&&src.raw_metadata?.fgv_answer_label&&src.booklet_type;
     if(bookletTypes.length>1&&!fgvScoped){
-      // A extração por IA (nexo-ai) lê o tipo impresso no caderno e o bloco certo do gabarito.
+      // A segunda leitura (Gemini/Claude) lê o tipo impresso no caderno e o bloco certo do gabarito.
       await db.from("exam_sources").update({
         status:"deferred",
         next_attempt_at:new Date(Date.now()+7*24*60*60*1000).toISOString(),
-        last_error:"Gabarito com múltiplos cadernos/tipos detectado; encaminhado à extração por IA com revisão.",
+        last_error:"Gabarito com múltiplos cadernos/tipos detectado; encaminhado à segunda leitura com revisão.",
         updated_at:new Date().toISOString(),
         ai_status:src.ai_status==="submitted"?"submitted":"queued",
         raw_metadata:{...(src.raw_metadata||{}),detected_booklet_types:bookletTypes}
@@ -505,21 +515,70 @@ async function processSource(src:any){
         :(fgvScoped
           ?parseFgvAnswerTable(answer.text,String(src.raw_metadata?.fgv_answer_label||src.exam_name||src.role_name||""),String(src.raw_metadata?.fgv_booklet_type||"Tipo 1"))
           :parseAnswers(answer.text)));
-    let qs = src.board==="CEBRASPE"
-      ?parseTrueFalse(exam.text,answers)
-      :(src.board==="IBFC"?parseIbfcMultipleChoice(exam.text,answers):parseMultipleChoice(exam.text,answers));
-    if(qs.length<5 && src.board!=="CEBRASPE" && src.board!=="IBFC") qs=parseTrueFalse(exam.text,answers);
-    let validated=0,rejected=0,inserted=0,annulled=0,heldForAi=0,keptExisting=0,occurrences=0;
-    for(const q of qs){
-      const answerValue=q.answer;
-      // Falha fechada: item com tabela/figura/texto-base que o texto do PDF não carrega não é gravado
-      // por este extrator. A fonte vai para a extração por IA (nexo-ai), que monta o contexto e envia à revisão.
-      if(q.needs_context_review){
-        heldForAi++;
+
+    // 1º leitura com posição (layout.ts); 2º o extrator antigo, só para números que a primeira não achou.
+    const seg=src.board==="CEBRASPE"?segmentCebraspe(layout,answers):segmentMultipleChoice(layout,answers);
+    const legacy=src.board==="CEBRASPE"
+      ?parseTrueFalse(examText,answers)
+      :(src.board==="IBFC"?parseIbfcMultipleChoice(examText,answers):parseMultipleChoice(examText,answers));
+    const plan=planCollect(seg,legacy,answers);
+
+    // figuras embutidas viram PNG no armazenamento público nexo-midia
+    const mediaCache=new Map<string,string|null>();
+    const mediaFor=async(figs:FigureRef[])=>{
+      const urls:string[]=[];
+      for(const f of figs){
+        if(!f.image) continue;
+        const k=f.pagina+":"+f.image;
+        if(!mediaCache.has(k)){
+          let url:string|null=null;
+          try{
+            const png=await figurePng(layout.doc,f.pagina,f.image);
+            if(png){
+              const path=`auto/${src.id}/p${f.pagina}-${(await hashStatement(f.image)).slice(0,12)}.png`;
+              const {error}=await db.storage.from("nexo-midia").upload(path,png,{contentType:"image/png",upsert:true});
+              if(!error) url=db.storage.from("nexo-midia").getPublicUrl(path).data.publicUrl;
+            }
+          }catch{ url=null; }
+          mediaCache.set(k,url);
+        }
+        const u=mediaCache.get(k); if(u) urls.push(u);
+      }
+      return urls;
+    };
+    const ctxId=new Map<string,string>();
+    for(const c of plan.contexts){
+      const media=await mediaFor(c.figures);
+      const {data,error}=await db.from("question_contexts").upsert(
+        {source_id:src.id,context_key:"L:"+c.key,content:c.text,figure_refs:c.figures,media_urls:media,updated_at:new Date().toISOString()},
+        {onConflict:"source_id,context_key"}).select("id").single();
+      if(!error&&data) ctxId.set(c.key,data.id);
+    }
+
+    let validated=0,rejected=0,inserted=0,annulled=0,keptExisting=0,occurrences=0,enriched=0;
+    const {data:existingFull}=await db.from("question_bank").select("id,question_number,statement,options,question_type,review_flags,context_id,figure_refs,media_urls").eq("source_id",src.id);
+    const existingByNumber=new Map((existingFull||[]).map((r:any)=>[r.question_number,r]));
+    for(const q of plan.ready){
+      const prev:any=existingByNumber.get(q.question_number);
+      if(prev){
+        // Registro existente: nunca muda enunciado/gabarito/publicação; só ganha texto-base e figuras que faltavam.
+        keptExisting++;
+        const patch:any={};
+        // texto antigo com rodapé colado ou símbolos ilegíveis: troca pela leitura limpa da mesma questão (gabarito intacto)
+        const clean=cleanReplacement(prev,q);
+        if(clean){
+          patch.statement=clean.statement; patch.options=clean.options; patch.statement_hash=await hashStatement(clean.statement);
+          patch.review_flags=[...new Set([...(Array.isArray(prev.review_flags)?prev.review_flags:[]).filter((f:string)=>f!=="rodape_colado"&&f!=="texto_com_simbolos"),"texto_corrigido_extrator"])];
+        }
+        if(!prev.context_id&&q.context&&ctxId.has(q.context)) patch.context_id=ctxId.get(q.context);
+        if((!Array.isArray(prev.figure_refs)||!prev.figure_refs.length)&&q.figures.length){
+          patch.figure_refs=q.figures;
+          if(!Array.isArray(prev.media_urls)||!prev.media_urls.length) patch.media_urls=await mediaFor(q.figures);
+        }
+        if(Object.keys(patch).length){ patch.updated_at=new Date().toISOString(); await db.from("question_bank").update(patch).eq("id",prev.id); enriched++; }
         continue;
       }
-      // Registro já existente desta fonte: preservar (inclusive publicação, revisão e classificação).
-      if(existingSet.has(q.question_number)){keptExisting++;continue;}
+      const answerValue=q.answer;
       let status="validated";
       if(answerValue==="ANULADA"){status="annulled";annulled++;}
       else if(!answerValue){status="rejected";rejected++;}
@@ -537,27 +596,31 @@ async function processSource(src:any){
       const examSourceName=src.raw_metadata?.exam_source_name||src.provider||"Fonte oficial";
       const answerSourceType=src.raw_metadata?.answer_source_type||"official";
       const answerSourceName=src.raw_metadata?.answer_source_name||src.provider||"Fonte oficial";
-      const row={...q,statement_hash:h,source_id:src.id,board:src.board,year:src.year,institution:src.institution,role_name:src.role_name,status,
+      const row={question_number:q.question_number,statement:q.statement,options:q.options,answer:q.answer,question_type:q.question_type,
+        statement_hash:h,source_id:src.id,board:src.board,year:src.year,institution:src.institution,role_name:src.role_name,status,
+        context_id:q.context?ctxId.get(q.context)??null:null,figure_refs:q.figures,media_urls:await mediaFor(q.figures),review_flags:q.flags,
         validation_method:answerSourceType==="official"?"official_answer_key_pdf":"mirror_answer_key",
         validation_source_type:answerSourceType==="official"?"official":"mirror",
         exam_source_type:examSourceType,exam_source_name:examSourceName,exam_source_url:src.exam_pdf_url,
         answer_source_type:answerSourceType,answer_source_name:answerSourceName,answer_source_url:src.answer_key_pdf_url,
         classification_status:status==="annulled"?"review_needed":"pending",publication_status:status==="annulled"?"withheld":"banked",
-        extraction_method:EXTRACTION_METHOD,
+        extraction_method:q.method,
         captured_at:new Date().toISOString(),updated_at:new Date().toISOString()};
-      delete (row as any).needs_context_review;
       const {error}=await db.from("question_bank").insert(row);
       if(!error){
         if(status!=="annulled"&&status!=="rejected") inserted++;
+        existingByNumber.set(q.question_number,{id:"",question_number:q.question_number});
         existingSet.add(q.question_number);
       }
     }
-    const missing=[...answers.keys()].filter(n=>!existingSet.has(n)).length;
-    const sendToAi=isOfficial&&(heldForAi>0||missing>0)&&src.ai_status!=="submitted";
+    // o que ficou de fora vai para a segunda leitura (Gemini gratuito e rotina do Claude), com a lista exata
+    const pending=plan.pending.filter(n=>!existingSet.has(n));
+    const sendToAi=isOfficial&&pending.length>0&&src.ai_status!=="submitted";
     await db.from("exam_sources").update({status:validated>0||keptExisting>0?"validated":"extracted",last_error:null,next_attempt_at:null,updated_at:new Date().toISOString(),
       ...(sendToAi?{ai_status:"queued"}:{}),
-      raw_metadata:{...(src.raw_metadata||{}),extraction:{method:EXTRACTION_METHOD,answers:answers.size,parsed:qs.length,held_for_ai:heldForAi,missing,kept_existing:keptExisting,occurrences}}}).eq("id",src.id);
-    return {extracted:qs.length,validated,rejected,inserted,annulled,held_for_ai:heldForAi,occurrences};
+      raw_metadata:{...(src.raw_metadata||{}),extraction:{method:EXTRACTION_METHOD,answers:answers.size,layout_items:seg.items.length,contexts:plan.contexts.length,
+        ready:plan.ready.length,pending_numbers:pending,pending_reasons:plan.reasons,kept_existing:keptExisting,enriched,occurrences}}}).eq("id",src.id);
+    return {extracted:plan.ready.length,validated,rejected,inserted,annulled,held_for_ai:pending.length,occurrences,enriched};
   }catch(e){
     const attempts=(src.attempt_count||0)+1;
     const blocked=String(e).includes("SOURCE_BLOCKED_CHALLENGE");

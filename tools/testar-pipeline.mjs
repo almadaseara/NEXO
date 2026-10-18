@@ -121,4 +121,114 @@ assert.deepEqual(splitRange([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), [{ from: 1, to: 5 
 assert.deepEqual(splitRange([51, 52, 53, 54, 55, 56], { from: 51, to: 53 }), [{ from: 51, to: 52 }, { from: 53, to: 53 }]);
 assert.equal(splitRange([7]), null);
 
-console.log('OK: pipeline oficial v2 — pareamento Cebraspe, esquema, gabarito e plano de gravação.');
+// ---------- extrator com posição na página (question-collector/layout.ts) ----------
+const { segmentCebraspe, segmentMultipleChoice, planCollect, mergeImages, GARBLED } = await import('../supabase/functions/question-collector/layout.ts');
+const linha = (page, col, y, x0, text) => ({ page, col, y, x0, x1: x0 + text.length * 4.5, text });
+const pag = [{ w: 595, h: 842 }, { w: 595, h: 842 }, { w: 595, h: 842 }];
+
+// Cebraspe: número na margem (28), continuação com recuo de item (46), parágrafo de texto-base com outro recuo (57).
+const ce = segmentCebraspe({ pages: pag, images: [], lines: [
+  linha(1, 0, 790, 160, '-- CONHECIMENTOS ESPECÍFICOS --'),
+  linha(1, 0, 770, 28, 'A respeito do inquérito policial, julgue os itens seguintes.'),
+  linha(1, 0, 755, 28, '59 No caso de repressão a crime de tráfico de pessoas, a autoridade'),
+  linha(1, 0, 744, 46, 'policial poderá requisitar dados às empresas de telefonia.'),
+  linha(1, 0, 730, 28, '60 O indiciamento é ato privativo do delegado de polícia.'),
+  linha(1, 1, 780, 332, 'Um usuário recebeu a seguinte planilha, criada no Excel.'),
+  linha(1, 1, 768, 303, 'Tendo como referência essa situação hipotética, julgue o item.'),
+  linha(1, 1, 750, 303, '61 Basta usar o Preenchimento Relâmpago na coluna C.'),
+  linha(2, 0, 780, 28, 'Considere as variáveis ' + String.fromCharCode(0x1810) + ' e Y.'),
+  linha(2, 0, 765, 28, '62 Var(X) = 2.'),
+] }, new Map([[59, 'C'], [60, 'E'], [61, 'E'], [62, 'C'], [63, 'C']]));
+const ceN = Object.fromEntries(ce.items.map((i) => [i.n, i]));
+assert.deepEqual(ce.items.map((i) => i.n), [59, 60, 61, 62]);
+assert.ok(ceN[59].text.endsWith('empresas de telefonia.'), 'Continuação recuada entra no item');
+assert.match(ce.contexts.find((c) => c.key === ceN[59].context).text, /^A respeito do inquérito policial/, 'Comando do bloco vira contexto (sem o título de seção)');
+assert.equal(ceN[60].context, ceN[59].context, 'Itens do mesmo bloco compartilham o contexto');
+assert.match(ce.contexts.find((c) => c.key === ceN[61].context).text, /^Um usuário recebeu/, 'Parágrafo com outro recuo é texto-base, não continuação do item 60');
+assert.equal(ceN[62].garbled, true, 'Fórmula ilegível no texto-base marca o item');
+assert.ok(GARBLED.test(String.fromCharCode(0xe000)) && !GARBLED.test('Ação — “texto” • 1º'), 'Detector de símbolos ilegíveis não pega português comum');
+
+// Múltipla escolha: capa descartada, título de matéria não vira contexto, alternativas com continuação recuada,
+// herança de texto-base só para a primeira questão ou quem cita o texto.
+const mcq = segmentMultipleChoice({ pages: pag, images: [
+  { page: 2, col: 0, y: 750, name: 'img_p1_1', box: [0.07, 0.10, 0.6, 0.11] },
+], lines: [
+  linha(1, 0, 760, 43, 'LEIA COM ATENÇÃO • Você receberá o cartão de respostas.'),
+  linha(2, 0, 790, 43, 'Língua Portuguesa'),
+  linha(2, 0, 775, 43, 'A cidade amanheceu cinzenta, e o investigador releu o relatório.'),
+  linha(2, 0, 765, 43, '1'),
+  linha(2, 0, 755, 43, 'Segundo o texto, o investigador'),
+  linha(2, 0, 745, 43, '(A) dormiu.'), linha(2, 0, 735, 43, '(B) releu o relatório'), linha(2, 0, 725, 57, 'ao amanhecer.'),
+  linha(2, 0, 715, 43, '(C) saiu.'), linha(2, 0, 705, 43, '(D) chorou.'),
+  linha(2, 0, 695, 43, '2'),
+  linha(2, 0, 685, 43, 'Assinale a frase com linguagem figurada.'),
+  linha(2, 0, 675, 43, '(A) Ele é um leão.'), linha(2, 0, 665, 43, '(B) Choveu.'), linha(2, 0, 655, 43, '(C) Saí.'), linha(2, 0, 645, 43, '(D) Li.'),
+  linha(3, 0, 790, 43, 'Noções de Direito Constitucional'),
+  linha(3, 0, 770, 43, '3'),
+  linha(3, 0, 760, 43, 'Sobre o habeas corpus, assinale a afirmativa correta.'),
+  linha(3, 0, 750, 43, '(A) a) b'), linha(3, 0, 740, 43, '(B) c'), linha(3, 0, 730, 43, '(C) d'), linha(3, 0, 720, 43, '(D) e'), linha(3, 0, 710, 43, '(E) f'),
+] }, new Map([[1, 'B'], [2, 'A'], [3, 'E']]));
+const mcqN = Object.fromEntries(mcq.items.map((i) => [i.n, i]));
+assert.deepEqual(mcq.items.map((i) => i.n), [1, 2, 3]);
+assert.equal(mcq.contexts.length, 1, 'Só o texto da prova vira contexto (capa e título de matéria não)');
+assert.match(mcq.contexts[0].text, /^A cidade amanheceu/);
+assert.equal(mcqN[1].options[1], 'releu o relatório ao amanhecer.', 'Alternativa com continuação recuada');
+assert.equal(mcqN[1].figures.length, 1, 'Figura dentro do enunciado fica na própria questão');
+assert.equal(mcqN[2].context, null, 'Questão que não cita o texto não herda o texto-base');
+assert.equal(mcqN[3].context, null, 'Título de matéria encerra o texto-base anterior');
+assert.equal(mcqN[3].options.length, 5);
+
+// Decisão por número: fórmula, figura citada sem imagem e questão não achada vão para a segunda leitura.
+const plano = planCollect(ce, [{ question_number: 63, statement: 'Item recuperado pelo extrator antigo, sem contexto pendente.', options: ['Certo', 'Errado'], answer: 'C', question_type: 'true_false' }],
+  new Map([[59, 'C'], [60, 'E'], [61, 'E'], [62, 'C'], [63, 'C'], [64, 'E']]));
+assert.deepEqual(plano.ready.map((q) => q.question_number), [59, 60, 63]);
+assert.equal(plano.reasons[61], 'tabela_nao_localizada', 'Planilha citada sem figura nem tabela localizada: segunda leitura');
+assert.equal(plano.reasons[62], 'formula');
+assert.equal(plano.reasons[64], 'nao_encontrada');
+assert.equal(plano.ready.find((q) => q.question_number === 63).method, 'pdfjs_regex_v27');
+
+// Figura fatiada em faixas encostadas vira uma só.
+const fig = mergeImages([
+  { page: 3, col: 1, y: 759, name: 'a', box: [0.51, 0.098, 0.953, 0.150] },
+  { page: 3, col: 1, y: 715, name: 'b', box: [0.51, 0.150, 0.953, 0.202] },
+  { page: 3, col: 1, y: 591, name: 'c', box: [0.51, 0.297, 0.952, 0.351] },
+]);
+assert.equal(fig.length, 2);
+assert.equal(fig[0].name, 'a+b');
+assert.deepEqual(fig[0].box, [0.51, 0.098, 0.953, 0.202]);
+
+// ---------- segunda leitura (Gemini gratuito e rotina do Claude) ----------
+const { toGeminiSchema } = await import('../supabase/functions/nexo-ai/lib.ts');
+const gs = toGeminiSchema(EXTRACTION_SCHEMA);
+assert.equal(gs.type, 'OBJECT');
+assert.equal(gs.properties.caderno.properties.ano.type, 'INTEGER');
+assert.equal(gs.properties.caderno.properties.ano.nullable, true, 'anyOf com null vira nullable');
+assert.equal(JSON.stringify(gs).includes('additionalProperties'), false, 'Gemini não recebe additionalProperties');
+assert.deepEqual(gs.properties.questoes.items.properties.tipo.enum, ['multipla_escolha', 'certo_errado']);
+
+const alvo = planIngestion({ caderno: {}, contextos: [], questoes: [
+  { numero: 71, tipo: 'certo_errado', contexto_id: null, enunciado: 'X e Y são independentes.', alternativas: [], figuras: [], pagina: 2, gabarito_lido: null, anulada: false, alertas: [] },
+  { numero: 80, tipo: 'certo_errado', contexto_id: null, enunciado: 'Questão que não foi pedida nesta leitura.', alternativas: [], figuras: [], pagina: 2, gabarito_lido: null, anulada: false, alertas: [] },
+] }, [], new Map([[71, 'E'], [72, 'C'], [80, 'C']]), src, 'gemini_pdf_v1', new Set([71, 72]));
+assert.deepEqual(alvo.inserts.map((i) => i.question_number), [71], 'Leitura direcionada ignora números não pedidos');
+assert.equal(alvo.inserts[0].row.extraction_method, 'gemini_pdf_v1');
+assert.equal(alvo.inserts[0].row.status, 'validated', 'Sem gabarito lido pela IA, vale o oficial');
+assert.ok(alvo.inserts[0].row.review_flags.includes('lido_por_ia'), 'Toda leitura por IA leva o alerta para a revisão');
+assert.deepEqual(alvo.report.missing_from_ai, [72], 'Número pedido e não devolvido continua pendente');
+
+// Texto antigo com rodapé colado é trocado pela leitura limpa só quando é a mesma questão.
+const { cleanReplacement } = await import('../supabase/functions/question-collector/layout.ts');
+const nova = { question_number: 30, statement: 'O servidor que pratica o ato responde por estrito cumprimento do dever legal.', options: ['Certo', 'Errado'],
+  answer: 'E', question_type: 'true_false', context: null, figures: [], flags: [], method: 'pdf_layout_v28' };
+const suja = { statement: nova.statement + ' POLÍCIA CIVIL DO ESTADO DO AMAZONAS - 2021 FGV Escrivão de Polícia – 4ª Classe Tipo Branca – Página 13', options: ['Certo', 'Errado'], question_type: 'true_false' };
+assert.deepEqual(cleanReplacement(suja, nova), { statement: nova.statement, options: nova.options });
+assert.equal(cleanReplacement({ ...suja, statement: nova.statement }, nova), null, 'Texto limpo não é tocado');
+assert.equal(cleanReplacement({ ...suja, statement: 'Outra questão qualquer. Tipo Branca – Página 2' }, nova), null, 'Questão diferente não é trocada');
+assert.equal(cleanReplacement({ ...suja, options: ['A', 'B', 'C', 'D'], question_type: 'multiple_choice' }, nova), null, 'Tipo/alternativas diferentes não são trocados');
+assert.equal(cleanReplacement(suja, { ...nova, method: 'pdfjs_regex_v27' }), null, 'Só a leitura por posição substitui texto');
+
+const rotinas = fs.readFileSync(path.join(here, '../docs/rotinas/segunda-leitura.md'), 'utf8');
+assert.match(rotinas, /insert into public\.ai_external_extractions/, 'A rotina só deposita resultados');
+assert.match(rotinas, /Proibido: alterar `question_bank`/);
+
+console.log('OK: pipeline oficial v2 — pareamento Cebraspe, esquema, gabarito, plano de gravação, extrator por posição e segunda leitura.');

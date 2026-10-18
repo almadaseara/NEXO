@@ -18,7 +18,16 @@ function mods(){ return typeof modules !== 'undefined' ? modules : []; }
 function norm(s){ return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
 function semTags(s){ return String(s || '').replace(/<[^>]*>/g, ' '); }
 /* tira o rodapé de página que veio colado do PDF da prova ("--- PAGE 13 --- POLÍCIA CIVIL ...") */
-function limpa(s){ return String(s || '').replace(/\s*-{3}\s*PAGE\s*\d+\s*-{3}[\s\S]*$/, '').replace(/\s+/g, ' ').trim(); }
+function limpa(s){
+  return String(s || '').replace(/\s*-{3}\s*PAGE\s*\d+\s*-{3}[\s\S]*$/, '')
+    /* rodapé do caderno FGV colado no texto pelo extrator antigo:
+       "POLÍCIA CIVIL DO ESTADO DO AMAZONAS - 2021 FGV Escrivão ... Tipo Branca – Página 13 Direito Ambiental" */
+    .replace(/\s*(?:[A-ZÀ-Ú][A-ZÀ-Ú\s\/-]{3,60}?\s*-?\s*)?\b(?:19|20)\d{2}\s+FGV\b(?=[\s\S]{0,140}(?:Tipo\s+\S+\s*[–-]\s*P[áa]gina|Prova Objetiva|Classe))[\s\S]*$/, '')
+    .replace(/\s*\bTipo\s+(?:Branca|Amarela|Verde|Azul|Rosa)\s*[–-]\s*P[áa]gina\s+\d+[\s\S]*$/i, '')
+    .replace(/\s*\bEspa[çc]o livre\b/gi, '')
+    .replace(new RegExp(String.fromCharCode(0xf020), 'g'), ' ').replace(new RegExp(String.fromCharCode(0xf0b7), 'g'), '•')
+    .replace(/\s+/g, ' ').trim();
+}
 function link(u){ return /^https:\/\/[^\s"'<>]+$/.test(u || '') ? u : ''; }
 
 var DISC = [

@@ -88,7 +88,7 @@ export interface SourceMeta {
   year?: number | null; booklet_type?: string | null;
 }
 
-export function buildExtractionInstructions(src: SourceMeta, range?: { from: number; to: number } | null) {
+export function buildExtractionInstructions(src: SourceMeta, range?: { from: number; to: number } | null, numbers?: number[] | null, withAnswerKey = true) {
   const lines = [
     "Anexos: 1) o caderno de questões oficial; 2) o gabarito definitivo oficial.",
     "Dados conhecidos desta prova (podem estar incompletos):",
@@ -100,6 +100,8 @@ export function buildExtractionInstructions(src: SourceMeta, range?: { from: num
     "",
     "Tarefa: transcreva todas as questões objetivas do caderno, na ordem, com o número impresso.",
     range ? `Transcreva SOMENTE as questões de número ${range.from} a ${range.to}.` : "",
+    numbers?.length ? `Transcreva SOMENTE as questões de número: ${numbers.join(", ")}. As demais já foram lidas; não as inclua.` : "",
+    withAnswerKey ? "" : "Não há gabarito anexo: use `gabarito_lido` = null em todas (o gabarito oficial já é conhecido).",
     "",
     "Regras:",
     "1. Certo/Errado (Cebraspe): cada item numerado é uma questão do tipo certo_errado, sem alternativas.",
@@ -115,8 +117,29 @@ export function buildExtractionInstructions(src: SourceMeta, range?: { from: num
     "   tipos de caderno e não der para saber com segurança qual bloco vale para este caderno, use null e explique em `alertas`.",
     "7. Ignore capa, instruções gerais, folha de respostas e provas discursivas (registre em `caderno.observacoes`).",
     "8. `pagina`: página do PDF (começando em 1) onde a questão começa.",
+    "9. Fórmulas e símbolos: escreva em texto legível com Unicode, sem LaTeX (ex.: Var(X − Y) = 2; P → (Q ∨ ¬R); √n · X̄ / σ; x² + 3x).",
   ];
   return lines.filter((l, i) => l !== "" || lines[i - 1] !== "").join("\n");
+}
+
+// ---------- esquema no formato do Gemini (subconjunto OpenAPI: "nullable" em vez de anyOf com null) ----------
+export function toGeminiSchema(s: any): any {
+  if (!s || typeof s !== "object") return s;
+  if (Array.isArray(s.anyOf)) {
+    const real = s.anyOf.filter((x: any) => x?.type !== "null");
+    if (real.length === 1) return { ...toGeminiSchema(real[0]), nullable: true, ...(s.description ? { description: s.description } : {}) };
+  }
+  const out: any = {};
+  if (s.type) out.type = String(s.type).toUpperCase();
+  if (s.description) out.description = s.description;
+  if (s.enum) out.enum = s.enum;
+  if (s.properties) {
+    out.properties = Object.fromEntries(Object.entries(s.properties).map(([k, v]) => [k, toGeminiSchema(v)]));
+    out.propertyOrdering = Object.keys(s.properties);
+  }
+  if (s.required) out.required = s.required;
+  if (s.items) out.items = toGeminiSchema(s.items);
+  return out;
 }
 
 // ---------- gabarito oficial lido de forma determinística (mesma regra do question-collector) ----------
@@ -178,7 +201,10 @@ export interface ContextPlan { key: string; content: string; figure_refs: any[] 
 export interface InsertPlan { question_number: number; context_key: string | null; row: Record<string, unknown> }
 export interface UpdatePlan { id: string; question_number: number; context_key: string | null; patch: Record<string, unknown> }
 
-export function planIngestion(ai: any, existing: ExistingRow[], officialAnswers: Map<number, string>, src: SourceMeta & { exam_pdf_url?: string | null; answer_key_pdf_url?: string | null; provider?: string | null }) {
+// method: quem leu (claude_pdf_v1, gemini_pdf_v1, claude_routine_v1). only: números pedidos numa leitura
+// direcionada; o resto da resposta é ignorado. Toda leitura por IA leva o alerta "lido_por_ia" para a revisão.
+export function planIngestion(ai: any, existing: ExistingRow[], officialAnswers: Map<number, string>, src: SourceMeta & { exam_pdf_url?: string | null; answer_key_pdf_url?: string | null; provider?: string | null },
+  method: string = EXTRACTION_METHOD, only?: Set<number> | null) {
   const byNumber = new Map<number, ExistingRow>(existing.map((r) => [r.question_number, r]));
   const contexts: ContextPlan[] = [];
   const ctxIds = new Set<string>();
@@ -201,6 +227,7 @@ export function planIngestion(ai: any, existing: ExistingRow[], officialAnswers:
     const n = Number(q?.numero);
     const statement = String(q?.enunciado || "").trim();
     if (!Number.isInteger(n) || n < 1 || n > 250 || seen.has(n)) { report.skipped.push(`número inválido ou repetido: ${q?.numero}`); continue; }
+    if (only && !only.has(n)) continue;
     seen.add(n);
     report.ai_questions++;
     const isTF = q?.tipo === "certo_errado";
@@ -267,12 +294,13 @@ export function planIngestion(ai: any, existing: ExistingRow[], officialAnswers:
         answer_source_type: "official", answer_source_name: src.provider || "Fonte oficial", answer_source_url: src.answer_key_pdf_url ?? null,
         classification_status: status === "annulled" ? "review_needed" : "pending",
         publication_status: status === "annulled" ? "withheld" : "banked",
-        figure_refs: figs, review_flags: [...new Set(flags)], extraction_method: EXTRACTION_METHOD,
+        figure_refs: figs, review_flags: [...new Set([...flags, "lido_por_ia"])], extraction_method: method,
         media_urls: [],
       },
     });
   }
-  for (const n of officialAnswers.keys()) if (!seen.has(n) && !byNumber.has(n)) report.missing_from_ai.push(n);
+  for (const n of officialAnswers.keys()) if (!seen.has(n) && !byNumber.has(n) && (!only || only.has(n))) report.missing_from_ai.push(n);
+  if (only) for (const n of only) if (!seen.has(n) && !officialAnswers.has(n) && !byNumber.has(n)) report.missing_from_ai.push(n);
   report.missing_from_ai.sort((a, b) => a - b);
   return { contexts: contexts.filter((c) => usedContexts.has(c.key)), inserts, updates, report };
 }

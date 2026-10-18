@@ -77,10 +77,10 @@ create policy question_occurrences_read on public.question_occurrences for selec
     where q.id = question_occurrences.question_id and q.status = 'validated' and q.publication_status = 'published'))
 );
 
--- 5. Trabalhos de IA (Message Batches da Anthropic) ------------------------------------------
+-- 5. Trabalhos de IA (Gemini gratuito, rotinas do Claude Code e, opcional, Message Batches pagos) --
 create table if not exists public.ai_jobs (
   id uuid primary key default gen_random_uuid(),
-  kind text not null check (kind in ('extract', 'classify')),
+  kind text not null check (kind in ('extract', 'classify', 'gemini', 'external')),
   batch_id text unique,
   status text not null default 'submitted' check (status in ('submitted', 'ingested', 'error', 'canceled')),
   items jsonb not null default '{}'::jsonb,
@@ -95,12 +95,60 @@ drop policy if exists ai_jobs_admin_read on public.ai_jobs;
 create policy ai_jobs_admin_read on public.ai_jobs for select to authenticated using ((select public.is_nexo_admin()));
 
 alter table public.exam_sources
-  add column if not exists ai_status text check (ai_status in ('queued', 'submitted', 'done', 'error', 'skipped')),
+  add column if not exists ai_status text check (ai_status in ('queued', 'submitted', 'needs_claude', 'done', 'error', 'skipped')),
   add column if not exists ai_job_id uuid references public.ai_jobs(id) on delete set null,
   add column if not exists ai_attempts integer not null default 0,
   add column if not exists ai_last_error text,
   add column if not exists ai_summary jsonb;
 create index if not exists exam_sources_ai_status_idx on public.exam_sources(ai_status);
+
+-- Resultados entregues pelas rotinas do Claude Code (assinatura, sem custo de API). A rotina só insere aqui;
+-- a função nexo-ai valida e grava com as mesmas regras das outras leituras (nada é publicado).
+create table if not exists public.ai_external_extractions (
+  id uuid primary key default gen_random_uuid(),
+  kind text not null check (kind in ('extract', 'classify')),
+  source_id uuid references public.exam_sources(id) on delete cascade,
+  method text not null default 'claude_routine_v1',
+  model text,
+  payload jsonb not null,
+  status text not null default 'pending' check (status in ('pending', 'done', 'error')),
+  result jsonb,
+  created_at timestamptz not null default now(),
+  processed_at timestamptz,
+  check (kind = 'classify' or source_id is not null)
+);
+alter table public.ai_external_extractions enable row level security;
+drop policy if exists ai_external_admin_read on public.ai_external_extractions;
+create policy ai_external_admin_read on public.ai_external_extractions for select to authenticated using ((select public.is_nexo_admin()));
+
+-- O que a rotina de segunda leitura deve fazer: provas na fila, com os números exatos que faltam.
+create or replace function public.nexo_rotina_fila_leitura(p_limite integer default 2)
+returns table (source_id uuid, board text, year integer, exam_name text, exam_pdf_url text, answer_key_pdf_url text,
+               numeros integer[], motivos jsonb, ai_status text)
+language sql stable security definer set search_path = public as $$
+  select s.id, s.board, s.year, s.exam_name, s.exam_pdf_url, s.answer_key_pdf_url,
+    coalesce((select array_agg(x::int) from jsonb_array_elements_text(coalesce(s.ai_summary->'pending_numbers', s.raw_metadata->'extraction'->'pending_numbers')) x), '{}'),
+    s.raw_metadata->'extraction'->'pending_reasons', s.ai_status
+  from public.exam_sources s
+  where s.provider ilike '%OFICIAL%' and s.exam_pdf_url like 'https://%'
+    and (s.ai_status = 'needs_claude' or (s.ai_status = 'queued' and s.updated_at < now() - interval '2 days'))
+    and not exists (select 1 from public.ai_external_extractions e where e.source_id = s.id and e.status = 'pending')
+  order by (s.ai_status = 'needs_claude') desc, s.year desc nulls last
+  limit greatest(1, least(p_limite, 10))
+$$;
+-- Questões validadas ainda sem módulo (nem revisado nem sugerido), para a rotina de classificação.
+create or replace function public.nexo_rotina_fila_classificacao(p_limite integer default 200)
+returns table (id uuid, board text, year integer, statement text, options jsonb, texto_base text)
+language sql stable security definer set search_path = public as $$
+  select q.id, q.board, q.year, q.statement, q.options, c.content
+  from public.question_bank q left join public.question_contexts c on c.id = q.context_id
+  where q.status = 'validated' and q.ai_module_id is null
+    and not exists (select 1 from public.question_module_map m where m.question_id = q.id)
+  order by q.year desc nulls last, q.id
+  limit greatest(1, least(p_limite, 500))
+$$;
+revoke all on function public.nexo_rotina_fila_leitura(integer) from public, anon, authenticated;
+revoke all on function public.nexo_rotina_fila_classificacao(integer) from public, anon, authenticated;
 
 -- 6. Catálogo de módulos = árvore do site (ui/nexo-ui.js, ARVORE; títulos de data/temas) -------
 alter table public.subject_catalog add column if not exists description text;
@@ -298,10 +346,28 @@ drop policy if exists "nexo-midia admin apaga" on storage.objects;
 create policy "nexo-midia admin apaga" on storage.objects for delete to authenticated
   using (bucket_id = 'nexo-midia' and (select public.is_nexo_admin()));
 
--- 11. Fila inicial: segunda extração (por IA) das fontes oficiais já processadas --------------
-update public.exam_sources set ai_status = 'queued'
-where provider ilike '%OFICIAL%' and status in ('validated', 'extracted') and ai_status is null
+-- 11. Reprocessar as fontes oficiais já lidas com o extrator por posição (gratuito) ----------------
+-- Registros existentes são preservados; o coletor só acrescenta questões que faltavam, textos-base e
+-- figuras, e manda para a segunda leitura (IA) apenas os números que não conseguir resolver.
+update public.exam_sources set status = 'queued', next_attempt_at = null, updated_at = now(),
+  raw_metadata = coalesce(raw_metadata, '{}'::jsonb) || jsonb_build_object('reprocessar_layout_v28', now())
+where provider ilike '%OFICIAL%' and status in ('validated', 'extracted')
   and exam_pdf_url is not null and answer_key_pdf_url is not null;
+
+-- 11b. Marca para o revisor o que veio de site espelho (nada é apagado nem despublicado aqui) ---------
+update public.question_bank set review_flags = review_flags || '["gabarito_de_espelho"]'::jsonb
+where validation_source_type = 'mirror' and not review_flags ? 'gabarito_de_espelho';
+update public.question_bank q set review_flags = q.review_flags || '["caderno_de_espelho"]'::jsonb
+from public.exam_sources s
+where s.id = q.source_id and s.exam_pdf_url ilike '%qconcursos%' and not q.review_flags ? 'caderno_de_espelho';
+-- Textos com rodapé do caderno colado (37 publicadas em 18/10) e com fórmulas ilegíveis: o reprocessamento
+-- troca pelo texto limpo quando a leitura nova bate com a antiga; o que sobrar fica marcado para a revisão.
+update public.question_bank set review_flags = review_flags || '["rodape_colado"]'::jsonb
+where (statement || ' ' || options::text) ~* '((19|20)[0-9]{2} FGV|tipo (branca|amarela|verde|azul|rosa) *[–-] *p[áa]gina [0-9]+|--- PAGE [0-9]+ ---|espa[çc]o livre)'
+  and not review_flags ? 'rodape_colado';
+update public.question_bank set review_flags = review_flags || '["texto_com_simbolos"]'::jsonb
+where (statement || ' ' || options::text) ~ '[᠀-᣿㐀-䶿一-鿿---�]'
+  and not review_flags ? 'texto_com_simbolos';
 
 -- 12. Agendamentos ----------------------------------------------------------------------------
 do $$ begin

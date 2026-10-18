@@ -24,8 +24,13 @@ var ICONE = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentCo
 var FLAGS = {
   tem_figura:'Tem figura', contexto_com_figura:'Texto-base com figura', alerta_ia:'Alerta da IA',
   texto_divergente_ia:'Texto difere da 2ª leitura', gabarito_divergente_ia:'IA leu outro gabarito',
-  gabarito_lido_pela_ia:'Gabarito lido pela IA', gabarito_fora_das_alternativas:'Gabarito fora das alternativas'
+  gabarito_lido_pela_ia:'Gabarito lido pela IA', gabarito_fora_das_alternativas:'Gabarito fora das alternativas',
+  lido_por_ia:'Lido por IA', figura_automatica:'Figura recortada automaticamente', tabela_em_texto:'Tabela em texto',
+  gabarito_de_espelho:'Gabarito de site espelho', caderno_de_espelho:'Caderno de site espelho',
+  rodape_colado:'Rodapé do caderno colado no texto', texto_com_simbolos:'Fórmula/símbolo ilegível', texto_corrigido_extrator:'Texto corrigido pelo extrator'
 };
+var METODOS = { pdf_layout_v28:'extrator por posição', pdfjs_regex_v27:'extrator antigo', gemini_pdf_v1:'lida pelo Gemini',
+  claude_routine_v1:'lida pela rotina do Claude', claude_pdf_v1:'lida pela API do Claude' };
 var FILTROS = [['prontas', 'Prontas para publicar'], ['atencao', 'Precisam de conferência'], ['retidas', 'Retidas'], ['publicadas', 'Publicadas']];
 var POR_PAGINA = 20;
 var estado = { filtro:'prontas', banca:'', pagina:0, itens:[], total:0, carregando:false, erro:'', resumo:null, contagem:null, ultima:0 };
@@ -135,8 +140,11 @@ async function processarAgora(btn){
     var r = await sb().functions.invoke('nexo-ai', { body:{ action:'tick' } });
     if(r.error) throw r.error;
     var d = r.data || {};
-    if(d.status === 'missing_api_key') window.alert('Falta cadastrar a chave ANTHROPIC_API_KEY nas Edge Functions do Supabase.');
-    else window.alert('Lotes recolhidos: ' + ((d.collected || []).filter(function(x){ return x.ingested != null; }).length) + '. Provas enviadas à IA: ' + ((d.extract && d.extract.sources) || 0) + '. Questões enviadas para sugestão de módulo: ' + ((d.classify && d.classify.questions) || 0) + '.');
+    var gem = Array.isArray(d.gemini) ? d.gemini : [];
+    window.alert('Resultados das rotinas do Claude gravados: ' + ((d.external || []).length) + '.\n'
+      + (d.gemini && d.gemini.skipped ? 'Gemini desligado (falta GEMINI_API_KEY).' : 'Provas lidas pelo Gemini: ' + gem.filter(function(x){ return x.method; }).length
+        + (gem.some(function(x){ return x.quota; }) ? ' (cota gratuita do dia esgotada)' : '') + '.')
+      + (d.extract ? '\nProvas enviadas à API paga: ' + (d.extract.sources || 0) + '.' : ''));
   }catch(e){ window.alert('Não foi possível processar agora: ' + (e && e.message || e)); }
   btn.disabled = false; btn.textContent = 'Processar agora';
   carregar();
@@ -161,7 +169,7 @@ function cartao(x){
   var resp = String(x.answer || '').toUpperCase(), ctx = x.question_contexts;
   var flags = (x.review_flags || []).map(function(f){ return '<span class="flag">' + escH(FLAGS[f] || f) + '</span>'; }).join('');
   var meta = [x.board, x.year, limpa(x.role_name), x.question_number ? 'Q' + x.question_number : '', ce ? 'Certo/Errado' : 'Múltipla escolha',
-    x.extraction_method === 'claude_pdf_v1' ? 'extraída por IA' : '', x.answer_source_type === 'official' ? 'gabarito oficial' : 'gabarito de apoio']
+    METODOS[x.extraction_method] || '', x.answer_source_type === 'official' ? 'gabarito oficial' : 'gabarito de apoio']
     .filter(Boolean).map(function(t){ return '<span>' + escH(t) + '</span>'; }).join('');
   var opsHtml = ce
     ? '<ul class="nx-rev-ops"><li class="' + (resp === 'C' ? 'ok' : '') + '">Certo</li><li class="' + (resp === 'E' ? 'ok' : '') + '">Errado</li></ul>'
@@ -202,7 +210,8 @@ function blocoResumo(){
     [n('banked/validated') + n('ready/validated'), 'validadas aguardando revisão'],
     [n('banked/pending_validation'), 'precisam de conferência'],
     [Number(r.fontes_oficiais || 0), 'provas oficiais cadastradas'],
-    [Number(ia.queued || 0) + Number(ia.submitted || 0), 'provas na fila da IA'],
+    [Number(ia.queued || 0) + Number(ia.submitted || 0), 'provas na fila do Gemini'],
+    [Number(ia.needs_claude || 0), 'provas aguardando a rotina do Claude'],
     [Number(r.sugestoes_ia || 0), 'com módulo sugerido pela IA']
   ];
   var ult = (r.ultimos_trabalhos || [])[0];
