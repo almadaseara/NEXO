@@ -57,7 +57,7 @@ async function carregarExcecoes(){
     .select('id,question_number,statement,board,year,role_name,status,publication_status,media_urls,exam_source_url,answer_source_url,answer_source_type')
     .eq('publication_status','published').order('created_at',{ascending:false}).limit(500);
   if(error){box.textContent='Fila indisponível: confirme as permissões administrativas.';return}
-  const vis=/\\b(tabela|quadro|figura|gráfico|imagem)\\b/i;
+  const vis=/\b(tabela|quadro|figura|gráfico|imagem)\b/i;
   const comando=/julgue os itens (a seguir|seguintes|subsequentes)/i;
   const exceptions=(data||[]).map(q=>{
     const reasons=[];
