@@ -22,7 +22,7 @@ function avisar(tipo){ avisos.forEach(function(f){ try{ f(tipo); }catch(e){} });
 /* ---------- fila do que falta enviar ---------- */
 function fila(){ var f = ler(KF, null); return f && typeof f === 'object' ? { plano:f.plano || null, marcas:f.marcas || {} } : { plano:null, marcas:{} }; }
 function gravarFila(f){ gravar(KF, f); }
-function temPendencia(){ var f = fila(); return !!f.plano || Object.keys(f.marcas).length > 0; }
+function temPendencia(){ var f = fila(); return !!f.plano || Object.keys(f.marcas).length > 0 || pendenteH(); }
 function marcarEstado(novo){
   if(novo === estado) return;
   estado = novo; desenharAviso(); avisar('estado');
@@ -78,7 +78,7 @@ async function enviarMarcas(){
     if(!temPendencia()) marcarEstado('ok');
   }catch(e){ marcarEstado('erro'); }
 }
-function enviarTudo(){ if(!usuario) return; var f = fila(); if(f.plano) enviarPlano(); if(Object.keys(f.marcas).length) enviarMarcas(); }
+function enviarTudo(){ if(!usuario) return; var f = fila(); if(f.plano) enviarPlano(); if(Object.keys(f.marcas).length) enviarMarcas(); if(pendenteH()) enviarHistorico(); }
 
 /* ---------- mesclagem entre aparelhos ---------- */
 function juntarPorId(a, b){ /* listas: une pelos ids; o item local (b) vale quando os dois têm o mesmo id */
@@ -139,12 +139,111 @@ async function sincronizar(){
     });
     Object.keys(t).forEach(function(k){ if(!vistos[k]) f.marcas[k] = t[k].updated_at || agoraISO(); });
     gravar(KM, t); gravarFila(f);
+    await baixarHistorico();
     if(f.plano) await enviarPlano();
     if(Object.keys(f.marcas).length) await enviarMarcas();
+    if(pendenteH()) await enviarHistorico();
     if(!temPendencia()) marcarEstado('ok');
     avisar('sincronizado');
   }catch(e){ marcarEstado('erro'); }
   sincronizando = false;
+}
+
+/* ---------- histórico de questões e revisão (tabelas study_answers e study_events) ---------- */
+var HF = 'nexo_historico_fila', tHist = null;
+function filaH(){
+  var f = ler(HF, null);
+  return f && typeof f === 'object'
+    ? { respostas:f.respostas || {}, resolvidas:f.resolvidas || {}, eventos:f.eventos || {} }
+    : { respostas:{}, resolvidas:{}, eventos:{} };
+}
+function pendenteH(){ var f = filaH(); return Object.keys(f.respostas).length + Object.keys(f.resolvidas).length + Object.keys(f.eventos).length > 0; }
+/* lê todas as linhas de uma consulta, de 1000 em 1000 (limite padrão do Supabase) */
+async function paginar(fazer){
+  var todas = [], n = 0;
+  for(;;){
+    var r = await fazer(n, n + 999);
+    if(r && r.error) throw r.error;
+    var d = (r && r.data) || [];
+    todas = todas.concat(d); n += d.length;
+    if(d.length < 1000) break;
+  }
+  return todas;
+}
+async function enviarHistorico(){
+  tHist = null;
+  var sb = cliente(); if(!sb || !usuario) return;
+  var f = filaH(), st = ler('nexo_practice_answers', {}) || {}, res = ler('nexo_caderno_resolvidas', {}) || {};
+  var chaves = Object.keys(f.respostas).concat(Object.keys(f.resolvidas)).filter(function(k, i, a){ return a.indexOf(k) === i; });
+  var enviados = {};
+  try{
+    var comResposta = chaves.filter(function(k){ return st[k] && st[k].done; });
+    for(var i = 0; i < comResposta.length; i += 500){
+      var lote = comResposta.slice(i, i + 500).map(function(k){
+        enviados[k] = { at:st[k].at, res:res[k] || 0 };
+        return { user_id:usuario.id, skey:k, ok:!!st[k].ok, letra:st[k].r || '', answered_at:new Date(st[k].at).toISOString(), resolvida_em:res[k] ? new Date(res[k]).toISOString() : null };
+      });
+      var r = await sb.from('study_answers').upsert(lote, { onConflict:'user_id,skey' });
+      if(r && r.error) throw r.error;
+    }
+    var ids = Object.keys(f.eventos), locais = {}, enviadosEv = {};
+    ler('nexo_eventos', []).forEach(function(e){ if(e && e.id && f.eventos[e.id]) locais[e.id] = e; });
+    var comEvento = Object.keys(locais);
+    for(var j = 0; j < comEvento.length; j += 500){
+      var pacote = comEvento.slice(j, j + 500);
+      var linhas = pacote.map(function(id){
+        var e = locais[id];
+        return { user_id:usuario.id, ev_id:id, t:Math.round(e.t || 0), k:String(e.k || ''), m:e.m == null ? null : String(e.m),
+          ok:e.ok == null ? null : !!e.ok, g:e.g == null ? null : +e.g, ms:e.ms == null ? null : Math.round(e.ms) };
+      });
+      var r2 = await sb.from('study_events').upsert(linhas, { onConflict:'user_id,ev_id' });
+      if(r2 && r2.error) throw r2.error;
+      pacote.forEach(function(id){ enviadosEv[id] = 1; });
+    }
+    /* tira da fila o que foi enviado e não mudou durante o envio; o que não tem mais resposta é descartado */
+    var g = filaH(), atual = ler('nexo_practice_answers', {}) || {}, resAtual = ler('nexo_caderno_resolvidas', {}) || {};
+    Object.keys(enviados).forEach(function(k){
+      if(atual[k] && atual[k].at === enviados[k].at && (resAtual[k] || 0) === enviados[k].res){ delete g.respostas[k]; delete g.resolvidas[k]; }
+    });
+    chaves.forEach(function(k){ if(!(atual[k] && atual[k].done)) { delete g.respostas[k]; delete g.resolvidas[k]; } });
+    Object.keys(enviadosEv).forEach(function(id){ delete g.eventos[id]; });
+    Object.keys(g.eventos).forEach(function(id){ if(!locais[id]) delete g.eventos[id]; });
+    gravar(HF, g);
+    if(!temPendencia()) marcarEstado('ok');
+  }catch(e){ marcarEstado('erro'); }
+}
+/* baixa o histórico da conta e junta com o do aparelho (o que ainda não foi enviado daqui tem prioridade) */
+async function baixarHistorico(){
+  var sb = cliente(); if(!sb || !usuario) return;
+  var f = filaH(), st = ler('nexo_practice_answers', {}) || {}, res = ler('nexo_caderno_resolvidas', {}) || {};
+  var linhas = await paginar(function(a, b){
+    return sb.from('study_answers').select('skey,ok,letra,answered_at,resolvida_em').eq('user_id', usuario.id).order('skey').range(a, b);
+  });
+  linhas.forEach(function(l){
+    var at = Date.parse(l.answered_at) || 0, loc = st[l.skey];
+    if(!f.respostas[l.skey] && (!loc || !loc.done || at > (loc.at || 0))){
+      st[l.skey] = { done:true, ok:!!l.ok, r:l.letra || '', at:at };
+    }
+    if(l.resolvida_em && !f.resolvidas[l.skey]){
+      var rt = Date.parse(l.resolvida_em) || 0;
+      if(rt > (res[l.skey] || 0)) res[l.skey] = rt;
+    }
+  });
+  gravar('nexo_practice_answers', st); gravar('nexo_caderno_resolvidas', res);
+  var eventos = await paginar(function(a, b){
+    return sb.from('study_events').select('ev_id,t,k,m,ok,g,ms').eq('user_id', usuario.id).order('t', { ascending:false }).range(a, b);
+  });
+  var porId = {};
+  ler('nexo_eventos', []).forEach(function(e){ if(e && e.id) porId[e.id] = e; });
+  eventos.forEach(function(r){
+    if(porId[r.ev_id]) return;
+    var e = { id:r.ev_id, t:Number(r.t), k:r.k };
+    if(r.m != null) e.m = r.m; if(r.ok != null) e.ok = r.ok; if(r.g != null) e.g = r.g; if(r.ms != null) e.ms = r.ms;
+    porId[r.ev_id] = e;
+  });
+  var lista = Object.keys(porId).map(function(k){ return porId[k]; }).sort(function(x, y){ return x.t - y.t; });
+  if(lista.length > 20000) lista = lista.slice(-20000);
+  gravar('nexo_eventos', lista);
 }
 
 /* ---------- aviso "Não sincronizado" ---------- */
@@ -176,6 +275,11 @@ function iniciar(n){
 }
 window.addEventListener('online', function(){ if(usuario && temPendencia()) sincronizar(); });
 setInterval(function(){ if(usuario && temPendencia() && !sincronizando) enviarTudo(); }, 60000);
+/* respostas e revisões são enviadas logo depois de feitas (com uma pausa para juntar as seguidas) */
+document.addEventListener('nexo:historico', function(){
+  if(!usuario) return;
+  clearTimeout(tHist); tHist = setTimeout(enviarHistorico, 1500);
+});
 /* ao sair da página a fila já está guardada; o envio aqui é uma tentativa extra */
 window.addEventListener('pagehide', function(){ if(tPlano || tMarcas){ clearTimeout(tPlano); clearTimeout(tMarcas); enviarTudo(); } });
 

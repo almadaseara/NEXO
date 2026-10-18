@@ -90,6 +90,7 @@ window.nexoCadernoErros = function(d){
 
 window.nexoCadernoResolver = function(skey){
   var r = ler(KRES, {}) || {}; r[skey] = Date.now(); gravar(KRES, r);
+  if(window.nexoEnfileirarHistorico) window.nexoEnfileirarHistorico('resolvidas', skey);
   window.nexoCadernoErros();
 };
 
@@ -226,9 +227,12 @@ window.nexoSimularEntregar = function(){
 };
 
 /* ======================= revisão de hoje (adaptativa) ======================= */
-/* A sessão mistura: (1) questões erradas que ainda não foram resolvidas, as mais antigas primeiro;
-   (2) questões de assuntos com mais erro, com peso pela taxa de erro no histórico.
-   Se o aluno erra uma questão na sessão, ela volta mais tarde na mesma sessão (até 2 vezes). */
+/* A sessão mistura três coisas, nesta ordem de montagem:
+   (1) fichas do fichário que vencem hoje (até um quarto da sessão);
+   (2) questões erradas ainda não resolvidas, as mais antigas primeiro (até metade do resto);
+   (3) questões de assuntos com mais erro, com peso pela taxa de erro no histórico.
+   Questão ou ficha errada volta mais tarde na mesma sessão (até 2 vezes).
+   O histórico fica na conta e sincroniza entre aparelhos (nexo-estudo.js). */
 var REV = null, REV_REPETICOES = 2;
 window.nexoRevisaoEstado = function(){ return REV; };
 
@@ -240,19 +244,37 @@ function taxasPorModulo(){
   });
   return porMod;
 }
+function fichasDevidas(){
+  return window.nexoFichasRevisao ? window.nexoFichasRevisao.devidas() : [];
+}
+function itemFicha(c){
+  var m = mods().find(function(x){ return x.id === c.m; });
+  return { tipo:'ficha', c:c, skey:'ficha:' + c.id, m:{ id:c.m, title:m ? m.title : c.d }, q:null };
+}
 
 function montarRevisao(n){
   var st = ler('nexo_practice_answers', {}) || {};
+  var devidas = fichasDevidas();
+  var nFichas = Math.min(devidas.length, Math.floor(n / 4));
+  var fichas = devidas.slice(0, nFichas).map(itemFicha);
+  var restoN = n - fichas.length;
   var pend = erradas().sort(function(a, b){ return (st[a.skey].at || 0) - (st[b.skey].at || 0); });
-  var doCaderno = pend.slice(0, Math.ceil(n / 2));
+  var doCaderno = pend.slice(0, Math.ceil(restoN / 2));
   var usados = {}; doCaderno.forEach(function(x){ usados[x.skey] = 1; });
   var tx = taxasPorModulo();
   var resto = todas().filter(function(x){ return !usados[x.skey]; }).map(function(x){
     var r = tx[x.m.id], erro = r && r.n ? 1 - r.ok / r.n : 0.5;      /* sem histórico: peso médio */
     var ja = st[x.skey] && st[x.skey].done ? 0.5 : 1;                 /* já respondida: sai menos */
     return { x:x, k:Math.pow(Math.random(), 1 / ((0.5 + erro) * ja)) };
-  }).sort(function(a, b){ return b.k - a.k; }).slice(0, Math.max(0, n - doCaderno.length)).map(function(o){ return o.x; });
-  return doCaderno.concat(resto);
+  }).sort(function(a, b){ return b.k - a.k; }).slice(0, Math.max(0, restoN - doCaderno.length)).map(function(o){ return o.x; });
+  /* as fichas ficam espalhadas pela sessão, não todas no começo */
+  var base = doCaderno.concat(resto), out = [], f = 0;
+  base.forEach(function(x, i){
+    out.push(x);
+    if(fichas.length && (i + 1) % 3 === 0 && f < fichas.length) out.push(fichas[f++]);
+  });
+  while(f < fichas.length) out.push(fichas[f++]);
+  return out;
 }
 
 /* assuntos com pior taxa de acerto (pelo menos 4 respostas) */
@@ -269,19 +291,20 @@ function assuntosFracos(){
 window.nexoRevisao = function(){
   setCur('revisao'); fechar(); refazerNav(); head('Revisão de hoje');
   if(REV && REV.ativa) return revisaoItem();
-  var pend = erradas().length, total = todas().length, fracos = assuntosFracos();
+  var pend = erradas().length, fichasHoje = fichasDevidas().length, total = todas().length, fracos = assuntosFracos();
   var lista = fracos.length
     ? '<ol class="nx-sub" style="padding-left:20px;line-height:1.7">' + fracos.map(function(f){
         return '<li><b>' + esc(f.titulo) + '</b> · ' + esc(f.disc) + ' · acerto de ' + f.taxa + '% em ' + f.n + ' respostas</li>';
       }).join('') + '</ol>'
     : '<p class="nx-sub">Ainda não há respostas suficientes para apontar assuntos fracos (pelo menos 4 em um mesmo assunto).</p>';
   view().innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Revisão de hoje</h1>'
-    + '<p>Uma sessão com o que você errou e o que mais precisa de atenção.</p></div></div>'
-    + '<div class="dz-stats"><div class="dz-stat"><div class="v">' + pend + '</div><div class="k">Erradas para revisar</div></div>'
+    + '<p>Uma sessão com as fichas que vencem hoje, o que você errou e o que mais precisa de atenção.</p></div></div>'
+    + '<div class="dz-stats"><div class="dz-stat"><div class="v">' + fichasHoje + '</div><div class="k">Fichas para hoje</div></div>'
+    + '<div class="dz-stat"><div class="v">' + pend + '</div><div class="k">Erradas para revisar</div></div>'
     + '<div class="dz-stat"><div class="v">' + total + '</div><div class="k">Questões no NEXO</div></div></div>'
     + '<div class="nx-panel" style="margin-bottom:16px"><h2 style="margin:0 0 8px">Assuntos que pedem atenção</h2>' + lista + '</div>'
     + '<form id="rev-form" class="nx-panel" onsubmit="event.preventDefault();nexoRevisaoIniciar()" style="display:grid;gap:14px;max-width:520px">'
-    + '<label>Questões nesta sessão <select id="rev-n">' + [10, 15, 20, 30].map(function(n){ return '<option value="' + n + '"' + (n === 15 ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>'
+    + '<label>Itens nesta sessão <select id="rev-n">' + [10, 15, 20, 30].map(function(n){ return '<option value="' + n + '"' + (n === 15 ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>'
     + '<p id="rev-aviso" role="status" class="nx-sub" style="margin:0"></p>'
     + '<div style="display:flex;gap:8px;flex-wrap:wrap"><button type="submit" class="nx-btn primary">Começar revisão</button>'
     + '<button type="button" class="nx-btn" onclick="showFlashcards()">Fichário</button></div></form></div>';
@@ -291,31 +314,69 @@ window.nexoRevisao = function(){
 window.nexoRevisaoIniciar = function(){
   var sel = document.getElementById('rev-n'), n = sel ? +sel.value : 15;
   var fila = montarRevisao(n);
-  if(!fila.length){ var a = document.getElementById('rev-aviso'); if(a) a.textContent = 'Não há questões disponíveis agora.'; return; }
-  REV = { ativa:true, fila:fila, i:0, acertos:0, respondidas:0, repet:{}, itemInicio:0, atual:null, inicio:Date.now() };
+  if(!fila.length){ var a = document.getElementById('rev-aviso'); if(a) a.textContent = 'Não há itens disponíveis agora.'; return; }
+  REV = { ativa:true, fila:fila, i:0, acertos:0, respondidas:0, repet:{}, itemInicio:0, atual:null, virada:false, inicio:Date.now() };
   revisaoItem();
 };
 
 function revisaoItem(){
   var x = REV.fila[REV.i];
   REV.atual = x; REV.itemInicio = Date.now();
+  var ultima = REV.i === REV.fila.length - 1 ? 'Último item desta sessão' : 'Item ' + (REV.i + 1) + ' de ' + REV.fila.length;
+  var cab = '<div class="nx-page"><div class="nx-head"><div><h1>Revisão de hoje</h1>'
+    + '<p>' + ultima + ' · acertos: ' + REV.acertos + ' de ' + REV.respondidas + '</p></div></div>';
+  if(x.tipo === 'ficha'){
+    view().innerHTML = cab + revisaoFichaHTML(x) + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 40px"><button type="button" class="nx-btn" onclick="nexoRevisaoEncerrar()">Encerrar revisão</button></div></div>';
+    view().scrollTop = 0; return;
+  }
   var meta = '<div class="practice-question-meta"><span>' + esc(disc(x.m)) + '</span><span>' + esc(x.m.title) + '</span>'
     + (x.q.source ? '<span>' + esc(x.q.source) + '</span>' : '') + '</div>';
   var corpo = x.tipo === 'official' ? officialQuestionHTML(x.q, x.i, x.m.id) : questionHTML(x.q, x.i, x.m.id);
-  var ultima = REV.i === REV.fila.length - 1 ? 'Última questão desta sessão' : 'Questão ' + (REV.i + 1) + ' de ' + REV.fila.length;
-  view().innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Revisão de hoje</h1>'
-    + '<p>' + ultima + ' · acertos: ' + REV.acertos + ' de ' + REV.respondidas + '</p></div></div>'
-    + meta + corpo
+  view().innerHTML = cab + meta + corpo
     + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 40px"><button type="button" class="nx-btn primary" onclick="nexoRevisaoProxima()">Próxima</button>'
     + '<button type="button" class="nx-btn" onclick="nexoRevisaoEncerrar()">Encerrar revisão</button></div></div>';
   view().scrollTop = 0;
+}
+
+function revisaoFichaHTML(x){
+  var c = x.c;
+  var meta = '<div class="practice-question-meta"><span>' + esc(c.d) + '</span><span>' + esc(c.tipo) + '</span>' + (c.sec ? '<span>' + esc(c.sec) + '</span>' : '') + '</div>';
+  var virada = REV.virada;
+  var corpo = '<div class="nx-panel" style="margin-bottom:12px"><div style="font-weight:700;margin-bottom:6px">Ficha</div><div>' + c.f + '</div>'
+    + (virada ? '<hr style="margin:14px 0;border:0;border-top:1px solid var(--nx-line)"><div>' + c.v + '</div>' : '') + '</div>';
+  var botoes = virada
+    ? '<div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="nx-btn" onclick="nexoRevisaoAvaliar(0)">Errei</button>'
+      + '<button type="button" class="nx-btn" onclick="nexoRevisaoAvaliar(1)">Hesitei</button>'
+      + '<button type="button" class="nx-btn primary" onclick="nexoRevisaoAvaliar(2)">Acertei</button></div>'
+    : '<button type="button" class="nx-btn primary" onclick="nexoRevisaoVirar()">Ver resposta</button>';
+  return meta + corpo + botoes;
+}
+
+window.nexoRevisaoVirar = function(){
+  if(!REV || !REV.ativa || !REV.atual || REV.atual.tipo !== 'ficha' || REV.virada) return;
+  REV.virada = true; revisaoItem();
+};
+
+window.nexoRevisaoAvaliar = function(g){
+  if(!REV || !REV.ativa || !REV.virada || !REV.atual || REV.atual.tipo !== 'ficha') return;
+  var x = REV.atual;
+  window.nexoFichasRevisao.avaliar(x.c.id, g);
+  REV.respondidas++; if(g === 2) REV.acertos++;
+  if(g === 0){ var c = REV.repet[x.skey] || 0; if(c < REV_REPETICOES){ REV.repet[x.skey] = c + 1; REV.fila.push(x); } }
+  avancarRevisao();
+};
+
+function avancarRevisao(){
+  REV.i++; REV.virada = false;
+  if(REV.i >= REV.fila.length) return window.nexoRevisaoEncerrar();
+  revisaoItem();
 }
 
 /* conta a resposta da questão atual (se foi respondida depois de exibida) e avança */
 window.nexoRevisaoProxima = function(){
   if(!REV || !REV.ativa) return;
   var x = REV.atual;
-  if(x){
+  if(x && x.tipo !== 'ficha'){
     var s = (ler('nexo_practice_answers', {}) || {})[x.skey];
     if(s && s.done && (s.at || 0) >= REV.itemInicio){
       REV.respondidas++;
@@ -326,9 +387,7 @@ window.nexoRevisaoProxima = function(){
       }
     }
   }
-  REV.i++;
-  if(REV.i >= REV.fila.length) return window.nexoRevisaoEncerrar();
-  revisaoItem();
+  avancarRevisao();
 };
 
 window.nexoRevisaoEncerrar = function(){
