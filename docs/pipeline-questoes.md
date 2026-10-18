@@ -51,7 +51,12 @@ segredo `ANTHROPIC_API_KEY` for cadastrado.
 - **Múltipla escolha (FGV, AOCP, FCC, IBFC…):** número sozinho ou "QUESTÃO n", alternativas (A)…(E) ou a)…e) com
   continuação recuada; capa e títulos de matéria descartados; questão só herda o texto-base se for a primeira
   depois dele ou se o citar.
-- **Figuras:** imagens embutidas no PDF viram PNG (faixas empilhadas são juntadas) em `nexo-midia/auto/…`.
+- **Cebraspe múltipla escolha** (gabarito A–E): título "Questão n" e alternativas "A texto" com letra solta; a
+  letra A só abre as alternativas quando a linha seguinte confirma (continuação recuada, próxima letra ou questão).
+- **Figuras:** imagens embutidas no PDF viram PNG (faixas empilhadas são juntadas) em `nexo-midia/auto/…`;
+  imagem pequena com texto por cima (rótulo "Questão n") é descartada; PDF acima de 3 MB é lido sem figuras.
+- **Execução:** uma prova por chamada, a próxima encadeada; cron `nexo-question-collector-15m` religa a cadeia.
+  Prova que estoura o limite de CPU volta à fila; na 3ª vez vai inteira para a leitura por IA.
 - **Vai para a 2ª camada** (`planCollect`): fórmula/símbolo ilegível, figura ou tabela citada e não localizada,
   alternativas incompletas, número não encontrado. O extrator antigo (`pdfjs_regex_v27`) cobre só números que
   a leitura por posição não achou e que não dependem de contexto.

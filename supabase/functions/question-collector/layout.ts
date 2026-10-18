@@ -14,7 +14,8 @@ export interface Item { n: number; text: string; options: string[]; context: str
 const HEADER = 0.055, FOOTER = 0.055;
 
 // ---------------------------------------------------------------- extração (pdf.js)
-export async function extractLayout(pdfjs: any, data: Uint8Array, opts: { columns?: boolean; maxPages?: number } = {}): Promise<Layout> {
+// images:false pula a decodificação das imagens (a parte mais cara em PDFs pesados).
+export async function extractLayout(pdfjs: any, data: Uint8Array, opts: { columns?: boolean; maxPages?: number; images?: boolean } = {}): Promise<Layout> {
   const maxPages = opts.maxPages ?? 220;
   const doc = await pdfjs.getDocument({ data, disableWorker: true, verbosity: 0 }).promise;
   const pages: { w: number; h: number }[] = [];
@@ -38,7 +39,7 @@ export async function extractLayout(pdfjs: any, data: Uint8Array, opts: { column
       const top = 1 - l.y / H, x = l.x0 / W;
       return top >= im.box[1] - 0.005 && top <= im.box[3] + 0.005 && x >= im.box[0] - 0.01 && x <= im.box[2];
     });
-    images.push(...(await pageImages(pdfjs, page, p, W, H, twoCols)).filter((im) => !labels(im)));
+    if (opts.images !== false) images.push(...(await pageImages(pdfjs, page, p, W, H, twoCols)).filter((im) => !labels(im)));
   }
   lines.sort(readingOrder);
   return { pages, lines, images, doc };

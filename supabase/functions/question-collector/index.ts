@@ -488,7 +488,9 @@ async function processSource(src:any){
     }
     const pdfjs = await import("npm:pdfjs-dist@4.10.38/legacy/build/pdf.mjs");
     const [examBytes,answer]=await Promise.all([pdfBytes(src.exam_pdf_url),extractPdfText(src.answer_key_pdf_url)]);
-    const layout=await extractLayout(pdfjs,examBytes);
+    // PDF pesado (imagens grandes ou escaneado): lê só o texto; questão que cita figura vai para a segunda leitura
+    const heavy=examBytes.length>3_000_000;
+    const layout=await extractLayout(pdfjs,examBytes,{images:!heavy});
     const examText=plainText(layout);
     await db.from("exam_documents").upsert([
       {source_id:src.id,document_type:"exam",url:src.exam_pdf_url,extracted_text:examText,extraction_status:"done",page_count:layout.pages.length,updated_at:new Date().toISOString()},
@@ -650,9 +652,9 @@ Deno.serve(async (req)=>{
   if(isBusy) return Response.json({status:"busy"});
   await loadSettings();
   // Fonte que ficou em "processing" porque a execução anterior foi encerrada pelo limite de CPU volta para a fila
-  // (até 3 tentativas; depois fica em erro para revisão), em vez de ficar presa para sempre.
+  // (até 3 tentativas; depois a prova inteira vai para a leitura por IA), em vez de ficar presa para sempre.
   const stale=new Date(Date.now()-10*60*1000).toISOString();
-  await db.from("exam_sources").update({status:"error",last_error:"Leitura interrompida pelo limite de CPU da função 3 vezes.",updated_at:new Date().toISOString()})
+  await db.from("exam_sources").update({status:"extracted",ai_status:"queued",last_error:"Leitura interrompida pelo limite de CPU da função 3 vezes; enviada à leitura por IA.",updated_at:new Date().toISOString()})
     .eq("status","processing").lt("last_attempt_at",stale).gte("attempt_count",3);
   await db.from("exam_sources").update({status:"queued",updated_at:new Date().toISOString()})
     .eq("status","processing").lt("last_attempt_at",stale).lt("attempt_count",3);
