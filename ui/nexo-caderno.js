@@ -225,10 +225,131 @@ window.nexoSimularEntregar = function(){
   refazerNav();
 };
 
+/* ======================= revisão de hoje (adaptativa) ======================= */
+/* A sessão mistura: (1) questões erradas que ainda não foram resolvidas, as mais antigas primeiro;
+   (2) questões de assuntos com mais erro, com peso pela taxa de erro no histórico.
+   Se o aluno erra uma questão na sessão, ela volta mais tarde na mesma sessão (até 2 vezes). */
+var REV = null, REV_REPETICOES = 2;
+window.nexoRevisaoEstado = function(){ return REV; };
+
+function taxasPorModulo(){
+  var porMod = {};
+  (ler('nexo_eventos', []) || []).forEach(function(e){
+    if(!e || e.k !== 'q') return;
+    var r = porMod[e.m] = porMod[e.m] || { n:0, ok:0 }; r.n++; if(e.ok) r.ok++;
+  });
+  return porMod;
+}
+
+function montarRevisao(n){
+  var st = ler('nexo_practice_answers', {}) || {};
+  var pend = erradas().sort(function(a, b){ return (st[a.skey].at || 0) - (st[b.skey].at || 0); });
+  var doCaderno = pend.slice(0, Math.ceil(n / 2));
+  var usados = {}; doCaderno.forEach(function(x){ usados[x.skey] = 1; });
+  var tx = taxasPorModulo();
+  var resto = todas().filter(function(x){ return !usados[x.skey]; }).map(function(x){
+    var r = tx[x.m.id], erro = r && r.n ? 1 - r.ok / r.n : 0.5;      /* sem histórico: peso médio */
+    var ja = st[x.skey] && st[x.skey].done ? 0.5 : 1;                 /* já respondida: sai menos */
+    return { x:x, k:Math.pow(Math.random(), 1 / ((0.5 + erro) * ja)) };
+  }).sort(function(a, b){ return b.k - a.k; }).slice(0, Math.max(0, n - doCaderno.length)).map(function(o){ return o.x; });
+  return doCaderno.concat(resto);
+}
+
+/* assuntos com pior taxa de acerto (pelo menos 4 respostas) */
+function assuntosFracos(){
+  var tx = taxasPorModulo(), mods_ = mods(), lista = [];
+  Object.keys(tx).forEach(function(id){
+    var r = tx[id]; if(r.n < 4) return;
+    var m = mods_.find(function(x){ return x.id === id; }); if(!m) return;
+    lista.push({ titulo:m.title, disc:disc(m), taxa:Math.round(r.ok / r.n * 100), n:r.n });
+  });
+  return lista.sort(function(a, b){ return a.taxa - b.taxa; }).slice(0, 3);
+}
+
+window.nexoRevisao = function(){
+  setCur('revisao'); fechar(); refazerNav(); head('Revisão de hoje');
+  if(REV && REV.ativa) return revisaoItem();
+  var pend = erradas().length, total = todas().length, fracos = assuntosFracos();
+  var lista = fracos.length
+    ? '<ol class="nx-sub" style="padding-left:20px;line-height:1.7">' + fracos.map(function(f){
+        return '<li><b>' + esc(f.titulo) + '</b> · ' + esc(f.disc) + ' · acerto de ' + f.taxa + '% em ' + f.n + ' respostas</li>';
+      }).join('') + '</ol>'
+    : '<p class="nx-sub">Ainda não há respostas suficientes para apontar assuntos fracos (pelo menos 4 em um mesmo assunto).</p>';
+  view().innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Revisão de hoje</h1>'
+    + '<p>Uma sessão com o que você errou e o que mais precisa de atenção.</p></div></div>'
+    + '<div class="dz-stats"><div class="dz-stat"><div class="v">' + pend + '</div><div class="k">Erradas para revisar</div></div>'
+    + '<div class="dz-stat"><div class="v">' + total + '</div><div class="k">Questões no NEXO</div></div></div>'
+    + '<div class="nx-panel" style="margin-bottom:16px"><h2 style="margin:0 0 8px">Assuntos que pedem atenção</h2>' + lista + '</div>'
+    + '<form id="rev-form" class="nx-panel" onsubmit="event.preventDefault();nexoRevisaoIniciar()" style="display:grid;gap:14px;max-width:520px">'
+    + '<label>Questões nesta sessão <select id="rev-n">' + [10, 15, 20, 30].map(function(n){ return '<option value="' + n + '"' + (n === 15 ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select></label>'
+    + '<p id="rev-aviso" role="status" class="nx-sub" style="margin:0"></p>'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap"><button type="submit" class="nx-btn primary">Começar revisão</button>'
+    + '<button type="button" class="nx-btn" onclick="showFlashcards()">Fichário</button></div></form></div>';
+  view().scrollTop = 0;
+};
+
+window.nexoRevisaoIniciar = function(){
+  var sel = document.getElementById('rev-n'), n = sel ? +sel.value : 15;
+  var fila = montarRevisao(n);
+  if(!fila.length){ var a = document.getElementById('rev-aviso'); if(a) a.textContent = 'Não há questões disponíveis agora.'; return; }
+  REV = { ativa:true, fila:fila, i:0, acertos:0, respondidas:0, repet:{}, itemInicio:0, atual:null, inicio:Date.now() };
+  revisaoItem();
+};
+
+function revisaoItem(){
+  var x = REV.fila[REV.i];
+  REV.atual = x; REV.itemInicio = Date.now();
+  var meta = '<div class="practice-question-meta"><span>' + esc(disc(x.m)) + '</span><span>' + esc(x.m.title) + '</span>'
+    + (x.q.source ? '<span>' + esc(x.q.source) + '</span>' : '') + '</div>';
+  var corpo = x.tipo === 'official' ? officialQuestionHTML(x.q, x.i, x.m.id) : questionHTML(x.q, x.i, x.m.id);
+  var ultima = REV.i === REV.fila.length - 1 ? 'Última questão desta sessão' : 'Questão ' + (REV.i + 1) + ' de ' + REV.fila.length;
+  view().innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Revisão de hoje</h1>'
+    + '<p>' + ultima + ' · acertos: ' + REV.acertos + ' de ' + REV.respondidas + '</p></div></div>'
+    + meta + corpo
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 40px"><button type="button" class="nx-btn primary" onclick="nexoRevisaoProxima()">Próxima</button>'
+    + '<button type="button" class="nx-btn" onclick="nexoRevisaoEncerrar()">Encerrar revisão</button></div></div>';
+  view().scrollTop = 0;
+}
+
+/* conta a resposta da questão atual (se foi respondida depois de exibida) e avança */
+window.nexoRevisaoProxima = function(){
+  if(!REV || !REV.ativa) return;
+  var x = REV.atual;
+  if(x){
+    var s = (ler('nexo_practice_answers', {}) || {})[x.skey];
+    if(s && s.done && (s.at || 0) >= REV.itemInicio){
+      REV.respondidas++;
+      if(s.ok) REV.acertos++;
+      else {
+        var c = REV.repet[x.skey] || 0;
+        if(c < REV_REPETICOES){ REV.repet[x.skey] = c + 1; REV.fila.push(x); }
+      }
+    }
+  }
+  REV.i++;
+  if(REV.i >= REV.fila.length) return window.nexoRevisaoEncerrar();
+  revisaoItem();
+};
+
+window.nexoRevisaoEncerrar = function(){
+  if(!REV || !REV.ativa) return window.nexoRevisao();
+  REV.ativa = false;
+  var pct = REV.respondidas ? Math.round(REV.acertos / REV.respondidas * 100) : 0;
+  view().innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Revisão concluída</h1>'
+    + '<p>As erradas que você ainda não resolveu continuam no caderno de erros.</p></div></div>'
+    + '<div class="nx-panel" style="margin-bottom:16px"><h2 style="margin:0 0 6px">' + REV.acertos + ' de ' + REV.respondidas + ' acertos</h2>'
+    + '<p class="nx-sub">' + pct + '% de acerto nesta sessão · tempo ' + fmt(Date.now() - REV.inicio) + '</p>'
+    + '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button type="button" class="nx-btn primary" onclick="nexoRevisaoIniciar()">Nova revisão</button>'
+    + '<button type="button" class="nx-btn" onclick="nexoCadernoErros()">Caderno de erros</button></div></div></div>';
+  view().scrollTop = 0;
+  refazerNav();
+};
+
 /* ======================= entradas no menu ======================= */
-/* botões "Caderno de erros" e "Simulado" logo depois de "Desempenho", com o mesmo visual */
+/* botões "Revisão de hoje", "Caderno de erros" e "Simulado", antes da lista de disciplinas */
 var renderNavAnterior = window.renderNav;
 var ICONES = {
+  revisao: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.5L4 10"/><path d="M4 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.5L20 14"/><path d="M20 20v-6h-6"/></svg>',
   caderno: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h10a2 2 0 0 1 2 2v14H8a2 2 0 0 1-2-2Z"/><path d="m9.5 10.5 1.5 1.5 3-3"/></svg>',
   simulado: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9zM9 11h6M9 15h4"/></svg>'
 };
@@ -239,6 +360,7 @@ window.renderNav = function(){
   quitarBotoesCaderno(nav);
   var ref = nav.querySelector('.folder-wrap');
   var html = [
+    ['revisao', 'Revisão de hoje', 'nexoRevisao()'],
     ['caderno', 'Caderno de erros', 'nexoCadernoErros()'],
     ['simulado', 'Simulado', 'nexoSimulado()']
   ].map(function(it){
