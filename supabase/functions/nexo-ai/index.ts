@@ -3,9 +3,11 @@
 //   1. rotinas do Claude Code (assinatura, sem custo de API): depositam o resultado em ai_external_extractions;
 //   2. Gemini, camada gratuita (segredo GEMINI_API_KEY): lê só as questões que o extrator por posição não resolveu;
 //   3. API paga da Anthropic (segredo ANTHROPIC_API_KEY, opcional): Message Batches; desligada sem a chave.
-// Nada é publicado aqui: tudo entra como "banked" e passa pela revisão do administrador.
+// Leituras entram como "banked". Ao fim de cada "tick" o Gemini sugere o módulo e nexo_auto_publicar() publica
+// o que passa nas travas (gabarito oficial conferido, sem alertas graves, módulo com confiança alta/média);
+// o resto fica na revisão. Desligar: collector_control.auto_publish = false.
 //
-// POST {action}: "tick" (padrão) | "ingest_external" | "gemini" | "collect" | "submit_extract" | "submit_classify" | "status" | "pdf"
+// POST {action}: "tick" (padrão) | "ingest_external" | "gemini" | "gemini_classify" | "auto_publish" | "collect" | "submit_extract" | "submit_classify" | "status" | "pdf"
 // Autenticação: cabeçalho x-nexo-cron (pg_cron) ou JWT de administrador do NEXO.
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
@@ -15,7 +17,7 @@ import {
   splitRange, normalizeStatement, classifySchema, classifySystem, classifyUserText, CONFIDENCE, OUT_OF_CATALOG,
   type CatalogEntry, type ExistingRow,
 } from "./lib.ts";
-import { geminiExtract, GeminiQuotaError, GEMINI_METHOD } from "./gemini.ts";
+import { geminiClassify, geminiExtract, GeminiQuotaError, GEMINI_CLASSIFY_METHOD, GEMINI_METHOD } from "./gemini.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const db = createClient(SUPABASE_URL, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
@@ -26,6 +28,8 @@ const UA = "Mozilla/5.0 (compatible; NEXO-AI/1.1; +https://almadaseara.github.io
 const BETAS = ["server-side-fallback-2026-07-01"];
 const MAX_PDF_BYTES = 20 * 1024 * 1024;
 const CLASSIFY_CHUNK = 25;
+const GEMINI_CLASSIFY_CHUNK = 40;
+const GEMINI_CLASSIFY_CALLS = 3;
 const MAX_EXTRACT_ATTEMPTS = 3;
 const TIME_BUDGET_MS = 120_000;
 type BatchRequest = Anthropic.Beta.Messages.Batches.BatchCreateParams.Request;
@@ -221,6 +225,29 @@ async function geminiTick(limit: number, deadline: number) {
     }
   }
   return out;
+}
+
+// Sugestão de módulo pelo Gemini: até GEMINI_CLASSIFY_CALLS lotes por execução, na mesma fila da rotina do Claude.
+async function geminiClassifyTick(deadline: number) {
+  if (!GEMINI_API_KEY) return { skipped: "sem GEMINI_API_KEY" };
+  let catalog: CatalogEntry[] | null = null;
+  let classified = 0;
+  for (let call = 0; call < GEMINI_CLASSIFY_CALLS && Date.now() < deadline - 40_000; call++) {
+    const { data: qs, error } = await db.rpc("nexo_rotina_fila_classificacao", { p_limite: GEMINI_CLASSIFY_CHUNK, p_offset: 0 });
+    if (error) throw error;
+    if (!qs?.length) break;
+    catalog = catalog || await loadCatalog();
+    try {
+      const r = await geminiClassify(GEMINI_API_KEY, GEMINI_MODEL, classifySystem(catalog), classifyUserText(qs.map((q: any) => ({
+        id: q.id, statement: q.statement, options: q.options, board: q.board, year: q.year, context: q.texto_base,
+      }))), classifySchema(catalog));
+      classified += await applyClassification(qs.map((q: any) => q.id), r.json, new Set(catalog.map((c) => c.module_id)), GEMINI_CLASSIFY_METHOD);
+    } catch (e) {
+      if (e instanceof GeminiQuotaError) return { classified, quota: true };
+      return { classified, error: String(e) };
+    }
+  }
+  return { classified };
 }
 
 // ---------------------------------------------------------------- 3. API paga da Anthropic (opcional)
@@ -424,11 +451,16 @@ Deno.serve(async (req) => {
     if (action === "tick" || action === "ingest_external") result.external = await ingestExternal(deadline);
     if (client && (action === "tick" || action === "collect")) result.collected = await collect(client);
     if (action === "tick" || action === "gemini") result.gemini = await geminiTick(cfg.extractPerTick, deadline);
+    if (action === "tick" || action === "gemini_classify") result.gemini_classify = await geminiClassifyTick(deadline);
     if (client && (action === "tick" || action === "submit_extract")) {
       const ids = Array.isArray(body?.source_ids) ? body.source_ids.map(String) : undefined;
       result.extract = await submitExtract(client, ids?.length ? ids.length : cfg.extractPerTick, ids);
     }
     if (client && (action === "tick" || action === "submit_classify")) result.classify = await submitClassify(client, Number(body?.limit) || cfg.classifyPerTick);
+    if (action === "tick" || action === "auto_publish") {
+      const { data, error } = await db.rpc("nexo_auto_publicar", {});
+      result.auto_publish = error ? { error: error.message } : data;
+    }
     if (!client && (action === "collect" || action === "submit_extract" || action === "submit_classify")) result.anthropic_api = "desligada (sem ANTHROPIC_API_KEY)";
     return json(result);
   } catch (e) {

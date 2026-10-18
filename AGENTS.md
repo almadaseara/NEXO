@@ -9,7 +9,7 @@ Regras que nunca podem ser quebradas:
 1. Não inventar leis, súmulas, teses, números de processo, datas ou questões. Conferir em fonte oficial (Planalto, STF, STJ) e citar o link.
 2. O que for incerto ou ainda pendente recebe `status:"atencao"` ou `"pendente"`, com "confira" na explicação.
 3. Não copiar prosa de PDFs de cursos (lei seca pode ser citada literalmente).
-4. Não alterar gabaritos nem o banco de questões no Supabase. Questão só é publicada pela tela Administração → Revisar questões (função `nexo_admin_revisar_questao`), nunca por SQL ou cron. O pipeline está em `docs/pipeline-questoes.md`; mudou `supabase/functions/`? Rode `node tools/testar-extrator-cebraspe.js` e `node tools/testar-pipeline.mjs` (Node 24+).
+4. Não alterar gabaritos nem o banco de questões no Supabase. Questão é publicada pela tela Administração → Revisar questões (função `nexo_admin_revisar_questao`) ou pela publicação automática da `nexo-ai` (função `nexo_auto_publicar`, decidida pelo administrador em 18/10/2026; travas em `docs/sql/2026-10-18-publicacao-automatica.sql`). Não afrouxar essas travas nem publicar por outro caminho sem pedido do administrador. O pipeline está em `docs/pipeline-questoes.md`; mudou `supabase/functions/`? Rode `node tools/testar-extrator-cebraspe.js` e `node tools/testar-pipeline.mjs` (Node 24+).
 5. Preservar o código e os dados existentes; mudanças pequenas e revisáveis.
 
 Antes de entregar qualquer mudança em `data/temas/`:

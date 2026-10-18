@@ -114,3 +114,17 @@ segunda leitura em vez de gravá-los.
 - Caderno *matriz* com vários gabaritos separados é pareado com o gabarito do próprio arquivo; os números
   cobertos por outros gabaritos seguem para a segunda leitura e conferência.
 - Os limites da camada gratuita do Gemini são definidos pelo Google por projeto e podem mudar.
+
+## Publicação automática
+
+A cada execução da `nexo-ai` (cron de 20 min), depois da leitura: o Gemini sugere o módulo de até 120 questões
+(3 lotes de 40) e `nexo_auto_publicar()` publica as que passam em todas as travas:
+
+- gabarito oficial conferido pelo sistema (`status = validated`, `validation_source_type = official`);
+- nenhum alerta grave (`gabarito_de_espelho`, `caderno_de_espelho`, `gabarito_lido_pela_ia`, `alerta_ia`, `tem_figura`, `rodape_colado`);
+- resposta compatível com as alternativas e enunciado não vazio;
+- módulo do catálogo com confiança alta ou média (`auto_publish_min_confidence`, padrão 0,7);
+- nunca revista pelo administrador (o que ele guardou ou reteve fica como está).
+
+Cada questão publicada assim leva o alerta `publicado_automaticamente`. Para desfazer uma, use "Reter" na revisão.
+Para desligar tudo: `update collector_control set auto_publish = false where id = 1;`.
