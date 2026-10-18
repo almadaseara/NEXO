@@ -119,7 +119,7 @@ function auditarImportacao(texto: string, respostas: Map<number,string>, questoe
   if (ausentes.length) problemas.push("Numeração incompleta (" + ausentes.length + " questões não extraídas): " + ausentes.slice(0,12).join(", "));
   const duplicadas = questoes.map(q => q.question_number).filter((n,i,arr) => arr.indexOf(n)!==i);
   if (duplicadas.length) problemas.push("Questões duplicadas no caderno: " + [...new Set(duplicadas)].join(", "));
-  const tabelaOuFigura = /\\b(?:tabela|quadro|figura|gr[aá]fico|diagrama|imagem)\\b|com base nos dados precedentes/i.test(texto);
+  const tabelaOuFigura = /\b(?:tabela|quadro|figura|gr[aá]fico|diagrama|imagem)\b|com base nos dados precedentes/i.test(texto);
   if (tabelaOuFigura) problemas.push("Há referência a tabela/figura ou contexto compartilhado: revisão visual obrigatória antes da importação.");
   const semAlternativas = questoes.filter(q => !Array.isArray(q.options) || q.options.length !== 5 || q.options.some((v:string)=>!String(v).trim()));
   if (semAlternativas.length) problemas.push("Há questões sem cinco alternativas válidas.");
