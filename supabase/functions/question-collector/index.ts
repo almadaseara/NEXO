@@ -263,23 +263,29 @@ function parseTrueFalse(text:string,answers:Map<number,string>){
   for(let i=0;i<nums.length;i++){
     const n=nums[i], next=nums[i+1];
     const end=next? "(?=(?:\\n|\\s)"+next+"\\s*[.)-]?\\s+)" : "$";
-    const re=new RegExp("(?:^|\\n|\\s)"+n+"\\s*[.)-]?\\s+([\\s\\S]{40,2200}?)"+end,"i");
+    const re=new RegExp("(?:^|\\n|\\s)"+n+"\\s*[.)-]?\\s+([\\s\\S]{18,2200}?)"+end,"i");
     const m=clean.match(re); if(!m) continue;
     const raw=m[1].replace(/\s+/g," ").trim();
     // O PDF pode colocar a instrução do BLOCO SEGUINTE depois do item atual.
     // Não incorporá-la silenciosamente ao enunciado.
     const nextCommand=/(?:Julgue os itens (?:a seguir|seguintes|subsequentes)|Acerca dos temas seguintes, julgue)/i.exec(raw);
-    const statement=(nextCommand&&nextCommand.index>35?raw.slice(0,nextCommand.index):raw).trim();
-    if(statement.length<40) continue;
+    let statement=(nextCommand&&nextCommand.index>25?raw.slice(0,nextCommand.index):raw).trim();
+    // Saldos e instrução entre itens são contexto do próximo bloco, não parte do item anterior.
+    const tableStart=/(?:conta\s+saldo\s*\(?R\$\)?|Com base nos dados precedentes)/i.exec(statement);
+    if(tableStart&&tableStart.index>25) statement=statement.slice(0,tableStart.index).trim();
+    if(statement.length<18) continue;
     // O extrator de texto NÃO carrega tabelas/figuras. O trecho prévio ou o
     // próprio enunciado pode indicar dependência de contexto compartilhado.
     // Atribuição conservadora: encaminhar para revisão, jamais publicar sozinho.
     const start=m.index||0;
-    const earlier=clean.slice(Math.max(0,start-1200),start);
+    const earlier=clean.slice(Math.max(0,start-1800),start).replace(/\s+/g," ");
+    const lastShared=earlier.toLowerCase().lastIndexOf("com base nos dados precedentes");
+    const lastNext=earlier.toLowerCase().lastIndexOf("julgue os itens a seguir");
+    const sharedContext=lastShared>=0&&lastShared>lastNext;
     const needsContext=/(?:tabela|quadro|figura|gr[aá]fico|balancete|dados a seguir|informa[cç][oõ]es a seguir)/i.test(
-      earlier.slice(-650)+" "+statement);
+      statement);
     rows.push({question_number:n,statement,options:["Certo","Errado"],answer:answers.get(n),question_type:"true_false",
-      needs_context_review:needsContext||Boolean(nextCommand&&nextCommand.index>35)});
+      needs_context_review:needsContext||sharedContext||Boolean(nextCommand&&nextCommand.index>25)||Boolean(tableStart)});
   }
   return rows;
 }
