@@ -9,7 +9,7 @@ Regras que nunca podem ser quebradas:
 1. Não inventar leis, súmulas, teses, números de processo, datas ou questões. Conferir em fonte oficial (Planalto, STF, STJ) e citar o link.
 2. O que for incerto ou ainda pendente recebe `status:"atencao"` ou `"pendente"`, com "confira" na explicação.
 3. Não copiar prosa de PDFs de cursos (lei seca pode ser citada literalmente).
-4. Não alterar gabaritos, o banco de questões no Supabase nem os arquivos do robô (`robot/`, `data/robot-*.json`, `data/question-candidates.json`).
+4. Não alterar gabaritos nem o banco de questões no Supabase. Questão só é publicada pela tela Administração → Revisar questões (função `nexo_admin_revisar_questao`), nunca por SQL ou cron. O pipeline está em `docs/pipeline-questoes.md`; mudou `supabase/functions/`? Rode `node tools/testar-extrator-cebraspe.js` e `node tools/testar-pipeline.mjs` (Node 24+).
 5. Preservar o código e os dados existentes; mudanças pequenas e revisáveis.
 
 Antes de entregar qualquer mudança em `data/temas/`:
@@ -21,4 +21,4 @@ python3 tools/testar-site.py         # tem que terminar com "OK" (requer playwri
 
 Módulo novo: inclua o `id` na constante `ARVORE` de `ui/nexo-ui.js` (árvore da barra lateral) e no tópico certo de `data/trilha/pcba.js` (trilha de estudos). Mudou cores no `index.html`? Rode `python3 tools/gerar-tema-escuro.py`.
 
-Sempre rode `git pull --rebase origin main` antes de enviar (o robô faz commits automáticos).
+Sempre rode `git pull --rebase origin main` antes de enviar.

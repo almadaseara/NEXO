@@ -1,12 +1,29 @@
 
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { extractLayout, plainText, segmentCebraspe, segmentMultipleChoice, planCollect, cleanReplacement, type FigureRef } from "./layout.ts";
+import { figurePng } from "./figures.ts";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const db = createClient(SUPABASE_URL, SERVICE_KEY);
 
-const UA = "Mozilla/5.0 (compatible; NEXO-QuestionCollector/1.1; +https://almadaseara.github.io/NEXO/)";
+const UA = "Mozilla/5.0 (compatible; NEXO-QuestionCollector/1.3; +https://almadaseara.github.io/NEXO/)";
+const EXTRACTION_METHOD = "pdf_layout_v28";
+
+// Janela de anos e uso de site espelho vêm de collector_control (nexo_year_window); carregados a cada chamada.
+let YEAR_MIN = 2018;
+let YEAR_MAX = new Date().getUTCFullYear() + 1;
+let ALLOW_MIRROR = false;
+function inYearWindow(y:number|null|undefined){ return typeof y==="number" && y>=YEAR_MIN && y<=YEAR_MAX; }
+async function loadSettings(){
+  const {data:win}=await db.rpc("nexo_year_window");
+  const w=Array.isArray(win)?win[0]:win;
+  if(w?.year_min) YEAR_MIN=Number(w.year_min);
+  if(w?.year_max) YEAR_MAX=Number(w.year_max);
+  const {data:ctl}=await db.from("collector_control").select("allow_mirror").eq("id",1).maybeSingle();
+  ALLOW_MIRROR=ctl?.allow_mirror===true;
+}
 
 function cleanMeta(v:string|null|undefined){
   if(!v) return null;
@@ -59,12 +76,17 @@ async function getText(url:string){
   }
   return text;
 }
+async function pdfBytes(url:string){
+  const r=await fetch(url,{headers:{"user-agent":UA}});
+  if(!r.ok) throw new Error("PDF HTTP "+r.status);
+  return new Uint8Array(await r.arrayBuffer());
+}
 async function extractPdfText(url:string){
   const r=await fetch(url,{headers:{"user-agent":UA}});
   if(!r.ok) throw new Error("PDF HTTP "+r.status);
   const data=new Uint8Array(await r.arrayBuffer());
   const pdfjs = await import("npm:pdfjs-dist@4.10.38/legacy/build/pdf.mjs");
-  const doc=await pdfjs.getDocument({data,disableWorker:true}).promise;
+  const doc=await pdfjs.getDocument({data,disableWorker:true} as any).promise;
   let text="";
   for(let p=1;p<=Math.min(doc.numPages,220);p++){
     const page=await doc.getPage(p);
@@ -86,7 +108,7 @@ function parseCebraspeAnswerTable(text:string){
     }
     const ans:string[]=[];
     let k=j;
-    while(k<tokens.length&&/^(C|E|X)$/i.test(tokens[k])&&ans.length<60){
+    while(k<tokens.length&&(/^(C|E|X)$/i.test(tokens[k])||/^[ABD]$/.test(tokens[k]))&&ans.length<60){
       ans.push(tokens[k].toUpperCase());k++;
     }
     if(nums.length>=5&&ans.length>=5){
@@ -247,12 +269,17 @@ function parseMultipleChoice(text:string,answers:Map<number,string>){
     const re=new RegExp("(?:^|\\n|\\s)"+n+"\\s*[.)-]?\\s+([\\s\\S]{40,5000}?)(?=(?:\\n|\\s)"+next+"\\s*[.)-]?\\s+|$)","i");
     const m=clean.match(re); if(!m) continue;
     const block=m[1].replace(/\s+/g," ").trim();
-    const opts=[...block.matchAll(/(?:^|\s)\(?([A-E])\s*[).:-]\s*([\s\S]*?)(?=(?:\s\(?[A-E]\s*[).:-])|$)/g)].map(x=>x[2].trim());
-    if(opts.length!==5) continue;
+    const optMatches=[...block.matchAll(/(?:^|\s)\(?([A-E])\s*[).:-]\s*([\s\S]*?)(?=(?:\s\(?[A-E]\s*[).:-])|$)/g)];
+    // Bancas com 4 (AOCP, Consulplan...) ou 5 alternativas; as letras precisam vir em sequência a partir de A.
+    if(optMatches.length<4||optMatches.length>5) continue;
+    if(optMatches.some((x,i)=>x[1]!=="ABCDE"[i])) continue;
+    const opts=optMatches.map(x=>x[2].trim());
+    const answer=answers.get(n);
+    if(answer&&answer!=="ANULADA"&&"ABCDE".slice(0,opts.length).indexOf(answer)<0) continue;
     const firstOpt=block.search(/(?:^|\s)\(?A\s*[).:-]/);
     const statement=(firstOpt>0?block.slice(0,firstOpt):block).trim();
     if(statement.length<40) continue;
-    rows.push({question_number:n,statement,options:opts,answer:answers.get(n),question_type:"multiple_choice"});
+    rows.push({question_number:n,statement,options:opts,answer,question_type:"multiple_choice"});
   }
   return rows;
 }
@@ -304,7 +331,7 @@ async function upsertSource(url:string,career:string|null){
   if(existing) return {data:existing,isNew:false,skippedKnown:true};
 
   const urlYear=yearFrom(url);
-  if(urlYear!==null&&(urlYear<2018||urlYear>2026)) return {data:null,isNew:false,skippedOutOfRange:true};
+  if(urlYear!==null&&!inYearWindow(urlYear)) return {data:null,isNew:false,skippedOutOfRange:true};
 
   const html=await getText(url);
   const plain=stripHtml(html);
@@ -317,7 +344,7 @@ async function upsertSource(url:string,career:string|null){
   const examName=cleanMeta((plain.match(/Prova\s+(.{3,140}?)(?:Cargo:|Ano:|Órgão:|Organizadora:)/i)||[])[1]?.trim()||cargo||null);
   const hasSimulator=/simGabaritos\s*=/.test(html);
   let nextStatus=((links.exam&&links.answer)||hasSimulator)?"queued":"discovered";
-  if(year!==null&&(year<2018||year>2026)) nextStatus="out_of_range";
+  if(year!==null&&!inYearWindow(year)) nextStatus="out_of_range";
 
   const payload:any={
     source_page_url:url,career:career||null,board:board||null,year:year||null,
@@ -356,7 +383,7 @@ async function discoverFromSeed(seed:any){
   const unique=[...new Set([...direct,...extra])]
     .filter(u=>{
       const y=yearFrom(u);
-      return y===null||(y>=2018&&y<=2026);
+      return y===null||inYearWindow(y);
     })
     .slice(0,100);
   let newSources=0;
@@ -418,11 +445,11 @@ function parsePciSimulator(html:string,baseUrl:string){
 }
 
 async function processSource(src:any){
-  if(src.year===null||src.year===undefined||src.year<2018||src.year>2026){
+  if(!inYearWindow(src.year)){
     await db.from("exam_sources").update({
       status:src.year===null||src.year===undefined?"deferred":"out_of_range",
       next_attempt_at:src.year===null||src.year===undefined?new Date(Date.now()+24*60*60*1000).toISOString():null,
-      last_error:"Fonte fora da janela obrigatória 2018-2026 ou sem ano identificável.",
+      last_error:`Fonte fora da janela ${YEAR_MIN}-${YEAR_MAX} ou sem ano identificável.`,
       updated_at:new Date().toISOString()
     }).eq("id",src.id);
     return {extracted:0,validated:0,rejected:0,inserted:0};
@@ -432,8 +459,10 @@ async function processSource(src:any){
     status:"processing",attempt_count:(src.attempt_count||0)+1,last_attempt_at:now,updated_at:now
   }).eq("id",src.id);
   try{
-    const sourceHtml=await getText(src.source_page_url);
-    const simQs=parsePciSimulator(sourceHtml,src.source_page_url);
+    const isOfficial=String(src.provider||"").toUpperCase().includes("OFICIAL");
+    // Site espelho só com collector_control.allow_mirror=true; fontes oficiais nunca passam por aqui.
+    const sourceHtml=(!isOfficial&&ALLOW_MIRROR)?await getText(src.source_page_url):"";
+    const simQs=sourceHtml?parsePciSimulator(sourceHtml,src.source_page_url):[];
     const {data:existingRows}=await db.from("question_bank").select("question_number").eq("source_id",src.id);
     const existingSet=new Set((existingRows||[]).map((x:any)=>x.question_number));
     if(simQs.length){
@@ -454,22 +483,29 @@ async function processSource(src:any){
       return {extracted:simQs.length,validated,rejected:0,inserted,annulled,duplicates};
     }
     if(!src.exam_pdf_url||!src.answer_key_pdf_url){
-      await db.from("exam_sources").update({status:"deferred",next_attempt_at:new Date(Date.now()+12*60*60*1000).toISOString(),last_error:"Sem simulador estruturado e sem links diretos de prova/gabarito.",updated_at:new Date().toISOString()}).eq("id",src.id);
+      await db.from("exam_sources").update({status:"deferred",next_attempt_at:new Date(Date.now()+12*60*60*1000).toISOString(),last_error:"Sem links diretos de prova e gabarito oficiais.",updated_at:new Date().toISOString()}).eq("id",src.id);
       return {extracted:0,validated:0,rejected:0,inserted:0};
     }
-    const [exam,answer]=await Promise.all([extractPdfText(src.exam_pdf_url),extractPdfText(src.answer_key_pdf_url)]);
+    const pdfjs = await import("npm:pdfjs-dist@4.10.38/legacy/build/pdf.mjs");
+    const [examBytes,answer]=await Promise.all([pdfBytes(src.exam_pdf_url),extractPdfText(src.answer_key_pdf_url)]);
+    // PDF pesado (imagens grandes ou escaneado): lê só o texto; questão que cita figura vai para a segunda leitura
+    const heavy=examBytes.length>3_000_000;
+    const layout=await extractLayout(pdfjs,examBytes,{images:!heavy});
+    const examText=plainText(layout);
     await db.from("exam_documents").upsert([
-      {source_id:src.id,document_type:"exam",url:src.exam_pdf_url,extracted_text:exam.text,extraction_status:"done",page_count:exam.pageCount,updated_at:new Date().toISOString()},
+      {source_id:src.id,document_type:"exam",url:src.exam_pdf_url,extracted_text:examText,extraction_status:"done",page_count:layout.pages.length,updated_at:new Date().toISOString()},
       {source_id:src.id,document_type:"answer_key",url:src.answer_key_pdf_url,extracted_text:answer.text,extraction_status:"done",page_count:answer.pageCount,updated_at:new Date().toISOString()}
     ],{onConflict:"source_id,document_type,url"});
     const bookletTypes=[...new Set([...answer.text.matchAll(/(?:tipo|caderno)\s*([1-4])/gi)].map(m=>m[1]))];
     const fgvScoped=src.board==="FGV"&&src.raw_metadata?.fgv_answer_label&&src.booklet_type;
     if(bookletTypes.length>1&&!fgvScoped){
+      // A segunda leitura (Gemini/Claude) lê o tipo impresso no caderno e o bloco certo do gabarito.
       await db.from("exam_sources").update({
         status:"deferred",
         next_attempt_at:new Date(Date.now()+7*24*60*60*1000).toISOString(),
-        last_error:"Gabarito com múltiplos cadernos/tipos detectado; exige associação segura por caderno antes da validação.",
+        last_error:"Gabarito com múltiplos cadernos/tipos detectado; encaminhado à segunda leitura com revisão.",
         updated_at:new Date().toISOString(),
+        ai_status:src.ai_status==="submitted"?"submitted":"queued",
         raw_metadata:{...(src.raw_metadata||{}),detected_booklet_types:bookletTypes}
       }).eq("id",src.id);
       return {extracted:0,validated:0,rejected:0,inserted:0,annulled:0};
@@ -481,45 +517,114 @@ async function processSource(src:any){
         :(fgvScoped
           ?parseFgvAnswerTable(answer.text,String(src.raw_metadata?.fgv_answer_label||src.exam_name||src.role_name||""),String(src.raw_metadata?.fgv_booklet_type||"Tipo 1"))
           :parseAnswers(answer.text)));
-    let qs = src.board==="CEBRASPE"
-      ?parseTrueFalse(exam.text,answers)
-      :(src.board==="IBFC"?parseIbfcMultipleChoice(exam.text,answers):parseMultipleChoice(exam.text,answers));
-    if(qs.length<5 && src.board!=="CEBRASPE" && src.board!=="IBFC") qs=parseTrueFalse(exam.text,answers);
-    let validated=0,rejected=0,inserted=0,annulled=0;
-    for(const q of qs){
+
+    // 1º leitura com posição (layout.ts); 2º o extrator antigo, só para números que a primeira não achou.
+    // Cebraspe também aplica provas de múltipla escolha (gabarito A–E): essas seguem o leitor de alternativas.
+    const certoErrado=src.board==="CEBRASPE"&&![...answers.values()].some(a=>/^[ABD]$/.test(a));
+    const seg=certoErrado?segmentCebraspe(layout,answers):segmentMultipleChoice(layout,answers);
+    const legacy=certoErrado
+      ?parseTrueFalse(examText,answers)
+      :(src.board==="IBFC"?parseIbfcMultipleChoice(examText,answers):parseMultipleChoice(examText,answers));
+    const plan=planCollect(seg,legacy,answers);
+
+    // figuras embutidas viram PNG no armazenamento público nexo-midia
+    const mediaCache=new Map<string,string|null>();
+    const mediaFor=async(figs:FigureRef[])=>{
+      const urls:string[]=[];
+      for(const f of figs){
+        if(!f.image) continue;
+        const k=f.pagina+":"+f.image;
+        if(!mediaCache.has(k)){
+          let url:string|null=null;
+          try{
+            const png=await figurePng(layout.doc,f.pagina,f.image);
+            if(png){
+              const path=`auto/${src.id}/p${f.pagina}-${(await hashStatement(f.image)).slice(0,12)}.png`;
+              const {error}=await db.storage.from("nexo-midia").upload(path,png,{contentType:"image/png",upsert:true});
+              if(!error) url=db.storage.from("nexo-midia").getPublicUrl(path).data.publicUrl;
+            }
+          }catch{ url=null; }
+          mediaCache.set(k,url);
+        }
+        const u=mediaCache.get(k); if(u) urls.push(u);
+      }
+      return urls;
+    };
+    const ctxId=new Map<string,string>();
+    for(const c of plan.contexts){
+      const media=await mediaFor(c.figures);
+      const {data,error}=await db.from("question_contexts").upsert(
+        {source_id:src.id,context_key:"L:"+c.key,content:c.text,figure_refs:c.figures,media_urls:media,updated_at:new Date().toISOString()},
+        {onConflict:"source_id,context_key"}).select("id").single();
+      if(!error&&data) ctxId.set(c.key,data.id);
+    }
+
+    let validated=0,rejected=0,inserted=0,annulled=0,keptExisting=0,occurrences=0,enriched=0;
+    const {data:existingFull}=await db.from("question_bank").select("id,question_number,statement,options,question_type,review_flags,context_id,figure_refs,media_urls").eq("source_id",src.id);
+    const existingByNumber=new Map((existingFull||[]).map((r:any)=>[r.question_number,r]));
+    for(const q of plan.ready){
+      const prev:any=existingByNumber.get(q.question_number);
+      if(prev){
+        // Registro existente: nunca muda enunciado/gabarito/publicação; só ganha texto-base e figuras que faltavam.
+        keptExisting++;
+        const patch:any={};
+        // texto antigo com rodapé colado ou símbolos ilegíveis: troca pela leitura limpa da mesma questão (gabarito intacto)
+        const clean=cleanReplacement(prev,q);
+        if(clean){
+          patch.statement=clean.statement; patch.options=clean.options; patch.statement_hash=await hashStatement(clean.statement);
+          patch.review_flags=[...new Set([...(Array.isArray(prev.review_flags)?prev.review_flags:[]).filter((f:string)=>f!=="rodape_colado"&&f!=="texto_com_simbolos"),"texto_corrigido_extrator"])];
+        }
+        if(!prev.context_id&&q.context&&ctxId.has(q.context)) patch.context_id=ctxId.get(q.context);
+        if((!Array.isArray(prev.figure_refs)||!prev.figure_refs.length)&&q.figures.length){
+          patch.figure_refs=q.figures;
+          if(!Array.isArray(prev.media_urls)||!prev.media_urls.length) patch.media_urls=await mediaFor(q.figures);
+        }
+        if(Object.keys(patch).length){ patch.updated_at=new Date().toISOString(); await db.from("question_bank").update(patch).eq("id",prev.id); enriched++; }
+        continue;
+      }
       const answerValue=q.answer;
       let status="validated";
       if(answerValue==="ANULADA"){status="annulled";annulled++;}
-      if(!answerValue){status="rejected";rejected++}
-      else if(answerValue!=="ANULADA") validated++;
-      // Falha fechada: não sobrepor registro nem validar item com contexto visual
-      // incompleto. Sua recuperação requer documento/contexto associado e revisão.
-      if(q.needs_context_review){
-        rejected++;
-        continue;
-      }
+      else if(!answerValue){status="rejected";rejected++;}
+      else validated++;
       const h=await hashStatement(q.statement);
       const {data:dup}=await db.from("question_bank").select("id").eq("statement_hash",h).limit(1);
-      if((dup||[]).length && !existingSet.has(q.question_number)) continue;
+      if((dup||[]).length){
+        // Mesma questão aplicada em outra prova: registrar a ocorrência em vez de duplicar.
+        const {error:occErr}=await db.from("question_occurrences").upsert(
+          {question_id:dup![0].id,source_id:src.id,question_number:q.question_number},{onConflict:"question_id,source_id"});
+        if(!occErr) occurrences++;
+        continue;
+      }
       const examSourceType=src.raw_metadata?.exam_source_type||"official";
       const examSourceName=src.raw_metadata?.exam_source_name||src.provider||"Fonte oficial";
       const answerSourceType=src.raw_metadata?.answer_source_type||"official";
       const answerSourceName=src.raw_metadata?.answer_source_name||src.provider||"Fonte oficial";
-      const row={...q,statement_hash:h,source_id:src.id,board:src.board,year:src.year,institution:src.institution,role_name:src.role_name,status,
+      const row={question_number:q.question_number,statement:q.statement,options:q.options,answer:q.answer,question_type:q.question_type,
+        statement_hash:h,source_id:src.id,board:src.board,year:src.year,institution:src.institution,role_name:src.role_name,status,
+        context_id:q.context?ctxId.get(q.context)??null:null,figure_refs:q.figures,media_urls:await mediaFor(q.figures),review_flags:q.flags,
         validation_method:answerSourceType==="official"?"official_answer_key_pdf":"mirror_answer_key",
         validation_source_type:answerSourceType==="official"?"official":"mirror",
         exam_source_type:examSourceType,exam_source_name:examSourceName,exam_source_url:src.exam_pdf_url,
         answer_source_type:answerSourceType,answer_source_name:answerSourceName,answer_source_url:src.answer_key_pdf_url,
         classification_status:status==="annulled"?"review_needed":"pending",publication_status:status==="annulled"?"withheld":"banked",
+        extraction_method:q.method,
         captured_at:new Date().toISOString(),updated_at:new Date().toISOString()};
-      const {error}=await db.from("question_bank").upsert(row,{onConflict:"source_id,question_number"});
-      if(!error&&!existingSet.has(q.question_number)){
-        if(status!=="annulled") inserted++;
+      const {error}=await db.from("question_bank").insert(row);
+      if(!error){
+        if(status!=="annulled"&&status!=="rejected") inserted++;
+        existingByNumber.set(q.question_number,{id:"",question_number:q.question_number});
         existingSet.add(q.question_number);
       }
     }
-    await db.from("exam_sources").update({status:validated>0?"validated":"extracted",last_error:null,next_attempt_at:null,updated_at:new Date().toISOString()}).eq("id",src.id);
-    return {extracted:qs.length,validated,rejected,inserted,annulled};
+    // o que ficou de fora vai para a segunda leitura (Gemini gratuito e rotina do Claude), com a lista exata
+    const pending=plan.pending.filter(n=>!existingSet.has(n));
+    const sendToAi=isOfficial&&pending.length>0&&src.ai_status!=="submitted";
+    await db.from("exam_sources").update({status:validated>0||keptExisting>0?"validated":"extracted",last_error:null,next_attempt_at:null,updated_at:new Date().toISOString(),
+      ...(sendToAi?{ai_status:"queued"}:{}),
+      raw_metadata:{...(src.raw_metadata||{}),extraction:{method:EXTRACTION_METHOD,answers:answers.size,layout_items:seg.items.length,contexts:plan.contexts.length,
+        ready:plan.ready.length,pending_numbers:pending,pending_reasons:plan.reasons,kept_existing:keptExisting,enriched,occurrences}}}).eq("id",src.id);
+    return {extracted:plan.ready.length,validated,rejected,inserted,annulled,held_for_ai:pending.length,occurrences,enriched};
   }catch(e){
     const attempts=(src.attempt_count||0)+1;
     const blocked=String(e).includes("SOURCE_BLOCKED_CHALLENGE");
@@ -545,6 +650,14 @@ Deno.serve(async (req)=>{
   const {data:isBusy,error:busyErr}=await db.rpc("collector_is_busy");
   if(busyErr) return Response.json({status:"error",error:busyErr.message},{status:500});
   if(isBusy) return Response.json({status:"busy"});
+  await loadSettings();
+  // Fonte que ficou em "processing" porque a execução anterior foi encerrada pelo limite de CPU volta para a fila
+  // (até 3 tentativas; depois a prova inteira vai para a leitura por IA), em vez de ficar presa para sempre.
+  const stale=new Date(Date.now()-10*60*1000).toISOString();
+  await db.from("exam_sources").update({status:"extracted",ai_status:"queued",last_error:"Leitura interrompida pelo limite de CPU da função 3 vezes; enviada à leitura por IA.",updated_at:new Date().toISOString()})
+    .eq("status","processing").lt("last_attempt_at",stale).gte("attempt_count",3);
+  await db.from("exam_sources").update({status:"queued",updated_at:new Date().toISOString()})
+    .eq("status","processing").lt("last_attempt_at",stale).lt("attempt_count",3);
   const {data:run,error:runErr}=await db.from("collector_runs").insert({status:"running"}).select().single();
   if(runErr) return Response.json({error:runErr.message},{status:500});
   let stats={discovered_count:0,new_sources_discovered:0,pages_scanned:0,extracted_count:0,validated_count:0,rejected_count:0,inserted_count:0,deferred_count:0,annulled_count:0};
@@ -555,18 +668,18 @@ Deno.serve(async (req)=>{
       const {data,error}=await db.from("exam_sources").select("*")
         .like("provider","%OFICIAL%")
         .eq("status","queued")
-        .gte("year",2018).lte("year",2026)
+        .gte("year",YEAR_MIN).lte("year",YEAR_MAX)
         .order("last_attempt_at",{ascending:true,nullsFirst:true})
         .limit(2);
       if(error) throw error;
       candidates=data||[];
     }else{
-      const {data,error}=await db.from("exam_sources").select("*")
+      let query=db.from("exam_sources").select("*")
         .in("status",["queued","discovered","error","deferred"])
-        .gte("year",2018).lte("year",2026)
-        .or("next_attempt_at.is.null,next_attempt_at.lte."+new Date().toISOString())
-        .order("last_attempt_at",{ascending:true,nullsFirst:true})
-        .limit(120);
+        .gte("year",YEAR_MIN).lte("year",YEAR_MAX)
+        .or("next_attempt_at.is.null,next_attempt_at.lte."+new Date().toISOString());
+      if(!ALLOW_MIRROR) query=query.like("provider","%OFICIAL%");
+      const {data,error}=await query.order("last_attempt_at",{ascending:true,nullsFirst:true}).limit(120);
       if(error) throw error;
       candidates=data||[];
     }
@@ -576,9 +689,12 @@ Deno.serve(async (req)=>{
       const official=String(s.provider||"").includes("OFICIAL")?-1000:0;
       return official+(st[s.status]??5)*100+(s.attempt_count||0);
     };
-    const maxSources=officialMode?2:30;
+    // Leitura com posição custa CPU: uma prova oficial por execução, e a próxima vem encadeada
+    // (enqueue_official_question_collector), para não estourar o limite de CPU da Edge Function.
+    const chain=officialMode||!ALLOW_MIRROR;
+    const maxSources=chain?1:30;
     const sources=(candidates||[]).filter((s:any)=>!s.next_attempt_at||new Date(s.next_attempt_at).getTime()<=now).sort((a:any,b:any)=>priority(a)-priority(b)).slice(0,maxSources);
-    const batchSize=officialMode?2:6;
+    const batchSize=chain?1:6;
     for(let i=0;i<sources.length;i+=batchSize){
       const batch=sources.slice(i,i+batchSize);
       const results=await Promise.allSettled(batch.map((src:any)=>processSource(src)));
@@ -591,7 +707,7 @@ Deno.serve(async (req)=>{
         }else errors.push(src.source_page_url+": "+String(res.reason));
       });
     }
-    if(!officialMode){
+    if(!officialMode&&ALLOW_MIRROR){
       const {data:seeds}=await db.from("collector_seed_urls").select("*").eq("enabled",true).order("last_scanned_at",{ascending:true,nullsFirst:true}).order("priority",{ascending:true}).limit(2);
       const seedResults=await Promise.allSettled((seeds||[]).map((seed:any)=>discoverFromSeed(seed)));
       seedResults.forEach((res,idx)=>{
@@ -605,10 +721,10 @@ Deno.serve(async (req)=>{
     }
     stats.pages_scanned+=sources.length;
     const status=errors.length?"partial":(stats.extracted_count===0&&stats.inserted_count===0?"idle":"success");
-    await db.from("collector_runs").update({...stats,status,finished_at:new Date().toISOString(),details:{errors,processed_sources:sources.length,new_unique_questions:stats.inserted_count,eligible_sources:sources.length,pipeline:officialMode?"official_extraction_validation":"extraction_validation",year_window:"2018-2026",official_mode:officialMode}}).eq("id",run.id);
+    await db.from("collector_runs").update({...stats,status,finished_at:new Date().toISOString(),details:{errors,processed_sources:sources.length,new_unique_questions:stats.inserted_count,eligible_sources:sources.length,pipeline:officialMode?"official_extraction_validation":"extraction_validation",year_window:`${YEAR_MIN}-${YEAR_MAX}`,official_mode:officialMode}}).eq("id",run.id);
 
     let next_official_request_id:any=null;
-    if(officialMode){
+    if(chain&&sources.length){
       const {count}=await db.from("exam_sources").select("id",{count:"exact",head:true}).like("provider","%OFICIAL%").eq("status","queued");
       if((count||0)>0){
         const {data:nextId,error:nextErr}=await db.rpc("enqueue_official_question_collector");
@@ -617,7 +733,7 @@ Deno.serve(async (req)=>{
       }
     }
 
-    return Response.json({run_id:run.id,status,...stats,processed_sources:sources.length,year_window:"2018-2026",official_mode:officialMode,next_official_request_id,errors});
+    return Response.json({run_id:run.id,status,...stats,processed_sources:sources.length,year_window:`${YEAR_MIN}-${YEAR_MAX}`,official_mode:officialMode,next_official_request_id,errors});
   }catch(e){
     await db.from("collector_runs").update({...stats,status:"error",finished_at:new Date().toISOString(),error:String(e)}).eq("id",run.id);
     return Response.json({run_id:run.id,status:"error",...stats,error:String(e)},{status:500});

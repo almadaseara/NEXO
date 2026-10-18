@@ -1,7 +1,7 @@
 /* NEXO — Administração / Classificar questões (auditoria Q-03).
    O site só mostra questões do banco que têm módulo do NEXO revisado por um administrador. Antes isso
    ficava em data/banco-classificacao.json, editado à mão, e cada questão publicada depois ficava invisível.
-   Aqui o administrador vê as publicadas sem módulo, com a sugestão do robô, e grava a escolha na tabela
+   Aqui o administrador vê as publicadas sem módulo, com a sugestão da IA (nexo-ai) ou do robô antigo, e grava a escolha na tabela
    question_module_map (docs/sql/2026-10-18-auditoria-acesso.sql). Não altera question_bank nem gabaritos.
    "Não usar no site" grava "-" e tira a questão da lista de pendentes. */
 (function(){
@@ -42,7 +42,7 @@ async function carregar(){
     if(m.error) throw m.error;
     mapa = {}; (m.data || []).forEach(function(x){ mapa[x.question_id] = x.module_id; });
     var q = await c.from('question_bank')
-      .select('id,question_number,statement,board,year,role_name,module_id,answer_source_type,created_at')
+      .select('id,question_number,statement,board,year,role_name,module_id,ai_module_id,ai_module_confidence,ai_module_reason,answer_source_type,created_at')
       .eq('status', 'validated').eq('publication_status', 'published').order('created_at', { ascending:false }).limit(5000);
     if(q.error) throw q.error;
     questoes = q.data || [];
@@ -85,14 +85,16 @@ function desenhar(){
   var seg = [['pendentes', 'Sem módulo' + (pendentes ? ' (' + pendentes + ')' : '')], ['classificadas', 'Classificadas']]
     .map(function(f){ return '<button type="button" aria-pressed="' + (filtro === f[0]) + '" data-cls-filtro="' + f[0] + '">' + f[1] + '</button>'; }).join('');
   var itens = lista.slice(0, mostrar).map(function(x){
-    var atual = mapa[x.id] || '', sug = titulo(x.module_id);
+    var sugId = x.ai_module_id && x.ai_module_id !== 'fora_do_catalogo' ? x.ai_module_id : x.module_id;
+    var atual = mapa[x.id] || '', sug = titulo(sugId), daIa = sugId === x.ai_module_id;
     var texto = limpa(x.statement); if(texto.length > 420) texto = texto.slice(0, 420) + '…';
     return '<div class="nx-cls-item"><div class="nx-cls-meta">' + [x.board, x.year, limpa(x.role_name), x.question_number ? 'Q' + x.question_number : '', x.answer_source_type === 'official' ? 'gabarito oficial' : 'gabarito de apoio']
         .filter(Boolean).map(function(t){ return '<span>' + escH(t) + '</span>'; }).join('') + '</div>'
       + '<p class="nx-cls-texto">' + escH(texto) + '</p>'
-      + (sug && !atual ? '<div class="nx-cls-sug">Sugestão do robô: <b>' + escH(sug) + '</b> (confira antes de salvar)</div>' : '')
+      + (sug && !atual ? '<div class="nx-cls-sug">Sugestão ' + (daIa ? 'da IA' : 'do robô') + ': <b>' + escH(sug) + '</b>' + (daIa && x.ai_module_confidence ? ' · confiança ' + Math.round(x.ai_module_confidence * 100) + '%' : '') + (daIa && x.ai_module_reason ? ' — ' + escH(x.ai_module_reason) : '') + ' (confira antes de salvar)</div>' : '')
+      + (x.ai_module_id === 'fora_do_catalogo' && !atual ? '<div class="nx-cls-sug">A IA indica que o assunto está fora dos módulos do site' + (x.ai_module_reason ? ' — ' + escH(x.ai_module_reason) : '') + '.</div>' : '')
       + (atual ? '<div class="nx-cls-sug">Atual: <b>' + escH(atual === '-' ? 'Não usar no site' : titulo(atual) || atual) + '</b></div>' : '')
-      + '<div class="nx-cls-acoes"><select data-cls-sel="' + escH(x.id) + '" aria-label="Módulo do NEXO">' + opcoesModulos(atual || (sug ? x.module_id : '')) + '</select>'
+      + '<div class="nx-cls-acoes"><select data-cls-sel="' + escH(x.id) + '" aria-label="Módulo do NEXO">' + opcoesModulos(atual || (sug ? sugId : '')) + '</select>'
       + '<button type="button" class="nx-btn small primary" data-cls-salvar="' + escH(x.id) + '">Salvar</button></div></div>';
   }).join('');
   v.innerHTML = '<div class="nx-head"><div><h1>Classificar questões</h1><p>Questões publicadas do banco só aparecem para os alunos depois de ligadas a um módulo do NEXO. Confira o enunciado e escolha o módulo.</p></div>'

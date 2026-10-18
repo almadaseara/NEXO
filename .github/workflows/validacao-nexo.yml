@@ -12,11 +12,12 @@ on:
       - 'ui/**'
       - 'tools/validar-temas.js'
       - 'tools/auditar-acervo.js'
-      - 'tools/diagnosticar-robo.js'
       - 'tools/testar-extrator-cebraspe.js'
+      - 'tools/testar-pipeline.mjs'
+      - 'tools/fixtures/**'
+      - 'docs/rotinas/**'
+      - 'supabase/functions/**'
       - 'tools/testar-integridade-aocp.js'
-      - 'supabase/functions/aocp-import/**'
-      - 'supabase/functions/question-collector/**'
       - 'data/mapas-ilustrados.json'
       - 'data/banco-classificacao.json'
       - 'assets/mapas/**'
@@ -42,7 +43,7 @@ jobs:
       - name: Preparar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
       - name: Preparar Python
         uses: actions/setup-python@v5
         with:
@@ -57,8 +58,8 @@ jobs:
         run: node tools/testar-fila-fase2.js
       - name: Auditar mapas e classificacoes
         run: node tools/auditar-acervo.js
-      - name: Diagnosticar coleta de documentos
-        run: node tools/diagnosticar-robo.js
+      - name: Testar pipeline oficial (Cebraspe e IA)
+        run: node tools/testar-pipeline.mjs
       - name: Instalar Playwright
         run: |
           python -m pip install playwright

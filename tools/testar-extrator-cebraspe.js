@@ -27,7 +27,26 @@ assert.equal(qs.find(q=>q.question_number===110).statement.includes('Julgue os i
 assert.equal(qs.find(q=>q.question_number===110).needs_context_review,true,'Marcar bloco de transição para revisão');
 assert.equal(qs.find(q=>q.question_number===107).needs_context_review,true,'Marcar dependência da tabela compartilhada');
 assert.equal(qs.find(q=>q.question_number===111).answer,'ANULADA');
-assert.match(src,/if\(q\.needs_context_review\)\s*\{\s*rejected\+\+;\s*continue;/,'Retenção obrigatória antes da gravação');
+const layoutSrc=fs.readFileSync(path.join(__dirname,'../supabase/functions/question-collector/layout.ts'),'utf8');
+assert.match(layoutSrc,/if \(lg && !lg\.needs_context_review/,'Retenção obrigatória antes da gravação (extrator antigo só sem contexto pendente)');
+assert.match(src,/const plan=planCollect\(seg,legacy,answers\)/,'Gravação decidida por planCollect');
+assert.match(src,/ai_status:"queued"/,'Item retido encaminha a fonte para a segunda leitura');
+assert.match(src,/if\(prev\)\{[\s\S]{0,200}keptExisting\+\+;/,'Reprocessar não pode sobrescrever registro existente');
+assert.doesNotMatch(src,/\b2018\s*&&|<2018|>2026/,'Janela de anos não pode ser fixa no código');
+
+// Múltipla escolha com 4 alternativas (AOCP, Consulplan) e gabarito fora das letras.
+const mcBegin=src.indexOf('function parseMultipleChoice(');
+const mcEnd=src.indexOf('function parseTrueFalse(',mcBegin);
+const mcJs=src.slice(mcBegin,mcEnd)
+  .replace('text:string,answers:Map<number,string>','text,answers')
+  .replace('const rows:any[]=[];','const rows=[];');
+const parseMC=vm.runInNewContext(mcJs+'\nparseMultipleChoice');
+const mcText='21 Assinale a alternativa correta acerca do inquérito policial conforme o Código de Processo Penal brasileiro vigente. (A) É peça obrigatória. (B) É dispensável. (C) É sigiloso sempre. (D) É contraditório. 22 Considerando a Lei de Execução Penal, assinale a alternativa que apresenta o direito correto do preso. (A) Visita íntima ilimitada. (B) Trabalho remunerado. (C) Saída livre. (D) Voto obrigatório. (E) Porte de arma.';
+const mc=parseMC(mcText,new Map([[21,'B'],[22,'B']]));
+assert.equal(mc.length,2,'Deve aceitar 4 e 5 alternativas');
+assert.equal(mc[0].options.length,4);
+assert.equal(mc[1].options.length,5);
+assert.equal(parseMC(mcText,new Map([[21,'E'],[22,'B']])).length,1,'Gabarito E em questão de 4 alternativas é descartado');
 // Regressão com enunciados reais da PF 2025 (bloco III), incluindo item 109 curto.
 const realAnswers=new Map([[105,'E'],[106,'C'],[107,'E'],[108,'C'],[109,'E'],[110,'C'],[111,'ANULADA']]);
 const realText=[
