@@ -22,6 +22,9 @@ h1{margin:0 0 10px}.muted{color:#6f817a;line-height:1.55}.btn{display:inline-blo
   <p class="muted">Acesso administrativo confirmado. O controle operacional do Robô de Questões continua protegido também pelas permissões do GitHub.</p>
   <a class="btn" href="https://github.com/almadaseara/NEXO/actions/workflows/question-robot.yml">Abrir painel do Robô de Questões</a>
   <button class="btn" style="margin-left:8px;background:#fff;color:#315c4e;border:1px solid #d7e3de" onclick="logout()">Sair</button>
+  <h2 style="margin:26px 0 6px;font-size:18px">Fila de exceções — Fase 2</h2>
+  <p class="muted">Triagem apenas para conferência: as sinalizações não confirmam erro. Confira prova, gabarito e mídia antes de qualquer decisão editorial.</p>
+  <div id="excecoes" class="muted">Carregando...</div>
   <h2 style="margin:26px 0 6px;font-size:18px">Erros reportados pelos alunos</h2>
   <p class="muted" style="margin:0 0 10px">Avisos enviados pelo botão "Reportar erro" das questões. Marque como resolvido depois de corrigir.</p>
   <div id="reportes" class="muted">Carregando...</div>
@@ -46,7 +49,33 @@ async function logout(){await nexoSupabase.auth.signOut();sessionStorage.clear()
   status.textContent='Administrador autenticado.';
   document.getElementById('adminContent').style.display='block';
   carregarReportes();
+  carregarExcecoes();
 })();
+async function carregarExcecoes(){
+  const box=document.getElementById('excecoes');
+  const {data,error}=await nexoSupabase.from('question_bank')
+    .select('id,question_number,statement,board,year,role_name,status,publication_status,media_urls,exam_source_url,answer_source_url,answer_source_type')
+    .eq('publication_status','published').order('created_at',{ascending:false}).limit(500);
+  if(error){box.textContent='Fila indisponível: confirme as permissões administrativas.';return}
+  const vis=/\b(tabela|quadro|figura|gráfico|imagem)\b/i;
+  const comando=/julgue os itens (a seguir|seguintes|subsequentes)/i;
+  const exceptions=(data||[]).map(q=>{
+    const reasons=[];
+    const hasMedia=Array.isArray(q.media_urls)&&q.media_urls.length>0;
+    if(vis.test(q.statement||'')&&!hasMedia) reasons.push('Possível mídia/contexto ausente');
+    if(comando.test(q.statement||'')) reasons.push('Possível comando de bloco incorporado');
+    if(q.answer_source_type!=='official') reasons.push('Gabarito sem proveniência oficial registrada');
+    return {q,reasons};
+  }).filter(x=>x.reasons.length);
+  box.innerHTML='<p><b>'+exceptions.length+'</b> registros sinalizados dentre '+(data||[]).length+' publicações inspecionadas. Não modifica publicação nem gabaritos.</p>'
+    +(exceptions.length?exceptions.slice(0,60).map(({q,reasons})=>{
+      const source=q.exam_source_url&&/^https:\/\//.test(q.exam_source_url)?'<a href="'+esc(q.exam_source_url)+'" target="_blank" rel="noopener noreferrer">Ver prova</a>':'';
+      const answer=q.answer_source_url&&/^https:\/\//.test(q.answer_source_url)?'<a href="'+esc(q.answer_source_url)+'" target="_blank" rel="noopener noreferrer">Ver gabarito</a>':'';
+      return '<div class="rep"><b>'+esc((q.board||'?')+' '+(q.year||'')+' · questão '+(q.question_number||'?'))+'</b>'
+        +'<small>'+esc(reasons.join(' · '))+'</small>'
+        +'<p>'+esc((q.statement||'').slice(0,260))+'</p><small>'+source+(source&&answer?' · ':'')+answer+'</small></div>';
+    }).join(''):'<p>Nenhuma sinalização nessa amostra.</p>');
+}
 const MOTIVO={sem_enunciado:'Enunciado faltando',alternativas:'Alternativas',gabarito:'Gabarito',comentario:'Comentário',outro:'Outro'};
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 async function carregarReportes(){
