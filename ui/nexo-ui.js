@@ -70,11 +70,37 @@ aplicarTema(temaPreferido());
 /* ======================= registro de desempenho ======================= */
 var EV_KEY = 'nexo_eventos';
 function eventos(){ var a = LS.get(EV_KEY, []); return Array.isArray(a) ? a : []; }
+/* histórico para sincronizar entre aparelhos: o que ainda falta enviar ao Supabase (ver nexo-estudo.js) */
+var HF_KEY = 'nexo_historico_fila';
+function novoId(){ return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+function enfileirarHistorico(tipo, chave){
+  var f = LS.get(HF_KEY, null) || {};
+  f.respostas = f.respostas || {}; f.resolvidas = f.resolvidas || {}; f.eventos = f.eventos || {};
+  f[tipo][chave] = 1; LS.set(HF_KEY, f);
+  try{ document.dispatchEvent(new CustomEvent('nexo:historico')); }catch(e){}
+}
+window.nexoEnfileirarHistorico = enfileirarHistorico;
+/* primeira vez nesta conta neste aparelho: envia tudo o que já existe (eventos, respostas e resolvidas) */
+function prepararHistorico(){
+  if(LS.get('nexo_historico_inicial', false)) return;
+  var f = LS.get(HF_KEY, null) || {};
+  f.respostas = f.respostas || {}; f.resolvidas = f.resolvidas || {}; f.eventos = f.eventos || {};
+  var a = eventos();
+  a.forEach(function(e){ if(!e) return; if(!e.id) e.id = novoId(); f.eventos[e.id] = 1; });
+  LS.set(EV_KEY, a);
+  var st = LS.get('nexo_practice_answers', {}) || {};
+  Object.keys(st).forEach(function(k){ if(st[k] && st[k].done) f.respostas[k] = 1; });
+  var res = LS.get('nexo_caderno_resolvidas', {}) || {};
+  Object.keys(res).forEach(function(k){ f.resolvidas[k] = 1; });
+  LS.set(HF_KEY, f); LS.set('nexo_historico_inicial', true);
+}
 function registrar(e){
   e.t = e.t || Date.now();
+  e.id = e.id || novoId();
   var a = eventos(); a.push(e);
   if(a.length > 20000) a = a.slice(-20000);
   LS.set(EV_KEY, a);
+  enfileirarHistorico('eventos', e.id);
   atualizarPill();
 }
 window.nexoRegistrar = registrar;
@@ -493,6 +519,23 @@ window.nexoFichas = {
     var l = minhasFichas().slice(); l.push(c); gravarMinhas(l); return c;
   },
   remover:function(id){ gravarMinhas(minhasFichas().filter(function(c){ return c.id !== id; })); var st = estado(); delete st['u:' + id]; LS.set(FK, st); var s0 = planoEstudo(); if(s0 && s0.progress && s0.progress.fx){ delete s0.progress.fx['u:' + id]; window.nexoEstudo.salvarPlano(s0); } }
+};
+/* API para a revisão de hoje (nexo-caderno.js): fichas que vencem hoje e a gravação da avaliação */
+function gravarAvaliacao(id, g){
+  var c = fichaPorId(id), st = estado(), x = st[id] || { b:0, n:0 }, agora = Date.now();
+  if(g === 0){ x.b = 1; x.due = agora; }
+  else if(g === 1){ x.b = Math.max(1, x.b); x.due = agora + Math.max(.5, INTERVALOS[x.b] / 2) * DIA; }
+  else { x.b = Math.min(5, x.b + 1); x.due = agora + INTERVALOS[x.b] * DIA; }
+  x.n = (x.n || 0) + 1; x.ult = agora; st[id] = x; salvarEstado(st);
+  registrar({ k:'f', m:c ? c.m : null, g:g });
+}
+window.nexoFichasRevisao = {
+  devidas: function(limite){
+    var st = estado(), lim = fimDeHoje();
+    return fichas().filter(function(c){ var x = st[c.id]; return x && x.due <= lim; })
+      .sort(function(a, b){ return st[a.id].due - st[b.id].due; }).slice(0, limite == null ? 9999 : limite);
+  },
+  avaliar: gravarAvaliacao
 };
 document.addEventListener('nexo:estudo', function(e){ if(e.detail === 'sincronizado'){ cacheFichas = null; if(cur() === 'flashcards' && !S) window.showFlashcards(); } });
 /* andamento da revisão: fica no aparelho (rápido) e no plano de estudos (sincroniza com a conta).
@@ -1196,6 +1239,7 @@ window.nexoDesempenho = function(p){
 
 /* ======================= início ======================= */
 function iniciar(){
+  try{ prepararHistorico(); }catch(e){}
   montarFerramentas(); prepararBarraAcesso(); atualizarPill();
   try{ renderNav(); }catch(e){}
   try{ if(typeof syncAccess === 'function') syncAccess(); }catch(e){}

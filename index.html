@@ -1705,7 +1705,7 @@ function syncAccess() {
 let practiceStatus='all';
 let practiceFilteredPool=[];
 function practiceAnswerState(){try{return JSON.parse(localStorage.getItem('nexo_practice_answers')||'{}')}catch(e){return {}}}
-function savePracticeAnswer(key,ok,letra){const s=practiceAnswerState();s[key]={done:true,ok:!!ok,r:letra||'',at:Date.now()};localStorage.setItem('nexo_practice_answers',JSON.stringify(s))}
+function savePracticeAnswer(key,ok,letra){const s=practiceAnswerState();s[key]={done:true,ok:!!ok,r:letra||'',at:Date.now()};localStorage.setItem('nexo_practice_answers',JSON.stringify(s));if(window.nexoEnfileirarHistorico)window.nexoEnfileirarHistorico('respostas',key)}
 function practicePool(){
   const pool=[];
   modules.forEach(m=>{
