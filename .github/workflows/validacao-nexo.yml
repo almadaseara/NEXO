@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'admin.html'
+      - 'tools/testar-fila-fase2.js'
       - 'data/temas/**'
       - 'temas/**'
       - 'ui/**'
@@ -51,6 +53,8 @@ jobs:
         run: node tools/testar-extrator-cebraspe.js
       - name: Testar integridade AOCP
         run: node tools/testar-integridade-aocp.js
+      - name: Testar fila de excecoes
+        run: node tools/testar-fila-fase2.js
       - name: Auditar mapas e classificacoes
         run: node tools/auditar-acervo.js
       - name: Diagnosticar coleta de documentos
