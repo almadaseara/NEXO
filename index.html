@@ -1421,6 +1421,21 @@ async function signInWithSocial(provider){
   }
 }
 
+/* Senha em vazamentos (HaveIBeenPwned, k-anonymity): só os 5 primeiros caracteres do SHA-1 saem do aparelho.
+   Se a API não responder, não bloqueia o cadastro. */
+async function senhaVazada(senha){
+  try{
+    const buf=await crypto.subtle.digest('SHA-1',new TextEncoder().encode(senha));
+    const hex=[...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,'0')).join('').toUpperCase();
+    const r=await fetch('https://api.pwnedpasswords.com/range/'+hex.slice(0,5),{headers:{'Add-Padding':'true'}});
+    if(!r.ok) return false;
+    const sufixo=hex.slice(5);
+    return (await r.text()).split('\n').some(function(l){
+      const partes=l.trim().split(':');
+      return partes[0]===sufixo && parseInt(partes[1],10)>0;
+    });
+  }catch(e){ return false; }
+}
 async function submitNexoAuth(event){
   event.preventDefault();
   const email=document.getElementById('auth-email-input').value.trim().toLowerCase();
@@ -1430,6 +1445,7 @@ async function submitNexoAuth(event){
   const btn=document.getElementById('auth-submit');
   if((authUiMode==='signup'||authUiMode==='recovery') && password!==confirm){setAuthStatus('As senhas não coincidem.','error');return;}
   if(password.length<6){setAuthStatus('Use uma senha com pelo menos 6 caracteres.','error');return;}
+  if((authUiMode==='signup'||authUiMode==='recovery') && await senhaVazada(password)){setAuthStatus('Esta senha já apareceu em vazamentos de dados. Escolha outra.','error');return;}
   btn.disabled=true;
   setAuthStatus(authUiMode==='recovery'?'Salvando sua nova senha...':authUiMode==='signup'?'Criando sua conta e senha...':'Entrando...');
   try{
