@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-18T02:17:25.154210+00:00",
+  "updated_at": "2026-10-18T02:53:51.690796+00:00",
   "candidates": [
     {
       "id": "8808ae696293df0f",
@@ -10,7 +10,7 @@
       "board": "Instituto AOCP",
       "year": null,
       "source_page": "https://link.institutoaocp.org.br/certificado/cpf.jsp",
-      "discovered_at": "2026-10-18T02:17:03.479308+00:00"
+      "discovered_at": "2026-10-18T02:53:32.676124+00:00"
     },
     {
       "id": "5ddba9a1d57a6e6a",
@@ -32,7 +32,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721044+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949305+00:00"
     },
     {
       "id": "aab4df6c09b82674",
@@ -43,7 +43,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725944+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954010+00:00"
     },
     {
       "id": "4589825bf0225ee6",
@@ -54,7 +54,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725993+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954061+00:00"
     },
     {
       "id": "9a2cf7dd4441b73a",
@@ -65,7 +65,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726856+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954960+00:00"
     },
     {
       "id": "16d6efd861164272",
@@ -76,7 +76,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729936+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958116+00:00"
     },
     {
       "id": "5a428531f244de6e",
@@ -87,7 +87,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733286+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961437+00:00"
     },
     {
       "id": "61c7eff135d22be8",
@@ -98,7 +98,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733321+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961472+00:00"
     },
     {
       "id": "7135bfc1fa5918d4",
@@ -109,7 +109,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733361+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961517+00:00"
     },
     {
       "id": "71ee825bb1a50834",
@@ -120,7 +120,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.506137+00:00"
+      "discovered_at": "2026-10-18T02:53:28.671427+00:00"
     },
     {
       "id": "da7a89c630f453e1",
@@ -131,7 +131,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-militar",
-      "discovered_at": "2026-10-18T02:17:00.088461+00:00"
+      "discovered_at": "2026-10-18T02:53:29.206722+00:00"
     },
     {
       "id": "929401d2cf4d9a5a",
@@ -142,7 +142,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-militar",
-      "discovered_at": "2026-10-18T02:17:00.088537+00:00"
+      "discovered_at": "2026-10-18T02:53:29.206793+00:00"
     },
     {
       "id": "ee7c2d356865e2ba",
@@ -153,7 +153,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-militar",
-      "discovered_at": "2026-10-18T02:17:00.088174+00:00"
+      "discovered_at": "2026-10-18T02:53:29.206431+00:00"
     },
     {
       "id": "d9dba22790934ee4",
@@ -175,7 +175,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.505614+00:00"
+      "discovered_at": "2026-10-18T02:53:28.670872+00:00"
     },
     {
       "id": "a26a39cec0f5f8cb",
@@ -186,7 +186,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.506314+00:00"
+      "discovered_at": "2026-10-18T02:53:28.671607+00:00"
     },
     {
       "id": "219b8f5e2365e5d8",
@@ -197,7 +197,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.507825+00:00"
+      "discovered_at": "2026-10-18T02:53:28.673099+00:00"
     },
     {
       "id": "dfc6545dc85b5ec9",
@@ -208,7 +208,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.508075+00:00"
+      "discovered_at": "2026-10-18T02:53:28.673349+00:00"
     },
     {
       "id": "589677d248b04bca",
@@ -219,7 +219,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.508275+00:00"
+      "discovered_at": "2026-10-18T02:53:28.673545+00:00"
     },
     {
       "id": "a0bf82107e7711d9",
@@ -230,7 +230,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.508313+00:00"
+      "discovered_at": "2026-10-18T02:53:28.673584+00:00"
     },
     {
       "id": "fc60b8d22e8ef5af",
@@ -241,7 +241,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.508351+00:00"
+      "discovered_at": "2026-10-18T02:53:28.673623+00:00"
     },
     {
       "id": "1ec456de13de1999",
@@ -252,7 +252,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-civil",
-      "discovered_at": "2026-10-18T02:16:59.504872+00:00"
+      "discovered_at": "2026-10-18T02:53:28.670154+00:00"
     },
     {
       "id": "ddd06b24086449a0",
@@ -263,7 +263,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/pesquisa/policia-militar",
-      "discovered_at": "2026-10-18T02:17:00.088302+00:00"
+      "discovered_at": "2026-10-18T02:53:29.206561+00:00"
     },
     {
       "id": "7ddc253a7ecb0ded",
@@ -274,7 +274,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737419+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966932+00:00"
     },
     {
       "id": "82bd734fc0cfbd37",
@@ -285,7 +285,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/sead-ap-publica-edital-retificado-de-concurso-para-delegado-e-oficial-investigador-de-policia-civil",
-      "discovered_at": "2026-10-18T02:17:23.928077+00:00"
+      "discovered_at": "2026-10-18T02:53:50.634157+00:00"
     },
     {
       "id": "3e28b4395c795388",
@@ -296,7 +296,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.719576+00:00"
+      "discovered_at": "2026-10-18T02:53:27.947785+00:00"
     },
     {
       "id": "0113fda6150aad9a",
@@ -307,7 +307,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720473+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948722+00:00"
     },
     {
       "id": "c25bcad995b6fdbf",
@@ -318,7 +318,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720515+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948764+00:00"
     },
     {
       "id": "3fb6c4a6feb487cb",
@@ -329,7 +329,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720588+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948817+00:00"
     },
     {
       "id": "397c7586a6cdbc7b",
@@ -340,7 +340,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720433+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948683+00:00"
     },
     {
       "id": "997a081abd843034",
@@ -351,7 +351,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720631+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948855+00:00"
     },
     {
       "id": "df634be3933d58b8",
@@ -362,7 +362,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720684+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948906+00:00"
     },
     {
       "id": "7e476b8fc09ee97a",
@@ -373,7 +373,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720725+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948946+00:00"
     },
     {
       "id": "01207f115e2969ed",
@@ -384,7 +384,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720765+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949018+00:00"
     },
     {
       "id": "448aab6240a6b55e",
@@ -395,7 +395,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720824+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949088+00:00"
     },
     {
       "id": "b8928bdddcdeb26f",
@@ -406,7 +406,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721340+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949598+00:00"
     },
     {
       "id": "6921d91183e6ba6f",
@@ -417,7 +417,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721397+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949655+00:00"
     },
     {
       "id": "37d69b7214ba98a1",
@@ -428,7 +428,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721437+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949695+00:00"
     },
     {
       "id": "0ea293567de6a763",
@@ -439,7 +439,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721489+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949747+00:00"
     },
     {
       "id": "085c9e0e7ec31918",
@@ -450,7 +450,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721527+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949784+00:00"
     },
     {
       "id": "9d0574cc3cd8d3df",
@@ -461,7 +461,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720866+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949133+00:00"
     },
     {
       "id": "f35a73365a8a5e21",
@@ -472,7 +472,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720908+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949173+00:00"
     },
     {
       "id": "65e429eb6477f403",
@@ -483,7 +483,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720954+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949216+00:00"
     },
     {
       "id": "2473e623a863450e",
@@ -494,7 +494,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721009+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949271+00:00"
     },
     {
       "id": "6f8a24475ec995e8",
@@ -505,7 +505,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721084+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949345+00:00"
     },
     {
       "id": "c4ee2934279ec3e5",
@@ -516,7 +516,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721136+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949395+00:00"
     },
     {
       "id": "84247048b7ca020f",
@@ -527,7 +527,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721193+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949452+00:00"
     },
     {
       "id": "276bdd4e4528ee9d",
@@ -538,7 +538,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721243+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949502+00:00"
     },
     {
       "id": "8971ffe92bf45d08",
@@ -549,7 +549,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721301+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949560+00:00"
     },
     {
       "id": "0890c0ef6c54d03b",
@@ -560,7 +560,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721584+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949821+00:00"
     },
     {
       "id": "3cbfd4902b37bce0",
@@ -571,7 +571,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721629+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949862+00:00"
     },
     {
       "id": "b5e1c475ba66c2fe",
@@ -582,7 +582,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721668+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949901+00:00"
     },
     {
       "id": "7e31c519bbe201b7",
@@ -593,7 +593,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721720+00:00"
+      "discovered_at": "2026-10-18T02:53:27.949952+00:00"
     },
     {
       "id": "c9ef8afd783ce430",
@@ -604,7 +604,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722104+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950359+00:00"
     },
     {
       "id": "d0c7c2f08c80e937",
@@ -615,7 +615,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722169+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950424+00:00"
     },
     {
       "id": "d9faeb6f02b10377",
@@ -626,7 +626,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722231+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950484+00:00"
     },
     {
       "id": "f4f5269457a0ef5e",
@@ -637,7 +637,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722293+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950546+00:00"
     },
     {
       "id": "de6ef61020b3f455",
@@ -648,7 +648,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722357+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950609+00:00"
     },
     {
       "id": "9ac11e535a8d82f8",
@@ -659,7 +659,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722421+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950669+00:00"
     },
     {
       "id": "b83c51565f49e8e8",
@@ -670,7 +670,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722482+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950730+00:00"
     },
     {
       "id": "2b3ddaf8c73ac014",
@@ -681,7 +681,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722561+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950793+00:00"
     },
     {
       "id": "ac757c36a81b846d",
@@ -692,7 +692,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722634+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950856+00:00"
     },
     {
       "id": "2f615c266ca82cc0",
@@ -703,7 +703,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722695+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950915+00:00"
     },
     {
       "id": "b26130d18bba47c3",
@@ -714,7 +714,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722761+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950996+00:00"
     },
     {
       "id": "aa6e4b89b667e607",
@@ -725,7 +725,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722824+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951060+00:00"
     },
     {
       "id": "c51f89e63f1a8e94",
@@ -736,7 +736,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722884+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951120+00:00"
     },
     {
       "id": "d5a4431509dd10e6",
@@ -747,7 +747,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722947+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951178+00:00"
     },
     {
       "id": "c487048cd3ac48df",
@@ -758,7 +758,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723001+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951231+00:00"
     },
     {
       "id": "e9826fb7a9a9b35f",
@@ -769,7 +769,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721762+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950012+00:00"
     },
     {
       "id": "3c88bb95f58e61cf",
@@ -780,7 +780,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721815+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950071+00:00"
     },
     {
       "id": "d37caf72dc69a4f5",
@@ -791,7 +791,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721860+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950116+00:00"
     },
     {
       "id": "f9bb298d95829e5e",
@@ -802,7 +802,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721901+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950157+00:00"
     },
     {
       "id": "df690d15c069b649",
@@ -813,7 +813,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721944+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950200+00:00"
     },
     {
       "id": "3df95fc8d83b5c40",
@@ -824,7 +824,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.721982+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950238+00:00"
     },
     {
       "id": "8ee429419bb678c8",
@@ -835,7 +835,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.722044+00:00"
+      "discovered_at": "2026-10-18T02:53:27.950299+00:00"
     },
     {
       "id": "7463074e5e89ce6c",
@@ -846,7 +846,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723046+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951275+00:00"
     },
     {
       "id": "e0e5f7859575f178",
@@ -857,7 +857,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723090+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951318+00:00"
     },
     {
       "id": "a4ea1503f97403fb",
@@ -868,7 +868,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723137+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951357+00:00"
     },
     {
       "id": "cf8e3f4206483ccb",
@@ -879,7 +879,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723175+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951395+00:00"
     },
     {
       "id": "c448af722365a2e8",
@@ -890,7 +890,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723228+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951447+00:00"
     },
     {
       "id": "54f7f8117c7f7137",
@@ -901,7 +901,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723277+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951489+00:00"
     },
     {
       "id": "2433294632e1043f",
@@ -912,7 +912,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723318+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951531+00:00"
     },
     {
       "id": "4b97bceddce4345f",
@@ -923,7 +923,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723668+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951855+00:00"
     },
     {
       "id": "91ac9f2d10a7b551",
@@ -934,7 +934,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723710+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951896+00:00"
     },
     {
       "id": "1419839a4c8f39e4",
@@ -945,7 +945,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723751+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951936+00:00"
     },
     {
       "id": "de2fcb4b5264fb66",
@@ -956,7 +956,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723802+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952006+00:00"
     },
     {
       "id": "990ca28ef3f7a177",
@@ -967,7 +967,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723863+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952072+00:00"
     },
     {
       "id": "4fe3e0422ef68264",
@@ -978,7 +978,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723376+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951588+00:00"
     },
     {
       "id": "ea56b6e45ee90144",
@@ -989,7 +989,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723418+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951631+00:00"
     },
     {
       "id": "9cf55e649c5ab2a9",
@@ -1000,7 +1000,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723476+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951688+00:00"
     },
     {
       "id": "7685b74d29902eef",
@@ -1011,7 +1011,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723534+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951744+00:00"
     },
     {
       "id": "bdbc974d720aeee1",
@@ -1022,7 +1022,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723612+00:00"
+      "discovered_at": "2026-10-18T02:53:27.951801+00:00"
     },
     {
       "id": "e669f6c0faad99e5",
@@ -1033,7 +1033,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723903+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952112+00:00"
     },
     {
       "id": "6a0530cfec7d266e",
@@ -1044,7 +1044,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.723964+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952174+00:00"
     },
     {
       "id": "bad0d2e7b6432c06",
@@ -1055,7 +1055,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724023+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952232+00:00"
     },
     {
       "id": "e9b0e2821a84cbf8",
@@ -1066,7 +1066,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724064+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952273+00:00"
     },
     {
       "id": "68c59a05f402337c",
@@ -1077,7 +1077,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724105+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952314+00:00"
     },
     {
       "id": "d68f03f7bf462520",
@@ -1088,7 +1088,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724146+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952356+00:00"
     },
     {
       "id": "1b064daf1009234a",
@@ -1099,7 +1099,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725570+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953632+00:00"
     },
     {
       "id": "8ea6f069172c4d60",
@@ -1110,7 +1110,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725615+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953672+00:00"
     },
     {
       "id": "167f41e8eafdeac9",
@@ -1121,7 +1121,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724205+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952415+00:00"
     },
     {
       "id": "801e0586282d5d67",
@@ -1132,7 +1132,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724247+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952458+00:00"
     },
     {
       "id": "5cd9de6e2d07e24a",
@@ -1143,7 +1143,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724288+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952498+00:00"
     },
     {
       "id": "b012af7640421de1",
@@ -1154,7 +1154,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724348+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952559+00:00"
     },
     {
       "id": "4fd5f893035bea0d",
@@ -1165,7 +1165,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724409+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952620+00:00"
     },
     {
       "id": "599a99c5a71b2f73",
@@ -1176,7 +1176,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724452+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952663+00:00"
     },
     {
       "id": "ec03ee6375905b3d",
@@ -1187,7 +1187,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724493+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952703+00:00"
     },
     {
       "id": "8ccc2c16518bd350",
@@ -1198,7 +1198,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724533+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952742+00:00"
     },
     {
       "id": "7a2c7105d6084b2c",
@@ -1209,7 +1209,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724598+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952783+00:00"
     },
     {
       "id": "09f4955153de3ab6",
@@ -1220,7 +1220,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724669+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952824+00:00"
     },
     {
       "id": "d0d1e5e43e706e08",
@@ -1231,7 +1231,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724728+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952871+00:00"
     },
     {
       "id": "0fffce6f915fd547",
@@ -1242,7 +1242,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724826+00:00"
+      "discovered_at": "2026-10-18T02:53:27.952926+00:00"
     },
     {
       "id": "d57d1765f008bd5c",
@@ -1253,7 +1253,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724900+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953000+00:00"
     },
     {
       "id": "3da132afb0dc2a0f",
@@ -1264,7 +1264,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.724958+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953060+00:00"
     },
     {
       "id": "1c1c4496f083b6d1",
@@ -1275,7 +1275,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725012+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953113+00:00"
     },
     {
       "id": "7c8468518eacf034",
@@ -1286,7 +1286,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725053+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953153+00:00"
     },
     {
       "id": "2269260a1841db22",
@@ -1297,7 +1297,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725120+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953210+00:00"
     },
     {
       "id": "daef74c4a4370978",
@@ -1308,7 +1308,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725177+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953264+00:00"
     },
     {
       "id": "39cf9807f02f1e12",
@@ -1319,7 +1319,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725237+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953323+00:00"
     },
     {
       "id": "ed4921a3933a41ce",
@@ -1330,7 +1330,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725290+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953375+00:00"
     },
     {
       "id": "f5317f629b5a4403",
@@ -1341,7 +1341,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725347+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953431+00:00"
     },
     {
       "id": "c1f3bde34e2c7347",
@@ -1352,7 +1352,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725403+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953486+00:00"
     },
     {
       "id": "2942be4c9155df0b",
@@ -1363,7 +1363,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725444+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953527+00:00"
     },
     {
       "id": "1877cef62bee6023",
@@ -1374,7 +1374,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725498+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953580+00:00"
     },
     {
       "id": "cf1859c54af2643f",
@@ -1385,7 +1385,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725762+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953816+00:00"
     },
     {
       "id": "359753394f1c672f",
@@ -1396,7 +1396,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725665+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953721+00:00"
     },
     {
       "id": "edf702103e1a9357",
@@ -1407,7 +1407,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725723+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953777+00:00"
     },
     {
       "id": "d9c21a42ca633c90",
@@ -1418,7 +1418,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725856+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953910+00:00"
     },
     {
       "id": "889427b5da1496ae",
@@ -1429,7 +1429,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725903+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953956+00:00"
     },
     {
       "id": "b1d2875c0f140861",
@@ -1440,7 +1440,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.725809+00:00"
+      "discovered_at": "2026-10-18T02:53:27.953863+00:00"
     },
     {
       "id": "fa743d400cc30e05",
@@ -1451,7 +1451,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726034+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954102+00:00"
     },
     {
       "id": "4d64d1c964a628e4",
@@ -1462,7 +1462,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726074+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954142+00:00"
     },
     {
       "id": "f6ef6c746b8c6702",
@@ -1473,7 +1473,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726117+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954220+00:00"
     },
     {
       "id": "a317a486d9a9a829",
@@ -1484,7 +1484,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726160+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954289+00:00"
     },
     {
       "id": "2df3d43160cd2335",
@@ -1495,7 +1495,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726202+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954335+00:00"
     },
     {
       "id": "59f6f91854d547b7",
@@ -1506,7 +1506,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726254+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954389+00:00"
     },
     {
       "id": "fb8ca22beb111ca2",
@@ -1517,7 +1517,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726294+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954429+00:00"
     },
     {
       "id": "e690cdae7d235054",
@@ -1528,7 +1528,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726401+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954532+00:00"
     },
     {
       "id": "afe9a91663de6214",
@@ -1539,7 +1539,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726346+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954481+00:00"
     },
     {
       "id": "527c69aa63b6bf4c",
@@ -1550,7 +1550,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720381+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948630+00:00"
     },
     {
       "id": "07c24aed9dc88b58",
@@ -1561,7 +1561,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726440+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954570+00:00"
     },
     {
       "id": "80d2b63bc8dc6e02",
@@ -1572,7 +1572,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726491+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954621+00:00"
     },
     {
       "id": "1cc8abf0db676c93",
@@ -1583,7 +1583,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726602+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954709+00:00"
     },
     {
       "id": "1943a38af213c580",
@@ -1594,7 +1594,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726538+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954668+00:00"
     },
     {
       "id": "e4a1e34764e5eb20",
@@ -1605,7 +1605,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726658+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954763+00:00"
     },
     {
       "id": "c19fa99b08608ab5",
@@ -1616,7 +1616,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726697+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954801+00:00"
     },
     {
       "id": "b67419f4728a3852",
@@ -1627,7 +1627,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726736+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954840+00:00"
     },
     {
       "id": "d991619ddeb8e596",
@@ -1638,7 +1638,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726771+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954876+00:00"
     },
     {
       "id": "9d5c2406e6b99517",
@@ -1649,7 +1649,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726822+00:00"
+      "discovered_at": "2026-10-18T02:53:27.954926+00:00"
     },
     {
       "id": "1ce21b34bee2b2b0",
@@ -1660,7 +1660,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726894+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955018+00:00"
     },
     {
       "id": "5ae4695b723fd1a3",
@@ -1671,7 +1671,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726930+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955057+00:00"
     },
     {
       "id": "f19b85193b1587f9",
@@ -1682,7 +1682,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.726974+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955101+00:00"
     },
     {
       "id": "bbd1c6b6dabdd49d",
@@ -1693,7 +1693,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727013+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955141+00:00"
     },
     {
       "id": "eb8feb902ad5d484",
@@ -1704,7 +1704,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727051+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955178+00:00"
     },
     {
       "id": "07358eda05278ef1",
@@ -1715,7 +1715,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727088+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955215+00:00"
     },
     {
       "id": "d87adffac88b0a52",
@@ -1726,7 +1726,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727139+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955266+00:00"
     },
     {
       "id": "3e60e7fce67d80ed",
@@ -1737,7 +1737,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727240+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955371+00:00"
     },
     {
       "id": "f842450b400896af",
@@ -1748,7 +1748,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727280+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955411+00:00"
     },
     {
       "id": "ed43ed65b17be3d4",
@@ -1759,7 +1759,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727323+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955450+00:00"
     },
     {
       "id": "6795c325bdfd95c1",
@@ -1770,7 +1770,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727190+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955321+00:00"
     },
     {
       "id": "66051cdfd5ff07d9",
@@ -1781,7 +1781,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727360+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955487+00:00"
     },
     {
       "id": "6984bc6ae560c10c",
@@ -1792,7 +1792,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727396+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955523+00:00"
     },
     {
       "id": "5e33e45737be47bc",
@@ -1803,7 +1803,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727432+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955559+00:00"
     },
     {
       "id": "2e80864f910ce1fa",
@@ -1814,7 +1814,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727467+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955595+00:00"
     },
     {
       "id": "a672cf97b347a996",
@@ -1825,7 +1825,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727504+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955632+00:00"
     },
     {
       "id": "1cb8c3d39ad7c6c9",
@@ -1836,7 +1836,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727622+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955725+00:00"
     },
     {
       "id": "db1d9dd06e685f17",
@@ -1847,7 +1847,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727664+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955766+00:00"
     },
     {
       "id": "8f6cea3359e8a50e",
@@ -1858,7 +1858,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727559+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955671+00:00"
     },
     {
       "id": "d9fc3b8eac882820",
@@ -1869,7 +1869,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727703+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955805+00:00"
     },
     {
       "id": "b66dbf914de370f4",
@@ -1880,7 +1880,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727755+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955857+00:00"
     },
     {
       "id": "3bf5e2bf4498b1b6",
@@ -1891,7 +1891,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727809+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955912+00:00"
     },
     {
       "id": "0405065c10ef3a66",
@@ -1902,7 +1902,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727847+00:00"
+      "discovered_at": "2026-10-18T02:53:27.955950+00:00"
     },
     {
       "id": "b340f154c2e5b330",
@@ -1913,7 +1913,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727887+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956008+00:00"
     },
     {
       "id": "417a78c95dfc6cdb",
@@ -1924,7 +1924,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727939+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956063+00:00"
     },
     {
       "id": "dcd0ead9c9054dfd",
@@ -1935,7 +1935,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.727978+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956103+00:00"
     },
     {
       "id": "7ddb7338b0e50784",
@@ -1946,7 +1946,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728032+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956157+00:00"
     },
     {
       "id": "5e6dec58d4458a6b",
@@ -1957,7 +1957,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728071+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956200+00:00"
     },
     {
       "id": "cd0c0603c60c34a1",
@@ -1968,7 +1968,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728127+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956256+00:00"
     },
     {
       "id": "2ae0bfb34a37147a",
@@ -1979,7 +1979,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728425+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956545+00:00"
     },
     {
       "id": "d9425920b24cdd15",
@@ -1990,7 +1990,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728527+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956648+00:00"
     },
     {
       "id": "a6fd9ca278025fb8",
@@ -2001,7 +2001,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728475+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956596+00:00"
     },
     {
       "id": "08a8d2a13e700c0a",
@@ -2012,7 +2012,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728586+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956720+00:00"
     },
     {
       "id": "09cdf850b37c108b",
@@ -2023,7 +2023,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728640+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956815+00:00"
     },
     {
       "id": "f552b1bba0306143",
@@ -2034,7 +2034,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728693+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956913+00:00"
     },
     {
       "id": "e0239194dbcc97f5",
@@ -2045,7 +2045,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728734+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956965+00:00"
     },
     {
       "id": "547608680e449a9c",
@@ -2056,7 +2056,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728212+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956335+00:00"
     },
     {
       "id": "458683700a23bb6f",
@@ -2067,7 +2067,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728265+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956387+00:00"
     },
     {
       "id": "f12f45396102929c",
@@ -2078,7 +2078,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728327+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956448+00:00"
     },
     {
       "id": "2a95cc9f4a7488f0",
@@ -2089,7 +2089,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728385+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956506+00:00"
     },
     {
       "id": "86e0f8f7e05583e5",
@@ -2100,7 +2100,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728169+00:00"
+      "discovered_at": "2026-10-18T02:53:27.956297+00:00"
     },
     {
       "id": "a623eb014d8e01ea",
@@ -2111,7 +2111,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728788+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957041+00:00"
     },
     {
       "id": "b3a1008e0a3dc40a",
@@ -2122,7 +2122,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728846+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957103+00:00"
     },
     {
       "id": "788bcbfce9453a85",
@@ -2133,7 +2133,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728948+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957205+00:00"
     },
     {
       "id": "f21612d165070d25",
@@ -2144,7 +2144,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728899+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957157+00:00"
     },
     {
       "id": "0b02c5c3cb4eab85",
@@ -2155,7 +2155,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.728997+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957255+00:00"
     },
     {
       "id": "9c81c80f57a5b5da",
@@ -2166,7 +2166,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729036+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957294+00:00"
     },
     {
       "id": "5e19512c7960b518",
@@ -2177,7 +2177,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729076+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957334+00:00"
     },
     {
       "id": "8e7dc725a652ad6e",
@@ -2188,7 +2188,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729387+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957652+00:00"
     },
     {
       "id": "39f3f4c078ff16a1",
@@ -2199,7 +2199,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729439+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957703+00:00"
     },
     {
       "id": "0b5146a7641d6634",
@@ -2210,7 +2210,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729490+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957753+00:00"
     },
     {
       "id": "73e6ae33a2146bdd",
@@ -2221,7 +2221,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729117+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957380+00:00"
     },
     {
       "id": "dec8aac1153ae0f7",
@@ -2232,7 +2232,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729160+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957420+00:00"
     },
     {
       "id": "69271a26164105c7",
@@ -2243,7 +2243,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729206+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957471+00:00"
     },
     {
       "id": "e6cb3885d4668694",
@@ -2254,7 +2254,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729248+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957514+00:00"
     },
     {
       "id": "a294f0d008842bc3",
@@ -2265,7 +2265,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729287+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957552+00:00"
     },
     {
       "id": "70d54864f53f7639",
@@ -2276,7 +2276,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729347+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957612+00:00"
     },
     {
       "id": "ea506d1f5d6b119f",
@@ -2287,7 +2287,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729596+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957838+00:00"
     },
     {
       "id": "0c5f58a03c5c9086",
@@ -2298,7 +2298,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729635+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957876+00:00"
     },
     {
       "id": "eaf4882b9d4cb1ce",
@@ -2309,7 +2309,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729687+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957926+00:00"
     },
     {
       "id": "fa771030a79f1d3d",
@@ -2320,7 +2320,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729537+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957799+00:00"
     },
     {
       "id": "ce8094815485c9b1",
@@ -2331,7 +2331,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729726+00:00"
+      "discovered_at": "2026-10-18T02:53:27.957965+00:00"
     },
     {
       "id": "41ef0781b5f72d08",
@@ -2342,7 +2342,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729864+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958080+00:00"
     },
     {
       "id": "da66f41efc56f744",
@@ -2353,7 +2353,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729773+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958032+00:00"
     },
     {
       "id": "477dc80fa37f8f6e",
@@ -2364,7 +2364,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.729980+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958155+00:00"
     },
     {
       "id": "54942f7b64f066f7",
@@ -2375,7 +2375,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730023+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958195+00:00"
     },
     {
       "id": "fbabbc206658dfc7",
@@ -2386,7 +2386,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730086+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958251+00:00"
     },
     {
       "id": "9876a184a5714668",
@@ -2397,7 +2397,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730128+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958291+00:00"
     },
     {
       "id": "bb7c1d83450bf62b",
@@ -2408,7 +2408,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730181+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958344+00:00"
     },
     {
       "id": "f7732f1ccf7b202a",
@@ -2419,7 +2419,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730220+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958383+00:00"
     },
     {
       "id": "fef1d3235e07e0b8",
@@ -2430,7 +2430,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730258+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958421+00:00"
     },
     {
       "id": "2ee7c33184972cd5",
@@ -2441,7 +2441,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730296+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958462+00:00"
     },
     {
       "id": "495590718baf56a8",
@@ -2452,7 +2452,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730420+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958585+00:00"
     },
     {
       "id": "fe256328f67e3f7e",
@@ -2463,7 +2463,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730459+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958624+00:00"
     },
     {
       "id": "55b0700138b4e8ea",
@@ -2474,7 +2474,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730337+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958503+00:00"
     },
     {
       "id": "31acb876bfdffacd",
@@ -2485,7 +2485,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730379+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958545+00:00"
     },
     {
       "id": "58924505abbe1cd9",
@@ -2496,7 +2496,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.720323+00:00"
+      "discovered_at": "2026-10-18T02:53:27.948571+00:00"
     },
     {
       "id": "bf8fc417c2aaf842",
@@ -2507,7 +2507,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730496+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958661+00:00"
     },
     {
       "id": "21fd156d5bab1ab6",
@@ -2518,7 +2518,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730560+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958707+00:00"
     },
     {
       "id": "214b3ab6f9bad3a9",
@@ -2529,7 +2529,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732591+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960728+00:00"
     },
     {
       "id": "4d45259524dbcd8b",
@@ -2540,7 +2540,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732633+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960769+00:00"
     },
     {
       "id": "09067ece6f0caa6b",
@@ -2551,7 +2551,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732671+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960807+00:00"
     },
     {
       "id": "40014d3ffa7114cf",
@@ -2562,7 +2562,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732714+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960850+00:00"
     },
     {
       "id": "083694a49a80f88a",
@@ -2573,7 +2573,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732770+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960905+00:00"
     },
     {
       "id": "8bfe11705f41ae3b",
@@ -2584,7 +2584,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732808+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960942+00:00"
     },
     {
       "id": "92d1d7acd3d62265",
@@ -2595,7 +2595,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732847+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960997+00:00"
     },
     {
       "id": "67651ad9a54057f9",
@@ -2606,7 +2606,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732901+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961056+00:00"
     },
     {
       "id": "d5db3edf3331ccdd",
@@ -2617,7 +2617,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732958+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961114+00:00"
     },
     {
       "id": "8e069c6eb17120ab",
@@ -2628,7 +2628,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733016+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961172+00:00"
     },
     {
       "id": "80756ce2a971168f",
@@ -2639,7 +2639,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730614+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958753+00:00"
     },
     {
       "id": "989d2e293e78426c",
@@ -2650,7 +2650,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730673+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958810+00:00"
     },
     {
       "id": "bce0c75e41933753",
@@ -2661,7 +2661,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730728+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958866+00:00"
     },
     {
       "id": "fe4d25e17c3f98ae",
@@ -2672,7 +2672,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730787+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958924+00:00"
     },
     {
       "id": "3f95906ad3b0c98d",
@@ -2683,7 +2683,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730897+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959051+00:00"
     },
     {
       "id": "5dcf1996f9e272ae",
@@ -2694,7 +2694,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730949+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959104+00:00"
     },
     {
       "id": "52334383ea00d077",
@@ -2705,7 +2705,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731006+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959162+00:00"
     },
     {
       "id": "3d3d2ac66b45cccc",
@@ -2716,7 +2716,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731058+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959214+00:00"
     },
     {
       "id": "dfa482a3ceea69b1",
@@ -2727,7 +2727,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731108+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959264+00:00"
     },
     {
       "id": "8b2f5f4bcef84c8a",
@@ -2738,7 +2738,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731163+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959314+00:00"
     },
     {
       "id": "5f2d9896e6896fc9",
@@ -2749,7 +2749,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731227+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959374+00:00"
     },
     {
       "id": "a89c066dfa24aa00",
@@ -2760,7 +2760,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731282+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959432+00:00"
     },
     {
       "id": "eb80730fb9ea7892",
@@ -2771,7 +2771,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731333+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959484+00:00"
     },
     {
       "id": "2935286679a747d6",
@@ -2782,7 +2782,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731433+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959584+00:00"
     },
     {
       "id": "c5c1ca87af3d7b62",
@@ -2793,7 +2793,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731483+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959634+00:00"
     },
     {
       "id": "c2ef28f6ac944bc9",
@@ -2804,7 +2804,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731536+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959687+00:00"
     },
     {
       "id": "0eba1402276924f7",
@@ -2815,7 +2815,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731608+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959737+00:00"
     },
     {
       "id": "5aef1507adf1acd0",
@@ -2826,7 +2826,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.730844+00:00"
+      "discovered_at": "2026-10-18T02:53:27.958992+00:00"
     },
     {
       "id": "b4168a8534fc3a7f",
@@ -2837,7 +2837,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731717+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959846+00:00"
     },
     {
       "id": "fd14a4ca3d348c18",
@@ -2848,7 +2848,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731818+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959948+00:00"
     },
     {
       "id": "fd02d01b03c55d8f",
@@ -2859,7 +2859,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731876+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960024+00:00"
     },
     {
       "id": "b23c432ced025d8f",
@@ -2870,7 +2870,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731928+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960081+00:00"
     },
     {
       "id": "d49d489d1289f3aa",
@@ -2881,7 +2881,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731979+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960132+00:00"
     },
     {
       "id": "419bee8f387d52a0",
@@ -2892,7 +2892,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732029+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960182+00:00"
     },
     {
       "id": "db5a88ae3f18e1b5",
@@ -2903,7 +2903,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732079+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960232+00:00"
     },
     {
       "id": "c2343dd58753a3b2",
@@ -2914,7 +2914,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732127+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960281+00:00"
     },
     {
       "id": "ac2ea930413965a6",
@@ -2925,7 +2925,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732177+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960331+00:00"
     },
     {
       "id": "72021c216537d7c8",
@@ -2936,7 +2936,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732227+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960382+00:00"
     },
     {
       "id": "3f8689d9ef69c7ce",
@@ -2947,7 +2947,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732277+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960433+00:00"
     },
     {
       "id": "eee8cfdb238b8c95",
@@ -2958,7 +2958,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731382+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959533+00:00"
     },
     {
       "id": "2946deb276ad11f9",
@@ -2969,7 +2969,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732325+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960483+00:00"
     },
     {
       "id": "a345e24a0567fe98",
@@ -2980,7 +2980,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732375+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960532+00:00"
     },
     {
       "id": "db5d089a05f93613",
@@ -2991,7 +2991,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732424+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960583+00:00"
     },
     {
       "id": "ee392308d97face8",
@@ -3002,7 +3002,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732479+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960633+00:00"
     },
     {
       "id": "11ce3c87de6edfa0",
@@ -3013,7 +3013,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.732533+00:00"
+      "discovered_at": "2026-10-18T02:53:27.960688+00:00"
     },
     {
       "id": "cbce449cc6ffa99e",
@@ -3024,7 +3024,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731768+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959898+00:00"
     },
     {
       "id": "16953ea20279fcb6",
@@ -3035,7 +3035,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.731662+00:00"
+      "discovered_at": "2026-10-18T02:53:27.959790+00:00"
     },
     {
       "id": "0cd856302b5be60a",
@@ -3046,7 +3046,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733063+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961218+00:00"
     },
     {
       "id": "61d4298915daa430",
@@ -3057,7 +3057,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733101+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961256+00:00"
     },
     {
       "id": "1e7ee5137af85b1d",
@@ -3068,7 +3068,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733149+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961303+00:00"
     },
     {
       "id": "35a1001ce585bb76",
@@ -3079,7 +3079,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733202+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961355+00:00"
     },
     {
       "id": "e450bb31a3bfc517",
@@ -3090,7 +3090,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733252+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961404+00:00"
     },
     {
       "id": "a13684144a2b58e9",
@@ -3101,7 +3101,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733401+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961558+00:00"
     },
     {
       "id": "038dc88efaedf349",
@@ -3112,7 +3112,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733453+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961610+00:00"
     },
     {
       "id": "76848ee1924caa2f",
@@ -3123,7 +3123,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733593+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961767+00:00"
     },
     {
       "id": "f9e9bdb629f19ab1",
@@ -3134,7 +3134,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733516+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961667+00:00"
     },
     {
       "id": "c372118dae20547b",
@@ -3145,7 +3145,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733648+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961863+00:00"
     },
     {
       "id": "4799a58670cdc782",
@@ -3156,7 +3156,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733691+00:00"
+      "discovered_at": "2026-10-18T02:53:27.961930+00:00"
     },
     {
       "id": "405b652e8abced45",
@@ -3167,7 +3167,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733744+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962045+00:00"
     },
     {
       "id": "af278f7c99e2f01e",
@@ -3178,7 +3178,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733784+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962112+00:00"
     },
     {
       "id": "23cd33b8b748b89a",
@@ -3200,7 +3200,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/setec-campinas-sp-abre-concurso-publico-com-salarios-de-ate-10428",
-      "discovered_at": "2026-10-18T02:17:19.696658+00:00"
+      "discovered_at": "2026-10-18T02:53:46.791078+00:00"
     },
     {
       "id": "fc324f3677ec11ea",
@@ -3233,7 +3233,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/pmmg-abre-concurso-com-90-vagas-para-o-curso-de-formacao-de-oficiais",
-      "discovered_at": "2026-10-18T02:17:20.992726+00:00"
+      "discovered_at": "2026-10-18T02:53:48.041231+00:00"
     },
     {
       "id": "4802f3d20499131e",
@@ -3244,7 +3244,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-contagem-mg-retifica-edital-de-concurso-publico",
-      "discovered_at": "2026-10-18T02:17:21.452018+00:00"
+      "discovered_at": "2026-10-18T02:53:48.454834+00:00"
     },
     {
       "id": "b359776f6b439ed9",
@@ -3255,7 +3255,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/emater-mg-anuncia-retificacao-de-concurso-publico-com-salarios-de-ate-7321",
-      "discovered_at": "2026-10-18T02:17:21.909164+00:00"
+      "discovered_at": "2026-10-18T02:53:48.869607+00:00"
     },
     {
       "id": "efb70c05e7f78811",
@@ -3277,7 +3277,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/tce-go-retifica-concurso-publico-para-tecnicos-de-controle-externo",
-      "discovered_at": "2026-10-18T02:17:23.542160+00:00"
+      "discovered_at": "2026-10-18T02:53:50.273288+00:00"
     },
     {
       "id": "cd20190221de95f7",
@@ -3288,7 +3288,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/ifpa-abre-concurso-publico-para-cargos-tecnico-administrativos-em-educacao",
-      "discovered_at": "2026-10-18T02:17:24.691913+00:00"
+      "discovered_at": "2026-10-18T02:53:51.323841+00:00"
     },
     {
       "id": "eccdbb71d3f0cf59",
@@ -3354,7 +3354,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/sead-ap-publica-edital-retificado-de-concurso-para-delegado-e-oficial-investigador-de-policia-civil",
-      "discovered_at": "2026-10-18T02:17:23.928309+00:00"
+      "discovered_at": "2026-10-18T02:53:50.634388+00:00"
     },
     {
       "id": "e2c8a7ddf270d132",
@@ -3376,7 +3376,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-sao-goncalo-rj-abre-concursos-para-guardas-municipais",
-      "discovered_at": "2026-10-18T02:17:20.082096+00:00"
+      "discovered_at": "2026-10-18T02:53:47.143304+00:00"
     },
     {
       "id": "25002cc2cd110fb6",
@@ -3387,7 +3387,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-curitiba-pr-retifica-concursos-publicos-com-vagas-imediatas-e-cadastro-de-reserva",
-      "discovered_at": "2026-10-18T02:17:22.300146+00:00"
+      "discovered_at": "2026-10-18T02:53:49.215060+00:00"
     },
     {
       "id": "67ef330f8f334b37",
@@ -3398,7 +3398,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-alvorada-rs-retifica-concurso-publico-com-salarios-de-ate-18974",
-      "discovered_at": "2026-10-18T02:17:22.687641+00:00"
+      "discovered_at": "2026-10-18T02:53:49.568886+00:00"
     },
     {
       "id": "4ff03857e3a03d84",
@@ -3420,7 +3420,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-caldas-novas-go-divulga-retificacao-do-concurso-publico-para-guardas-civis-municipais",
-      "discovered_at": "2026-10-18T02:17:23.144318+00:00"
+      "discovered_at": "2026-10-18T02:53:49.922303+00:00"
     },
     {
       "id": "6a0bc08814bf9ef4",
@@ -3431,7 +3431,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/seplad-e-fhcgv-pa-anunciam-concurso-publico-com-vagas-imediatas-e-formacao-de-cadastro-de-reserva",
-      "discovered_at": "2026-10-18T02:17:25.148441+00:00"
+      "discovered_at": "2026-10-18T02:53:51.685190+00:00"
     },
     {
       "id": "91784c85ac3ab144",
@@ -3464,7 +3464,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-piracicaba-sp-abre-selecao-para-professores-substitutos",
-      "discovered_at": "2026-10-18T02:17:18.776811+00:00"
+      "discovered_at": "2026-10-18T02:53:45.964524+00:00"
     },
     {
       "id": "8ef6d6785224b544",
@@ -3475,7 +3475,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/camara-de-boituva-sp-abre-concursos-com-salarios-de-ate-8595",
-      "discovered_at": "2026-10-18T02:17:19.238505+00:00"
+      "discovered_at": "2026-10-18T02:53:46.371801+00:00"
     },
     {
       "id": "c66c10807a3c3fb6",
@@ -3486,7 +3486,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/hospital-municipal-dr-gil-alves-mg-abre-concurso-com-salarios-de-ate-7950",
-      "discovered_at": "2026-10-18T02:17:20.535489+00:00"
+      "discovered_at": "2026-10-18T02:53:47.628916+00:00"
     },
     {
       "id": "ea5f1d08f8c94e87",
@@ -3497,7 +3497,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/assembleia-legislativa-do-estado-do-para-retifica-concursos-para-diversos-cargos",
-      "discovered_at": "2026-10-18T02:17:24.309177+00:00"
+      "discovered_at": "2026-10-18T02:53:50.986774+00:00"
     },
     {
       "id": "869b75f1c5506b94",
@@ -3508,7 +3508,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733825+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962178+00:00"
     },
     {
       "id": "6b76c75daae07853",
@@ -3519,7 +3519,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733862+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962237+00:00"
     },
     {
       "id": "1901d7eebc1675fb",
@@ -3530,7 +3530,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733901+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962297+00:00"
     },
     {
       "id": "84ce404ea729b209",
@@ -3541,7 +3541,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733938+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962354+00:00"
     },
     {
       "id": "c49b0affa13b15aa",
@@ -3552,7 +3552,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.733973+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962410+00:00"
     },
     {
       "id": "d1f4892b8c5e1cf9",
@@ -3563,7 +3563,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734009+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962466+00:00"
     },
     {
       "id": "a1f3f061c94b07b0",
@@ -3574,7 +3574,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734101+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962612+00:00"
     },
     {
       "id": "d72a946c399a2477",
@@ -3585,7 +3585,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734050+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962527+00:00"
     },
     {
       "id": "423b29e7499f6ad0",
@@ -3596,7 +3596,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734138+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962669+00:00"
     },
     {
       "id": "c3c58c5f86a32f52",
@@ -3607,7 +3607,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734176+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962731+00:00"
     },
     {
       "id": "95f56ec3bb33829d",
@@ -3618,7 +3618,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734215+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962792+00:00"
     },
     {
       "id": "2effb450e65d70b2",
@@ -3629,7 +3629,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734267+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962878+00:00"
     },
     {
       "id": "2a5a448653f36f76",
@@ -3640,7 +3640,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734327+00:00"
+      "discovered_at": "2026-10-18T02:53:27.962995+00:00"
     },
     {
       "id": "a0453a39d83d0acc",
@@ -3651,7 +3651,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734427+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963165+00:00"
     },
     {
       "id": "60a29b72ee62219b",
@@ -3662,7 +3662,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734471+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963226+00:00"
     },
     {
       "id": "fdd6e6b339691865",
@@ -3673,7 +3673,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734540+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963340+00:00"
     },
     {
       "id": "81a11b1f472f6f90",
@@ -3684,7 +3684,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734614+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963409+00:00"
     },
     {
       "id": "48b830d713c4bc72",
@@ -3695,7 +3695,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734668+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963501+00:00"
     },
     {
       "id": "d451bd9a3f67e5c8",
@@ -3706,7 +3706,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734721+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963589+00:00"
     },
     {
       "id": "ca36f7615444f822",
@@ -3717,7 +3717,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734771+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963673+00:00"
     },
     {
       "id": "dc66a6966203faa4",
@@ -3728,7 +3728,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734827+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963767+00:00"
     },
     {
       "id": "91340617da4fa930",
@@ -3739,7 +3739,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734883+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963861+00:00"
     },
     {
       "id": "231ff70d13fa3bed",
@@ -3750,7 +3750,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734934+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963956+00:00"
     },
     {
       "id": "6bd6b6246d7db587",
@@ -3761,7 +3761,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734988+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964086+00:00"
     },
     {
       "id": "ab68378a7171357b",
@@ -3772,7 +3772,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735039+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964177+00:00"
     },
     {
       "id": "3c31abedb1ff76a2",
@@ -3783,7 +3783,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735102+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964271+00:00"
     },
     {
       "id": "751b2178348ccaab",
@@ -3794,7 +3794,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.734385+00:00"
+      "discovered_at": "2026-10-18T02:53:27.963099+00:00"
     },
     {
       "id": "b2e9a7f46c5c998c",
@@ -3805,7 +3805,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735160+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964367+00:00"
     },
     {
       "id": "bf8a0ea90f402c24",
@@ -3816,7 +3816,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735201+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964429+00:00"
     },
     {
       "id": "5d189466b0857a18",
@@ -3827,7 +3827,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735240+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964491+00:00"
     },
     {
       "id": "6d467611c9fd37f1",
@@ -3838,7 +3838,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735280+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964564+00:00"
     },
     {
       "id": "80c1fc68dd801fb2",
@@ -3849,7 +3849,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735333+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964681+00:00"
     },
     {
       "id": "ed056b14ee5ecfa3",
@@ -3860,7 +3860,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735392+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964810+00:00"
     },
     {
       "id": "125cc71c47859da1",
@@ -3871,7 +3871,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735449+00:00"
+      "discovered_at": "2026-10-18T02:53:27.964923+00:00"
     },
     {
       "id": "5517f7f4acdfdc96",
@@ -3882,7 +3882,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735507+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965028+00:00"
     },
     {
       "id": "8c6fe6229ec1b561",
@@ -3893,7 +3893,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735595+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965109+00:00"
     },
     {
       "id": "f38e9413d17e58bc",
@@ -3904,7 +3904,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735659+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965172+00:00"
     },
     {
       "id": "c6dec7530a9bb1c3",
@@ -3915,7 +3915,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735717+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965231+00:00"
     },
     {
       "id": "427e454234db1d78",
@@ -3926,7 +3926,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735774+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965288+00:00"
     },
     {
       "id": "8ab302fe57e85033",
@@ -3937,7 +3937,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735816+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965331+00:00"
     },
     {
       "id": "52f357a5c3798b21",
@@ -3948,7 +3948,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735861+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965373+00:00"
     },
     {
       "id": "735be84ee0d36791",
@@ -3959,7 +3959,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735903+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965414+00:00"
     },
     {
       "id": "9adc6526c5608431",
@@ -3970,7 +3970,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735944+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965455+00:00"
     },
     {
       "id": "45f2bed0f3b9f849",
@@ -3981,7 +3981,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.735997+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965508+00:00"
     },
     {
       "id": "12c792a3bb971118",
@@ -3992,7 +3992,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736040+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965551+00:00"
     },
     {
       "id": "67513ed51b4aaab1",
@@ -4003,7 +4003,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736092+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965605+00:00"
     },
     {
       "id": "75347a7e4db9569c",
@@ -4014,7 +4014,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736147+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965660+00:00"
     },
     {
       "id": "cfda77ebfc9571c3",
@@ -4025,7 +4025,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736202+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965716+00:00"
     },
     {
       "id": "5c63a7862acebc2b",
@@ -4036,7 +4036,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736243+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965758+00:00"
     },
     {
       "id": "772428104a5cf404",
@@ -4047,7 +4047,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736297+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965813+00:00"
     },
     {
       "id": "ca90c6e3d5815bf5",
@@ -4058,7 +4058,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736347+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965863+00:00"
     },
     {
       "id": "b9e1c90a63834be0",
@@ -4069,7 +4069,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736400+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965916+00:00"
     },
     {
       "id": "c294f4772dcd3b48",
@@ -4080,7 +4080,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736452+00:00"
+      "discovered_at": "2026-10-18T02:53:27.965971+00:00"
     },
     {
       "id": "a43310a15f3a52d8",
@@ -4091,7 +4091,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736500+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966037+00:00"
     },
     {
       "id": "171083484c143338",
@@ -4102,7 +4102,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736538+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966078+00:00"
     },
     {
       "id": "71162816fb6c138c",
@@ -4113,7 +4113,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736646+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966165+00:00"
     },
     {
       "id": "9628ae92534e9cc4",
@@ -4124,7 +4124,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736605+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966124+00:00"
     },
     {
       "id": "77a43e032bfa22b9",
@@ -4135,7 +4135,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736786+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966305+00:00"
     },
     {
       "id": "c4a3ec416b41d4df",
@@ -4146,7 +4146,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736695+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966214+00:00"
     },
     {
       "id": "f9e4d649d082970e",
@@ -4157,7 +4157,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736747+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966265+00:00"
     },
     {
       "id": "cdb84601a3b2a8f2",
@@ -4168,7 +4168,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736836+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966354+00:00"
     },
     {
       "id": "457a97f6381c19a4",
@@ -4179,7 +4179,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736875+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966393+00:00"
     },
     {
       "id": "d06f8fc8dbd6b25e",
@@ -4190,7 +4190,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736927+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966444+00:00"
     },
     {
       "id": "4aa419211143ef2b",
@@ -4201,7 +4201,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.736965+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966482+00:00"
     },
     {
       "id": "93e35ace2acc5549",
@@ -4212,7 +4212,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737013+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966530+00:00"
     },
     {
       "id": "498f11d51ef06a76",
@@ -4223,7 +4223,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737121+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966634+00:00"
     },
     {
       "id": "e94e09ed57fe6638",
@@ -4234,7 +4234,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737172+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966685+00:00"
     },
     {
       "id": "55f32d9c072a28c8",
@@ -4245,7 +4245,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737066+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966583+00:00"
     },
     {
       "id": "d5c918ba1f271da6",
@@ -4256,7 +4256,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737210+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966723+00:00"
     },
     {
       "id": "917fd94d79ee6ab4",
@@ -4267,7 +4267,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737247+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966760+00:00"
     },
     {
       "id": "a1a5bb900ca8f69b",
@@ -4278,7 +4278,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737287+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966799+00:00"
     },
     {
       "id": "3631677bca4ac59d",
@@ -4289,7 +4289,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737337+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966849+00:00"
     },
     {
       "id": "66adba7068eb649c",
@@ -4300,7 +4300,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737384+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966896+00:00"
     },
     {
       "id": "18150fdd1276a877",
@@ -4311,7 +4311,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737463+00:00"
+      "discovered_at": "2026-10-18T02:53:27.966995+00:00"
     },
     {
       "id": "e7538a955bb4896f",
@@ -4322,7 +4322,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737955+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967490+00:00"
     },
     {
       "id": "8d682e6c44f7b538",
@@ -4333,7 +4333,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737995+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967531+00:00"
     },
     {
       "id": "999841cf81f63da2",
@@ -4344,7 +4344,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738033+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967569+00:00"
     },
     {
       "id": "d5d57bd02ade4928",
@@ -4355,7 +4355,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738079+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967616+00:00"
     },
     {
       "id": "c80c885f231a44cf",
@@ -4366,7 +4366,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738120+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967653+00:00"
     },
     {
       "id": "545f92c9765cfdd8",
@@ -4377,7 +4377,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737517+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967058+00:00"
     },
     {
       "id": "6e56ccf51264f338",
@@ -4388,7 +4388,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737584+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967110+00:00"
     },
     {
       "id": "6b7eb627f2ebae4d",
@@ -4399,7 +4399,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737641+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967163+00:00"
     },
     {
       "id": "cf3dcca1ae669619",
@@ -4410,7 +4410,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737698+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967220+00:00"
     },
     {
       "id": "aa71ab7851c6d5df",
@@ -4421,7 +4421,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737752+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967273+00:00"
     },
     {
       "id": "cc3b4445ae5e8946",
@@ -4432,7 +4432,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737811+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967333+00:00"
     },
     {
       "id": "6cb98729ac1f4bba",
@@ -4443,7 +4443,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737864+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967391+00:00"
     },
     {
       "id": "ffb7676d1f49961c",
@@ -4454,7 +4454,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.737916+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967450+00:00"
     },
     {
       "id": "bc1e7cefd3417636",
@@ -4465,7 +4465,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738168+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967701+00:00"
     },
     {
       "id": "379f3e04081fc91e",
@@ -4476,7 +4476,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738205+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967739+00:00"
     },
     {
       "id": "98b07a07a29740e0",
@@ -4487,7 +4487,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738242+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967777+00:00"
     },
     {
       "id": "d741863d1d648285",
@@ -4498,7 +4498,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/provas/",
-      "discovered_at": "2026-10-18T02:16:58.738278+00:00"
+      "discovered_at": "2026-10-18T02:53:27.967814+00:00"
     },
     {
       "id": "eaf16f080af5a97b",
@@ -4509,7 +4509,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/assembleia-legislativa-do-estado-do-para-retifica-concursos-para-diversos-cargos",
-      "discovered_at": "2026-10-18T02:17:24.308980+00:00"
+      "discovered_at": "2026-10-18T02:53:50.986579+00:00"
     },
     {
       "id": "fea05688919e2247",
@@ -4520,7 +4520,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/camara-de-boituva-sp-abre-concursos-com-salarios-de-ate-8595",
-      "discovered_at": "2026-10-18T02:17:19.238312+00:00"
+      "discovered_at": "2026-10-18T02:53:46.371610+00:00"
     },
     {
       "id": "7ce286f554c636c4",
@@ -4553,7 +4553,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/emater-mg-anuncia-retificacao-de-concurso-publico-com-salarios-de-ate-7321",
-      "discovered_at": "2026-10-18T02:17:21.908986+00:00"
+      "discovered_at": "2026-10-18T02:53:48.869432+00:00"
     },
     {
       "id": "72639a507d676a85",
@@ -4586,7 +4586,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/hospital-municipal-dr-gil-alves-mg-abre-concurso-com-salarios-de-ate-7950",
-      "discovered_at": "2026-10-18T02:17:20.535290+00:00"
+      "discovered_at": "2026-10-18T02:53:47.628717+00:00"
     },
     {
       "id": "77f9f0744dbbb8c8",
@@ -4597,7 +4597,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/ifpa-abre-concurso-publico-para-cargos-tecnico-administrativos-em-educacao",
-      "discovered_at": "2026-10-18T02:17:24.691418+00:00"
+      "discovered_at": "2026-10-18T02:53:51.323367+00:00"
     },
     {
       "id": "0f02801a2c7a5f79",
@@ -4608,7 +4608,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-alvorada-rs-retifica-concurso-publico-com-salarios-de-ate-18974",
-      "discovered_at": "2026-10-18T02:17:22.686803+00:00"
+      "discovered_at": "2026-10-18T02:53:49.568054+00:00"
     },
     {
       "id": "d84e7dfe96521645",
@@ -4619,7 +4619,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-caldas-novas-go-divulga-retificacao-do-concurso-publico-para-guardas-civis-municipais",
-      "discovered_at": "2026-10-18T02:17:23.144137+00:00"
+      "discovered_at": "2026-10-18T02:53:49.922117+00:00"
     },
     {
       "id": "92e4367dc93013f9",
@@ -4641,7 +4641,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-contagem-mg-retifica-edital-de-concurso-publico",
-      "discovered_at": "2026-10-18T02:17:21.451501+00:00"
+      "discovered_at": "2026-10-18T02:53:48.454346+00:00"
     },
     {
       "id": "6e965219f5f722b2",
@@ -4674,7 +4674,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-curitiba-pr-retifica-concursos-publicos-com-vagas-imediatas-e-cadastro-de-reserva",
-      "discovered_at": "2026-10-18T02:17:22.299688+00:00"
+      "discovered_at": "2026-10-18T02:53:49.214583+00:00"
     },
     {
       "id": "6718b41a27169058",
@@ -4696,7 +4696,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-piracicaba-sp-abre-selecao-para-professores-substitutos",
-      "discovered_at": "2026-10-18T02:17:18.776510+00:00"
+      "discovered_at": "2026-10-18T02:53:45.964247+00:00"
     },
     {
       "id": "d71b8646a5b89811",
@@ -4718,7 +4718,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/prefeitura-de-sao-goncalo-rj-abre-concursos-para-guardas-municipais",
-      "discovered_at": "2026-10-18T02:17:20.081910+00:00"
+      "discovered_at": "2026-10-18T02:53:47.143103+00:00"
     },
     {
       "id": "c559d044356c73ad",
@@ -4806,7 +4806,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/seplad-e-fhcgv-pa-anunciam-concurso-publico-com-vagas-imediatas-e-formacao-de-cadastro-de-reserva",
-      "discovered_at": "2026-10-18T02:17:25.148018+00:00"
+      "discovered_at": "2026-10-18T02:53:51.684744+00:00"
     },
     {
       "id": "9a5dd75debe20f9a",
@@ -4839,7 +4839,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/setec-campinas-sp-abre-concurso-publico-com-salarios-de-ate-10428",
-      "discovered_at": "2026-10-18T02:17:19.696152+00:00"
+      "discovered_at": "2026-10-18T02:53:46.790570+00:00"
     },
     {
       "id": "417e86b198b74fb5",
@@ -4850,7 +4850,7 @@
       "board": "Demais bancas",
       "year": null,
       "source_page": "https://www.pciconcursos.com.br/noticias/tce-go-retifica-concurso-publico-para-tecnicos-de-controle-externo",
-      "discovered_at": "2026-10-18T02:17:23.541963+00:00"
+      "discovered_at": "2026-10-18T02:53:50.273089+00:00"
     },
     {
       "id": "355f6079af59ddc1",
