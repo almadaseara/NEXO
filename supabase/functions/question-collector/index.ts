@@ -282,7 +282,7 @@ function parseTrueFalse(text:string,answers:Map<number,string>){
     const lastShared=earlier.toLowerCase().lastIndexOf("com base nos dados precedentes");
     const lastNext=earlier.toLowerCase().lastIndexOf("julgue os itens a seguir");
     const sharedContext=lastShared>=0&&lastShared>lastNext;
-    const visualMatches=[...earlier.matchAll(/\\b(?:tabela|quadro|figura|gr[aá]fico)\\b/gi)];
+    const visualMatches=[...earlier.matchAll(/\b(?:tabela|quadro|figura|gr[aá]fico)\b/gi)];
     const lastVisual=visualMatches.length?visualMatches[visualMatches.length-1].index:-1;
     const nearbyTable=lastVisual>=0 && earlier.length-lastVisual<350 && lastVisual>lastNext;
     const needsContext=/(?:tabela|quadro|figura|gr[aá]fico|dados a seguir|informa[cç][oõ]es a seguir)/i.test(
