@@ -285,7 +285,7 @@ function parseTrueFalse(text:string,answers:Map<number,string>){
     const visualMatches=[...earlier.matchAll(/\\b(?:tabela|quadro|figura|gr[aá]fico)\\b/gi)];
     const lastVisual=visualMatches.length?visualMatches[visualMatches.length-1].index:-1;
     const nearbyTable=lastVisual>=0 && earlier.length-lastVisual<350 && lastVisual>lastNext;
-    const needsContext=/(?:tabela|quadro|figura|gr[aá]fico|balancete|dados a seguir|informa[cç][oõ]es a seguir)/i.test(
+    const needsContext=/(?:tabela|quadro|figura|gr[aá]fico|dados a seguir|informa[cç][oõ]es a seguir)/i.test(
       statement);
     rows.push({question_number:n,statement,options:["Certo","Errado"],answer:answers.get(n),question_type:"true_false",
       needs_context_review:needsContext||sharedContext||nearbyTable||Boolean(nextCommand&&nextCommand.index>25)||Boolean(tableStart)});
