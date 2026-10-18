@@ -24,5 +24,9 @@ extração estruturada → identificação de caderno/tipo → validação do ga
 ## Fontes iniciais
 - Instituto AOCP
 - PCI Concursos
+- CEBRASPE
+- Bancas adicionadas: FGV (conhecimento.fgv.br), FCC (fcc.org.br), Vunesp (vunesp.com.br), IBADE (ibade.org.br), Quadrix (quadrix.org.br), Consulplan (consulplan.net), Fundatec (fundatec.org.br)
+
+Os domínios permitidos ficam em `allowed_domains` no `config.json`. Subdomínios são aceitos; outros domínios são recusados.
 
 O arquivo `robot/config.json` permite ampliar carreiras, termos e fontes.

@@ -66,7 +66,14 @@
     "https://www.pciconcursos.com.br/provas/",
     "https://www.pciconcursos.com.br/pesquisa/policia-civil",
     "https://www.pciconcursos.com.br/pesquisa/policia-militar",
-    "https://www.cebraspe.org.br/concursos/"
+    "https://www.cebraspe.org.br/concursos/",
+    "https://conhecimento.fgv.br/concursos/nosso-portfolio",
+    "https://www.fcc.org.br/concursos/",
+    "https://www.vunesp.com.br/busca/concurso/inscricoes%20abertas",
+    "https://www.ibade.org.br/",
+    "https://quadrix.org.br/index/abertos/",
+    "https://www.consulplan.net/",
+    "https://www.fundatec.org.br/portal/concursos/"
   ],
   "max_pages_per_run": 60,
   "max_depth": 1,
@@ -103,6 +110,13 @@
     "institutoaocp.org.br",
     "cebraspe.org.br",
     "pciconcursos.com.br",
-    "arquivos.qconcursos.com"
+    "arquivos.qconcursos.com",
+    "conhecimento.fgv.br",
+    "fcc.org.br",
+    "vunesp.com.br",
+    "ibade.org.br",
+    "quadrix.org.br",
+    "consulplan.net",
+    "fundatec.org.br"
   ]
 }
