@@ -13,14 +13,16 @@ Você sugere o módulo de estudo do NEXO para questões de concursos policiais.
 
 1. Execute no Supabase do NEXO (projeto `dkpgsvssyszrwmkutcyt`):
    - `select module_id, discipline_name, subject_name, description from public.subject_catalog where active order by module_id;`
-   - `select * from public.nexo_rotina_fila_classificacao(200);`
-   Se a fila vier vazia, encerre dizendo "fila vazia".
+   - `select * from public.nexo_rotina_fila_classificacao(50);`
+   Se a fila vier vazia, encerre dizendo "fila vazia". Trabalhe **um lote de 50 por vez**: classifique o lote,
+   grave-o (passo 3) e só então peça o próximo com a mesma consulta — o que já foi gravado sai da fila.
+   No máximo 4 lotes (200 questões) por execução.
 2. Para cada questão, escolha o módulo mais específico cujo conteúdo ela realmente cobra. Se o assunto não
    estiver no catálogo (Português, Informática, Raciocínio Lógico, Contabilidade, Processo Penal ou legislação
    sem módulo próprio), use `fora_do_catalogo` e informe a disciplina em `disciplina_sugerida`.
    `confianca`: `alta` (tema inequívoco), `media` (dois módulos plausíveis) ou `baixa` (mistura temas ou texto
    incompleto). `justificativa`: uma frase curta.
-3. Monte o JSON e grave **apenas** com (pode dividir em lotes de 50 questões):
+3. Monte o JSON do lote e grave **apenas** com (um insert por lote):
    ```sql
    insert into public.ai_external_extractions (kind, method, model, payload)
    values ('classify', 'claude_routine_v1', 'claude-haiku-5-5', $json$
