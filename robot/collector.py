@@ -108,14 +108,13 @@ def score_candidate(url, text, cfg):
     if "caderno de questões" in hay or "prova objetiva" in hay: score += 10
     return min(score,100)
 
-def allowed_domain(url):
+DOMINIOS_PADRAO=["institutoaocp.org.br","cebraspe.org.br","pciconcursos.com.br","arquivos.qconcursos.com"]
+
+def allowed_domain(url, cfg=None):
+    """Domínios que o robô pode seguir. Lista em config.json (allowed_domains); sem a chave, usa o padrão."""
     host=urlparse(url).netloc.lower()
-    return (
-        host.endswith("institutoaocp.org.br")
-        or host.endswith("cebraspe.org.br")
-        or host.endswith("pciconcursos.com.br")
-        or host.endswith("arquivos.qconcursos.com")
-    )
+    dominios=(cfg or {}).get("allowed_domains", DOMINIOS_PADRAO)
+    return any(host==d or host.endswith("."+d) for d in dominios)
 
 def discover(cfg):
     queue=[(u,0) for u in cfg["seeds"]]
@@ -178,7 +177,7 @@ def discover(cfg):
                         "source_page":final,
                         "discovered_at":now()
                     })
-            elif depth < cfg.get("max_depth",1) and allowed_domain(target):
+            elif depth < cfg.get("max_depth",1) and allowed_domain(target, cfg):
                 if relevant or page_relevant:
                     queue.append((target,depth+1))
 

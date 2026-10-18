@@ -13,7 +13,9 @@
     "Corpo de Bombeiros",
     "Polícia Federal",
     "Polícia Rodoviária Federal",
-    "Guarda Municipal"
+    "Guarda Municipal",
+    "Polícia Científica",
+    "Polícia Legislativa"
   ],
   "keywords": [
     "polícia",
@@ -37,7 +39,11 @@
     "idecan",
     "quadrix",
     "consulplan",
-    "fundatec"
+    "fundatec",
+    "perito criminal",
+    "papiloscopista",
+    "polícia científica",
+    "polícia legislativa"
   ],
   "document_keywords": {
     "prova": [
@@ -92,5 +98,11 @@
       "demais anos"
     ],
     "note": "Dentro de cada banca, priorizar 2026, depois 2025, depois 2024 e somente depois anos anteriores."
-  }
+  },
+  "allowed_domains": [
+    "institutoaocp.org.br",
+    "cebraspe.org.br",
+    "pciconcursos.com.br",
+    "arquivos.qconcursos.com"
+  ]
 }
