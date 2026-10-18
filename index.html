@@ -1154,7 +1154,7 @@ function checkOfficialQuestion(prefix,i){
   finishQuestion(card);
   solved++;
   const ok=sel.value===q.answer;
-  savePracticeAnswer(key,ok);
+  savePracticeAnswer(key,ok,sel.value);
   if(ok) correct++;
   q.options.forEach((_,j)=>{
     const letter='ABCDE'[j];
@@ -1315,6 +1315,7 @@ function checkQuestion(prefix,i){
     finishQuestion(card);
     solved++;
     const ok = sel.value === q.answer;
+    savePracticeAnswer('q_'+prefix+'_'+i, ok, sel.value);
     if(ok) correct++;
 
     // Visual feedback on every alternative.
@@ -1704,7 +1705,7 @@ function syncAccess() {
 let practiceStatus='all';
 let practiceFilteredPool=[];
 function practiceAnswerState(){try{return JSON.parse(localStorage.getItem('nexo_practice_answers')||'{}')}catch(e){return {}}}
-function savePracticeAnswer(key,ok){const s=practiceAnswerState();s[key]={done:true,ok:!!ok,at:Date.now()};localStorage.setItem('nexo_practice_answers',JSON.stringify(s))}
+function savePracticeAnswer(key,ok,letra){const s=practiceAnswerState();s[key]={done:true,ok:!!ok,r:letra||'',at:Date.now()};localStorage.setItem('nexo_practice_answers',JSON.stringify(s))}
 function practicePool(){
   const pool=[];
   modules.forEach(m=>{
@@ -2115,5 +2116,6 @@ syncAccess();
 <script src="ui/nexo-cadastros.js?v=20261017"></script>
 <script src="ui/nexo-classificar.js?v=20261018"></script>
 <script src="ui/nexo-importar.js?v=20261018"></script>
+<script src="ui/nexo-caderno.js?v=20261018a"></script>
 </body>
 </html>

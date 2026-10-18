@@ -9,7 +9,7 @@
 'use strict';
 
 var DADOS = ['nexo_estudo', 'nexo_marcas', 'nexo_estudo_fila', 'nexo_eventos', 'nexo_eventos_import', 'nexo_fichario',
-  'nexo_fichario_novas', 'nexo_minhas_fichas', 'nexo_practice_answers', 'nexo_cronometro',
+  'nexo_fichario_novas', 'nexo_minhas_fichas', 'nexo_practice_answers', 'nexo_caderno_resolvidas', 'nexo_simulado_config', 'nexo_cronometro',
   'nexo_last_practice_filter', 'nexo_saved_practice_filter', 'nexo_filtro_q'];
 var PREFIXOS = ['acervo.']; /* chaves de IA e preferências do Acervo Digital Pessoal */
 var DONO = 'nexo_dono', GUARDADO = 'nexo_conta:';
