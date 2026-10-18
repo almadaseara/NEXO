@@ -47,7 +47,14 @@ function montarQuestao(r){
     /* alternativa que veio vazia ou só com a letra ("A", "B"...) = questão importada quebrada: não exibe */
     if(ops.some(function(o, i){ var t = semTags(o).replace(/[\s.)]/g, '').toUpperCase(); return t === '' || t === 'ABCDE'[i]; })) return null;
   }
-  var texto = limpa(r.statement); if(texto.length < 15) return null;
+  var texto = limpa(r.statement); if(texto.length < 8) return null;
+  /* texto-base compartilhado e figuras recortadas do caderno oficial (pipeline v2) */
+  var ctx = r.question_contexts || null;
+  var midias = (Array.isArray(r.media_urls) ? r.media_urls : []).concat(ctx && Array.isArray(ctx.media_urls) ? ctx.media_urls : []).map(link).filter(Boolean);
+  var figuras = (Array.isArray(r.figure_refs) ? r.figure_refs.length : 0) + (ctx && Array.isArray(ctx.figure_refs) ? ctx.figure_refs.length : 0);
+  if(figuras && !midias.length) return null; /* depende de figura que ainda não foi recortada: não exibe pela metade */
+  var antes = (ctx && ctx.content ? '<div class="nx-q-ctx" style="border-left:3px solid var(--nx-accent);padding:6px 12px;margin-bottom:10px;white-space:pre-wrap">' + escH(String(ctx.content).trim()) + '</div>' : '')
+    + midias.map(function(u){ return '<img src="' + escH(u) + '" alt="Figura do caderno oficial" loading="lazy" style="display:block;max-width:100%;margin:6px 0 10px;border-radius:6px;background:#fff">'; }).join('');
   /* "instituição" às vezes veio com lixo da página de origem ("Organizadora: X Verificação de segurança ...") */
   var inst = limpa(r.institution || '').split(/Verifica[cç][aã]o de seguran[cç]a/i)[0].trim(), org = inst.match(/Organizadora:\s*(.+)$/i);
   inst = inst.replace(/\s*Organizadora:.*$/i, '').trim();
@@ -61,7 +68,7 @@ function montarQuestao(r){
   return {
     num:'Q' + (r.question_number || ''), source:[banca, ano].filter(Boolean).join(' · '),
     collection:[cargo, inst].filter(Boolean).map(escH).join(' · ') || 'Banco de provas NEXO',
-    text:escH(texto), options:ops, answer:resp, comment:com,
+    text:antes + escH(texto), options:ops, answer:resp, comment:com,
     banco:true, ce:ce, board:banca, year:ano, role:cargo, bancoId:r.id
   };
 }
@@ -77,7 +84,7 @@ async function carregarBanco(){
     var ids = Object.keys(mapa.questoes || {}).filter(function(id){ return mapa.questoes[id] !== '-'; }), linhas = [];
     for(var i = 0; i < ids.length; i += 60){
       var res = await sb.from('question_bank')
-        .select('id,question_number,statement,options,answer,question_type,board,year,institution,role_name,exam_source_url,answer_source_url,answer_source_type,status,publication_status')
+        .select('id,question_number,statement,options,answer,question_type,board,year,institution,role_name,exam_source_url,answer_source_url,answer_source_type,status,publication_status,media_urls,figure_refs,question_contexts(content,media_urls,figure_refs)')
         .in('id', ids.slice(i, i + 60)).eq('status', 'validated').eq('publication_status', 'published');
       if(res.error) throw res.error;
       linhas = linhas.concat(res.data || []);
