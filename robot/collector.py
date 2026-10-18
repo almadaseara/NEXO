@@ -66,8 +66,17 @@ def classify_doc(url, text, cfg):
         return "pdf"
     return "page"
 
-def detect_board(url, text):
+def detect_board(url, text, cfg=None):
+    """Banca pelo domínio do link, depois pelo nome no texto (config.json: board_domains e board_keywords)."""
+    cfg=cfg or {}
+    host=urlparse(url).netloc.lower()
+    for nome, dominios in cfg.get("board_domains",{}).items():
+        if any(host==d or host.endswith("."+d) for d in dominios):
+            return nome
     hay=(url+" "+text).lower()
+    for nome, palavras in cfg.get("board_keywords",{}).items():
+        if any(re.search(r"\b"+re.escape(p)+r"\b", hay) for p in palavras):
+            return nome
     if "institutoaocp" in hay or "instituto aocp" in hay:
         return "Instituto AOCP"
     if "cebraspe" in hay or "cespe" in hay:
@@ -92,7 +101,7 @@ def board_rank(board, cfg):
 def score_candidate(url, text, cfg):
     hay=(url+" "+text).lower()
     score=0
-    board=detect_board(url,text)
+    board=detect_board(url,text,cfg)
     year=detect_year(url,text)
     if board=="Instituto AOCP": score += 35
     elif board=="CEBRASPE": score += 30
@@ -138,7 +147,7 @@ def discover(cfg):
                 "id":hashlib.sha1(final.encode()).hexdigest()[:16],
                 "url":final,"title":final.rsplit("/",1)[-1],"kind":"pdf",
                 "score":score_candidate(final,"",cfg),
-                "board":detect_board(final,""),
+                "board":detect_board(final,"",cfg),
                 "year":detect_year(final,""),
                 "source_page":url,
                 "discovered_at":now()
@@ -172,7 +181,7 @@ def discover(cfg):
                         "id":hashlib.sha1(target.encode()).hexdigest()[:16],
                         "url":target,"title":label or target.rsplit("/",1)[-1],
                         "kind":kind,"score":score,
-                        "board":detect_board(target,label),
+                        "board":detect_board(target,label,cfg),
                         "year":detect_year(target,label),
                         "source_page":final,
                         "discovered_at":now()
@@ -271,13 +280,12 @@ def main():
         "pairs_pending_validation":len(pairs),
         "errors_last_run":len(errors),
         "priority_order":{
-            "boards":["Instituto AOCP","CEBRASPE","Demais bancas"],
+            "boards":cfg.get("priority_boards",["Instituto AOCP","CEBRASPE","Demais bancas"]),
             "years":[2026,2025,2024,"demais anos"]
         },
         "by_board":{
-            "Instituto AOCP":sum(1 for x in all_items if x.get("board")=="Instituto AOCP"),
-            "CEBRASPE":sum(1 for x in all_items if x.get("board")=="CEBRASPE"),
-            "Demais bancas":sum(1 for x in all_items if x.get("board")=="Demais bancas")
+            nome:sum(1 for x in all_items if x.get("board")==nome)
+            for nome in cfg.get("priority_boards",["Instituto AOCP","CEBRASPE","Demais bancas"])
         },
         "by_year":{
             "2026":sum(1 for x in all_items if x.get("year")==2026),

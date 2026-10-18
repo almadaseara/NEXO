@@ -4,6 +4,13 @@
   "priority_boards": [
     "Instituto AOCP",
     "CEBRASPE",
+    "FGV",
+    "FCC",
+    "Vunesp",
+    "IBADE",
+    "Quadrix",
+    "Consulplan",
+    "Fundatec",
     "Demais bancas"
   ],
   "careers": [
@@ -80,7 +87,14 @@
   "board_priority": {
     "Instituto AOCP": 1,
     "CEBRASPE": 2,
-    "Demais bancas": 3
+    "FGV": 3,
+    "FCC": 3,
+    "Vunesp": 3,
+    "IBADE": 3,
+    "Quadrix": 3,
+    "Consulplan": 3,
+    "Fundatec": 3,
+    "Demais bancas": 4
   },
   "year_priority": [
     2026,
@@ -96,6 +110,13 @@
     "board_order": [
       "Instituto AOCP",
       "CEBRASPE",
+      "FGV",
+      "FCC",
+      "Vunesp",
+      "IBADE",
+      "Quadrix",
+      "Consulplan",
+      "Fundatec",
       "Demais bancas"
     ],
     "year_order": [
@@ -118,5 +139,66 @@
     "quadrix.org.br",
     "consulplan.net",
     "fundatec.org.br"
-  ]
+  ],
+  "board_domains": {
+    "Instituto AOCP": [
+      "institutoaocp.org.br"
+    ],
+    "CEBRASPE": [
+      "cebraspe.org.br"
+    ],
+    "FGV": [
+      "conhecimento.fgv.br"
+    ],
+    "FCC": [
+      "fcc.org.br"
+    ],
+    "Vunesp": [
+      "vunesp.com.br"
+    ],
+    "IBADE": [
+      "ibade.org.br"
+    ],
+    "Quadrix": [
+      "quadrix.org.br"
+    ],
+    "Consulplan": [
+      "consulplan.net"
+    ],
+    "Fundatec": [
+      "fundatec.org.br"
+    ]
+  },
+  "board_keywords": {
+    "Instituto AOCP": [
+      "instituto aocp"
+    ],
+    "CEBRASPE": [
+      "cebraspe",
+      "cespe"
+    ],
+    "FGV": [
+      "fundação getulio vargas",
+      "fgv"
+    ],
+    "FCC": [
+      "fundação carlos chagas",
+      "fcc"
+    ],
+    "Vunesp": [
+      "vunesp"
+    ],
+    "IBADE": [
+      "ibade"
+    ],
+    "Quadrix": [
+      "quadrix"
+    ],
+    "Consulplan": [
+      "consulplan"
+    ],
+    "Fundatec": [
+      "fundatec"
+    ]
+  }
 }
