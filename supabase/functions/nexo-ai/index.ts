@@ -201,8 +201,12 @@ async function geminiTick(limit: number, deadline: number) {
     const numbers = pendingOf(src);
     const full = numbers.length === 0; // sem lista: leitura completa, com o gabarito para conferência
     try {
+      // gabarito que a nexo-ai sabe ler sozinha (hoje só Cebraspe); se não cobre os números pedidos, o PDF vai junto
+      const { data: keyDoc } = await db.from("exam_documents").select("extracted_text").eq("source_id", src.id).eq("document_type", "answer_key").maybeSingle();
+      const known = officialAnswersFromKey(src.board, keyDoc?.extracted_text);
+      const needKey = full || numbers.some((n) => !known.has(n));
       const docs = [{ label: "Caderno de questões (oficial):", data: toBase64(await pdfBytes(src.exam_pdf_url)) }];
-      if (full && src.answer_key_pdf_url) docs.push({ label: "Gabarito definitivo (oficial):", data: toBase64(await pdfBytes(src.answer_key_pdf_url)) });
+      if (needKey && src.answer_key_pdf_url) docs.push({ label: "Gabarito definitivo (oficial):", data: toBase64(await pdfBytes(src.answer_key_pdf_url)) });
       const r = await geminiExtract(GEMINI_API_KEY, GEMINI_MODEL, docs, buildExtractionInstructions(src, null, full ? null : numbers, docs.length > 1));
       const applied = await applyExtraction(src.id, r.json, GEMINI_METHOD, { only: full ? null : numbers });
       await db.from("ai_jobs").insert({ kind: "gemini", status: "ingested", ingested_at: new Date().toISOString(), usage: r.usage, summary: { model: r.model, ...applied } });

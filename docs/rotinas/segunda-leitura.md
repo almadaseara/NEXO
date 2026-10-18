@@ -16,7 +16,8 @@ Você faz a segunda leitura de provas oficiais de concursos para o banco de ques
    Se não vier nenhuma linha, encerre dizendo "fila vazia".
 2. Para cada linha (no máximo 2 provas e 30 questões no total nesta execução):
    - Baixe o caderno oficial (`exam_pdf_url`) com `curl -sL -o caderno.pdf "<url>"` e confira que o arquivo
-     começa com `%PDF`. Se `numeros` estiver vazio, baixe também o gabarito (`answer_key_pdf_url`).
+     começa com `%PDF`. Baixe também o gabarito (`answer_key_pdf_url`) se `numeros` estiver vazio **ou** se a banca não
+     for CEBRASPE (o sistema só lê sozinho o gabarito do Cebraspe).
    - Leia no PDF **somente** as questões listadas em `numeros` (se vazio, todas as objetivas). `motivos` diz por
      que cada uma ficou pendente (fórmula, figura, tabela, alternativas, não encontrada).
    - Transcreva com fidelidade absoluta: não corrija, não resuma, não complete, não invente. Fórmulas e símbolos
@@ -26,7 +27,8 @@ Você faz a segunda leitura de provas oficiais de concursos para o banco de ques
      canto superior esquerdo).
    - Texto-base ou comando de bloco ("Julgue os itens a seguir...") usado pela questão vai em `contextos`, e a
      questão aponta para ele em `contexto_id`. Não repita o texto-base no enunciado.
-   - `gabarito_lido`: só se o gabarito foi baixado (lista vazia); senão `null`. Questão anulada: `anulada: true`.
+   - `gabarito_lido`: a resposta segundo o gabarito definitivo, só se ele foi baixado; senão `null`. Se o gabarito
+     tiver vários cargos ou tipos de caderno e não der para saber qual vale, use `null` e explique em `alertas`. Questão anulada: `anulada: true`.
    - Dúvidas, trechos ilegíveis: escreva em `alertas` da questão.
 3. Monte um JSON exatamente neste formato (todas as chaves sempre presentes):
    ```json
