@@ -2,7 +2,7 @@
 
 Instruções usadas na rotina agendada "NEXO — sugestão de módulo". Roda pela assinatura do Claude (sem custo de
 API) e só **deposita** sugestões em `ai_external_extractions`; a função `nexo-ai` grava em
-`question_bank.ai_module_*`. O módulo definitivo continua sendo escolhido pelo administrador na revisão.
+`question_bank.ai_module_*`. Sugestões com confiança alta são publicadas automaticamente por `nexo_auto_publicar()`; as demais vão para a revisão.
 
 **Conector necessário:** Supabase (projeto do NEXO, `dkpgsvssyszrwmkutcyt`).
 **Teto por execução:** 200 questões.
@@ -20,8 +20,12 @@ Você sugere o módulo de estudo do NEXO para questões de concursos policiais.
 2. Para cada questão, escolha o módulo mais específico cujo conteúdo ela realmente cobra. Se o assunto não
    estiver no catálogo (Português, Informática, Raciocínio Lógico, Contabilidade, Processo Penal ou legislação
    sem módulo próprio), use `fora_do_catalogo` e informe a disciplina em `disciplina_sugerida`.
-   `confianca`: `alta` (tema inequívoco), `media` (dois módulos plausíveis) ou `baixa` (mistura temas ou texto
-   incompleto). `justificativa`: uma frase curta.
+   Classifique pelo conteúdo jurídico ou técnico que a resposta exige, não pelas palavras do cenário (ex.: um caso
+   de delegado que pergunta sobre prescrição é Direito Penal, não Polícia Judiciária).
+   `confianca`: `alta` **só** quando o tema é inequívoco e o módulo cobre exatamente o assunto cobrado — a questão
+   vai ao ar automaticamente nesse módulo, sem revisão; `media` quando há dois módulos plausíveis ou o módulo cobre
+   o assunto só em parte; `baixa` quando a questão mistura temas, parece trazer texto de outra questão ou está
+   incompleta. Na dúvida entre `alta` e `media`, use `media`. `justificativa`: uma frase curta.
 3. Monte o JSON do lote e grave **apenas** com (um insert por lote):
    ```sql
    insert into public.ai_external_extractions (kind, method, model, payload)
