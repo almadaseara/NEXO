@@ -117,13 +117,14 @@ segunda leitura em vez de gravá-los.
 
 ## Publicação automática
 
-A cada execução da `nexo-ai` (cron de 20 min), depois da leitura: o Gemini sugere o módulo de até 120 questões
-(3 lotes de 40) e `nexo_auto_publicar()` publica as que passam em todas as travas:
+A cada execução da `nexo-ai` (cron de 20 min), depois da leitura: o Gemini sugere o módulo de até 60 questões
+(4 lotes de 15) e `nexo_auto_publicar()` publica as que passam em todas as travas:
 
 - gabarito oficial conferido pelo sistema (`status = validated`, `validation_source_type = official`);
 - nenhum alerta grave (`gabarito_de_espelho`, `caderno_de_espelho`, `gabarito_lido_pela_ia`, `alerta_ia`, `tem_figura`, `rodape_colado`);
 - resposta compatível com as alternativas e enunciado não vazio;
-- módulo do catálogo com confiança alta ou média (`auto_publish_min_confidence`, padrão 0,7);
+- texto inteiro: item certo/errado termina com pontuação, não traz o comando do bloco seguinte ("julgue os próximos itens") colado no fim e, se cita "o texto" ou "a situação hipotética", tem o texto-base ligado;
+- módulo do catálogo com confiança **alta** (`auto_publish_min_confidence` = 0,9; média e baixa ficam na revisão; fora do catálogo nunca é publicada);
 - nunca revista pelo administrador (o que ele guardou ou reteve fica como está).
 
 Cada questão publicada assim leva o alerta `publicado_automaticamente`. Para desfazer uma, use "Reter" na revisão.

@@ -33,6 +33,8 @@ begin
       and length(btrim(coalesce(q.statement, ''))) >= 15
       and q.statement !~* '\mjulgue\M[^.!?]*[.:]?\s*$'          -- comando do bloco seguinte colado no fim do item
       and jsonb_typeof(q.options) = 'array'
+      and (jsonb_array_length(q.options) <> 2 or q.statement ~ '[.?!)"”…]\s*$')  -- item certo/errado cortado
+      and (q.context_id is not null or q.statement !~* '(em quest[ãa]o|nessa situa[çc][ãa]o|nesse caso hipot|situa[çc][ãa]o hipot[ée]tica apresentada|do texto|no texto|o texto|do caso|no caso apresentado|na situa[çc][ãa]o descrita)')  -- cita texto-base que não veio
       and (case when jsonb_array_length(q.options) = 2 then q.answer in ('C', 'E')
                 when jsonb_array_length(q.options) between 4 and 5 then position(q.answer in left('ABCDE', jsonb_array_length(q.options))) > 0
                 else false end)
