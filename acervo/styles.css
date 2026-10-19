@@ -495,12 +495,25 @@ button:active { transform: translateY(1px); }
 .quiz-expl { margin: 12px 0 0; color: var(--ink-2); }
 
 /* Biblioteca: pastas, quadros, modelos */
-.folder-tiles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
-.folder-tile { display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); text-align: left; }
+.folder-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin-bottom: 24px; }
+.folder-tile { position: relative; display: flex; align-items: center; gap: 10px; padding: 10px 8px 10px 10px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); text-align: left; cursor: pointer; min-width: 0; }
 .folder-tile:hover { border-color: var(--accent); }
-.folder-tile b { display: block; }
+.folder-tile.drop-on, .crumb.drop-on { outline: 2px dashed var(--accent); outline-offset: 2px; background: var(--accent-soft, rgba(36,118,107,.1)); }
+.folder-tile .ft-text { flex: 1; min-width: 0; }
+.folder-tile b { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .folder-tile small { color: var(--ink-3); }
-.ft-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-size: 18px; }
+.ft-icon { width: 40px; height: 40px; display: grid; place-items: center; font-size: 24px; flex: none; }
+.ft-icon svg { width: 38px; height: 38px; fill: currentColor; fill-opacity: .22; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.ft-more { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; color: var(--ink-3); flex: none; }
+.ft-more:hover { background: var(--line); color: var(--ink); }
+.ft-more svg { width: 18px; height: 18px; fill: currentColor; stroke: none; }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; margin: 0 0 16px; font-size: 14px; }
+.crumb { border: 0; background: transparent; padding: 4px 8px; border-radius: 8px; color: var(--ink-2); cursor: pointer; font: inherit; }
+.crumb:hover { background: var(--line); }
+.crumb.current { color: var(--ink); font-weight: 700; cursor: default; }
+.crumb-sep { color: var(--ink-3); }
+.kind-ico { width: 14px; height: 14px; vertical-align: -2px; margin-right: 5px; fill: none; stroke: var(--ink-3); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.move-list { max-height: 50vh; overflow-y: auto; }
 .emoji-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 6px; margin-bottom: 12px; }
 .emoji-choice { font-size: 22px; height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); }
 .emoji-choice.active, .emoji-choice:hover { border-color: var(--accent); background: var(--accent-soft); }
