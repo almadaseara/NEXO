@@ -19,7 +19,7 @@ function setHead(t){ var h = document.getElementById('head'); if(h) h.textConten
 function fecharMenuMovel(){ try{ if(typeof closeMobileNav === 'function') closeMobileNav(); }catch(e){} }
 
 var ICONE = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7c-2.5-1.8-5.5-1.8-8-1v12c2.5-.8 5.5-.8 8 1 2.5-1.8 5.5-1.8 8-1V6c-2.5-.8-5.5-.8-8 1Z"/><path d="M12 7v12"/></svg>';
-var SECOES = [['all', 'Todos os cadernos'], ['favorites', 'Favoritos'], ['study', 'Estudar'], ['bookmarks', 'Páginas marcadas']];
+var SECOES = [['all', 'Documentos'], ['favorites', 'Favoritos'], ['study', 'Estudar'], ['bookmarks', 'Páginas marcadas']];
 var A = { pronto:false, nav:'all', pastas:[], due:0, editor:null, pendente:null };
 var hashInicial = /^#acervo/.test(location.hash) ? location.hash : '';
 

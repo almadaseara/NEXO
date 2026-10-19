@@ -9,6 +9,8 @@ import { saveAsset } from './db.js';
 import { postToNexo } from './nexo.js';
 
 export const COVER_COLORS = ['#244b48', '#24766b', '#437b99', '#7a4f9a', '#b8860b', '#a23b55', '#34495e', '#5a6b3a', '#d07a8f', '#4a90a4'];
+const IMG_ICON = '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>';
+const FOLDER_SVG = '<path d="M2.5 7.5A2.5 2.5 0 0 1 5 5h4.2a2 2 0 0 1 1.5.7L12 7h7a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5z"/>';
 const PATTERNS = { plain: 'Lisa', lines: 'Linhas', dots: 'Pontos', diag: 'Listras', page: '1ª página' };
 
 const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [] };
@@ -25,6 +27,7 @@ export function initLibrary(opts) {
     { label: 'Quadro branco infinito', icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M7 13l3-3 3 3 4-4"/>', onClick: () => newBoard() },
     { label: 'Pasta', icon: 'folder', onClick: () => newFolder(currentFolderId()) },
     { label: 'Importar PDF…', icon: 'pdf', onClick: () => importPdfNotebook() },
+    { label: 'Importar imagem…', icon: IMG_ICON, onClick: () => importImageNotebook() },
   ], { align: 'right' }));
   $('btn-lib-more').addEventListener('click', (e) => showMenu(e.currentTarget, [
     { label: 'Assistente de IA', icon: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/>', onClick: () => aiSettingsDialog() },
@@ -118,6 +121,7 @@ function folderMenu(f, e) {
       if (e !== undefined) { f.emoji = e || undefined; await db.put('folders', f); refreshLibrary(); }
     } },
     { label: 'Nova subpasta', icon: 'folder', onClick: () => newFolder(f.id) },
+    { label: 'Mover para…', icon: 'folder', onClick: () => moveDialog(f, 'folder') },
     'sep',
     { label: 'Excluir pasta', icon: 'trash', danger: true, onClick: async () => {
       const ok = await confirmDialog('Excluir pasta?', `Os cadernos e subpastas de “${f.name}” não serão apagados: eles sobem um nível.`, { ok: 'Excluir pasta' });
@@ -166,9 +170,9 @@ function emojiDialog(current) {
 async function newFolder(parentId = null) {
   const name = await promptDialog(parentId ? 'Nova subpasta' : 'Nova pasta', { label: 'Nome da pasta', value: '', ok: 'Criar' });
   if (!name) return;
-  const f = { id: uid(), name, parentId, color: COVER_COLORS[state.folders.length % COVER_COLORS.length], createdAt: Date.now() };
+  const f = { id: uid(), name, parentId: parentId || null, color: COVER_COLORS[state.folders.length % COVER_COLORS.length], createdAt: Date.now() };
   await db.put('folders', f);
-  state.nav = 'folder:' + f.id;
+  toast('Pasta criada');
   refreshLibrary();
 }
 
@@ -386,6 +390,31 @@ function makeNotebook(title, cover, defaults) {
   return { id: uid(), title, folderId: currentFolderId(), cover, defaults, favorite: false, createdAt: now, updatedAt: now, pageIds: [] };
 }
 
+async function importImageNotebook(fileArg) {
+  const file = fileArg instanceof File ? fileArg : await pickFile('file-image');
+  if (!file || !file.type.startsWith('image/')) return;
+  try {
+    const assetId = await saveAsset(file);
+    const url = URL.createObjectURL(file);
+    const dim = await new Promise((res) => { const im = new Image(); im.onload = () => res({ w: im.naturalWidth || 595, h: im.naturalHeight || 842 }); im.onerror = () => res(null); im.src = url; });
+    URL.revokeObjectURL(url);
+    if (!dim) return toast('Imagem inválida');
+    const width = 595, height = Math.max(200, Math.round(width * dim.h / dim.w));
+    const nb = makeNotebook(file.name.replace(/\.[^.]+$/, ''), { color: COVER_COLORS[9], pattern: 'page' }, { template: 'blank', paper: 'white', size: 'a4' });
+    nb.kind = 'image';
+    const page = newPage(nb.id, { width, height });
+    page.images = [{ id: uid(), assetId, x: 0, y: 0, w: width, h: height }];
+    nb.pageIds = [page.id];
+    await db.put('pages', page);
+    await db.put('notebooks', nb);
+    toast('Imagem importada');
+    onOpen(nb.id);
+  } catch (e) {
+    console.error(e);
+    toast('Não foi possível importar esta imagem.');
+  }
+}
+
 export async function importPdfNotebook(fileArg) {
   const file = fileArg instanceof File ? fileArg : await pickFile('file-pdf');
   if (!file) return;
@@ -415,40 +444,132 @@ function sorted(list) {
   return s;
 }
 
+function folderOf(id) { return state.folders.find((x) => x.id === id); }
+function parentKey(f) { return f.parentId && folderOf(f.parentId) ? f.parentId : null; }
+function nbFolderKey(n) { return n.folderId && folderOf(n.folderId) ? n.folderId : null; }
+function folderChain(id) {
+  const chain = [];
+  for (let f = folderOf(id), i = 0; f && i < 50; f = folderOf(f.parentId), i++) chain.unshift(f);
+  return chain;
+}
+function descendantIds(id) {
+  const out = new Set([id]);
+  let grew = true;
+  while (grew) { grew = false; for (const f of state.folders) if (!out.has(f.id) && out.has(f.parentId)) { out.add(f.id); grew = true; } }
+  return out;
+}
+function itemCount(id) {
+  return state.folders.filter((x) => parentKey(x) === id).length + state.notebooks.filter((x) => nbFolderKey(x) === id).length;
+}
+
 async function renderContent() {
   const content = $('lib-content');
   if (state.query) return renderSearch(content);
-  let list = state.notebooks, title = 'Todos os cadernos';
+  let list = state.notebooks, title = 'Documentos';
   if (state.nav === 'favorites') { list = list.filter((n) => n.favorite); title = 'Favoritos'; }
   else if (state.nav === 'bookmarks') { $('lib-title').textContent = 'Páginas marcadas'; return renderBookmarks(content); }
   else if (state.nav === 'study') { $('lib-title').textContent = 'Estudar'; return renderStudyView(content, () => refreshLibrary()); }
   let subfolders = [];
-  if (state.nav.startsWith('folder:')) {
-    const f = state.folders.find((x) => 'folder:' + x.id === state.nav);
-    list = list.filter((n) => n.folderId === f?.id);
-    title = (f?.emoji ? f.emoji + ' ' : '') + (f?.name || 'Pasta');
-    subfolders = state.folders.filter((x) => x.parentId === f?.id);
+  const explorer = state.nav === 'all' || state.nav.startsWith('folder:');
+  const here = explorer ? currentFolderId() : null;
+  if (explorer) {
+    list = list.filter((n) => nbFolderKey(n) === here);
+    subfolders = state.folders.filter((x) => parentKey(x) === here);
+    const f = here && folderOf(here);
+    if (f) title = (f.emoji ? f.emoji + ' ' : '') + f.name;
   }
   $('lib-title').textContent = title;
   content.replaceChildren();
+  if (explorer) content.append(breadcrumb(here));
   if (!list.length && !subfolders.length) {
-    content.append(emptyState(state.nav));
+    content.append(here ? folderEmpty() : emptyState(state.nav));
     return;
   }
   if (subfolders.length) {
     const row = h('div', { class: 'folder-tiles' });
-    for (const sf of subfolders) {
-      const n = state.notebooks.filter((x) => x.folderId === sf.id).length;
-      const tile = h('button', { class: 'folder-tile' }, h('span', { class: 'ft-icon', style: { background: sf.color || COVER_COLORS[0] } }, sf.emoji || '📁'),
-        h('span', {}, h('b', {}, sf.name), h('small', {}, n + (n === 1 ? ' caderno' : ' cadernos'))));
-      tile.addEventListener('click', () => setNav('folder:' + sf.id));
-      row.append(tile);
-    }
+    for (const sf of subfolders) row.append(folderTile(sf));
     content.append(row);
   }
   const grid = h('div', { class: 'grid' });
   for (const nb of sorted(list)) grid.append(card(nb));
   content.append(grid);
+}
+
+// Caminho no estilo do explorador de arquivos; cada trecho também aceita soltar itens.
+function breadcrumb(here) {
+  const bar = h('nav', { class: 'crumbs', 'aria-label': 'Caminho da pasta' });
+  const part = (label, id, last) => {
+    const b = h('button', { class: 'crumb' + (last ? ' current' : ''), type: 'button' }, label);
+    if (!last) b.addEventListener('click', () => setNav(id ? 'folder:' + id : 'all'));
+    enableDrop(b, id);
+    return b;
+  };
+  const chain = here ? folderChain(here) : [];
+  bar.append(part('Documentos', null, !chain.length));
+  chain.forEach((f, i) => {
+    bar.append(h('span', { class: 'crumb-sep' }, '›'));
+    bar.append(part((f.emoji ? f.emoji + ' ' : '') + f.name, f.id, i === chain.length - 1));
+  });
+  return bar;
+}
+
+function folderEmpty() {
+  const art = icon(FOLDER_SVG);
+  art.setAttribute('viewBox', '0 0 24 24');
+  art.classList.add('empty-art');
+  return h('div', { class: 'empty' }, h('div', {}, art, h('h2', {}, 'Esta pasta está vazia'),
+    h('div', {}, 'Crie subpastas, cadernos, quadros e importe PDFs ou imagens aqui dentro.'),
+    h('div', { class: 'row' },
+      h('button', { class: 'btn', onclick: () => newFolder(currentFolderId()) }, 'Nova pasta'),
+      h('button', { class: 'btn', onclick: () => importPdfNotebook() }, 'Importar PDF'),
+      h('button', { class: 'btn primary', onclick: () => newNotebookDialog() }, 'Novo caderno'))));
+}
+
+function folderTile(sf) {
+  const n = itemCount(sf.id);
+  const glyph = sf.emoji
+    ? h('span', { class: 'ft-emoji' }, sf.emoji)
+    : (() => { const i = icon(FOLDER_SVG); i.setAttribute('viewBox', '0 0 24 24'); return i; })();
+  const more = h('span', { class: 'ft-more', role: 'button', tabindex: '0', 'aria-label': 'Opções da pasta' },
+    icon('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'));
+  const tile = h('button', { class: 'folder-tile', type: 'button', draggable: 'true', title: sf.name },
+    h('span', { class: 'ft-icon', style: { color: sf.color || COVER_COLORS[0] } }, glyph),
+    h('span', { class: 'ft-text' }, h('b', {}, sf.name), h('small', {}, n + (n === 1 ? ' item' : ' itens'))), more);
+  tile.addEventListener('click', (e) => {
+    if (e.target.closest('.ft-more')) { e.stopPropagation(); const r = more.getBoundingClientRect(); folderMenu(sf, { clientX: r.left, clientY: r.bottom + 4 }); return; }
+    setNav('folder:' + sf.id);
+  });
+  tile.addEventListener('contextmenu', (e) => { e.preventDefault(); folderMenu(sf, e); });
+  tile.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/acervo-folder', sf.id));
+  enableDrop(tile, sf.id);
+  return tile;
+}
+
+// Soltar um caderno ou uma pasta sobre uma pasta (ou sobre um trecho do caminho) move o item.
+function enableDrop(el, folderId) {
+  const ok = (e) => [...(e.dataTransfer?.types || [])].some((t) => t === 'text/acervo-notebook' || t === 'text/acervo-folder');
+  el.addEventListener('dragover', (e) => { if (ok(e)) { e.preventDefault(); el.classList.add('drop-on'); } });
+  el.addEventListener('dragleave', () => el.classList.remove('drop-on'));
+  el.addEventListener('drop', async (e) => {
+    el.classList.remove('drop-on');
+    if (!ok(e)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const nbId = e.dataTransfer.getData('text/acervo-notebook');
+    const fId = e.dataTransfer.getData('text/acervo-folder');
+    if (nbId) {
+      const nb = state.notebooks.find((x) => x.id === nbId);
+      if (nb && (nb.folderId || null) !== (folderId || null)) { nb.folderId = folderId || null; await db.put('notebooks', nb); toast('Movido'); refreshLibrary(); }
+    } else if (fId) {
+      const f = folderOf(fId);
+      if (!f || f.id === folderId || (folderId && descendantIds(f.id).has(folderId))) return toast('Não dá para mover a pasta para dentro dela mesma');
+      if ((f.parentId || null) === (folderId || null)) return;
+      f.parentId = folderId || null;
+      await db.put('folders', f);
+      toast('Movido');
+      refreshLibrary();
+    }
+  });
 }
 
 function emptyState(nav) {
@@ -464,6 +585,17 @@ function emptyState(nav) {
     nav === 'favorites' ? null : h('div', { class: 'row' },
       h('button', { class: 'btn', onclick: () => importPdfNotebook() }, 'Importar PDF'),
       h('button', { class: 'btn primary', onclick: () => newNotebookDialog() }, 'Novo caderno'))));
+}
+
+function kindIcon(nb) {
+  const pdf = nb.cover?.pattern === 'page' && nb.kind !== 'image';
+  const svg = nb.kind === 'board' ? '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/>'
+    : nb.kind === 'image' ? IMG_ICON
+    : pdf ? '<path d="M7 3h7l5 5v13H7zM14 3v5h5"/>'
+    : '<path d="M6 3h11a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6zM6 3v18M10 8h5"/>';
+  const i = icon(svg);
+  i.classList.add('kind-ico');
+  return i;
 }
 
 function card(nb) {
@@ -488,7 +620,7 @@ function card(nb) {
   more.addEventListener('click', (e) => { e.stopPropagation(); notebookMenu(nb, more); });
   const el = h('div', { class: 'card', draggable: 'true', tabindex: '0' }, cover,
     h('div', { class: 'card-meta' },
-      h('div', { class: 't' }, h('div', { class: 'name', title: nb.title }, nb.title), h('div', { class: 'sub' }, relativeDate(nb.updatedAt))),
+      h('div', { class: 't' }, h('div', { class: 'name', title: nb.title }, kindIcon(nb), nb.title), h('div', { class: 'sub' }, relativeDate(nb.updatedAt))),
       star, more));
   el.addEventListener('click', () => onOpen(nb.id));
   el.addEventListener('keydown', (e) => { if (e.key === 'Enter') onOpen(nb.id); });
@@ -543,30 +675,39 @@ async function editCover(nb) {
   refreshLibrary();
 }
 
-async function moveDialog(nb) {
+async function moveDialog(item, kind = 'notebook') {
+  const current = kind === 'folder' ? (item.parentId || null) : (item.folderId || null);
+  const blocked = kind === 'folder' ? descendantIds(item.id) : new Set();
   const target = await modal((box, close) => {
-    const list = h('div', { class: 'nav' });
-    const opt = (id, name, color) => {
-      const b = h('button', { class: 'nav-item' + ((nb.folderId || null) === id ? ' active' : '') },
+    const list = h('div', { class: 'nav move-list' });
+    const opt = (id, name, color, depth) => {
+      const b = h('button', { class: 'nav-item' + (current === id ? ' active' : ''), style: { paddingLeft: 8 + depth * 18 + 'px' } },
         h('span', { class: 'folder-dot', style: { background: color || 'var(--ink-3)' } }), name);
       b.addEventListener('click', () => close({ id }));
       return b;
     };
-    list.append(opt(null, 'Sem pasta'));
-    for (const f of state.folders) list.append(opt(f.id, f.name, f.color));
+    list.append(opt(null, 'Documentos (raiz)', null, 0));
+    const walk = (pid, depth) => {
+      for (const f of state.folders.filter((x) => parentKey(x) === pid && !blocked.has(x.id))) {
+        list.append(opt(f.id, (f.emoji ? f.emoji + ' ' : '') + f.name, f.color, depth));
+        walk(f.id, depth + 1);
+      }
+    };
+    walk(null, 1);
     box.append(h('h2', {}, 'Mover para…'), list, h('div', { class: 'actions' },
       h('button', { class: 'btn', onclick: async () => {
         const name = await promptDialog('Nova pasta', { label: 'Nome da pasta', ok: 'Criar' });
         if (!name) return;
-        const f = { id: uid(), name, color: COVER_COLORS[state.folders.length % COVER_COLORS.length], createdAt: Date.now() };
+        const f = { id: uid(), name, parentId: null, color: COVER_COLORS[state.folders.length % COVER_COLORS.length], createdAt: Date.now() };
         await db.put('folders', f);
+        state.folders.push(f);
         close({ id: f.id });
       } }, 'Nova pasta'),
       h('button', { class: 'btn ghost', onclick: () => close() }, 'Cancelar')));
   });
   if (!target) return;
-  nb.folderId = target.id;
-  await db.put('notebooks', nb);
+  if (kind === 'folder') { item.parentId = target.id; await db.put('folders', item); }
+  else { item.folderId = target.id; await db.put('notebooks', item); }
   refreshLibrary();
 }
 
