@@ -1,7 +1,8 @@
 /* NEXO — Acervo Digital Pessoal: cadernos do aluno (escrita à mão, PDFs anotados, quadro
    branco, flashcards, IA com a chave do próprio aluno), app em acervo/.
-   - Abre como uma view do NEXO: item na barra lateral (as seções e pastas ficam nas abas do
-     próprio Acervo), botão na barra de acesso do celular e atalho na busca (Ctrl K).
+   - Abre numa página própria, em tela cheia (item na barra lateral, botão na barra de acesso do
+     celular e atalho na busca Ctrl K): a barra do Acervo tem a logomarca e "Home", que voltam ao
+     painel do NEXO, e "Tema". As seções e pastas ficam nas abas do próprio Acervo.
    - O app roda num iframe da mesma origem, isolado do CSS/JS do NEXO, que fica vivo enquanto a
      página estiver aberta: dá para ir à lei seca e voltar ao caderno exatamente onde estava.
    - Para conta ativa com permissão de aluno (can_student), no modo Aluno ou ADM; ao sair da conta,
@@ -39,11 +40,45 @@ function host(){
   var h = document.getElementById('acervo-host');
   if(!h){
     var v = document.getElementById('view'); if(!v) return null;
-    v.insertAdjacentHTML('afterend', '<div id="acervo-host" hidden></div>');
+    v.insertAdjacentHTML('afterend', '<div id="acervo-host" hidden>' + barraHTML() + '</div>');
     h = document.getElementById('acervo-host');
+    temaBotao();
   }
   return h;
 }
+
+/* ---------- página própria ----------
+   Aberto, o Acervo ocupa a tela inteira (sem a barra lateral, o cabeçalho e a barra de acesso do
+   NEXO), com uma barra própria: logomarca e "Home" voltam ao painel do NEXO; "Tema" troca claro/escuro.
+   O iframe continua vivo: ao voltar ao Acervo, o caderno está onde ficou. */
+function barraHTML(){
+  return '<div class="nx-acervo-top" role="banner">' +
+    '<a class="nx-acervo-brand" href="#" onclick="nexoSairAcervo();return false" title="Voltar ao NEXO Revisão" aria-label="NEXO Revisão — voltar ao início">' +
+      '<span class="nx-acervo-logo">NEXO</span><span class="nx-acervo-sub">revisão</span><span class="nx-acervo-badge">Acervo</span></a>' +
+    '<nav class="nx-acervo-links" aria-label="Acervo">' +
+      '<button type="button" onclick="nexoSairAcervo()" title="Voltar ao painel do NEXO"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/></svg><span>Home</span></button>' +
+      '<button type="button" id="nx-acervo-tema" onclick="nexoAcervoTema()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span>Tema</span></button>' +
+    '</nav>' +
+    '<span class="nx-acervo-nota">Dados neste aparelho · sem sincronização</span>' +
+  '</div>';
+}
+function temaBotao(){
+  var b = document.getElementById('nx-acervo-tema'); if(!b) return;
+  var escuro = document.documentElement.getAttribute('data-theme') === 'dark';
+  b.setAttribute('aria-label', escuro ? 'Usar tema claro' : 'Usar tema escuro');
+  b.title = escuro ? 'Tema claro' : 'Tema escuro';
+}
+window.nexoAcervoTema = function(){
+  var t = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  if(typeof window.nexoSetTheme === 'function') window.nexoSetTheme(t);
+  else document.documentElement.setAttribute('data-theme', t);
+  temaBotao();
+};
+window.nexoSairAcervo = function(){
+  if(typeof window.home === 'function') window.home();
+  else { setCur(null); try{ syncAccess(); }catch(e){} }
+  try{ window.scrollTo(0, 0); }catch(e){}
+};
 function frame(criar){
   var f = document.getElementById('acervo-frame');
   if(!f && criar){
@@ -145,10 +180,8 @@ window.syncAccess = function(){
 /* No celular a página rola inteira e a barra de acesso é fixa embaixo: o iframe ocupa o espaço entre as duas. */
 function ajustarAltura(){
   var h = host(); if(!h || h.hidden) return;
-  if(window.innerWidth > 700){ h.style.height = ''; return; }
-  var topo = (document.querySelector('header') || {}).offsetHeight || 0;
-  var bar = $('.access-bar'), barra = bar && getComputedStyle(bar).position === 'fixed' ? bar.offsetHeight : 0;
-  h.style.height = Math.max(320, window.innerHeight - topo - barra) + 'px';
+  /* página própria: o cabeçalho e a barra de acesso do NEXO ficam escondidos, então ocupa a altura toda */
+  h.style.height = window.innerWidth > 700 ? '' : Math.max(320, window.innerHeight) + 'px';
 }
 window.addEventListener('resize', ajustarAltura);
 
