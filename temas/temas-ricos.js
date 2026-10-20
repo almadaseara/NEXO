@@ -124,7 +124,8 @@
     T.secoes.forEach(function(s){
       h+='<section class="tr-card" id="tr-s-'+s.id+'"><h2>'+s.titulo+'</h2>';
       h+='<div class="tr-quick"><div class="tr-lbl">Em 30 segundos</div><ul>'+s.rapido.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
-      h+='<div class="tr-read tr-cor">'+s.teoria.map(function(t){return '<h3>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+colorir(p)+'</p>'}).join('')}).join('')+'</div>';
+      if(s.teoria.length>1) h+='<nav class="tr-indice" aria-label="Tópicos desta seção"><span class="tr-lbl">Tópicos</span>'+s.teoria.map(function(t,i){return '<button class="tr-chip" type="button" data-trjump="tr-t-'+s.id+'-'+i+'"><b>'+(i+1)+'</b> '+t.h+'</button>'}).join('')+'</nav>';
+      h+='<div class="tr-read tr-cor tr-topicos'+(s.teoria.length>1?'':' tr-um')+'">'+s.teoria.map(function(t,i){return '<article class="tr-topico" id="tr-t-'+s.id+'-'+i+'"><h3><span class="tr-tn" aria-hidden="true">'+(i+1)+'</span>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+colorir(p)+'</p>'}).join('')+'</article>'}).join('')+'</div>';
       if(s.quadro)h+='<div class="tr-tbl"><table><caption>'+s.quadro.titulo+'</caption><thead><tr>'+s.quadro.head.map(function(c){return '<th scope="col">'+c+'</th>'}).join('')+'</tr></thead><tbody>'+s.quadro.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';
       if(s.pegadinhas&&s.pegadinhas.length)h+='<div class="tr-traps"><div class="tr-lbl">Pegadinhas</div><ul>'+s.pegadinhas.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
       h+=counts(T,s.id)+'</section>';
