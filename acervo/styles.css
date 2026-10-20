@@ -768,6 +768,7 @@ button:active { transform: translateY(1px); }
 .ro-toggle svg { width: 16px; height: 16px; }
 .ro-toggle:hover { border-color: var(--accent); color: var(--ink); }
 #editor.readonly .ro-toggle { background: var(--nx-gold); border-color: var(--nx-gold); color: #1d1606; }
+#editor:not(.readonly) .ro-toggle { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 #editor.readonly #tools, #editor.readonly #tool-options,
 #editor.readonly #ed-undo, #editor.readonly #ed-redo, #editor.readonly #ed-record, #editor.readonly #ed-add-page { display: none !important; }
 #editor.readonly .toolbar { grid-template-columns: minmax(0, 1fr) auto; }
