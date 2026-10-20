@@ -202,7 +202,7 @@ export const FOLDER_ICONS = [
 const ICON_BY_ID = new Map(FOLDER_ICONS.map(([id, , p]) => [id, p]));
 const NO_ICON = '<path d="M5 19L19 5" stroke="#e5484d"/>';
 
-// Pasta estilo Goodnotes: aba atrás mais escura, frente com degradê suave e ícone branco.
+// Pasta do Acervo: aba atrás mais escura, frente com degradê suave e ícone branco.
 export function folderGlyph(color = '#45bfdb', iconId = '', emoji = '') {
   const back = shade(color, -0.28), frontTop = shade(color, 0.12), frontBottom = shade(color, -0.04);
   const gid = 'fg' + Math.random().toString(36).slice(2, 8);

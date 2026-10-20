@@ -1,5 +1,10 @@
 // Importação e exportação de PDF.
-import { PDFDocument, PDFName, PDFString, rgb, degrees, StandardFonts } from '../vendor/pdf-lib.esm.min.js';
+// pdf-lib (500 KB) só é baixado ao exportar PDF.
+let PDFDocument, PDFName, PDFString, rgb, degrees, StandardFonts;
+async function ensurePdfLib() {
+  if (PDFDocument) return;
+  ({ PDFDocument, PDFName, PDFString, rgb, degrees, StandardFonts } = await import('../vendor/pdf-lib.esm.min.js'));
+}
 import { saveAsset, getAssetBlob, uid } from './db.js';
 import {
   loadPdf, extractPdfText, extractPdfOutline, drawTemplate, drawBgImage, drawPdfPage, strokeSvgPath, fillSvgPath,
@@ -114,6 +119,7 @@ async function textBoxImage(out, t, lineCount) {
 }
 
 export async function exportNotebookPdf(notebook, pages, onProgress) {
+  await ensurePdfLib();
   const out = await PDFDocument.create();
   out.setTitle(notebook.title);
   out.setCreator('Acervo Digital Pessoal — NEXO Revisão');

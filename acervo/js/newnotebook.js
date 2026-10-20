@@ -4,20 +4,20 @@ import { h, icon, modal, confirmDialog } from './ui.js';
 import { drawTemplate, PAGE_SIZES, PAPER_COLORS } from './render.js';
 import { COVERS, COVER_GROUPS, coverThumb, coverPreset, coverFromPreset, applyCover, DEFAULT_COVER_ID } from './covers.js';
 
-// Papéis em grupos, como no Goodnotes. `spacing` ajusta o espaço entre as linhas.
+// Papéis em grupos. `spacing` ajusta o espaço entre as linhas.
 export const PAPER_GALLERY = [
-  { group: 'Essenciais', items: [
+  { group: 'Básicos', items: [
     { id: 'blank', label: 'Branco', template: 'blank' },
     { id: 'dotted', label: 'Pontilhado', template: 'dotted' },
     { id: 'lined-narrow', label: 'Pautado estreito', template: 'lined', spacing: 0.75 },
     { id: 'lined-wide', label: 'Pautado largo', template: 'lined', spacing: 1.4 },
     { id: 'grid', label: 'Quadriculado', template: 'grid' },
   ] },
-  { group: 'Folhas para escrita', items: [
+  { group: 'Para escrever e revisar', items: [
     { id: 'lined', label: 'Pautado com margem', template: 'lined', spacing: 1 },
     { id: 'cornell', label: 'Cornell', template: 'cornell' },
   ] },
-  { group: 'Planificador', items: [
+  { group: 'Planejamento', items: [
     { id: 'checklist', label: 'Tarefas', template: 'checklist' },
     { id: 'planner', label: 'Planificador semanal', template: 'planner' },
     { id: 'monthly', label: 'Planificador mensal', template: 'monthly' },

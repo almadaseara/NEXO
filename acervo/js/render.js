@@ -1,10 +1,16 @@
 // Desenho de páginas: modelos de papel, tinta, PDFs, imagens, textos e fitas.
 import { getStroke } from '../vendor/perfect-freehand.mjs';
-import * as pdfjs from '../vendor/pdf.min.mjs';
 import { getAssetBlob } from './db.js';
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL('../vendor/pdf.worker.min.mjs', import.meta.url).href;
-export { pdfjs };
+// O leitor de PDF (350 KB) só é baixado quando um PDF é aberto.
+let pdfjsMod = null;
+export async function pdfjsLib() {
+  if (!pdfjsMod) {
+    pdfjsMod = await import('../vendor/pdf.min.mjs');
+    pdfjsMod.GlobalWorkerOptions.workerSrc = new URL('../vendor/pdf.worker.min.mjs', import.meta.url).href;
+  }
+  return pdfjsMod;
+}
 
 export const PAGE_SIZES = {
   'a4': { w: 595, h: 842, label: 'A4 retrato' },
@@ -406,7 +412,7 @@ export function loadPdf(assetId) {
       const blob = await getAssetBlob(assetId);
       if (!blob) throw new Error('PDF não encontrado');
       const data = new Uint8Array(await blob.arrayBuffer());
-      return pdfjs.getDocument({ data, isEvalSupported: false }).promise;
+      return (await pdfjsLib()).getDocument({ data, isEvalSupported: false }).promise;
     })());
   }
   return pdfCache.get(assetId);

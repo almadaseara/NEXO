@@ -44,7 +44,7 @@ export function initLibrary(opts) {
         { label: 'Imagem', icon: IMG_ICON, onClick: () => importImageNotebook() },
         { label: 'Pasta', icon: 'folder', onClick: () => newFolder(currentFolderId()) },
         'sep',
-        { tip: 'Dica: toque duas vezes em “+ Novo” para criar uma nota rápida' },
+        { tip: 'Atalho: dê dois cliques em “Novo” para abrir uma nota rápida' },
       ], { align: 'right' });
     }, 260);
   });
