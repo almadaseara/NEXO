@@ -102,8 +102,13 @@ NEXO.secoes = [
     { h: "Qualificadoras — o mapa completo",
       p: [
         "<b>2 a 8 anos</b> (§4º e §8º): rompimento de obstáculo; abuso de confiança, fraude, escalada ou destreza; chave falsa; concurso de duas ou mais pessoas; bens que comprometem órgãos públicos ou serviços essenciais (§4º, V); fios, cabos e equipamentos de energia, telefonia e dados, e material ferroviário ou metroviário (§8º, que admite expressamente o privilégio).",
-        "<b>4 a 10 anos</b>: explosivo ou artefato análogo (§4º-A — <b>hediondo</b>); fraude por dispositivo eletrônico ou informático (§4º-B); veículo levado para outro Estado ou para o exterior (§5º); animal de produção ou animal doméstico (§6º, I); celular, computador, tablet e similares (§6º, II); explosivos e acessórios (§7º, I); <b>arma de fogo</b> (§7º, II); praticado por integrante de facção, milícia ou grupo paramilitar no contexto do grupo (§9º); combustíveis retirados de instalações de produção, armazenamento ou transporte (§10).",
-        "Majorantes do furto eletrônico (§4º-C): servidor fora do país (+1/3 a 2/3); vítima idosa ou vulnerável (+1/3 até o dobro). Majorantes do furto de combustível: +1/3 (§11) e +2/3 conforme o resultado (§12)."
+        "<b>4 a 10 anos</b>: explosivo ou artefato análogo (§4º-A — <b>hediondo</b>); fraude por dispositivo eletrônico ou informático (§4º-B); veículo levado para outro Estado ou para o exterior (§5º); animal de produção ou animal doméstico (§6º, I); celular, computador, tablet e similares (§6º, II); explosivos e acessórios (§7º, I); <b>arma de fogo</b> (§7º, II); praticado por integrante de facção, milícia ou grupo paramilitar no contexto do grupo (§9º); combustíveis retirados de instalações de produção, armazenamento ou transporte (§10)."
+      ]},
+    { h: "Majorantes do furto (causas de aumento)",
+      p: [
+        "Não são qualificadoras: não trocam os limites da pena; aumentam por fração na 3ª fase. Além do repouso noturno (§1º, só no furto simples), há majorantes próprias de duas formas qualificadas:",
+        "Furto eletrônico (§4º-C, sobre o §4º-B): servidor fora do país (+1/3 a 2/3); vítima idosa ou vulnerável (+1/3 até o dobro).",
+        "Furto de combustível: +1/3 (§11) e +2/3 conforme o resultado (§12)."
       ]},
     { h: "Detalhes que a banca cobra",
       p: [

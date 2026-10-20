@@ -150,8 +150,8 @@ secoes:[
     { h:"Funcional, menor de 14 e instituição de ensino", p:[
       "Funcional: o crime precisa ocorrer <b>no exercício da função ou em decorrência dela</b>. Matar policial de folga por briga de trânsito sem relação com a função não qualifica. Guardas municipais: a doutrina inclui (atuam na segurança pública, CF, art. 144, §8º).",
       "Assimetria da Lei 15.134/2025: o enteado do policial (afinidade) não está na alínea a; o sogro do juiz (afinidade) está na alínea b. Estender a alínea a por analogia seria analogia <i>in malam partem</i>.",
-      "Menor de 14: a idade se afere no momento da conduta (teoria da atividade, art. 4º). Majorantes do §2º-B: +1/3 a 1/2 (deficiência/doença que aumente a vulnerabilidade); +2/3 (autor ascendente, padrasto, tio, irmão, tutor, preceptor, empregador etc.); +2/3 (em instituição de <b>educação básica</b>, que não inclui a superior).",
-      "Instituição de ensino (X): abrange educação infantil, fundamental, médio e superior, públicas e privadas. Majorantes do §2º-C: +1/3 a 1/2 (vítima com deficiência ou doença limitante); +2/3 (autor com autoridade sobre a vítima <b>ou professor/funcionário da instituição</b>)."]},
+      "Menor de 14: a idade se afere no momento da conduta (teoria da atividade, art. 4º).",
+      "Instituição de ensino (X): abrange educação infantil, fundamental, médio e superior, públicas e privadas."]},
     { h:"Pluralidade de qualificadoras", p:[
       "Não existe homicídio \"duplamente qualificado\" para fins de pena: uma qualificadora qualifica; as demais vão para a 2ª fase (se forem agravantes) ou, residualmente, para a 1ª fase (circunstâncias judiciais).",
       "A idade (menor de 14) não pode qualificar e também majorar (§4º): bis in idem. Se outra qualificadora já qualificou, a idade pode funcionar como majorante do §4º."]}
@@ -170,6 +170,10 @@ secoes:[
     "Culposo (§3º): detenção de <b>1 a 3 anos</b>. +1/3 (§4º): inobservância de regra técnica, deixar de socorrer, não diminuir as consequências, fugir do flagrante.",
     "Perdão judicial (§5º): consequências tão graves para o próprio agente que a pena se torna desnecessária. Sentença <b>declaratória</b> da extinção da punibilidade (Súmula 18 do STJ)."],
   teoria:[
+    { h:"Majorantes do homicídio qualificado (§2º-B e §2º-C)", p:[
+      "Não são qualificadoras: não criam nova pena. Incidem na 3ª fase, como fração, sobre a pena do homicídio já qualificado pelo inciso IX (menor de 14) ou X (instituição de ensino).",
+      "§2º-B (vítima menor de 14 — inciso IX): +1/3 a 1/2 (deficiência/doença que aumente a vulnerabilidade); +2/3 (autor ascendente, padrasto, tio, irmão, tutor, preceptor, empregador etc.); +2/3 (em instituição de <b>educação básica</b>, que não inclui a superior).",
+      "§2º-C (instituição de ensino — inciso X): +1/3 a 1/2 (vítima com deficiência ou doença limitante); +2/3 (autor com autoridade sobre a vítima <b>ou professor/funcionário da instituição</b>)."]},
     { h:"Homicídio culposo", p:[
       "Imprudência (ação afoita), negligência (omissão de cautela) e imperícia (falta de aptidão técnica). Cirurgião experiente que esquece a pinça: negligência, não imperícia.",
       "Não há compensação de culpas: a culpa concorrente da vítima não exclui a do agente, só influi na pena (art. 59).",
