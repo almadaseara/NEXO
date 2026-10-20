@@ -134,8 +134,10 @@ export function showMenu(anchor, items, { align = 'left' } = {}) {
   for (const it of items) {
     if (it === 'sep') { menu.append(h('hr')); continue; }
     if (!it) continue;
+    if (it.tip) { menu.append(h('div', { class: 'menu-tip' }, it.tip)); continue; }
     const btn = h('button', { role: 'menuitem', class: it.danger ? 'danger' : '' },
       it.icon ? icon(ICONS[it.icon] || it.icon) : null, h('span', {}, it.label),
+      it.badge ? h('span', { class: 'menu-badge' }, it.badge) : null,
       it.checked ? h('span', { class: 'menu-check' }, '✓') : null);
     btn.addEventListener('click', (e) => { e.stopPropagation(); closeMenu(); it.onClick?.(); });
     menu.append(btn);

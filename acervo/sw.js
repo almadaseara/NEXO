@@ -1,7 +1,7 @@
 // Service worker do Acervo Digital Pessoal: deixa os cadernos funcionando offline.
 // Fica em /acervo/sw.js, então o escopo máximo é /acervo/ e ele nunca intercepta
 // as páginas do NEXO (index.html, revisao.html, admin.html).
-const VERSION = 'acervo-v4';
+const VERSION = 'acervo-v5';
 const SCOPE = new URL('./', self.location).href;
 const SHELL = [
   './',
@@ -28,6 +28,9 @@ const SHELL = [
   'js/browserai.js',
   'js/nexo.js',
   'js/sync.js',
+  'js/pickers.js',
+  'js/covers.js',
+  'js/newnotebook.js',
   'vendor/pdf.min.mjs',
   'vendor/pdf.worker.min.mjs',
   'vendor/pdf-lib.esm.min.js',
