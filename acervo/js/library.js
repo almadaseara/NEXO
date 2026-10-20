@@ -108,10 +108,15 @@ const TRASH_DAYS = 30;
 export async function refreshLibrary() {
   const all = await db.all('notebooks');
   const limite = Date.now() - TRASH_DAYS * 864e5;
+  const allFolders = await db.all('folders');
   for (const n of all.filter((x) => x.trashedAt && x.trashedAt < limite)) await deleteNotebook(n).catch(() => {});
+  for (const f of allFolders.filter((x) => x.trashedAt && x.trashedAt < limite)) await db.delete('folders', f.id).catch(() => {});
   state.notebooks = all.filter((x) => !x.trashedAt);
-  state.trash = all.filter((x) => x.trashedAt && x.trashedAt >= limite).sort((a, b) => b.trashedAt - a.trashedAt);
-  state.folders = (await db.all('folders')).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+  // na lixeira só aparece o item que o aluno apagou; o conteúdo de uma pasta apagada vai e volta com ela
+  state.trash = all.filter((x) => x.trashedAt && x.trashedAt >= limite && !x.trashedWith).sort((a, b) => b.trashedAt - a.trashedAt);
+  state.trashFolders = allFolders.filter((x) => x.trashedAt && x.trashedAt >= limite && !x.trashedWith).sort((a, b) => b.trashedAt - a.trashedAt);
+  state.trashAll = { notebooks: all.filter((x) => x.trashedAt && x.trashedAt >= limite), folders: allFolders.filter((x) => x.trashedAt && x.trashedAt >= limite) };
+  state.folders = allFolders.filter((x) => !x.trashedAt).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
   if (state.nav.startsWith('folder:') && !state.folders.some((f) => 'folder:' + f.id === state.nav)) state.nav = 'all';
   const due = await studyDueCount().catch(() => 0);
   const badge = $('study-due');
@@ -165,10 +170,10 @@ function folderMenu(f, e) {
     { label: 'Mover para…', icon: 'folder', onClick: () => moveDialog(f, 'folder') },
     'sep',
     { label: 'Excluir pasta', icon: 'trash', danger: true, onClick: async () => {
-      const ok = await confirmDialog('Excluir pasta?', `Os cadernos e subpastas de “${f.name}” não serão apagados: eles sobem um nível.`, { ok: 'Excluir pasta' });
+      const n = folderContents([f.id]);
+      const ok = await confirmDialog('Mover pasta para a lixeira?', `“${f.name}” e tudo o que está dentro (${n.books} ${n.books === 1 ? 'caderno' : 'cadernos'}, ${n.dirs} ${n.dirs === 1 ? 'subpasta' : 'subpastas'}) vão para a lixeira por ${TRASH_DAYS} dias.`, { ok: 'Mover para a lixeira', danger: true });
       if (!ok) return;
-      await removeFolderKeepingItems(f);
-      refreshLibrary();
+      await trashFolders([f]);
     } },
   ]);
 }
@@ -859,27 +864,84 @@ function renderSelectionBar() {
     h('button', { class: 'btn small danger', disabled: !n, onclick: async () => {
       const list = books(), folders = dirs(); const now = Date.now();
       if (folders.length) {
-        const ok = await confirmDialog('Apagar seleção?', `${folders.length === 1 ? 'A pasta' : 'As pastas'} será apagada, mas os cadernos e subpastas de dentro sobem um nível. Os cadernos selecionados vão para a lixeira.`, { ok: 'Apagar', danger: true });
+        const ok = await confirmDialog('Mover seleção para a lixeira?', `${folders.length === 1 ? 'A pasta' : 'As pastas'} e tudo o que está dentro, mais os cadernos selecionados, vão para a lixeira por ${TRASH_DAYS} dias.`, { ok: 'Mover para a lixeira', danger: true });
         if (!ok) return;
-        for (const f of folders) await removeFolderKeepingItems(f, new Set(folders.map((x) => x.id)));
       }
-      for (const x of list) x.trashedAt = now;
-      if (list.length) await db.putMany('notebooks', list);
+      const rootSet = new Set(folders.map((x) => x.id));
+      // caderno selecionado dentro de pasta também selecionada já vai junto com a pasta
+      const inFolder = new Set(); for (const f of folders) for (const id of descendantIds(f.id)) inFolder.add(id);
+      const solo = list.filter((x) => !(x.folderId && inFolder.has(x.folderId)));
+      const undoFolders = folders.length ? await trashFolders(folders, { quiet: true }) : null;
+      for (const x of solo) x.trashedAt = now;
+      if (solo.length) await db.putMany('notebooks', solo);
       setSelecting(false); refreshLibrary();
-      if (list.length) toast(`${list.length} caderno${list.length === 1 ? '' : 's'} na lixeira`, { action: 'Desfazer', duration: 6000, onAction: async () => {
-        for (const x of list) delete x.trashedAt; await db.putMany('notebooks', list); refreshLibrary();
+      const total = solo.length + (folders.length ? rootSet.size : 0);
+      toast(`${total} ${total === 1 ? 'item' : 'itens'} na lixeira`, { action: 'Desfazer', duration: 6000, onAction: async () => {
+        for (const x of solo) delete x.trashedAt;
+        if (solo.length) await db.putMany('notebooks', solo);
+        if (undoFolders) await restoreFolders(undoFolders, { quiet: true });
+        refreshLibrary();
       } });
     } }, icon(ICONS.trash), 'Apagar'));
   document.body.append(bar);
 }
 
-// Apaga a pasta e sobe os itens de dentro para o nível acima (ignorando outras pastas apagadas junto).
-async function removeFolderKeepingItems(f, alsoRemoved = new Set()) {
-  let up = f.parentId || null;
-  while (up && alsoRemoved.has(up)) up = folderOf(up)?.parentId || null;
-  for (const n of state.notebooks.filter((x) => x.folderId === f.id)) { n.folderId = up; await db.put('notebooks', n); }
-  for (const sub of state.folders.filter((x) => x.parentId === f.id && !alsoRemoved.has(x.id))) { sub.parentId = up; await db.put('folders', sub); }
-  await db.delete('folders', f.id);
+// Quantos cadernos e subpastas existem dentro das pastas (recursivo).
+function folderContents(rootIds) {
+  const ids = new Set(); for (const r of rootIds) for (const id of descendantIds(r)) ids.add(id);
+  return { dirs: ids.size - rootIds.length, books: state.notebooks.filter((n) => n.folderId && ids.has(n.folderId)).length };
+}
+
+// Pasta apagada vai para a lixeira com tudo o que está dentro. Só a pasta apagada pelo aluno aparece na
+// lixeira; o conteúdo recebe `trashedWith` (id dessa pasta) para voltar junto na restauração.
+async function trashFolders(roots, { quiet = false } = {}) {
+  const now = Date.now();
+  const set = new Set(roots.map((r) => r.id));
+  roots = roots.filter((r) => { let up = r.parentId; while (up) { if (set.has(up)) return false; up = folderOf(up)?.parentId; } return true; });
+  const dirs = [], books = [];
+  for (const root of roots) {
+    const ids = descendantIds(root.id);
+    for (const f of state.folders.filter((x) => ids.has(x.id))) { f.trashedAt = now; if (f.id !== root.id) f.trashedWith = root.id; dirs.push(f); }
+    for (const n of state.notebooks.filter((x) => x.folderId && ids.has(x.folderId))) { n.trashedAt = now; n.trashedWith = root.id; books.push(n); }
+  }
+  await db.putMany('folders', dirs);
+  if (books.length) await db.putMany('notebooks', books);
+  const undo = { roots, dirs, books };
+  if (!quiet) {
+    refreshLibrary();
+    toast(`${roots.length === 1 ? `Pasta “${roots[0].name}”` : `${roots.length} pastas`} na lixeira`, { action: 'Desfazer', duration: 6000, onAction: () => restoreFolders(undo) });
+  }
+  return undo;
+}
+
+async function restoreFolders({ roots, dirs, books }, { quiet = false } = {}) {
+  const rootIds = new Set(roots.map((r) => r.id));
+  for (const f of dirs) {
+    delete f.trashedAt; delete f.trashedWith;
+    // pasta-mãe apagada de vez ou ainda na lixeira por conta própria: a pasta volta para a raiz
+    if (rootIds.has(f.id) && f.parentId && !state.folders.some((x) => x.id === f.parentId)) f.parentId = null;
+  }
+  for (const n of books) { delete n.trashedAt; delete n.trashedWith; }
+  await db.putMany('folders', dirs);
+  if (books.length) await db.putMany('notebooks', books);
+  if (!quiet) { toast('Pasta restaurada'); refreshLibrary(); }
+}
+
+// Reconstrói o que uma pasta da lixeira carrega (pastas e cadernos marcados com o id dela).
+function trashedBundle(f) {
+  const all = state.trashAll || { notebooks: [], folders: [] };
+  const dirs = [f, ...all.folders.filter((x) => x.trashedWith === f.id)];
+  return { roots: [f], dirs, books: all.notebooks.filter((n) => n.trashedWith === f.id) };
+}
+
+async function purgeFolder(f) {
+  const b = trashedBundle(f);
+  const ok = await confirmDialog('Excluir definitivamente?', `“${f.name}” e ${b.books.length} ${b.books.length === 1 ? 'caderno' : 'cadernos'} de dentro serão apagados deste aparelho. Isso não pode ser desfeito.`, { ok: 'Excluir', danger: true });
+  if (!ok) return;
+  for (const n of b.books) await deleteNotebook(n);
+  for (const d of b.dirs) await db.delete('folders', d.id);
+  toast('Pasta excluída definitivamente');
+  refreshLibrary();
 }
 
 async function moveMany(list, dirs = []) {
@@ -927,21 +989,35 @@ async function purgeNotebook(nb) {
 function renderTrash(content) {
   content.replaceChildren();
   const list = state.trash || [];
-  if (!list.length) {
+  const dirsT = state.trashFolders || [];
+  if (!list.length && !dirsT.length) {
     content.append(h('div', { class: 'empty' }, h('div', {}, h('h2', {}, 'A lixeira está vazia'),
-      h('div', {}, `Cadernos excluídos ficam aqui por ${TRASH_DAYS} dias e podem ser restaurados.`))));
+      h('div', {}, `Cadernos e pastas excluídos ficam aqui por ${TRASH_DAYS} dias e podem ser restaurados.`))));
     return;
   }
   content.append(h('div', { class: 'trash-head' },
-    h('p', {}, `Cadernos excluídos ficam aqui por ${TRASH_DAYS} dias e depois são apagados de vez.`),
+    h('p', {}, `Cadernos e pastas excluídos ficam aqui por ${TRASH_DAYS} dias e depois são apagados de vez.`),
     h('button', { class: 'btn', onclick: async () => {
-      const ok = await confirmDialog('Esvaziar a lixeira?', `${list.length} ${list.length === 1 ? 'caderno será apagado' : 'cadernos serão apagados'} deste aparelho. Isso não pode ser desfeito.`, { ok: 'Esvaziar', danger: true });
+      const all = state.trashAll;
+      const ok = await confirmDialog('Esvaziar a lixeira?', `${all.notebooks.length} ${all.notebooks.length === 1 ? 'caderno' : 'cadernos'} e ${all.folders.length} ${all.folders.length === 1 ? 'pasta serão apagados' : 'pastas serão apagados'} deste aparelho. Isso não pode ser desfeito.`, { ok: 'Esvaziar', danger: true });
       if (!ok) return;
-      for (const n of list) await deleteNotebook(n);
+      for (const n of all.notebooks) await deleteNotebook(n);
+      for (const f of all.folders) await db.delete('folders', f.id);
       toast('Lixeira esvaziada');
       refreshLibrary();
     } }, 'Esvaziar lixeira')));
   const rows = h('div', { class: 'results trash-list' });
+  for (const f of dirsT) {
+    const b = trashedBundle(f);
+    const dias = Math.max(0, TRASH_DAYS - Math.floor((Date.now() - f.trashedAt) / 864e5));
+    rows.append(h('div', { class: 'result trash-row' },
+      h('span', { class: 'lr-folder' }, folderGlyph(f.color || FOLDER_COLOR, f.icon, f.emoji)),
+      h('div', { class: 'trash-info' }, h('div', { class: 'r-title' }, f.name),
+        h('div', { class: 'r-snip' }, `Pasta · ${b.books.length} ${b.books.length === 1 ? 'caderno' : 'cadernos'}, ${b.dirs.length - 1} ${b.dirs.length - 1 === 1 ? 'subpasta' : 'subpastas'} · excluída ${relativeDate(f.trashedAt)} · apagada de vez em ${dias} ${dias === 1 ? 'dia' : 'dias'}`)),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn', onclick: () => restoreFolders(trashedBundle(f)) }, 'Restaurar'),
+        h('button', { class: 'btn danger', onclick: () => purgeFolder(f) }, 'Excluir definitivamente'))));
+  }
   for (const nb of list) {
     const dias = Math.max(0, TRASH_DAYS - Math.floor((Date.now() - nb.trashedAt) / 864e5));
     rows.append(h('div', { class: 'result trash-row' },
