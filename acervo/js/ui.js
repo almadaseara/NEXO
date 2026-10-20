@@ -151,7 +151,11 @@ export function showMenu(anchor, items, { align = 'left' } = {}) {
   menu.style.top = y + 'px';
   openMenu = menu;
   setTimeout(() => {
-    const off = (e) => { if (!menu.contains(e.target)) { closeMenu(); document.removeEventListener('pointerdown', off, true); } };
+    // Só fecha o próprio menu: se ele já foi trocado por um submenu, sai sem fechar o submenu.
+    const off = (e) => {
+      if (openMenu !== menu) { document.removeEventListener('pointerdown', off, true); return; }
+      if (!menu.contains(e.target)) { closeMenu(); document.removeEventListener('pointerdown', off, true); }
+    };
     document.addEventListener('pointerdown', off, true);
   });
   return menu;

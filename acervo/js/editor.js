@@ -178,6 +178,8 @@ export async function openEditor(notebookId, { pageIndex = 0, query = '' } = {})
     for (const im of p.images) assetsSeen.add(im.assetId);
   }
   nb.outline ||= [];
+  nb.trashedPages ||= [];
+  purgeOldTrashedPages().catch(() => {});
   nb.recordings ||= [];
   undoStack = []; redoStack = []; selection = null; pendingCard = null; find = { query: '', hits: [], idx: -1 };
   $('ed-title').value = nb.title;
@@ -1998,8 +2000,24 @@ async function pageOp(newIds, extraPages = []) {
 async function applyPageOrder(ids, pool) {
   const current = new Set(nb.pageIds);
   const next = new Set(ids);
-  for (const id of current) if (!next.has(id)) await db.delete('pages', id);
-  for (const id of ids) if (!current.has(id)) await db.put('pages', pool.get(id));
+  // Página que sai do caderno vai para a lixeira de páginas (guarda posição e data); nada é apagado.
+  nb.trashedPages ||= [];
+  const oldOrder = nb.pageIds.slice();
+  for (const id of current) {
+    if (next.has(id)) continue;
+    const p = pool.get(id) || pageById(id);
+    if (!p) continue;
+    p.trashedAt = Date.now();
+    await db.put('pages', p);
+    nb.trashedPages = [...nb.trashedPages.filter((t) => t.id !== id), { id, index: oldOrder.indexOf(id), at: p.trashedAt }];
+  }
+  for (const id of ids) {
+    if (current.has(id)) continue;
+    const p = pool.get(id);
+    if (p?.trashedAt) delete p.trashedAt;
+    nb.trashedPages = nb.trashedPages.filter((t) => t.id !== id);
+    await db.put('pages', p);
+  }
   nb.pageIds = ids.slice();
   pages = ids.map((id) => pool.get(id) || pageById(id)).filter(Boolean);
   for (const p of pages) { p.tapes ||= []; p.links ||= []; }
@@ -2052,7 +2070,70 @@ async function deletePage(i) {
   }
   const ids = nb.pageIds.filter((id) => id !== pages[i].id);
   await pageOp(ids);
-  toast('Página excluída', { action: 'Desfazer', onAction: undo });
+  toast('Página enviada para a lixeira de páginas', { action: 'Desfazer', onAction: undo });
+}
+
+// ---------- Lixeira de páginas ----------
+const PAGE_TRASH_DAYS = 30;
+async function purgeOldTrashedPages() {
+  const limite = Date.now() - PAGE_TRASH_DAYS * 864e5;
+  const velhas = (nb.trashedPages || []).filter((t) => t.at < limite);
+  for (const t of velhas) await purgeTrashedPage(t.id, { silent: true });
+}
+
+async function purgeTrashedPage(id, { silent = false } = {}) {
+  const p = await db.get('pages', id);
+  nb.trashedPages = (nb.trashedPages || []).filter((t) => t.id !== id);
+  if (p && p.trashedAt && !nb.pageIds.includes(id)) {
+    const assets = new Set([p.pdf?.assetId, p.bgAsset, ...(p.images || []).map((im) => im.assetId)].filter(Boolean));
+    await db.delete('pages', id);
+    await collectGarbage(assets);
+  }
+  await saveNotebook();
+  if (!silent) toast('Página excluída definitivamente');
+}
+
+async function restoreTrashedPage(t) {
+  const p = await db.get('pages', t.id);
+  if (!p) { nb.trashedPages = nb.trashedPages.filter((x) => x.id !== t.id); await saveNotebook(); return; }
+  await flushSave();
+  const ids = nb.pageIds.slice();
+  ids.splice(Math.min(Math.max(0, t.index), ids.length), 0, t.id);
+  const pool = new Map(pages.map((x) => [x.id, x]));
+  pool.set(p.id, p);
+  pushUndo({ type: 'pages', before: nb.pageIds.slice(), after: ids.slice(), pool });
+  await applyPageOrder(ids, pool);
+  scrollToPage(ids.indexOf(t.id));
+  toast('Página restaurada');
+}
+
+async function pageTrashDialog() {
+  await flushSave();
+  const list = (nb.trashedPages || []).slice().sort((a, b) => b.at - a.at);
+  await modal((box, close) => {
+    box.append(h('h2', {}, 'Lixeira de páginas'));
+    if (!list.length) {
+      box.append(h('p', {}, `Nenhuma página excluída. Páginas excluídas ficam aqui por ${PAGE_TRASH_DAYS} dias.`));
+    } else {
+      box.append(h('p', {}, `Páginas excluídas ficam aqui por ${PAGE_TRASH_DAYS} dias e depois são apagadas de vez.`));
+      const grid = h('div', { class: 'page-trash-grid' });
+      for (const t of list) {
+        const canvas = h('canvas', { style: { width: '100%', display: 'block' } });
+        db.get('pages', t.id).then((p) => { if (p) renderPageFlat(p, canvas, 150); });
+        const quando = new Date(t.at).toLocaleDateString('pt-BR');
+        grid.append(h('div', { class: 'page-trash-item' }, h('div', { class: 'page-trash-thumb' }, canvas),
+          h('small', {}, `Era a página ${t.index + 1} · ${quando}`),
+          h('div', { class: 'row' },
+            h('button', { class: 'btn small', onclick: () => { close(); restoreTrashedPage(t); } }, 'Restaurar'),
+            h('button', { class: 'btn small danger', onclick: async () => {
+              if (!(await confirmDialog('Excluir página definitivamente?', 'Isso não pode ser desfeito.', { ok: 'Excluir', danger: true }))) return;
+              close(); await purgeTrashedPage(t.id);
+            } }, 'Excluir'))));
+      }
+      box.append(grid);
+    }
+    box.append(h('div', { class: 'actions' }, h('button', { class: 'btn ghost', onclick: () => close() }, 'Fechar')));
+  });
 }
 
 async function movePage(i, to) {
@@ -2181,6 +2262,7 @@ function moreMenu() {
     'sep',
     isBoard() ? { label: 'Fundo do quadro…', icon: 'template', onClick: () => pageTemplateDialog(0) }
       : { label: `Página ${currentIndex + 1}…`, icon: 'page', onClick: () => showMenu(btn, pageMenuItems(currentIndex), { align: 'right' }) },
+    isBoard() ? null : { label: `Lixeira de páginas${(nb.trashedPages || []).length ? ' (' + nb.trashedPages.length + ')' : ''}`, icon: 'trash', onClick: pageTrashDialog },
     'sep',
     { label: 'Desenhar só com a caneta', icon: 'pen', checked: settings.penOnly, onClick: () => {
       settings.penOnly = !settings.penOnly; saveSettings();

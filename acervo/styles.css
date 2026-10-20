@@ -557,3 +557,25 @@ button:active { transform: translateY(1px); }
 .trash-row .trash-info { flex: 1; min-width: 0; }
 .trash-row .row { gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 @media (max-width: 640px) { .trash-row { flex-wrap: wrap; } .trash-row .row { width: 100%; justify-content: flex-start; } }
+
+/* Lixeira de páginas */
+.page-trash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; max-height: 60vh; overflow: auto; margin: 10px 0; }
+.page-trash-item { display: flex; flex-direction: column; gap: 6px; }
+.page-trash-thumb { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; }
+.page-trash-item small { color: var(--ink-3, #6b7c78); font-size: 12px; }
+.page-trash-item .row { display: flex; gap: 6px; }
+
+/* Seleção em lote */
+.card.selectable { position: relative; cursor: pointer; }
+.card.selectable .sel-check { position: absolute; top: 8px; left: 8px; z-index: 2; width: 22px; height: 22px; border-radius: 50%;
+  border: 2px solid #fff; background: rgba(0,0,0,.25); box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+.card.selected { outline: 3px solid var(--nx-accent, #2f7968); outline-offset: 2px; border-radius: 12px; }
+.card.selected .sel-check { background: var(--nx-accent, #2f7968); }
+.card.selected .sel-check::after { content: ''; position: absolute; left: 6px; top: 2px; width: 5px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.sel-bar { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 50; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  max-width: calc(100% - 24px); padding: 10px 12px; border-radius: 14px; background: var(--nx-surface, #fff); border: 1px solid var(--nx-line, #e3e9e7);
+  box-shadow: 0 10px 30px rgba(0,0,0,.18); color: var(--nx-ink, #213638); }
+.sel-bar b { font-size: 13px; margin-right: 4px; }
+.sel-bar .sel-sep { width: 1px; height: 22px; background: var(--nx-line, #e3e9e7); }
+.btn.small { padding: 6px 10px; font-size: 12.5px; }
+.btn[disabled] { opacity: .45; pointer-events: none; }
