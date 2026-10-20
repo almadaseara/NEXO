@@ -17,7 +17,7 @@ var DIA = 864e5;
 var DIAS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
 var DCURTO = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 var PRIO_MOD = { 'MUITO ALTA':3, 'ALTA':2, 'MÉDIA':2, 'COMPLEMENTAR':1 };
-var PRIO_NOME = { 3:'Prioridade alta', 2:'Prioridade média', 1:'Complementar' };
+var PRIO_NOME = { 3:'Prioridade alta', 2:'Prioridade média', 1:'Prioridade baixa' };
 var DISC_SITE = { penal:'Direito Penal', constitucional:'Direito Constitucional', administrativo:'Direito Administrativo', medicina_legal:'Medicina Legal' };
 /* tópicos iguais em duas disciplinas do edital contam como um só */
 var IGUAIS = { 'top:da-lopc':'top:lg-11370', 'top:da-6677':'top:lg-6677', 'top:le-racismo':'top:ig-7716' };
@@ -48,6 +48,15 @@ function topicos(discId){
     var pr = ms.length ? Math.max.apply(null, ms.map(function(id){ return PRIO_MOD[modulo(id).priority] || 2; })) : t[3];
     return { id:t[0], nome:t[1], mods:ms, prio:pr, estimada:!ms.length, h:t[4], ordem:i, disc:discId };
   });
+}
+/* prioridade da disciplina: média da prioridade dos seus tópicos (3 alta, 2 média, 1 baixa) */
+function prioDisciplina(discId){
+  var ts = topicos(discId); if(!ts.length) return 0;
+  var m = ts.reduce(function(a, t){ return a + t.prio; }, 0) / ts.length;
+  return m >= 2.5 ? 3 : m >= 1.75 ? 2 : 1;
+}
+function legendaPrio(){
+  return '<span class="nt-leg" aria-label="Legenda de prioridade"><span><i class="nt-pdot p3"></i>Alta</span><span><i class="nt-pdot p2"></i>Média</span><span><i class="nt-pdot p1"></i>Baixa</span></span>';
 }
 function topico(id){ for(var k in ED.disciplinas){ var t = topicos(k).find(function(x){ return x.id === id; }); if(t) return t; } return null; }
 /* palavras de estudo de um módulo (teoria + lei seca + julgados) */
@@ -485,9 +494,9 @@ window.nexoCronograma = function(a){
   var topo = '<div class="nx-head"><div><h1>Minha trilha</h1><p>' + (s.plan ? (ED.cargos[s.plan.cargo] || {}).nome + ' · ' : '') + ED.nome + ' · ' + ED.banca + '</p></div>'
     + '<div class="nt-prova"><b>' + (faltam > 0 ? faltam : 0) + '</b><span>dias para a prova<br>' + dma(deIso(ED.prova)) + '</span></div></div>';
   var conta = E().conectado() ? '' : '<p class="nt-aviso">Seu plano está salvo neste navegador. Entre na sua conta para guardar o plano, o progresso dos livros e as marcações e usar em outros aparelhos.</p>';
-  if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<h2 class="nt-edtit">Edital verticalizado</h2>' + telaEdital(s) + '</div>'; v.scrollTop = 0; return; }
+  if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEdital(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
-  var abas = '<div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>'
+  var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
     + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>';
   v.innerHTML = '<div class="nx-page nt">' + topo + conta + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEdital(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
 };
@@ -656,5 +665,5 @@ document.addEventListener('nexo:estudo', function(e){ if(e.detail === 'sincroniz
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inicial); else setTimeout(inicial, 0);
 })();
 
-window.nexoTrilha = { gerarSemana:gerarSemana, gerarPlano:gerarPlano, topicos:topicos, unidades:unidades, progresso:progresso, editais:EDS, edital:function(){ return ED; } };
+window.nexoTrilha = { prioDisciplina:prioDisciplina, legendaPrio:legendaPrio, prioNome:function(n){ return PRIO_NOME[n]; }, gerarSemana:gerarSemana, gerarPlano:gerarPlano, topicos:topicos, unidades:unidades, progresso:progresso, editais:EDS, edital:function(){ return ED; } };
 })();

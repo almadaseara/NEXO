@@ -682,7 +682,6 @@ button:disabled { opacity: .35; cursor: not-allowed; }
   </header>
   <nav class="access-bar" aria-label="Acesso rápido">
     <button type="button" data-area="home" onclick="home()"><span data-icon="home"></span><span>Painel</span></button>
-    <button type="button" data-area="library" onclick="openLibrary()"><span data-icon="book"></span><span>Módulos</span></button>
     <button type="button" data-area="questions" onclick="openLibrary('quest')"><span data-icon="check"></span><span>Questões</span></button>
     <button type="button" data-area="law" onclick="openLibrary('lei')"><span data-icon="shield"></span><span>Lei seca</span></button>
     <button type="button" data-area="maps" class="access-secondary" onclick="openLibrary('mapa')"><span data-icon="map"></span><span>Mapas mentais</span></button>
@@ -820,7 +819,7 @@ function renderNav(){
   const admItems=items.filter(m=>m.discipline==='Direito Administrativo');
   const medItems=items.filter(m=>m.discipline==='Medicina Legal');
   const penalItems=items.filter(m=>m.discipline==='Direito Penal');
-  let h=`<div class="sec">Seu espaço de estudo</div><button class="primary-nav ${current===null?'active':''}" onclick="home()">${icon('home')} Painel de estudos</button><button class="primary-nav ${current==='library'?'active':''}" onclick="openLibrary()">${icon('book')} Meus módulos</button><button class="primary-nav" onclick="openLibrary('quest')">${icon('check')} Praticar questões</button><button class="primary-nav ${current==='ranking'?'active':''}" onclick="incidence()">${icon('chart')} Prioridades de estudo</button><button class="primary-nav ${current==='sources'?'active':''}" onclick="officialBank()">${icon('shield')} Fontes oficiais</button>${(nexoProfile&&nexoProfile.can_admin&&nexoMode==='admin')?`<div class="sec">Administração</div><button class="primary-nav admin-nav-marker ${current==='admin-robot'?'active':''}" onclick="openAdminRobot()">${icon('chart')} Robô de Questões</button>`:''}<button class="primary-nav ${current==='flashcards'?'active':''}" onclick="showFlashcards()">${icon('book')} Flashcards</button><div class="sec library-label">Biblioteca <span>${modules.length} módulos</span></div>`;
+  let h=`<div class="sec">Seu espaço de estudo</div><button class="primary-nav ${current===null?'active':''}" onclick="home()">${icon('home')} Painel de estudos</button><button class="primary-nav" onclick="openLibrary('quest')">${icon('check')} Praticar questões</button><button class="primary-nav ${current==='sources'?'active':''}" onclick="officialBank()">${icon('shield')} Fontes oficiais</button>${(nexoProfile&&nexoProfile.can_admin&&nexoMode==='admin')?`<div class="sec">Administração</div><button class="primary-nav admin-nav-marker ${current==='admin-robot'?'active':''}" onclick="openAdminRobot()">${icon('chart')} Robô de Questões</button>`:''}<button class="primary-nav ${current==='flashcards'?'active':''}" onclick="showFlashcards()">${icon('book')} Flashcards</button><div class="sec library-label">Biblioteca <span>${modules.length} módulos</span></div>`;
   h+=`<div class="folder-wrap" id="const-folder"><button class="folder-btn" onclick="toggleConstFolder()" aria-expanded="false"><span>${icon('book')} Direito Constitucional</span><span class="arrow">›</span></button><div class="folder-list">`;
   constItems.forEach(m=>{h+=`<button onclick="openModule('${m.id}')" class="module-nav ${current===m.id?'active':''}"><span class="module-dot"></span><span>${m.title}</span></button>`;});
   if(!constItems.length) h+='<p class="nav-empty">Nenhum assunto encontrado.</p>';
@@ -2000,8 +1999,7 @@ function renderCommand() {
   const actions = [
     { id: 'home', label: 'Painel de estudos', icon: 'home', hint: 'Visão geral' },
     ...Object.entries(resourceOptions).map(([id, settings]) => ({ id, label: settings.short, icon: settings.icon, hint: 'Explorar biblioteca' })),
-    { id: 'sources', label: 'Fontes oficiais', icon: 'shield', hint: 'Conferir referências' },
-    { id: 'ranking', label: 'Prioridades de estudo', icon: 'chart', hint: 'Ordem sugerida' }
+    { id: 'sources', label: 'Fontes oficiais', icon: 'shield', hint: 'Conferir referências' }
   ].filter(action => normalizeSearch(action.label).includes(query));
   const found = sortedModules().filter(module => normalizeSearch(`${module.title} ${module.focus}`).includes(query));
   const actionResults = actions.map(action => `<button type="button" class="command-result" onclick="commandNavigate('action','${action.id}')">${workspaceIcon(action.icon)}<span><b>${action.label}</b><small>${action.hint}</small></span>${icon('arrow')}</button>`).join('');

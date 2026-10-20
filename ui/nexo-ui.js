@@ -624,7 +624,7 @@ function secaoMinhas(){
   var opts = '<option value="">Sem assunto</option>' + listaDisciplinas().map(function(nome){ return '<optgroup label="' + escH(nome) + '">' + folhas(['', arvoreDe(nome)]).map(function(id){ return '<option value="' + id + '">' + escH(rotulo(id)) + '</option>'; }).join('') + '</optgroup>'; }).join('');
   return '<section class="nx-panel fx-minhas" aria-label="Minhas fichas"><div class="fx-minhas-h"><div><h2>Minhas fichas</h2><p class="nx-sub">Crie fichas com suas palavras. Também dá para criar a partir de um trecho do livro: selecione o texto e toque em <b>+ Ficha</b>.</p></div>'
     + (l.length ? '<button type="button" class="nx-btn primary small" data-fx-scope="u">Revisar minhas fichas (' + hoje + ')</button>' : '') + '</div>'
-    + '<details class="fx-nova"' + (l.length ? '' : ' open') + '><summary>Criar ficha</summary><form id="fx-nova-form" class="fx-nova-form">'
+    + '<details class="fx-nova"><summary>Criar ficha</summary><form id="fx-nova-form" class="fx-nova-form">'
     + '<label>Frente (pergunta)<textarea name="f" rows="2" maxlength="600" required placeholder="Ex.: Qual a redução de pena no erro de proibição evitável?"></textarea></label>'
     + '<label>Verso (resposta)<textarea name="v" rows="3" maxlength="1200" required placeholder="Ex.: De 1/6 a 1/3 (CP, art. 21)."></textarea></label>'
     + '<label>Assunto<select name="m">' + opts + '</select></label>'

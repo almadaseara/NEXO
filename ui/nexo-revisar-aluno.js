@@ -88,7 +88,8 @@ window.nexoRevisarHub = function(){
       + ' · ' + d.pend + (d.pend === 1 ? ' erro pendente' : ' erros pendentes') + '</span></button>';
   }).join('');
   view().innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Revisar</h1>'
-    + '<p>Veja seu domínio por disciplina e assunto e escolha como revisar: pelas questões que você errou ou pelos flashcards.</p></div></div>'
+    + '<p>Veja seu domínio por disciplina e assunto e escolha como revisar: pelas questões que você errou ou pelos flashcards.</p></div>'
+    + '<div><button type="button" class="nx-btn small" onclick="nexoLivros()">← Livros digitais</button></div></div>'
     + (c.disciplinas.length ? '<div class="rva-grid">' + cards + '</div>' : '<div class="nx-empty"><b>Nenhuma disciplina disponível.</b></div>')
     + '<p class="nx-sub" style="margin-top:16px">O percentual considera só questões (acertos ÷ respostas). Flashcards não entram nessa conta.</p></div>';
   view().scrollTop = 0;
@@ -121,39 +122,4 @@ document.addEventListener('click', function(ev){
   window.nexoCadernoErros({ disc:nome, assunto:b.getAttribute('data-rva-questoes') || '', status:'pendente', origem:true });
 });
 
-/* entradas "Revisar": na barra de acesso, logo depois de "Questões" (Praticar questões), e na lateral, junto de
-   "Revisão de hoje" e "Caderno de erros" */
-var navAnterior = window.renderNav;
-var ICONE = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.5L4 10"/><path d="M4 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.5L20 14"/><path d="M20 20v-6h-6"/></svg>';
-function ativo(){ return atual() === 'revisar-aluno' || atual() === 'caderno'; }
-function barraAcesso(){
-  var bar = document.querySelector('.access-bar'); if(!bar) return;
-  var b = bar.querySelector('[data-area="revisar"]');
-  if(!b){
-    var q = bar.querySelector('[data-area="questions"]'); if(!q) return;
-    q.insertAdjacentHTML('afterend', '<button type="button" data-area="revisar" onclick="nexoRevisarHub()">' + ICONE + '<span>Revisar</span></button>');
-    b = bar.querySelector('[data-area="revisar"]');
-  }
-  if(ativo()){
-    Array.prototype.forEach.call(bar.querySelectorAll('[data-area]'), function(x){ x.classList.remove('selected'); x.removeAttribute('aria-current'); });
-    b.classList.add('selected'); b.setAttribute('aria-current', 'page');
-  }else if(b.classList.contains('selected')){ b.classList.remove('selected'); b.removeAttribute('aria-current'); }
-}
-window.renderNav = function(){
-  var r;
-  try{ if(typeof navAnterior === 'function') r = navAnterior.apply(this, arguments); }catch(e){}
-  var nav = document.getElementById('nav'); if(!nav) return r;
-  Array.prototype.slice.call(nav.querySelectorAll('.nx-rva-nav')).forEach(function(x){ x.parentNode.removeChild(x); });
-  var html = '<button type="button" class="primary-nav nx-nav-extra nx-rva-nav' + (ativo() ? ' active' : '') + '" onclick="nexoRevisarHub()">' + ICONE + ' Revisar</button>';
-  var ref = nav.querySelector('.nx-cad-nav') || nav.querySelector('.folder-wrap');
-  if(ref) ref.insertAdjacentHTML('beforebegin', html); else nav.insertAdjacentHTML('beforeend', html);
-  barraAcesso();
-  return r;
-};
-var syncAnterior = window.syncAccess;
-window.syncAccess = function(){
-  try{ if(typeof syncAnterior === 'function') syncAnterior.apply(this, arguments); }catch(e){}
-  barraAcesso();
-};
-barraAcesso();
 })();
