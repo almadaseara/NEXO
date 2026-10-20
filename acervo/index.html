@@ -89,6 +89,7 @@
         <button class="icon-btn" id="ed-back" title="Voltar ao acervo" aria-label="Voltar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
         <button class="icon-btn" id="ed-pages" title="Miniaturas das páginas" aria-label="Páginas"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></button>
         <input id="ed-title" class="title-input" aria-label="Título do caderno" />
+        <button type="button" class="ro-toggle" id="ed-readonly" aria-pressed="true"></button>
       </div>
 
       <div class="tb-group tools" id="tools">
@@ -120,6 +121,7 @@
 
     <div class="ed-body">
       <aside class="thumbs" id="thumbs" hidden></aside>
+      <div class="ro-banner" id="ro-banner" role="status" hidden><span><b>Modo leitura ligado.</b><span class="ro-long"> Para escrever, desative-o.</span></span><button type="button" class="btn primary" id="ro-edit">Editar</button></div>
       <div class="canvas-scroll" id="scroller">
         <div class="pages" id="pages"></div>
       </div>
