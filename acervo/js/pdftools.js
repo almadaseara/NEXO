@@ -3,7 +3,7 @@ import { PDFDocument, PDFName, PDFString, rgb, degrees, StandardFonts } from '..
 import { saveAsset, getAssetBlob, uid } from './db.js';
 import {
   loadPdf, extractPdfText, extractPdfOutline, drawTemplate, drawBgImage, drawPdfPage, strokeSvgPath, fillSvgPath,
-  wrapLines, loadImage, tapeCorners, PAPER_COLORS, NOTE_PAD,
+  wrapLines, loadImage, tapeCorners, PAPER_COLORS, NOTE_PAD, drawTextBox,
 } from './render.js';
 
 // Salva o PDF e devolve as páginas prontas para um caderno.
@@ -88,12 +88,29 @@ async function rasterBackground(page, includePdf) {
   return canvasToPngBytes(c);
 }
 
+// A fonte padrão do PDF (Helvetica) cobre os acentos do português, mas não símbolos como → ≠ ≤ ✓
+// nem emojis. safeText devolve o texto codificável e diz se algo ficou de fora.
 function safeText(font, text) {
-  let out = '';
+  let out = '', missing = false;
   for (const ch of text) {
-    try { font.encodeText(ch); out += ch; } catch { out += ch === '\t' ? '  ' : '?'; }
+    if (ch === '\t') { out += '  '; continue; }
+    try { font.encodeText(ch); out += ch; } catch { out += ' '; if (ch.trim()) missing = true; }
   }
-  return out;
+  return { text: out, missing };
+}
+
+// Caixa de texto com caracteres fora da fonte padrão: sai como imagem nítida (3x), desenhada pelo
+// mesmo código do editor, em vez de trocar símbolos por "?".
+async function textBoxImage(out, t, lineCount) {
+  const scale = 3, pad = (t.bg ? NOTE_PAD : 0) + 4;
+  const lh = t.size * 1.3;
+  const w = t.w + pad * 2, h = Math.max(t.h || 0, lineCount * lh) + pad * 2;
+  const c = document.createElement('canvas');
+  c.width = Math.ceil(w * scale); c.height = Math.ceil(h * scale);
+  const ctx = c.getContext('2d');
+  ctx.scale(scale, scale);
+  drawTextBox(ctx, { ...t, x: pad, y: pad });
+  return { png: await out.embedPng(await canvasToPngBytes(c)), w, h, pad };
 }
 
 export async function exportNotebookPdf(notebook, pages, onProgress) {
@@ -191,9 +208,18 @@ export async function exportNotebookPdf(notebook, pages, onProgress) {
 
     for (const t of page.texts || []) {
       const f = t.bold ? fontBold : font;
-      const text = safeText(f, t.text);
+      const { text, missing } = safeText(f, t.text);
       const lines = wrapLines((str) => f.widthOfTextAtSize(str, t.size), text, t.w);
       const lh = t.size * 1.3;
+      if (missing) {
+        // imagem por cima; o texto codificável fica invisível por baixo para a busca e a seleção
+        lines.forEach((ln, k) => {
+          pdfPage.drawText(ln, { x: ox + t.x, y: top - t.y - k * lh - (lh - t.size) / 2 - t.size * 0.8, size: t.size, font: f, opacity: 0 });
+        });
+        const im = await textBoxImage(out, t, lines.length);
+        pdfPage.drawImage(im.png, { x: ox + t.x - im.pad, y: top - t.y + im.pad - im.h, width: im.w, height: im.h });
+        continue;
+      }
       if (t.bg) {
         const hgt = Math.max(t.h || 0, lines.length * lh) + NOTE_PAD * 2;
         pdfPage.drawRectangle({ x: ox + t.x - NOTE_PAD, y: top - t.y + NOTE_PAD - hgt, width: t.w + NOTE_PAD * 2, height: hgt, color: hexToRgb(t.bg) });

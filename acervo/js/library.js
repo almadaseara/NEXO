@@ -13,7 +13,7 @@ const IMG_ICON = '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9
 const FOLDER_SVG = '<path d="M2.5 7.5A2.5 2.5 0 0 1 5 5h4.2a2 2 0 0 1 1.5.7L12 7h7a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5z"/>';
 const PATTERNS = { plain: 'Lisa', lines: 'Linhas', dots: 'Pontos', diag: 'Listras', page: '1ª página' };
 
-const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [] };
+const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [], trash: [] };
 let onOpen = () => {};
 const thumbCache = new Map(); // notebookId -> {key, url}
 
@@ -67,8 +67,16 @@ export function setNav(nav) {
   render();
 }
 
+// Lixeira: excluir manda o caderno para cá (trashedAt) sem apagar páginas nem arquivos; ele some
+// das listas, da busca e das páginas marcadas, pode ser restaurado e é apagado de vez depois de
+// TRASH_DAYS dias ou pelo botão "Excluir definitivamente".
+const TRASH_DAYS = 30;
 export async function refreshLibrary() {
-  state.notebooks = await db.all('notebooks');
+  const all = await db.all('notebooks');
+  const limite = Date.now() - TRASH_DAYS * 864e5;
+  for (const n of all.filter((x) => x.trashedAt && x.trashedAt < limite)) await deleteNotebook(n).catch(() => {});
+  state.notebooks = all.filter((x) => !x.trashedAt);
+  state.trash = all.filter((x) => x.trashedAt && x.trashedAt >= limite).sort((a, b) => b.trashedAt - a.trashedAt);
   state.folders = (await db.all('folders')).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
   if (state.nav.startsWith('folder:') && !state.folders.some((f) => 'folder:' + f.id === state.nav)) state.nav = 'all';
   const due = await studyDueCount().catch(() => 0);
@@ -469,6 +477,7 @@ async function renderContent() {
   if (state.nav === 'favorites') { list = list.filter((n) => n.favorite); title = 'Favoritos'; }
   else if (state.nav === 'bookmarks') { $('lib-title').textContent = 'Páginas marcadas'; return renderBookmarks(content); }
   else if (state.nav === 'study') { $('lib-title').textContent = 'Estudar'; return renderStudyView(content, () => refreshLibrary()); }
+  else if (state.nav === 'trash') { $('lib-title').textContent = 'Lixeira'; return renderTrash(content); }
   let subfolders = [];
   const explorer = state.nav === 'all' || state.nav.startsWith('folder:');
   const here = explorer ? currentFolderId() : null;
@@ -655,10 +664,7 @@ function notebookMenu(nb, anchor) {
     { label: 'Duplicar', icon: 'copy', onClick: () => duplicateNotebook(nb) },
     { label: 'Exportar PDF', icon: 'pdf', onClick: () => exportPdfFlow(nb) },
     'sep',
-    { label: 'Excluir', icon: 'trash', danger: true, onClick: async () => {
-      const ok = await confirmDialog('Excluir caderno?', `“${nb.title}” e todas as suas páginas serão apagados deste aparelho. Isso não pode ser desfeito.`, { ok: 'Excluir', danger: true });
-      if (ok) { await deleteNotebook(nb); toast('Caderno excluído'); refreshLibrary(); }
-    } },
+    { label: 'Mover para a lixeira', icon: 'trash', danger: true, onClick: () => trashNotebook(nb) },
   ], { align: 'right' });
 }
 
@@ -711,11 +717,74 @@ async function moveDialog(item, kind = 'notebook') {
   refreshLibrary();
 }
 
+async function trashNotebook(nb) {
+  nb.trashedAt = Date.now();
+  await db.put('notebooks', nb);
+  refreshLibrary();
+  toast(`“${nb.title}” foi para a lixeira`, { action: 'Desfazer', onAction: () => restoreNotebook(nb), duration: 6000 });
+}
+
+async function restoreNotebook(nb) {
+  delete nb.trashedAt;
+  // se a pasta foi apagada enquanto o caderno estava na lixeira, ele volta para a raiz
+  if (nb.folderId && !state.folders.some((f) => f.id === nb.folderId)) nb.folderId = null;
+  await db.put('notebooks', nb);
+  toast('Caderno restaurado');
+  refreshLibrary();
+}
+
+async function purgeNotebook(nb) {
+  const ok = await confirmDialog('Excluir definitivamente?', `“${nb.title}” e todas as suas páginas serão apagados deste aparelho. Isso não pode ser desfeito.`, { ok: 'Excluir', danger: true });
+  if (!ok) return;
+  await deleteNotebook(nb);
+  toast('Caderno excluído definitivamente');
+  refreshLibrary();
+}
+
+function renderTrash(content) {
+  content.replaceChildren();
+  const list = state.trash || [];
+  if (!list.length) {
+    content.append(h('div', { class: 'empty' }, h('div', {}, h('h2', {}, 'A lixeira está vazia'),
+      h('div', {}, `Cadernos excluídos ficam aqui por ${TRASH_DAYS} dias e podem ser restaurados.`))));
+    return;
+  }
+  content.append(h('div', { class: 'trash-head' },
+    h('p', {}, `Cadernos excluídos ficam aqui por ${TRASH_DAYS} dias e depois são apagados de vez.`),
+    h('button', { class: 'btn', onclick: async () => {
+      const ok = await confirmDialog('Esvaziar a lixeira?', `${list.length} ${list.length === 1 ? 'caderno será apagado' : 'cadernos serão apagados'} deste aparelho. Isso não pode ser desfeito.`, { ok: 'Esvaziar', danger: true });
+      if (!ok) return;
+      for (const n of list) await deleteNotebook(n);
+      toast('Lixeira esvaziada');
+      refreshLibrary();
+    } }, 'Esvaziar lixeira')));
+  const rows = h('div', { class: 'results trash-list' });
+  for (const nb of list) {
+    const dias = Math.max(0, TRASH_DAYS - Math.floor((Date.now() - nb.trashedAt) / 864e5));
+    rows.append(h('div', { class: 'result trash-row' },
+      h('div', { class: 'swatch', style: { background: nb.cover?.color || COVER_COLORS[0] } }),
+      h('div', { class: 'trash-info' }, h('div', { class: 'r-title' }, nb.title),
+        h('div', { class: 'r-snip' }, `${nb.pageIds.length} pág. · excluído ${relativeDate(nb.trashedAt)} · apagado de vez em ${dias} ${dias === 1 ? 'dia' : 'dias'}`)),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn', onclick: () => restoreNotebook(nb) }, 'Restaurar'),
+        h('button', { class: 'btn danger', onclick: () => purgeNotebook(nb) }, 'Excluir definitivamente'))));
+  }
+  content.append(rows);
+}
+
 async function duplicateNotebook(nb) {
   const pages = await getNotebookPages(nb);
   const copy = { ...structuredClone(nb), id: uid(), title: nb.title + ' (cópia)', createdAt: Date.now(), updatedAt: Date.now(), favorite: false };
-  const newPages = pages.map((p) => ({ ...structuredClone(p), id: uid(), notebookId: copy.id }));
+  const idMap = new Map(pages.map((p) => [p.id, uid()]));
+  const newPages = pages.map((p) => ({ ...structuredClone(p), id: idMap.get(p.id), notebookId: copy.id }));
   copy.pageIds = newPages.map((p) => p.id);
+  // a cópia aponta para as próprias páginas: sumário e links "página deste caderno" seguem o novo ID
+  copy.outline = (copy.outline || []).filter((o) => idMap.has(o.pageId)).map((o) => ({ ...o, pageId: idMap.get(o.pageId) }));
+  for (const p of newPages) {
+    p.links = (p.links || []).map((l) => (l.target?.type === 'page' && idMap.has(l.target.pageId)
+      ? { ...l, id: uid(), target: { ...l.target, pageId: idMap.get(l.target.pageId) } } : { ...l, id: uid() }));
+  }
+  delete copy.trashedAt;
   await db.putMany('pages', newPages);
   await db.put('notebooks', copy);
   toast('Caderno duplicado');
