@@ -152,8 +152,9 @@ export function initEditor({ onClose, onOpenNotebook }) {
   document.addEventListener('keydown', onKeyDown);
   document.addEventListener('keyup', (e) => { if (e.code === 'Space' && tempHand) { tempHand = false; updateCursor(); } });
   document.addEventListener('paste', onPaste);
-  window.addEventListener('beforeunload', () => { if (nb) flushSave(); });
-  document.addEventListener('visibilitychange', () => { if (document.hidden && nb) flushSave(); });
+  // ao fechar com alterações ainda não gravadas, tenta gravar e pede confirmação ao navegador
+  window.addEventListener('beforeunload', (e) => { if (nb && dirty.size) { autoSave(); e.preventDefault(); e.returnValue = ''; } });
+  document.addEventListener('visibilitychange', () => { if (document.hidden && nb) autoSave(); });
 }
 
 export async function openEditor(notebookId, { pageIndex = 0, query = '' } = {}) {
@@ -1921,22 +1922,62 @@ async function redo() {
   updateUndoButtons();
 }
 
+// cada alteração numa página soma 1; a gravação só tira da lista as páginas que não mudaram
+// enquanto eram gravadas
+const editVersion = new WeakMap();
+
 function markDirty(page) {
   dirty.add(page);
+  editVersion.set(page, (editVersion.get(page) || 0) + 1);
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(flushSave, 600);
+  saveTimer = setTimeout(autoSave, 600);
 }
 
-async function flushSave() {
+// Gravações em fila (uma de cada vez). Uma página só sai da lista de "não salvas" depois que a
+// gravação termina; se falhar (espaço cheio, transação abortada), volta para a lista, o aluno vê
+// um aviso que fica na tela e uma nova tentativa é feita. Nunca há falso "salvo".
+let saveChain = Promise.resolve();
+let saveErrorToast = null;
+let saveFailed = false;
+let saveRetryTimer = null;
+
+function flushSave() {
   clearTimeout(saveTimer);
-  if (!nb) return;
+  const run = saveChain.then(doFlush);
+  saveChain = run.catch(() => {});
+  return run;
+}
+
+async function doFlush() {
+  if (!nb || !dirty.size) return;
   const list = [...dirty];
-  dirty.clear();
-  if (list.length) {
+  const versions = new Map(list.map((p) => [p, editVersion.get(p) || 0]));
+  try {
     await db.putMany('pages', list.filter((p) => nb.pageIds.includes(p.id)));
     await saveNotebook();
-    list.forEach(refreshThumb);
+  } catch (err) {
+    // mantém as páginas como não salvas (ainda em memória) e avisa sem sumir sozinho
+    saveFailed = true;
+    if (!saveErrorToast?.isConnected) {
+      saveErrorToast = toast('Não foi possível salvar as últimas alterações. Elas continuam abertas aqui; libere espaço e toque em Tentar de novo.', {
+        action: 'Tentar de novo', onAction: () => autoSave(), duration: 0,
+      });
+    }
+    clearTimeout(saveRetryTimer);
+    saveRetryTimer = setTimeout(autoSave, 15000);
+    throw err;
   }
+  // só remove o que foi gravado; o que mudou durante a gravação continua na lista
+  for (const p of list) if ((editVersion.get(p) || 0) === versions.get(p)) dirty.delete(p);
+  if (saveFailed) { saveErrorToast?.remove(); toast('Alterações salvas.'); }
+  saveFailed = false;
+  saveErrorToast = null;
+  clearTimeout(saveRetryTimer);
+  list.forEach(refreshThumb);
+}
+
+function autoSave() {
+  flushSave().catch((err) => console.warn('[Acervo] salvamento falhou', err));
 }
 
 async function saveNotebook() {

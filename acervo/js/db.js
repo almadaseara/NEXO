@@ -211,16 +211,55 @@ export async function exportBackup() {
   return new Blob([JSON.stringify(data)], { type: 'application/json' });
 }
 
+// Só aceita arquivos embutidos no próprio backup (data:...;base64,...): nunca busca endereço externo.
+function dataURLToBlob(url) {
+  const m = /^data:([^;,]*)(;base64)?,(.*)$/s.exec(typeof url === 'string' ? url : '');
+  if (!m || !m[2]) throw new Error('O backup tem um arquivo em formato inválido.');
+  const bin = atob(m[3]);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Blob([bytes], { type: m[1] || 'application/octet-stream' });
+}
+
+// Restauração tudo-ou-nada: primeiro lê e valida o arquivo inteiro (nada é apagado se algo
+// estiver errado); depois apaga (se for substituir) e grava todas as tabelas numa transação
+// única. Se a gravação falhar (ex.: espaço do navegador cheio), o IndexedDB desfaz tudo e o
+// acervo continua como estava.
 export async function importBackup(file, { replace = false } = {}) {
-  const data = JSON.parse(await file.text());
+  let data;
+  try { data = JSON.parse(await file.text()); } catch { throw new Error('O arquivo de backup está corrompido ou não é JSON.'); }
   // Aceita também backups feitos no app original (antes da integração ao NEXO).
-  if (data.app !== 'acervo-digital-pessoal' && data.app !== 'nanquim') throw new Error('Este arquivo não é um backup do Acervo Digital Pessoal.');
-  if (replace) for (const s of STORES) await db.clear(s);
-  for (const s of STORES) if (s !== 'assets' && data[s]) await db.putMany(s, data[s]);
-  const assets = [];
-  for (const a of data.assets || []) {
-    const blob = await (await fetch(a.data)).blob();
-    assets.push({ id: a.id, type: a.type, blob });
+  if (!data || (data.app !== 'acervo-digital-pessoal' && data.app !== 'nanquim')) throw new Error('Este arquivo não é um backup do Acervo Digital Pessoal.');
+  const rows = {};
+  for (const s of STORES) {
+    if (s === 'assets' || data[s] == null) continue;
+    if (!Array.isArray(data[s]) || data[s].some((v) => !v || typeof v !== 'object' || v.id == null)) {
+      throw new Error('O backup está incompleto ou corrompido (' + s + ').');
+    }
+    rows[s] = data[s];
   }
-  await db.putMany('assets', assets);
+  if (data.assets != null && !Array.isArray(data.assets)) throw new Error('O backup está incompleto ou corrompido (arquivos).');
+  rows.assets = (data.assets || []).map((a) => {
+    if (!a || a.id == null) throw new Error('O backup está incompleto ou corrompido (arquivos).');
+    const blob = dataURLToBlob(a.data);
+    return { id: a.id, type: a.type || blob.type, blob };
+  });
+
+  const database = await open();
+  await new Promise((resolve, reject) => {
+    const t = database.transaction(STORES, 'readwrite');
+    t.oncomplete = () => resolve();
+    t.onerror = () => reject(t.error || new Error('Não foi possível gravar o backup.'));
+    t.onabort = () => reject(t.error || new Error('Não foi possível gravar o backup (espaço do navegador cheio?). Nada foi alterado.'));
+    try {
+      for (const s of STORES) {
+        const store = t.objectStore(s);
+        if (replace) store.clear();
+        for (const v of rows[s] || []) store.put(v);
+      }
+    } catch (err) {
+      try { t.abort(); } catch { /* já encerrada */ }
+      reject(new Error('O backup tem um registro que não pode ser gravado. Nada foi alterado.'));
+    }
+  });
 }
