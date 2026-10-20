@@ -9,7 +9,8 @@ export { pdfjs };
 export const PAGE_SIZES = {
   'a4': { w: 595, h: 842, label: 'A4 retrato' },
   'a4-land': { w: 842, h: 595, label: 'A4 paisagem' },
-  'letter': { w: 612, h: 792, label: 'Carta' },
+  'letter': { w: 612, h: 792, label: 'Carta retrato' },
+  'letter-land': { w: 792, h: 612, label: 'Carta paisagem' },
   'square': { w: 700, h: 700, label: 'Quadrado' },
 };
 
@@ -24,6 +25,7 @@ export const TEMPLATES = {
   monthly: 'Mês',
   yearly: 'Ano',
   music: 'Partitura',
+  tab: 'Tablatura',
 };
 
 export const PAPER_COLORS = {
@@ -130,6 +132,13 @@ export function drawTemplate(ctx, page) {
         const idx = n - 1 + first;
         ctx.fillText(String(n), cx + 8 + (idx % 7) * cw, cy + 30 + Math.floor(idx / 7) * ch);
       }
+    }
+  } else if (t === 'tab') {
+    const gap = 7 * sp, staff = gap * 5;
+    for (let y = 70; y + staff < H - 30; y += staff + 40 * sp) {
+      for (let i = 0; i < 6; i++) hline(y + i * gap, 36, W - 36);
+      ctx.save(); ctx.fillStyle = paper.strong; ctx.font = `700 ${Math.max(8, gap * 1.6)}px sans-serif`;
+      ctx.fillText('T', 40, y + gap * 1.8); ctx.fillText('A', 40, y + gap * 3.3); ctx.fillText('B', 40, y + gap * 4.8); ctx.restore();
     }
   } else if (t === 'music') {
     const gap = 7 * sp, staff = gap * 4;

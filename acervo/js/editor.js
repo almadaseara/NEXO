@@ -1,7 +1,8 @@
 // Editor de cadernos e quadros brancos: escrita à mão, formas, borracha, laço, texto, imagens,
 // fitas, laser, links, figurinhas, áudio, sumário, apresentação, zoom e busca.
+import { colorPanel } from './pickers.js';
 import { db, uid, saveAsset, getNotebookPages, collectGarbage } from './db.js';
-import { h, icon, modal, confirmDialog, promptDialog, progressDialog, showMenu, closeMenu, toast, pickFile, normalize } from './ui.js';
+import { h, icon, ICONS, modal, confirmDialog, promptDialog, progressDialog, showMenu, closeMenu, toast, pickFile, normalize } from './ui.js';
 import {
   drawTemplate, drawBgImage, drawPdfPage, drawStroke, drawStrokes, strokeBounds, pointInPolygon, distToSegment,
   loadImage, loadPdf, renderPageFlat, PAGE_SIZES, TEXT_FONT, PEN_STYLES, NOTE_COLORS, NOTE_PAD,
@@ -82,6 +83,7 @@ let pendingCard = null; // frente de um flashcard esperando o verso
 let player = null;      // { rec, audio, tapSeek, timer }
 let presenting = null;  // { prevZoom, prevTool }
 let thumbsTab = 'pages';
+let pageSel = null; // null = painel normal; Set de ids = modo de seleção de páginas
 
 const MAX_PX = 14e6;
 const isBoard = () => nb?.kind === 'board';
@@ -159,6 +161,7 @@ export function initEditor({ onClose, onOpenNotebook }) {
 
 export async function openEditor(notebookId, { pageIndex = 0, query = '' } = {}) {
   if (nb) await closeEditor({ silent: true });
+  pageSel = null;
   nb = await db.get('notebooks', notebookId);
   if (!nb) { toast('Caderno não encontrado'); return false; }
   if (nb.trashedAt) { toast('Este caderno está na lixeira. Restaure-o para abrir.'); nb = null; return false; }
@@ -278,13 +281,18 @@ function renderToolOptions() {
     b.addEventListener('click', () => { settings[key].size = s; saveSettings(); renderToolOptions(); });
     return b;
   });
-  const colorPicker = (initial, onChange) => {
-    const inp = h('input', { type: 'color', value: initial, style: { position: 'fixed', left: '0', top: '0', opacity: '0', pointerEvents: 'none' } });
-    document.body.append(inp);
-    inp.addEventListener('input', () => onChange(inp.value, false));
-    inp.addEventListener('change', () => { inp.remove(); onChange(inp.value, true); });
-    inp.addEventListener('blur', () => setTimeout(() => inp.remove(), 500));
-    inp.click();
+  // Seletor de cores completo (predefinidas, personalizada e histórico) num balão junto ao botão.
+  const colorPicker = (anchor, initial, onChange) => {
+    document.querySelector('.cp-pop')?.remove();
+    const pop = h('div', { class: 'cp-pop' });
+    const close = () => { pop.remove(); document.removeEventListener('pointerdown', off, true); };
+    const off = (e) => { if (!pop.contains(e.target) && !anchor.contains(e.target)) close(); };
+    pop.append(colorPanel({ value: initial, tab: 'presets', onChange: (c) => onChange(c, false), onDone: (c) => { onChange(c, true); close(); } }));
+    document.body.append(pop);
+    const r = anchor.getBoundingClientRect();
+    pop.style.left = Math.max(8, Math.min(r.left, innerWidth - pop.offsetWidth - 8)) + 'px';
+    pop.style.top = Math.min(r.bottom + 8, Math.max(8, innerHeight - pop.offsetHeight - 8)) + 'px';
+    setTimeout(() => document.addEventListener('pointerdown', off, true));
   };
   const swatches = (key) => {
     const conf = settings[key];
@@ -293,17 +301,15 @@ function renderToolOptions() {
       b.addEventListener('click', () => {
         if (conf.color === c) {
           // segundo toque: trocar esta cor da paleta
-          colorPicker(c, (v, done) => { conf.palette[i] = v; conf.color = v; saveSettings(); b.style.setProperty('--c', v); if (done) renderToolOptions(); });
+          colorPicker(b, c, (v, done) => { conf.palette[i] = v; conf.color = v; saveSettings(); b.style.setProperty('--c', v); if (done) renderToolOptions(); });
           return;
         }
         conf.color = c; saveSettings(); renderToolOptions();
       });
       return b;
     });
-    const custom = h('label', { class: 'swatch-btn custom', title: 'Outra cor' });
-    const inp = h('input', { type: 'color', value: conf.color });
-    inp.addEventListener('change', () => { conf.color = inp.value; saveSettings(); renderToolOptions(); });
-    custom.append(inp);
+    const custom = h('button', { type: 'button', class: 'swatch-btn custom', title: 'Outra cor e histórico', 'aria-label': 'Outra cor' });
+    custom.addEventListener('click', () => colorPicker(custom, conf.color, (v, done) => { conf.color = v; if (done) { saveSettings(); renderToolOptions(); } }));
     out.push(custom);
     return out;
   };
@@ -2320,8 +2326,9 @@ function renderThumbs() {
     b.addEventListener('click', () => { thumbsTab = k; renderThumbs(); });
     tabs.append(b);
   }
-  box.append(tabs);
-  if (thumbsTab === 'outline') return renderOutline(box);
+  if (thumbsTab === 'outline') { box.append(tabs); return renderOutline(box); }
+  if (pageSel) pageSel = new Set([...pageSel].filter((id) => pages.some((p) => p.id === id)));
+  box.append(h('div', { class: 'thumbs-head' }, tabs, pageSelHeader()));
   thumbObserver = new IntersectionObserver((entries) => {
     for (const en of entries) if (en.isIntersecting && !en.target.dataset.drawn) {
       en.target.dataset.drawn = '1';
@@ -2332,12 +2339,16 @@ function renderThumbs() {
   pages.forEach((p, i) => {
     const c = h('canvas');
     c.style.aspectRatio = `${p.width} / ${p.height}`;
-    const item = h('div', { class: 'thumb-item' + (i === currentIndex ? ' current' : ''), 'data-id': p.id, draggable: 'true' }, c,
+    const item = h('div', { class: 'thumb-item' + (i === currentIndex ? ' current' : '') + (pageSel?.has(p.id) ? ' picked' : ''), 'data-id': p.id, draggable: pageSel ? 'false' : 'true' }, c,
       h('div', { class: 'num' }, p.bookmarked ? icon('<path d="M7 4h10v16l-5-4-5 4z"/>') : null, String(i + 1)));
-    item.addEventListener('click', () => scrollToPage(pages.indexOf(p)));
-    item.addEventListener('contextmenu', (e) => { e.preventDefault(); showMenu({ getBoundingClientRect: () => ({ left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY }) }, pageMenuItems(pages.indexOf(p))); });
+    if (pageSel) item.prepend(h('span', { class: 'pick-check', 'aria-hidden': 'true' }));
+    item.addEventListener('click', () => {
+      if (pageSel) { pageSel.has(p.id) ? pageSel.delete(p.id) : pageSel.add(p.id); renderThumbs(); return; }
+      scrollToPage(pages.indexOf(p));
+    });
+    item.addEventListener('contextmenu', (e) => { e.preventDefault(); if (pageSel) return; showMenu({ getBoundingClientRect: () => ({ left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY }) }, pageMenuItems(pages.indexOf(p))); });
     let press;
-    item.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') press = setTimeout(() => showMenu(item, pageMenuItems(pages.indexOf(p))), 550); });
+    item.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' && !pageSel) press = setTimeout(() => showMenu(item, pageMenuItems(pages.indexOf(p))), 550); });
     item.addEventListener('pointerup', () => clearTimeout(press));
     item.addEventListener('pointermove', () => clearTimeout(press));
     item.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/acervo-page', p.id); e.dataTransfer.effectAllowed = 'move'; });
@@ -2356,7 +2367,78 @@ function renderThumbs() {
     box.append(item);
     thumbObserver.observe(item);
   });
-  box.append(h('button', { class: 'btn', style: { justifyContent: 'center' }, onclick: () => addPage(pages.length) }, '+ Página'));
+  if (!pageSel) box.append(h('button', { class: 'btn', style: { justifyContent: 'center' }, onclick: () => addPage(pages.length) }, '+ Página'));
+}
+
+// Cabeçalho do painel de páginas: "Selecionar" ou, no modo seleção, "Selecionar tudo / Cancelar" + ações em lote.
+function pageSelHeader() {
+  if (!pageSel) {
+    return h('div', { class: 'thumbs-sel-row' },
+      h('button', { class: 'btn small', type: 'button', onclick: () => { pageSel = new Set(); renderThumbs(); } }, 'Selecionar'));
+  }
+  const n = pageSel.size, all = n === pages.length && n > 0;
+  const act = (label, svg, fn, danger) => h('button', { type: 'button', class: 'pg-act' + (danger ? ' danger' : ''), disabled: !n, onclick: fn }, icon(svg), h('span', {}, label));
+  const chosen = () => pages.filter((p) => pageSel.has(p.id));
+  return h('div', { class: 'thumbs-sel' },
+    h('div', { class: 'thumbs-sel-row' },
+      h('button', { class: 'sel-all', type: 'button', 'aria-pressed': String(all), onclick: () => { pageSel = all ? new Set() : new Set(pages.map((p) => p.id)); renderThumbs(); } },
+        h('span', { class: 'sel-dot' + (all ? ' on' : '') }), 'Tudo'),
+      h('button', { class: 'btn small ghost', type: 'button', onclick: () => { pageSel = null; renderThumbs(); } }, 'Cancelar')),
+    h('div', { class: 'pg-actions', role: 'toolbar', 'aria-label': `${n} página${n === 1 ? '' : 's'} selecionada${n === 1 ? '' : 's'}` },
+      act('Copiar', '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>', () => duplicatePages(chosen())),
+      act('Lixo', ICONS.trash, () => trashPages(chosen()), true),
+      act('Mais', '<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>', (e) => showMenu(e.currentTarget, [
+        { label: chosen().every((p) => p.bookmarked) ? 'Remover marcadores' : 'Marcar páginas', icon: '<path d="M7 4h10v16l-5-4-5 4z"/>', onClick: () => bookmarkPages(chosen()) },
+        { label: 'Mover para o início', icon: 'up', onClick: () => movePagesTo(chosen(), 'start') },
+        { label: 'Mover para o fim', icon: 'down', onClick: () => movePagesTo(chosen(), 'end') },
+        'sep',
+        { label: 'Limpar anotações', icon: 'clear', onClick: async () => {
+          if (await confirmDialog('Limpar anotações?', `Traços, textos, imagens e fitas de ${n} página${n === 1 ? '' : 's'} serão removidos. Você pode desfazer.`, { ok: 'Limpar' })) chosen().forEach((p) => clearPage(pages.indexOf(p)));
+        } },
+      ], { align: 'right' }))),
+    h('small', { class: 'muted' }, n ? `${n} selecionada${n === 1 ? '' : 's'}` : 'Toque nas páginas'));
+}
+
+async function duplicatePages(list) {
+  if (!list.length) return;
+  const sel = new Set(list.map((p) => p.id));
+  const copies = pages.filter((p) => sel.has(p.id)).map((src) => ({ ...structuredClone(src), id: uid(), bookmarked: false }));
+  const last = Math.max(...list.map((p) => pages.indexOf(p)));
+  const ids = nb.pageIds.slice();
+  ids.splice(last + 1, 0, ...copies.map((c) => c.id));
+  pageSel = null;
+  await pageOp(ids, copies);
+  toast(`${copies.length} página${copies.length === 1 ? ' copiada' : 's copiadas'}`);
+}
+
+async function trashPages(list) {
+  if (!list.length) return;
+  if (list.length >= pages.length) {
+    toast('O caderno precisa de pelo menos uma página. Deixe uma sem selecionar.');
+    return;
+  }
+  const sel = new Set(list.map((p) => p.id));
+  pageSel = null;
+  await pageOp(nb.pageIds.filter((id) => !sel.has(id)));
+  toast(`${list.length} página${list.length === 1 ? ' enviada' : 's enviadas'} para a lixeira de páginas`, { action: 'Desfazer', onAction: undo });
+}
+
+function bookmarkPages(list) {
+  const mark = !list.every((p) => p.bookmarked);
+  for (const p of list) { p.bookmarked = mark; markDirty(p); refreshThumb(p); }
+  updatePageUi();
+  renderThumbs();
+  toast(mark ? 'Páginas marcadas' : 'Marcadores removidos');
+}
+
+async function movePagesTo(list, where) {
+  const sel = new Set(list.map((p) => p.id));
+  const picked = nb.pageIds.filter((id) => sel.has(id));
+  const rest = nb.pageIds.filter((id) => !sel.has(id));
+  const ids = where === 'start' ? [...picked, ...rest] : [...rest, ...picked];
+  if (ids.every((id, i) => id === nb.pageIds[i])) return;
+  await pageOp(ids);
+  requestAnimationFrame(() => scrollToPage(ids.indexOf(picked[0])));
 }
 
 function renderOutline(box) {

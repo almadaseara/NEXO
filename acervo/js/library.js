@@ -1,18 +1,21 @@
 // Biblioteca: cadernos, pastas, favoritos, busca global.
 import { syncEnabled, setSyncEnabled, syncNow } from './sync.js';
 import { db, uid, getNotebookPages, deleteNotebook, exportBackup, importBackup } from './db.js';
-import { h, icon, ICONS, modal, confirmDialog, promptDialog, progressDialog, showMenu, toast, download, pickFile, safeFilename, relativeDate, normalize, snippet } from './ui.js';
+import { h, icon, ICONS, modal, confirmDialog, promptDialog, progressDialog, showMenu, closeMenu, toast, download, pickFile, safeFilename, relativeDate, normalize, snippet } from './ui.js';
 import { importPdf, newPage, exportNotebookPdf, outlineForPages } from './pdftools.js';
 import { renderPageFlat, drawTemplate, loadPdf, TEMPLATES, PAGE_SIZES, PAPER_COLORS, SPACINGS } from './render.js';
 import { renderStudyView, studyDueCount } from './study.js';
 import { aiSettingsDialog } from './ai.js';
 import { saveAsset } from './db.js';
 import { postToNexo } from './nexo.js';
+import { folderDialog, folderGlyph } from './pickers.js';
+import { applyCover, coverFromPreset, coverPreset, DEFAULT_COVER_ID } from './covers.js';
+import { notebookSetupDialog } from './newnotebook.js';
 
 export const COVER_COLORS = ['#244b48', '#24766b', '#437b99', '#7a4f9a', '#b8860b', '#a23b55', '#34495e', '#5a6b3a', '#d07a8f', '#4a90a4'];
+const FOLDER_COLOR = '#45bfdb';
 const IMG_ICON = '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>';
 const FOLDER_SVG = '<path d="M2.5 7.5A2.5 2.5 0 0 1 5 5h4.2a2 2 0 0 1 1.5.7L12 7h7a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5z"/>';
-const PATTERNS = { plain: 'Lisa', lines: 'Linhas', dots: 'Pontos', diag: 'Listras', page: '1ª página' };
 
 const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [], trash: [], selecting: false, selected: new Set() };
 let onOpen = () => {};
@@ -23,13 +26,26 @@ const $ = (id) => document.getElementById(id);
 export function initLibrary(opts) {
   onOpen = opts.onOpen;
   document.querySelectorAll('[data-nav]').forEach((b) => b.addEventListener('click', () => setNav(b.dataset.nav)));
-  $('btn-new-notebook').addEventListener('click', (e) => showMenu(e.currentTarget, [
-    { label: 'Caderno', icon: 'page', onClick: () => newNotebookDialog() },
-    { label: 'Quadro branco infinito', icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M7 13l3-3 3 3 4-4"/>', onClick: () => newBoard() },
-    { label: 'Pasta', icon: 'folder', onClick: () => newFolder(currentFolderId()) },
-    { label: 'Importar PDF…', icon: 'pdf', onClick: () => importPdfNotebook() },
-    { label: 'Importar imagem…', icon: IMG_ICON, onClick: () => importImageNotebook() },
-  ], { align: 'right' }));
+  const novoBtn = $('btn-new-notebook');
+  let novoTimer = null;
+  novoBtn.addEventListener('click', (e) => {
+    // dois toques seguidos em "+ Novo" criam uma nota rápida
+    if (novoTimer) { clearTimeout(novoTimer); novoTimer = null; closeMenu(); quickNote(); return; }
+    const anchor = e.currentTarget;
+    novoTimer = setTimeout(() => {
+      novoTimer = null;
+      showMenu(anchor, [
+        { label: 'Caderno', icon: 'page', onClick: () => newNotebookDialog() },
+        { label: 'Quadro branco', icon: '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M7 13l3-3 3 3 4-4"/>', onClick: () => newBoard() },
+        { label: 'Importar', icon: '<path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/>', onClick: () => importAny() },
+        { label: 'Nota rápida', icon: 'edit', onClick: () => quickNote() },
+        { label: 'Imagem', icon: IMG_ICON, onClick: () => importImageNotebook() },
+        { label: 'Pasta', icon: 'folder', onClick: () => newFolder(currentFolderId()) },
+        'sep',
+        { tip: 'Dica: toque duas vezes em “+ Novo” para criar uma nota rápida' },
+      ], { align: 'right' });
+    }, 260);
+  });
   $('btn-lib-more').addEventListener('click', (e) => showMenu(e.currentTarget, [
     { label: 'Assistente de IA', icon: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/>', onClick: () => aiSettingsDialog() },
     { label: 'Nova pasta', icon: 'folder', onClick: () => newFolder(currentFolderId()) },
@@ -136,13 +152,12 @@ function folderMenu(f, e) {
       const name = await promptDialog('Renomear pasta', { value: f.name });
       if (name) { f.name = name; await db.put('folders', f); refreshLibrary(); }
     } },
-    { label: 'Cor', icon: 'palette', onClick: async () => {
-      const color = await colorDialog('Cor da pasta', f.color);
-      if (color) { f.color = color; await db.put('folders', f); refreshLibrary(); }
-    } },
-    { label: 'Ícone (emoji)', icon: 'star', onClick: async () => {
-      const e = await emojiDialog(f.emoji);
-      if (e !== undefined) { f.emoji = e || undefined; await db.put('folders', f); refreshLibrary(); }
+    { label: 'Cor e ícone…', icon: 'palette', onClick: async () => {
+      const r = await folderDialog({ title: 'Personalizar pasta', name: f.name, color: f.color || FOLDER_COLOR, iconId: f.icon || '', emoji: f.emoji || '', ok: 'Salvar' });
+      if (!r) return;
+      f.name = r.name; f.color = r.color; f.icon = r.icon; f.emoji = r.emoji;
+      await db.put('folders', f);
+      refreshLibrary();
     } },
     { label: 'Nova subpasta', icon: 'folder', onClick: () => newFolder(f.id) },
     { label: 'Mover para…', icon: 'folder', onClick: () => moveDialog(f, 'folder') },
@@ -150,51 +165,16 @@ function folderMenu(f, e) {
     { label: 'Excluir pasta', icon: 'trash', danger: true, onClick: async () => {
       const ok = await confirmDialog('Excluir pasta?', `Os cadernos e subpastas de “${f.name}” não serão apagados: eles sobem um nível.`, { ok: 'Excluir pasta' });
       if (!ok) return;
-      for (const n of state.notebooks.filter((x) => x.folderId === f.id)) { n.folderId = f.parentId || null; await db.put('notebooks', n); }
-      for (const sub of state.folders.filter((x) => x.parentId === f.id)) { sub.parentId = f.parentId || null; await db.put('folders', sub); }
-      await db.delete('folders', f.id);
+      await removeFolderKeepingItems(f);
       refreshLibrary();
     } },
   ]);
 }
 
-function colorDialog(title, current) {
-  return modal((box, close) => {
-    let sel = current || COVER_COLORS[0];
-    const row = h('div', { class: 'choice-row' });
-    const draw = () => {
-      row.replaceChildren(...COVER_COLORS.map((c) => {
-        const b = h('button', { class: 'cover-choice' + (c === sel ? ' active' : ''), style: { '--c': c, width: '38px', height: '38px', borderRadius: '10px' }, 'aria-label': c });
-        b.addEventListener('click', () => { sel = c; draw(); });
-        return b;
-      }));
-    };
-    draw();
-    box.append(h('h2', {}, title), row, h('div', { class: 'actions', style: { marginTop: '20px' } },
-      h('button', { class: 'btn ghost', onclick: () => close() }, 'Cancelar'),
-      h('button', { class: 'btn primary', onclick: () => close(sel) }, 'Salvar')));
-  });
-}
-
-const FOLDER_EMOJIS = ['📚', '📐', '🧪', '🧬', '💻', '🌍', '📖', '🎨', '🎵', '⚖️', '🏛️', '🧮', '🩺', '📊', '✍️', '🗂️', '💼', '⭐', '🎯', '🧠'];
-function emojiDialog(current) {
-  return modal((box, close) => {
-    const grid = h('div', { class: 'emoji-grid' });
-    for (const e of FOLDER_EMOJIS) {
-      const b = h('button', { class: 'emoji-choice' + (e === current ? ' active' : '') }, e);
-      b.addEventListener('click', () => close(e));
-      grid.append(b);
-    }
-    box.append(h('h2', {}, 'Ícone da pasta'), grid, h('div', { class: 'actions' },
-      h('button', { class: 'btn ghost', onclick: () => close('') }, 'Sem ícone'),
-      h('button', { class: 'btn', onclick: () => close() }, 'Cancelar')));
-  });
-}
-
 async function newFolder(parentId = null) {
-  const name = await promptDialog(parentId ? 'Nova subpasta' : 'Nova pasta', { label: 'Nome da pasta', value: '', ok: 'Criar' });
-  if (!name) return;
-  const f = { id: uid(), name, parentId: parentId || null, color: COVER_COLORS[state.folders.length % COVER_COLORS.length], createdAt: Date.now() };
+  const r = await folderDialog({ title: parentId ? 'Nova subpasta' : 'Nova pasta', color: FOLDER_COLOR, ok: 'OK' });
+  if (!r) return;
+  const f = { id: uid(), name: r.name, parentId: parentId || null, color: r.color, icon: r.icon, emoji: r.emoji, createdAt: Date.now() };
   await db.put('folders', f);
   toast('Pasta criada');
   refreshLibrary();
@@ -347,54 +327,40 @@ export async function applyPageSetup(page, cfg, { keepSize = false, keepPdf = fa
   if (!keepSize && cfg.size) { const sz = PAGE_SIZES[cfg.size]; page.width = sz.w; page.height = sz.h; }
 }
 
-function coverFields(cfg) {
-  const colorRow = h('div', { class: 'choice-row' });
-  const patRow = h('div', { class: 'seg' });
-  const draw = () => {
-    colorRow.replaceChildren(...COVER_COLORS.map((c) => {
-      const b = h('button', { class: 'cover-choice' + (cfg.color === c ? ' active' : ''), style: { '--c': c }, type: 'button', 'aria-label': 'Cor ' + c });
-      b.addEventListener('click', () => { cfg.color = c; draw(); });
-      return b;
-    }));
-    patRow.replaceChildren(...Object.entries(PATTERNS).map(([k, label]) => {
-      const b = h('button', { class: cfg.pattern === k ? 'active' : '', type: 'button' }, label);
-      b.addEventListener('click', () => { cfg.pattern = k; draw(); });
-      return b;
-    }));
-  };
-  draw();
-  return h('div', {},
-    h('div', { class: 'field' }, h('label', {}, 'Cor da capa'), colorRow),
-    h('div', { class: 'field' }, h('label', {}, 'Estilo da capa'), patRow));
-}
-
 async function newNotebookDialog() {
-  const cfg = {
-    title: '', color: COVER_COLORS[Math.floor(Math.random() * COVER_COLORS.length)], pattern: 'plain',
-    template: 'lined', paper: 'white', size: 'a4',
-  };
-  const result = await modal((box, close) => {
-    const title = h('input', { class: 'input', placeholder: 'Ex.: Cálculo I', value: '' });
-    const submit = () => { cfg.title = title.value.trim() || 'Sem título'; close(true); };
-    title.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
-    box.append(
-      h('h2', {}, 'Novo caderno'),
-      h('div', { class: 'field' }, h('label', {}, 'Título'), title),
-      coverFields(cfg),
-      pageSetupFields(cfg),
-      h('div', { class: 'actions' },
-        h('button', { class: 'btn ghost', onclick: () => close(false) }, 'Cancelar'),
-        h('button', { class: 'btn primary', onclick: submit }, 'Criar caderno')),
-    );
-  });
-  if (!result) return;
-  const nb = makeNotebook(cfg.title, { color: cfg.color, pattern: cfg.pattern }, { template: cfg.template, paper: cfg.paper, size: cfg.size, spacing: cfg.spacing });
+  const cfg = { title: '', coverId: DEFAULT_COVER_ID, template: 'lined', spacing: 1, paper: 'white', size: 'a4', custom: null };
+  const ok = await notebookSetupDialog(cfg, { importTemplate });
+  if (!ok) return;
+  const nb = makeNotebook(cfg.title || 'Caderno sem título', coverFromPreset(coverPreset(cfg.coverId)), { template: cfg.template, paper: cfg.paper, size: cfg.size, spacing: cfg.spacing });
   const page = newPage(nb.id);
   await applyPageSetup(page, cfg);
   nb.pageIds = [page.id];
   await db.put('pages', page);
   await db.put('notebooks', nb);
   onOpen(nb.id);
+}
+
+// Nota rápida: caderno de uma página lisa, já aberto para escrever.
+async function quickNote() {
+  const d = new Date();
+  const title = 'Nota rápida ' + d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const cfg = { template: 'blank', spacing: 1, paper: 'white', size: 'a4', custom: null };
+  const nb = makeNotebook(title, coverFromPreset(coverPreset('none')), { template: cfg.template, paper: cfg.paper, size: cfg.size, spacing: 1 });
+  const page = newPage(nb.id);
+  await applyPageSetup(page, cfg);
+  nb.pageIds = [page.id];
+  await db.put('pages', page);
+  await db.put('notebooks', nb);
+  onOpen(nb.id);
+}
+
+// "Importar": escolhe um PDF ou uma imagem e abre como caderno.
+async function importAny() {
+  const file = await pickFile('file-any');
+  if (!file) return;
+  if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) importPdfNotebook(file);
+  else if (file.type.startsWith('image/')) importImageNotebook(file);
+  else toast('Escolha um PDF ou uma imagem.');
 }
 
 async function newBoard() {
@@ -552,15 +518,20 @@ function folderEmpty() {
 
 function folderTile(sf) {
   const n = itemCount(sf.id);
-  const glyph = sf.emoji
-    ? h('span', { class: 'ft-emoji' }, sf.emoji)
-    : (() => { const i = icon(FOLDER_SVG); i.setAttribute('viewBox', '0 0 24 24'); return i; })();
   const more = h('span', { class: 'ft-more', role: 'button', tabindex: '0', 'aria-label': 'Opções da pasta' },
     icon('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'));
-  const tile = h('button', { class: 'folder-tile', type: 'button', draggable: 'true', title: sf.name },
-    h('span', { class: 'ft-icon', style: { color: sf.color || COVER_COLORS[0] } }, glyph),
+  const tile = h('button', { class: 'folder-tile', type: 'button', draggable: 'true', title: sf.name, 'data-id': sf.id },
+    h('span', { class: 'ft-icon' }, folderGlyph(sf.color || FOLDER_COLOR, sf.icon, sf.emoji)),
     h('span', { class: 'ft-text' }, h('b', {}, sf.name), h('small', {}, n + (n === 1 ? ' item' : ' itens'))), more);
+  const pick = () => { state.selected.has(sf.id) ? state.selected.delete(sf.id) : state.selected.add(sf.id); tile.classList.toggle('selected', state.selected.has(sf.id)); tile.setAttribute('aria-pressed', String(state.selected.has(sf.id))); renderSelectionBar(); };
+  if (state.selecting) {
+    tile.classList.add('selectable');
+    tile.classList.toggle('selected', state.selected.has(sf.id));
+    tile.setAttribute('aria-pressed', String(state.selected.has(sf.id)));
+    tile.prepend(h('span', { class: 'sel-check', 'aria-hidden': 'true' }));
+  }
   tile.addEventListener('click', (e) => {
+    if (state.selecting) { e.preventDefault(); pick(); return; }
     if (e.target.closest('.ft-more')) { e.stopPropagation(); const r = more.getBoundingClientRect(); folderMenu(sf, { clientX: r.left, clientY: r.bottom + 4 }); return; }
     setNav('folder:' + sf.id);
   });
@@ -613,7 +584,7 @@ function emptyState(nav) {
 }
 
 function kindIcon(nb) {
-  const pdf = nb.cover?.pattern === 'page' && nb.kind !== 'image';
+  const pdf = nb.cover?.pattern === 'page' && nb.kind !== 'image' && nb.cover?.id !== 'none';
   const svg = nb.kind === 'board' ? '<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/>'
     : nb.kind === 'image' ? IMG_ICON
     : pdf ? '<path d="M7 3h7l5 5v13H7zM14 3v5h5"/>'
@@ -625,10 +596,14 @@ function kindIcon(nb) {
 
 function card(nb) {
   const cover = h('div', { class: 'cover pattern-' + (nb.cover?.pattern || 'plain'), style: { '--c': nb.cover?.color || COVER_COLORS[0] } });
-  if (nb.kind === 'board') {
+  const preset = nb.kind !== 'board' && nb.cover?.pattern !== 'page' && applyCover(cover, nb.cover);
+  if (nb.cover?.id === 'none') {
+    cover.classList.add('cover-none');
+    loadThumb(nb).then((url) => { if (url) cover.prepend(h('img', { class: 'thumb', src: url, alt: '' })); });
+  } else if (nb.kind === 'board') {
     cover.classList.add('board-cover');
     cover.append(h('div', { class: 'cover-label' }, nb.title), h('span', { class: 'pdf-badge' }, 'QUADRO'));
-  } else if (nb.cover?.pattern === 'page') {
+  } else if (nb.cover?.pattern === 'page' && !preset) {
     cover.append(h('span', { class: 'pdf-badge' }, `${nb.pageIds.length} pág.`));
     loadThumb(nb).then((url) => { if (url) cover.prepend(h('img', { class: 'thumb', src: url, alt: '' })); });
   } else {
@@ -678,29 +653,48 @@ async function loadThumb(nb) {
 function notebookMenu(nb, anchor) {
   showMenu(anchor, [
     { label: 'Abrir', icon: 'page', onClick: () => onOpen(nb.id) },
-    { label: 'Renomear', icon: 'edit', onClick: async () => {
-      const t = await promptDialog('Renomear caderno', { value: nb.title });
+    { label: 'Alterar nome', icon: 'edit', onClick: async () => {
+      const t = await promptDialog('Alterar nome', { value: nb.title });
       if (t) { nb.title = t; nb.updatedAt = Date.now(); await db.put('notebooks', nb); refreshLibrary(); }
     } },
-    { label: 'Capa', icon: 'palette', onClick: () => editCover(nb) },
-    { label: 'Mover para pasta', icon: 'folder', onClick: () => moveDialog(nb) },
-    { label: nb.favorite ? 'Remover dos favoritos' : 'Favoritar', icon: 'star', onClick: async () => { nb.favorite = !nb.favorite; await db.put('notebooks', nb); refreshLibrary(); } },
     { label: 'Duplicar', icon: 'copy', onClick: () => duplicateNotebook(nb) },
-    { label: 'Exportar PDF', icon: 'pdf', onClick: () => exportPdfFlow(nb) },
+    { label: 'Exportar como PDF', icon: 'pdf', onClick: () => exportPdfFlow(nb) },
+    { label: 'Mover', icon: '<path d="M10 4H5v16h5M14 8l4 4-4 4M18 12H9"/>', onClick: () => moveDialog(nb) },
+    { label: nb.favorite ? 'Remover dos favoritos' : 'Favoritar', icon: 'star', onClick: async () => { nb.favorite = !nb.favorite; await db.put('notebooks', nb); refreshLibrary(); } },
+    nb.kind === 'board' || nb.cover?.pattern === 'page' && nb.cover?.id !== 'none' ? null : { label: 'Capa…', icon: 'palette', onClick: () => editCover(nb) },
+    { label: 'Compartilhar…', icon: '<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M17 11a3 3 0 1 0 0-6M21 20a5 5 0 0 0-4-5"/>', onClick: () => shareNotebook(nb) },
     'sep',
-    { label: 'Mover para a lixeira', icon: 'trash', danger: true, onClick: () => trashNotebook(nb) },
+    { label: 'Mover para o lixo', icon: 'trash', danger: true, onClick: () => trashNotebook(nb) },
   ], { align: 'right' });
 }
 
+// Compartilha o caderno como PDF (folha de compartilhamento do aparelho; senão baixa o arquivo).
+async function shareNotebook(nb) {
+  const prog = progressDialog('Preparando PDF');
+  try {
+    const pages = await getNotebookPages(nb);
+    const blob = await exportNotebookPdf(nb, pages, (f, t) => prog.set(f, t));
+    prog.close();
+    const file = new File([blob], safeFilename(nb.title) + '.pdf', { type: 'application/pdf' });
+    if (navigator.canShare?.({ files: [file] })) {
+      try { await navigator.share({ files: [file], title: nb.title }); return; } catch (e) { if (e?.name === 'AbortError') return; }
+    }
+    download(blob, file.name);
+    toast('Este aparelho não abre o compartilhamento: o PDF foi baixado.');
+  } catch (e) {
+    console.error(e);
+    prog.close();
+    toast('Não foi possível preparar o PDF: ' + (e.message || e), { duration: 5000 });
+  }
+}
+
 async function editCover(nb) {
-  const cfg = { color: nb.cover?.color || COVER_COLORS[0], pattern: nb.cover?.pattern || 'plain' };
-  const ok = await modal((box, close) => {
-    box.append(h('h2', {}, 'Capa do caderno'), coverFields(cfg), h('div', { class: 'actions' },
-      h('button', { class: 'btn ghost', onclick: () => close(false) }, 'Cancelar'),
-      h('button', { class: 'btn primary', onclick: () => close(true) }, 'Salvar')));
-  });
+  const cfg = { title: nb.title, coverId: nb.cover?.id || DEFAULT_COVER_ID };
+  const ok = await notebookSetupDialog(cfg, { mode: 'cover', heading: 'Capa do caderno', ok: 'Salvar' });
   if (!ok) return;
-  nb.cover = { color: cfg.color, pattern: cfg.pattern };
+  nb.cover = coverFromPreset(coverPreset(cfg.coverId));
+  if (cfg.title) nb.title = cfg.title;
+  nb.updatedAt = Date.now();
   await db.put('notebooks', nb);
   refreshLibrary();
 }
@@ -760,42 +754,68 @@ function renderSelectionBar() {
   document.getElementById('sel-bar')?.remove();
   if (!state.selecting) return;
   const n = state.selected.size;
-  const chosen = () => state.notebooks.filter((x) => state.selected.has(x.id));
-  const bar = h('div', { class: 'sel-bar', id: 'sel-bar', role: 'toolbar', 'aria-label': 'Ações com os cadernos selecionados' },
-    h('b', {}, n ? `${n} selecionado${n === 1 ? '' : 's'}` : 'Toque nos cadernos'),
+  const books = () => state.notebooks.filter((x) => state.selected.has(x.id));
+  const dirs = () => state.folders.filter((x) => state.selected.has(x.id));
+  const hasFolder = dirs().length > 0;
+  const bar = h('div', { class: 'sel-bar', id: 'sel-bar', role: 'toolbar', 'aria-label': 'Ações com os itens selecionados' },
+    h('button', { class: 'icon-btn small', title: 'Sair da seleção', 'aria-label': 'Sair da seleção', onclick: () => setSelecting(false) }, icon(ICONS.clear)),
+    h('b', {}, n ? `${n} selecionada${n === 1 ? '' : 's'}` : 'Toque nos itens'),
     h('button', { class: 'btn small', onclick: () => {
-      // seleciona os cadernos visíveis nesta tela
-      for (const c of document.querySelectorAll('#lib-content .card.selectable[data-id]')) state.selected.add(c.dataset.id);
+      for (const c of document.querySelectorAll('#lib-content .selectable[data-id]')) state.selected.add(c.dataset.id);
       renderContent(); renderSelectionBar();
-    } }, 'Selecionar todos'),
+    } }, 'Selecionar tudo'),
     h('span', { class: 'sel-sep' }),
-    h('button', { class: 'btn small', disabled: !n, onclick: async () => { await moveMany(chosen()); } }, 'Mover'),
-    h('button', { class: 'btn small', disabled: !n, onclick: async () => {
-      const list = chosen(); const fav = !list.every((x) => x.favorite);
+    h('button', { class: 'btn small', disabled: !n || hasFolder, title: hasFolder ? 'Pastas não podem ser duplicadas' : '', onclick: async () => {
+      const list = books();
+      for (const x of list) await duplicateNotebook(x);
+      setSelecting(false); refreshLibrary();
+    } }, icon('<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/>'), 'Duplicar'),
+    h('button', { class: 'btn small', disabled: !n, onclick: async () => { await moveMany(books(), dirs()); } }, 'Mover'),
+    h('button', { class: 'btn small', disabled: !books().length, onclick: async () => {
+      const list = books(); const fav = !list.every((x) => x.favorite);
       for (const x of list) { x.favorite = fav; } await db.putMany('notebooks', list);
       toast(fav ? 'Adicionados aos favoritos' : 'Removidos dos favoritos'); setSelecting(false); refreshLibrary();
     } }, 'Favoritar'),
     h('button', { class: 'btn small danger', disabled: !n, onclick: async () => {
-      const list = chosen(); const now = Date.now();
+      const list = books(), folders = dirs(); const now = Date.now();
+      if (folders.length) {
+        const ok = await confirmDialog('Apagar seleção?', `${folders.length === 1 ? 'A pasta' : 'As pastas'} será apagada, mas os cadernos e subpastas de dentro sobem um nível. Os cadernos selecionados vão para a lixeira.`, { ok: 'Apagar', danger: true });
+        if (!ok) return;
+        for (const f of folders) await removeFolderKeepingItems(f, new Set(folders.map((x) => x.id)));
+      }
       for (const x of list) x.trashedAt = now;
-      await db.putMany('notebooks', list);
+      if (list.length) await db.putMany('notebooks', list);
       setSelecting(false); refreshLibrary();
-      toast(`${list.length} caderno${list.length === 1 ? '' : 's'} na lixeira`, { action: 'Desfazer', duration: 6000, onAction: async () => {
+      if (list.length) toast(`${list.length} caderno${list.length === 1 ? '' : 's'} na lixeira`, { action: 'Desfazer', duration: 6000, onAction: async () => {
         for (const x of list) delete x.trashedAt; await db.putMany('notebooks', list); refreshLibrary();
       } });
-    } }, 'Lixeira'),
-    h('button', { class: 'btn small ghost', onclick: () => setSelecting(false) }, 'Cancelar'));
+    } }, icon(ICONS.trash), 'Apagar'));
   document.body.append(bar);
 }
 
-async function moveMany(list) {
-  if (!list.length) return;
-  const proxy = { folderId: list.every((x) => x.folderId === list[0].folderId) ? list[0].folderId : undefined };
-  const target = await pickFolderDialog(proxy.folderId ?? null);
+// Apaga a pasta e sobe os itens de dentro para o nível acima (ignorando outras pastas apagadas junto).
+async function removeFolderKeepingItems(f, alsoRemoved = new Set()) {
+  let up = f.parentId || null;
+  while (up && alsoRemoved.has(up)) up = folderOf(up)?.parentId || null;
+  for (const n of state.notebooks.filter((x) => x.folderId === f.id)) { n.folderId = up; await db.put('notebooks', n); }
+  for (const sub of state.folders.filter((x) => x.parentId === f.id && !alsoRemoved.has(x.id))) { sub.parentId = up; await db.put('folders', sub); }
+  await db.delete('folders', f.id);
+}
+
+async function moveMany(list, dirs = []) {
+  if (!list.length && !dirs.length) return;
+  const all = [...list, ...dirs];
+  const blocked = new Set();
+  for (const f of dirs) { blocked.add(f.id); for (const id of descendantIds(f.id)) blocked.add(id); }
+  const key = (x) => (x.folderId !== undefined ? x.folderId : x.parentId) || null;
+  const same = all.every((x) => key(x) === key(all[0]));
+  const target = await pickFolderDialog(same ? key(all[0]) : null, blocked);
   if (target === undefined) return;
   for (const x of list) x.folderId = target;
-  await db.putMany('notebooks', list);
-  toast(`${list.length} caderno${list.length === 1 ? '' : 's'} movido${list.length === 1 ? '' : 's'}`);
+  for (const f of dirs) f.parentId = target;
+  if (list.length) await db.putMany('notebooks', list);
+  if (dirs.length) await db.putMany('folders', dirs);
+  toast(`${all.length} ${all.length === 1 ? 'item movido' : 'itens movidos'}`);
   setSelecting(false);
   refreshLibrary();
 }
