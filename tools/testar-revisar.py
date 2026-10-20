@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Testa o módulo Revisar (aluno) e o caderno de erros por disciplina/assunto, em largura de celular.
+"""Testa o módulo Revisar (aluno), o botão nos Livros digitais, a legenda de prioridade e o fichário em grade e o caderno de erros por disciplina/assunto, em largura de celular.
 
 Uso (na raiz do repositório):  python3 tools/testar-revisar.py
 Requisitos: pip install playwright  &&  python3 -m playwright install chromium
@@ -21,13 +21,30 @@ def servidor():
 JS = r"""() => {
   const o = {}, txt = () => document.querySelector('#view').textContent;
   const larg = () => document.documentElement.scrollWidth;
-  localStorage.clear();
+  document.body.classList.remove('logged-out'); localStorage.clear();
   // 1. Revisar logo depois de Questões (Praticar questões) na barra de acesso e na lateral
   renderNav();
-  const bar = [...document.querySelectorAll('.access-bar [data-area]')];
-  const iq = bar.findIndex(b => b.dataset.area === 'questions');
-  o.barraAbaixo = iq >= 0 && bar[iq + 1].dataset.area === 'revisar' && /Revisar/.test(bar[iq + 1].textContent);
-  o.navLateral = !!document.querySelector('#nav .nx-rva-nav') && /nexoRevisao\(\)/.test(document.querySelector('#nav .nx-rva-nav').nextElementSibling.getAttribute('onclick') || '');
+  // navegação: Revisar mora no topo dos Livros digitais; fora da lateral e da barra; sem Módulos e Prioridades
+  const lateral = [...document.querySelectorAll('#nav .primary-nav')].map(b => b.textContent.trim() + ' ' + (b.getAttribute('onclick') || ''));
+  const barraTxt = [...document.querySelectorAll('.access-bar [data-area]')].map(b => b.textContent.trim());
+  o.semRevisaoNaLateral = !lateral.some(x => /Revisão de hoje|nexoRevisao\(|nexoRevisarHub/.test(x)) && !barraTxt.includes('Revisar');
+  o.semModulosPrioridades = !lateral.some(x => /Meus módulos|Prioridades de estudo/.test(x)) && !barraTxt.includes('Módulos');
+  nexoLivros();
+  const bt = document.querySelector('.lv-revisar');
+  o.botaoNosLivros = !!bt && /Revisar/.test(bt.textContent) && !!bt.querySelector('svg') && bt.getBoundingClientRect().top < document.querySelector('.lv-livro').getBoundingClientRect().top;
+  o.prioNosLivros = document.querySelectorAll('.lv-livro .lv-prio').length === document.querySelectorAll('.lv-livro').length;
+  o.sw0 = larg();
+  bt.click(); o.botaoAbreRevisar = /Revisar/.test(document.getElementById('head').textContent) && !!document.querySelector('.rva-card');
+  // trilha: legenda alta/média/baixa e nenhuma bolinha cinza
+  nexoCronograma('edital');
+  o.legenda = [...document.querySelectorAll('.nt-leg span')].map(e => e.textContent.trim()).join(',') === 'Alta,Média,Baixa';
+  const cores = new Set([...document.querySelectorAll('.nt-ed li .nt-pdot')].map(e => getComputedStyle(e).backgroundColor));
+  const cinza = [...document.querySelectorAll('.nt-ed li .nt-pdot.p1')].every(e => { const c = getComputedStyle(e).backgroundColor.match(/\d+/g).map(Number); return c[1] > c[0] && c[1] >= c[2]; });
+  o.bolinhaBaixaVerde = cinza; o.sw00 = larg();
+  // flashcards em grade e "Criar ficha" recolhido
+  showFlashcards();
+  o.fichasGrade = getComputedStyle(document.querySelector('.fx-decks')).display === 'grid';
+  o.criarFichaRecolhido = document.querySelector('.fx-nova').open === false; o.sw000 = larg();
   // disciplina com ao menos dois assuntos que têm questões
   const comQ = modules.filter(m => (m.official_questions || []).some(q => q.options && q.answer));
   const porD = {}; comQ.forEach(m => (porD[m.discipline || 'Direito Constitucional'] ||= []).push(m));
@@ -91,7 +108,7 @@ async def main():
         await pg.goto(f'http://127.0.0.1:{porta}/index.html')
         await pg.wait_for_timeout(1500)
         r = await pg.evaluate(JS)
-        larguras = [r.pop(k) for k in ('sw1', 'sw2', 'sw3', 'sw4')]
+        larguras = [r.pop(k) for k in ('sw0', 'sw00', 'sw000', 'sw1', 'sw2', 'sw3', 'sw4')]
         for k, v in r.items():
             if k in ('disc', 'A', 'B'): continue
             ok = v is True

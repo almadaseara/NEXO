@@ -256,6 +256,12 @@ document.addEventListener('nexo:leitura', function(){ if(pagina.mod) redesenharL
 
 /* ---------- página "Livros digitais" ---------- */
 var abertosLivros = {};
+var ICO_REVISAR = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/><path d="m9.5 14.5.5-2 4-4 1.5 1.5-4 4z"/></svg>';
+var NOME_PRIO = { 3:'alta', 2:'média', 1:'baixa' };
+function prioLivro(L){
+  try{ var T = window.nexoTrilha; if(!T) return ''; var n = T.prioDisciplina(L.id); if(!n) return '';
+    return '<p class="lv-prio" title="' + T.prioNome(n) + ' no edital"><i class="nt-pdot p' + n + '"></i>Prioridade ' + NOME_PRIO[n] + '</p>'; }catch(e){ return ''; }
+}
 window.nexoLivros = function(){
   try{ if(typeof closeMobileNav === 'function') closeMobileNav(); }catch(e){}
   setCur('livros'); try{ renderNav(); }catch(e){}
@@ -264,14 +270,15 @@ window.nexoLivros = function(){
     var caps = capitulos(L.id), pl = pctLivro(L.id), c = continuar(L.id), tm = caps.reduce(function(s, id){ return s + minutos(modulo(id)); }, 0);
     var cm = c && modulo(c.mod), ci = c ? caps.indexOf(c.mod) + 1 : 0, aberto = abertosLivros[L.id];
     return '<section class="lv-livro" style="--c:' + L.cor + '"><div class="lv-capa"><span class="lv-capa-sig">' + L.sigla + '</span><span class="lv-capa-tit">' + escH(L.nome) + '</span><span class="lv-capa-pct">' + pl + '%</span></div>'
-      + '<div class="lv-info"><h2>' + escH(L.nome) + '</h2><p class="nx-sub">' + caps.length + ' capítulos · cerca de ' + Math.round(tm / 60) + ' h de leitura</p>'
+      + '<div class="lv-info"><h2>' + escH(L.nome) + '</h2>' + prioLivro(L) + '<p class="nx-sub">' + caps.length + ' capítulos · cerca de ' + Math.round(tm / 60) + ' h de leitura</p>'
       + '<div class="lv-prog"><div class="lv-barra"><i style="width:' + pl + '%;background:' + L.cor + '"></i></div><span>' + pl + '% concluído</span></div>'
       + (cm ? '<p class="lv-cont">' + (pl ? 'Continue em' : 'Comece por') + ' <b>Capítulo ' + ci + ': ' + escH(cm.title) + '</b></p>' : '')
       + '<div class="nt-btns"><button type="button" class="nx-btn primary small" data-lv="livro" data-livro="' + L.id + '">' + (pl ? 'Continuar leitura' : 'Começar a ler') + '</button><button type="button" class="nx-btn ghost small" data-lv="sumario" data-livro="' + L.id + '" aria-expanded="' + !!aberto + '">' + (aberto ? 'Fechar sumário' : 'Ver sumário') + '</button></div>'
       + (aberto ? '<ol class="lv-sumario">' + caps.map(function(id, i){ var m = modulo(id), p = pctModulo(id); return '<li><button type="button" data-lv="parte" data-mod="' + id + '">' + anel(p, L.cor) + '<span>' + (i + 1) + '. ' + escH(m.title) + '</span><small>' + minutos(m) + ' min · ' + p + '%</small></button></li>'; }).join('') + '</ol>' : '')
       + '</div></section>';
   }).join('');
-  document.getElementById('view').innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Livros digitais</h1><p>Cada disciplina organizada em capítulos, na ordem de estudo do edital. Marque as partes como lidas para acompanhar o quanto já concluiu.</p></div></div><div class="lv-livros">' + cards + '</div></div>';
+  document.getElementById('view').innerHTML = '<div class="nx-page"><div class="nx-head"><div><h1>Livros digitais</h1><p>Cada disciplina organizada em capítulos, na ordem de estudo do edital. Marque as partes como lidas para acompanhar o quanto já concluiu.</p></div>'
+    + '<div class="lv-revisar-wrap"><button type="button" class="nx-btn primary lv-revisar" onclick="nexoRevisarHub()" title="Domínio por disciplina e assunto, caderno de erros e flashcards">' + ICO_REVISAR + 'Revisar</button></div></div><div class="lv-livros">' + cards + '</div></div>';
 };
 
 /* entrada no menu lateral, logo depois de "Cronograma e trilha" */
@@ -282,7 +289,7 @@ if(typeof rn === 'function'){
     try{
       var nav = document.getElementById('nav'); if(!nav || nav.querySelector('.lv-nav')) return r;
       var ref = nav.querySelector('.nt-nav') || nav.querySelector('.primary-nav');
-      var html = '<button type="button" class="primary-nav nx-nav-extra lv-nav' + (curAtual() === 'livros' ? ' active' : '') + '" onclick="nexoLivros()">' + IC.livro + ' Livros digitais</button>';
+      var html = '<button type="button" class="primary-nav nx-nav-extra lv-nav' + ((curAtual() === 'livros' || curAtual() === 'revisar-aluno') ? ' active' : '') + '" onclick="nexoLivros()">' + IC.livro + ' Livros digitais</button>';
       if(ref) ref.insertAdjacentHTML('afterend', html);
       if(curAtual() === 'livros') Array.prototype.forEach.call(nav.querySelectorAll('.primary-nav.active:not(.lv-nav)'), function(x){ x.classList.remove('active'); });
     }catch(e){}

@@ -519,7 +519,7 @@ window.nexoRevisaoEncerrar = function(){
 };
 
 /* ======================= entradas no menu ======================= */
-/* botões "Revisão de hoje", "Caderno de erros" e "Simulado", antes da lista de disciplinas */
+/* botões "Caderno de erros" e "Simulado", antes da lista de disciplinas (a revisão fica em Livros digitais > Revisar) */
 var renderNavAnterior = window.renderNav;
 var ICONES = {
   revisao: '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.9-3.5L4 10"/><path d="M4 4v6h6"/><path d="M4 13a8 8 0 0 0 14.9 3.5L20 14"/><path d="M20 20v-6h-6"/></svg>',
@@ -533,7 +533,6 @@ window.renderNav = function(){
   quitarBotoesCaderno(nav);
   var ref = nav.querySelector('.folder-wrap');
   var html = [
-    ['revisao', 'Revisão de hoje', 'nexoRevisao()'],
     ['caderno', 'Caderno de erros', 'nexoCadernoErros()'],
     ['simulado', 'Simulado', 'nexoSimulado()']
   ].map(function(it){
