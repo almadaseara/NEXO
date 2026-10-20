@@ -80,7 +80,14 @@ export function notebookSetupDialog(cfg, opts = {}) {
       const coverBtn = h('button', { type: 'button', class: 'nb-pick' + (view === 'cover' ? ' active' : ''), 'aria-label': 'Escolher capa' },
         coverPreview(), h('span', {}, coverPreset(cfg.coverId)?.label || 'Capa'));
       coverBtn.addEventListener('click', () => { view = 'cover'; refresh(); });
-      const kids = [h('div', { class: 'nb-field' }, h('label', {}, 'Título'), title), h('div', { class: 'nb-field' }, h('label', {}, 'Capa'), coverBtn)];
+      const hasCover = cfg.coverId !== 'none';
+      const toggle = h('label', { class: 'nb-toggle' }, h('input', { type: 'checkbox', checked: hasCover, 'aria-label': 'Usar capa' }), h('span', {}, 'Com capa'));
+      toggle.querySelector('input').addEventListener('change', (e) => {
+        if (e.target.checked) cfg.coverId = cfg._prevCover && cfg._prevCover !== 'none' ? cfg._prevCover : DEFAULT_COVER_ID;
+        else { cfg._prevCover = cfg.coverId; cfg.coverId = 'none'; }
+        refresh();
+      });
+      const kids = [h('div', { class: 'nb-field' }, h('label', {}, 'Título'), title), h('div', { class: 'nb-field' }, h('label', {}, 'Capa'), coverBtn, toggle)];
       if (mode === 'full') {
         const label = cfg.custom ? (customs.find((t) => t.id === cfg.custom)?.name || 'Modelo') : (PAPER_GALLERY.flatMap((g) => g.items).find((i) => i.template === cfg.template && (i.spacing || 1) === (cfg.spacing || 1))?.label || 'Papel');
         const pBtn = h('button', { type: 'button', class: 'nb-pick' + (view === 'paper' ? ' active' : ''), 'aria-label': 'Escolher papel' },
@@ -122,9 +129,15 @@ export function notebookSetupDialog(cfg, opts = {}) {
       const cur = paperKey(cfg);
       const secs = PAPER_GALLERY.map((g) => section(g.group, ...g.items.map((it) => {
         const active = !cfg.custom && cur === it.template + ':' + (it.spacing || 1);
+        const dots = h('span', { class: 'paper-dots' }, ...[['cream', 'Amarelo'], ['white', 'Branco'], ['slate', 'Escuro']].map(([k, name]) =>
+          h('span', { class: 'paper-dot' + (cfg.paper === k ? ' on' : ''), role: 'button', title: name, 'aria-label': 'Papel ' + name.toLowerCase(), 'data-paper': k, style: { background: PAPER_COLORS[k].bg } })));
         const b = h('button', { type: 'button', class: 'gal-item paper' + (active ? ' active' : ''), title: it.label, 'aria-pressed': String(active) },
-          paperPreview(it.template, cfg.paper, cfg.size, it.spacing || 1), h('span', { class: 'gal-label' }, it.label));
-        b.addEventListener('click', () => { cfg.template = it.template; cfg.spacing = it.spacing || 1; cfg.custom = null; refresh(); });
+          paperPreview(it.template, cfg.paper, cfg.size, it.spacing || 1), h('span', { class: 'gal-label' }, it.label), dots);
+        b.addEventListener('click', (e) => {
+          const dot = e.target.closest?.('.paper-dot');
+          if (dot) cfg.paper = dot.dataset.paper;
+          cfg.template = it.template; cfg.spacing = it.spacing || 1; cfg.custom = null; refresh();
+        });
         return b;
       })));
       const mine = customs.map((t) => {

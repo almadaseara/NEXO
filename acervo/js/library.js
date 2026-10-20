@@ -17,7 +17,9 @@ const FOLDER_COLOR = '#45bfdb';
 const IMG_ICON = '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/>';
 const FOLDER_SVG = '<path d="M2.5 7.5A2.5 2.5 0 0 1 5 5h4.2a2 2 0 0 1 1.5.7L12 7h7a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5z"/>';
 
-const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [], trash: [], selecting: false, selected: new Set() };
+const VIEW_KEY = 'acervo.view';
+const readPref = (k, d) => { try { return localStorage.getItem(k) || d; } catch { return d; } };
+const state = { nav: 'all', sort: readPref('acervo.sort', 'updated'), dir: readPref('acervo.dir', 'desc'), view: readPref(VIEW_KEY, 'grid'), query: '', notebooks: [], folders: [], trash: [], selecting: false, selected: new Set() };
 let onOpen = () => {};
 const thumbCache = new Map(); // notebookId -> {key, url}
 
@@ -73,7 +75,7 @@ export function initLibrary(opts) {
   selBtn.addEventListener('click', () => setSelecting(!state.selecting));
   $('btn-import-pdf').before(selBtn);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && state.selecting && !$('library').hidden) setSelecting(false); });
-  $('sort').addEventListener('change', (e) => { state.sort = e.target.value; renderContent(); });
+  $('btn-view').addEventListener('click', (e) => viewMenu(e.currentTarget));
   let t;
   $('search').addEventListener('input', (e) => {
     clearTimeout(t);
@@ -426,12 +428,42 @@ export async function importPdfNotebook(fileArg) {
 }
 
 // ---------- Conteúdo ----------
+const SORTS = [['created', 'Data de criação'], ['updated', 'Última modificação'], ['title', 'Nome'], ['type', 'Tipo']];
+const typeRank = (n) => (n.kind === 'board' ? 1 : n.kind === 'image' ? 2 : n.cover?.pattern === 'page' && n.cover?.id !== 'none' ? 3 : 0);
 function sorted(list) {
   const s = [...list];
-  if (state.sort === 'title') s.sort((a, b) => a.title.localeCompare(b.title, 'pt-BR', { numeric: true }));
-  else if (state.sort === 'created') s.sort((a, b) => b.createdAt - a.createdAt);
-  else s.sort((a, b) => b.updatedAt - a.updatedAt);
+  const sign = state.dir === 'asc' ? 1 : -1;
+  const byTitle = (a, b) => a.title.localeCompare(b.title, 'pt-BR', { numeric: true });
+  if (state.sort === 'title') s.sort((a, b) => sign * byTitle(a, b));
+  else if (state.sort === 'created') s.sort((a, b) => sign * (a.createdAt - b.createdAt));
+  else if (state.sort === 'type') s.sort((a, b) => sign * (typeRank(a) - typeRank(b)) || byTitle(a, b));
+  else s.sort((a, b) => sign * (a.updatedAt - b.updatedAt));
   return s;
+}
+function sortedFolders(list) {
+  const s = [...list];
+  const sign = state.dir === 'asc' ? 1 : -1;
+  if (state.sort === 'created' || state.sort === 'updated') s.sort((a, b) => sign * ((a.createdAt || 0) - (b.createdAt || 0)));
+  else s.sort((a, b) => (state.sort === 'title' ? sign : 1) * a.name.localeCompare(b.name, 'pt-BR', { numeric: true }));
+  return s;
+}
+
+function setView(v) { state.view = v; try { localStorage.setItem(VIEW_KEY, v); } catch { /* sem armazenamento */ } renderContent(); }
+function setSort(key) {
+  if (state.sort === key) state.dir = state.dir === 'desc' ? 'asc' : 'desc';
+  else { state.sort = key; state.dir = key === 'title' || key === 'type' ? 'asc' : 'desc'; }
+  try { localStorage.setItem('acervo.sort', state.sort); localStorage.setItem('acervo.dir', state.dir); } catch { /* sem armazenamento */ }
+  renderContent();
+}
+function viewMenu(anchor) {
+  showMenu(anchor, [
+    { label: state.selecting ? 'Sair da seleção' : 'Selecionar elementos', icon: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/>', onClick: () => setSelecting(!state.selecting) },
+    'sep',
+    { label: 'Grelha', icon: '<rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/>', checked: state.view === 'grid', onClick: () => setView('grid') },
+    { label: 'Lista', icon: '<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>', checked: state.view === 'list', onClick: () => setView('list') },
+    'sep',
+    ...SORTS.map(([k, label]) => ({ label: label + (state.sort === k ? (state.dir === 'desc' ? '  ↓' : '  ↑') : ''), checked: state.sort === k, onClick: () => setSort(k) })),
+  ], { align: 'right' });
 }
 
 function folderOf(id) { return state.folders.find((x) => x.id === id); }
@@ -463,6 +495,7 @@ async function renderContent() {
   let subfolders = [];
   const explorer = state.nav === 'all' || state.nav.startsWith('folder:');
   const here = explorer ? currentFolderId() : null;
+  if (state.nav === 'favorites') subfolders = state.folders.filter((x) => x.favorite);
   if (explorer) {
     list = list.filter((n) => nbFolderKey(n) === here);
     subfolders = state.folders.filter((x) => parentKey(x) === here);
@@ -476,14 +509,54 @@ async function renderContent() {
     content.append(here ? folderEmpty() : emptyState(state.nav));
     return;
   }
+  if (state.view === 'list') {
+    const rows = h('div', { class: 'list-view', role: 'list' });
+    for (const sf of sortedFolders(subfolders)) rows.append(listRow(sf, true));
+    for (const nb of sorted(list)) rows.append(listRow(nb, false));
+    content.append(rows);
+    return;
+  }
   if (subfolders.length) {
     const row = h('div', { class: 'folder-tiles' });
-    for (const sf of subfolders) row.append(folderTile(sf));
+    for (const sf of sortedFolders(subfolders)) row.append(folderTile(sf));
     content.append(row);
   }
   const grid = h('div', { class: 'grid' });
   for (const nb of sorted(list)) grid.append(card(nb));
   content.append(grid);
+}
+
+// Visualização em lista: miniatura, nome, data, estrela e seta, como no app do celular.
+function listRow(item, isFolder) {
+  const when = new Date(isFolder ? (item.createdAt || Date.now()) : item.updatedAt).toLocaleDateString('pt-BR');
+  const thumb = isFolder
+    ? h('span', { class: 'lr-folder' }, folderGlyph(item.color || FOLDER_COLOR, item.icon, item.emoji))
+    : h('span', { class: 'lr-cover' }, buildCover(item, { mini: true }));
+  const star = h('button', { type: 'button', class: 'icon-btn small star' + (item.favorite ? ' on' : ''), title: item.favorite ? 'Remover dos favoritos' : 'Favoritar', 'aria-label': 'Favorito' }, icon(ICONS.star));
+  star.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    if (state.selecting) return;
+    item.favorite = !item.favorite;
+    await db.put(isFolder ? 'folders' : 'notebooks', item);
+    refreshLibrary();
+  });
+  const name = isFolder ? item.name : item.title;
+  const row = h('div', { class: 'list-row', role: 'listitem', tabindex: '0', draggable: 'true', 'data-id': item.id },
+    thumb, h('span', { class: 'lr-text' }, h('b', { title: name }, name), h('small', {}, isFolder ? `${when} · ${itemCount(item.id)} itens` : when)), star,
+    h('span', { class: 'lr-chev', 'aria-hidden': 'true' }, icon('<path d="M9 6l6 6-6 6"/>')));
+  const pick = () => { state.selected.has(item.id) ? state.selected.delete(item.id) : state.selected.add(item.id); row.classList.toggle('selected', state.selected.has(item.id)); row.setAttribute('aria-selected', String(state.selected.has(item.id))); renderSelectionBar(); };
+  if (state.selecting) {
+    row.classList.add('selectable');
+    row.classList.toggle('selected', state.selected.has(item.id));
+    row.prepend(h('span', { class: 'sel-check', 'aria-hidden': 'true' }));
+  }
+  const go = () => (state.selecting ? pick() : isFolder ? setNav('folder:' + item.id) : onOpen(item.id));
+  row.addEventListener('click', go);
+  row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || (state.selecting && e.key === ' ')) { e.preventDefault(); go(); } });
+  row.addEventListener('contextmenu', (e) => { e.preventDefault(); (isFolder ? folderMenu : notebookMenu)(item, isFolder ? e : { getBoundingClientRect: () => ({ left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY }) }); });
+  row.addEventListener('dragstart', (e) => e.dataTransfer.setData(isFolder ? 'text/acervo-folder' : 'text/acervo-notebook', item.id));
+  if (isFolder) enableDrop(row, item.id);
+  return row;
 }
 
 // Caminho no estilo do explorador de arquivos; cada trecho também aceita soltar itens.
@@ -522,7 +595,8 @@ function folderTile(sf) {
     icon('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'));
   const tile = h('button', { class: 'folder-tile', type: 'button', draggable: 'true', title: sf.name, 'data-id': sf.id },
     h('span', { class: 'ft-icon' }, folderGlyph(sf.color || FOLDER_COLOR, sf.icon, sf.emoji)),
-    h('span', { class: 'ft-text' }, h('b', {}, sf.name), h('small', {}, n + (n === 1 ? ' item' : ' itens'))), more);
+    h('span', { class: 'ft-text' }, h('b', {}, sf.name), h('small', {}, n + (n === 1 ? ' item' : ' itens'))),
+    h('span', { class: 'ft-star' + (sf.favorite ? ' on' : ''), role: 'button', tabindex: '0', title: sf.favorite ? 'Remover dos favoritos' : 'Favoritar', 'aria-label': 'Favorito' }, icon(ICONS.star)), more);
   const pick = () => { state.selected.has(sf.id) ? state.selected.delete(sf.id) : state.selected.add(sf.id); tile.classList.toggle('selected', state.selected.has(sf.id)); tile.setAttribute('aria-pressed', String(state.selected.has(sf.id))); renderSelectionBar(); };
   if (state.selecting) {
     tile.classList.add('selectable');
@@ -532,6 +606,7 @@ function folderTile(sf) {
   }
   tile.addEventListener('click', (e) => {
     if (state.selecting) { e.preventDefault(); pick(); return; }
+    if (e.target.closest('.ft-star')) { e.stopPropagation(); sf.favorite = !sf.favorite; db.put('folders', sf).then(refreshLibrary); return; }
     if (e.target.closest('.ft-more')) { e.stopPropagation(); const r = more.getBoundingClientRect(); folderMenu(sf, { clientX: r.left, clientY: r.bottom + 4 }); return; }
     setNav('folder:' + sf.id);
   });
@@ -594,7 +669,7 @@ function kindIcon(nb) {
   return i;
 }
 
-function card(nb) {
+function buildCover(nb, { mini = false } = {}) {
   const cover = h('div', { class: 'cover pattern-' + (nb.cover?.pattern || 'plain'), style: { '--c': nb.cover?.color || COVER_COLORS[0] } });
   const preset = nb.kind !== 'board' && nb.cover?.pattern !== 'page' && applyCover(cover, nb.cover);
   if (nb.cover?.id === 'none') {
@@ -602,13 +677,18 @@ function card(nb) {
     loadThumb(nb).then((url) => { if (url) cover.prepend(h('img', { class: 'thumb', src: url, alt: '' })); });
   } else if (nb.kind === 'board') {
     cover.classList.add('board-cover');
-    cover.append(h('div', { class: 'cover-label' }, nb.title), h('span', { class: 'pdf-badge' }, 'QUADRO'));
+    if (!mini) cover.append(h('div', { class: 'cover-label' }, nb.title), h('span', { class: 'pdf-badge' }, 'QUADRO'));
   } else if (nb.cover?.pattern === 'page' && !preset) {
-    cover.append(h('span', { class: 'pdf-badge' }, `${nb.pageIds.length} pág.`));
+    if (!mini) cover.append(h('span', { class: 'pdf-badge' }, `${nb.pageIds.length} pág.`));
     loadThumb(nb).then((url) => { if (url) cover.prepend(h('img', { class: 'thumb', src: url, alt: '' })); });
-  } else {
+  } else if (!mini) {
     cover.append(h('div', { class: 'cover-label' }, nb.title));
   }
+  return cover;
+}
+
+function card(nb) {
+  const cover = buildCover(nb);
   const star = h('button', { class: 'icon-btn small star' + (nb.favorite ? ' on' : ''), title: nb.favorite ? 'Remover dos favoritos' : 'Favoritar', 'aria-label': 'Favorito' }, icon(ICONS.star));
   star.addEventListener('click', async (e) => {
     e.stopPropagation();
