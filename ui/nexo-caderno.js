@@ -43,56 +43,170 @@ function todas(){
 }
 
 /* ======================= caderno de erros ======================= */
-function erradas(){
-  var st = ler('nexo_practice_answers', {}) || {}, res = ler(KRES, {}) || {};
-  return todas().filter(function(x){
-    var s = st[x.skey];
-    if(!s || !s.done || s.ok !== false) return false;
-    return !res[x.skey] || (s.at || 0) > res[x.skey];   /* errou de novo depois de resolver: volta */
+/* Cada questão errada vira uma única pendência (por skey), mesmo com vários erros: as tentativas ficam em nexo_eventos.
+   O caderno é só uma visualização de nexo_practice_answers; nada do enunciado é copiado.
+   nexo_caderno_erros guarda quando foi o último erro: assim acertar depois NÃO encerra a pendência em silêncio,
+   quem encerra é o aluno ("Resolvi este erro"). Um novo erro depois de resolvido reabre a pendência. */
+var KERR = 'nexo_caderno_erros', KNOTA = 'nexo_caderno_notas';
+var filtroAss = '', filtroSt = 'pendente', origemRevisar = false;
+var MOTIVOS = ['Não sabia o conteúdo', 'Confundi conceitos', 'Li errado ou caí em pegadinha', 'Chutei', 'Falta de atenção', 'Outro'];
+
+function mapaErros(){
+  var e = ler(KERR, {}) || {}, st = ler('nexo_practice_answers', {}) || {}, mudou = false;
+  Object.keys(st).forEach(function(k){
+    var s = st[k];
+    if(s && s.done && s.ok === false && (e[k] || 0) < (s.at || 0)){ e[k] = s.at || Date.now(); mudou = true; }
   });
+  if(mudou) gravar(KERR, e);
+  return e;
 }
+function situacao(skey, e, res){
+  var a = e[skey];
+  if(!a) return res[skey] ? 'resolvida' : null;
+  return (!res[skey] || a > res[skey]) ? 'pendente' : 'resolvida';
+}
+/* todas as questões que entraram no caderno (pendentes e resolvidas), com a situação de cada uma */
+function registros(){
+  var e = mapaErros(), res = ler(KRES, {}) || {}, out = [];
+  todas().forEach(function(x){
+    var s = situacao(x.skey, e, res);
+    if(s){ x.situacao = s; out.push(x); }
+  });
+  return out;
+}
+function erradas(){ return registros().filter(function(x){ return x.situacao === 'pendente'; }); }
 
+window.nexoCadernoApi = { erradas:erradas, registros:registros, todas:todas, disc:disc };
+
+function opt(v, rot, sel){ return '<option value="' + esc(v) + '"' + (sel ? ' selected' : '') + '>' + esc(rot) + '</option>'; }
+
+/* d: texto (disciplina, uso antigo) ou { disc, assunto, status, origem } */
 window.nexoCadernoErros = function(d){
-  if(typeof d === 'string') filtroDisc = d;
+  if(typeof d === 'string'){ filtroDisc = d; filtroAss = ''; origemRevisar = false; }
+  else if(d && typeof d === 'object'){
+    if('disc' in d) filtroDisc = d.disc || '';
+    if('assunto' in d) filtroAss = d.assunto || '';
+    if(d.status) filtroSt = d.status;
+    if('origem' in d) origemRevisar = !!d.origem;
+  }
   setCur('caderno'); fechar(); refazerNav(); head('Caderno de erros');
-  var lista = erradas(), st = ler('nexo_practice_answers', {}) || {};
-  var discs = [];
-  lista.forEach(function(x){ var n = disc(x.m); if(discs.indexOf(n) < 0) discs.push(n); });
-  if(filtroDisc && discs.indexOf(filtroDisc) < 0) filtroDisc = '';
-  var mostra = filtroDisc ? lista.filter(function(x){ return disc(x.m) === filtroDisc; }) : lista;
+  var st = ler('nexo_practice_answers', {}) || {}, notas = ler(KNOTA, {}) || {};
+  var todos = registros();
+  var doRecorte = todos.filter(function(x){
+    return (!filtroDisc || disc(x.m) === filtroDisc) && (!filtroAss || x.m.id === filtroAss);
+  });
+  var mostra = doRecorte.filter(function(x){ return filtroSt === 'todas' || x.situacao === filtroSt; });
+  var nPend = doRecorte.filter(function(x){ return x.situacao === 'pendente'; }).length;
+  var nRes = doRecorte.length - nPend;
 
-  var topo = '<div class="nx-page"><div class="nx-head"><div><h1>Caderno de erros</h1>'
-    + '<p>Questões que você errou. Refaça aqui; quando dominar, marque como resolvida.</p></div></div>';
-  if(!lista.length){
-    view().innerHTML = topo + '<div class="nx-empty"><b>Nenhuma questão errada pendente.</b>'
-      + 'Quando você errar uma questão no Módulos, no Questões ou no Simulado, ela aparece aqui.</div></div>';
+  var voltar = origemRevisar && filtroDisc
+    ? '<button type="button" class="nx-btn small" onclick="nexoRevisarDisc(\'' + esc(filtroDisc).replace(/'/g, '&#39;') + '\')">← Voltar a ' + esc(filtroDisc) + '</button>'
+    : '';
+  var titulo = filtroDisc ? 'Caderno de erros · ' + esc(filtroDisc) : 'Caderno de erros';
+  var sub = filtroAss ? (function(){ var m = mods().find(function(z){ return z.id === filtroAss; }); return m ? 'Assunto: ' + esc(m.title) : ''; })() : 'Questões que você errou, agrupadas por assunto.';
+  var topo = '<div class="nx-page"><div class="nx-head"><div><h1>' + titulo + '</h1><p>' + sub + '</p></div>' + (voltar ? '<div>' + voltar + '</div>' : '') + '</div>';
+
+  /* filtros */
+  var discs = [], assuntos = [];
+  todos.forEach(function(x){ var n = disc(x.m); if(discs.indexOf(n) < 0) discs.push(n); });
+  todos.forEach(function(x){
+    if(filtroDisc && disc(x.m) !== filtroDisc) return;
+    if(!assuntos.some(function(a){ return a.id === x.m.id; })) assuntos.push({ id:x.m.id, t:x.m.title });
+  });
+  var filtros = '<div class="cad-filtros">'
+    + '<label class="nx-sub">Disciplina <select id="cad-disc" onchange="nexoCadernoErros({disc:this.value,assunto:\'\'})">' + opt('', 'Todas', !filtroDisc)
+    + discs.map(function(n){ return opt(n, n, n === filtroDisc); }).join('') + '</select></label>'
+    + '<label class="nx-sub">Assunto <select id="cad-ass" onchange="nexoCadernoErros({assunto:this.value})">' + opt('', 'Todos', !filtroAss)
+    + assuntos.map(function(a){ return opt(a.id, a.t, a.id === filtroAss); }).join('') + '</select></label>'
+    + '<div class="nx-seg" role="group" aria-label="Situação">'
+    + [['pendente', 'Pendentes (' + nPend + ')'], ['resolvida', 'Resolvidas (' + nRes + ')'], ['todas', 'Todas (' + doRecorte.length + ')']].map(function(p){
+        return '<button type="button" aria-pressed="' + (filtroSt === p[0]) + '" onclick="nexoCadernoErros({status:\'' + p[0] + '\'})">' + p[1] + '</button>'; }).join('')
+    + '</div></div>';
+
+  if(!mostra.length){
+    var msg = !todos.length
+      ? '<b>Nenhuma questão no caderno ainda.</b>Quando você errar uma questão no Módulos, no Praticar questões ou no Simulado, ela aparece aqui.'
+      : filtroSt === 'pendente'
+        ? '<b>Nenhum erro pendente' + (filtroAss ? ' neste assunto' : filtroDisc ? ' nesta disciplina' : '') + '.</b>' + (nRes ? 'Você tem ' + nRes + ' resolvida(s); veja em "Resolvidas".' : 'Continue praticando; os erros novos entram aqui sozinhos.')
+        : '<b>Nada para mostrar neste filtro.</b>Troque a situação, o assunto ou a disciplina.';
+    view().innerHTML = topo + filtros + '<div class="nx-empty">' + msg + '</div></div>';
     view().scrollTop = 0; return;
   }
-  var sel = '<label class="nx-sub">Disciplina <select id="cad-disc" onchange="nexoCadernoErros(this.value)">'
-    + '<option value="">Todas (' + lista.length + ')</option>'
-    + discs.map(function(n){ var c = lista.filter(function(x){ return disc(x.m) === n; }).length;
-        return '<option value="' + esc(n) + '"' + (n === filtroDisc ? ' selected' : '') + '>' + esc(n) + ' (' + c + ')</option>'; }).join('')
-    + '</select></label>';
 
-  var itens = mostra.map(function(x){
-    var s = st[x.skey] || {};
-    var meta = '<div class="practice-question-meta"><span>' + esc(disc(x.m)) + '</span><span>' + esc(x.m.title) + '</span>'
-      + (x.q.source ? '<span>' + esc(x.q.source) + '</span>' : '') + '</div>';
-    var ultima = s.r ? '<p class="nx-sub" style="margin:6px 0">Na última vez você marcou a alternativa ' + esc(s.r) + '.</p>' : '';
-    var corpo = x.tipo === 'official' ? officialQuestionHTML(x.q, x.i, x.m.id) : questionHTML(x.q, x.i, x.m.id);
-    return '<div class="cad-item" data-cad="' + esc(x.skey) + '">' + meta + ultima + corpo
-      + '<div style="margin:6px 0 16px"><button type="button" class="nx-btn" onclick="nexoCadernoResolver(\'' + esc(x.skey) + '\')">Marcar como resolvida</button></div></div>';
+  /* agrupa por assunto (módulo) */
+  var grupos = [], porId = {};
+  mostra.forEach(function(x){
+    var g = porId[x.m.id]; if(!g){ g = porId[x.m.id] = { m:x.m, itens:[] }; grupos.push(g); }
+    g.itens.push(x);
+  });
+  var corpoGrupos = grupos.map(function(g){
+    var itens = g.itens.map(function(x){ return itemCaderno(x, st[x.skey] || {}, notas[x.skey] || {}); }).join('');
+    return '<section class="cad-grupo"><h2 class="cad-assunto">' + esc(g.m.title) + ' <small>' + esc(disc(g.m)) + ' · ' + g.itens.length + (g.itens.length === 1 ? ' questão' : ' questões') + '</small></h2>' + itens + '</section>';
   }).join('');
-
-  view().innerHTML = topo + '<p class="nx-sub">' + mostra.length + (mostra.length === 1 ? ' questão' : ' questões') + ' para refazer</p>' + sel + itens + '</div>';
+  view().innerHTML = topo + filtros + '<p class="nx-sub">' + mostra.length + (mostra.length === 1 ? ' questão' : ' questões') + '</p>' + corpoGrupos + '</div>';
   view().scrollTop = 0;
 };
+
+function itemCaderno(x, s, n){
+  var meta = '<div class="practice-question-meta"><span>' + esc(disc(x.m)) + '</span><span>' + esc(x.m.title) + '</span>'
+    + (x.q.source ? '<span>' + esc(x.q.source) + '</span>' : '')
+    + '<span class="cad-sit ' + x.situacao + '">' + (x.situacao === 'pendente' ? 'Pendente' : 'Resolvida') + '</span></div>';
+  var ultima = s.r ? '<p class="nx-sub" style="margin:6px 0">Na última tentativa você marcou a alternativa ' + esc(s.r) + (s.ok ? ' (acertou).' : '.') + '</p>' : '';
+  var corpo = x.tipo === 'official' ? officialQuestionHTML(x.q, x.i, x.m.id) : questionHTML(x.q, x.i, x.m.id);
+  var k = esc(x.skey);
+  var motivo = '<label class="nx-sub">Motivo do erro <select data-cad-motivo="' + k + '"><option value="">Escolher…</option>'
+    + MOTIVOS.map(function(m){ return opt(m, m, n.motivo === m); }).join('') + '</select></label>';
+  var nota = '<label class="nx-sub">Minha anotação <textarea data-cad-nota="' + k + '" rows="2" maxlength="600" placeholder="O que fez você errar? O que lembrar na próxima?">' + esc(n.nota || '') + '</textarea></label>';
+  var acoes = x.situacao === 'pendente'
+    ? '<button type="button" class="nx-btn" onclick="nexoCadernoResolver(\'' + k + '\')">Marcar como resolvido</button>'
+    : '<button type="button" class="nx-btn" onclick="nexoCadernoReabrir(\'' + k + '\')">Reabrir erro</button>';
+  return '<div class="cad-item" data-cad="' + k + '">' + meta + ultima + corpo
+    + '<div class="cad-anot">' + motivo + nota + '</div>'
+    + '<div class="cad-acoes" data-cad-acoes="' + k + '" style="margin:6px 0 16px">' + acoes + '</div></div>';
+}
 
 window.nexoCadernoResolver = function(skey){
   var r = ler(KRES, {}) || {}; r[skey] = Date.now(); gravar(KRES, r);
   if(window.nexoEnfileirarHistorico) window.nexoEnfileirarHistorico('resolvidas', skey);
   window.nexoCadernoErros();
 };
+window.nexoCadernoReabrir = function(skey){
+  var r = ler(KRES, {}) || {}, e = ler(KERR, {}) || {};
+  delete r[skey]; e[skey] = Math.max(e[skey] || 0, Date.now()); gravar(KRES, r); gravar(KERR, e);
+  if(window.nexoEnfileirarHistorico) window.nexoEnfileirarHistorico('resolvidas', skey);
+  window.nexoCadernoErros();
+};
+
+/* motivo e anotação: ficam só do aluno (neste aparelho) */
+document.addEventListener('change', function(ev){
+  var t = ev.target; if(!t || !t.getAttribute) return;
+  var k = t.getAttribute('data-cad-motivo') || t.getAttribute('data-cad-nota'); if(!k) return;
+  var notas = ler(KNOTA, {}) || {}, n = notas[k] || {};
+  if(t.hasAttribute('data-cad-motivo')) n.motivo = t.value; else n.nota = t.value.slice(0, 600);
+  n.at = Date.now(); notas[k] = n; gravar(KNOTA, notas);
+});
+
+/* todo erro novo registra o momento; acertar uma pendente oferece "Resolvi este erro" em vez de fechar sozinha */
+(function(){
+  var orig = window.savePracticeAnswer; if(typeof orig !== 'function') return;
+  window.savePracticeAnswer = function(key, ok, letra){
+    var r = orig.apply(this, arguments);
+    try{
+      var e = ler(KERR, {}) || {};
+      if(!ok){ e[key] = Date.now(); gravar(KERR, e); }
+      else if(atual() === 'caderno'){
+        var res = ler(KRES, {}) || {};
+        if(situacao(key, e, res) === 'pendente'){
+          var box = document.querySelector('[data-cad-acoes="' + key + '"]');
+          if(box && !box.querySelector('.cad-acertou')) box.insertAdjacentHTML('afterbegin',
+            '<p class="cad-acertou nx-sub" role="status" style="margin:0 0 8px"><b>Você acertou desta vez.</b> A pendência continua até você confirmar que entendeu o erro.</p>'
+            + '<button type="button" class="nx-btn primary" onclick="nexoCadernoResolver(\'' + esc(key) + '\')">Resolvi este erro</button> ');
+        }
+      }
+    }catch(err){}
+    return r;
+  };
+})();
 
 /* ======================= simulado ======================= */
 /* peso por módulo: quanto mais o aluno erra num módulo, mais chance de cair questão dele */
@@ -258,7 +372,7 @@ function montarRevisao(n){
   var nFichas = Math.min(devidas.length, Math.floor(n / 4));
   var fichas = devidas.slice(0, nFichas).map(itemFicha);
   var restoN = n - fichas.length;
-  var pend = erradas().sort(function(a, b){ return (st[a.skey].at || 0) - (st[b.skey].at || 0); });
+  var pend = erradas().sort(function(a, b){ return ((st[a.skey] || {}).at || 0) - ((st[b.skey] || {}).at || 0); });
   var doCaderno = pend.slice(0, Math.ceil(restoN / 2));
   var usados = {}; doCaderno.forEach(function(x){ usados[x.skey] = 1; });
   var tx = taxasPorModulo();
