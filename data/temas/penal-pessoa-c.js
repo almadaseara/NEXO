@@ -14,11 +14,22 @@ T.penal_pessoa_07 = {
 meta:{ tema:"Lesão corporal (art. 129)", atualizado:AT,
   foco:"Lesão leve, grave, gravíssima e seguida de morte; violência doméstica (§§9º a 11) e de gênero (§13); lesão funcional e em instituição de ensino (§12); antifacção (§§3º-A e 8º-A); culposa, privilégio e ação penal." },
 secoes:[
-{ id:"resultados", titulo:"Leve, grave, gravíssima e seguida de morte", curto:"Resultados",
+{ id:"simples", titulo:"Lesão leve, privilégio e ação penal", curto:"Simples",
   rapido:["Leve (caput): detenção de <b>3 meses a 1 ano</b> — infração de menor potencial ofensivo. Agressão sem lesão é <b>vias de fato</b> (LCP, art. 21).",
-    "Grave (§1º, 1 a 5 anos): incapacidade para ocupações habituais por <b>mais de 30 dias</b>; perigo de vida; <b>debilidade</b> permanente de membro, sentido ou função; <b>aceleração de parto</b>.",
+    "Privilégio (§4º): redução de <b>1/6 a 1/3</b>. Substituição da detenção por multa (§5º): só lesão leve, privilegiada ou recíproca."],
+  teoria:[
+    { h:"Ação penal", p:[
+      "Regra: pública incondicionada. Leve e culposa: condicionada à representação (Lei 9.099, art. 88), salvo violência doméstica contra a mulher (incondicionada).",
+      "O STF, na ADI 4424, deu interpretação conforme à Lei Maria da Penha: a lesão em violência doméstica contra a mulher é de ação pública incondicionada, qualquer que seja a extensão."]}
+  ],
+  pegadinhas:["A substituição da detenção por multa (§5º) não cabe em lesão grave: só a leve é punida com detenção."]},
+{ id:"qualificadoras", titulo:"Grave, gravíssima, seguida de morte e violência doméstica", curto:"Qualificadoras",
+  rapido:["Grave (§1º, 1 a 5 anos): incapacidade para ocupações habituais por <b>mais de 30 dias</b>; perigo de vida; <b>debilidade</b> permanente de membro, sentido ou função; <b>aceleração de parto</b>.",
     "Gravíssima (§2º, 2 a 8 anos): incapacidade <b>permanente para o trabalho</b>; enfermidade incurável; <b>perda ou inutilização</b> de membro, sentido ou função; deformidade permanente; <b>aborto</b>.",
-    "Seguida de morte (§3º, 4 a 12 anos): preterdolo — o agente não quis nem assumiu o risco da morte. Não vai a júri. Se ligada a facção/milícia/grupo paramilitar: <b>20 a 40 anos</b> (§3º-A)."],
+    "Seguida de morte (§3º, 4 a 12 anos): preterdolo — o agente não quis nem assumiu o risco da morte. Não vai a júri. Se ligada a facção/milícia/grupo paramilitar: <b>20 a 40 anos</b> (§3º-A).",
+    "§9º: lesão contra ascendente, descendente, irmão, cônjuge, companheiro, <b>pessoa com relação de trabalho doméstico</b> (Lei 15.455/2026) ou com quem conviva ou tenha convivido, ou prevalecendo-se de relações domésticas, de trabalho doméstico, de coabitação ou hospitalidade — reclusão de <b>2 a 5 anos</b>.",
+    "§13: lesão contra a <b>mulher por razões da condição do sexo feminino</b> — reclusão de <b>2 a 5 anos</b> (Lei 14.994/2024).",
+    "Violência doméstica contra a mulher: ação <b>incondicionada</b> (Súmula 542), sem transação nem sursis processual (Súmula 536), sem substituição por restritivas (Súmula 588), sem insignificância (Súmula 589), sem exigir coabitação (Súmula 600)."],
   teoria:[
     { h:"Lesão grave", p:[
       "Incapacidade por mais de 30 dias = 31 dias ou mais, para qualquer ocupação habitual <b>lícita</b> (trabalho, estudo, lazer). Exige exame complementar após o 30º dia (CPP, art. 168, §2º); a falta pode ser suprida por prova testemunhal.",
@@ -30,10 +41,13 @@ secoes:[
       "Perda (mutilação ou amputação) ou inutilização <b>total</b> de membro, sentido ou função. Inutilização parcial = debilidade (grave).",
       "Deformidade permanente: dano estético relevante e duradouro, ainda que em parte não exposta do corpo (prevalece). Cirurgia reparadora posterior não afasta a qualificadora, segundo o STJ, se a vítima não é obrigada a se submeter a ela.",
       "Aborto: resultado culposo. Dolo de aborto → art. 125 + lesão."]},
-    { h:"Lesão culposa", p:[
-      "§6º: detenção de 2 meses a 1 ano. <b>Não há gradação</b>: lesão culposa que deforma a vítima continua lesão culposa simples.",
-      "Majorante de 1/3 (§7º, remetendo ao 121, §4º): regra técnica, omissão de socorro, fuga do flagrante. Perdão judicial (§8º).",
-      "No trânsito: CTB, art. 303 (especialidade)."]}
+    { h:"Violência doméstica e de gênero (§§9º e 13)", p:[
+      "Os §§9º e 13 qualificam a lesão <b>leve</b> (pela relação ou pelo gênero, não pelo resultado). Se o resultado for grave, gravíssimo ou morte, aplica-se o §1º, §2º ou §3º, com o aumento de 1/3 do §10 (veja a aba Majorantes).",
+      "O §9º protege qualquer vítima (homem, mulher, idoso, irmão). O §13 exige vítima mulher e motivação ou vulnerabilidade de gênero (121-A, §1º).",
+      "Pena de 2 a 5 anos (desde 10/10/2024): não cabe suspensão condicional do processo. Antes, o §9º era detenção de 3 meses a 3 anos e o §13, reclusão de 1 a 4."]},
+    { h:"Lei 15.455/2026", p:[
+      "Incluiu expressamente a pessoa com relação de trabalho doméstico e o prevalecimento das relações de trabalho doméstico. Ex.: patrão que agride o jardineiro ou a empregada doméstica responde pelo §9º.",
+      "Vigência em 02/07/2026; mais grave, não retroage para fatos anteriores que só se encaixariam pela nova redação. A mesma lei obriga a autoridade policial a comunicar ao MTE e ao MPT, em 48 horas, indícios de trabalho análogo ao de escravo ou de violência doméstica contra trabalhadora doméstica (Lei Maria da Penha, art. 11, parágrafo único)."]}
   ],
   quadro:{ titulo:"Grave × gravíssima", head:["Lesão grave (§1º) — 1 a 5","Lesão gravíssima (§2º) — 2 a 8"], rows:[
     ["Incapacidade para ocupações habituais por mais de 30 dias","Incapacidade permanente para o trabalho"],
@@ -41,93 +55,94 @@ secoes:[
     ["Debilidade permanente de membro, sentido ou função","Perda ou inutilização de membro, sentido ou função"],
     ["Aceleração de parto","Aborto"],
     ["—","Deformidade permanente"]]},
-  pegadinhas:["\"Lesão gravíssima\" é nome doutrinário: o CP chama ambas de \"natureza grave\", mas a pena do §2º é maior.","Lesão grave admite suspensão condicional do processo (pena mínima de 1 ano); gravíssima não."]},
-{ id:"domestica", titulo:"Violência doméstica e de gênero", curto:"Doméstica",
-  rapido:["§9º: lesão contra ascendente, descendente, irmão, cônjuge, companheiro, <b>pessoa com relação de trabalho doméstico</b> (Lei 15.455/2026) ou com quem conviva ou tenha convivido, ou prevalecendo-se de relações domésticas, de trabalho doméstico, de coabitação ou hospitalidade — reclusão de <b>2 a 5 anos</b>.",
-    "§13: lesão contra a <b>mulher por razões da condição do sexo feminino</b> — reclusão de <b>2 a 5 anos</b> (Lei 14.994/2024).",
-    "§10: se o resultado for grave, gravíssimo ou morte (§§1º a 3º) nas circunstâncias do §9º, aumenta-se <b>1/3</b>. §11: vítima com deficiência no §9º, <b>+1/3</b>.",
-    "Violência doméstica contra a mulher: ação <b>incondicionada</b> (Súmula 542), sem transação nem sursis processual (Súmula 536), sem substituição por restritivas (Súmula 588), sem insignificância (Súmula 589), sem exigir coabitação (Súmula 600)."],
-  teoria:[
-    { h:"Qualificadora × majorante", p:[
-      "Os §§9º e 13 qualificam a lesão <b>leve</b> (pela relação ou pelo gênero, não pelo resultado). Se o resultado for grave, gravíssimo ou morte, aplica-se o §1º, §2º ou §3º, com o aumento de 1/3 do §10.",
-      "O §9º protege qualquer vítima (homem, mulher, idoso, irmão). O §13 exige vítima mulher e motivação ou vulnerabilidade de gênero (121-A, §1º).",
-      "Pena de 2 a 5 anos (desde 10/10/2024): não cabe suspensão condicional do processo. Antes, o §9º era detenção de 3 meses a 3 anos e o §13, reclusão de 1 a 4."]},
-    { h:"Lei 15.455/2026", p:[
-      "Incluiu expressamente a pessoa com relação de trabalho doméstico e o prevalecimento das relações de trabalho doméstico. Ex.: patrão que agride o jardineiro ou a empregada doméstica responde pelo §9º.",
-      "Vigência em 02/07/2026; mais grave, não retroage para fatos anteriores que só se encaixariam pela nova redação. A mesma lei obriga a autoridade policial a comunicar ao MTE e ao MPT, em 48 horas, indícios de trabalho análogo ao de escravo ou de violência doméstica contra trabalhadora doméstica (Lei Maria da Penha, art. 11, parágrafo único)."]}
-  ],
-  pegadinhas:["Lesão leve contra a mulher em contexto doméstico: ação pública <b>incondicionada</b>, mesmo sendo leve.","Retratação da representação não se aplica à lesão doméstica contra a mulher, porque a ação é incondicionada."]},
-{ id:"majorantes", titulo:"Funcional, ensino, antifacção e privilégio", curto:"Majorantes",
+  pegadinhas:["\"Lesão gravíssima\" é nome doutrinário: o CP chama ambas de \"natureza grave\", mas a pena do §2º é maior.","Lesão grave admite suspensão condicional do processo (pena mínima de 1 ano); gravíssima não.","Lesão leve contra a mulher em contexto doméstico: ação pública <b>incondicionada</b>, mesmo sendo leve.","Retratação da representação não se aplica à lesão doméstica contra a mulher, porque a ação é incondicionada."]},
+{ id:"majorantes", titulo:"Majorantes da lesão dolosa (§§7º, 8º-A e 10 a 12)", curto:"Majorantes",
   rapido:["§12, I (+1/3 a 2/3): contra agentes dos arts. 142 e 144, sistema prisional, Força Nacional (parente <b>consanguíneo</b>) ou membros do Judiciário, MP, Defensoria, Advocacia Pública e oficial de justiça (parente <b>inclusive por afinidade</b>); ou <b>nas dependências de instituição de ensino</b>.",
     "§12, II (+2/3 ao dobro): em instituição de ensino <b>e</b> vítima com deficiência/doença limitante ou autor com autoridade sobre ela, professor ou funcionário da instituição.",
     "§8º-A (+2/3): lesão por integrante de facção, milícia ou grupo paramilitar no contexto da atuação do grupo — exceto a lesão seguida de morte, que tem a qualificadora do §3º-A.",
-    "§7º (+1/3): vítima menor de 14 ou maior de 60, milícia privada ou grupo de extermínio (remete ao 121, §§4º e 6º). Privilégio (§4º): 1/6 a 1/3. Substituição por multa (§5º): só lesão leve, privilegiada ou recíproca."],
+    "§10: se o resultado for grave, gravíssimo ou morte (§§1º a 3º) nas circunstâncias do §9º, aumenta-se <b>1/3</b>. §11: vítima com deficiência no §9º, <b>+1/3</b>.",
+    "§7º (+1/3): se ocorrer qualquer das hipóteses dos §§4º e 6º do art. 121 — vítima <b>menor de 14 ou maior de 60</b>, milícia privada ou grupo de extermínio (na lesão <b>culposa</b>, regra técnica, omissão de socorro ou fuga: veja a aba Culposo)."],
   teoria:[
+    { h:"Aumentos da violência doméstica (§§10 e 11)", p:[
+      "§10: nos casos dos §§1º a 3º (lesão grave, gravíssima ou seguida de morte), se as circunstâncias são as do §9º, aumenta-se a pena em <b>1/3</b>.",
+      "§11: na hipótese do §9º, a pena aumenta <b>1/3</b> se a vítima é pessoa com deficiência."]},
     { h:"Comparação com o homicídio", p:[
       "Contra agente de segurança ou em instituição de ensino: no homicídio é <b>qualificadora</b>; na lesão, <b>majorante</b>.",
-      "Lesão gravíssima e seguida de morte contra esses agentes, seus familiares ou em instituição de ensino são <b>hediondas</b> (Lei 8.072, art. 1º, I-A, com a redação da Lei 15.159/2025)."]},
-    { h:"Ação penal", p:[
-      "Regra: pública incondicionada. Leve e culposa: condicionada à representação (Lei 9.099, art. 88), salvo violência doméstica contra a mulher (incondicionada).",
-      "O STF, na ADI 4424, deu interpretação conforme à Lei Maria da Penha: a lesão em violência doméstica contra a mulher é de ação pública incondicionada, qualquer que seja a extensão."]}
+      "Lesão gravíssima e seguida de morte contra esses agentes, seus familiares ou em instituição de ensino são <b>hediondas</b> (Lei 8.072, art. 1º, I-A, com a redação da Lei 15.159/2025)."]}
   ],
-  pegadinhas:["§12, I, c (ensino): +1/3 a 2/3. §12, II (ensino + vítima vulnerável ou autor professor/com autoridade): +2/3 ao dobro.","A substituição da detenção por multa (§5º) não cabe em lesão grave: só a leve é punida com detenção."]}
+  pegadinhas:["§12, I, c (ensino): +1/3 a 2/3. §12, II (ensino + vítima vulnerável ou autor professor/com autoridade): +2/3 ao dobro."]},
+{ id:"culposo", titulo:"Lesão culposa e perdão judicial", curto:"Culposo",
+  rapido:["Lesão culposa (§6º): detenção de <b>2 meses a 1 ano</b>. Sem gradação: não existe \"lesão culposa gravíssima\".",
+    "Majorante de <b>1/3</b> (§7º, remetendo ao 121, §4º): regra técnica, omissão de socorro, fuga do flagrante. <b>Perdão judicial</b> (§8º).",
+    "No trânsito: CTB, art. 303 (especialidade)."],
+  teoria:[
+    { h:"Lesão culposa", p:[
+      "§6º: detenção de 2 meses a 1 ano. <b>Não há gradação</b>: lesão culposa que deforma a vítima continua lesão culposa simples.",
+      "Majorante de 1/3 (§7º, remetendo ao 121, §4º): regra técnica, omissão de socorro, fuga do flagrante. Perdão judicial (§8º).",
+      "No trânsito: CTB, art. 303 (especialidade)."]}
+  ],
+  pegadinhas:["Lesão culposa que deforma a vítima continua sendo lesão culposa simples (§6º): <b>não há gradação</b>.","Lesão leve e culposa: ação condicionada à representação (Lei 9.099, art. 88)."]}
 ],
 lei:[
-{ art:"CP, art. 129, caput a §3º-A", nome:"Lesão e resultados", sec:"resultados", itens:[
+{ art:"CP, art. 129, caput, §§4º e 5º", nome:"Lesão simples e privilégio", sec:"simples", itens:[
   { id:"cp129", rot:"Art. 129, caput", t:"<b class='g1'>Ofender a integridade corporal ou a saúde</b> de outrem:<br>Pena - detenção, de <b class='g2'>três meses a um ano</b>.", c:["lc1"] },
+  { id:"cp129p", rot:"§§4º e 5º", t:"§ 4° Se o agente comete o crime impelido por motivo de <b class='g1'>relevante valor social ou moral</b> ou sob o <b class='g1'>domínio de violenta emoção, logo em seguida a injusta provocação</b> da vítima, o juiz pode reduzir a pena de <b class='g2'>um sexto a um terço</b>.<br>§ 5° O juiz, <b class='g3'>não sendo graves as lesões</b>, pode ainda substituir a pena de detenção pela de multa: I - se ocorre qualquer das hipóteses do parágrafo anterior; II - se as <b class='g1'>lesões são recíprocas</b>.", c:["lc14"] }
+]},
+{ art:"CP, art. 129, §§1º a 3º-A, 9º e 13", nome:"Lesão qualificada", sec:"qualificadoras", itens:[
   { id:"cp129g", rot:"§§1º e 2º", t:"§ 1º Se resulta:<br>I - Incapacidade para as ocupações habituais, por <b class='g2'>mais de trinta dias</b>;<br>II - <b class='g1'>perigo de vida</b>;<br>III - <b class='g1'>debilidade</b> permanente de membro, sentido ou função;<br>IV - <b class='g1'>aceleração de parto</b>:<br>Pena - reclusão, de <b class='g2'>um a cinco anos</b>.<br>§ 2° Se resulta:<br>I - Incapacidade <b class='g1'>permanente para o trabalho</b>;<br>II - <b class='g1'>enfermidade incurável</b>;<br>III - <b class='g1'>perda ou inutilização</b> do membro, sentido ou função;<br>IV - <b class='g1'>deformidade permanente</b>;<br>V - <b class='g1'>aborto</b>:<br>Pena - reclusão, de <b class='g2'>dois a oito anos</b>.", c:["lc2","lc3","lc4","lc5"] },
-  { id:"cp129m", rot:"§§3º e 3º-A", t:"§ 3° Se resulta morte e as circunstâncias evidenciam que o agente <b class='g3'>não quis o resultado, nem assumiu o risco de produzi-lo</b>:<br>Pena - reclusão, de <b class='g2'>quatro a doze anos</b>.<br>§ 3º-A. No crime previsto no § 3º deste artigo, se cometido <b class='g1'>no contexto da atuação ou para a consecução das condutas</b> previstas no art. 2º da lei que institui o marco legal do combate ao crime organizado no Brasil:<br>Pena - reclusão, de <b class='g2'>20 (vinte) a 40 (quarenta) anos</b>.", nota:"§3º-A incluído pela Lei 15.358/2026.", novo:true, c:["lc6","lc7"] }
-]},
-{ art:"CP, art. 129, §§4º a 8º-A", nome:"Privilégio, culposa e aumentos", sec:"majorantes", itens:[
-  { id:"cp129p", rot:"§§4º e 5º", t:"§ 4° Se o agente comete o crime impelido por motivo de <b class='g1'>relevante valor social ou moral</b> ou sob o <b class='g1'>domínio de violenta emoção, logo em seguida a injusta provocação</b> da vítima, o juiz pode reduzir a pena de <b class='g2'>um sexto a um terço</b>.<br>§ 5° O juiz, <b class='g3'>não sendo graves as lesões</b>, pode ainda substituir a pena de detenção pela de multa: I - se ocorre qualquer das hipóteses do parágrafo anterior; II - se as <b class='g1'>lesões são recíprocas</b>.", c:["lc14"] },
-  { id:"cp129c", rot:"§§6º a 8º-A", t:"§ 6° Se a lesão é <b class='g1'>culposa</b>:<br>Pena - detenção, de <b class='g2'>dois meses a um ano</b>.<br>§ 7º Aumenta-se a pena de <b class='g2'>1/3</b> se ocorrer qualquer das hipóteses dos §§ 4º e 6º do art. 121 deste Código.<br>§ 8º - Aplica-se à lesão culposa o disposto no § 5º do art. 121 (<b class='g1'>perdão judicial</b>).<br>§ 8º-A. <b class='g3'>Com exceção do disposto no § 3º-A</b> deste artigo, aumenta-se a pena em <b class='g2'>2/3</b> se a lesão é praticada por <b class='g1'>integrante de organização criminosa ultraviolenta, grupo paramilitar ou milícia privada</b>, no contexto da atuação ou para a consecução das condutas previstas no art. 2º da lei que institui o marco legal do combate ao crime organizado no Brasil.", nota:"§8º-A incluído pela Lei 15.358/2026.", novo:true, c:["lc8","lc7"] }
-]},
-{ art:"CP, art. 129, §§9º a 11 e 13", nome:"Violência doméstica e de gênero", sec:"domestica", itens:[
-  { id:"cp129d", rot:"§§9º a 11", t:"§ 9º Se a lesão for praticada contra <b class='g1'>ascendente, descendente, irmão, cônjuge ou companheiro, pessoa com relação de trabalho doméstico</b> ou com quem <b class='g1'>conviva ou tenha convivido</b>, ou, ainda, prevalecendo-se o agente das relações domésticas, de trabalho doméstico, de coabitação ou de hospitalidade:<br>Pena – reclusão, de <b class='g2'>2 (dois) a 5 (cinco) anos</b>.<br>§ 10. Nos casos previstos nos <b class='g3'>§§ 1º a 3º</b> deste artigo, se as circunstâncias são as indicadas no § 9º deste artigo, aumenta-se a pena em <b class='g2'>1/3</b>.<br>§ 11. Na hipótese do § 9º deste artigo, a pena será aumentada de <b class='g2'>um terço</b> se o crime for cometido contra <b class='g1'>pessoa portadora de deficiência</b>.", nota:"Redação do caput do §9º pela Lei 15.455/2026; pena pela Lei 14.994/2024.", novo:true, c:["lc9","lc10","lc11"], j:["stj-s542-lc","stj-s536","stj-s588","stj-s589","stj-s600"] },
+  { id:"cp129m", rot:"§§3º e 3º-A", t:"§ 3° Se resulta morte e as circunstâncias evidenciam que o agente <b class='g3'>não quis o resultado, nem assumiu o risco de produzi-lo</b>:<br>Pena - reclusão, de <b class='g2'>quatro a doze anos</b>.<br>§ 3º-A. No crime previsto no § 3º deste artigo, se cometido <b class='g1'>no contexto da atuação ou para a consecução das condutas</b> previstas no art. 2º da lei que institui o marco legal do combate ao crime organizado no Brasil:<br>Pena - reclusão, de <b class='g2'>20 (vinte) a 40 (quarenta) anos</b>.", nota:"§3º-A incluído pela Lei 15.358/2026.", novo:true, c:["lc6","lc7"] },
+  { id:"cp129d9", rot:"§9º", t:"§ 9º Se a lesão for praticada contra <b class='g1'>ascendente, descendente, irmão, cônjuge ou companheiro, pessoa com relação de trabalho doméstico</b> ou com quem <b class='g1'>conviva ou tenha convivido</b>, ou, ainda, prevalecendo-se o agente das relações domésticas, de trabalho doméstico, de coabitação ou de hospitalidade:<br>Pena – reclusão, de <b class='g2'>2 (dois) a 5 (cinco) anos</b>.", nota:"Redação do caput do §9º pela Lei 15.455/2026; pena pela Lei 14.994/2024.", novo:true, c:["lc9","lc11"], j:["stj-s542-lc","stj-s536","stj-s588","stj-s589","stj-s600"] },
   { id:"cp129g13", rot:"§13", t:"§ 13. Se a lesão é praticada <b class='g1'>contra a mulher, por razões da condição do sexo feminino</b>, nos termos do § 1º do art. 121-A deste Código:<br>Pena – reclusão, de <b class='g2'>2 (dois) a 5 (cinco) anos</b>.", nota:"Redação da Lei 14.994/2024.", novo:true, c:["lc12"] }
 ]},
-{ art:"CP, art. 129, §12", nome:"Lesão funcional e em instituição de ensino", sec:"majorantes", itens:[
+{ art:"CP, art. 129, §§7º, 8º-A e 10 a 12", nome:"Majorantes da lesão dolosa", sec:"majorantes", itens:[
+  { id:"cp129c7", rot:"§7º", t:"§ 7º Aumenta-se a pena de <b class='g2'>1/3</b> se ocorrer qualquer das hipóteses dos §§ 4º e 6º do art. 121 deste Código." },
+  { id:"cp129c8a", rot:"§8º-A", t:"§ 8º-A. <b class='g3'>Com exceção do disposto no § 3º-A</b> deste artigo, aumenta-se a pena em <b class='g2'>2/3</b> se a lesão é praticada por <b class='g1'>integrante de organização criminosa ultraviolenta, grupo paramilitar ou milícia privada</b>, no contexto da atuação ou para a consecução das condutas previstas no art. 2º da lei que institui o marco legal do combate ao crime organizado no Brasil.", nota:"§8º-A incluído pela Lei 15.358/2026.", novo:true, c:["lc7"] },
+  { id:"cp129d10", rot:"§§10 e 11", t:"§ 10. Nos casos previstos nos <b class='g3'>§§ 1º a 3º</b> deste artigo, se as circunstâncias são as indicadas no § 9º deste artigo, aumenta-se a pena em <b class='g2'>1/3</b>.<br>§ 11. Na hipótese do § 9º deste artigo, a pena será aumentada de <b class='g2'>um terço</b> se o crime for cometido contra <b class='g1'>pessoa portadora de deficiência</b>.", c:["lc10"] },
   { id:"cp129f", rot:"§12", t:"§ 12. Aumenta-se a pena de:<br>I - <b class='g2'>1/3 (um terço) a 2/3 (dois terços)</b> se a lesão dolosa for praticada:<br>a) contra autoridade ou agente descrito nos arts. 142 e 144 da Constituição Federal ou integrantes do sistema prisional ou da Força Nacional de Segurança Pública, no exercício da função ou em decorrência dela, ou contra seu cônjuge, companheiro ou <b class='g3'>parente consanguíneo</b> até terceiro grau, em razão dessa condição;<br>b) contra membro do Poder Judiciário, do Ministério Público, da Defensoria Pública ou da Advocacia Pública, de que tratam os arts. 131 e 132 da Constituição Federal, ou oficial de justiça, no exercício da função ou em decorrência dela, ou contra seu cônjuge, companheiro ou parente, <b class='g3'>inclusive por afinidade</b>, até o terceiro grau, em razão dessa condição; ou<br>c) <b class='g1'>nas dependências de instituição de ensino</b>;<br>II - <b class='g2'>2/3 (dois terços) ao dobro</b> se a lesão dolosa for praticada nas dependências de instituição de ensino e:<br>a) a vítima for pessoa com deficiência ou com doença que acarrete condição limitante ou de vulnerabilidade física ou mental; ou<br>b) o autor for ascendente, padrasto ou madrasta, tio, irmão, cônjuge, companheiro, tutor, curador, preceptor ou empregador da vítima ou por qualquer outro título tiver autoridade sobre ela ou, ainda, for <b class='g1'>professor ou funcionário da instituição de ensino</b>.", nota:"Redação da Lei 15.159/2025.", novo:true, c:["lc13","lc15"] }
+]},
+{ art:"CP, art. 129, §§6º e 8º", nome:"Lesão culposa e perdão judicial", sec:"culposo", itens:[
+  { id:"cp129c6", rot:"§6º", t:"§ 6° Se a lesão é <b class='g1'>culposa</b>:<br>Pena - detenção, de <b class='g2'>dois meses a um ano</b>.", c:["lc8"] },
+  { id:"cp129c8", rot:"§8º", t:"§ 8º - Aplica-se à lesão culposa o disposto no § 5º do art. 121 (<b class='g1'>perdão judicial</b>)." }
 ]}
 ],
 juris:[
-{ id:"stj-s542-lc", trib:"STJ", tipo:"Súmula", num:"542", sec:"domestica", status:"vigente", data:"",
+{ id:"stj-s542-lc", trib:"STJ", tipo:"Súmula", num:"542", sec:"qualificadoras", status:"vigente", data:"",
   titulo:"Ação penal incondicionada", texto:"A ação penal relativa ao crime de lesão corporal resultante de violência doméstica contra a mulher é pública incondicionada.",
-  explica:"No mesmo sentido, STF, ADI 4424 (2012). Vale também para a lesão leve.", lei:["cp129d","cp129g13"], fonte:STJS },
-{ id:"stj-s536", trib:"STJ", tipo:"Súmula", num:"536", sec:"domestica", status:"vigente", data:"",
+  explica:"No mesmo sentido, STF, ADI 4424 (2012). Vale também para a lesão leve.", lei:["cp129d9","cp129g13"], fonte:STJS },
+{ id:"stj-s536", trib:"STJ", tipo:"Súmula", num:"536", sec:"qualificadoras", status:"vigente", data:"",
   titulo:"Sem transação e sem sursis processual", texto:"A suspensão condicional do processo e a transação penal não se aplicam na hipótese de delitos sujeitos ao rito da Lei Maria da Penha.",
-  explica:"Reflexo do art. 41 da Lei 11.340/2006 (não se aplica a Lei 9.099/95).", lei:["cp129d"], fonte:STJS },
-{ id:"stj-s588", trib:"STJ", tipo:"Súmula", num:"588", sec:"domestica", status:"vigente", data:"",
+  explica:"Reflexo do art. 41 da Lei 11.340/2006 (não se aplica a Lei 9.099/95).", lei:["cp129d9"], fonte:STJS },
+{ id:"stj-s588", trib:"STJ", tipo:"Súmula", num:"588", sec:"qualificadoras", status:"vigente", data:"",
   titulo:"Sem penas restritivas de direitos", texto:"A prática de crime ou contravenção penal contra a mulher com violência ou grave ameaça no ambiente doméstico impossibilita a substituição da pena privativa de liberdade por restritiva de direitos.",
-  explica:"Alcança também as contravenções (ex.: vias de fato).", lei:["cp129d"], fonte:STJS },
-{ id:"stj-s589", trib:"STJ", tipo:"Súmula", num:"589", sec:"domestica", status:"vigente", data:"",
+  explica:"Alcança também as contravenções (ex.: vias de fato).", lei:["cp129d9"], fonte:STJS },
+{ id:"stj-s589", trib:"STJ", tipo:"Súmula", num:"589", sec:"qualificadoras", status:"vigente", data:"",
   titulo:"Sem insignificância", texto:"É inaplicável o princípio da insignificância nos crimes ou contravenções penais praticados contra a mulher no âmbito das relações domésticas.",
-  explica:"Mesmo lesão levíssima.", lei:["cp129d"], fonte:STJS },
-{ id:"stj-s600", trib:"STJ", tipo:"Súmula", num:"600", sec:"domestica", status:"vigente", data:"",
+  explica:"Mesmo lesão levíssima.", lei:["cp129d9"], fonte:STJS },
+{ id:"stj-s600", trib:"STJ", tipo:"Súmula", num:"600", sec:"qualificadoras", status:"vigente", data:"",
   titulo:"Sem exigência de coabitação", texto:"Para configuração da violência doméstica e familiar prevista no artigo 5º da Lei 11.340/2006, Lei Maria da Penha, não se exige a coabitação entre autor e vítima.",
-  explica:"Namoro e ex-relacionamentos entram.", lei:["cp129d","cp129g13"], fonte:STJS },
-{ id:"stf-adi4424", trib:"STF", tipo:"ADI", num:"4424", sec:"majorantes", status:"vigente", data:"Plenário, 09/02/2012",
+  explica:"Namoro e ex-relacionamentos entram.", lei:["cp129d9","cp129g13"], fonte:STJS },
+{ id:"stf-adi4424", trib:"STF", tipo:"ADI", num:"4424", sec:"qualificadoras", status:"vigente", data:"Plenário, 09/02/2012",
   titulo:"Lei Maria da Penha: lesão sem representação", texto:"Interpretação conforme aos arts. 12, I, 16 e 41 da Lei 11.340/2006 para assentar a natureza incondicionada da ação penal em caso de crime de lesão corporal, pouco importando a extensão desta, praticado contra a mulher no ambiente doméstico.",
-  explica:"Origem da Súmula 542 do STJ.", lei:["cp129d"], fonte:STFJ },
-{ id:"lei15455", trib:"Legislação", tipo:"Lei", num:"15.455/2026", sec:"domestica", status:"vigente", data:"DOU 02/07/2026",
+  explica:"Origem da Súmula 542 do STJ.", lei:["cp129d9"], fonte:STFJ },
+{ id:"lei15455", trib:"Legislação", tipo:"Lei", num:"15.455/2026", sec:"qualificadoras", status:"vigente", data:"DOU 02/07/2026",
   titulo:"Trabalho doméstico no §9º", texto:"Altera o art. 129, §9º, do CP para incluir a pessoa com relação de trabalho doméstico e o prevalecimento das relações de trabalho doméstico; acrescenta parágrafo único ao art. 11 da Lei Maria da Penha (comunicação ao MTE e ao MPT em 48 horas).",
-  explica:"Também prevê medidas assistenciais para trabalhadores resgatados de condição análoga à de escravo (seguro-desemprego, CadÚnico, Bolsa Família).", lei:["cp129d"], fonte:L15455 }
+  explica:"Também prevê medidas assistenciais para trabalhadores resgatados de condição análoga à de escravo (seguro-desemprego, CadÚnico, Bolsa Família).", lei:["cp129d9"], fonte:L15455 }
 ],
 cards:[
-{ id:"lc1", tipo:"distincao", sec:"resultados", f:"Lesão leve × vias de fato.", v:"<b>Lesão</b>: ofende a integridade ou a saúde (há dano). <b>Vias de fato</b> (LCP, art. 21): violência sem lesão (empurrão, puxão de cabelo).", lei:["cp129"] },
-{ id:"lc2", tipo:"numero", sec:"resultados", f:"Incapacidade para as ocupações habituais: quantos dias para ser grave?", v:"<b>Mais de 30</b> (31 ou mais). Com exatos 30, é leve.", lei:["cp129g"] },
-{ id:"lc3", tipo:"caso", sec:"resultados", f:"Ladrão profissional fica 40 dias sem poder \"trabalhar\" após ser agredido. Lesão grave?", v:"<b>Não.</b> A ocupação habitual precisa ser <b>lícita</b>. Lesão leve.", lei:["cp129g"] },
-{ id:"lc4", tipo:"caso", sec:"resultados", f:"Vítima perde a visão de um olho. Grave ou gravíssima?", v:"<b>Grave</b> (debilidade da visão). Órgão duplo: a função persiste com o outro olho.", lei:["cp129g"] },
-{ id:"lc5", tipo:"distincao", sec:"resultados", f:"Debilidade × inutilização.", v:"<b>Debilidade</b>: enfraquecimento (grave, §1º, III). <b>Inutilização</b>: perda total da função, ainda que o membro permaneça (gravíssima, §2º, III).", lei:["cp129g"] },
-{ id:"lc6", tipo:"caso", sec:"resultados", f:"Soco no rosto; a vítima cai, bate a cabeça e morre. Agente queria só machucar.", v:"<b>Lesão corporal seguida de morte</b> (129, §3º — 4 a 12). Preterdolo. Não vai a júri.", lei:["cp129m"] },
-{ id:"lc7", tipo:"distincao", sec:"resultados", f:"Lesão por integrante de facção no contexto do grupo: §3º-A × §8º-A.", v:"Se resulta <b>morte</b> (preterdolosa): qualificadora do <b>§3º-A</b> (20 a 40). Demais lesões: <b>+2/3</b> (§8º-A). Não se somam.", lei:["cp129m","cp129c"] },
-{ id:"lc8", tipo:"ce", sec:"resultados", f:"Certo ou errado: lesão culposa que causa deformidade permanente é \"lesão culposa gravíssima\".", v:"<b>Errado.</b> Não há gradação na lesão culposa (§6º).", lei:["cp129c"] },
-{ id:"lc9", tipo:"caso", sec:"domestica", f:"Irmão de 25 anos agride o irmão de 18 por causa de tarefas da casa; lesão leve. Enquadramento e pena?", v:"<b>129, §9º</b> — reclusão de 2 a 5 anos (vítima homem também entra no §9º).", lei:["cp129d"] },
-{ id:"lc10", tipo:"caso", sec:"domestica", f:"Marido agride a esposa e ela fica 45 dias incapacitada. Enquadramento?", v:"<b>129, §1º, I</b> (lesão grave) com aumento de <b>1/3</b> do §10. Ação incondicionada.", lei:["cp129d"] },
-{ id:"lc11", tipo:"caso", sec:"domestica", f:"Patrão agride o jardineiro que trabalha na casa (fato de agosto de 2026). Enquadramento?", v:"<b>129, §9º</b>: relação de trabalho doméstico, incluída pela Lei 15.455/2026.", lei:["cp129d"], j:["lei15455"] },
-{ id:"lc12", tipo:"juris", sec:"domestica", f:"Lesão leve do namorado contra a namorada: cabe transação penal? Precisa de representação?", v:"<b>Não</b> e <b>não</b>: Súmulas 536 e 542 do STJ.", lei:["cp129g13"], j:["stj-s536","stj-s542-lc"] },
+{ id:"lc1", tipo:"distincao", sec:"simples", f:"Lesão leve × vias de fato.", v:"<b>Lesão</b>: ofende a integridade ou a saúde (há dano). <b>Vias de fato</b> (LCP, art. 21): violência sem lesão (empurrão, puxão de cabelo).", lei:["cp129"] },
+{ id:"lc2", tipo:"numero", sec:"qualificadoras", f:"Incapacidade para as ocupações habituais: quantos dias para ser grave?", v:"<b>Mais de 30</b> (31 ou mais). Com exatos 30, é leve.", lei:["cp129g"] },
+{ id:"lc3", tipo:"caso", sec:"qualificadoras", f:"Ladrão profissional fica 40 dias sem poder \"trabalhar\" após ser agredido. Lesão grave?", v:"<b>Não.</b> A ocupação habitual precisa ser <b>lícita</b>. Lesão leve.", lei:["cp129g"] },
+{ id:"lc4", tipo:"caso", sec:"qualificadoras", f:"Vítima perde a visão de um olho. Grave ou gravíssima?", v:"<b>Grave</b> (debilidade da visão). Órgão duplo: a função persiste com o outro olho.", lei:["cp129g"] },
+{ id:"lc5", tipo:"distincao", sec:"qualificadoras", f:"Debilidade × inutilização.", v:"<b>Debilidade</b>: enfraquecimento (grave, §1º, III). <b>Inutilização</b>: perda total da função, ainda que o membro permaneça (gravíssima, §2º, III).", lei:["cp129g"] },
+{ id:"lc6", tipo:"caso", sec:"qualificadoras", f:"Soco no rosto; a vítima cai, bate a cabeça e morre. Agente queria só machucar.", v:"<b>Lesão corporal seguida de morte</b> (129, §3º — 4 a 12). Preterdolo. Não vai a júri.", lei:["cp129m"] },
+{ id:"lc7", tipo:"distincao", sec:"qualificadoras", f:"Lesão por integrante de facção no contexto do grupo: §3º-A × §8º-A.", v:"Se resulta <b>morte</b> (preterdolosa): qualificadora do <b>§3º-A</b> (20 a 40). Demais lesões: <b>+2/3</b> (§8º-A). Não se somam.", lei:["cp129m","cp129c8a"] },
+{ id:"lc8", tipo:"ce", sec:"culposo", f:"Certo ou errado: lesão culposa que causa deformidade permanente é \"lesão culposa gravíssima\".", v:"<b>Errado.</b> Não há gradação na lesão culposa (§6º).", lei:["cp129c6"] },
+{ id:"lc9", tipo:"caso", sec:"qualificadoras", f:"Irmão de 25 anos agride o irmão de 18 por causa de tarefas da casa; lesão leve. Enquadramento e pena?", v:"<b>129, §9º</b> — reclusão de 2 a 5 anos (vítima homem também entra no §9º).", lei:["cp129d9"] },
+{ id:"lc10", tipo:"caso", sec:"majorantes", f:"Marido agride a esposa e ela fica 45 dias incapacitada. Enquadramento?", v:"<b>129, §1º, I</b> (lesão grave) com aumento de <b>1/3</b> do §10. Ação incondicionada.", lei:["cp129d10"] },
+{ id:"lc11", tipo:"caso", sec:"qualificadoras", f:"Patrão agride o jardineiro que trabalha na casa (fato de agosto de 2026). Enquadramento?", v:"<b>129, §9º</b>: relação de trabalho doméstico, incluída pela Lei 15.455/2026.", lei:["cp129d9"], j:["lei15455"] },
+{ id:"lc12", tipo:"juris", sec:"qualificadoras", f:"Lesão leve do namorado contra a namorada: cabe transação penal? Precisa de representação?", v:"<b>Não</b> e <b>não</b>: Súmulas 536 e 542 do STJ.", lei:["cp129g13"], j:["stj-s536","stj-s542-lc"] },
 { id:"lc13", tipo:"caso", sec:"majorantes", f:"Pai de aluno agride outro pai durante reunião na escola. E se fosse o professor agredindo o aluno?", v:"Pai × pai: <b>+1/3 a 2/3</b> (§12, I, c). Professor × aluno: <b>+2/3 ao dobro</b> (§12, II, b).", lei:["cp129f"] },
-{ id:"lc14", tipo:"ce", sec:"majorantes", f:"Certo ou errado: na lesão grave recíproca, o juiz pode substituir a pena por multa.", v:"<b>Errado.</b> O §5º só vale \"não sendo graves as lesões\".", lei:["cp129p"] },
+{ id:"lc14", tipo:"ce", sec:"simples", f:"Certo ou errado: na lesão grave recíproca, o juiz pode substituir a pena por multa.", v:"<b>Errado.</b> O §5º só vale \"não sendo graves as lesões\".", lei:["cp129p"] },
 { id:"lc15", tipo:"distincao", sec:"majorantes", f:"Agredir policial em razão da função: homicídio × lesão.", v:"Homicídio: <b>qualificadora</b> (121, §2º, VII). Lesão: <b>majorante</b> de 1/3 a 2/3 (129, §12, I). Lesão gravíssima ou seguida de morte nesse caso é hedionda.", lei:["cp129f"] }
 ],
 questoes:[]
