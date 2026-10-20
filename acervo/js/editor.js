@@ -161,6 +161,7 @@ export async function openEditor(notebookId, { pageIndex = 0, query = '' } = {})
   if (nb) await closeEditor({ silent: true });
   nb = await db.get('notebooks', notebookId);
   if (!nb) { toast('Caderno não encontrado'); return false; }
+  if (nb.trashedAt) { toast('Este caderno está na lixeira. Restaure-o para abrir.'); nb = null; return false; }
   pages = await getNotebookPages(nb);
   if (!pages.length) {
     const s = PAGE_SIZES[nb.defaults?.size] || PAGE_SIZES.a4;
@@ -1654,7 +1655,7 @@ async function renderInkOnly(strokes) {
 async function linkDialog() {
   const v = views.get(selection.pageId);
   const b = selection.bbox;
-  const notebooks = (await db.all('notebooks')).filter((n) => n.id !== nb.id).sort((x, y) => x.title.localeCompare(y.title, 'pt-BR'));
+  const notebooks = (await db.all('notebooks')).filter((n) => n.id !== nb.id && !n.trashedAt).sort((x, y) => x.title.localeCompare(y.title, 'pt-BR'));
   const target = await modal((box, close) => {
     let mode = 'page';
     const body = h('div');
