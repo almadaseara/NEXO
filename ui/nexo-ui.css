@@ -847,3 +847,47 @@ html[data-theme="dark"] .rv-card .rv-fig{background:rgba(255,255,255,.92);border
 .fx-deck>summary{grid-template-columns:auto minmax(0,1fr) auto}
 .fx-deck>summary .nx-btn{display:inline-flex;grid-column:1/-1;justify-content:center}
 .fx-deck>summary .fx-due{text-align:right}
+
+/* ---------- Modo foco: a janela inteira para a leitura ----------
+   Fica só o essencial: cronômetro, tamanho da letra, abas (Resumo, Lei seca, Jurisprudência, Questões…)
+   e o índice dos tópicos do livro. A barra de marcação vai para a borda esquerda, fora do texto. */
+@media (min-width:701px){
+  body.study-focus header .command-trigger,
+  body.study-focus header .pills,
+  body.study-focus header .auth-actions{display:none!important}
+  body.study-focus header #head{margin-right:auto}
+  body.study-focus .nx-rbar-wrap{left:12px!important}
+  body.study-focus:has(.nx-rbar-wrap:not([hidden])) #view{padding-left:82px!important}
+  body.study-focus #view>.reader-toolbar,
+  body.study-focus #view>.hero,
+  body.study-focus #view>.reading-content{max-width:1240px}
+  body.study-focus .reader-toolbar{padding-top:6px;padding-bottom:6px}
+  body.study-focus .reader-position,
+  body.study-focus .reader-navigation{display:none}
+  body.study-focus .study-view .hero,
+  body.study-focus .hero{background:transparent;border:0;border-bottom:1px solid var(--nx-line);border-radius:0;box-shadow:none;padding:0 4px;margin-bottom:14px}
+  body.study-focus .hero>.badge,
+  body.study-focus .hero>span,
+  body.study-focus .hero>h1,
+  body.study-focus .hero>p{display:none}
+  body.study-focus .study-view .hero .tabs,
+  body.study-focus .hero .tabs{border-top:0;margin-top:0;padding:6px 0 0;flex-wrap:wrap}
+  body.study-focus .hero .tabs button{padding:11px 14px;font-size:13px;border-radius:7px 7px 0 0}
+  body.study-focus .reading-content .card{padding:30px 34px}
+  body.study-focus .reading-content .tr-read p{max-width:none}
+}
+
+/* ---------- Resumo por tópicos ----------
+   Cada seção traz o resumo de 30 segundos, o índice dos tópicos e os tópicos lado a lado em telas largas. */
+.tr-indice{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:2px 0 4px}
+.tr-indice .tr-lbl{margin-right:4px}
+.tr-indice .tr-chip b{display:inline-grid;place-items:center;min-width:19px;height:19px;border-radius:6px;background:var(--rd-h);color:var(--nx-surface,#fff);font-size:11px;margin-right:2px}
+.tr-topicos{display:grid;grid-template-columns:1fr;gap:12px}
+.tr-topico{border:1px solid var(--nx-line,#e3e9e8);border-left:4px solid var(--rd-h);border-radius:10px;padding:4px 16px 8px;background:var(--nx-surface,#fff);scroll-margin-top:86px}
+.tr-topico p:last-child{margin-bottom:2px}
+.tr-read.tr-topicos h3{border-left:0;padding-left:0;margin:12px 0 6px;display:flex;gap:9px;align-items:center;font-size:16px}
+.tr-tn{display:inline-grid;place-items:center;flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--rd-h);color:var(--nx-surface,#fff);font-size:12px;font-weight:800}
+@media (min-width:1180px){
+  .tr-topicos:not(.tr-um){grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
+}
+@media (max-width:700px){.tr-topico{padding:2px 12px 6px}}

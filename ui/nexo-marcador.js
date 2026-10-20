@@ -93,14 +93,81 @@ function envolver(mp, ini, fim, fazer){
   });
 }
 function limparDom(raiz){
-  Array.prototype.forEach.call(raiz.querySelectorAll('.nx-mk'), function(el){ var p = el.parentNode; while(el.firstChild) p.insertBefore(el.firstChild, el); p.removeChild(el); });
+  Array.prototype.forEach.call(raiz.querySelectorAll('.nx-mk, .nx-aspan'), function(el){ var p = el.parentNode; while(el.firstChild) p.insertBefore(el.firstChild, el); p.removeChild(el); });
   Array.prototype.forEach.call(raiz.querySelectorAll('.nx-auto'), function(el){ el.classList.remove('nx-auto', 'nx-auto-am', 'nx-auto-vd', 'nx-auto-rs', 'nx-auto-az'); el.removeAttribute('data-nx-autoq'); });
   Array.prototype.forEach.call(raiz.querySelectorAll('.nx-mk-nota-ic'), function(el){ el.remove(); });
   raiz.normalize();
 }
 
-/* ---------- pontos importantes: o que o próprio material já destaca ---------- */
-var AUTO_SEL = [['mark', 'am'], ['b.g1', 'am'], ['b.g2', 'vd'], ['b.g3', 'rs'], ['u', 'az'], ['.summary b, .summary strong, .tr-camada b, .tr-sec b, .tr-rapido b, li > b, p > b, p > strong', 'am']];
+/* ---------- pontos importantes ----------
+   1) respeita o que o próprio material já grifou à mão (mark, u, b.g1...);
+   2) lê cada parágrafo no contexto: divide em frases, pontua cada uma pelo que ela diz (regra, pena,
+      exceção, súmula, número, definição) e marca a FRASE inteira mais importante do parágrafo. Se a frase
+      for longa, marca só a oração que carrega a ideia. Em parágrafos sem frase de destaque, marca o termo
+      definido ("Valor social: ..."). Exemplos e explicações soltas não entram. */
+var AUTO_SEL = [['mark', 'am'], ['b.g1', 'am'], ['b.g2', 'vd'], ['b.g3', 'rs'], ['u', 'az']];
+var RX_ABREV = /(?:^|[\s(])(?:arts?|incs?|n|nº|p|pp|ex|cf|v|vs|ss|sr|sra|dr|dra|min|rel|rep|hc|re|resp|resps|ag|rg|adi|adpf|adc|obs|al|par|cap|fls?|etc|c\/c|s\/n|§§?)\.$/i;
+var C_EXCECAO = /\b(?:exceto|salvo|ressalvad[oa]s?|n[ãa]o (?:admite|cabe|caber[áa]|se aplica|incide|h[áa]|configura|exclui|afasta|permite|basta|depende|[ée])|inadmiss[íi]vel|[ée] vedad[oa]|veda|vedad[oa]|impossível|inaplic[áa]vel|incabível|afasta|descabe|ainda que|mesmo que|independe|irrelevante|apenas|somente|exclusivamente|nunca|em nenhuma hip[óo]tese)\b/i;
+var C_REGRA = /\b(?:configura|caracteriza|constitui|considera-se|consideram-se|entende-se|define-se|consiste|responde|respondem|aplica-se|aplicam-se|incide|incidem|admite|admitem|cabe|cabem|prevalece|prevalecem|exige|exigem|depende|dependem|pressup[õo]e|requisito|elementar|elementares|n[úu]cleo|compet[êe]ncia|a[çc][ãa]o penal|consuma-se|consuma|tentativa|dolo|culpa|sempre|obrigat[óo]ri[oa]|necess[áa]ri[oa]|bem jur[íi]dico|sujeito (?:ativo|passivo))\b/i;
+var C_JURIS = /\b(?:STF|STJ|S[úu]mulas?|Tema \d+|Informativo|jurisprud[êe]ncia|entendimento|tese|HC \d+|RE \d+|REsp|ADI|ADPF)\b/;
+var C_PENA = /\b(?:reclus[ãa]o|deten[çc][ãa]o|multa|pena|pris[ãa]o|regime (?:fechado|semiaberto|aberto)|aumentad[oa]|diminu[íi]d[oa]|redu[çc][ãa]o|aumento|prescri[çc][ãa]o|prazo)\b/i;
+var C_NUM = /\b\d+\s*(?:\/\s*\d+|anos?|meses|m[êe]s|dias?|horas?|%|salários?)|\b(?:um|dois|tr[êe]s|metade|d[óo]bro|tri?plo)\b\s*(?:sexto|terço|terços|quarto)?/i;
+var C_REF = /\b(?:arts?\.|§\s*\d|inc\.|inciso|al[íi]nea|par[áa]grafo [úu]nico|caput)/i;
+
+function frases(t){
+  var out = [], ini = 0, re = /[.!?]+["”)]*\s+/g, m;
+  while((m = re.exec(t))){
+    var fim = m.index + m[0].length, ant = t.slice(0, m.index + 1);
+    if(RX_ABREV.test(ant)) continue;
+    var prox = t.charAt(fim); if(prox && !/[A-ZÁÉÍÓÚÂÊÔÃÕÇ0-9"“(§]/.test(prox)) continue;
+    out.push([ini, m.index + m[0].replace(/\s+$/, '').length]); ini = fim;
+  }
+  if(ini < t.length) out.push([ini, t.length]);
+  return out.filter(function(f){ return t.slice(f[0], f[1]).trim().length > 0; });
+}
+function pontuar(f, enfase){
+  var sc = 0, cat = {};
+  function add(k, v){ sc += v; cat[k] = (cat[k] || 0) + v; }
+  if(C_EXCECAO.test(f)) add('exc', 3);
+  if(C_REGRA.test(f)) add('reg', 2);
+  if(C_JURIS.test(f)) add('jur', 3);
+  if(C_PENA.test(f) && C_NUM.test(f)) add('pen', 4); else if(C_PENA.test(f)) add('pen', 1);
+  if(C_REF.test(f)) add('ref', 1);
+  if(C_NUM.test(f)) add('num', 1);
+  if(/^[^.:]{2,48}:\s+\S/.test(f) && !/^(?:ex|obs|cf)\b/i.test(f)) add('def', 2);
+  if(/\b(?:[ée] o |[ée] a |[ée] um |[ée] uma |s[ãa]o os |s[ãa]o as )/.test(f.slice(0, 90))) add('def', 1);
+  if(enfase) add('enf', Math.min(3, enfase));
+  var n = f.trim().length;
+  if(/^\(?\s*(?:ex|exemplo|obs)\b/i.test(f.trim()) || /\bpor exemplo\b/i.test(f)) sc -= 3;
+  if(n < 28) sc -= 3; else if(n > 300) sc -= 1;
+  return { sc:sc, cat:cat };
+}
+function corDa(cat){
+  var k = Object.keys(cat).sort(function(a, b){ return cat[b] - cat[a]; })[0];
+  return { exc:['rs', 'Exceção ou limite'], jur:['az', 'Entendimento dos tribunais'], pen:['vd', 'Pena, prazo ou número'], num:['vd', 'Pena, prazo ou número'], ref:['az', 'Base legal'] }[k] || ['am', 'Regra ou conceito central'];
+}
+/* a oração que carrega a ideia, quando a frase é longa */
+function melhorOracao(t, ini, fim){
+  var txt = t.slice(ini, fim), partes = [], a = 0, re = /[;,—–]\s+|\s+[—–]\s+/g, m;
+  while((m = re.exec(txt))){ partes.push([a, m.index]); a = m.index + m[0].length; }
+  partes.push([a, txt.length]);
+  if(partes.length < 2) return [ini, fim];
+  var melhor = null, nota = -99;
+  partes.forEach(function(p){ var s = txt.slice(p[0], p[1]); if(s.trim().length < 18) return; var r = pontuar(s, 0).sc; if(r > nota){ nota = r; melhor = p; } });
+  return melhor ? [ini + melhor[0], ini + melhor[1]] : [ini, fim];
+}
+function blocosDeTexto(raiz){
+  return Array.prototype.filter.call(raiz.querySelectorAll('p, li, td, .tr-texto, .tr-quote'), function(el){
+    if(el.closest('[data-nx-skip],button,.tr-lbl,h1,h2,h3,h4,.small,.muted,.tr-legenda,.lv-cab,.lv-rodape,.nx-mk-nota-ic,thead,th')) return false;
+    if(el.querySelector('p, li, ul, ol, table, .tr-texto')) return false;
+    return true;
+  });
+}
+function mapaDe(el){
+  var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), nos = [], txt = '', n;
+  while((n = w.nextNode())){ if(ignorar(n)) continue; nos.push({ n:n, ini:txt.length }); txt += n.nodeValue; }
+  return { nos:nos, txt:txt };
+}
 function aplicarAuto(raiz, st){
   var ocultos = (st && st.ocultos) || [];
   AUTO_SEL.forEach(function(par){
@@ -109,6 +176,45 @@ function aplicarAuto(raiz, st){
       var t = el.textContent.trim(); if(t.length < 3 || t.length > 400 || ocultos.indexOf(t) >= 0) return;
       el.classList.add('nx-auto', 'nx-auto-' + par[1]); el.setAttribute('data-nx-autoq', t);
     });
+  });
+  blocosDeTexto(raiz).forEach(function(el){
+    if(el.querySelector('.nx-auto') || el.closest('.nx-auto')) return;
+    var mp = mapaDe(el), t = mp.txt; if(t.trim().length < 28) return;
+    var fr = frases(t); if(!fr.length) return;
+    var enfases = Array.prototype.map.call(el.querySelectorAll('b, strong, .tr-g1, .tr-g2, .tr-g3, .tr-ref'), function(x){ return x.textContent; });
+    var pont = fr.map(function(f, i){
+      var s = t.slice(f[0], f[1]);
+      var nEnf = enfases.filter(function(x){ return x.length > 2 && s.indexOf(x) >= 0; }).length;
+      var r = pontuar(s, nEnf); r.i = i; r.f = f; return r;
+    });
+    var limite = Math.max(1, Math.ceil(fr.length / 3));
+    var escolhidas = pont.filter(function(x){ return x.sc >= 5; }).sort(function(a, b){ return b.sc - a.sc; }).slice(0, limite)
+      .sort(function(a, b){ return b.i - a.i; });   /* do fim para o começo: os índices continuam valendo */
+    var feitos = 0;
+    escolhidas.forEach(function(x){
+      var ini = x.f[0], fim = x.f[1];
+      if(fim - ini > 240){ var o = melhorOracao(t, ini, fim); ini = o[0]; fim = o[1]; }
+      /* tira espaços e pontuação solta das pontas */
+      while(ini < fim && /\s/.test(t.charAt(ini))) ini++;
+      while(fim > ini && /\s/.test(t.charAt(fim - 1))) fim--;
+      var q = t.slice(ini, fim); if(q.length < 12 || ocultos.indexOf(q) >= 0) return;
+      var c = corDa(x.cat);
+      envolver(mp, ini, fim, function(){
+        var e = document.createElement('span'); e.className = 'nx-aspan nx-auto nx-auto-' + c[0]; e.setAttribute('data-nx-autoq', q); e.title = c[1]; return e;
+      });
+      feitos++;
+      mp = mapaDe(el);
+    });
+    if(!feitos){
+      /* sem frase de destaque: marca o termo que o parágrafo define ("Valor social: ...") */
+      var d = /^\s*([^.:]{3,48}?):\s+\S/.exec(t);
+      if(d && !/^(?:ex|obs|cf)\b/i.test(d[1].trim()) && d[1].trim().split(/\s+/).length <= 6 && pont[0].sc >= 2 && ocultos.indexOf(d[1].trim()) < 0){
+        var i0 = t.indexOf(d[1]);
+        envolver(mp, i0, i0 + d[1].length, function(){
+          var e = document.createElement('span'); e.className = 'nx-aspan nx-auto nx-auto-am'; e.setAttribute('data-nx-autoq', d[1].trim()); e.title = 'Termo definido'; return e;
+        });
+      }
+    }
   });
 }
 
