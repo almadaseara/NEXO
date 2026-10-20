@@ -25,32 +25,43 @@ secoes:[
       "Ação penal: pública incondicionada."]}
   ],
   pegadinhas:["Antes de 2019 o crime só existia se houvesse morte ou lesão grave. Hoje, consuma-se sem resultado.","Roleta-russa e pacto de morte: o sobrevivente que apenas instigou responde pelo 122; se praticou o ato executório contra o outro, homicídio."]},
-{ id:"qualificadas", titulo:"Resultados, vítima vulnerável e majorantes", curto:"Resultados",
+{ id:"qualificadoras", titulo:"Resultados e vítima vulnerável (§§1º, 2º, 6º e 7º)", curto:"Qualificadoras",
   rapido:["Lesão grave ou gravíssima (§1º): <b>1 a 3 anos</b>. Morte (§2º): <b>2 a 6 anos</b>.",
-    "Vítima <b>menor de 14</b> ou sem discernimento/sem capacidade de resistência: se resulta <b>lesão gravíssima</b>, responde por <b>lesão gravíssima</b> (129, §2º); se resulta <b>morte</b>, por <b>homicídio</b> (§§6º e 7º).",
-    "Pena <b>duplicada</b>: motivo egoístico, torpe ou fútil; vítima menor ou com resistência diminuída. <b>Até o dobro</b>: pela internet, rede social ou em tempo real. <b>Em dobro</b>: líder, coordenador ou administrador de grupo/comunidade/rede virtual."],
+    "Vítima <b>menor de 14</b> ou sem discernimento/sem capacidade de resistência: se resulta <b>lesão gravíssima</b>, responde por <b>lesão gravíssima</b> (129, §2º); se resulta <b>morte</b>, por <b>homicídio</b> (§§6º e 7º)."],
   teoria:[
     { h:"Escada de resultados", p:[
       "Vítima com capacidade de resistência: 122 simples (nada acontece ou lesão leve), §1º (grave/gravíssima) ou §2º (morte).",
-      "Vítima menor de 14 ou sem discernimento: o legislador manda responder pelo crime de dano — lesão gravíssima (129, §2º) ou homicídio (121). Se resultar só lesão grave (não gravíssima), continua o 122, §1º, com a pena duplicada do §3º, II.",
-      "\"Menor\" no §3º, II: prevalece o menor de 18 (e maior de 14, porque abaixo disso aplicam-se os §§6º e 7º em caso de gravíssima ou morte)."]},
-    { h:"Ambiente digital e hediondez", p:[
-      "§4º (até o dobro): conduta pela rede de computadores, rede social ou transmitida em tempo real — desafios on-line como os do tipo \"baleia azul\".",
-      "§5º (Lei 14.811/2024): pena <b>em dobro</b> para líder, coordenador, administrador de grupo, comunidade ou rede virtual, ou quem por eles é responsável. Antes, o aumento era de metade: a mudança é mais grave e não retroage.",
-      "A forma do caput e do §4º (pela internet ou em tempo real) é <b>hedionda</b> (Lei 8.072, art. 1º, X)."]}
+      "Vítima menor de 14 ou sem discernimento: o legislador manda responder pelo crime de dano — lesão gravíssima (129, §2º) ou homicídio (121). Se resultar só lesão grave (não gravíssima), continua o 122, §1º, com a pena duplicada do §3º, II."]},
   ],
   quadro:{ titulo:"O que o agente responde", head:["Resultado","Vítima comum","Vítima menor de 14 ou sem discernimento"], rows:[
     ["Nenhum / lesão leve","122, caput (6m a 2a)","122, caput (pena duplicada — §3º, II)"],
     ["Lesão grave","122, §1º (1 a 3)","122, §1º com §3º, II"],
     ["Lesão gravíssima","122, §1º (1 a 3)","Lesão gravíssima — 129, §2º (§6º)"],
     ["Morte","122, §2º (2 a 6)","Homicídio — art. 121 (§7º)"]]},
-  pegadinhas:["§4º = aumento ATÉ o dobro (variável). §5º = pena EM dobro (fixa).","O §6º só fala em lesão <b>gravíssima</b>; lesão grave em vítima vulnerável continua no 122."]}
+  pegadinhas:["O §6º só fala em lesão <b>gravíssima</b>; lesão grave em vítima vulnerável continua no 122."]},
+{ id:"majorantes", titulo:"Pena duplicada, ambiente digital e líder de grupo (§§3º a 5º)", curto:"Majorantes",
+  rapido:["Pena <b>duplicada</b>: motivo egoístico, torpe ou fútil; vítima menor ou com resistência diminuída. <b>Até o dobro</b>: pela internet, rede social ou em tempo real. <b>Em dobro</b>: líder, coordenador ou administrador de grupo/comunidade/rede virtual."],
+  teoria:[
+    { h:"Pena duplicada (§3º)", p:[
+      "§3º: a pena é <b>duplicada</b> se o crime é praticado por motivo egoístico, torpe ou fútil, ou se a vítima é <b>menor</b> ou tem diminuída, por qualquer causa, a capacidade de resistência.",
+      "\"Menor\" no §3º, II: prevalece o menor de 18 (e maior de 14, porque abaixo disso aplicam-se os §§6º e 7º em caso de gravíssima ou morte)."]},
+    { h:"Ambiente digital e hediondez", p:[
+      "§4º (até o dobro): conduta pela rede de computadores, rede social ou transmitida em tempo real — desafios on-line como os do tipo \"baleia azul\".",
+      "§5º (Lei 14.811/2024): pena <b>em dobro</b> para líder, coordenador, administrador de grupo, comunidade ou rede virtual, ou quem por eles é responsável. Antes, o aumento era de metade: a mudança é mais grave e não retroage.",
+      "A forma do caput e do §4º (pela internet ou em tempo real) é <b>hedionda</b> (Lei 8.072, art. 1º, X)."]}
+  ],
+  pegadinhas:["§4º = aumento ATÉ o dobro (variável). §5º = pena EM dobro (fixa)."]}
 ],
 lei:[
-{ art:"CP, art. 122", nome:"Induzimento, instigação ou auxílio a suicídio ou a automutilação", sec:"tipo", itens:[
-  { id:"cp122", rot:"Art. 122, caput a §2º", t:"<b class='g1'>Induzir ou instigar</b> alguém a suicidar-se ou a praticar automutilação ou prestar-lhe <b class='g1'>auxílio material</b> para que o faça:<br>Pena - reclusão, de <b class='g2'>6 (seis) meses a 2 (dois) anos</b>.<br>§ 1º Se da automutilação ou da tentativa de suicídio resulta <b class='g1'>lesão corporal de natureza grave ou gravíssima</b>, nos termos dos §§ 1º e 2º do art. 129 deste Código:<br>Pena - reclusão, de <b class='g2'>1 (um) a 3 (três) anos</b>.<br>§ 2º Se o suicídio se consuma ou se da automutilação resulta <b class='g1'>morte</b>:<br>Pena - reclusão, de <b class='g2'>2 (dois) a 6 (seis) anos</b>.", c:["sa1","sa2","sa3","sa4"] },
-  { id:"cp122m", rot:"Art. 122, §§3º a 5º", t:"§ 3º A pena é <b class='g2'>duplicada</b>:<br>I - se o crime é praticado por motivo <b class='g1'>egoístico, torpe ou fútil</b>;<br>II - se a vítima é <b class='g1'>menor</b> ou tem diminuída, por qualquer causa, a capacidade de resistência.<br>§ 4º A pena é aumentada <b class='g2'>até o dobro</b> se a conduta é realizada por meio da <b class='g1'>rede de computadores, de rede social ou transmitida em tempo real</b>.<br>§ 5º Aplica-se a pena <b class='g2'>em dobro</b> se o autor é <b class='g1'>líder, coordenador ou administrador de grupo, de comunidade ou de rede virtual</b>, ou por estes é responsável.", nota:"§5º com redação da Lei 14.811/2024 (antes: aumento de metade).", novo:true, c:["sa5","sa6","sa7"] },
+{ art:"CP, art. 122, caput", nome:"Induzimento, instigação ou auxílio a suicídio ou a automutilação", sec:"tipo", itens:[
+  { id:"cp122", rot:"Art. 122, caput", t:"<b class='g1'>Induzir ou instigar</b> alguém a suicidar-se ou a praticar automutilação ou prestar-lhe <b class='g1'>auxílio material</b> para que o faça:<br>Pena - reclusão, de <b class='g2'>6 (seis) meses a 2 (dois) anos</b>.", c:["sa1","sa2","sa3","sa4"] }
+]},
+{ art:"CP, art. 122, §§1º, 2º, 6º e 7º", nome:"Resultados e vítima vulnerável", sec:"qualificadoras", itens:[
+  { id:"cp122q", rot:"Art. 122, §§1º e 2º", t:"§ 1º Se da automutilação ou da tentativa de suicídio resulta <b class='g1'>lesão corporal de natureza grave ou gravíssima</b>, nos termos dos §§ 1º e 2º do art. 129 deste Código:<br>Pena - reclusão, de <b class='g2'>1 (um) a 3 (três) anos</b>.<br>§ 2º Se o suicídio se consuma ou se da automutilação resulta <b class='g1'>morte</b>:<br>Pena - reclusão, de <b class='g2'>2 (dois) a 6 (seis) anos</b>.", c:["sa10"] },
   { id:"cp122v", rot:"Art. 122, §§6º e 7º", t:"§ 6º Se o crime de que trata o § 1º deste artigo resulta em <b class='g1'>lesão corporal de natureza gravíssima</b> e é cometido contra <b class='g3'>menor de 14 (quatorze) anos</b> ou contra quem, por enfermidade ou deficiência mental, não tem o necessário discernimento para a prática do ato, ou que, por qualquer outra causa, não pode oferecer resistência, responde o agente pelo crime descrito no <b class='g2'>§ 2º do art. 129</b> deste Código.<br>§ 7º Se o crime de que trata o § 2º deste artigo é cometido contra <b class='g3'>menor de 14 (quatorze) anos</b> ou contra quem não tem o necessário discernimento para a prática do ato, ou que, por qualquer outra causa, não pode oferecer resistência, responde o agente pelo crime de <b class='g2'>homicídio</b>, nos termos do art. 121 deste Código.", c:["sa8","sa9"] }
+]},
+{ art:"CP, art. 122, §§3º a 5º", nome:"Pena duplicada e ambiente digital", sec:"majorantes", itens:[
+  { id:"cp122m", rot:"Art. 122, §§3º a 5º", t:"§ 3º A pena é <b class='g2'>duplicada</b>:<br>I - se o crime é praticado por motivo <b class='g1'>egoístico, torpe ou fútil</b>;<br>II - se a vítima é <b class='g1'>menor</b> ou tem diminuída, por qualquer causa, a capacidade de resistência.<br>§ 4º A pena é aumentada <b class='g2'>até o dobro</b> se a conduta é realizada por meio da <b class='g1'>rede de computadores, de rede social ou transmitida em tempo real</b>.<br>§ 5º Aplica-se a pena <b class='g2'>em dobro</b> se o autor é <b class='g1'>líder, coordenador ou administrador de grupo, de comunidade ou de rede virtual</b>, ou por estes é responsável.", nota:"§5º com redação da Lei 14.811/2024 (antes: aumento de metade).", novo:true, c:["sa5","sa6","sa7"] }
 ]}
 ],
 juris:[
@@ -63,12 +74,12 @@ cards:[
 { id:"sa2", tipo:"caso", sec:"tipo", f:"A convence B (adulto) a se matar. B desiste e não faz nada. Há crime?", v:"<b>Sim, consumado</b> (122, caput). Desde 2019 o crime é formal.", lei:["cp122"] },
 { id:"sa3", tipo:"caso", sec:"tipo", f:"Site exalta o suicídio e incita \"os jovens\" a se matarem, sem alvo definido. Há o art. 122?", v:"<b>Não.</b> Exige vítima <b>determinada</b>. Incentivo genérico não configura o tipo.", lei:["cp122"] },
 { id:"sa4", tipo:"caso", sec:"tipo", f:"A vítima pede e A dispara a arma contra a cabeça dela. Art. 122?", v:"<b>Não — homicídio.</b> Quem pratica o ato executório da morte mata; o 122 é só induzir, instigar ou auxiliar.", lei:["cp122"] },
-{ id:"sa5", tipo:"distincao", sec:"qualificadas", f:"§4º × §5º do art. 122.", v:"<b>§4º</b>: até o dobro se pela internet, rede social ou em tempo real. <b>§5º</b>: em dobro se o autor lidera, coordena ou administra grupo/comunidade/rede virtual.", lei:["cp122m"] },
-{ id:"sa6", tipo:"ce", sec:"qualificadas", f:"Certo ou errado: o art. 122 praticado em transmissão ao vivo é hediondo.", v:"<b>Certo.</b> Lei 8.072, art. 1º, X (caput e §4º do art. 122).", lei:["cp122m"] },
-{ id:"sa7", tipo:"caso", sec:"qualificadas", f:"Administrador de grupo de WhatsApp de \"desafios\" instiga um membro a se automutilar (2025). Pena?", v:"Art. 122 com pena <b>em dobro</b> (§5º, Lei 14.811/2024); se a instigação foi pela rede, também o §4º (até o dobro). Forma hedionda.", lei:["cp122m"] },
-{ id:"sa8", tipo:"caso", sec:"qualificadas", f:"A induz criança de 12 anos a pular do telhado; ela morre. Qual crime?", v:"<b>Homicídio</b> (art. 122, §7º): vítima menor de 14 e resultado morte.", lei:["cp122v"] },
-{ id:"sa9", tipo:"caso", sec:"qualificadas", f:"A induz adolescente de 13 anos a se automutilar; resulta lesão <b>grave</b> (não gravíssima). Qual crime?", v:"<b>Art. 122, §1º</b>, com a pena duplicada (§3º, II). O §6º só desloca para o 129 quando a lesão é <b>gravíssima</b>.", lei:["cp122v","cp122m"] },
-{ id:"sa10", tipo:"numero", sec:"qualificadas", f:"Penas do art. 122: simples, lesão grave/gravíssima e morte.", v:"<b>6m a 2a</b>; <b>1 a 3</b>; <b>2 a 6</b> (reclusão).", lei:["cp122"] },
+{ id:"sa5", tipo:"distincao", sec:"majorantes", f:"§4º × §5º do art. 122.", v:"<b>§4º</b>: até o dobro se pela internet, rede social ou em tempo real. <b>§5º</b>: em dobro se o autor lidera, coordena ou administra grupo/comunidade/rede virtual.", lei:["cp122m"] },
+{ id:"sa6", tipo:"ce", sec:"majorantes", f:"Certo ou errado: o art. 122 praticado em transmissão ao vivo é hediondo.", v:"<b>Certo.</b> Lei 8.072, art. 1º, X (caput e §4º do art. 122).", lei:["cp122m"] },
+{ id:"sa7", tipo:"caso", sec:"majorantes", f:"Administrador de grupo de WhatsApp de \"desafios\" instiga um membro a se automutilar (2025). Pena?", v:"Art. 122 com pena <b>em dobro</b> (§5º, Lei 14.811/2024); se a instigação foi pela rede, também o §4º (até o dobro). Forma hedionda.", lei:["cp122m"] },
+{ id:"sa8", tipo:"caso", sec:"qualificadoras", f:"A induz criança de 12 anos a pular do telhado; ela morre. Qual crime?", v:"<b>Homicídio</b> (art. 122, §7º): vítima menor de 14 e resultado morte.", lei:["cp122v"] },
+{ id:"sa9", tipo:"caso", sec:"qualificadoras", f:"A induz adolescente de 13 anos a se automutilar; resulta lesão <b>grave</b> (não gravíssima). Qual crime?", v:"<b>Art. 122, §1º</b>, com a pena duplicada (§3º, II). O §6º só desloca para o 129 quando a lesão é <b>gravíssima</b>.", lei:["cp122v","cp122m"] },
+{ id:"sa10", tipo:"numero", sec:"qualificadoras", f:"Penas do art. 122: simples, lesão grave/gravíssima e morte.", v:"<b>6m a 2a</b>; <b>1 a 3</b>; <b>2 a 6</b> (reclusão).", lei:["cp122","cp122q"] },
 { id:"sa11", tipo:"distincao", sec:"tipo", f:"Art. 122: quando vai ao júri?", v:"Só na modalidade <b>suicídio</b> (crime doloso contra a vida). Automutilação: juiz singular.", lei:["cp122"], j:["stf-adi-122-jur"] }
 ],
 questoes:[]
