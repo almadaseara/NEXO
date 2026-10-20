@@ -32,8 +32,8 @@ Para testar localmente, sirva a **raiz do repositório** (não a pasta `acervo/`
 ## Funcionalidades
 
 **Leitura e tela**
-- Todo caderno, PDF ou quadro abre em **modo leitura**: as ferramentas somem, tocar só rola a página (e revela fitas) e o selo dourado "Apenas leitura" fica na barra. Para escrever, toque em **Editar** (ou no selo); tocar de novo volta à leitura. Ao tentar escrever com a caneta no modo leitura, o aviso reaparece.
-- No computador a página inteira cabe na tela; no celular ela ocupa a largura toda, com margens mínimas. Zoom pelos botões, Ctrl+roda ou pinça.
+- Todo caderno, PDF ou quadro abre em **modo leitura**: as ferramentas somem, tocar só rola a página (e revela fitas) e o selo dourado com **cadeado fechado** ("Apenas leitura") fica na barra. Para escrever, toque no cadeado (ou em **Editar** no aviso): ele abre e a edição é liberada; tocar de novo fecha e volta à leitura. Ao tentar escrever com a caneta no modo leitura, o aviso reaparece.
+- No computador a página fica em tamanho confortável de leitura (até ~800 px de largura); no celular ela ocupa a largura toda, com margens mínimas. Zoom pelos botões, Ctrl+roda ou pinça.
 
 **Escrita**
 - Caneta tinteiro, esferográfica, pincel e lápis (com textura), com pressão; marca-texto por baixo da tinta; paleta editável.

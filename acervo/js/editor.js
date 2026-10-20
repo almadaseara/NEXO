@@ -247,10 +247,10 @@ function setReadOnly(on, { silent = false } = {}) {
   ed.classList.toggle('readonly', readOnly);
   const b = $('ed-readonly');
   b.setAttribute('aria-pressed', String(readOnly));
-  b.title = readOnly ? 'Modo leitura ligado — toque para desativar e editar' : 'Editando — toque para voltar ao modo leitura';
+  b.title = readOnly ? 'Modo leitura (cadeado fechado) — toque para abrir e editar' : 'Edição liberada (cadeado aberto) — toque para fechar e voltar ao modo leitura';
   b.innerHTML = readOnly
     ? '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Apenas leitura</span>'
-    : '<svg viewBox="0 0 24 24"><path d="M4 20l1-5L16 4l4 4L9 19z M14 6l4 4"/></svg><span>Editando</span>';
+    : '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.6-1.8"/></svg><span>Edição liberada</span>';
   $('ed-title').readOnly = readOnly;
   if (readOnly) flashReadOnly(false); else hideBanner();
   if (readOnly) $('pages').style.cursor = 'grab'; else updateCursor();
@@ -405,12 +405,10 @@ function computeFit() {
   const maxW = Math.max(...pages.map((p) => p.width), 595);
   const wasFit = Math.abs(zoom - fitZoom) < 1e-3;
   let fit = Math.min(avail / maxW, 1.6);
-  // No computador, a página inteira cabe na tela (como um caderno aberto na mesa); no celular,
-  // a página ocupa a largura toda. Ctrl+roda ou os botões de zoom ampliam quando quiser.
-  if (!phone && sc.clientHeight > 200) {
-    const ref = pages[currentIndex] || pages[0];
-    if (ref) fit = Math.min(fit, Math.max(0.25, (sc.clientHeight - 52) / ref.height));
-  }
+  // No celular, a página ocupa a largura toda.
+  // No computador, a página fica num tamanho confortável de leitura (até ~800 px de largura),
+  // sem esticar até as bordas da tela. Ctrl+roda ou os botões de zoom ampliam quando quiser.
+  if (!phone) fit = Math.min(fit, 800 / maxW);
   fitZoom = isBoard() ? 1 : fit;
   if (wasFit) zoom = fitZoom; // quem estava “ajustado à largura” continua ajustado
 }
