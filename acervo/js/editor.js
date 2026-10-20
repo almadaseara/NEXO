@@ -83,6 +83,7 @@ let pendingCard = null; // frente de um flashcard esperando o verso
 let player = null;      // { rec, audio, tapSeek, timer }
 let presenting = null;  // { prevZoom, prevTool }
 let thumbsTab = 'pages';
+let readOnly = true; // todo caderno abre em modo leitura
 let pageSel = null; // null = painel normal; Set de ids = modo de seleção de páginas
 
 const MAX_PX = 14e6;
@@ -105,6 +106,8 @@ export function initEditor({ onClose, onOpenNotebook }) {
   $('ed-search').addEventListener('click', () => openFind());
   $('ed-record').addEventListener('click', toggleRecording);
   $('ed-ai').addEventListener('click', () => toggleAssistant(aiContext()));
+  $('ed-readonly').addEventListener('click', () => setReadOnly(!readOnly));
+  $('ro-edit').addEventListener('click', () => setReadOnly(false));
   $('ed-title').addEventListener('change', async (e) => {
     nb.title = e.target.value.trim() || 'Sem título';
     e.target.value = nb.title;
@@ -195,6 +198,7 @@ export async function openEditor(notebookId, { pageIndex = 0, query = '' } = {})
   $('ed-pages').hidden = isBoard();
   if (isBoard()) $('thumbs').hidden = true;
   setTool(['image', 'stickers'].includes(settings.tool) ? 'pen' : settings.tool);
+  setReadOnly(true, { silent: true });
   zoom = 0; // força o ajuste
   computeFit();
   zoom = fitZoom;
@@ -235,6 +239,38 @@ export async function closeEditor({ silent = false } = {}) {
   onCloseCb();
 }
 
+// ---------- Modo leitura ----------
+function setReadOnly(on, { silent = false } = {}) {
+  readOnly = !!on;
+  if (readOnly) { clearSelection(); commitTextEdit(); }
+  const ed = $('editor');
+  ed.classList.toggle('readonly', readOnly);
+  const b = $('ed-readonly');
+  b.setAttribute('aria-pressed', String(readOnly));
+  b.title = readOnly ? 'Modo leitura ligado — toque para desativar e editar' : 'Editando — toque para voltar ao modo leitura';
+  b.innerHTML = readOnly
+    ? '<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Apenas leitura</span>'
+    : '<svg viewBox="0 0 24 24"><path d="M4 20l1-5L16 4l4 4L9 19z M14 6l4 4"/></svg><span>Editando</span>';
+  $('ed-title').readOnly = readOnly;
+  if (readOnly) flashReadOnly(false); else hideBanner();
+  if (readOnly) $('pages').style.cursor = 'grab'; else updateCursor();
+  if (!silent) toast(readOnly ? 'Modo leitura ligado' : 'Edição liberada');
+  // a barra de ferramentas muda de altura: reajusta a página se ela estava ajustada à tela
+  if (nb && !silent) requestAnimationFrame(() => { computeFit(); layout(); });
+}
+// O aviso aparece ao abrir e some sozinho; o selo "Apenas leitura" na barra fica sempre visível.
+// Volta (piscando) quando a pessoa tenta escrever com a caneta ou usar um atalho de edição.
+let bannerTimer = 0;
+function hideBanner() { clearTimeout(bannerTimer); $('ro-banner').hidden = true; }
+function flashReadOnly(pulse = true) {
+  const bn = $('ro-banner');
+  bn.hidden = false;
+  bn.classList.remove('pulse');
+  if (pulse) { void bn.offsetWidth; bn.classList.add('pulse'); }
+  clearTimeout(bannerTimer);
+  bannerTimer = setTimeout(() => { bn.hidden = true; }, 6000);
+}
+
 // ---------- Ferramentas ----------
 function setTool(t) {
   if (t !== 'lasso') clearSelection();
@@ -250,7 +286,7 @@ function setTool(t) {
 }
 
 function updateCursor() {
-  const t = tempHand ? 'hand' : tool;
+  const t = tempHand || readOnly ? 'hand' : tool;
   const c = { pen: 'crosshair', highlighter: 'crosshair', eraser: 'cell', lasso: 'crosshair', text: 'text', hand: 'grab', tape: 'crosshair', laser: 'none' }[t] || 'default';
   $('pages').style.cursor = c;
 }
@@ -364,10 +400,18 @@ function computeFit() {
   const sc = $('scroller');
   // desconta a barra de rolagem vertical mesmo antes de ela aparecer
   const scrollbar = sc.offsetWidth - sc.clientWidth || 16;
-  const avail = Math.max(200, sc.offsetWidth - scrollbar - (innerWidth < 820 ? 40 : 64));
+  const phone = innerWidth < 820;
+  const avail = Math.max(200, sc.offsetWidth - scrollbar - (phone ? 14 : 64));
   const maxW = Math.max(...pages.map((p) => p.width), 595);
   const wasFit = Math.abs(zoom - fitZoom) < 1e-3;
-  fitZoom = isBoard() ? 1 : Math.min(avail / maxW, 1.6);
+  let fit = Math.min(avail / maxW, 1.6);
+  // No computador, a página inteira cabe na tela (como um caderno aberto na mesa); no celular,
+  // a página ocupa a largura toda. Ctrl+roda ou os botões de zoom ampliam quando quiser.
+  if (!phone && sc.clientHeight > 200) {
+    const ref = pages[currentIndex] || pages[0];
+    if (ref) fit = Math.min(fit, Math.max(0.25, (sc.clientHeight - 52) / ref.height));
+  }
+  fitZoom = isBoard() ? 1 : fit;
   if (wasFit) zoom = fitZoom; // quem estava “ajustado à largura” continua ajustado
 }
 
@@ -792,6 +836,11 @@ function onPointerDown(e) {
   const penEraser = e.pointerType === 'pen' && (e.button === 5 || (e.buttons & 32));
   let t = penEraser ? 'eraser' : tool;
   if (tempHand || (e.pointerType === 'touch' && settings.penOnly) || e.button === 1) t = 'hand';
+  if (readOnly && !presenting) {
+    // Leitura: qualquer toque só rola a página (e revela fitas). Caneta na página lembra como editar.
+    if (e.pointerType === 'pen' && v && !penEraser) flashReadOnly();
+    t = 'hand';
+  }
   if (!v && t !== 'hand') t = e.pointerType === 'touch' ? 'hand' : null;
   if (!t) { clearSelection(); return; }
 
@@ -1846,6 +1895,7 @@ function openStickers(anchor) {
 function onPaste(e) {
   if (!nb || $('editor').hidden) return;
   if (e.target.closest?.('input, textarea')) return;
+  if (readOnly) { flashReadOnly(); return; }
   const file = [...(e.clipboardData?.files || [])].find((f) => f.type.startsWith('image/'));
   if (file) { e.preventDefault(); insertImageFlow(file); return; }
   if (pasteClipboard()) e.preventDefault();
@@ -2707,6 +2757,16 @@ function onKeyDown(e) {
     if (['arrowright', 'arrowdown', 'pagedown', ' '].includes(k)) { e.preventDefault(); presentStep(1); return; }
     if (['arrowleft', 'arrowup', 'pageup'].includes(k)) { e.preventDefault(); presentStep(-1); return; }
     if (k === 'escape') { exitPresentation(); return; }
+  }
+  if (readOnly && !presenting) {
+    if (mod && k === 'f') { e.preventDefault(); openFind(); return; }
+    if (mod && (k === '=' || k === '+')) { e.preventDefault(); setZoom(zoom * 1.2); return; }
+    if (mod && k === '-') { e.preventDefault(); setZoom(zoom / 1.2); return; }
+    if (mod && k === '0') { e.preventDefault(); setZoom(fitZoom); return; }
+    if (k === 'pagedown' || k === 'arrowright') { e.preventDefault(); scrollToPage(Math.min(pages.length - 1, currentIndex + 1)); return; }
+    if (k === 'pageup' || k === 'arrowleft') { e.preventDefault(); scrollToPage(Math.max(0, currentIndex - 1)); return; }
+    if (mod && ['z', 'y', 'x', 'd', 'v'].includes(k)) { e.preventDefault(); flashReadOnly(); }
+    return;
   }
   if (mod && k === 'z') { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
   if (mod && k === 'y') { e.preventDefault(); redo(); return; }
