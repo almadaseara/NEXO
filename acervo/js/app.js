@@ -5,6 +5,7 @@ import { initEditor, openEditor, closeEditor } from './editor.js';
 import { toast } from './ui.js';
 import { initStudy } from './study.js';
 import { postToNexo, onNexo } from './nexo.js';
+import { initSync, syncNow, setSyncEnabled, syncEnabled } from './sync.js';
 
 const editorOpen = () => !document.getElementById('editor').hidden;
 const titleInput = document.getElementById('ed-title');
@@ -48,6 +49,16 @@ if (m) openEditor(m[1]).then((ok) => {
   else history.replaceState(null, '', location.pathname);
 });
 postToNexo({ type: 'ready' });
+
+// ---------- Sincronização ----------
+// Mudanças vindas de outro aparelho atualizam a biblioteca (o caderno aberto espera fechar).
+let remoteTimer;
+window.addEventListener('acervo:remote', () => {
+  clearTimeout(remoteTimer);
+  remoteTimer = setTimeout(() => { if (!editorOpen()) refreshLibrary(); }, 300);
+});
+onNexo('sync-now', () => { if (!syncEnabled()) setSyncEnabled(true); else syncNow(); });
+initSync();
 
 // ---------- Offline ----------
 // O service worker fica restrito a /acervo/: não intercepta as páginas do NEXO.

@@ -59,7 +59,7 @@ function barraHTML(){
       '<button type="button" onclick="nexoSairAcervo()" title="Voltar ao painel do NEXO"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/></svg><span>Home</span></button>' +
       '<button type="button" id="nx-acervo-tema" onclick="nexoAcervoTema()"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg><span>Tema</span></button>' +
     '</nav>' +
-    '<span class="nx-acervo-nota">Dados neste aparelho · sem sincronização</span>' +
+    '<button type="button" class="nx-acervo-nota" id="nx-acervo-sync" onclick="nexoAcervoSincronizar()" title="Sincronizar agora">Dados neste aparelho</button>' +
   '</div>';
 }
 function temaBotao(){
@@ -74,6 +74,26 @@ window.nexoAcervoTema = function(){
   else document.documentElement.setAttribute('data-theme', t);
   temaBotao();
 };
+/* Sincronização: o Acervo usa o cliente do Supabase do próprio NEXO (um segundo cliente no iframe
+   disputaria a renovação do token) e informa o estado para a barra. */
+window.nexoAcervoSupabase = function(){ try{ return nexoSupabase; }catch(e){ return null; } };
+window.nexoAcervoSincronizar = function(){ enviar({ type:'sync-now' }); };
+function horaCurta(t){ try{ return new Date(t).toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
+function mostrarSync(d){
+  var el = document.getElementById('nx-acervo-sync'); if(!el) return;
+  var p = d.pending || 0, txt, cls = '';
+  if(d.state === 'syncing'){ txt = 'Sincronizando…'; cls = 'on'; }
+  else if(d.state === 'ok'){ txt = p ? p + ' alteraç' + (p === 1 ? 'ão' : 'ões') + ' a enviar' : 'Sincronizado ' + horaCurta(d.last); cls = p ? 'warn' : 'ok'; }
+  else if(d.state === 'offline'){ txt = 'Sem internet · salvo neste aparelho'; cls = 'warn'; }
+  else if(d.state === 'error'){ txt = 'Erro ao sincronizar · tocar para tentar'; cls = 'bad'; }
+  else if(d.state === 'off'){ txt = 'Sincronização desligada'; }
+  else { txt = 'Dados neste aparelho'; }
+  if(d.tooBig) txt += ' · ' + d.tooBig + ' arquivo' + (d.tooBig === 1 ? '' : 's') + ' grande' + (d.tooBig === 1 ? '' : 's') + ' só aqui';
+  el.textContent = txt;
+  el.className = 'nx-acervo-nota' + (cls ? ' ' + cls : '');
+  el.title = d.state === 'error' && d.error ? 'Erro: ' + d.error + ' — tocar para tentar de novo' : 'Sincronizar agora';
+}
+
 window.nexoSairAcervo = function(){
   if(typeof window.home === 'function') window.home();
   else { setCur(null); try{ syncAccess(); }catch(e){} }
@@ -216,6 +236,7 @@ window.addEventListener('message', function(e){
   }
   if(d.type === 'library'){ A.nav = d.nav || 'all'; A.pastas = d.folders || []; A.due = d.due || 0; A.editor = null; }
   if(d.type === 'editor') A.editor = { id:d.id, title:d.title || 'Caderno' };
+  if(d.type === 'sync'){ mostrarSync(d); return; }
   if(cur() === 'acervo'){ try{ renderNav(); }catch(err){} cabecalho(); }
 });
 

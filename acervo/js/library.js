@@ -1,4 +1,5 @@
 // Biblioteca: cadernos, pastas, favoritos, busca global.
+import { syncEnabled, setSyncEnabled, syncNow } from './sync.js';
 import { db, uid, getNotebookPages, deleteNotebook, exportBackup, importBackup } from './db.js';
 import { h, icon, ICONS, modal, confirmDialog, promptDialog, progressDialog, showMenu, toast, download, pickFile, safeFilename, relativeDate, normalize, snippet } from './ui.js';
 import { importPdf, newPage, exportNotebookPdf, outlineForPages } from './pdftools.js';
@@ -13,7 +14,7 @@ const IMG_ICON = '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9
 const FOLDER_SVG = '<path d="M2.5 7.5A2.5 2.5 0 0 1 5 5h4.2a2 2 0 0 1 1.5.7L12 7h7a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 19 20H5a2.5 2.5 0 0 1-2.5-2.5z"/>';
 const PATTERNS = { plain: 'Lisa', lines: 'Linhas', dots: 'Pontos', diag: 'Listras', page: '1ª página' };
 
-const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [], trash: [] };
+const state = { nav: 'all', sort: 'updated', query: '', notebooks: [], folders: [], trash: [], selecting: false, selected: new Set() };
 let onOpen = () => {};
 const thumbCache = new Map(); // notebookId -> {key, url}
 
@@ -33,6 +34,14 @@ export function initLibrary(opts) {
     { label: 'Assistente de IA', icon: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/>', onClick: () => aiSettingsDialog() },
     { label: 'Nova pasta', icon: 'folder', onClick: () => newFolder(currentFolderId()) },
     'sep',
+    syncEnabled()
+      ? { label: 'Sincronizar agora', icon: '<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/>', onClick: () => syncNow() }
+      : { label: 'Ligar sincronização', icon: '<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/>', onClick: () => { setSyncEnabled(true); toast('Sincronização ligada: seus cadernos vão para a sua conta do NEXO.'); } },
+    syncEnabled() ? { label: 'Desligar sincronização', icon: '<path d="M4 4l16 16M7 7a8 8 0 0 0 11 10M17.5 6.5A8 8 0 0 1 20 12"/>', onClick: async () => {
+      const ok = await confirmDialog('Desligar sincronização?', 'Os cadernos continuam neste aparelho, mas as próximas alterações não vão para os outros aparelhos até você ligar de novo.', { ok: 'Desligar' });
+      if (ok) { setSyncEnabled(false); toast('Sincronização desligada'); }
+    } } : null,
+    'sep',
     { label: 'Fazer backup', icon: '<path d="M12 4v11m0 0l-4-4m4 4l4-4M5 19h14"/>', onClick: doBackup },
     { label: 'Restaurar backup', icon: '<path d="M12 15V4m0 0L8 8m4-4l4 4M5 19h14"/>', onClick: doRestore },
   ], { align: 'right' }));
@@ -42,6 +51,12 @@ export function initLibrary(opts) {
     if (f) folderMenu(f, { clientX: r.left, clientY: r.bottom + 4 });
   });
   $('btn-import-pdf').addEventListener('click', importPdfNotebook);
+  // Seleção de vários cadernos (mover, favoritar, lixeira em lote)
+  const selBtn = h('button', { class: 'btn', id: 'btn-select', type: 'button', title: 'Selecionar vários cadernos' },
+    icon('<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8.5 12l2.5 2.5 4.5-5"/>'), h('span', {}, 'Selecionar'));
+  selBtn.addEventListener('click', () => setSelecting(!state.selecting));
+  $('btn-import-pdf').before(selBtn);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && state.selecting && !$('library').hidden) setSelecting(false); });
   $('sort').addEventListener('change', (e) => { state.sort = e.target.value; renderContent(); });
   let t;
   $('search').addEventListener('input', (e) => {
@@ -64,6 +79,7 @@ export function setNav(nav) {
   if (nav.startsWith('folder:') && !state.folders.some((f) => 'folder:' + f.id === nav)) nav = 'all';
   state.nav = nav;
   if (state.query) { state.query = ''; $('search').value = ''; }
+  if (state.selecting) setSelecting(false, { silent: true });
   render();
 }
 
@@ -621,18 +637,26 @@ function card(nb) {
   const star = h('button', { class: 'icon-btn small star' + (nb.favorite ? ' on' : ''), title: nb.favorite ? 'Remover dos favoritos' : 'Favoritar', 'aria-label': 'Favorito' }, icon(ICONS.star));
   star.addEventListener('click', async (e) => {
     e.stopPropagation();
+    if (state.selecting) return;
     nb.favorite = !nb.favorite;
     await db.put('notebooks', nb);
     refreshLibrary();
   });
   const more = h('button', { class: 'icon-btn small', 'aria-label': 'Opções' }, icon('<circle cx="5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="19" cy="12" r="1.3"/>'));
   more.addEventListener('click', (e) => { e.stopPropagation(); notebookMenu(nb, more); });
-  const el = h('div', { class: 'card', draggable: 'true', tabindex: '0' }, cover,
+  const el = h('div', { class: 'card', draggable: 'true', tabindex: '0', 'data-id': nb.id }, cover,
     h('div', { class: 'card-meta' },
       h('div', { class: 't' }, h('div', { class: 'name', title: nb.title }, kindIcon(nb), nb.title), h('div', { class: 'sub' }, relativeDate(nb.updatedAt))),
       star, more));
-  el.addEventListener('click', () => onOpen(nb.id));
-  el.addEventListener('keydown', (e) => { if (e.key === 'Enter') onOpen(nb.id); });
+  const pick = () => { state.selected.has(nb.id) ? state.selected.delete(nb.id) : state.selected.add(nb.id); el.classList.toggle('selected', state.selected.has(nb.id)); el.setAttribute('aria-pressed', String(state.selected.has(nb.id))); renderSelectionBar(); };
+  if (state.selecting) {
+    el.classList.add('selectable');
+    el.classList.toggle('selected', state.selected.has(nb.id));
+    el.setAttribute('aria-pressed', String(state.selected.has(nb.id)));
+    el.prepend(h('span', { class: 'sel-check', 'aria-hidden': 'true' }));
+  }
+  el.addEventListener('click', (e) => { if (state.selecting) { e.preventDefault(); pick(); } else onOpen(nb.id); });
+  el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || (state.selecting && e.key === ' ')) { e.preventDefault(); state.selecting ? pick() : onOpen(nb.id); } });
   el.addEventListener('contextmenu', (e) => { e.preventDefault(); notebookMenu(nb, { getBoundingClientRect: () => ({ left: e.clientX, right: e.clientX, top: e.clientY, bottom: e.clientY }) }); });
   el.addEventListener('dragstart', (e) => e.dataTransfer.setData('text/acervo-notebook', nb.id));
   return el;
@@ -683,7 +707,15 @@ async function editCover(nb) {
 
 async function moveDialog(item, kind = 'notebook') {
   const current = kind === 'folder' ? (item.parentId || null) : (item.folderId || null);
-  const blocked = kind === 'folder' ? descendantIds(item.id) : new Set();
+  const target = await pickFolderDialog(current, kind === 'folder' ? descendantIds(item.id) : new Set());
+  if (target === undefined) return;
+  if (kind === 'folder') { item.parentId = target; await db.put('folders', item); }
+  else { item.folderId = target; await db.put('notebooks', item); }
+  refreshLibrary();
+}
+
+// Escolher pasta de destino. Devolve o id (null = raiz) ou undefined se cancelar.
+async function pickFolderDialog(current, blocked = new Set()) {
   const target = await modal((box, close) => {
     const list = h('div', { class: 'nav move-list' });
     const opt = (id, name, color, depth) => {
@@ -711,9 +743,60 @@ async function moveDialog(item, kind = 'notebook') {
       } }, 'Nova pasta'),
       h('button', { class: 'btn ghost', onclick: () => close() }, 'Cancelar')));
   });
-  if (!target) return;
-  if (kind === 'folder') { item.parentId = target.id; await db.put('folders', item); }
-  else { item.folderId = target.id; await db.put('notebooks', item); }
+  return target ? target.id : undefined;
+}
+
+// ---------- Seleção em lote ----------
+function setSelecting(on, { silent = false } = {}) {
+  state.selecting = on;
+  state.selected = new Set();
+  const b = document.getElementById('btn-select');
+  if (b) { b.classList.toggle('primary', on); b.querySelector('span').textContent = on ? 'Cancelar' : 'Selecionar'; }
+  if (!silent) renderContent();
+  renderSelectionBar();
+}
+
+function renderSelectionBar() {
+  document.getElementById('sel-bar')?.remove();
+  if (!state.selecting) return;
+  const n = state.selected.size;
+  const chosen = () => state.notebooks.filter((x) => state.selected.has(x.id));
+  const bar = h('div', { class: 'sel-bar', id: 'sel-bar', role: 'toolbar', 'aria-label': 'Ações com os cadernos selecionados' },
+    h('b', {}, n ? `${n} selecionado${n === 1 ? '' : 's'}` : 'Toque nos cadernos'),
+    h('button', { class: 'btn small', onclick: () => {
+      // seleciona os cadernos visíveis nesta tela
+      for (const c of document.querySelectorAll('#lib-content .card.selectable[data-id]')) state.selected.add(c.dataset.id);
+      renderContent(); renderSelectionBar();
+    } }, 'Selecionar todos'),
+    h('span', { class: 'sel-sep' }),
+    h('button', { class: 'btn small', disabled: !n, onclick: async () => { await moveMany(chosen()); } }, 'Mover'),
+    h('button', { class: 'btn small', disabled: !n, onclick: async () => {
+      const list = chosen(); const fav = !list.every((x) => x.favorite);
+      for (const x of list) { x.favorite = fav; } await db.putMany('notebooks', list);
+      toast(fav ? 'Adicionados aos favoritos' : 'Removidos dos favoritos'); setSelecting(false); refreshLibrary();
+    } }, 'Favoritar'),
+    h('button', { class: 'btn small danger', disabled: !n, onclick: async () => {
+      const list = chosen(); const now = Date.now();
+      for (const x of list) x.trashedAt = now;
+      await db.putMany('notebooks', list);
+      setSelecting(false); refreshLibrary();
+      toast(`${list.length} caderno${list.length === 1 ? '' : 's'} na lixeira`, { action: 'Desfazer', duration: 6000, onAction: async () => {
+        for (const x of list) delete x.trashedAt; await db.putMany('notebooks', list); refreshLibrary();
+      } });
+    } }, 'Lixeira'),
+    h('button', { class: 'btn small ghost', onclick: () => setSelecting(false) }, 'Cancelar'));
+  document.body.append(bar);
+}
+
+async function moveMany(list) {
+  if (!list.length) return;
+  const proxy = { folderId: list.every((x) => x.folderId === list[0].folderId) ? list[0].folderId : undefined };
+  const target = await pickFolderDialog(proxy.folderId ?? null);
+  if (target === undefined) return;
+  for (const x of list) x.folderId = target;
+  await db.putMany('notebooks', list);
+  toast(`${list.length} caderno${list.length === 1 ? '' : 's'} movido${list.length === 1 ? '' : 's'}`);
+  setSelecting(false);
   refreshLibrary();
 }
 
@@ -785,6 +868,7 @@ async function duplicateNotebook(nb) {
       ? { ...l, id: uid(), target: { ...l.target, pageId: idMap.get(l.target.pageId) } } : { ...l, id: uid() }));
   }
   delete copy.trashedAt;
+  copy.trashedPages = [];
   await db.putMany('pages', newPages);
   await db.put('notebooks', copy);
   toast('Caderno duplicado');
@@ -816,7 +900,7 @@ async function renderSearch(content) {
   const pageHits = [];
   for (const p of pages) {
     const nb = byId.get(p.notebookId);
-    if (!nb) continue;
+    if (!nb || p.trashedAt) continue;
     const texts = [p.pdfText || '', p.inkText || '', ...(p.texts || []).map((t) => t.text)];
     const hit = texts.find((t) => normalize(t).includes(q));
     if (hit) pageHits.push({ nb, page: p, index: nb.pageIds.indexOf(p.id), text: hit });
@@ -850,7 +934,7 @@ async function renderSearch(content) {
 }
 
 async function renderBookmarks(content) {
-  const pages = (await db.all('pages')).filter((p) => p.bookmarked);
+  const pages = (await db.all('pages')).filter((p) => p.bookmarked && !p.trashedAt);
   const byId = new Map(state.notebooks.map((n) => [n.id, n]));
   content.replaceChildren();
   const rows = pages.map((p) => ({ p, nb: byId.get(p.notebookId) })).filter((r) => r.nb)

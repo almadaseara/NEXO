@@ -17,9 +17,12 @@ function contaId() {
 }
 const CONTA = contaId();
 const DB_NAME = CONTA ? LEGADO + ':' + CONTA : LEGADO;
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 // v2: baralhos e cartões de estudo, figurinhas (elementos salvos) e modelos personalizados.
+// v3: sincronização — 'outbox' (alterações locais ainda não enviadas, gravadas na mesma transação
+// do dado) e 'syncmeta' (revisão do servidor de cada registro e o cursor de recebimento).
 const STORES = ['folders', 'notebooks', 'pages', 'assets', 'decks', 'cards', 'elements', 'templates'];
+const SYNC_STORES = ['outbox', 'syncmeta'];
 
 let dbPromise = null;
 
@@ -32,6 +35,7 @@ function criarStores(db) {
       if (name === 'cards') store.createIndex('deckId', 'deckId');
     }
   }
+  for (const name of SYNC_STORES) if (!db.objectStoreNames.contains(name)) db.createObjectStore(name, { keyPath: 'key' });
 }
 
 // Copia o banco antigo (sem conta) para o banco desta conta, se ela é a dona dos dados do aparelho.
@@ -101,6 +105,28 @@ async function tx(store, mode = 'readonly') {
   return db.transaction(store, mode).objectStore(store);
 }
 
+// ---------- Fila de sincronização ----------
+// Toda gravação local registra, na MESMA transação, uma entrada em 'outbox'. Se a gravação falhar,
+// a entrada também não existe; se der certo, a alteração com certeza será enviada depois.
+let outboxSeq = 0;
+function seq() { return Date.now() * 1000 + (outboxSeq++ % 1000); }
+function queue(t, store, id, deleted) {
+  t.objectStore('outbox').put({ key: store + ':' + id, store, id, deleted: !!deleted, seq: seq() });
+}
+function changed() {
+  try { window.dispatchEvent(new CustomEvent('acervo:changed')); } catch { /* fora do navegador */ }
+}
+function run(stores, fn) {
+  return open().then((database) => new Promise((resolve, reject) => {
+    const t = database.transaction([...stores, 'outbox'], 'readwrite');
+    let result;
+    t.oncomplete = () => { changed(); resolve(result); };
+    t.onerror = () => reject(t.error);
+    t.onabort = () => reject(t.error || new Error('Gravação cancelada'));
+    try { result = fn(t); } catch (err) { try { t.abort(); } catch { /* já encerrada */ } reject(err); }
+  }));
+}
+
 export const db = {
   async get(store, id) {
     return wrap((await tx(store)).get(id));
@@ -111,26 +137,97 @@ export const db = {
   async byIndex(store, index, value) {
     return wrap((await tx(store)).index(index).getAll(value));
   },
-  async put(store, value) {
-    return wrap((await tx(store, 'readwrite')).put(value));
+  put(store, value) {
+    return run([store], (t) => { t.objectStore(store).put(value); queue(t, store, value.id); return value.id; });
   },
-  async putMany(store, values) {
+  putMany(store, values) {
+    return run([store], (t) => { const s = t.objectStore(store); for (const v of values) { s.put(v); queue(t, store, v.id); } });
+  },
+  delete(store, id) {
+    return run([store], (t) => { t.objectStore(store).delete(id); queue(t, store, id, true); });
+  },
+  clear(store) {
+    return run([store], (t) => {
+      const s = t.objectStore(store);
+      const r = s.getAllKeys();
+      r.onsuccess = () => { for (const id of r.result) queue(t, store, id, true); s.clear(); };
+    });
+  },
+};
+
+// Usado pelo motor de sincronização (sync.js).
+export const syncDb = {
+  STORES,
+  async outbox(limit = 200) {
     const database = await open();
     return new Promise((resolve, reject) => {
-      const t = database.transaction(store, 'readwrite');
-      const s = t.objectStore(store);
-      for (const v of values) s.put(v);
+      const out = [];
+      const r = database.transaction('outbox').objectStore('outbox').openCursor();
+      r.onsuccess = () => { const c = r.result; if (!c || out.length >= limit) return resolve(out); out.push(c.value); c.continue(); };
+      r.onerror = () => reject(r.error);
+    });
+  },
+  async outboxCount() { return wrap((await tx('outbox')).count()); },
+  async pendingKeys() { return new Set(await wrap((await tx('outbox')).getAllKeys())); },
+  // Tira da fila só as entradas que não mudaram desde o envio (mesmo seq) e grava as revisões.
+  async ack(entries, revisions) {
+    const database = await open();
+    return new Promise((resolve, reject) => {
+      const t = database.transaction(['outbox', 'syncmeta'], 'readwrite');
+      const ob = t.objectStore('outbox'), meta = t.objectStore('syncmeta');
+      for (const e of entries) {
+        const r = ob.get(e.key);
+        r.onsuccess = () => { if (r.result && r.result.seq === e.seq) ob.delete(e.key); };
+        if (revisions.has(e.key)) meta.put({ key: e.key, rev: revisions.get(e.key) });
+      }
       t.oncomplete = () => resolve();
       t.onerror = () => reject(t.error);
     });
   },
-  async delete(store, id) {
-    return wrap((await tx(store, 'readwrite')).delete(id));
+  async revisions(keys) {
+    const s = await tx('syncmeta');
+    const out = new Map();
+    await Promise.all(keys.map((k) => wrap(s.get(k)).then((v) => out.set(k, v ? v.rev : 0))));
+    return out;
   },
-  async clear(store) {
-    return wrap((await tx(store, 'readwrite')).clear());
+  async getMeta(key, fallback = null) { const v = await wrap((await tx('syncmeta')).get('@' + key)); return v ? v.value : fallback; },
+  async setMeta(key, value) { return wrap((await tx('syncmeta', 'readwrite')).put({ key: '@' + key, value })); },
+  // Aplica registros que vieram do servidor sem colocá-los na fila de envio.
+  async applyRemote(rows) {
+    const database = await open();
+    return new Promise((resolve, reject) => {
+      const t = database.transaction([...STORES, 'syncmeta'], 'readwrite');
+      for (const r of rows) {
+        const s = t.objectStore(r.store);
+        if (r.deleted) s.delete(r.id); else if (r.value) s.put(r.value);
+        t.objectStore('syncmeta').put({ key: r.store + ':' + r.id, rev: r.revision });
+      }
+      t.oncomplete = () => { try { window.dispatchEvent(new CustomEvent('acervo:remote')); } catch { /* */ } resolve(); };
+      t.onerror = () => reject(t.error);
+    });
   },
+  // Primeira sincronização deste aparelho: tudo o que já existe entra na fila uma vez.
+  async queueEverything() {
+    const database = await open();
+    return new Promise((resolve, reject) => {
+      const t = database.transaction([...STORES, 'outbox'], 'readwrite');
+      for (const s of STORES) {
+        const r = t.objectStore(s).getAllKeys();
+        r.onsuccess = () => { for (const id of r.result) queue(t, s, id); };
+      }
+      t.oncomplete = () => resolve();
+      t.onerror = () => reject(t.error);
+    });
+  },
+  // Coloca arquivos baixados do servidor no aparelho (sem gerar envio).
+  async putAssetLocal(a) { return wrap((await tx('assets', 'readwrite')).put(a)); },
+  async setRevision(key, rev) { return wrap((await tx('syncmeta', 'readwrite')).put({ key, rev })); },
+  async dropOutbox(key) { return wrap((await tx('outbox', 'readwrite')).delete(key)); },
 };
+
+// Arquivo que ainda não chegou neste aparelho: sync.js registra quem sabe buscá-lo no servidor.
+let remoteAssetLoader = null;
+export function setRemoteAssetLoader(fn) { remoteAssetLoader = fn; }
 
 export function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 9);
@@ -146,7 +243,9 @@ export async function saveAsset(blob) {
 
 export async function getAssetBlob(id) {
   const a = await db.get('assets', id);
-  return a ? a.blob : null;
+  if (a) return a.blob;
+  if (remoteAssetLoader) { try { return await remoteAssetLoader(id); } catch { return null; } }
+  return null;
 }
 
 export async function getNotebookPages(notebook) {
@@ -247,15 +346,19 @@ export async function importBackup(file, { replace = false } = {}) {
 
   const database = await open();
   await new Promise((resolve, reject) => {
-    const t = database.transaction(STORES, 'readwrite');
-    t.oncomplete = () => resolve();
+    const t = database.transaction([...STORES, 'outbox'], 'readwrite');
+    t.oncomplete = () => { changed(); resolve(); };
     t.onerror = () => reject(t.error || new Error('Não foi possível gravar o backup.'));
     t.onabort = () => reject(t.error || new Error('Não foi possível gravar o backup (espaço do navegador cheio?). Nada foi alterado.'));
     try {
       for (const s of STORES) {
         const store = t.objectStore(s);
-        if (replace) store.clear();
-        for (const v of rows[s] || []) store.put(v);
+        if (replace) {
+          const k = store.getAllKeys();
+          k.onsuccess = () => { const novos = new Set((rows[s] || []).map((v) => v.id)); for (const id of k.result) if (!novos.has(id)) queue(t, s, id, true); };
+          store.clear();
+        }
+        for (const v of rows[s] || []) { store.put(v); queue(t, s, v.id); }
       }
     } catch (err) {
       try { t.abort(); } catch { /* já encerrada */ }
