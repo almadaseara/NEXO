@@ -141,9 +141,9 @@ button:active { transform: translateY(1px); }
 .card-meta .t { flex: 1; min-width: 0; }
 .card-meta .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .card-meta .sub { font-size: 12px; color: var(--ink-3); }
-.card .star { color: var(--ink-3); }
-.card .star.on { color: #d9a400; }
-.card .star.on svg { fill: currentColor; }
+.star { color: var(--ink-3); }
+.star.on { color: #d9a400; }
+.star.on svg { fill: currentColor; }
 
 .empty { display: grid; place-items: center; text-align: center; padding: 80px 20px; color: var(--ink-2); }
 .empty h2 { font: 600 22px var(--font-display); color: var(--ink); margin: 14px 0 6px; }
