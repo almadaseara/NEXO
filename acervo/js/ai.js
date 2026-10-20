@@ -1,6 +1,7 @@
 // Assistente de IA. Provedores: Claude (API da Anthropic), Google Gemini (tem nível gratuito)
 // e Ollama (roda no próprio computador, grátis). As chamadas saem direto do navegador.
-import Anthropic from '../vendor/anthropic-sdk.mjs';
+// O SDK da Anthropic (300 KB) só é baixado na primeira chamada ao Claude.
+let Anthropic = null;
 import { h, icon, modal, toast, progressDialog, escapeHtml } from './ui.js';
 import { renderPageFlat } from './render.js';
 import { addCards, ensureNotebookDeck, allDecks } from './study.js';
@@ -189,6 +190,7 @@ class AIError extends Error {}
 
 function friendlyError(e) {
   if (e instanceof AIError || e instanceof ProviderError) return e.message;
+  if (!Anthropic) return e?.message || 'Erro inesperado.';
   if (e instanceof Anthropic.AuthenticationError) return 'Chave da API inválida. Confira em Assistente → Configurar.';
   if (e instanceof Anthropic.PermissionDeniedError) return 'Sua chave não tem permissão para este modelo.';
   if (e instanceof Anthropic.RateLimitError) return 'Limite de uso atingido. Tente de novo em instantes.';
@@ -222,6 +224,7 @@ async function ask({ system, content, schema, effort = 'medium', maxTokens = 160
   if (cfg.provider === 'ollama') {
     return askOllama({ url: cfg.ollamaUrl, model: cfg.ollamaModel, system, content, schema, onText, signal });
   }
+  Anthropic ||= (await import('../vendor/anthropic-sdk.mjs')).default;
   const client = new Anthropic({ apiKey: cfg.apiKey, dangerouslyAllowBrowser: true });
   const params = {
     model: cfg.model,

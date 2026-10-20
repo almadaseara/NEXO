@@ -580,7 +580,7 @@ button:active { transform: translateY(1px); }
 .btn.small { padding: 6px 10px; font-size: 12.5px; }
 .btn[disabled] { opacity: .45; pointer-events: none; }
 
-/* ---------- Seletor de cores, pasta e galerias (estilo Goodnotes) ---------- */
+/* ---------- Seletor de cores, pasta e galerias  ---------- */
 .pal-grid { display: grid; grid-template-columns: repeat(9, 1fr); gap: 12px 8px; justify-items: center; padding: 6px 4px; }
 .pal-dot { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(128,128,128,.35); background: var(--c); padding: 0; cursor: pointer; }
 .pal-dot:hover { transform: scale(1.1); }

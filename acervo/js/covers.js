@@ -8,59 +8,35 @@ const top = (color, pct, rest) => `linear-gradient(${color} 0 ${pct}%, transpare
 
 export const COVER_COLORS_CLASSIC = ['#244b48', '#24766b', '#437b99', '#7a4f9a', '#b8860b', '#a23b55', '#34495e', '#5a6b3a', '#d07a8f', '#4a90a4'];
 
-// bg = fundo CSS; spine = cor da lombada (opcional); plain = sem etiqueta com o título
+// bg = fundo CSS; spine = cor da lombada (opcional); light = capa clara (texto escuro)
 export const COVERS = [
-  { group: 'Comum', id: 'none', label: 'Sem capa', none: true },
-  { group: 'Comum', id: 'preto-integral', label: 'Preto integral simples', bg: '#383b47', spine: '#101114' },
-  { group: 'Comum', id: 'preto-simples', label: 'Preto simples', bg: '#b09f86', spine: '#383b47' },
-  { group: 'Comum', id: 'azul-bebe', label: 'Azul-bebé sólido', bg: '#a6c9f2', spine: '#2f86f6' },
+  { group: 'Básicas', id: 'none', label: 'Sem capa', none: true },
+  { group: 'Básicas', id: 'nexo-verde', label: 'Verde NEXO', bg: '#244b48', spine: '#173331' },
+  { group: 'Básicas', id: 'grafite', label: 'Grafite', bg: '#3a3f4a', spine: '#23262d' },
+  { group: 'Básicas', id: 'areia', label: 'Areia', bg: '#d4c7a8', spine: '#b3a47c', light: true },
+  { group: 'Básicas', id: 'oceano', label: 'Oceano', bg: '#2f6f8f', spine: '#1f4d66' },
+  { group: 'Básicas', id: 'vinho', label: 'Vinho', bg: '#7a2c3d', spine: '#531d2a' },
+  { group: 'Básicas', id: 'papel', label: 'Papel', bg: '#fbfaf6', spine: '#e2dfd5', light: true },
 
-  { group: 'Simples', id: 'simples', label: 'Simples', bg: '#b09f86', spine: '#f2f2f2' },
-  { group: 'Simples', id: 'simples-amarelo', label: 'Simples amarelo', bg: '#b09f86', spine: '#fff44d' },
-  { group: 'Simples', id: 'simples-integral', label: 'Preto integral', bg: '#383b47', spine: '#0d0d10' },
-  { group: 'Simples', id: 'simples-preto', label: 'Preto', bg: '#b09f86', spine: '#2d3040' },
-  { group: 'Simples', id: 'simples-azul', label: 'Azul simples', bg: '#b09f86', spine: '#8fb5f5' },
+  { group: 'Estudo', id: 'gabarito', label: 'Gabarito', bg: tile(36, 28, `<circle cx='9' cy='7' r='4.2' fill='none' stroke='#6b7b8c' stroke-width='1.2'/><circle cx='20' cy='7' r='4.2' fill='#2a3f55'/><circle cx='31' cy='7' r='4.2' fill='none' stroke='#6b7b8c' stroke-width='1.2'/><circle cx='9' cy='21' r='4.2' fill='#2a3f55'/><circle cx='20' cy='21' r='4.2' fill='none' stroke='#6b7b8c' stroke-width='1.2'/><circle cx='31' cy='21' r='4.2' fill='none' stroke='#6b7b8c' stroke-width='1.2'/>`, '#f4f1e8'), spine: '#c9c4b4', light: true },
+  { group: 'Estudo', id: 'paragrafo', label: 'Parágrafo', bg: tile(44, 44, `<text x='22' y='30' text-anchor='middle' font-family='Georgia,serif' font-size='26' fill='#3f7f73' opacity='.55'>§</text>`, '#1d3d3a'), spine: '#122826' },
+  { group: 'Estudo', id: 'balanca', label: 'Balança', bg: tile(54, 54, `<g fill='none' stroke='#9fb7d4' stroke-width='1.6' stroke-linecap='round' opacity='.6'><path d='M27 12v28M20 40h14M14 17h26M14 17l-5 11a5 5 0 0 0 10 0zM40 17l-5 11a5 5 0 0 0 10 0z'/></g>`, '#1c2b44'), spine: '#111b2c' },
+  { group: 'Estudo', id: 'escudo', label: 'Escudo', bg: tile(48, 54, `<path d='M24 8l13 5v10c0 9-6 15-13 18C17 38 11 32 11 23V13z' fill='none' stroke='#c9a24a' stroke-width='1.6' opacity='.65'/><path d='M18 24l4 4 8-9' fill='none' stroke='#c9a24a' stroke-width='1.8' opacity='.65'/>`, '#2a2f3a'), spine: '#181b22' },
+  { group: 'Estudo', id: 'lupa', label: 'Lupa', bg: tile(50, 50, `<g fill='none' stroke='#b6865a' stroke-width='2' stroke-linecap='round' opacity='.7'><circle cx='22' cy='22' r='9'/><path d='M29 29l9 9'/></g>`, '#f3ead8'), spine: '#d6c6a4', light: true },
+  { group: 'Estudo', id: 'revisado', label: 'Revisado', bg: tile(40, 40, `<path d='M8 21l7 7 15-17' fill='none' stroke='#2f8f6f' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.55'/>`, '#e3f2ea'), spine: '#a9d2bd', light: true },
+  { group: 'Estudo', id: 'curvas', label: 'Curvas de nível', bg: `repeating-radial-gradient(circle at 70% 35%, transparent 0 14px, rgba(255,255,255,.22) 14px 15.5px), repeating-radial-gradient(circle at 20% 85%, transparent 0 18px, rgba(255,255,255,.14) 18px 19.5px), #1f6b6a`, spine: '#134646' },
+  { group: 'Estudo', id: 'colmeia', label: 'Colmeia', bg: tile(42, 36, `<path d='M14 2l14 0 7 12-7 12H14L7 14z' fill='none' stroke='#e8c46a' stroke-width='1.4' opacity='.55'/>`, '#3b2f4f'), spine: '#241c33' },
 
-  { group: 'Liso', id: 'liso', label: 'Liso', bg: '#ffffff', spine: '#e6e6e6', light: true },
-  { group: 'Liso', id: 'bege-liso', label: 'Bege liso', bg: '#e8d8c2', spine: '#d6c3a8', light: true },
-  { group: 'Liso', id: 'cinza-escuro-liso', label: 'Cinzento-escuro liso', bg: '#64635f', spine: '#4c4b48' },
-  { group: 'Liso', id: 'verde-liso', label: 'Verde liso', bg: '#a9b69f', spine: '#8e9d84' },
-  { group: 'Liso', id: 'cinza-liso', label: 'Cinzento liso', bg: '#d2d2d2', spine: '#bdbdbd', light: true },
+  { group: 'Degradês', id: 'amanhecer', label: 'Amanhecer', bg: 'linear-gradient(160deg, #ffb36b, #e8607a 70%, #8a3f7a)', spine: '#6e2f60' },
+  { group: 'Degradês', id: 'mare', label: 'Maré', bg: 'linear-gradient(160deg, #54c4b0, #2b7fa8 55%, #1a2f5c)', spine: '#13224a' },
+  { group: 'Degradês', id: 'aurora', label: 'Aurora', bg: 'linear-gradient(160deg, #8de08a, #3aa58a 45%, #5a3f9a)', spine: '#3c2a70' },
+  { group: 'Degradês', id: 'crepusculo', label: 'Crepúsculo', bg: 'linear-gradient(160deg, #6c63d9, #a2479c 60%, #e0607e)', spine: '#6a2d66' },
+  { group: 'Degradês', id: 'nevoa', label: 'Névoa', bg: 'linear-gradient(160deg, #eef2f6, #bfcddd 70%, #9aaec6)', spine: '#8497b0', light: true },
 
-  { group: 'Padrões', id: 'pinceis', label: 'Pincéis', bg: `linear-gradient(118deg, transparent 0 16%, #e7cf70 16% 44%, transparent 44%), linear-gradient(62deg, transparent 0 52%, #94b3c6 52% 80%, transparent 80%), linear-gradient(170deg, transparent 0 70%, #f3b9c8 70% 86%, transparent 86%), #f7f1e6`, light: true },
-  { group: 'Padrões', id: 'pontos', label: 'Pontos', bg: tile(60, 60, `<circle cx='14' cy='14' r='11' fill='#fff'/><circle cx='42' cy='40' r='7' fill='#fff'/><circle cx='50' cy='12' r='3' fill='#f0a04b'/><circle cx='8' cy='48' r='3' fill='#7cc4b0'/><circle cx='30' cy='26' r='2' fill='#444'/>`, '#ecebe6'), light: true },
-  { group: 'Padrões', id: 'flores', label: 'Flores', bg: tile(70, 70, `<circle cx='18' cy='18' r='11' fill='#f5c542'/><circle cx='18' cy='18' r='4' fill='#e8833a'/><circle cx='50' cy='44' r='8' fill='#ee6b7e'/><circle cx='50' cy='44' r='3' fill='#fbd5a0'/><path d='M0 60q12-14 24 0M40 8q10 10 22 2' stroke='#1d6f6a' stroke-width='5' fill='none' stroke-linecap='round'/>`, '#fff'), light: true },
-  { group: 'Padrões', id: 'sementes', label: 'Sementes', bg: tile(44, 44, `<ellipse cx='12' cy='14' rx='6' ry='11' fill='#eef0c8' stroke='#8aa07a' stroke-width='1.5' transform='rotate(-25 12 14)'/><ellipse cx='34' cy='34' rx='6' ry='11' fill='#eef0c8' stroke='#8aa07a' stroke-width='1.5' transform='rotate(25 34 34)'/>`, '#bfe6d4'), light: true },
-  { group: 'Padrões', id: 'suave', label: 'Suave', bg: tile(34, 22, `<path d='M2 14l5-5 5 5 5-5 5 5 5-5' stroke='#d6a99b' stroke-width='1.4' fill='none'/><circle cx='17' cy='3' r='1.4' fill='#9fc3d6'/>`, '#f7f3ec'), light: true },
-
-  { group: 'Castanho', id: 'cast-lista', label: 'Lista de verificação', bg: tile(44, 44, `<path d='M0 22H44M22 0V44' stroke='#2a2a2a' stroke-width='.8'/><circle cx='22' cy='22' r='2' fill='#2a2a2a'/>`, '#c9bda3') },
-  { group: 'Castanho', id: 'cast-pontos', label: 'Pontos', bg: tile(30, 30, `<circle cx='8' cy='8' r='2' fill='#2c2c2c'/><circle cx='22' cy='20' r='2' fill='#fff'/>`, '#c9bda3') },
-  { group: 'Castanho', id: 'cast-paus', label: 'Paus', bg: tile(56, 56, `<path d='M6 12l16-6M32 22l16 8M10 44l14-8M40 52l8-14' stroke='#fff' stroke-width='5' stroke-linecap='round'/>`, '#c9bda3') },
-  { group: 'Castanho', id: 'cast-ondas', label: 'Ondas', bg: tile(48, 26, `<path d='M0 13q12-14 24 0t24 0' stroke='#fff' stroke-width='5' fill='none'/>`, '#c9bda3') },
-  { group: 'Castanho', id: 'cast-zigue', label: 'Ziguezague', bg: tile(40, 40, `<path d='M0 40L20 6l20 34z' fill='#9d9172'/><path d='M0 0l20 34L40 0z' fill='#b3a789'/>`, '#a99d7d') },
-
-  { group: 'Preto e branco', id: 'bw-circulo', label: 'Círculo e pontos', bg: tile(50, 50, `<circle cx='25' cy='25' r='16' fill='none' stroke='#fff' stroke-width='3' stroke-dasharray='2 3'/>`, '#0c0c0c') },
-  { group: 'Preto e branco', id: 'bw-geo', label: 'Geométrico', bg: `repeating-linear-gradient(160deg, transparent 0 8px, #111 8px 9px), #f6f6f6`, light: true },
-  { group: 'Preto e branco', id: 'bw-cartas', label: 'Cartas', bg: tile(26, 26, `<circle cx='6' cy='6' r='1.4' fill='#bdbdbd'/><circle cx='19' cy='19' r='1.4' fill='#bdbdbd'/>`, '#ffffff'), light: true },
-  { group: 'Preto e branco', id: 'bw-ondas', label: 'Ondas de linha', bg: `repeating-linear-gradient(0deg, #222 0 1px, transparent 1px 5px) bottom/100% 45% no-repeat, #ffffff`, light: true },
-  { group: 'Preto e branco', id: 'bw-ondas-preto', label: 'Ondas de linha (preto)', bg: `repeating-linear-gradient(0deg, #f0f0f0 0 1px, transparent 1px 5px) bottom/100% 45% no-repeat, #0b0b0b` },
-
-  { group: 'Fechado', id: 'fechado-1', label: 'Fechado 1', bg: top('#f6f6f6', 38, 'linear-gradient(#6a6a70, #5b5b61)'), spine: '#e9e9e9', light: true },
-  { group: 'Fechado', id: 'fechado-2', label: 'Fechado 2', bg: top('#f6f6f6', 38, 'linear-gradient(#9b5656, #4e3f4a)'), spine: '#e9e9e9', light: true },
-  { group: 'Fechado', id: 'fechado-3', label: 'Fechado 3', bg: top('#f6f6f6', 38, 'linear-gradient(#6a7fc2, #3f4b66)'), spine: '#e9e9e9', light: true },
-  { group: 'Fechado', id: 'fechado-4', label: 'Fechado 4', bg: top('#f6f6f6', 38, 'linear-gradient(#8a9a78, #566a52)'), spine: '#e9e9e9', light: true },
-  { group: 'Fechado', id: 'fechado-5', label: 'Fechado 5', bg: top('#f6f6f6', 38, 'linear-gradient(#c4b6aa, #9a9a98)'), spine: '#e9e9e9', light: true },
-
-  { group: 'Claro', id: 'claro-fluido', label: 'Fluido', bg: `radial-gradient(ellipse at 20% 30%, #fff 0 18%, transparent 40%), linear-gradient(135deg, #ffe2ee, #f9c8dd)`, light: true },
-  { group: 'Claro', id: 'claro-goood', label: 'GOOOD', bg: `repeating-linear-gradient(8deg, transparent 0 10px, rgba(60,200,255,.65) 10px 11.5px), #13224a` },
-  { group: 'Claro', id: 'claro-koi', label: 'Koi', bg: `radial-gradient(circle at 50% 100%, #fff5cf 0 14%, #f6c51a 14% 30%, #ef7a1a 30% 46%, #e0301b 46% 58%, #5598cc 58% 74%, #2f5da4 74% 88%, #ececec 88%)`, light: true },
-  { group: 'Claro', id: 'claro-liquido', label: 'Líquido', bg: `radial-gradient(ellipse at 70% 80%, #ffd9c8 0 25%, transparent 55%), linear-gradient(160deg, #f9c9dd, #fbe3ea)`, light: true },
-  { group: 'Claro', id: 'claro-lotus', label: 'Lótus', bg: tile(46, 46, `<rect x='4' y='4' width='18' height='18' rx='4' fill='#e05560'/><rect x='24' y='24' width='18' height='18' rx='4' fill='#37c28f'/><circle cx='33' cy='13' r='2.5' fill='#f2e46b'/>`, '#e2e4e0'), light: true },
-
-  { group: 'Celebração', id: 'cel-flores', label: 'Flores', bg: top('#2c1a3e', 62, tile(40, 40, `<circle cx='10' cy='12' r='5' fill='#e3363b'/><circle cx='30' cy='28' r='5' fill='#e3363b'/><path d='M2 36q8-6 14 0' stroke='#b9503a' fill='none' stroke-width='2'/>`, '#d9c89c')), spine: '#f2f2f2' },
-  { group: 'Celebração', id: 'cel-frutifero', label: 'Frutífero', bg: top('#2f5230', 62, tile(44, 44, `<circle cx='12' cy='14' r='8' fill='#f08a1c'/><circle cx='34' cy='32' r='8' fill='#f08a1c'/><path d='M2 40q8-8 16 0M26 8q8 6 16-2' stroke='#4c8a3a' stroke-width='3' fill='none'/>`, '#f7f0dc')), spine: '#f2f2f2' },
-  { group: 'Celebração', id: 'cel-sorte', label: 'Sorte', bg: top('#8e1a1c', 62, tile(36, 36, `<rect x='9' y='4' width='18' height='26' rx='8' fill='#c7262a' stroke='#e8b8a0' stroke-width='1.5'/>`, '#a41e22')), spine: '#f2f2f2' },
-  { group: 'Celebração', id: 'cel-riqueza', label: 'Riqueza', bg: top('#050505', 62, tile(44, 44, `<circle cx='12' cy='14' r='8' fill='#e3262c'/><circle cx='32' cy='30' r='8' fill='#fff'/><circle cx='12' cy='14' r='2.5' fill='#f2c94c'/>`, '#101010')), spine: '#f2f2f2' },
+  { group: 'Faixas', id: 'faixa-grafite', label: 'Faixa grafite', bg: top('#f6f6f4', 36, 'linear-gradient(#585d68, #3a3f4a)'), spine: '#e4e4e0', light: true },
+  { group: 'Faixas', id: 'faixa-vinho', label: 'Faixa vinho', bg: top('#f6f6f4', 36, 'linear-gradient(#9c4357, #5c2233)'), spine: '#e4e4e0', light: true },
+  { group: 'Faixas', id: 'faixa-azul', label: 'Faixa azul', bg: top('#f6f6f4', 36, 'linear-gradient(#4f86b8, #25466b)'), spine: '#e4e4e0', light: true },
+  { group: 'Faixas', id: 'faixa-verde', label: 'Faixa verde', bg: top('#f6f6f4', 36, 'linear-gradient(#4d9a82, #215043)'), spine: '#e4e4e0', light: true },
 
   ...COVER_COLORS_CLASSIC.map((c, i) => ({ group: 'Cores', id: 'cor-' + i, label: 'Cor ' + (i + 1), bg: c, spine: shadeDark(c) })),
 ];
@@ -73,8 +49,12 @@ function shadeDark(hex) {
 
 export const COVER_GROUPS = [...new Set(COVERS.map((c) => c.group))];
 const BY_ID = new Map(COVERS.map((c) => [c.id, c]));
-export const DEFAULT_COVER_ID = 'simples';
-export function coverPreset(id) { return BY_ID.get(id); }
+export const DEFAULT_COVER_ID = 'nexo-verde';
+// Ids de capas de uma versão anterior do catálogo apontam para as equivalentes atuais.
+const LEGACY = { simples: 'areia', 'simples-amarelo': 'areia', 'simples-integral': 'grafite', 'simples-preto': 'grafite', 'simples-azul': 'oceano',
+  'preto-integral': 'grafite', 'preto-simples': 'grafite', 'azul-bebe': 'oceano', liso: 'papel', 'bege-liso': 'areia', 'cinza-escuro-liso': 'grafite',
+  'verde-liso': 'nexo-verde', 'cinza-liso': 'nevoa' };
+export function coverPreset(id) { return BY_ID.get(id) || BY_ID.get(LEGACY[id]); }
 
 // Capa salva no caderno: { id, color, pattern }. Cadernos antigos só têm color/pattern.
 export function coverFromPreset(p) {
@@ -83,7 +63,7 @@ export function coverFromPreset(p) {
 
 // Aplica o visual de uma capa a um elemento .cover. Devolve true quando é uma capa do catálogo.
 export function applyCover(el, cover) {
-  const p = cover?.id && BY_ID.get(cover.id);
+  const p = cover?.id && coverPreset(cover.id);
   if (!p || p.none) return false;
   el.classList.add('preset');
   el.style.background = p.bg;
