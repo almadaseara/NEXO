@@ -83,6 +83,41 @@ secoes:[
     ["Base","Art. 5º, LXXI; Lei 13.300/2016","Art. 103, §2º; Lei 9.868/1999, arts. 12-A a 12-H"]] },
   pegadinhas:["Mandado de injunção e ação direta de inconstitucionalidade por omissão <b>não</b> são a mesma coisa: um é remédio individual/coletivo de caso concreto, o outro é controle abstrato.","No mandado de injunção a lei diz que a eficácia é, <b>em regra</b>, limitada às partes; o efeito erga omnes é <b>exceção</b>."]},
 
+{ id:"macetes", titulo:"Macetes para diferenciar as normas", curto:"Macetes",
+  rapido:["<b>Semáforo</b>: plena = <b>verde livre</b>; contida = <b>verde com radar</b> (passa já, mas a lei pode pôr limite); limitada = <b>vermelho</b> até a lei \"abrir o sinal\".",
+    "<b>Termômetro</b>: plena fica em 100°; contida <b>começa em 100° e pode esfriar</b> quando a lei restringe; limitada <b>começa fria e só esquenta</b> com a lei. <b>Contida desce, limitada sobe.</b>",
+    "<b>Freio × ponte</b>: palavras de <b>freio</b> (\"salvo\", \"atendidas as qualificações\") = <b>contida</b>; palavras de <b>ponte</b> (\"a lei disporá\", \"na forma da lei\", \"conforme definido em lei\") = <b>limitada</b>.",
+    "<b>Pergunta mágica</b>: \"sem a lei, eu já posso exercer o direito?\" Sim e ninguém aperta = plena. Sim, mas a lei pode apertar = contida. Não = limitada."],
+  teoria:[
+    { h:"Semáforo e termômetro", p:[
+      "Imagine um <b>semáforo</b>. <b>Plena</b> é o sinal verde: você passa e ninguém pode fechá-lo. <b>Contida</b> é o verde com <b>radar</b>: você passa agora, mas a lei pode colocar um limite de velocidade. <b>Limitada</b> é o vermelho: só abre quando a lei ligar o sinal.",
+      "Agora o <b>termômetro</b>. A plena está em 100° e fica lá. A contida também começa em 100° e <b>só pode esfriar</b> (restrição). A limitada começa <b>gelada</b> e <b>só esquenta</b> quando a lei chega. Frase para decorar: <b>\"contida desce, limitada sobe\"</b>."]},
+    { h:"Freio × ponte (as palavras do texto)", p:[
+      "Palavras de <b>freio</b> mostram que o direito já existe e a lei só pode <b>segurá-lo</b>: \"atendidas as qualificações que a lei estabelecer\", \"salvo nas hipóteses previstas em lei\". Isso é <b>contida</b>.",
+      "Palavras de <b>ponte</b> mostram que falta construir algo para o direito chegar à pessoa: \"a lei disporá\", \"na forma da lei\", \"conforme definido em lei\", \"nos termos de lei complementar\". Isso é <b>limitada</b>.",
+      "Se a expressão for \"nos termos da lei\" e você ficar em dúvida, use a <b>pergunta mágica</b>: sem a lei, o direito já funciona?"]},
+    { h:"A casa: pronta, com regras ou na planta", p:[
+      "<b>Plena</b> é uma casa <b>pronta e mobiliada</b>: é só entrar. <b>Contida</b> é uma casa <b>pronta</b>, mas o condomínio pode criar regras que apertam o uso. <b>Limitada</b> é uma casa <b>na planta</b>: não dá para morar até a lei (a construtora) terminar a obra."]},
+    { h:"Siglas para decorar os exemplos", p:[
+      "<b>Contida = TRI</b>: <b>T</b>rabalho (art. 5º, XIII), <b>T</b>rânsito, ou seja, ir e vir (art. 5º, XV) e <b>I</b>dentificação criminal (art. 5º, LVIII). São as três liberdades que a lei pode apertar. Some o art. 37, I, para brasileiros.",
+      "<b>Limitada = DLA</b> (\"Depois da Lei, Aí\"): <b>D</b>espedida arbitrária (art. 7º, I), <b>L</b>ucros (participação, art. 7º, XI) e <b>A</b>utomação (art. 7º, XXVII). Acrescente a greve do servidor (art. 37, VII) e a criação de Ministérios (art. 88).",
+      "<b>Plena</b>: lembre de \"poder, dor e juiz\": separação de <b>Poderes</b> (art. 2º), proibição de tortura (<b>dor</b>, art. 5º, III) e proibição de tribunal de <b>exceção</b> (art. 5º, XXXVII)."]},
+    { h:"Institutiva × programática: \"quem?\" × \"o quê?\"", p:[
+      "A <b>institutiva</b> responde \"<b>quem</b> vai fazer?\": cria ou organiza órgãos e estruturas (Ministérios, região metropolitana). A <b>programática</b> responde \"<b>o que</b> será feito?\": promete metas sociais (saúde, educação, cultura).",
+      "Truque: se o texto diz que algo é <b>\"direito de todos e dever do Estado\"</b>, pense em <b>programática</b>. Se diz que a lei vai <b>criar ou organizar</b> um órgão, pense em <b>institutiva</b>."]},
+    { h:"Efeitos mínimos da limitada: RIO", p:[
+      "Mesmo sem lei, toda norma limitada tem o <b>RIO</b>: ela <b>R</b>evoga o que for incompatível, <b>I</b>mpede lei contrária e <b>O</b>rienta a interpretação. Por isso não existe norma constitucional \"sem efeito nenhum\"."]},
+    { h:"Omissão: injunção é Individual, a ação direta é Geral", p:[
+      "<b>Mandado de injunção</b> tem <b>I</b> de <b>I</b>ndividual: resolve o seu caso concreto, porque a falta de lei impede você de exercer um direito. A <b>ação direta de inconstitucionalidade por omissão</b> tem <b>G</b> de <b>G</b>eral: avisa o Poder que não legislou, sem depender de um caso concreto."]},
+    { h:"Diniz em quatro materiais", p:[
+      "Maria Helena Diniz: <b>absoluta</b> é de <b>aço</b> (nem emenda arranha: cláusulas pétreas); <b>plena</b> é de <b>madeira</b> (aplica-se já, mas a emenda pode mexer); <b>relativa restringível</b> é um <b>elástico</b> (a lei encolhe); <b>relativa complementável</b> é <b>lego</b> (a lei completa a peça que falta)."]}],
+  quadro:{ titulo:"A pergunta mágica", head:["Pergunta","Resposta","Tipo de norma"], rows:[
+    ["Sem a lei, eu já posso exercer o direito?","Sim, e a lei nem pode apertar","Plena"],
+    ["Sem a lei, eu já posso exercer o direito?","Sim, mas a lei pode apertar","Contida"],
+    ["Sem a lei, eu já posso exercer o direito?","Não, preciso esperar a lei","Limitada"],
+    ["A limitada organiza órgãos ou estruturas?","Sim (\"quem?\")","Limitada institutiva"],
+    ["A limitada promete metas sociais?","Sim (\"o quê?\")","Limitada programática"]] },
+  pegadinhas:["\"Nos termos da lei\" pode aparecer em contida <b>e</b> em limitada: use a pergunta mágica.","Contida <b>desce</b> (a lei restringe); limitada <b>sobe</b> (a lei completa). Não inverta.","O macete TRI e o DLA ajudam a lembrar, mas confira sempre o texto do dispositivo."]},
 { id:"outras", titulo:"Outras classificações e armadilhas", curto:"Outras classificações",
   rapido:["<b>Maria Helena Diniz</b>: eficácia <b>absoluta</b> (nem emenda pode suprimir: cláusulas pétreas), <b>plena</b> (emendável, aplicação imediata), <b>relativa restringível</b> (= contida) e <b>relativa complementável</b> (= limitada).",
     "<b>Meirelles Teixeira</b>: normas de eficácia <b>plena</b> e de eficácia <b>limitada ou reduzida</b> (programáticas e de legislação).",
@@ -181,7 +216,18 @@ cards:[
 { id:"nc16", tipo:"numero", sec:"limitada", f:"Qual o prazo para o órgão administrativo agir após a ação direta de inconstitucionalidade por omissão que reconhece a omissão?", v:"<b>Trinta dias</b> (art. 103, §2º); pode ser prazo razoável estipulado excepcionalmente pelo Tribunal, conforme a Lei 9.868/1999.", lei:["cf103p2"] },
 { id:"nc17", tipo:"distincao", sec:"outras", f:"Na classificação de Maria Helena Diniz, o que são normas de eficácia relativa restringível e relativa complementável?", v:"<b>Restringível</b> = contida de Silva (a lei pode reduzir). <b>Complementável</b> = limitada de Silva (a lei completa). <b>Absoluta</b> = cláusulas pétreas.", lei:[] },
 { id:"nc19", tipo:"ce", sec:"classif", f:"Certo ou errado: a norma de eficácia contida produz ou pode produzir todos os efeitos e tem aplicabilidade direta, imediata e integral.", v:"<b>Errado.</b> Isso descreve a <b>plena</b>. A contida tem aplicabilidade direta e imediata, mas <b>não integral</b>, porque a lei ainda pode restringi-la.", lei:["cf5xiii"] },
-{ id:"nc18", tipo:"caso", sec:"outras", f:"O art. 3º do ADCT previa revisão constitucional após cinco anos da promulgação. Que eficácia ele tem hoje?", v:"<b>Exaurida</b> (esgotada): cumpriu o fim e não produz mais efeitos práticos futuros, embora siga no texto.", lei:[] }
+{ id:"nc18", tipo:"caso", sec:"outras", f:"O art. 3º do ADCT previa revisão constitucional após cinco anos da promulgação. Que eficácia ele tem hoje?", v:"<b>Exaurida</b> (esgotada): cumpriu o fim e não produz mais efeitos práticos futuros, embora siga no texto.", lei:[] },
+{ id:"nc20", tipo:"distincao", sec:"macetes", f:"Use o semáforo: plena, contida e limitada.", v:"<b>Plena</b> = verde livre. <b>Contida</b> = verde com radar (a lei pode limitar). <b>Limitada</b> = vermelho até a lei abrir o sinal.", lei:[] },
+{ id:"nc21", tipo:"distincao", sec:"macetes", f:"No termômetro, o que acontece com a contida e com a limitada?", v:"<b>Contida desce</b> (começa em 100° e a lei pode esfriar). <b>Limitada sobe</b> (começa fria e a lei esquenta).", lei:[] },
+{ id:"nc22", tipo:"caso", sec:"macetes", f:"O texto diz \"salvo nas hipóteses previstas em lei\". Freio ou ponte? Que tipo de norma?", v:"<b>Freio</b>: o direito já vale e a lei só pode restringir. É <b>contida</b> (ex.: identificação criminal, art. 5º, LVIII).", lei:["cf5lviii"] },
+{ id:"nc23", tipo:"caso", sec:"macetes", f:"O texto diz \"a lei disporá sobre a criação e extinção de Ministérios\". Freio ou ponte?", v:"<b>Ponte</b>: falta a lei para o direito chegar. É <b>limitada institutiva</b> (art. 88).", lei:["cf88"] },
+{ id:"nc24", tipo:"lacuna", sec:"macetes", f:"Contida = TRI: ______, trânsito (ir e vir) e identificação criminal.", v:"<b>Trabalho</b> (art. 5º, XIII); trânsito (XV); identificação criminal (LVIII).", lei:["cf5xiii","cf5xv","cf5lviii"] },
+{ id:"nc25", tipo:"lacuna", sec:"macetes", f:"Limitada = DLA: despedida arbitrária, ______ e automação.", v:"<b>Lucros</b> (participação nos lucros, art. 7º, XI). Despedida: art. 7º, I; automação: art. 7º, XXVII.", lei:["cf7i","cf7xi","cf7xxvii"] },
+{ id:"nc26", tipo:"distincao", sec:"macetes", f:"\"Quem?\" × \"o quê?\": institutiva × programática.", v:"<b>Institutiva</b> = quem faz (cria órgãos e estruturas). <b>Programática</b> = o que será feito (metas sociais). \"Direito de todos e dever do Estado\" lembra programática.", lei:["cf88","cf196"] },
+{ id:"nc27", tipo:"lacuna", sec:"macetes", f:"Efeitos mínimos da limitada (RIO): R___, I___ e O___.", v:"<b>R</b>evoga o incompatível, <b>I</b>mpede lei contrária e <b>O</b>rienta a interpretação.", lei:[] },
+{ id:"nc28", tipo:"distincao", sec:"macetes", f:"Como diferenciar o mandado de injunção da ação direta de inconstitucionalidade por omissão com uma letra?", v:"Injunção = <b>I</b>ndividual (caso concreto). Ação direta por omissão = <b>G</b>eral (aviso ao Poder omisso, sem caso concreto).", lei:["cf5lxxi","cf103p2"] },
+{ id:"nc29", tipo:"distincao", sec:"macetes", f:"Diniz em materiais: aço, madeira, elástico e lego.", v:"<b>Aço</b> = absoluta (nem emenda). <b>Madeira</b> = plena. <b>Elástico</b> = relativa restringível (contida). <b>Lego</b> = relativa complementável (limitada).", lei:[] },
+{ id:"nc30", tipo:"caso", sec:"macetes", f:"Você não sabe se uma norma é contida ou limitada. Qual a pergunta mágica?", v:"\"Sem a lei, eu já posso exercer o direito?\" <b>Sim, mas a lei pode apertar</b> = contida. <b>Não</b> = limitada. <b>Sim e ninguém aperta</b> = plena.", lei:[] }
 ],
 questoes:[]
 };
