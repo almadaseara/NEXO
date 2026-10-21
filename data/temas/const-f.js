@@ -9,7 +9,7 @@ var STFSV = "https://portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=26
 
 T.normas_constitucionais = {
 meta:{ tema:"Normas constitucionais: aplicabilidade e eficácia", atualizado:AT,
-  foco:"Eficácia jurídica, aplicabilidade e efetividade; normas de eficácia plena, contida e limitada (institutiva e programática); como saber a qual grupo o dispositivo pertence; mandado de injunção e ADO contra a omissão; outras classificações (Diniz, Teixeira) e pegadinhas. Conferido em " + AT + "." },
+  foco:"Eficácia jurídica, aplicabilidade e efetividade; normas de eficácia plena, contida e limitada (institutiva e programática); como saber a qual grupo o dispositivo pertence; mandado de injunção e ação direta de inconstitucionalidade por omissão contra a omissão; outras classificações (Diniz, Teixeira) e pegadinhas. Conferido em " + AT + "." },
 secoes:[
 { id:"conceito", titulo:"Conceitos: eficácia, aplicabilidade e efetividade", curto:"Conceitos",
   rapido:["<b>Eficácia jurídica</b> é a aptidão da norma para produzir efeitos; <b>aplicabilidade</b> é a possibilidade de aplicá-la ao caso concreto; <b>efetividade</b> (eficácia social) é a norma ser cumprida na prática.",
@@ -62,8 +62,8 @@ secoes:[
 { id:"limitada", titulo:"Normas de eficácia limitada: institutivas, programáticas e omissão", curto:"Limitada e omissão",
   rapido:["Duas espécies (Silva): <b>de princípio institutivo</b> (criam ou estruturam órgãos e institutos, e dependem de lei) e <b>de princípio programático</b> (traçam fins e programas sociais a realizar).",
     "<b>Institutivas</b>: art. 88 (lei dispõe sobre criação e extinção de Ministérios); art. 25, §3º (regiões metropolitanas por lei complementar estadual, de caráter <b>facultativo</b>: \"poderão\"). <b>Programáticas</b>: art. 196 (saúde) e art. 205 (educação).",
-    "Contra a <b>omissão</b> que impede o exercício do direito: <b>mandado de injunção</b> (art. 5º, LXXI; Lei 13.300/2016), caso concreto; e <b>ADO</b> (art. 103, §2º), controle abstrato.",
-    "No MI, a regra é decisão com <b>eficácia subjetiva limitada às partes</b>, mas o §1º do art. 9º admite efeito <b>ultra partes ou erga omnes</b> quando indispensável ao direito."],
+    "Contra a <b>omissão</b> que impede o exercício do direito: <b>mandado de injunção</b> (art. 5º, LXXI; Lei 13.300/2016), caso concreto; e <b>ação direta de inconstitucionalidade por omissão</b> (art. 103, §2º), controle abstrato.",
+    "No mandado de injunção, a regra é decisão com <b>eficácia subjetiva limitada às partes</b>, mas o §1º do art. 9º admite efeito <b>ultra partes ou erga omnes</b> quando indispensável ao direito."],
   teoria:[
     { h:"Institutivas × programáticas", p:[
       "As <b>institutivas</b> (organizatórias) dependem de lei para <b>estruturar</b> algo: criar órgão, instituir região metropolitana, organizar territórios. Silva as divide em <b>impositivas</b> (a lei <b>deve</b> ser feita) e <b>facultativas</b> (a lei <b>pode</b> ser feita, como no art. 25, §3º).",
@@ -73,15 +73,15 @@ secoes:[
       "Cabe quando a <b>falta total ou parcial</b> de norma regulamentadora torna inviável o exercício de direitos e liberdades constitucionais e das prerrogativas ligadas à <b>nacionalidade, soberania e cidadania</b>. Considera-se <b>parcial</b> a regulamentação quando as normas editadas são <b>insuficientes</b> (art. 2º).",
       "Reconhecida a <b>mora legislativa</b>, o juiz <b>fixa prazo razoável</b> para o legislador agir e, se a mora persistir, <b>estabelece as condições</b> para o exercício do direito (art. 8º). Esse modelo é chamado de posição <b>concretista</b>: a Justiça garante o direito ao caso, em vez de apenas avisar o Legislativo.",
       "A regra é <b>eficácia subjetiva limitada às partes</b>, com efeitos até a edição da norma; mas o §1º do art. 9º permite <b>ultra partes ou erga omnes</b> quando isso for inerente ou indispensável ao exercício do direito."]},
-    { h:"Ação direta de inconstitucionalidade por omissão — ADO (art. 103, §2º)", p:[
+    { h:"Ação direta de inconstitucionalidade por omissão (art. 103, §2º)", p:[
       "É <b>controle abstrato</b> (sem caso concreto), para tornar efetiva norma constitucional que depende de providência. Na decisão, o STF dá <b>ciência</b> ao Poder competente para agir; se o omisso for <b>órgão administrativo</b>, a CF fala em <b>trinta dias</b>.",
-      "Regulamentação: Lei 9.868/1999, arts. 12-A a 12-H. Diferença-chave de prova: <b>MI</b> protege um <b>direito concreto</b> do impetrante; <b>ADO</b> combate a omissão em tese, de forma geral."]}],
-  quadro:{ titulo:"Mandado de injunção × ADO", head:["Ponto","Mandado de injunção","ADO"], rows:[
+      "Regulamentação: Lei 9.868/1999, arts. 12-A a 12-H. Diferença-chave de prova: o <b>mandado de injunção</b> protege um <b>direito concreto</b> do impetrante; a <b>ação direta de inconstitucionalidade por omissão</b> combate a omissão em tese, de forma geral."]}],
+  quadro:{ titulo:"Mandado de injunção × ação direta de inconstitucionalidade por omissão", head:["Ponto","Mandado de injunção","Ação direta de inconstitucionalidade por omissão"], rows:[
     ["Natureza","Controle concreto (remédio constitucional)","Controle abstrato"],
     ["Objetivo","Viabilizar o exercício de um direito, liberdade ou prerrogativa","Tornar efetiva norma constitucional pela providência omitida"],
     ["Regra da decisão","Eficácia subjetiva limitada às partes (pode ser ultra partes ou erga omnes, art. 9º, §1º)","Ciência ao Poder omisso; 30 dias se for órgão administrativo"],
     ["Base","Art. 5º, LXXI; Lei 13.300/2016","Art. 103, §2º; Lei 9.868/1999, arts. 12-A a 12-H"]] },
-  pegadinhas:["MI e ADO <b>não</b> são a mesma coisa: um é remédio individual/coletivo de caso concreto, o outro é controle abstrato.","No MI a lei diz que a eficácia é, <b>em regra</b>, limitada às partes; o efeito erga omnes é <b>exceção</b>."]},
+  pegadinhas:["Mandado de injunção e ação direta de inconstitucionalidade por omissão <b>não</b> são a mesma coisa: um é remédio individual/coletivo de caso concreto, o outro é controle abstrato.","No mandado de injunção a lei diz que a eficácia é, <b>em regra</b>, limitada às partes; o efeito erga omnes é <b>exceção</b>."]},
 
 { id:"outras", titulo:"Outras classificações e armadilhas", curto:"Outras classificações",
   rapido:["<b>Maria Helena Diniz</b>: eficácia <b>absoluta</b> (nem emenda pode suprimir: cláusulas pétreas), <b>plena</b> (emendável, aplicação imediata), <b>relativa restringível</b> (= contida) e <b>relativa complementável</b> (= limitada).",
@@ -124,7 +124,7 @@ lei:[
 { art:"CF, arts. 196 e 205 (programáticas)", nome:"Exemplos de normas programáticas", sec:"limitada", itens:[
   { id:"cf196", rot:"Art. 196", t:"A saúde é <b class='g1'>direito de todos e dever do Estado</b>, garantida mediante políticas sociais e econômicas que visem à redução do risco de doença e de outros agravos e ao acesso universal e igualitário às ações e serviços para sua promoção, proteção e recuperação.", c:["nc13"], j:["stf-adpf45"] },
   { id:"cf205", rot:"Art. 205", t:"A educação, <b class='g1'>direito de todos e dever do Estado e da família</b>, será promovida e incentivada com a colaboração da sociedade, visando ao pleno desenvolvimento da pessoa, seu preparo para o exercício da cidadania e sua qualificação para o trabalho.", c:["nc13"] }]},
-{ art:"CF, arts. 5º, LXXI e 103, §2º; Leis 13.300/2016 e 9.868/1999", nome:"Omissão: mandado de injunção e ADO", sec:"limitada", itens:[
+{ art:"CF, arts. 5º, LXXI e 103, §2º; Leis 13.300/2016 e 9.868/1999", nome:"Omissão: mandado de injunção e ação direta de inconstitucionalidade por omissão", sec:"limitada", itens:[
   { id:"cf5lxxi", rot:"Art. 5º, LXXI", t:"conceder-se-á <b class='g1'>mandado de injunção</b> sempre que a <b class='g1'>falta de norma regulamentadora</b> torne inviável o exercício dos direitos e liberdades constitucionais e das prerrogativas inerentes à <b class='g2'>nacionalidade, à soberania e à cidadania</b>;", c:["nc14","nc15"] },
   { id:"cf103p2", rot:"Art. 103, §2º", t:"Declarada a inconstitucionalidade por omissão de medida para tornar efetiva norma constitucional, será dada <b class='g1'>ciência ao Poder competente</b> para a adoção das providências necessárias e, em se tratando de órgão administrativo, para fazê-lo em <b class='g2'>trinta dias</b>.", c:["nc16"] },
   { id:"l13300a8", rot:"Lei 13.300/2016, art. 8º", t:"Reconhecido o estado de mora legislativa, será deferida a injunção para: I - <b class='g1'>determinar prazo razoável</b> para que o impetrado promova a edição da norma regulamentadora; II - <b class='g1'>estabelecer as condições</b> em que se dará o exercício dos direitos, das liberdades ou das prerrogativas reclamados ou, se for o caso, as condições em que poderá o interessado promover ação própria visando a exercê-los, caso não seja suprida a mora legislativa no prazo determinado.", c:["nc15"] },
@@ -140,7 +140,7 @@ juris:[
   titulo:"Aposentadoria especial do servidor: regras do RGPS até a lei",
   texto:"Aplicam-se ao servidor público, no que couber, as regras do regime geral da previdência social sobre aposentadoria especial de que trata o artigo 40, § 4º, inciso III da Constituição Federal, até a edição de lei complementar específica.",
   explica:"Surgiu de mandados de injunção: diante da mora legislativa, o STF mandou aplicar regras do RGPS enquanto a lei não vem. O art. 40 foi alterado depois (EC 103/2019); confira a redação atual na fonte.", lei:["cf5lxxi"], fonte:STFSV },
-{ id:"stf-mi708", trib:"STF", tipo:"Mandado de injunção", num:"MI 708", sec:"limitada", status:"vigente", data:"25/10/2007",
+{ id:"stf-mi708", trib:"STF", tipo:"Mandado de injunção", num:"Mandado de Injunção 708", sec:"limitada", status:"vigente", data:"25/10/2007",
   titulo:"Greve do servidor (art. 37, VII): mora legislativa",
   texto:"Reconhecida a mora legislativa na regulamentação do direito de greve dos servidores públicos, o STF determinou a aplicação, no que couber, da lei de greve do setor privado (Lei 7.783/1989) até a edição de lei específica.",
   explica:"Mostra a posição concretista do STF e que o art. 37, VII é de eficácia limitada. Resumo do entendimento; data e termos conforme o material de estudo, confira o acórdão na fonte.", lei:["cf37vii"], fonte:STFJ },
@@ -156,10 +156,10 @@ juris:[
   titulo:"Programáticas, reserva do possível e mínimo existencial",
   texto:"Em decisão monocrática, o Min. Celso de Mello reconheceu que o Judiciário pode, excepcionalmente, intervir em políticas públicas para preservar o mínimo existencial, e que a reserva do possível não pode ser usada para fraudar direitos fundamentais.",
   explica:"Base para dizer que norma programática não é promessa vazia. Decisão monocrática (a ação foi declarada prejudicada); data e resumo conforme o material de estudo, confira na fonte.", lei:["cf196"], fonte:STFJ },
-{ id:"stf-ado26", trib:"STF", tipo:"ADO", num:"ADO 26", sec:"limitada", status:"atencao", data:"13/06/2019",
+{ id:"stf-ado26", trib:"STF", tipo:"Ação direta de inconstitucionalidade por omissão", num:"Ação Direta de Inconstitucionalidade por Omissão 26", sec:"limitada", status:"atencao", data:"13/06/2019",
   titulo:"Mora legislativa na criminalização da homotransfobia",
   texto:"O STF reconheceu a mora do Congresso e, até a edição de lei, enquadrou a homofobia e a transfobia nos tipos penais da Lei 7.716/1989 (racismo).",
-  explica:"Exemplo de ADO com solução provisória. Resumo conforme o material de estudo; confira os termos exatos da tese no acórdão antes de decorar.", lei:["cf103p2"], fonte:STFJ }
+  explica:"Exemplo de ação direta de inconstitucionalidade por omissão com solução provisória. Resumo conforme o material de estudo; confira os termos exatos da tese no acórdão antes de decorar.", lei:["cf103p2"], fonte:STFJ }
 ],
 
 cards:[
@@ -172,13 +172,13 @@ cards:[
 { id:"nc7", tipo:"distincao", sec:"classif", f:"Art. 37, I: o acesso a cargos públicos por brasileiros e por estrangeiros tem a mesma eficácia?", v:"<b>Não.</b> Brasileiros: <b>contida</b> (\"requisitos estabelecidos em lei\"). Estrangeiros: <b>limitada</b> (\"na forma da lei\").", lei:["cf37i"] },
 { id:"nc8", tipo:"distincao", sec:"limitada", f:"Art. 7º, I, XI e XXVII: qual a eficácia e o que têm em comum?", v:"<b>Limitada</b>: todos remetem à lei (\"lei complementar\", \"conforme definido em lei\", \"na forma da lei\") para produzir os efeitos essenciais.", lei:["cf7i","cf7xi","cf7xxvii"] },
 { id:"nc9", tipo:"distincao", sec:"limitada", f:"Art. 88 (Ministérios) e art. 25, §3º (regiões metropolitanas): que espécie de eficácia limitada?", v:"<b>Institutivas</b>. O art. 88 é <b>impositivo</b> (\"a lei disporá\"); o art. 25, §3º é <b>facultativo</b> (\"poderão\").", lei:["cf88","cf25p3"] },
-{ id:"nc10", tipo:"caso", sec:"limitada", f:"Servidores entram em greve, mas ainda não há lei específica prevista no art. 37, VII. O direito de greve está bloqueado?", v:"<b>Não.</b> A norma é de eficácia <b>limitada</b>, mas o STF (MI 708) determinou aplicar, no que couber, a Lei 7.783/1989 até haver lei específica.", lei:["cf37vii"], j:["stf-mi708"] },
+{ id:"nc10", tipo:"caso", sec:"limitada", f:"Servidores entram em greve, mas ainda não há lei específica prevista no art. 37, VII. O direito de greve está bloqueado?", v:"<b>Não.</b> A norma é de eficácia <b>limitada</b>, mas o STF (Mandado de Injunção 708) determinou aplicar, no que couber, a Lei 7.783/1989 até haver lei específica.", lei:["cf37vii"], j:["stf-mi708"] },
 { id:"nc11", tipo:"ce", sec:"classif", f:"Certo ou errado: a norma de eficácia contida depende de lei para ser aplicada.", v:"<b>Errado.</b> Ela é aplicável desde logo; a lei só pode <b>restringir</b> seu alcance. Dependem de lei as de eficácia <b>limitada</b>.", lei:["cf5xiii"] },
 { id:"nc12", tipo:"ce", sec:"conceito", f:"Certo ou errado: norma de eficácia limitada não produz nenhum efeito jurídico enquanto não for editada a lei.", v:"<b>Errado.</b> Produz efeitos mínimos: revoga o incompatível, impede lei contrária e orienta a interpretação.", lei:["cf5p1"] },
 { id:"nc13", tipo:"distincao", sec:"limitada", f:"Os arts. 196 (saúde) e 205 (educação) são de eficácia plena, contida ou limitada?", v:"<b>Limitada de princípio programático</b>: fixam fins e metas; o STF não as trata como promessa vazia (ADPF 45).", lei:["cf196","cf205"], j:["stf-adpf45"] },
 { id:"nc14", tipo:"lacuna", sec:"limitada", f:"Cabe mandado de injunção quando a falta de norma ______ torne inviável o exercício de direitos e liberdades constitucionais e de prerrogativas ligadas à nacionalidade, soberania e cidadania.", v:"<b>regulamentadora</b> (art. 5º, LXXI).", lei:["cf5lxxi"] },
 { id:"nc15", tipo:"numero", sec:"limitada", f:"Qual é a regra de eficácia da decisão no mandado de injunção e qual a exceção?", v:"Regra: eficácia subjetiva <b>limitada às partes</b> (Lei 13.300, art. 9º). Exceção: <b>ultra partes ou erga omnes</b> se inerente ou indispensável ao direito (§1º).", lei:["l13300a9","l13300a8"] },
-{ id:"nc16", tipo:"numero", sec:"limitada", f:"Qual o prazo para o órgão administrativo agir após a ADO que reconhece a omissão?", v:"<b>Trinta dias</b> (art. 103, §2º); pode ser prazo razoável estipulado excepcionalmente pelo Tribunal, conforme a Lei 9.868/1999.", lei:["cf103p2"] },
+{ id:"nc16", tipo:"numero", sec:"limitada", f:"Qual o prazo para o órgão administrativo agir após a ação direta de inconstitucionalidade por omissão que reconhece a omissão?", v:"<b>Trinta dias</b> (art. 103, §2º); pode ser prazo razoável estipulado excepcionalmente pelo Tribunal, conforme a Lei 9.868/1999.", lei:["cf103p2"] },
 { id:"nc17", tipo:"distincao", sec:"outras", f:"Na classificação de Maria Helena Diniz, o que são normas de eficácia relativa restringível e relativa complementável?", v:"<b>Restringível</b> = contida de Silva (a lei pode reduzir). <b>Complementável</b> = limitada de Silva (a lei completa). <b>Absoluta</b> = cláusulas pétreas.", lei:[] },
 { id:"nc19", tipo:"ce", sec:"classif", f:"Certo ou errado: a norma de eficácia contida produz ou pode produzir todos os efeitos e tem aplicabilidade direta, imediata e integral.", v:"<b>Errado.</b> Isso descreve a <b>plena</b>. A contida tem aplicabilidade direta e imediata, mas <b>não integral</b>, porque a lei ainda pode restringi-la.", lei:["cf5xiii"] },
 { id:"nc18", tipo:"caso", sec:"outras", f:"O art. 3º do ADCT previa revisão constitucional após cinco anos da promulgação. Que eficácia ele tem hoje?", v:"<b>Exaurida</b> (esgotada): cumpriu o fim e não produz mais efeitos práticos futuros, embora siga no texto.", lei:[] }

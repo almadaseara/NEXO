@@ -130,7 +130,7 @@ juris:[
 { id:"stf-adi4277", trib:"STF", tipo:"ADI/ADPF", num:"ADI 4.277 e ADPF 132", sec:"dimensoes", status:"vigente", data:"05/05/2011",
   titulo:"União homoafetiva como entidade familiar",
   texto:"O STF deu interpretação conforme ao art. 1.723 do Código Civil para excluir qualquer significado que impeça o reconhecimento da união contínua, pública e duradoura entre pessoas do mesmo sexo como família.",
-  explica:"Aplicação direta de igualdade, dignidade, liberdade e vedação de discriminação (art. 3º, IV). Na mesma linha, o STF equiparou a homotransfobia ao racismo (ADO 26, 2019).", lei:["cf5c"], fonte:STFJ }
+  explica:"Aplicação direta de igualdade, dignidade, liberdade e vedação de discriminação (art. 3º, IV). Na mesma linha, o STF equiparou a homotransfobia ao racismo (Ação Direta de Inconstitucionalidade por Omissão 26, 2019).", lei:["cf5c"], fonte:STFJ }
 ],
 cards:[
 { id:"td1", tipo:"distincao", sec:"dimensoes", f:"1ª, 2ª e 3ª dimensões: valor e exemplo.", v:"<b>1ª</b>: liberdade (vida, voto). <b>2ª</b>: igualdade (saúde, educação, trabalho). <b>3ª</b>: fraternidade (meio ambiente, paz).", lei:["cf5c"] },
