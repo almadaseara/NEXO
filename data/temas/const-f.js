@@ -30,26 +30,29 @@ secoes:[
 
 { id:"classif", titulo:"Eficácia plena, contida e limitada (José Afonso da Silva)", curto:"Plena × contida × limitada",
   rapido:["<b>Plena</b>: aplicabilidade <b>direta, imediata e integral</b>; não depende de lei e <b>não pode ser restringida</b> pela lei. Ex.: art. 2º; art. 5º, III e XXXVII.",
-    "<b>Contida</b>: aplicabilidade <b>direta e imediata</b>, mas a norma admite que a lei (ou outra norma, ou um conceito aberto) <b>restrinja</b> seu alcance. Ex.: art. 5º, XIII, XV e LVIII. Enquanto não há lei, vale <b>plenamente</b>.",
+    "<b>Contida</b>: aplicabilidade <b>direta e imediata</b>, porém <b>não integral</b>, pois a norma admite que a lei (ou outra norma, ou um conceito aberto) <b>restrinja</b> seu alcance. Ex.: art. 5º, XIII, XV e LVIII. Enquanto não há lei, vale <b>plenamente</b>.",
     "<b>Limitada</b>: aplicabilidade <b>indireta, mediata e reduzida</b>; depende de lei para produzir os efeitos essenciais. Ex.: art. 7º, I, XI e XXVII; art. 37, VII.",
     "<b>Macete</b>: contida = \"<b>já vale</b>, mas <b>pode apertar</b>\"; limitada = \"<b>só vale</b> depois da lei\"."],
   teoria:[
     { h:"Eficácia plena", p:[
       "Produz <b>todos</b> os efeitos desde a entrada em vigor e <b>não precisa</b> de lei para funcionar. O legislador infraconstitucional <b>não pode</b> reduzir seu alcance.",
-      "Exemplos clássicos: a separação e independência dos Poderes (art. 2º); a proibição de tortura e de tratamento desumano ou degradante (art. 5º, III); a vedação de juízo ou tribunal de exceção (art. 5º, XXXVII)."]},
+      "Exemplos clássicos: os remédios constitucionais; a separação e independência dos Poderes (art. 2º); a proibição de tortura e de tratamento desumano ou degradante (art. 5º, III); a vedação de juízo ou tribunal de exceção (art. 5º, XXXVII)."]},
     { h:"Eficácia contida (ou restringível)", p:[
       "Nasce <b>plena</b>: pode ser aplicada logo, sem lei. A diferença é que o próprio texto deixa <b>aberta</b> a possibilidade de o legislador (ou outra fonte) <b>restringir</b> o direito depois. Se a restrição vier, o direito encolhe; se não vier, vale por inteiro.",
       "Para Silva, a restrição pode vir de <b>três</b> formas: por <b>lei</b> (\"atendidas as qualificações que a lei estabelecer\", \"salvo nas hipóteses previstas em lei\"); por <b>conceitos genéricos</b> como ordem pública e bons costumes; e por <b>outras normas constitucionais</b> (por exemplo, as medidas do estado de defesa e do estado de sítio).",
-      "Exemplos: art. 5º, XIII (qualificações profissionais que a lei estabelecer); art. 5º, XV (\"nos termos da lei\"); art. 5º, LVIII (identificação criminal só nas hipóteses legais); art. 37, I, na parte dos <b>brasileiros</b> (\"requisitos estabelecidos em lei\")."]},
+      "Exemplos: a liberdade profissional; art. 5º, XIII (qualificações profissionais que a lei estabelecer); art. 5º, XV (\"nos termos da lei\"); art. 5º, LVIII (identificação criminal só nas hipóteses legais); art. 37, I, na parte dos <b>brasileiros</b> (\"requisitos estabelecidos em lei\")."]},
     { h:"Eficácia limitada", p:[
       "Sem a lei (ou outra norma integradora) a norma <b>não produz</b> seus efeitos essenciais. Sua aplicabilidade é <b>indireta</b> (depende de outra norma), <b>mediata</b> (só depois dela) e <b>reduzida</b> (efeitos mínimos até lá).",
       "Exemplos: art. 7º, I (proteção contra despedida arbitrária, \"nos termos de lei complementar\"); art. 7º, XI (participação nos lucros, \"conforme definido em lei\"); art. 7º, XXVII (proteção em face da automação, \"na forma da lei\"); art. 37, VII (greve do servidor, em lei específica); art. 37, I, na parte dos <b>estrangeiros</b> (\"na forma da lei\")."]},
+    { h:"Eficácia negativa das programáticas", p:[
+      "Para Marcelo Alexandrino e Vicente Paulo, as normas programáticas têm <b>eficácia negativa</b>: <b>revogam</b> o que for contrário ao programa e <b>impedem</b> a edição de normas posteriores que o contrariem.",
+      "Para Alexandre de Moraes, nelas a <b>oportunidade</b> e a <b>extensão</b> do programa cabem ao <b>Legislativo</b>; por isso a eficácia técnica é <b>limitada</b>. Os <b>mandados de criminalização</b> (ordens para que a lei puna certas condutas) são citados como exemplos de eficácia limitada."]},
     { h:"Como decidir na prova", p:[
       "Procure a expressão que liga o direito à lei e pergunte: <b>sem a lei o direito já funciona?</b> Se sim e a lei só pode <b>restringir</b> (\"atendidas as qualificações\", \"salvo\"), é <b>contida</b>. Se não funciona sem a lei (\"na forma da lei\", \"conforme definido em lei\", \"lei disporá\"), é <b>limitada</b>.",
       "Se o texto não remete à lei e não admite restrição, é <b>plena</b>.",
       "Cuidado: \"nos termos da lei\" aparece nos <b>dois</b> grupos. O que decide é a lógica acima, não a expressão sozinha."]}],
   quadro:{ titulo:"Plena × contida × limitada", head:["Critério","Plena","Contida","Limitada"], rows:[
-    ["Aplicabilidade","Direta, imediata e integral","Direta e imediata","Indireta, mediata e reduzida"],
+    ["Aplicabilidade","Direta, imediata e integral","Direta e imediata, mas não integral","Indireta, mediata e reduzida"],
     ["Precisa de lei para valer?","Não","Não","Sim"],
     ["A lei pode reduzir o alcance?","Não","Sim (restringe)","Não restringe: completa (regulamenta)"],
     ["Sem a lei, o que acontece?","Vale por inteiro","Vale por inteiro","Efeitos mínimos; direito não é exercido"],
@@ -177,6 +180,7 @@ cards:[
 { id:"nc15", tipo:"numero", sec:"limitada", f:"Qual é a regra de eficácia da decisão no mandado de injunção e qual a exceção?", v:"Regra: eficácia subjetiva <b>limitada às partes</b> (Lei 13.300, art. 9º). Exceção: <b>ultra partes ou erga omnes</b> se inerente ou indispensável ao direito (§1º).", lei:["l13300a9","l13300a8"] },
 { id:"nc16", tipo:"numero", sec:"limitada", f:"Qual o prazo para o órgão administrativo agir após a ADO que reconhece a omissão?", v:"<b>Trinta dias</b> (art. 103, §2º); pode ser prazo razoável estipulado excepcionalmente pelo Tribunal, conforme a Lei 9.868/1999.", lei:["cf103p2"] },
 { id:"nc17", tipo:"distincao", sec:"outras", f:"Na classificação de Maria Helena Diniz, o que são normas de eficácia relativa restringível e relativa complementável?", v:"<b>Restringível</b> = contida de Silva (a lei pode reduzir). <b>Complementável</b> = limitada de Silva (a lei completa). <b>Absoluta</b> = cláusulas pétreas.", lei:[] },
+{ id:"nc19", tipo:"ce", sec:"classif", f:"Certo ou errado: a norma de eficácia contida produz ou pode produzir todos os efeitos e tem aplicabilidade direta, imediata e integral.", v:"<b>Errado.</b> Isso descreve a <b>plena</b>. A contida tem aplicabilidade direta e imediata, mas <b>não integral</b>, porque a lei ainda pode restringi-la.", lei:["cf5xiii"] },
 { id:"nc18", tipo:"caso", sec:"outras", f:"O art. 3º do ADCT previa revisão constitucional após cinco anos da promulgação. Que eficácia ele tem hoje?", v:"<b>Exaurida</b> (esgotada): cumpriu o fim e não produz mais efeitos práticos futuros, embora siga no texto.", lei:[] }
 ],
 questoes:[]
