@@ -70,6 +70,26 @@ T.teoria_direitos = {
 meta:{ tema:"Teoria geral dos direitos fundamentais", atualizado:AT,
   foco:"Gerações (dimensões), características, titularidade, eficácia vertical e horizontal, aplicabilidade imediata, cláusula de abertura e tratados de direitos humanos (status supralegal × emenda constitucional), TPI e restrições." },
 secoes:[
+{ id:"conceitos", titulo:"Conceitos, status e princípios × regras", curto:"Conceitos",
+  rapido:["<b>Direitos humanos</b>: valem para o homem em geral, previstos em tratados, sem ligação com um Estado. <b>Direitos fundamentais</b>: os reconhecidos na ordem jurídica de um Estado (a CF/88).",
+    "<b>Direito</b> declara um bem ou vantagem (vida, propriedade); <b>garantia</b> é o instrumento que o protege (ex.: mandado de segurança).",
+    "<b>Status de Jellinek</b>: <b>passivo</b> (deveres, subordinação), <b>negativo</b> (liberdade diante do Estado), <b>positivo</b> (exigir prestações) e <b>ativo</b> (participar da vontade estatal, cidadania).",
+    "<b>Alexy</b>: princípios são <b>mandamentos de otimização</b> (colisão = ponderação); regras são <b>tudo ou nada</b> (conflito = validade: uma afasta a outra)."],
+  teoria:[
+    { h:"Origem e positivação", p:[
+      "A doutrina costuma apontar a <b>Magna Carta inglesa (1215)</b> como marco inicial, mas ela protegia os barões contra o rei, não o indivíduo em geral. A positivação dos direitos fundamentais vem da <b>Revolução Francesa</b> e das declarações das colônias americanas (1776), base das constituições liberais dos séculos XVIII e XIX.",
+      "Direitos fundamentais garantem condições mínimas de existência digna e limitam o poder arbitrário do Estado."]},
+    { h:"Teoria dos status (Jellinek)", p:[
+      "<b>Status passivo (subjectionis)</b>: o indivíduo tem deveres perante o Estado (alistamento eleitoral, voto como dever). <b>Status negativo (libertatis)</b>: espaço de liberdade contra a interferência estatal (inviolabilidade do domicílio, art. 5º).",
+      "<b>Status positivo (civitatis)</b>: direito de exigir prestações do Estado (direito de petição, saúde). <b>Status ativo</b>: competência para influenciar a formação da vontade estatal (direitos políticos, voto como direito)."]},
+    { h:"Características que mais caem", p:[
+      "<b>Historicidade</b> (mudam com a sociedade e o tempo); <b>inalienabilidade</b> (sem conteúdo econômico, não se vendem); <b>imprescritibilidade</b> (não se perdem pelo não uso); <b>irrenunciabilidade</b> (pode-se não exercer, não renunciar); <b>relatividade</b> (colisões se resolvem por ponderação e proporcionalidade).",
+      "Também aparecem: <b>personalidade</b> (não se transmitem), <b>cumulatividade</b> (podem ser exercidos ao mesmo tempo), <b>universalidade</b> e <b>proibição do retrocesso</b>.",
+      "Dimensões: a 4ª (democracia, pluralismo, informação) e a 5ª (paz) aparecem como \"futuro da cidadania\" e \"direito supremo da humanidade\" no material de estudo; a doutrina varia, então leia o enunciado."]},
+    { h:"Princípios × regras (Alexy)", p:[
+      "<b>Princípios</b> são normas amplas e abstratas, mandamentos de otimização cumpridos na maior medida possível (ex.: dignidade da pessoa humana); na colisão, aplica-se a <b>ponderação</b>.",
+      "<b>Regras</b> são específicas e definitivas: ou valem ou não valem (\"tudo ou nada\"); no conflito, resolve-se pela <b>validade</b>. Ex.: a regra sobre a eleição do Presidente da República."]}],
+  pegadinhas:["\"Regras são mandamentos de otimização\" está <b>errado</b>: isso é dos <b>princípios</b>.","Direitos fundamentais <b>não</b> são absolutos nem renunciáveis de forma definitiva.","Status ativo (participar) ≠ status positivo (exigir prestação)."]},
 { id:"dimensoes", titulo:"Dimensões e características", curto:"Dimensões",
   rapido:["<b>1ª dimensão</b> — liberdade: direitos civis e políticos, prestação <b>negativa</b> do Estado. <b>2ª</b> — igualdade: direitos sociais, econômicos e culturais, prestação <b>positiva</b>. <b>3ª</b> — fraternidade: difusos (meio ambiente, paz, consumidor, desenvolvimento).",
     "Parte da doutrina fala em 4ª (democracia, informação, pluralismo — Bonavides; biotecnologia — Bobbio) e 5ª (paz, para Bonavides).",
@@ -120,7 +140,13 @@ cards:[
 { id:"td5", tipo:"numero", sec:"eficacia", f:"Rito para tratado de direitos humanos ter status de emenda.", v:"<b>Cada Casa</b>, <b>2 turnos</b>, <b>3/5</b> dos membros (art. 5º, §3º).", lei:["cf5p3"] },
 { id:"td6", tipo:"distincao", sec:"eficacia", f:"Hierarquia dos tratados no Brasil.", v:"Direitos humanos com rito do §3º: <b>emenda</b>. Direitos humanos sem o rito: <b>supralegal</b>. Demais tratados: <b>lei ordinária</b> (tributários têm regra própria no CTN).", lei:["cf5p3"], j:["stf-re466343"] },
 { id:"td7", tipo:"caso", sec:"eficacia", f:"O TPI pede a entrega de brasileiro nato acusado de genocídio. A CF impede?", v:"<b>Não.</b> Entrega ao TPI (art. 5º, §4º) não é extradição.", lei:["cf5p4"] },
-{ id:"td8", tipo:"ce", sec:"dimensoes", f:"Certo ou errado: o titular pode renunciar definitivamente a um direito fundamental.", v:"<b>Errado.</b> São irrenunciáveis; admite-se apenas o <b>não exercício</b> temporário (ex.: expor a intimidade em reality show).", lei:[] }
+{ id:"td8", tipo:"ce", sec:"dimensoes", f:"Certo ou errado: o titular pode renunciar definitivamente a um direito fundamental.", v:"<b>Errado.</b> São irrenunciáveis; admite-se apenas o <b>não exercício</b> temporário (ex.: expor a intimidade em reality show).", lei:[] },
+{ id:"td9", tipo:"distincao", sec:"conceitos", f:"Direitos humanos × direitos fundamentais.", v:"<b>Humanos</b>: valem para o homem, sem vínculo com um Estado (tratados, DUDH). <b>Fundamentais</b>: reconhecidos na Constituição de um Estado.", lei:[] },
+{ id:"td10", tipo:"distincao", sec:"conceitos", f:"Direito × garantia fundamental.", v:"<b>Direito</b> declara a vantagem (vida, propriedade). <b>Garantia</b> protege o direito (mandado de segurança, habeas corpus).", lei:[] },
+{ id:"td11", tipo:"caso", sec:"conceitos", f:"Direito de petição aos Poderes Públicos: qual status de Jellinek?", v:"<b>Status positivo (civitatis)</b>: o indivíduo exige uma prestação do Estado. O voto como participação é status <b>ativo</b>.", lei:[] },
+{ id:"td12", tipo:"distincao", sec:"conceitos", f:"Os quatro status de Jellinek.", v:"<b>Passivo</b> (deveres), <b>negativo</b> (liberdade), <b>positivo</b> (prestações), <b>ativo</b> (participação política).", lei:[] },
+{ id:"td13", tipo:"ce", sec:"conceitos", f:"Certo ou errado: regras são mandamentos de otimização, cumpridos na maior intensidade possível.", v:"<b>Errado.</b> Os <b>princípios</b> são mandamentos de otimização; as regras são cumpridas integralmente (tudo ou nada).", lei:[] },
+{ id:"td14", tipo:"distincao", sec:"conceitos", f:"Colisão de princípios × conflito de regras (Alexy).", v:"Princípios colidem: resolve-se por <b>ponderação</b>. Regras conflitam: resolve-se pela <b>validade</b> (uma afasta a outra).", lei:[] },
 ],
 questoes:[]
 };
@@ -142,7 +168,22 @@ secoes:[
     { h:"Liberdade de expressão e seus limites", p:[
       "ADPF 130: a Lei de Imprensa não foi recepcionada; vedada a <b>censura prévia</b>.",
       "ADPF 187: \"marcha da maconha\" é exercício legítimo de reunião e expressão, não apologia ao crime.",
-      "Discurso de ódio não é protegido (HC 82.424 — caso Ellwanger: antissemitismo é racismo, imprescritível)."]}],
+      "Discurso de ódio não é protegido (HC 82.424 — caso Ellwanger: antissemitismo é racismo, imprescritível)."]},
+    { h:"Igualdade em concursos, legalidade e vida", p:[
+      "<b>Súmula 683/STF</b>: o limite de idade em concurso só se legitima quando justificado pela natureza das atribuições do cargo. Requisitos como altura mínima também dependem de <b>lei</b> e de razoabilidade (RE 1.469.887, conforme o material de estudo; confira).",
+      "Exceções doutrinárias ao princípio da legalidade: <b>estado de defesa, estado de sítio e medidas provisórias</b>. Por isso é errado dizer que a medida provisória é a <b>única</b> exceção.",
+      "O direito à vida tem <b>dupla acepção</b>: negativa (permanecer vivo, sem intervenção do Estado ou de particulares) e positiva (vida digna, com o mínimo existencial). O aborto é, em regra, vedado, com as hipóteses legais (risco à vida da gestante e estupro) e a ADPF 54 (feto anencéfalo)."]},
+    { h:"Tortura e presídios", p:[
+      "Tortura é crime <b>inafiançável</b> (art. 5º, XLIII); a <b>Lei 9.455/1997</b> define os crimes e a <b>Lei 12.847/2013</b> criou o Sistema Nacional de Prevenção e Combate à Tortura. Parte da doutrina vê o direito de não ser torturado como <b>absoluto</b>.",
+      "O Judiciário pode determinar obras emergenciais em presídios para garantir a integridade dos presos, sem que a reserva do possível ou a separação de Poderes sirvam de barreira (RE 592.581, Tema 220)."]},
+    { h:"Resposta, imprensa e liberdade de expressão", p:[
+      "O direito de resposta é proporcional ao agravo, no <b>mesmo meio</b>, e não exclui a indenização. Pela Lei 13.188/2015, o prazo para exercê-lo é <b>decadencial de 60 dias</b> da divulgação (conforme o material de estudo; confira a lei).",
+      "Julgados: ADPF 130 (Lei de Imprensa não recepcionada), ADI 4.815 (biografias sem autorização prévia), ADPF 187 (marcha da maconha), RE 1.075.412 (empresa jornalística responde por fala de entrevistado quando havia indícios concretos de falsidade e faltou dever de cuidado) e RE 511.961 (diploma de jornalismo).",
+      "Sigilo da fonte (XIV) não conflita com a vedação ao anonimato: o jornalista assina a notícia e responde pelos danos."]},
+    { h:"Crença: laicidade, símbolos e transfusão", p:[
+      "Símbolos religiosos em prédios públicos <b>não</b> violam a laicidade (ARE 1.249.095, Tema 1.086, 2024). Sacrifício ritual de animais em cultos de matriz africana é constitucional (RE 494.601).",
+      "Testemunhas de Jeová podem recusar transfusão de sangue (RE 979.742 e RE 1.212.272, 2024), se forem <b>maiores</b>, com escolha <b>livre, informada e expressa</b>, feita <b>antes</b> do ato médico e válida só para si; têm direito a tratamento alternativo do SUS.",
+      "A escusa de consciência (VIII) é, para Alexandrino e Paulo, norma de eficácia <b>contida</b>: vale até a lei criar prestação alternativa."]}],
   pegadinhas:["Anonimato é vedado, mas a denúncia anônima pode iniciar diligências preliminares.","Escusa de consciência só gera privação de direitos se houver recusa também da prestação alternativa."]},
 { id:"privacidade", titulo:"Intimidade, casa e sigilos (X a XII)", curto:"Casa e sigilos",
   rapido:["Casa = asilo inviolável. Entrada <b>sem consentimento</b>: <b>flagrante delito, desastre, prestar socorro</b> (dia ou noite) ou <b>determinação judicial, só durante o dia</b>.",
@@ -157,7 +198,17 @@ secoes:[
       "STJ: o consentimento do morador para a entrada deve ser livre e <b>comprovado</b> pelo Estado (registro escrito, gravação), sob pena de ilicitude (HC 598.051)."]},
     { h:"\"Dia\" e flagrante permanente", p:[
       "Dia: critério físico-astronômico (aurora ao crepúsculo) ou cronológico (6h às 18h); a Lei de Abuso de Autoridade (art. 22, §1º, III) pune o cumprimento de mandado de busca <b>após as 21h ou antes das 5h</b>.",
-      "Crimes permanentes (ex.: guardar drogas) mantêm o flagrante — mas a entrada continua exigindo fundadas razões prévias; o que se acha depois não legitima a entrada."]}],
+      "Crimes permanentes (ex.: guardar drogas) mantêm o flagrante — mas a entrada continua exigindo fundadas razões prévias; o que se acha depois não legitima a entrada."]},
+    { h:"Sigilo bancário: quem requisita sem ordem judicial", p:[
+      "<b>Sem ordem judicial</b>: Receita Federal (art. 6º da LC 105/2001), CPI federal ou estadual/distrital (art. 4º, §1º, LC 105; a municipal, em regra, não), Fisco dos demais entes que regulamentem o art. 6º e o Corregedor Nacional de Justiça em processo instaurado, com decisão fundamentada e indícios concretos (Informativo 1.056/STF, conforme o curso).",
+      "<b>Com ordem judicial</b>: polícia, Ministério Público e TCU. Exceções do curso: MP pode requisitar dados de contas de órgãos públicos; operações de crédito com recursos públicos não têm sigilo perante o TCU."]},
+    { h:"Interceptação, escuta e gravação clandestina", p:[
+      "<b>Interceptação</b>: um terceiro capta a conversa sem o conhecimento de nenhum interlocutor; exige ordem judicial (Lei 9.296/1996). <b>Escuta</b>: o terceiro capta com a ciência de <b>um</b> interlocutor; para a maioria da doutrina também exige ordem judicial.",
+      "<b>Gravação clandestina</b>: um dos interlocutores grava a <b>própria</b> conversa; em regra é lícita sem ordem judicial, salvo conversa protegida por sigilo (advogado e cliente, padre e fiel).",
+      "STJ: é ilícita a interceptação feita sem ordem judicial, mesmo com consentimento posterior de um interlocutor (Informativo 510, conforme o curso)."]},
+    { h:"Honra, imagem e direito ao esquecimento", p:[
+      "Classificação de Novelino: <b>intimidade</b> (esfera íntima, segredos); <b>vida privada</b> (relações sociais sem interesse público); <b>honra</b> (objetiva e subjetiva; a pessoa jurídica tem honra objetiva); <b>imagem</b> (proteção autônoma, vale mesmo sem ofensa à reputação).",
+      "A indenização pode ser cumulativa (dano material e moral). O STF rejeitou um direito ao esquecimento genérico: abusos na liberdade de expressão são analisados caso a caso (RE 1.010.606, Tema 786)."]}],
   pegadinhas:["Mandado judicial: só <b>de dia</b>. Flagrante, desastre, socorro: <b>a qualquer hora</b>.","CPI não pode interceptar telefone, mas pode quebrar o sigilo dos <b>registros</b>.","Encontrar droga depois não convalida entrada sem fundadas razões."]},
 { id:"liberdades", titulo:"Profissão, informação, locomoção, reunião e associação (XIII a XXI)", curto:"Liberdades",
   rapido:["Reunião (XVI): pacífica, <b>sem armas</b>, em local aberto ao público, <b>independe de autorização</b> — exige apenas <b>prévio aviso</b> e não frustrar reunião anterior no mesmo local.",
@@ -168,7 +219,10 @@ secoes:[
     { h:"Profissão e informação", p:[
       "XIII é norma de eficácia <b>contida</b>: livre o exercício, atendidas as qualificações que a lei estabelecer (ex.: Exame da OAB, constitucional). Jornalista não precisa de diploma (RE 511.961).",
       "XIV: acesso à informação e <b>sigilo da fonte</b> quando necessário ao exercício profissional.",
-      "XV: locomoção livre <b>em tempo de paz</b>, nos termos da lei, inclusive entrar, permanecer e sair com seus bens."]}],
+      "XV: locomoção livre <b>em tempo de paz</b>, nos termos da lei, inclusive entrar, permanecer e sair com seus bens."]},
+    { h:"Reunião, associação e substituição processual", p:[
+      "Reunião: exige <b>prévio aviso</b>, não autorização; o aviso pode ser feito pelas redes sociais e a falta dele não torna a manifestação ilícita por si só (RE 806.339, conforme o curso; confira).",
+      "Associação tem caráter <b>permanente</b> e pode ter personalidade jurídica; a reunião é temporária. <b>Representação processual</b> (XXI) exige autorização expressa; <b>substituição processual</b> (mandado de segurança coletivo, LXX) dispensa autorização (Súmula 629/STF)."]}],
   pegadinhas:["Reunião exige <b>aviso</b>, não autorização.","Dissolver associação: trânsito em julgado; suspender: basta decisão judicial.","Cooperativas: criação independe de autorização <b>na forma da lei</b>."]},
 { id:"propriedade", titulo:"Propriedade, desapropriação e requisição (XXII a XXXI)", curto:"Propriedade",
   rapido:["Propriedade é garantida, mas deve atender à <b>função social</b> (XXII e XXIII).",
@@ -216,7 +270,55 @@ juris:[
 { id:"stf-adpf130", trib:"STF", tipo:"ADPF", num:"ADPF 130", sec:"igualdade", status:"vigente", data:"30/04/2009",
   titulo:"Lei de Imprensa não recepcionada",
   texto:"A Lei 5.250/1967 (Lei de Imprensa) é incompatível com a Constituição de 1988, que veda a censura prévia e protege a plena liberdade de informação jornalística.",
-  explica:"Abusos são tratados <b>a posteriori</b> (direito de resposta, indenização, responsabilização penal).", lei:["cf5iv"], fonte:STFJ }
+  explica:"Abusos são tratados <b>a posteriori</b> (direito de resposta, indenização, responsabilização penal).", lei:["cf5iv"], fonte:STFJ },
+{ id:"stf-s683", trib:"STF", tipo:"Súmula", num:"Súmula 683", sec:"igualdade", status:"vigente", data:"2003",
+  titulo:"Limite de idade em concurso público",
+  texto:"O limite de idade para a inscrição em concurso público só se legitima em face do art. 7º, XXX, da Constituição, quando possa ser justificado pela natureza das atribuições do cargo a ser preenchido.",
+  explica:"Confira o ano de aprovação na fonte.", lei:[], fonte:STFSV },
+{ id:"stf-adpf54", trib:"STF", tipo:"ADPF", num:"ADPF 54", sec:"igualdade", status:"vigente", data:"12/04/2012",
+  titulo:"Anencefalia: interrupção da gravidez não é aborto",
+  texto:"O STF decidiu ser inconstitucional a interpretação segundo a qual a interrupção da gravidez de feto anencéfalo é conduta tipificada como aborto.",
+  explica:"Soma-se às hipóteses legais de aborto (risco à vida da gestante e estupro). Resumo; confira a tese na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-re592581", trib:"STF", tipo:"Repercussão geral", num:"RE 592.581 (Tema 220)", sec:"igualdade", status:"vigente", data:"13/08/2015",
+  titulo:"Obras emergenciais em presídios",
+  texto:"É lícito ao Judiciário impor à Administração a obrigação de fazer, consistente em obras emergenciais em estabelecimentos prisionais, para dar efetividade à dignidade da pessoa humana e à integridade física e moral dos presos (art. 5º, XLIX).",
+  explica:"Não cabe opor a reserva do possível nem a separação dos Poderes. Resumo; confira a tese na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-adi4815", trib:"STF", tipo:"ADI", num:"ADI 4.815", sec:"igualdade", status:"vigente", data:"10/06/2015",
+  titulo:"Biografias não precisam de autorização prévia",
+  texto:"O STF afastou a exigência de autorização prévia da pessoa biografada (ou de seus familiares) para obras biográficas literárias ou audiovisuais.",
+  explica:"Aplica a liberdade de expressão sem censura prévia (art. 5º, IX). Resumo; confira na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-re1075412", trib:"STF", tipo:"Repercussão geral", num:"RE 1.075.412", sec:"igualdade", status:"atencao", data:"29/11/2023",
+  titulo:"Responsabilidade de empresa jornalística por fala de entrevistado",
+  texto:"Empresas jornalísticas podem ser responsabilizadas civilmente pela fala de entrevistado se, na época da publicação, havia indícios concretos da falsidade da imputação e o veículo não observou o dever de cuidado na verificação.",
+  explica:"Conforme o material de estudo; confira o tema e a tese na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-are1249095", trib:"STF", tipo:"Repercussão geral", num:"ARE 1.249.095 (Tema 1.086)", sec:"igualdade", status:"atencao", data:"26/11/2024",
+  titulo:"Símbolos religiosos em prédios públicos",
+  texto:"A presença de símbolos religiosos, como imagens e crucifixos, em prédios e órgãos públicos não fere a laicidade nem a liberdade de crença.",
+  explica:"Conforme o material de estudo; confira a tese fixada na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-re979742", trib:"STF", tipo:"Repercussão geral", num:"RE 979.742 e RE 1.212.272", sec:"igualdade", status:"atencao", data:"25/09/2024",
+  titulo:"Testemunhas de Jeová e transfusão de sangue",
+  texto:"Testemunhas de Jeová, maiores e capazes, podem recusar transfusão de sangue, com escolha livre, informada e expressa, e têm direito a tratamento alternativo disponível no SUS.",
+  explica:"Conforme o material de estudo; confira as condições da tese na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-re494601", trib:"STF", tipo:"Recurso Extraordinário", num:"RE 494.601", sec:"igualdade", status:"atencao", data:"28/03/2019",
+  titulo:"Sacrifício ritual de animais em religiões de matriz africana",
+  texto:"É constitucional lei de proteção animal que, para resguardar a liberdade religiosa, permite o sacrifício ritual de animais em cultos de matriz africana.",
+  explica:"Conforme o material de estudo; confira a tese na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-re1469887", trib:"STF", tipo:"Repercussão geral", num:"RE 1.469.887", sec:"igualdade", status:"atencao", data:"22/09/2025",
+  titulo:"Altura mínima na Polícia Militar",
+  texto:"É inconstitucional, por violar a razoabilidade, lei estadual que exija altura mínima superior à prevista para ingresso nas carreiras do Exército.",
+  explica:"Segundo o material de estudo, os parâmetros do Exército seriam 1,60 m para homens e 1,55 m para mulheres. Confira o acórdão e a tese antes de decorar.", lei:[], fonte:STFJ },
+{ id:"stf-adi4275", trib:"STF", tipo:"ADI", num:"ADI 4.275 (Informativo 892)", sec:"igualdade", status:"atencao", data:"01/03/2018",
+  titulo:"Alteração de prenome e gênero por pessoa trans",
+  texto:"Pessoa transgênero pode alterar prenome e gênero no registro civil sem cirurgia de transgenitalização e sem autorização judicial.",
+  explica:"Conforme o material de estudo; confira a tese na fonte.", lei:[], fonte:STFJ },
+{ id:"stf-re1010606", trib:"STF", tipo:"Repercussão geral", num:"RE 1.010.606 (Tema 786)", sec:"privacidade", status:"vigente", data:"11/02/2021",
+  titulo:"Direito ao esquecimento é incompatível com a CF",
+  texto:"É incompatível com a Constituição a ideia de um direito ao esquecimento, entendido como o poder de impedir, pela passagem do tempo, a divulgação de fatos verídicos e licitamente obtidos. Excessos são analisados caso a caso.",
+  explica:"Resumo da tese; confira o texto completo na fonte.", lei:["cf5x"], fonte:STFJ },
+{ id:"stf-s629", trib:"STF", tipo:"Súmula", num:"Súmula 629", sec:"liberdades", status:"vigente", data:"2003",
+  titulo:"Mandado de segurança coletivo dispensa autorização",
+  texto:"A impetração de mandado de segurança coletivo por entidade de classe em favor dos associados independe da autorização destes.",
+  explica:"É substituição processual (art. 5º, LXX), diferente da representação do inciso XXI, que exige autorização expressa. Confira o ano na fonte.", lei:["cf5xvii"], fonte:STFSV }
 ],
 cards:[
 { id:"a1", tipo:"distincao", sec:"igualdade", f:"Princípio da legalidade × reserva legal.", v:"<b>Legalidade</b>: ninguém é obrigado senão em virtude de lei (genérico). <b>Reserva legal</b>: certas matérias só podem ser reguladas por lei formal (ex.: crimes e penas).", lei:["cf5ii"] },
@@ -232,7 +334,18 @@ cards:[
 { id:"a11", tipo:"ce", sec:"liberdades", f:"Certo ou errado: a criação de associações depende de autorização quando houver interesse público.", v:"<b>Errado.</b> Independe de autorização, vedada a interferência estatal (XVIII).", lei:["cf5xvii"] },
 { id:"a12", tipo:"caso", sec:"liberdades", f:"Lei exige aprovação no Exame da OAB para advogar. Viola a liberdade profissional?", v:"<b>Não.</b> O inciso XIII é de eficácia <b>contida</b>: a lei pode exigir qualificações (STF, RE 603.583).", lei:["cf5xiii"] },
 { id:"a13", tipo:"distincao", sec:"propriedade", f:"Requisição × desapropriação: indenização.", v:"<b>Requisição</b>: iminente perigo público; indenização <b>ulterior, se houver dano</b>. <b>Desapropriação</b>: <b>justa, prévia e em dinheiro</b> (com exceções).", lei:["cf5xxiv"] },
-{ id:"a14", tipo:"caso", sec:"propriedade", f:"Enchente iminente: a Defesa Civil ocupa galpão particular para abrigar desabrigados. Precisa indenizar antes?", v:"<b>Não.</b> É <b>requisição</b>: indeniza depois, se houver dano (XXV).", lei:["cf5xxiv"] }
+{ id:"a14", tipo:"caso", sec:"propriedade", f:"Enchente iminente: a Defesa Civil ocupa galpão particular para abrigar desabrigados. Precisa indenizar antes?", v:"<b>Não.</b> É <b>requisição</b>: indeniza depois, se houver dano (XXV).", lei:["cf5xxiv"] },
+{ id:"a15", tipo:"ce", sec:"igualdade", f:"Certo ou errado: a única exceção ao princípio da legalidade é a medida provisória.", v:"<b>Errado.</b> Doutrinariamente também são exceções o estado de defesa e o estado de sítio.", lei:["cf5ii"] },
+{ id:"a16", tipo:"caso", sec:"igualdade", f:"Edital impõe limite de idade para concurso de nível médio sem relação com as atribuições do cargo. É válido?", v:"<b>Não.</b> Súmula 683/STF: o limite só vale se justificado pela natureza das atribuições.", lei:[], j:["stf-s683"] },
+{ id:"a17", tipo:"distincao", sec:"igualdade", f:"Dupla acepção do direito à vida.", v:"<b>Negativa</b>: permanecer vivo, sem intervenção. <b>Positiva</b>: vida digna, com o mínimo existencial.", lei:[] },
+{ id:"a18", tipo:"caso", sec:"igualdade", f:"Jornal publica ofensa; o ofendido quer resposta e indenização. Pode os dois?", v:"<b>Sim.</b> A resposta, proporcional ao agravo e no mesmo meio, <b>não exclui</b> a indenização (art. 5º, V). Lei 13.188/2015: 60 dias (confira).", lei:["cf5iv"] },
+{ id:"a19", tipo:"caso", sec:"igualdade", f:"Paciente maior, testemunha de Jeová, recusa transfusão antes da cirurgia. A recusa vale? E se o paciente for criança?", v:"Para o maior, em escolha livre, informada e antecipada, <b>sim</b>. A escolha vale só para o próprio paciente: não se estende aos filhos menores.", lei:[], j:["stf-re979742"] },
+{ id:"a20", tipo:"ce", sec:"igualdade", f:"Certo ou errado: é inconstitucional lei que permite sacrifício de animais em cultos de religiões de matriz africana.", v:"<b>Errado.</b> O STF a considerou constitucional (RE 494.601).", lei:[], j:["stf-re494601"] },
+{ id:"a21", tipo:"distincao", sec:"privacidade", f:"Interceptação × escuta × gravação clandestina.", v:"<b>Interceptação</b>: terceiro, sem ciência de ninguém. <b>Escuta</b>: terceiro, com ciência de um. <b>Gravação</b>: um interlocutor grava a própria conversa (em regra lícita).", lei:["cf5xii"] },
+{ id:"a22", tipo:"distincao", sec:"privacidade", f:"Quem acessa dados bancários sem ordem judicial?", v:"<b>Sim</b>: Receita, CPI (federal e estadual), Corregedor do CNJ (casos específicos). <b>Não</b>: polícia, MP e TCU (precisam de ordem judicial).", lei:["cf5xii"] },
+{ id:"a23", tipo:"ce", sec:"privacidade", f:"Certo ou errado: o STF reconhece um amplo direito ao esquecimento que impede a divulgação de fatos verídicos e lícitos.", v:"<b>Errado.</b> RE 1.010.606 (Tema 786): é incompatível com a Constituição.", lei:["cf5x"], j:["stf-re1010606"] },
+{ id:"a24", tipo:"distincao", sec:"liberdades", f:"Representação processual × substituição processual.", v:"<b>Representação</b> (XXI): precisa de autorização expressa. <b>Substituição</b> (MS coletivo, LXX): dispensa autorização (Súmula 629).", lei:["cf5xvii"], j:["stf-s629"] },
+{ id:"a25", tipo:"caso", sec:"liberdades", f:"Grupo divulga ato público apenas em redes sociais, sem notificar a autoridade. A manifestação é ilícita?", v:"<b>Em regra, não.</b> O aviso pode ser feito pelas redes e a falta dele não torna o ato ilícito por si só (RE 806.339, confira).", lei:["cf5xvi"] }
 ],
 questoes:[]
 };
@@ -242,6 +355,19 @@ T.art5_parte2 = {
 meta:{ tema:"Garantias processuais, direito penal constitucional e remédios — art. 5º, XXXII a LXXIX", atualizado:AT,
   foco:"Inafastabilidade, direito adquirido, juiz natural e júri (Tema 1.068); legalidade e irretroatividade penal; mandados de criminalização (racismo, hediondos, grupos armados); penas vedadas e individualização; extradição; devido processo, provas ilícitas e presunção de inocência (ADCs 43/44/54); prisões e direitos do preso (SV 11 e 14); prisão civil (SV 25); habeas corpus, mandado de segurança, injunção, habeas data e ação popular; duração razoável e proteção de dados." },
 secoes:[
+{ id:"info", titulo:"Consumidor, informação, petição e certidão (XXXII a XXXIV)", curto:"XXXII a XXXIV",
+  rapido:["<b>Consumidor</b> (XXXII): o Estado promove sua defesa <b>na forma da lei</b> (Código de Defesa do Consumidor), por ser a parte mais fraca da relação.",
+    "<b>Direito de receber informações</b> dos órgãos públicos (XXXIII): de interesse particular, coletivo ou geral, no <b>prazo da lei</b>, sob pena de <b>responsabilidade</b>, ressalvado o sigilo imprescindível à segurança da sociedade e do Estado (Lei 12.527/2011, LAI).",
+    "<b>Petição</b> (XXXIV, a): defesa de direitos ou contra ilegalidade ou abuso de poder. <b>Certidão</b> (XXXIV, b): para defesa de direitos e esclarecimento de situações de <b>interesse pessoal</b>.",
+    "Petição e certidão são assegurados <b>independentemente do pagamento de taxas</b>."],
+  teoria:[
+    { h:"Informação e liberdade de imprensa", p:[
+      "A liberdade de informação abrange <b>informar, se informar e ser informado</b> e não se confunde com a liberdade de opinião (art. 5º, IV). Exercida profissionalmente pela imprensa, tem proteção própria nos arts. 220 a 224.",
+      "O STF descreve a liberdade de imprensa como o direito de <b>informar, buscar a informação, opinar e criticar</b> (AI 690.841, conforme o material de estudo; confira)."]},
+    { h:"Petição e certidão: diferenças e remédios", p:[
+      "O direito de petição tem caráter democrático e informal: serve para <b>defender direitos</b> ou <b>denunciar ilegalidade e abuso de poder</b>; é meio de participação e de fiscalização.",
+      "A certidão é <b>individual</b>: só para interesse pessoal do requerente (quem quer certidão sobre terceiro precisa de mandato). Não se exige demonstrar a finalidade. Se o pedido é negado com ilegalidade ou abuso, o remédio é o <b>mandado de segurança</b>, <b>não</b> o habeas data."]}],
+  pegadinhas:["Certidão: remédio contra a negativa é o <b>mandado de segurança</b>, não o habeas data.","Petição e certidão: <b>sem taxas</b>.","A LAI regulamenta o acesso à informação, mas o sigilo imprescindível à segurança da sociedade e do Estado fica ressalvado."]},
 { id:"penal", titulo:"Direito penal constitucional (XXXVII a L)", curto:"Penal",
   rapido:["<b>Imprescritíveis</b>: racismo e ação de grupos armados contra a ordem constitucional — <b>RAÇÃO</b> (RAcismo + AÇÃO de grupos armados). Ambos também <b>inafiançáveis</b>.",
     "<b>Inafiançáveis e insuscetíveis de graça ou anistia</b>: <b>TTTH</b> — tortura, tráfico, terrorismo e hediondos (respondem mandantes, executores e quem podia evitar e se omitiu).",
@@ -292,6 +418,9 @@ secoes:[
   pegadinhas:["Partido no MS coletivo precisa ter representação no <b>Congresso</b> (basta um parlamentar em uma Casa).","HD protege dados <b>do próprio impetrante</b>.","Estrangeiro não propõe ação popular (não é cidadão)."]}
 ],
 lei:[
+{ art:"CF, art. 5º, XXXII a XXXIV", nome:"Consumidor, informação, petição e certidão", sec:"info", itens:[
+  { id:"cf5xxxii", rot:"Incisos XXXII e XXXIII", t:"XXXII - o Estado <b class='g1'>promoverá, na forma da lei</b>, a defesa do consumidor;<br>XXXIII - todos têm direito a receber dos órgãos públicos informações de seu interesse particular, ou de interesse coletivo ou geral, que serão prestadas <b class='g2'>no prazo da lei</b>, sob pena de responsabilidade, <b class='g3'>ressalvadas aquelas cujo sigilo seja imprescindível à segurança da sociedade e do Estado</b>;", c:["inf1","inf2"] },
+  { id:"cf5xxxiv", rot:"Inciso XXXIV", t:"são a todos assegurados, <b class='g1'>independentemente do pagamento de taxas</b>: a) o <b class='g1'>direito de petição</b> aos Poderes Públicos em defesa de direitos ou contra ilegalidade ou abuso de poder; b) a obtenção de <b class='g1'>certidões</b> em repartições públicas, para defesa de direitos e esclarecimento de situações de interesse pessoal;", c:["inf3","inf4","inf5"] }]},
 { art:"CF, art. 5º, XXXVIII a XLVII", nome:"Júri e direito penal constitucional", sec:"penal", itens:[
   { id:"cf5xxxviii", rot:"Inciso XXXVIII", t:"é reconhecida a instituição do júri, com a organização que lhe der a lei, assegurados:<br>a) a <b class='g1'>plenitude de defesa</b>;<br>b) o <b class='g1'>sigilo das votações</b>;<br>c) a <b class='g1'>soberania dos veredictos</b>;<br>d) a competência para o julgamento dos <b class='g1'>crimes dolosos contra a vida</b>;", c:["b1"], j:["stf-t1068"] },
   { id:"cf5xlii", rot:"Incisos XXXIX, XL, XLII a XLIV", t:"XXXIX - não há crime sem <b class='g1'>lei anterior</b> que o defina, nem pena sem prévia cominação legal;<br>XL - a lei penal não retroagirá, <b class='g3'>salvo para beneficiar o réu</b>;<br>(...)<br>XLII - a prática do <b class='g1'>racismo</b> constitui crime <b class='g1'>inafiançável e imprescritível</b>, sujeito à pena de reclusão, nos termos da lei;<br>XLIII - a lei considerará crimes <b class='g1'>inafiançáveis e insuscetíveis de graça ou anistia</b> a prática da <b class='g1'>tortura, o tráfico</b> ilícito de entorpecentes e drogas afins, o <b class='g1'>terrorismo e os definidos como crimes hediondos</b>, por eles respondendo os mandantes, os executores e os que, podendo evitá-los, se omitirem;<br>XLIV - constitui crime <b class='g1'>inafiançável e imprescritível</b> a ação de <b class='g1'>grupos armados, civis ou militares</b>, contra a ordem constitucional e o Estado Democrático;", c:["b2","b3"] },
@@ -328,6 +457,11 @@ juris:[
   explica:"Só elementos <b>já documentados</b>. Negativa de acesso: cabe <b>reclamação</b> ao STF. Diligências em curso podem ser mantidas sob sigilo.", lei:["cf5lxi"], fonte:STFSV }
 ],
 cards:[
+{ id:"inf1", tipo:"lacuna", sec:"info", f:"Art. 5º, XXXII: o Estado promoverá, ______, a defesa do consumidor.", v:"<b>na forma da lei</b>.", lei:["cf5xxxii"] },
+{ id:"inf2", tipo:"caso", sec:"info", f:"Cidadão pede a um órgão público informação de interesse coletivo, mas o sigilo é imprescindível à segurança do Estado. Pode ser negada?", v:"<b>Sim.</b> O inciso XXXIII ressalva o sigilo imprescindível à segurança da sociedade e do Estado.", lei:["cf5xxxii"] },
+{ id:"inf3", tipo:"distincao", sec:"info", f:"Direito de petição × direito de certidão.", v:"<b>Petição</b>: defender direitos ou denunciar ilegalidade e abuso (a qualquer Poder). <b>Certidão</b>: obter documento para defesa de direitos e esclarecimento de situação de <b>interesse pessoal</b>.", lei:["cf5xxxiv"] },
+{ id:"inf4", tipo:"caso", sec:"info", f:"Repartição pública se recusa a emitir certidão devida. Qual o remédio: habeas data ou mandado de segurança?", v:"<b>Mandado de segurança</b>: violação a direito líquido e certo por ilegalidade ou abuso. Não é habeas data.", lei:["cf5xxxiv"] },
+{ id:"inf5", tipo:"ce", sec:"info", f:"Certo ou errado: petição e certidão exigem o pagamento de taxas.", v:"<b>Errado.</b> São assegurados <b>independentemente do pagamento de taxas</b>.", lei:["cf5xxxiv"] },
 { id:"b1", tipo:"lacuna", sec:"penal", f:"Princípios do júri: ______ de defesa, sigilo das ______, ______ dos veredictos e competência para os crimes ______ contra a vida.", v:"<b>plenitude</b>; <b>votações</b>; <b>soberania</b>; <b>dolosos</b>.", lei:["cf5xxxviii"], j:["stf-t1068"] },
 { id:"b2", tipo:"distincao", sec:"penal", f:"Imprescritíveis × insuscetíveis de graça ou anistia.", v:"<b>Imprescritíveis</b> (e inafiançáveis): racismo e ação de grupos armados. <b>Sem graça/anistia</b> (e inafiançáveis): tortura, tráfico, terrorismo e hediondos.", lei:["cf5xlii"] },
 { id:"b3", tipo:"ce", sec:"penal", f:"Certo ou errado: o crime de tortura é imprescritível.", v:"<b>Errado.</b> Tortura é inafiançável e insuscetível de graça ou anistia, mas <b>prescreve</b>.", lei:["cf5xlii"] },
