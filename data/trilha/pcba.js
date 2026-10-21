@@ -145,6 +145,7 @@ E.pcba = {
       ['pp-sentenca', 'Sentença, recursos e ações autônomas de impugnação', [], 1, 2]
     ]},
     constitucional:{ nome:'Noções de Direito Constitucional', sigla:'DC', cor:'#2a78d6', topicos:[
+      ['dc-normas', 'Aplicabilidade e eficácia das normas constitucionais', ['normas_constitucionais'], 2, 1],
       ['dc-teoria', 'Teoria dos direitos fundamentais', ['teoria_direitos'], 2, 1],
       ['dc-art5a', 'Direitos e deveres individuais e coletivos (art. 5º, I a XXXI)', ['art5_parte1'], 3, 2],
       ['dc-art5b', 'Garantias e remédios constitucionais (art. 5º, XXXII a LXXIX)', ['art5_parte2'], 3, 2],

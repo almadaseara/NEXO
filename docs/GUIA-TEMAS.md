@@ -2,7 +2,7 @@
 
 Este guia explica como criar, revisar e publicar os temas aprofundados do NEXO, para qualquer pessoa ou assistente de IA (Claude, ChatGPT, Codex) que continue o projeto. Leia inteiro antes de mexer.
 
-Situação em 14/10/2026: **68 módulos completos** — Direito Penal (28), Medicina Legal (10), Direito Constitucional (18) e Direito Administrativo (12).
+Situação em 14/10/2026: **69 módulos completos** — Direito Penal (28), Medicina Legal (10), Direito Constitucional (19) e Direito Administrativo (12).
 
 ---
 
@@ -22,7 +22,7 @@ Situação em 14/10/2026: **68 módulos completos** — Direito Penal (28), Medi
 |---|---|
 | Penal | `crimes-contra-o-patrimonio.js`, `penal-geral.js`, `penal-pessoa-a.js` a `-d.js`, `penal-sexual.js`, `penal-fe-publica.js`, `penal-adm-func.js`, `penal-adm-particular.js`, `penal-adm-justica.js`, `penal-incolumidade.js`, `penal-punibilidade.js` |
 | Medicina Legal | `ml-a.js` (introdução, perícias, documentos, identificação), `ml-b.js` (traumatologia, tanatologia, lesões), `ml-c.js` (sexologia, asfixiologia, psicopatologia) |
-| Constitucional | `const-a.js` a `const-e.js` |
+| Constitucional | `const-a.js` a `const-f.js` |
 | Administrativo | `adm-a.js` a `adm-c.js` |
 
 ### Interface (ui/)

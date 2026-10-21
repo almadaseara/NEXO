@@ -158,7 +158,7 @@ var DISCIPLINAS = [
 /* nó = id do módulo (texto) ou [rótulo, [filhos]] */
 var ARVORE = {
   'Direito Constitucional': [
-    ['Teoria e princípios', ['principios_fundamentais', 'teoria_direitos']],
+    ['Teoria e princípios', ['principios_fundamentais', 'normas_constitucionais', 'teoria_direitos']],
     ['Direitos e garantias fundamentais', ['art5_parte1', 'art5_parte2', 'direitos_sociais', 'nacionalidade', 'direitos_politicos', 'partidos']],
     ['Organização do Estado', ['organizacao_estado', 'adm_publica']],
     ['Organização dos Poderes', ['legislativo', 'processo_legislativo', 'executivo', 'judiciario', 'funcoes_essenciais']],
@@ -198,7 +198,7 @@ var ARVORE = {
 };
 /* rótulos curtos dentro do grupo (o título completo continua no módulo) */
 var ROTULOS = {
-  principios_fundamentais:'Princípios fundamentais e teoria da Constituição', teoria_direitos:'Teoria geral dos direitos fundamentais',
+  principios_fundamentais:'Princípios fundamentais e teoria da Constituição', normas_constitucionais:'Normas constitucionais: eficácia', teoria_direitos:'Teoria geral dos direitos fundamentais',
   art5_parte1:'Art. 5º, incisos I a XXXI', art5_parte2:'Art. 5º, incisos XXXII a LXXIX', direitos_politicos:'Cidadania e direitos políticos',
   organizacao_estado:'Organização político-administrativa', sistema_tributario_orcamento:'Sistema tributário e orçamento', ordem_economica_social:'Ordem econômica e social',
   adm_regime_principios:'Regime jurídico-administrativo e princípios', adm_estatais_fundacoes:'Fundações, empresas públicas e sociedades de economia mista',
