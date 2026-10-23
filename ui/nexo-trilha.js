@@ -332,7 +332,7 @@ function telaConfig(s){
   var bloco = function(nome, lista, nota){
     return '<fieldset class="nt-disc"><legend>' + nome + ' <small>' + nota + '</small></legend>' + lista.map(function(id){
       var d = ED.disciplinas[id], comMat = topicos(id).some(function(t){ return t.mods.length; });
-      return '<label class="nt-chk" style="--c:' + d.cor + '"><input type="checkbox" name="nt-disc" value="' + id + '"' + (sel.indexOf(id) >= 0 ? ' checked' : '') + '><span class="nt-sig">' + d.sigla + '</span><span>' + escH(d.nome) + (comMat ? '<small>livro digital no NEXO</small>' : '<small>sem material no NEXO ainda</small>') + '</span></label>';
+      return '<label class="nt-chk" style="--c:' + d.cor + '"><input type="checkbox" name="nt-disc" value="' + id + '"' + (sel.indexOf(id) >= 0 ? ' checked' : '') + '><span class="nt-sig nx-nt-icon">' + (window.nexoDisciplineSvg&&window.nexoDisciplineIcon?window.nexoDisciplineSvg(window.nexoDisciplineIcon(d.nome)):escH(d.sigla)) + '</span><span>' + escH(d.nome) + (comMat ? '<small>livro digital no NEXO</small>' : '<small>sem material no NEXO ainda</small>') + '</span></label>';
     }).join('') + '</fieldset>';
   };
   var concursos = Object.keys(EDS).map(function(k){ var x = EDS[k]; return '<option value="' + k + '"' + (ED.id === k ? ' selected' : '') + '>' + escH(x.nome + ' · ' + x.banca) + '</option>'; }).join('');
@@ -572,7 +572,7 @@ function telaEdital(s){
   return h + lista.map(function(id){
     var d = ED.disciplinas[id], x = dados[id], porTop = x.porTop;
     var itens = x.ts.filter(function(t){ return !soFalta || !feitoTop(t, porTop); });
-    return '<details class="nt-ed" style="--c:' + d.cor + '"' + (soFalta && itens.length ? ' open' : '') + '><summary><span class="nt-sig">' + d.sigla + '</span><b>' + escH(d.nome) + '</b><span class="nt-edn">' + x.f + '/' + x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0) + ' · ' + pc(x.f, x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0)) + '%</span><span class="nt-bar sm"><i style="width:' + pc(x.f, x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0)) + '%"></i></span></summary><ol>'
+    return '<details class="nt-ed" style="--c:' + d.cor + '"' + (soFalta && itens.length ? ' open' : '') + '><summary><span class="nt-sig nx-nt-icon">' + (window.nexoDisciplineSvg&&window.nexoDisciplineIcon?window.nexoDisciplineSvg(window.nexoDisciplineIcon(d.nome)):escH(d.sigla)) + '</span><b>' + escH(d.nome) + '</b><span class="nt-edn">' + x.f + '/' + x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0) + ' · ' + pc(x.f, x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0)) + '%</span><span class="nt-bar sm"><i style="width:' + pc(x.f, x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0)) + '%"></i></span></summary><ol>'
       + (itens.length ? itens.map(function(t){
         var uu = porTop[t.id] || [], todos = feitoTop(t, porTop), algum = uu.some(function(u){ return (prog[ch(u.id)] || {}).e; });
         var ja = plan.ja && plan.ja[t.id];
