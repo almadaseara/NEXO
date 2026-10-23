@@ -163,7 +163,7 @@ window.nexoGerenciarConcursos=function(){showPane(false);};
 window.nexoConcursosSelecionados=function(){return get();};
 /* emblemas oficiais: imagem local em assets/brasoes/<id>.png (quando existir) e depois o endereço oficial; sem imagem, o escudo */
 var BRASAO_LOCAL=[];
-var BRASAO_REMOTO={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image'};
+var BRASAO_REMOTO={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image',pcpe:'https://upload.wikimedia.org/wikipedia/commons/7/79/Polcivpernambuco.png',prf:'https://upload.wikimedia.org/wikipedia/commons/f/f1/Prf_brasao_novo.jpg',pmpe:'https://upload.wikimedia.org/wikipedia/commons/a/ac/Bras%C3%A3o_PMPE.PNG'};
 window.nexoBrasaoErro=function(i){var a=i.getAttribute('data-alt');if(a){i.setAttribute('data-alt','');i.src=a}else i.remove()};
 window.nexoBrasaoImg=function(id){var u=[];u.push('assets/brasoes/'+id+'.png');if(BRASAO_REMOTO[id])u.push(BRASAO_REMOTO[id]);return '<img src="'+esc(u[0])+'" data-alt="'+esc(u[1]||'')+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="nexoBrasaoErro(this)">';};
 restaurar();document.addEventListener('nexo:conta',restaurar);
