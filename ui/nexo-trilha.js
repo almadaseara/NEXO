@@ -38,7 +38,8 @@ function fmtMin(m){ m = Math.round(m); if(m < 60) return m + ' min'; var h = Mat
 function setCur(v){ try{ current = v; }catch(e){} }
 function curAtual(){ try{ return current; }catch(e){ return null; } }
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
-function usar(s){ var id = s && s.plan && s.plan.edital; ED = EDS[id] || EDS.pcba; return ED; }
+function grupoNome(g){ return (ED.grupos && ED.grupos[g]) || (g === 'gerais' ? 'Conhecimentos gerais' : 'Conhecimentos específicos'); }
+function usar(s){ var id = (s && s.plan && s.plan.edital) || (rascunho && rascunho.edital); ED = EDS[id] || EDS.pcba; return ED; }
 
 /* ---------- programa: tópicos e unidades (capítulos) ---------- */
 function topicos(discId){
@@ -172,7 +173,8 @@ function gerarSemana(st, inicio, op){
   var orc = Math.max(0, total * (Object.keys(prog).length ? .8 : .88) - usado);
   var dc = discsDoCargo(plan.cargo);
   var g = dc.gerais.filter(function(x){ return plan.discs.indexOf(x) >= 0; }), e = dc.especificos.filter(function(x){ return plan.discs.indexOf(x) >= 0; });
-  var pg = e.length && g.length ? .4 : 1, pe = e.length && g.length ? .6 : 1, peso = {};
+  var pv = ED.provas || { gerais:40, especificos:60 }, fg = pv.gerais / ((pv.gerais + pv.especificos) || 1);
+  var pg = e.length && g.length ? fg : 1, pe = e.length && g.length ? 1 - fg : 1, peso = {};
   var soma = function(l){ return l.reduce(function(s, x){ return s + (x === 'atualidades' ? .5 : 1); }, 0); };
   g.forEach(function(x){ peso[x] = pg * (x === 'atualidades' ? .5 : 1) / soma(g); });
   e.forEach(function(x){ peso[x] = pe / soma(e); });
@@ -300,7 +302,7 @@ function replanejarSeNecessario(s){
   if(!k){ /* passou do fim do plano: começa uma semana nova hoje */ ini = h; }
   gerarPlano(s, ini); E().salvarPlano(s); return true;
 }
-var aba = 'semana', aberta = null, editando = false, vendoSemana = null;
+var aba = 'semana', aberta = null, editando = false, vendoSemana = null, rascunho = null;
 
 /* ---------- telas ---------- */
 var ICON = {
@@ -326,7 +328,7 @@ function subTarefa(t){
 }
 
 function telaConfig(s){
-  var p = s.plan || { edital:'pcba', cargo:Object.keys(ED.cargos)[0], minutos:[0, 120, 120, 120, 120, 120, 180], discs:null };
+  var p = s.plan || { edital:ED.id, cargo:(rascunho && ED.cargos[rascunho.cargo] ? rascunho.cargo : Object.keys(ED.cargos)[0]), minutos:[0, 120, 120, 120, 120, 120, 180], discs:null };
   var dc = discsDoCargo(p.cargo), sel = p.discs || dc.gerais.concat(dc.especificos);
   var horas = [0, 30, 45, 60, 90, 120, 150, 180, 240, 300, 360, 480];
   var bloco = function(nome, lista, nota){
@@ -344,9 +346,9 @@ function telaConfig(s){
     + [1, 2, 3, 4, 5, 6, 0].map(function(w){ return '<label class="nt-dia"><span>' + DIAS[w] + '</span><select name="nt-min-' + w + '">' + horas.map(function(m){ return '<option value="' + m + '"' + (+p.minutos[w] === m ? ' selected' : '') + '>' + (m ? fmtMin(m) : 'Folga') + '</option>'; }).join('') + '</select></label>'; }).join('')
     + '</div><p class="nt-total" id="nt-total"></p>'
     + '<label class="nt-revfinal"><input type="checkbox" name="nt-revisar"' + (p.revisarAteProva !== false ? ' checked' : '') + '> Depois de concluir o conteúdo, continuar com revisões e questões até a prova</label></section>'
-    + '<section class="nx-panel"><h2>3. Disciplinas</h2><p class="nx-sub">' + (ED.provas ? 'Na prova são ' + ED.provas.gerais + ' questões de conhecimentos gerais e ' + ED.provas.especificos + ' de específicos; a trilha divide o tempo nessa proporção.' : '') + '</p><div id="nt-discs">'
-    + bloco('Conhecimentos gerais', dc.gerais, ED.provas ? ED.provas.gerais + ' questões' : '') + bloco('Conhecimentos específicos', dc.especificos, ED.provas ? ED.provas.especificos + ' questões' : '') + '</div></section>'
-    + '<div class="nt-acoes">' + (s.plan ? '<button type="button" class="nx-btn ghost" data-nt="cancelar">Cancelar</button>' : '') + '<button type="submit" class="nx-btn primary">' + (s.plan ? 'Salvar e recalcular o plano' : 'Montar meu plano de estudos') + '</button></div>'
+    + '<section class="nx-panel"><h2>3. Disciplinas</h2><p class="nx-sub">' + (ED.provas ? (ED.grupos ? 'No edital são ' + ED.provas.gerais + ' questões em “' + grupoNome('gerais') + '” e ' + ED.provas.especificos + ' em “' + grupoNome('especificos') + '”' : 'Na prova são ' + ED.provas.gerais + ' questões de conhecimentos gerais e ' + ED.provas.especificos + ' de específicos') + '; a trilha divide o tempo nessa proporção.' : '') + '</p><div id="nt-discs">'
+    + bloco(grupoNome('gerais'), dc.gerais, ED.provas ? ED.provas.gerais + ' questões' : '') + bloco(grupoNome('especificos'), dc.especificos, ED.provas ? ED.provas.especificos + ' questões' : '') + '</div></section>'
+    + '<div class="nt-acoes">' + ((s.plan || rascunho) ? '<button type="button" class="nx-btn ghost" data-nt="cancelar">Cancelar</button>' : '') + '<button type="submit" class="nx-btn primary">' + (s.plan ? 'Salvar e recalcular o plano' : 'Montar meu plano de estudos') + '</button></div>'
     + '</form>';
 }
 function totalForm(){
@@ -610,8 +612,8 @@ function telaEdital(s){
   var pc = function(a, b){ return b ? Math.round(a / b * 100) : 0; };
   var cargoNome = (ED.cargos[plan.cargo] || {}).nome || '';
   var h = '<section class="nt-edres" aria-label="Resumo do edital"><div class="nt-edres-main"><b>' + pc(ok, tot) + '%</b><span>do edital concluído<br><small>' + ok + ' de ' + tot + ' divisões · ' + escH(cargoNome) + '</small></span></div>'
-    + '<div class="nt-edres-g"><span>Conhecimentos gerais <b>' + pc(grupo.gerais[0], grupo.gerais[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.gerais[0], grupo.gerais[1]) + '%"></i></span>'
-    + '<span>Conhecimentos específicos <b>' + pc(grupo.especificos[0], grupo.especificos[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.especificos[0], grupo.especificos[1]) + '%"></i></span></div></section>';
+    + '<div class="nt-edres-g"><span>' + grupoNome('gerais') + ' <b>' + pc(grupo.gerais[0], grupo.gerais[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.gerais[0], grupo.gerais[1]) + '%"></i></span>'
+    + '<span>' + grupoNome('especificos') + ' <b>' + pc(grupo.especificos[0], grupo.especificos[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.especificos[0], grupo.especificos[1]) + '%"></i></span></div></section>';
   if(semPlano) h += '<p class="nt-aviso">Você ainda não montou seu plano. O progresso abaixo vem dos capítulos que você já leu no livro digital. Para marcar assuntos como estudados e receber a trilha semana a semana, <button type="button" class="nx-btn primary small" data-nt="editar">monte seu plano</button>.</p>';
   h += '<div class="nt-edtools"><p class="nx-sub nt-legenda">Assuntos na ordem de estudo. Cada capítulo mostra quanto você já leu; "Questões" abre as questões daquele capítulo.' + (semMat ? ' ' + semMat + ' assuntos ainda não têm material no NEXO.' : '') + '</p>'
     + '<label class="nt-ja nt-sofalta"><input type="checkbox" data-nt="sofalta"' + (soFalta ? ' checked' : '') + '> Mostrar só o que falta</label></div>';
@@ -643,8 +645,20 @@ function telaEdital(s){
   }).join('');
 }
 
+/* cria o cronograma e a trilha a partir do concurso/cargo escolhido na turma */
+window.nexoCronogramaCriar = function(edital, cargo){
+  if(!EDS[edital]) return false;
+  rascunho = { edital:edital, cargo:cargo }; editando = true; aba = 'semana';
+  window.nexoCronograma(); return true;
+};
+window.nexoCronogramaTem = function(edital, cargo){
+  var p = (E() && E().plano() || {}).plan; return !!(p && p.edital === edital && p.cargo === cargo);
+};
+window.nexoCronogramaDisponivel = function(edital, cargo){ var e = EDS[edital]; return !!(e && e.cargos && e.cargos[cargo]); };
 window.nexoCronograma = function(a){
   if(a) aba = a;
+  /* Cronograma e trilha só existem depois que o plano é criado a partir do concurso escolhido */
+  if(!st().plan && !editando && !rascunho && aba !== 'edital' && typeof window.nexoTurmasPainel === 'function'){ window.nexoTurmasPainel(); return; }
   try{ if(typeof closeMobileNav === 'function') closeMobileNav(); }catch(e){}
   setCur('cronograma'); try{ renderNav(); }catch(e){} try{ syncAccess(); }catch(e){}
   var h = document.getElementById('head'); if(h) h.textContent = 'Cronograma e trilha';
@@ -719,7 +733,7 @@ document.addEventListener('submit', function(e){
   if(!p.discs.length){ if(msg) msg.textContent = 'Escolha pelo menos uma disciplina.'; return; }
   p.criado = p.criado || Date.now();
   var mudouEdital = s.plan && s.plan.edital && s.plan.edital !== p.edital;
-  s.plan = p; editando = false;
+  s.plan = p; editando = false; rascunho = null;
   if(mudouEdital) s.weeks = {};
   var k = semanaKeyDe(s, hoje0());
   gerarPlano(s, k ? deIso(k) : hoje0()); E().salvarPlano(s); aba = 'semana'; vendoSemana = null; window.nexoCronograma();
@@ -739,8 +753,8 @@ document.addEventListener('click', function(e){
   if(a === 'ed-view'){nxEditalVista=b.dataset.v==='lista'?'lista':'cards';window.nexoCronograma('edital');return;}
   if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.te-disc,.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
   if(a === 'aba'){ window.nexoCronograma(b.dataset.aba); return; }
-  if(a === 'editar'){ editando = true; window.nexoCronograma(); return; }
-  if(a === 'cancelar'){ editando = false; window.nexoCronograma(); return; }
+  if(a === 'editar'){ editando = true; if(!s.plan && editalSelecionadoLab && EDS[editalSelecionadoLab]){ var mt = (window.nexoConcursosSelecionados ? window.nexoConcursosSelecionados().items : []).find(function(x){ return x.id === editalSelecionadoLab; }); rascunho = { edital:editalSelecionadoLab, cargo:mt ? mt.cargo : null }; } window.nexoCronograma(); return; }
+  if(a === 'cancelar'){ editando = false; var sempl = !s.plan; rascunho = null; if(sempl && typeof window.nexoTurmasPainel === 'function'){ window.nexoTurmasPainel(); return; } window.nexoCronograma(); return; }
   if(a === 'sem'){ if(b.dataset.k){ vendoSemana = b.dataset.k; aberta = null; window.nexoCronograma('semana'); } return; }
   if(a === 'gerar' || a === 'refazer'){
     var k = vendoSemana && a === 'refazer' && deIso(vendoSemana) <= hoje0() ? vendoSemana : semanaKeyDe(s, hoje0());
@@ -787,10 +801,11 @@ if(typeof rn === 'function'){
   window.renderNav = function(){
     var r = rn.apply(this, arguments);
     try{
-      var nav = document.getElementById('nav'); if(!nav || nav.querySelector('.nt-nav')) return r;
+      var nav = document.getElementById('nav'); if(!nav || nav.querySelector('.nt-nav') || nav.querySelector('.nt-nav-ed')) return r;
       var ref = nav.querySelector('.primary-nav');
       var naEd = curAtual() === 'cronograma' && aba === 'edital';
-      var html = '<button type="button" class="primary-nav nx-nav-extra nt-nav' + (curAtual() === 'cronograma' && !naEd ? ' active' : '') + '" onclick="nexoCronograma(\'semana\')">' + ICON.cal + ' Cronograma e trilha</button>'
+      var temPlano = !!(E() && E().plano().plan);
+      var html = (temPlano ? '<button type="button" class="primary-nav nx-nav-extra nt-nav' + (curAtual() === 'cronograma' && !naEd ? ' active' : '') + '" onclick="nexoCronograma(\'semana\')">' + ICON.cal + ' Cronograma e trilha</button>' : '')
         + '<button type="button" class="primary-nav nx-nav-extra nt-nav-ed' + (naEd ? ' active' : '') + '" onclick="nexoCronograma(\'edital\')">' + ICON.lista + ' Edital verticalizado</button>';
       if(ref) ref.insertAdjacentHTML('afterend', html); else nav.insertAdjacentHTML('afterbegin', html);
       if(curAtual() === 'cronograma') Array.prototype.forEach.call(nav.querySelectorAll('.primary-nav.active:not(.nt-nav)'), function(x){ x.classList.remove('active'); });
@@ -803,7 +818,10 @@ document.addEventListener('nexo:estudo', function(e){ if(e.detail === 'sincroniz
 /* menu inferior do celular: "Trilha" logo depois de "Painel" */
 (function(){
   function preparar(){
-    var bar = document.querySelector('.access-bar'); if(!bar || bar.querySelector('[data-area="trilha"]')) return;
+    var bar = document.querySelector('.access-bar'); if(!bar) return;
+    var exist = bar.querySelector('[data-area="trilha"]'), tem = !!(E() && E().plano().plan);
+    if(!tem){ if(exist) exist.remove(); var l0 = bar.querySelector('[data-area="law"]'); if(l0) l0.classList.remove('access-secondary'); return; }
+    if(exist) return;
     var painel = bar.querySelector('[data-area="home"]'), lei = bar.querySelector('[data-area="law"]');
     if(lei) lei.classList.add('access-secondary');
     var html = '<button type="button" data-area="trilha" onclick="nexoCronograma()">' + ICON.cal.replace('class="icon"', 'class="icon"') + '<span>Trilha</span></button>';

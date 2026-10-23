@@ -27,6 +27,13 @@ function cartao(c,s){
    +(prin?'<span class="tm-star" title="Principal">★</span>':'')+escudo(c.id)
    +'<span class="tm-nome"><b>'+esc(SIGLA[c.id]||c.id.toUpperCase())+'</b><small>'+esc(NOME[c.id]||c.nome)+'</small>'+(on?'<em>✓ '+(prin?'Principal':'Selecionado')+(job?' · '+esc(job):'')+'</em>':'')+'</span></button>';
 }
+function trilhaBloco(c,it,on){
+  if(!on||(confirmando===c.id))return '';
+  var D=window.nexoCronogramaDisponivel;
+  if(!D||!D(c.id,it.cargo))return '<p class="tm-info">Cronograma e trilha deste cargo: em preparação. Assim que o programa do edital for cadastrado e conferido, o botão de criar aparece aqui.</p>';
+  var tem=window.nexoCronogramaTem&&window.nexoCronogramaTem(c.id,it.cargo);
+  return '<div class="tm-acoes tm-trilha"><button type="button" class="nx-btn primary small" data-tm="trilha" data-id="'+esc(c.id)+'">'+(tem?'Abrir cronograma e trilha':'Criar cronograma e trilha')+'</button></div>';
+}
 function detalhe(s){
   var c=cat().find(function(x){return x.id===aberta});if(!c)return '';
   var it=s.items.find(function(x){return x.id===c.id}),on=!!it,cheio=!on&&s.items.length>=LIMITE;
@@ -35,6 +42,7 @@ function detalhe(s){
   return '<section class="tm-det" id="tm-det" aria-live="polite"><div class="tm-det-t"><b>'+esc(c.nome)+'</b><button type="button" class="tm-x" data-tm="fechar" aria-label="Fechar">×</button></div><p class="tm-info">'+info+'</p>'
    +'<label class="tm-cargo">Cargo<select id="tm-cargo">'+c.cargos.map(function(z){return '<option value="'+esc(z[0])+'"'+(z[0]===cargoSel?' selected':'')+'>'+esc(z[1])+'</option>'}).join('')+'</select></label>'
    +(on&&confirmando===c.id?'<div class="tm-conf"><p>Para desmatricular de <b>'+esc(NOME[c.id]||c.nome)+'</b>, digite <b>confirma</b> abaixo. Seu progresso neste aparelho não é apagado.</p><input type="text" id="tm-conf-in" autocomplete="off" autocapitalize="off" placeholder="Digite confirma" aria-label="Digite confirma para desmatricular"><div class="tm-acoes"><button type="button" class="nx-btn danger small" id="tm-conf-ok" data-tm="remover" data-id="'+esc(c.id)+'" disabled>Confirmar desmatrícula</button><button type="button" class="nx-btn ghost small" data-tm="cancelar">Cancelar</button></div></div>':'')
+   +trilhaBloco(c,it,on)
    +'<div class="tm-acoes"'+(on&&confirmando===c.id?' hidden':'')+'>'
    +(on?'<button type="button" class="nx-btn primary small" data-tm="salvarcargo" data-id="'+esc(c.id)+'">Salvar cargo</button>'+(s.principal!==c.id?'<button type="button" class="nx-btn small" data-tm="principal" data-id="'+esc(c.id)+'">Definir como principal</button>':'')+'<button type="button" class="nx-btn ghost small" data-tm="desmatricular" data-id="'+esc(c.id)+'">Desmatricular</button>'
       :(cheio?'<p class="tm-info">Limite de três concursos atingido. Desmatricule um para matricular neste.</p>':'<button type="button" class="nx-btn primary small" data-tm="adicionar" data-id="'+esc(c.id)+'">Matricular</button>'))
@@ -56,7 +64,7 @@ function mostrar(){
   v.innerHTML='<div class="nx-page tm"><div class="tm-topo"><div><span class="tm-kick">MINHA PREPARAÇÃO</span><h1>Painel por concurso</h1><p>Escolha até três concursos e o cargo de cada um. O principal define sua trilha e o painel de estudos.</p></div><strong id="tm-cont" class="tm-cont">'+s.items.length+'/'+LIMITE+' selecionados</strong></div>'
    +'<label class="tm-busca"><input type="search" id="tm-busca" placeholder="Pesquisar turmas" value="'+esc(busca)+'" autocomplete="off" aria-label="Pesquisar turmas"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></label>'
    +'<div id="tm-lista">'+lista()+'</div><div id="nx-concursos-root" class="nx-concursos tm-resumo"></div>'
-   +'<p class="tm-nota">As seleções ficam salvas neste aparelho e não alteram seu cronograma, questões ou dados na conta.</p></div>';
+   +'<p class="tm-nota">As seleções ficam salvas neste aparelho. O cronograma e a trilha só aparecem depois que você cria um para o concurso escolhido.</p></div>';
   resumo();
 }
 document.addEventListener('input',function(e){
@@ -74,6 +82,7 @@ document.addEventListener('click',function(e){
   var cargo=document.getElementById('tm-cargo'),cg=cargo&&cargo.value;
   if(a==='adicionar'&&items.length<LIMITE&&!items.some(function(x){return x.id===id})){items.push({id:id,cargo:cg});salvar(items,s.principal||id);pintar();return}
   if(a==='salvarcargo'){items.forEach(function(x){if(x.id===id)x.cargo=cg});salvar(items,s.principal);pintar();return}
+  if(a==='trilha'){var m=items.find(function(x){return x.id===id});if(!m)return;if(window.nexoCronogramaTem&&window.nexoCronogramaTem(id,m.cargo)){window.nexoCronograma('semana')}else if(window.nexoCronogramaCriar){window.nexoCronogramaCriar(id,m.cargo)}return}
   if(a==='principal'){salvar(items,id);pintar();return}
   if(a==='remover'){var ci2=document.getElementById('tm-conf-in');if(confirmando!==id||!ci2||ci2.value.trim().toLowerCase()!=='confirma')return;confirmando=null;items=items.filter(function(x){return x.id!==id});salvar(items,s.principal===id?(items[0]||{}).id:s.principal);aberta=null;pintar();return}
 });

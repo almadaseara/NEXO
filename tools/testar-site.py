@@ -66,7 +66,7 @@ async def main():
             home(); out.painel = document.querySelectorAll('.pn-panel').length + document.querySelectorAll('.nx-pd').length;
             nexoLivros(); out.livros = document.querySelectorAll('.lv-livro').length;
             nexoLivro.abrir('penal_aplicacao'); out.capitulo = document.querySelectorAll('.lv-lateral .lv-parte').length;
-            nexoCronograma(); document.querySelector('#nt-form').requestSubmit();
+            nexoCronogramaCriar('pcba','investigador'); document.querySelector('#nt-form').requestSubmit();
             const st = nexoEstudo.plano(), wk = st.weeks[Object.keys(st.weeks)[0]];
             out.trilha = wk.tarefas.length;
             out.trilhaCabe = [0,1,2,3,4,5,6].every(d => wk.tarefas.filter(t => t.d === d).reduce((a, t) => a + t.min, 0) <= (st.plan.minutos[new Date(Date.now() + d * 864e5).getDay()] || 0) + 1);
