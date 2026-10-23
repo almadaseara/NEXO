@@ -447,6 +447,25 @@ function telaPlano(s){
 var editalSelecionadoLab=null;
 
 var nxEditalVista='cards';
+function nxEdIcon(id){
+ var paths={
+ constitucional:'<path d="M3 10h18M5 10V20m5-10v10m4-10v10m5-10v10M2 21h20M12 3l10 6H2z"/>',
+ administrativo:'<path d="M7 3h8l4 4v14H5V3h2zm8 0v5h5M9 12h7M9 16h7"/>',
+ penal:'<path d="M12 3v17M6 20h12M5 7h14M5 7 2 13h6L5 7zm14 0-3 6h6l-3-6z"/>',
+ proc_penal:'<path d="m14 5 5 5m-8-2 5 5M3 21l9-9m-3-6 3-3 9 9-3 3z"/>',
+ medicina_legal:'<path d="M12 22V11m-5 3c-5-7 0-12 5-12s10 5 5 12M7 18c-7-3-6-12-1-15m12 0c5 4 6 12-1 15"/>',
+ leg_geral:'<path d="M7 3h10l3 3v15H4V3h3m4 6h6m-9 4h9m-9 4h7"/>',
+ portugues:'<path d="m5 20 7-17 7 17M7 15h10"/>',
+ informatica:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8M12 18v4"/>',
+ rlm:'<path d="M5 3h14M7 8l5 5-5 5m7-1h5"/>',
+ atualidades:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/>',
+ estatistica:'<path d="M3 20h18M5 17v-5h3v5m3 0V6h3v11m3 0V9h3v8"/>',
+ contabilidade:'<path d="M5 3h14v18H5zM8 7h8M8 12h2m3 0h3m-8 4h2m3 0h3"/>',
+ arquivologia:'<path d="M3 7h18v13H3zM7 7V4h10v3m-8 6h6"/>'
+ };
+ return '<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(paths[id]||'<path d="M4 4h16v16H4zM8 10h8M8 14h8"/>')+'</svg>';
+}
+
 function painelCardsEdital(s,sel,ed){
  var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
  var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
@@ -463,13 +482,13 @@ function painelCardsEdital(s,sel,ed){
   total+=ts.length;completed+=feitos;
   var pct=ts.length?Math.round(feitos/ts.length*100):0;
   var cor=d.cor||'#269a78', desc=ts.slice(0,2).map(function(x){return x[1];}).join(' · ');
-  return '<button type="button" class="nx-edcard" data-nt="ed-disc" data-ed-disc="'+escH(id)+'" style="--ed-color:'+escH(cor)+'"><span class="nx-edcard-top"><span class="nx-edcard-icon">'+escH(d.sigla||String(i+1))+'</span><span class="nx-edcard-ring" style="--p:'+pct+'%">'+pct+'%</span></span><strong>'+escH(d.nome)+'</strong><span class="nx-edcard-desc">'+escH(desc)+'</span><span class="nx-edcard-foot"><small>'+ts.length+' tópicos</small><span aria-hidden="true">→</span></span></button>';
+  return '<button type="button" class="nx-edcard" data-nt="ed-disc" data-ed-disc="'+escH(id)+'" style="--ed-color:'+escH(cor)+'"><span class="nx-edcard-top"><span class="nx-edcard-icon">'+nxEdIcon(id)+'</span><span class="nx-edcard-ring" style="--p:'+pct+'%">'+pct+'%</span></span><strong>'+escH(d.nome)+'</strong><span class="nx-edcard-desc">'+escH(desc)+'</span><span class="nx-edcard-foot"><small>'+ts.length+' tópicos</small><span aria-hidden="true">→</span></span></button>';
  }).join('');
  var pct=total?Math.round(completed/total*100):0;
- return '<div class="nx-ed-dashboard"><header class="nx-ed-welcome"><div><span class="nx-ed-eyebrow">ORGANIZAÇÃO DA PREPARAÇÃO</span><h2>Seu edital, sua evolução.</h2><p>Acompanhe as disciplinas do concurso selecionado.</p></div></header>'
+ return '<div class="nx-ed-dashboard"><header class="nx-ed-welcome"><div><h2>Olá, Estudante!</h2><p>Acompanhe seu progresso no edital verticalizado e mantenha o foco na sua aprovação.</p></div><div class="nx-ed-motivation"><span class="nx-ed-motivation-icon">◎</span><div><b>Disciplina hoje?</b><small>Continue de onde parou e evolua mais um pouco.</small></div><button type="button" data-nt="ed-retomar">▶ Retomar estudos</button></div></header>'
  +'<section class="nx-ed-summary"><div class="nx-ed-big-ring" style="--p:'+pct+'%"><strong>'+pct+'%</strong><small>concluído</small></div><div class="nx-ed-summary-main"><h3>Progresso geral</h3><p>'+completed+' de '+total+' tópicos concluídos</p><div class="nx-ed-progress"><span style="width:'+pct+'%"></span></div><div class="nx-ed-kpis"><span><b>'+completed+'</b> tópicos concluídos</span><span><b>'+total+'</b> tópicos no programa</span><span><b>'+ids.length+'</b> disciplinas</span></div></div></section>'
  +(noPlano?'':'<p class="nt-aviso">Consulta ao programa: para contabilizar conclusão, configure um plano de estudos para este cargo. Nenhum progresso foi presumido.</p>')
- +'<div class="nx-ed-section-head"><div><h3>Disciplinas do edital</h3><p>Acesse os tópicos de cada disciplina sem perder a estrutura original.</p></div><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards" class="active">Cards</button><button type="button" data-nt="ed-view" data-v="lista">Lista do edital</button></div></div><div class="nx-ed-grid">'+cards+'</div></div>';
+ +'<div class="nx-ed-section-head"><div><h3>Disciplinas do edital</h3><p>Explore os conteúdos do seu concurso de forma organizada e verticalizada.</p></div><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards" class="active">Cards</button><button type="button" data-nt="ed-view" data-v="lista">Lista do edital</button></div></div><div class="nx-ed-grid">'+cards+'</div></div>';
 }
 
 function escolherEditalLab(s){
@@ -615,6 +634,7 @@ document.addEventListener('submit', function(e){
 document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-nt]'); if(!b || b.tagName === 'INPUT') return;
   var a = b.dataset.nt, s = st();
+  if(a === 'ed-retomar'){window.nexoCronograma('semana');return;}
   if(a === 'ed-view'){nxEditalVista=b.dataset.v==='lista'?'lista':'cards';window.nexoCronograma('edital');return;}
   if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
   if(a === 'aba'){ window.nexoCronograma(b.dataset.aba); return; }
