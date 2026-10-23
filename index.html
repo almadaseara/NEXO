@@ -804,6 +804,46 @@ html[data-theme="dark"] .circle-progress{
 html[data-theme="dark"] .progress-ring:before,
 html[data-theme="dark"] .circle-progress:before{background:#1b252e!important}
 
+
+/* Laboratório: restauração do preto minimalista oficial, sem tons azulados nos cards. */
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard){
+ background:#171719!important;color:#f2f2f3!important;
+ --panel:#202023;--panel2:#29292d;--line:#38383d;
+ --text:#f2f2f3;--muted:#a6a7af;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-summary,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-edcard,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-footer{
+ background:#202023!important;border-color:#39393e!important;
+ box-shadow:none!important;color:#f2f2f3!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-edcard-ring:before,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-big-ring:before{
+ background:#202023!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-motivation{
+ background:#262b29!important;border-color:#3e5149!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-view{
+ background:#262629!important;border-color:#414146!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-view button.active{
+ background:#315e50!important;color:#f6fffb!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-edcard-foot small{
+ background:#303034!important;color:#dfe1e5!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-welcome h2,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-section-head h3,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-summary-main h3{
+ color:#f4f4f5!important;
+}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-edcard-desc,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-welcome p,
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-section-head p{
+ color:#adb0b9!important;
+}
+
 </style>
 </head>
 <body class="logged-out">
