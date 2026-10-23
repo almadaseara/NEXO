@@ -759,6 +759,25 @@ html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-view button{col
 html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-view button.active{background:#316b5b!important;color:#fff!important}
 html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-edcard-foot small{background:#2c3b44!important;color:#e1edf3!important}
 html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-footer small,html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard) .nx-ed-footer em{color:#afbeca!important}
+
+/* Anéis de progresso: neon discreto no tema escuro, legibilidade reforçada. */
+html[data-theme="dark"] .nx-page.nt .nx-edcard-ring{
+ background:conic-gradient(#43e0ae var(--p),#34444b 0)!important;
+ color:#e9fff7!important;
+ text-shadow:0 0 7px rgba(67,224,174,.20);
+ font-size:12px!important;
+ font-weight:800!important;
+ box-shadow:0 0 0 1px rgba(67,224,174,.13),0 0 11px rgba(67,224,174,.09);
+}
+html[data-theme="dark"] .nx-page.nt .nx-edcard-ring:before{
+ background:#1b252e!important;
+ inset:6px!important;
+}
+html[data-theme="dark"] .nx-page.nt .nx-ed-big-ring{
+ background:conic-gradient(#43e0ae var(--p),#34444b 0)!important;
+ box-shadow:0 0 16px rgba(67,224,174,.10);
+}
+html[data-theme="dark"] .nx-page.nt .nx-ed-big-ring:before{background:#1b252e!important}
 </style>
 </head>
 <body class="logged-out">
