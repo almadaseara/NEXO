@@ -282,7 +282,8 @@ window.renderNav = function(){
   nav = document.getElementById('nav'); if(!nav) return;
   $$('.folder-wrap', nav).forEach(function(x){ x.remove(); });
   $$('.nx-nav-extra', nav).forEach(function(x){ x.remove(); });
-  nav.insertAdjacentHTML('beforeend', arvoreHTML());
+  /* Laboratório: disciplinas saem da barra lateral; o acervo permanece acessível nas demais áreas. */
+  if(!window.NEXO_LAB_HIDE_DISCIPLINAS) nav.insertAdjacentHTML('beforeend', arvoreHTML());
   var m = moduloPorId(cur()), q = ((document.getElementById('search') || {}).value || '').trim();
   $$('.folder-wrap', nav).forEach(function(f){
     var tem = m && discInfo(disciplinaDe(m)).id === f.id;
