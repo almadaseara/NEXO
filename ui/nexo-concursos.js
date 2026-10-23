@@ -30,6 +30,19 @@ function nomeDisc(id,items){
  for(var i=0;i<items.length;i++){var e=edital(items[i].id);if(e&&e.disciplinas&&e.disciplinas[id])return e.disciplinas[id].nome;}
  return id;
 }
+
+function resumoComuns(items){
+ var known=items.map(function(x){return {item:x,discs:disciplinas(x)};}).filter(function(x){return !!x.discs;});
+ var missing=items.filter(function(x){return !disciplinas(x);});
+ if(items.length<2)return '<p class="nx-con-muted">Adicione outro concurso para comparar disciplinas.</p>';
+ if(known.length<2)return '<p class="nx-con-muted">Ainda não há pelo menos dois programas cadastrados para comparação. '+missing.length+' concurso(s) aguardam conferência do edital.</p>';
+ var comum=known[0].discs.filter(function(id){return known.every(function(x){return x.discs.includes(id);});});
+ var out='<p class="nx-con-muted">Comparação atualizada para '+known.length+' concurso(s) com programas disponíveis.</p>';
+ if(missing.length)out+='<p class="nx-con-muted">'+missing.length+' concurso(s) não incluído(s) no cálculo por falta de programa cadastrado. O resultado é parcial.</p>';
+ out+=comum.length?'<div class="nx-con-subjects">'+comum.map(function(id){return '<span>'+esc(nomeDisc(id,known.map(function(x){return x.item;})))+'</span>';}).join('')+'</div>':'<p>Nenhuma disciplina em comum entre os programas disponíveis.</p>';
+ return out;
+}
+
 function render(){
  var root=document.getElementById('nx-concursos-root');if(!root)return;
  var s=get(), pending=s.items.filter(function(x){return !disciplinas(x);});
@@ -49,9 +62,7 @@ function render(){
   html+='<div class="nx-con-card"><h3>Adicionar concurso</h3><label>Concurso <select id="nx-con-add">'+avail.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.nome)+'</option>';}).join('')+'</select></label><label>Cargo <select id="nx-con-job"></select></label><button class="nx-con-primary" data-action="add">Adicionar à preparação</button></div>';
  }else if(s.items.length===LIMIT){html+='<p class="nx-con-muted">Limite de três concursos atingido. Remova um para trocar.</p>';}
  html+='<section class="nx-con-card"><h3>Disciplinas em comum</h3>';
- if(!s.items.length)html+='<p>Selecione seus concursos para comparar as disciplinas.</p>';
- else if(pending.length)html+='<p>Comparação indisponível até que os programas oficiais de todos os cargos selecionados sejam cadastrados. Não usamos listas estimadas como se fossem editais.</p>';
- else html+=common.length?'<ul>'+common.map(function(x){return '<li>'+esc(nomeDisc(x,s.items))+'</li>';}).join('')+'</ul>':'<p>Não foram identificadas disciplinas em comum nos programas cadastrados.</p>';
+ html+=resumoComuns(s.items);
  html+='</section><p class="nx-con-muted">As seleções são salvas neste navegador. Esta função não altera o cronograma existente, questões, resultados ou dados no Supabase.</p>';
  root.innerHTML=html;
  var add=root.querySelector('#nx-con-add'),job=root.querySelector('#nx-con-job');
@@ -78,11 +89,7 @@ function renderPainel(){
  else h+='<p class="nx-con-muted">Conteúdo programático ainda não cadastrado para este concurso e cargo. Os indicadores ficam indisponíveis até a conferência do edital.</p>';
  h+='</section>';
  if(other.length){h+='<section class="nx-con-card"><h3>Concursos secundários</h3><div class="nx-con-list">'+other.map(function(x){var t=CATALOG.find(function(z){return z.id===x.id;}),d=disciplinas(x),job=t.cargos.find(function(z){return z[0]===x.cargo;});return '<div class="nx-con-secondary"><b>'+esc(t.nome)+'</b><small>'+esc(job?job[1]:x.cargo)+'</small><small>'+(d?d.length+' disciplinas cadastradas':'Programa pendente')+'</small></div>';}).join('')+'</div></section>';}
- var all=s.items.map(disciplinas),valid=all.every(Boolean);
- h+='<section class="nx-con-card"><h3>Estudo em comum</h3>';
- if(valid){var common=all[0].filter(function(d){return all.every(function(arr){return arr.includes(d);});});h+=common.length?'<p>'+common.length+' disciplinas aparecem nos programas selecionados.</p><div class="nx-con-subjects">'+common.map(function(id){return '<span>'+esc(nomeDisc(id,s.items))+'</span>';}).join('')+'</div>':'<p>Sem disciplinas compartilhadas identificadas.</p>';}
- else h+='<p class="nx-con-muted">A comparação ficará disponível quando todos os programas selecionados estiverem cadastrados. Não apresentamos interseções presumidas.</p>';
- h+='</section>';
+ h+='<section class="nx-con-card"><h3>Estudo em comum</h3>'+resumoComuns(s.items)+'</section>';
  root.innerHTML=h;
 }
 function showPane(dashboard){
