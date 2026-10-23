@@ -58,18 +58,56 @@ function render(){
  function fill(){if(!add||!job)return;var c=CATALOG.find(function(x){return x.id===add.value;});job.innerHTML=c.cargos.map(function(z){return '<option value="'+esc(z[0])+'">'+esc(z[1])+'</option>';}).join('');}
  if(add){add.addEventListener('change',fill);fill();}
 }
+
+/* Painel por concurso: indicadores derivados somente de programas cadastrados.
+   Não presume acertos nem percentual de edital sem dados confiáveis. */
+var painelAtivo=true;
+function renderPainel(){
+ var root=document.getElementById('nx-concursos-root');if(!root)return;
+ var s=get(),p=s.items.find(function(x){return x.id===s.principal;})||s.items[0],available=p&&disciplinas(p);
+ var c=p&&CATALOG.find(function(x){return x.id===p.id;});
+ var other=s.items.filter(function(x){return !p||x.id!==p.id;});
+ var h='<section class="nx-con-header nx-con-dashboard-head"><span class="nx-con-kicker">MINHA PREPARAÇÃO</span><h2>Painel por concurso</h2><p>Seus concursos em um único lugar, com foco no cargo principal.</p></section>';
+ if(!p){h+='<section class="nx-con-card"><h3>Configure sua preparação</h3><p>Escolha pelo menos um concurso e seu cargo para iniciar.</p><button data-action="config">Selecionar concursos</button></section>';root.innerHTML=h;return;}
+ h+='<section class="nx-con-card nx-con-main"><div class="nx-con-line"><div><span class="nx-con-kicker">CONCURSO PRINCIPAL</span><h3>'+esc(c.nome)+'</h3><p>'+esc((c.cargos.find(function(x){return x[0]===p.cargo;})||[])[1]||p.cargo)+'</p></div><span>Principal</span></div>';
+ h+='<div class="nx-con-metrics"><div><strong>'+s.items.length+' / 3</strong><small>Concursos ativos</small></div><div><strong>'+(available?available.length:'—')+'</strong><small>Disciplinas cadastradas</small></div><div><strong>—</strong><small>Domínio do edital*</small></div></div>';
+ h+='<p class="nx-con-muted">*O domínio do edital será exibido quando o progresso estiver vinculado aos tópicos deste cargo. Não estimamos porcentagens.</p>';
+ h+='<div class="nx-con-actions"><button data-action="config">Gerenciar concursos</button><button data-action="trilha">Abrir cronograma existente</button></div></section>';
+ h+='<section class="nx-con-card"><h3>Disciplinas do concurso principal</h3>';
+ if(available){h+='<div class="nx-con-subjects">'+available.map(function(id){return '<span>'+esc(nomeDisc(id,[p]))+'</span>';}).join('')+'</div><p class="nx-con-muted">Lista do programa cadastrado; não indica conclusão ou cobertura dos materiais.</p>';}
+ else h+='<p class="nx-con-muted">Conteúdo programático ainda não cadastrado para este concurso e cargo. Os indicadores ficam indisponíveis até a conferência do edital.</p>';
+ h+='</section>';
+ if(other.length){h+='<section class="nx-con-card"><h3>Concursos secundários</h3><div class="nx-con-list">'+other.map(function(x){var t=CATALOG.find(function(z){return z.id===x.id;}),d=disciplinas(x),job=t.cargos.find(function(z){return z[0]===x.cargo;});return '<div class="nx-con-secondary"><b>'+esc(t.nome)+'</b><small>'+esc(job?job[1]:x.cargo)+'</small><small>'+(d?d.length+' disciplinas cadastradas':'Programa pendente')+'</small></div>';}).join('')+'</div></section>';}
+ var all=s.items.map(disciplinas),valid=all.every(Boolean);
+ h+='<section class="nx-con-card"><h3>Estudo em comum</h3>';
+ if(valid){var common=all[0].filter(function(d){return all.every(function(arr){return arr.includes(d);});});h+=common.length?'<p>'+common.length+' disciplinas aparecem nos programas selecionados.</p><div class="nx-con-subjects">'+common.map(function(id){return '<span>'+esc(nomeDisc(id,s.items))+'</span>';}).join('')+'</div>':'<p>Sem disciplinas compartilhadas identificadas.</p>';}
+ else h+='<p class="nx-con-muted">A comparação ficará disponível quando todos os programas selecionados estiverem cadastrados. Não apresentamos interseções presumidas.</p>';
+ h+='</section>';
+ root.innerHTML=h;
+}
+function showPane(dashboard){
+ painelAtivo=dashboard;
+ var v=document.getElementById('view');if(!v)return;
+ var head=document.getElementById('head');if(head)head.textContent=dashboard?'Painel por concurso':'Meus Concursos';
+ v.innerHTML='<div id="nx-concursos-root" class="nx-concursos"></div>';
+ if(dashboard)renderPainel();else render();
+}
+
 function open(){
  var v=document.getElementById('view');if(!v)return;
  if(typeof window.closeMobileNav==='function')window.closeMobileNav();
  var head=document.getElementById('head');if(head)head.textContent='Meus Concursos';
- v.innerHTML='<div id="nx-concursos-root" class="nx-concursos"></div>';render();
+ showPane(true);
  if(typeof window.current!=='undefined')window.current=null;
 }
 window.nexoMeusConcursos=open;
+window.nexoGerenciarConcursos=function(){showPane(false);};
 window.nexoConcursosSelecionados=function(){return get();};
 document.addEventListener('click',function(e){
  var b=e.target.closest('#nx-concursos-root button[data-action]');if(!b)return;
  var s=get(),id=b.dataset.id,act=b.dataset.action;
+ if(act==='config'){showPane(false);return;}
+ if(act==='trilha'){if(typeof window.nexoCronograma==='function')window.nexoCronograma();return;}
  if(act==='add'){
   var c=document.getElementById('nx-con-add'),job=document.getElementById('nx-con-job');
   if(!c||!job||s.items.length>=LIMIT||s.items.some(function(x){return x.id===c.value;}))return;
@@ -77,7 +115,7 @@ document.addEventListener('click',function(e){
  }else if(act==='remove'){s.items=s.items.filter(function(x){return x.id!==id;});if(s.principal===id)s.principal=(s.items[0]||{}).id||null;
  }else if(act==='principal'){if(s.items.some(function(x){return x.id===id;}))s.principal=id;}
  else return;
- save(s);render();
+ save(s);if(painelAtivo)renderPainel();else render();
 });
 document.addEventListener('change',function(e){
  var t=e.target;if(!t.matches('#nx-concursos-root select[data-action="cargo"]'))return;
@@ -86,7 +124,7 @@ document.addEventListener('change',function(e){
 });
 function init(){
  var nav=document.getElementById('nav');if(!nav||document.getElementById('nx-con-nav'))return;
- var btn=document.createElement('button');btn.id='nx-con-nav';btn.type='button';btn.textContent='Meus concursos';
+ var btn=document.createElement('button');btn.id='nx-con-nav';btn.type='button';btn.textContent='Painel por concurso';
  btn.className='nx-con-nav';btn.addEventListener('click',open);nav.parentNode.insertBefore(btn,nav);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
