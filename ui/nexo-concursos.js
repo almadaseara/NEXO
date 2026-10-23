@@ -163,9 +163,32 @@ window.nexoGerenciarConcursos=function(){showPane(false);};
 window.nexoConcursosSelecionados=function(){return get();};
 /* emblemas oficiais: imagem local em assets/brasoes/<id>.png (quando existir) e depois o endereço oficial; sem imagem, o escudo */
 var BRASAO_LOCAL=[];
-var BRASAO_REMOTO={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image',pcpe:'https://upload.wikimedia.org/wikipedia/commons/7/79/Polcivpernambuco.png',prf:'https://upload.wikimedia.org/wikipedia/commons/f/f1/Prf_brasao_novo.jpg',pmpe:'https://upload.wikimedia.org/wikipedia/commons/a/ac/Bras%C3%A3o_PMPE.PNG'};
-window.nexoBrasaoErro=function(i){var a=i.getAttribute('data-alt');if(a){i.setAttribute('data-alt','');i.src=a}else i.remove()};
-window.nexoBrasaoImg=function(id){var u=[];u.push('assets/brasoes/'+id+'.png');if(BRASAO_REMOTO[id])u.push(BRASAO_REMOTO[id]);return '<img src="'+esc(u[0])+'" data-alt="'+esc(u[1]||'')+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="nexoBrasaoErro(this)">';};
+var BRASAO_REMOTO={pcba:'https://upload.wikimedia.org/wikipedia/commons/4/4d/Ins%C3%ADgnia_da_Pol%C3%ADcia_Civil_da_Bahia.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image',pcpe:'https://upload.wikimedia.org/wikipedia/commons/7/79/Polcivpernambuco.png',prf:'https://upload.wikimedia.org/wikipedia/commons/f/f1/Prf_brasao_novo.jpg',pmpe:'https://upload.wikimedia.org/wikipedia/commons/a/ac/Bras%C3%A3o_PMPE.PNG'};
+var BRASAO_ALT={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg'};
+/* emblemas em JPG/PNG com fundo branco: o fundo ligado às bordas vira transparente, para todos ficarem no mesmo padrão */
+window.nexoBrasaoLimpa=function(i){
+ if(i.getAttribute('data-ok'))return;i.setAttribute('data-ok','1');
+ try{
+  var m=Math.max(i.naturalWidth,i.naturalHeight);if(!m)return;
+  var sc=Math.min(1,320/m),w=Math.round(i.naturalWidth*sc),h=Math.round(i.naturalHeight*sc),c=document.createElement('canvas');c.width=w;c.height=h;
+  var x=c.getContext('2d',{willReadFrequently:true});x.drawImage(i,0,0,w,h);
+  var d=x.getImageData(0,0,w,h),D=d.data,r=D[0],g=D[1],b=D[2];
+  if(D[3]<250)return;
+  var seen=new Uint8Array(w*h),st=[],a,k;
+  for(a=0;a<w;a++)st.push(a,0,a,h-1);for(a=0;a<h;a++)st.push(0,a,w-1,a);
+  while(st.length){var py=st.pop(),px=st.pop();if(px<0||py<0||px>=w||py>=h)continue;var p=py*w+px;if(seen[p])continue;seen[p]=1;k=p*4;
+   if(Math.abs(D[k]-r)+Math.abs(D[k+1]-g)+Math.abs(D[k+2]-b)>=60)continue;
+   D[k+3]=0;st.push(px+1,py,px-1,py,px,py+1,px,py-1)}
+  x.putImageData(d,0,0);i.src=c.toDataURL('image/png');
+ }catch(e){}
+};
+window.nexoBrasaoErro=function(i){
+ if(i.getAttribute('crossorigin')){i.removeAttribute('crossorigin');i.src=i.src;return}
+ var a=i.getAttribute('data-alt');if(a){i.setAttribute('data-alt','');i.setAttribute('crossorigin','anonymous');i.src=a}else i.remove()};
+window.nexoBrasaoImg=function(id){var u=['assets/brasoes/'+id+'.png'];if(BRASAO_REMOTO[id])u.push(BRASAO_REMOTO[id]);
+ /* primeira opção: arquivo local; se não existir, o endereço oficial; por último o alternativo */
+ var alt=u.length>2?u[2]:(BRASAO_ALT[id]||'');
+ return '<img src="'+esc(u[0])+'" data-alt="'+esc(u[1]||'')+'" data-alt2="'+esc(alt)+'" alt="" loading="lazy" crossorigin="anonymous" referrerpolicy="no-referrer" onload="nexoBrasaoLimpa(this)" onerror="nexoBrasaoErro(this)">';};
 restaurar();document.addEventListener('nexo:conta',restaurar);
 window.nexoConcursosCatalogo=CATALOG;window.nexoConcursosSalvar=save;
 document.addEventListener('click',function(e){
