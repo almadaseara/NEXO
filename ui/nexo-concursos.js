@@ -72,7 +72,7 @@ function renderPainel(){
  h+='<section class="nx-con-card nx-con-main"><div class="nx-con-line"><div><span class="nx-con-kicker">CONCURSO PRINCIPAL</span><h3>'+esc(c.nome)+'</h3><p>'+esc((c.cargos.find(function(x){return x[0]===p.cargo;})||[])[1]||p.cargo)+'</p></div><span>Principal</span></div>';
  h+='<div class="nx-con-metrics"><div><strong>'+s.items.length+' / 3</strong><small>Concursos ativos</small></div><div><strong>'+(available?available.length:'—')+'</strong><small>Disciplinas cadastradas</small></div><div><strong>—</strong><small>Domínio do edital*</small></div></div>';
  h+='<p class="nx-con-muted">*O domínio do edital será exibido quando o progresso estiver vinculado aos tópicos deste cargo. Não estimamos porcentagens.</p>';
- h+='<div class="nx-con-actions"><button data-action="config">Gerenciar concursos</button><button data-action="trilha">Abrir cronograma existente</button></div></section>';
+ h+='<div class="nx-con-actions"><button data-action="config">Gerenciar concursos</button><button data-action="edital" data-id="'+esc(p.id)+'">Ver edital verticalizado</button><button data-action="trilha">Abrir cronograma existente</button></div></section>';
  h+='<section class="nx-con-card"><h3>Disciplinas do concurso principal</h3>';
  if(available){h+='<div class="nx-con-subjects">'+available.map(function(id){return '<span>'+esc(nomeDisc(id,[p]))+'</span>';}).join('')+'</div><p class="nx-con-muted">Lista do programa cadastrado; não indica conclusão ou cobertura dos materiais.</p>';}
  else h+='<p class="nx-con-muted">Conteúdo programático ainda não cadastrado para este concurso e cargo. Os indicadores ficam indisponíveis até a conferência do edital.</p>';
@@ -93,6 +93,53 @@ function showPane(dashboard){
  if(dashboard)renderPainel();else render();
 }
 
+
+/* Edital verticalizado — progresso de checklist isolado e por cargo. */
+var EKEY='nexo_edital_checklist_lab_v1', editalEscolhido=null;
+function checklist(){try{var x=JSON.parse(localStorage.getItem(EKEY)||'{}');return x&&typeof x==='object'&&!Array.isArray(x)?x:{};}catch(e){return {};}}
+function chaveTopico(item,disc,top){return [item.id,item.cargo,disc,top].join(':');}
+function abrirEdital(id){
+ var selected=get().items, item=selected.find(function(x){return x.id===id;})||selected[0];
+ if(!item){showPane(true);return;}
+ editalEscolhido=item.id;
+ var v=document.getElementById('view'),head=document.getElementById('head');if(head)head.textContent='Edital verticalizado';
+ v.innerHTML='<div id="nx-concursos-root" class="nx-concursos"></div>';
+ renderEdital();
+}
+function renderEdital(){
+ var root=document.getElementById('nx-concursos-root');if(!root)return;
+ var items=get().items,item=items.find(function(x){return x.id===editalEscolhido;})||items[0];
+ if(!item){showPane(true);return;}
+ var c=CATALOG.find(function(x){return x.id===item.id;}),ed=edital(item.id),ds=disciplinas(item),checks=checklist();
+ var html='<section class="nx-con-header"><span class="nx-con-kicker">ORGANIZAÇÃO DA PREPARAÇÃO</span><h2>Edital verticalizado</h2><p>Acompanhe os tópicos do programa cadastrado por cargo. As marcações são um checklist manual e não equivalem à conclusão dos estudos no NEXO.</p><div class="nx-con-actions"><button data-action="dashboard">Voltar ao painel</button></div></section>';
+ html+='<div class="nx-con-card"><label>Concurso e cargo <select id="nx-ed-select">'+items.map(function(x){var z=CATALOG.find(function(y){return y.id===x.id;}),j=z.cargos.find(function(y){return y[0]===x.cargo;});return '<option value="'+esc(x.id)+'"'+(x.id===item.id?' selected':'')+'>'+esc(z.nome)+' · '+esc(j?j[1]:x.cargo)+'</option>';}).join('')+'</select></label></div>';
+ if(!ed||!ds){root.innerHTML=html+'<section class="nx-con-card"><h3>Programa ainda indisponível</h3><p>O edital deste cargo precisa ser cadastrado e conferido antes de apresentar uma lista de assuntos.</p></section>';return;}
+ var tops=[];ds.forEach(function(id){var d=ed.disciplinas[id];if(d)(d.topicos||[]).forEach(function(t){tops.push(chaveTopico(item,id,t[0]));});});
+ var done=tops.filter(function(k){return checks[k]===true;}).length;
+ html+='<section class="nx-con-card"><h3>'+esc(c.nome)+'</h3><p class="nx-con-muted">'+esc(ed.edital||ed.nome||'Programa cadastrado')+' · '+esc(ed.conferido||'Conferência não informada')+'</p><div class="nx-ed-stats"><strong>'+done+' de '+tops.length+' tópicos marcados</strong><span>'+(tops.length?Math.round(done/tops.length*100):0)+'% do checklist</span></div><div class="nx-ed-track"><div style="width:'+(tops.length?done/tops.length*100:0)+'%"></div></div><p class="nx-con-muted">Percentual de marcação manual, não de domínio ou aprovação.</p></section>';
+ ds.forEach(function(id){
+  var d=ed.disciplinas[id];if(!d)return;
+  var count=d.topicos.filter(function(t){return checks[chaveTopico(item,id,t[0])]===true;}).length;
+  html+='<details class="nx-ed-group"><summary><span><b>'+esc(d.nome)+'</b><small>'+count+' de '+d.topicos.length+' tópicos marcados</small></span><span>Ver tópicos</span></summary><div class="nx-ed-topics">';
+  d.topicos.forEach(function(t){
+   var key=chaveTopico(item,id,t[0]),done=checks[key]===true;
+   html+='<label class="nx-ed-topic"><input type="checkbox" data-ed-check="'+esc(key)+'"'+(done?' checked':'')+'><span>'+esc(t[1])+'</span></label>';
+  });
+  html+='</div></details>';
+ });
+ root.innerHTML=html;
+}
+window.nexoEditalVerticalizado=abrirEdital;
+document.addEventListener('change',function(e){
+ if(e.target.id==='nx-ed-select'){editalEscolhido=e.target.value;renderEdital();return;}
+ var key=e.target.getAttribute('data-ed-check');if(!key)return;
+ var checks=checklist();if(e.target.checked)checks[key]=true;else delete checks[key];
+ try{localStorage.setItem(EKEY,JSON.stringify(checks));}catch(err){}
+ var open=Array.from(document.querySelectorAll('.nx-ed-group')).map(function(x){return x.open;});
+ renderEdital();
+ document.querySelectorAll('.nx-ed-group').forEach(function(x,i){x.open=!!open[i];});
+});
+
 function open(){
  var v=document.getElementById('view');if(!v)return;
  if(typeof window.closeMobileNav==='function')window.closeMobileNav();
@@ -107,6 +154,8 @@ document.addEventListener('click',function(e){
  var b=e.target.closest('#nx-concursos-root button[data-action]');if(!b)return;
  var s=get(),id=b.dataset.id,act=b.dataset.action;
  if(act==='config'){showPane(false);return;}
+ if(act==='dashboard'){showPane(true);return;}
+ if(act==='edital'){abrirEdital(id);return;}
  if(act==='trilha'){if(typeof window.nexoCronograma==='function')window.nexoCronograma();return;}
  if(act==='add'){
   var c=document.getElementById('nx-con-add'),job=document.getElementById('nx-con-job');
