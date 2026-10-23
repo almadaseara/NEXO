@@ -501,22 +501,24 @@ function nxUltimoPonto(id,estado,pr){
  var first=tops.find(function(t){var f=nxProgressoTopico(t,estado,pr);return f.feito<f.total;});
  return first?'Comece por: '+first.nome:'Disciplina concluída';
 }
+var NXKI={ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',livro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>',camadas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5zM3 13l9 5 9-5"/></svg>',barras:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 20v-6M12 20V6M18 20v-9"/></svg>'};
 function painelCardsEdital(s,sel,ed){
  var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
  var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
  var plano=noPlano?s.plan:null, pr=noPlano?progresso(s):{};
- var completed=0,total=0;
+ var completed=0,total=0,topFeitos=0,topTotal=0;
  var cards=ids.map(function(id,i){
   var d=ed.disciplinas[id];if(!d)return '';
   var ts=topicos(id),frac=ts.reduce(function(acc,top){var f=nxProgressoTopico(top,s,pr);acc.feito+=f.feito;acc.total+=f.total;return acc;},{feito:0,total:0});
   total+=frac.total;completed+=frac.feito;
+  ts.forEach(function(top){var f=nxProgressoTopico(top,s,pr);topTotal++;if(f.total&&f.feito>=f.total)topFeitos++;});
   var pct=frac.total?Math.round(frac.feito/frac.total*100):0;
   var cor=d.cor||'#269a78', desc=nxUltimoPonto(id,s,pr);
-  return '<button type="button" class="nx-edcard" data-nt="ed-disc" data-ed-disc="'+escH(id)+'" style="--ed-color:'+escH(cor)+'"><span class="nx-edcard-top"><span class="nx-edcard-icon">'+nxEdIcon(id)+'</span><span class="nx-edcard-ring" style="--p:'+pct+'%">'+pct+'%</span></span><strong>'+escH(d.nome)+'</strong><span class="nx-edcard-desc">'+escH(desc)+'</span><span class="nx-edcard-foot"><small>'+ts.length+' tópicos</small><span aria-hidden="true">→</span></span></button>';
+  return '<button type="button" class="nx-edcard" data-nt="ed-disc" data-ed-disc="'+escH(id)+'" style="--ed-color:'+escH(cor)+'"><span class="nx-edcard-top"><span class="nx-edcard-icon">'+nxEdIcon(id)+'</span><span class="nx-edcard-ring" style="--p:'+pct+'%"><b>'+pct+'%</b></span></span><strong>'+escH(d.nome)+'</strong><span class="nx-edcard-desc">'+escH(desc)+'</span><span class="nx-edcard-foot"><small>'+ts.length+' tópicos</small><span aria-hidden="true">→</span></span></button>';
  }).join('');
  var pct=total?Math.round(completed/total*100):0;
  return '<div class="nx-ed-dashboard"><header class="nx-ed-welcome"><div><h2>Olá, Estudante!</h2><p>Acompanhe seu progresso no edital verticalizado e mantenha o foco na sua aprovação.</p></div><div class="nx-ed-motivation"><span class="nx-ed-motivation-icon">◎</span><div><b>Disciplina hoje?</b><small>Continue de onde parou e evolua mais um pouco.</small></div><button type="button" data-nt="ed-retomar">▶ Retomar estudos</button></div></header>'
- +'<section class="nx-ed-summary"><div class="nx-ed-big-ring" style="--p:'+pct+'%"><strong>'+pct+'%</strong><small>concluído</small></div><div class="nx-ed-summary-main"><h3>Progresso geral</h3><p>'+completed+' de '+total+' divisões concluídas</p><div class="nx-ed-progress"><span style="width:'+pct+'%"></span></div><div class="nx-ed-kpis"><span><b>'+completed+'</b> divisões concluídas</span><span><b>'+total+'</b> divisões no programa</span><span><b>'+ids.length+'</b> disciplinas</span></div></div></section>'
+ +'<section class="nx-ed-summary"><div class="nx-ed-big-ring" style="--p:'+pct+'%"><strong>'+pct+'%</strong><small>concluído</small></div><div class="nx-ed-summary-main"><h3>Progresso geral</h3><p>Você concluiu '+completed+' de '+total+' divisões do edital.</p><div class="nx-ed-progress"><span style="width:'+pct+'%"></span></div><div class="nx-ed-kpis"><span class="nx-ed-kpi"><i>'+NXKI.ok+'</i><b>'+topFeitos+'</b><small>tópicos concluídos</small></span><span class="nx-ed-kpi"><i>'+NXKI.livro+'</i><b>'+topTotal+'</b><small>tópicos no total</small></span><span class="nx-ed-kpi"><i>'+NXKI.camadas+'</i><b>'+ids.length+'</b><small>disciplinas</small></span></div></div><div class="nx-ed-const"><i>'+NXKI.barras+'</i><div><b>Mantenha a constância!</b><small>Pequenos avanços diários geram grandes resultados.</small></div></div></section>'
  +(noPlano?'':'<p class="nt-aviso">Consulta ao programa: para contabilizar conclusão, configure um plano de estudos para este cargo. Nenhum progresso foi presumido.</p>')
  +'<div class="nx-ed-section-head"><div><h3>Disciplinas do edital</h3><p>Explore os conteúdos do seu concurso de forma organizada e verticalizada.</p></div><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards" class="active">Cards</button><button type="button" data-nt="ed-view" data-v="lista">Lista do edital</button></div></div><div class="nx-ed-grid">'+cards+'</div></div>';
 }
@@ -525,7 +527,7 @@ function escolherEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
  if(!items.length)return '';
  var ativo=editalSelecionadoLab||((s.plan||{}).edital)||pref.principal||items[0].id;
- return '<div class="nt-edtools"><div class="nt-edital-switch"><label class="nt-edital-label" for="nt-edital-lab-select">Preparação ativa</label><div class="nt-edital-selectwrap"><select id="nt-edital-lab-select" class="nt-edital-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select><span class="nt-edital-caret" aria-hidden="true">⌄</span></div></div></div>';
+ return '<div class="nt-edtools"><div class="nt-edital-switch"><label class="nt-edital-label" for="nt-edital-lab-select">Preparação ativa</label><div class="nt-edital-selectwrap"><select id="nt-edital-lab-select" class="nt-edital-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select><span class="nt-edital-caret" aria-hidden="true">⌄</span></div></div><button type="button" class="nx-ed-gerir" onclick="window.nexoGerenciarConcursos&&window.nexoGerenciarConcursos()">Gerenciar concurso/cargo</button></div>';
 }
 function telaEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
