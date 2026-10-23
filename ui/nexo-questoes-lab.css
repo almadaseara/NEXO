@@ -1,0 +1,75 @@
+/* NEXO Lab — Questões no celular (até 700px) */
+.nxm-folha[hidden],.nxm-nav,.nxm-barra{display:none}
+@media(max-width:700px){
+  body.nxm-trava{overflow:hidden}
+  /* cabeçalho compacto */
+  #view:has(#nxq-res) .library-heading{display:block;margin:6px 0 10px}
+  #view:has(#nxq-res) .library-heading .eyebrow,#view:has(#nxq-res) .library-heading p{display:none}
+  #view:has(#nxq-res) .library-heading h1{font-size:24px;margin:0}
+  #view:has(#nxq-res) .library-count{display:inline-block;margin-top:4px;font-size:12px}
+  /* caixa de filtros enxuta: situação (rolagem horizontal) + busca + botão Filtros */
+  #view:has(#nxq-res) .practice-filter-shell.nxq{padding:10px!important;gap:10px;border-radius:14px}
+  #view:has(#nxq-res) .practice-status-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:2px;scrollbar-width:none}
+  #view:has(#nxq-res) .practice-status-tabs::-webkit-scrollbar{display:none}
+  #view:has(#nxq-res) .practice-status-tabs button{flex:none;white-space:nowrap;padding:9px 14px;font-size:13px}
+  .nxm-barra{display:flex;gap:8px;align-items:stretch}
+  .nxm-kw{flex:1;min-width:0}
+  .nxm-kw .nxq-f{display:block;margin:0}.nxm-kw .nxq-f>span{display:none}
+  .nxm-kw input{width:100%;min-height:44px;font-size:14px}
+  .nxm-btn-filtros{cursor:pointer;font:inherit;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:7px;padding:0 14px;border-radius:12px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1f2f2b);color:var(--nx-ink,#eaf3f0);position:relative}
+  .nxm-btn-filtros i{font-style:normal;font-size:11px;font-weight:800;min-width:18px;height:18px;line-height:18px;text-align:center;border-radius:99px;background:var(--nx-accent,#3ec79a);color:var(--nx-accent-ink,#06231a)}
+  #view:has(#nxq-res) .practice-results-head{display:none}
+  /* uma questão por vez */
+  #view:has(#nxq-res) #nxq-res{padding-bottom:calc(var(--nxm-b,66px) + 84px)}
+  #view:has(#nxq-res) #nxq-res>.practice-question-card{display:none;scroll-margin-top:78px}
+  #view:has(#nxq-res) #nxq-res>.practice-question-card.nxm-ativa{display:block}
+  #view:has(#nxq-res) #nxq-res>.nxq-mais{display:none}
+  #view:has(#nxq-res) .practice-question-card{padding:14px!important;border-radius:14px}
+  #view:has(#nxq-res) .practice-question-meta{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:6px;scrollbar-width:none;margin-bottom:10px}
+  #view:has(#nxq-res) .practice-question-meta::-webkit-scrollbar{display:none}
+  #view:has(#nxq-res) .practice-question-meta span{flex:none;white-space:nowrap;font-size:11.5px}
+  #view:has(#nxq-res) .practice-question-card .card.q{border:0!important;padding:0!important;background:transparent!important;box-shadow:none!important;margin:0!important}
+  #view:has(#nxq-res) .practice-question-card label.opt{display:flex!important;position:relative;gap:10px;align-items:flex-start;padding:13px 12px 13px 46px!important}
+  #view:has(#nxq-res) .practice-question-card label.opt input[type=radio]{margin:4px 0 0;flex:none}
+  #view:has(#nxq-res) .practice-question-card label.opt>span:last-child{flex:1;min-width:0}
+  #view:has(#nxq-res) .practice-question-card .card.q p{line-height:1.55}
+  #view:has(#nxq-res) .practice-question-card label.opt{padding:13px 12px;margin:8px 0;border-radius:12px;min-height:48px}
+  #view.nxm-f0:has(#nxq-res) .practice-question-card .card.q{font-size:14px}
+  #view.nxm-f1:has(#nxq-res) .practice-question-card .card.q{font-size:16px}
+  #view.nxm-f2:has(#nxq-res) .practice-question-card .card.q{font-size:18px}
+  #view.nxm-f3:has(#nxq-res) .practice-question-card .card.q{font-size:20px}
+  /* barra de navegação, acima da barra do app */
+  .nxm-nav{position:fixed;left:0;right:0;bottom:var(--nxm-b,66px);z-index:36;display:flex;align-items:center;gap:6px;padding:8px 10px;background:color-mix(in srgb,var(--nx-bg,#0e1614) 94%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--nx-line,#2d3e3a)}
+  .nxm-nav button{cursor:pointer;font:inherit;font-weight:600;font-size:13.5px;padding:11px 10px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--nx-ink,#eaf3f0);min-height:44px}
+  .nxm-nav button:disabled{opacity:.35;cursor:default}
+  #nxm-ant,#nxm-prox{flex:1}
+  .nxm-nav .nxm-pos{flex:none;border-color:var(--nx-line,#2d3e3a);background:var(--nx-surface,#162320);padding:11px 14px}
+  .nxm-nav .nxm-mais{flex:none;font-size:20px;line-height:1;padding:8px 12px;border-color:var(--nx-line,#2d3e3a)}
+  .nxm-ir{position:absolute;left:10px;right:10px;bottom:calc(100% + 8px);display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--nx-surface,#162320);border:1px solid var(--nx-accent,#3ec79a)}
+  .nxm-ir[hidden]{display:none}
+  .nxm-ir label{flex:1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--nx-ink-2,#cfe0da)}
+  .nxm-ir input{width:90px;font:inherit;padding:9px;border-radius:9px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1f2f2b);color:var(--nx-ink,#eaf3f0)}
+  .nxm-ir button{background:var(--nx-accent,#3ec79a);color:var(--nx-accent-ink,#06231a);min-height:40px}
+  /* folha */
+  .nxm-folha{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end}
+  .nxm-folha[hidden]{display:none}
+  .nxm-fundo{position:absolute;inset:0;background:rgba(0,0,0,.55)}
+  .nxm-painel{position:relative;width:100%;max-height:88vh;display:flex;flex-direction:column;background:var(--nx-surface,#162320);border-radius:20px 20px 0 0;border-top:1px solid var(--nx-line,#2d3e3a);padding:8px 16px calc(14px + env(safe-area-inset-bottom))}
+  .nxm-alca{width:42px;height:4px;border-radius:99px;background:var(--nx-line,#2d3e3a);margin:2px auto 8px}
+  .nxm-sec{display:flex;flex-direction:column;min-height:0}.nxm-sec[hidden]{display:none}
+  .nxm-t{display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px}.nxm-t b{font-size:17px}
+  .nxm-x{cursor:pointer;font-size:26px;line-height:1;background:transparent;border:0;color:var(--nx-muted,#8aa39b)}
+  .nxm-corpo{overflow-y:auto;min-height:0;padding-bottom:8px}
+  .nxm-corpo .nxq-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  .nxm-corpo .nxq-rodape{display:grid;gap:10px;margin-top:12px}
+  .nxm-corpo .nxq-acoes{display:none}
+  .nxm-rodape{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;padding-top:10px;border-top:1px solid var(--nx-line,#2d3e3a)}
+  .nxm-rodape button{cursor:pointer;font:inherit;font-weight:700;padding:13px;border-radius:12px;min-height:48px}
+  .nxm-limpar{background:transparent;border:1px solid var(--nx-line,#2d3e3a);color:var(--nx-ink-2,#cfe0da)}
+  .nxm-ver{background:var(--nx-accent,#3ec79a);border:0;color:var(--nx-accent-ink,#06231a)}
+  .nxm-lista{display:grid;gap:2px}
+  .nxm-linha{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 4px;border-bottom:1px solid var(--nx-line,#2d3e3a);font:inherit;font-size:15px;font-weight:600;color:var(--nx-ink,#eaf3f0);background:transparent;border-left:0;border-right:0;border-top:0;text-align:left;width:100%}
+  .nxm-bt{cursor:pointer}
+  .nxm-fs{display:flex;gap:8px}.nxm-fs button{cursor:pointer;font:inherit;font-weight:700;padding:8px 16px;border-radius:10px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1f2f2b);color:var(--nx-ink,#eaf3f0)}.nxm-fs button:disabled{opacity:.35}
+  .nxm-det{padding:12px 4px;font-size:13.5px;color:var(--nx-ink-2,#cfe0da)}.nxm-det ul{margin:0;padding-left:18px;display:grid;gap:4px}
+}
