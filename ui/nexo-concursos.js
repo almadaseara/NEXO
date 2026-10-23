@@ -155,7 +155,7 @@ document.addEventListener('click',function(e){
  var s=get(),id=b.dataset.id,act=b.dataset.action;
  if(act==='config'){showPane(false);return;}
  if(act==='dashboard'){showPane(true);return;}
- if(act==='edital'){abrirEdital(id);return;}
+ if(act==='edital'){if(typeof window.nexoCronograma==='function')window.nexoCronograma('edital');return;}
  if(act==='trilha'){if(typeof window.nexoCronograma==='function')window.nexoCronograma();return;}
  if(act==='add'){
   var c=document.getElementById('nx-con-add'),job=document.getElementById('nx-con-job');
