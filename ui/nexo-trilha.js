@@ -529,6 +529,43 @@ function escolherEditalLab(s){
  var ativo=editalSelecionadoLab||((s.plan||{}).edital)||pref.principal||items[0].id;
  return '<div class="nt-edtools"><div class="nt-edital-switch"><label class="nt-edital-label" for="nt-edital-lab-select">Preparação ativa</label><div class="nt-edital-selectwrap"><select id="nt-edital-lab-select" class="nt-edital-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select><span class="nt-edital-caret" aria-hidden="true">⌄</span></div></div><button type="button" class="nx-ed-gerir" onclick="window.nexoGerenciarConcursos&&window.nexoGerenciarConcursos()">Gerenciar concurso/cargo</button></div>';
 }
+
+/* ===== Edital verticalizado em tabela (lab): Teoria, R1–R6 e aproveitamento por tópico ===== */
+var KREV='nexo_edital_rev_lab_v1', nxEdPct=false;
+function revLer(){try{var o=JSON.parse(localStorage.getItem(KREV)||'{}');return o&&typeof o==='object'?o:{};}catch(e){return {};}}
+function revSalvar(o){try{localStorage.setItem(KREV,JSON.stringify(o));}catch(e){}}
+function questoesPorModulo(){
+ var r={},a;try{a=JSON.parse(localStorage.getItem('nexo_eventos')||'[]');}catch(e){a=[];}
+ (Array.isArray(a)?a:[]).forEach(function(x){if(x&&x.k==='q'&&x.m){var c=r[x.m]=r[x.m]||{n:0,ok:0};c.n++;if(x.ok)c.ok++;}});
+ return r;
+}
+var TE_LIVRO='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>';
+function tabelaEditalLab(s,sel,ed){
+ var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
+ var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
+ var pr=noPlano?progresso(s):{},rev=revLer(),qm=questoesPorModulo(),totT=0,totOk=0;
+ var blocos=ids.map(function(id){
+  var d=ed.disciplinas[id];if(!d)return '';
+  var ts=topicos(id),feitos=0;
+  var linhas=ts.map(function(t){
+   var key=sel.id+'|'+sel.cargo+'|'+t.id,r=rev[key]||{},f=nxProgressoTopico(t,s,pr);
+   var lido=!!(f.total&&f.feito>=f.total)||!!(s.plan&&s.plan.ja&&s.plan.ja[t.id]);
+   var teoria=lido||!!r.t;totT++;if(teoria){feitos++;totOk++;}
+   var n=0,ok=0;t.mods.forEach(function(m){var c=qm[m];if(c){n+=c.n;ok+=c.ok;}});
+   var ap=n?Math.round(ok/n*100):null;
+   var prio='<span class="te-prio p'+t.prio+'" title="'+PRIO_NOME[t.prio]+(t.estimada?' (estimativa da NEXO)':'')+'">'+({3:'Alta',2:'Média',1:'Baixa'}[t.prio])+'</span>';
+   var estudar=t.mods.length?'<button type="button" class="te-liv" data-nt="modulo" data-mod="'+escH(t.mods[0])+'" title="Abrir o material" aria-label="Abrir material de '+escH(t.nome)+'">'+TE_LIVRO+'</button>':'<span class="te-sem" title="Sem material no NEXO">—</span>';
+   var cbs='';for(var i=0;i<6;i++)cbs+='<td><input type="checkbox" class="te-cb" data-nt="ed-rev" data-k="'+escH(key)+'" data-f="'+i+'" aria-label="R'+(i+1)+' — '+escH(t.nome)+'"'+((r.r&&r.r[i])?' checked':'')+'></td>';
+   return '<tr><td class="te-top"><span>'+escH(t.nome)+'</span></td><td>'+prio+'</td><td>'+estudar+'</td><td><input type="checkbox" class="te-cb" data-nt="ed-rev" data-k="'+escH(key)+'" data-f="t" aria-label="Teoria — '+escH(t.nome)+'"'+(teoria?' checked':'')+(lido?' disabled title="Concluído pelo plano ou pelo livro digital"':'')+'></td>'+cbs
+    +'<td class="te-ap'+(ap==null?'':(ap>=70?' ok':ap>=50?' md':' ruim'))+'"'+(n?' title="'+ok+' de '+n+' questões"':'')+'>'+(ap==null?'—':ap+'%')+'</td></tr>';
+  }).join('');
+  var pct=ts.length?Math.round(feitos/ts.length*100):0;
+  return '<details class="te-disc" style="--c:'+escH(d.cor||'#269a78')+'"><summary><span class="te-ico">'+nxEdIcon(id)+'</span><b>'+escH(d.nome)+'</b><span class="te-cont"><span class="te-n"><i data-te-f>'+feitos+'</i>/'+ts.length+'</span><span class="te-p">'+pct+'%</span></span><span class="te-seta" aria-hidden="true">⌃</span></summary>'
+   +'<div class="te-scroll"><table class="te-tab"><thead><tr><th rowspan="2" class="te-th-top">Tópico</th><th rowspan="2">Prioridade</th><th rowspan="2">Estudar</th><th rowspan="2">Teoria</th><th colspan="6" class="te-rv">Revisões</th><th rowspan="2">Aproveitamento</th></tr><tr>'+[1,2,3,4,5,6].map(function(i){return '<th>R'+i+'</th>';}).join('')+'</tr></thead><tbody>'+linhas+'</tbody></table></div></details>';
+ }).join('');
+ return '<section class="te-wrap'+(nxEdPct?' pct':'')+'" id="te-wrap"><div class="te-head"><div><h3>Edital Verticalizado</h3><p>'+totOk+' de '+totT+' tópicos com teoria concluída · '+escH(ed.nome)+' · '+escH(cargo.nome)+'</p></div><div class="te-btns"><button type="button" class="te-bt'+(nxEdPct?' on':'')+'" data-nt="ed-pct" title="Alternar contagem e porcentagem" aria-label="Alternar contagem e porcentagem">%</button><button type="button" class="te-bt" data-nt="ed-refresh" title="Atualizar" aria-label="Atualizar">↻</button></div></div>'
+  +(noPlano?'<p class="te-aviso">Visualização do programa deste cargo. Sua trilha e seu histórico não foram alterados; as marcações abaixo ficam salvas neste aparelho.</p>':'')+'<div class="te-list">'+blocos+'</div></section>';
+}
 function telaEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
  var id=editalSelecionadoLab||((s.plan||{}).edital)||pref&&pref.principal;
@@ -544,7 +581,7 @@ function telaEditalLab(s){
    var atual=mesmoPlano?s:{plan:null,progress:{},weeks:{}};
    /* O plano de outro cargo nunca é aplicado à seleção de leitura. */
    if(!mesmoPlano)atual={plan:{cargo:sel.cargo,discs:null,ja:{}},progress:{},weeks:{},_somenteConsulta:true};
-   return selector+(nxEditalVista==='cards'?painelCardsEdital(atual,sel,ed):'<div class="nx-ed-section-head"><h3>Lista do edital</h3><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards">Cards</button><button type="button" data-nt="ed-view" data-v="lista" class="active">Lista do edital</button></div></div>'+ (mesmoPlano?'':'<p class="nt-aviso">Visualização do programa deste cargo. Seu cronograma e histórico existente não foram alterados.</p>')+telaEdital(atual));
+   return selector+(nxEditalVista==='cards'?painelCardsEdital(atual,sel,ed):'<div class="nx-ed-section-head"><h3></h3><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards">Cards</button><button type="button" data-nt="ed-view" data-v="lista" class="active">Lista do edital</button></div></div>'+tabelaEditalLab(atual,sel,ed));
  }finally{ED=anterior;}
 }
 
@@ -645,6 +682,13 @@ document.addEventListener('change', function(e){
     }
     totalForm(); return;
   }
+  if(el.dataset && el.dataset.nt === 'ed-rev'){
+    var rv=revLer(),kk=el.dataset.k,o=rv[kk]=rv[kk]||{r:[0,0,0,0,0,0]};
+    if(el.dataset.f==='t')o.t=el.checked?1:0;else{o.r=o.r||[0,0,0,0,0,0];o.r[+el.dataset.f]=el.checked?1:0;}
+    revSalvar(rv);
+    var det=el.closest('details');if(det){var tr=det.querySelectorAll('tbody tr'),c=0;tr.forEach(function(r){var t0=r.querySelector('[data-f="t"]');if(t0&&t0.checked)c++;});var ci=det.querySelector('[data-te-f]');if(ci)ci.textContent=c;var pp=det.querySelector('.te-p');if(pp)pp.textContent=(tr.length?Math.round(c/tr.length*100):0)+'%';}
+    return;
+  }
   if(el.id === 'nt-edital-lab-select'){ editalSelecionadoLab=el.value;window.nexoCronograma('edital');return; }
   if(el.dataset && el.dataset.nt === 'sofalta'){ soFalta = !!el.checked; window.nexoCronograma('edital'); return; }
   if(el.dataset && el.dataset.nt === 'ja' && document.querySelector('.nt-aviso') && document.querySelector('.nt-aviso').textContent.indexOf('Visualização do programa deste cargo')>=0)return;
@@ -677,8 +721,10 @@ document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-nt]'); if(!b || b.tagName === 'INPUT') return;
   var a = b.dataset.nt, s = st();
   if(a === 'ed-retomar'){window.nexoCronograma('semana');return;}
+  if(a === 'ed-pct'){nxEdPct=!nxEdPct;var w=document.getElementById('te-wrap');if(w)w.classList.toggle('pct',nxEdPct);b.classList.toggle('on',nxEdPct);return;}
+  if(a === 'ed-refresh'){window.nexoCronograma('edital');return;}
   if(a === 'ed-view'){nxEditalVista=b.dataset.v==='lista'?'lista':'cards';window.nexoCronograma('edital');return;}
-  if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
+  if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.te-disc,.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
   if(a === 'aba'){ window.nexoCronograma(b.dataset.aba); return; }
   if(a === 'editar'){ editando = true; window.nexoCronograma(); return; }
   if(a === 'cancelar'){ editando = false; window.nexoCronograma(); return; }

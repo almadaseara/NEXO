@@ -58,3 +58,37 @@ html .nx-ed-gerir:hover{border-color:var(--nx-accent,#3ec79a)}
 @media(max-width:1100px){html .nx-ed-dashboard .nx-ed-summary{flex-wrap:wrap}.nx-ed-const{width:100%}}
 @media(max-width:860px){html .nx-ed-dashboard .nx-ed-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}html .nx-ed-dashboard .nx-ed-motivation{min-width:0;width:100%}}
 @media(max-width:560px){html .nx-ed-dashboard .nx-ed-grid{grid-template-columns:1fr!important}html .nx-ed-kpi{padding:0 12px}html .nx-ed-dashboard .nx-ed-kpis{flex-wrap:wrap;gap:12px 0!important}html .nx-ed-big-ring{width:88px!important;height:88px!important}}
+
+/* Edital verticalizado em tabela (substitui a "Lista do edital") */
+.te-wrap{display:grid;gap:12px;padding:18px;border:1px solid var(--nx-line,#2d3e3a);border-radius:16px;background:var(--nx-surface,#162320)}
+.te-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.te-head h3{margin:0;font-size:20px}.te-head p{margin:4px 0 0;font-size:12.5px;color:var(--nx-muted,#8aa39b)}
+.te-btns{display:flex;gap:8px}
+.te-bt{cursor:pointer;font:inherit;font-weight:700;width:38px;height:34px;border-radius:9px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1f2f2b);color:var(--nx-ink-2,#cfe0da)}
+.te-bt.on{background:var(--nx-accent,#3ec79a);color:var(--nx-accent-ink,#06231a);border-color:transparent}
+.te-aviso{margin:0;font-size:12.5px;color:var(--nx-muted,#8aa39b)}
+.te-list{display:grid;gap:10px}
+.te-disc{border:1px solid var(--nx-line,#2d3e3a);border-radius:12px;background:var(--nx-bg,transparent);overflow:hidden}
+.te-disc>summary{list-style:none;display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer}
+.te-disc>summary::-webkit-details-marker{display:none}
+.te-ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 16%,transparent)}
+.te-ico svg{width:18px;height:18px}
+.te-disc>summary b{flex:1;min-width:0;font-size:15px}
+.te-cont{font-size:12.5px;color:var(--nx-muted,#8aa39b);font-weight:700}.te-cont .te-p{display:none}.te-wrap.pct .te-n{display:none}.te-wrap.pct .te-p{display:inline}
+.te-seta{transition:transform .15s;color:var(--nx-muted,#8aa39b)}.te-disc:not([open]) .te-seta{transform:rotate(180deg)}
+.te-scroll{overflow-x:auto;border-top:1px solid var(--nx-line,#2d3e3a);padding:6px 10px 10px}
+.te-tab{width:100%;min-width:780px;border-collapse:collapse;font-size:13px}
+.te-tab th{font-size:12px;font-weight:700;padding:9px 6px;text-align:center;color:var(--nx-ink-2,#cfe0da);border-bottom:1px solid var(--nx-line,#2d3e3a)}
+.te-tab th.te-th-top{text-align:left;padding-left:8px}.te-tab th.te-rv{border-bottom:1px solid var(--nx-line,#2d3e3a)}
+.te-tab td{padding:9px 6px;text-align:center;border-bottom:1px solid color-mix(in srgb,var(--nx-line,#2d3e3a) 55%,transparent);vertical-align:middle}
+.te-tab tr:last-child td{border-bottom:0}
+.te-tab td.te-top{text-align:left;padding-left:8px;line-height:1.35;max-width:380px}
+.te-prio{display:inline-block;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700}
+.te-prio.p3{background:#4a1f26;color:#ff8f9b}.te-prio.p2{background:#4a3a14;color:#f1c25b}.te-prio.p1{background:#173d32;color:#6fd9b0}
+.te-liv{cursor:pointer;border:0;background:transparent;color:var(--nx-ink-2,#cfe0da);padding:4px;border-radius:6px}.te-liv:hover{color:var(--nx-accent,#3ec79a)}
+.te-sem{color:var(--nx-muted,#8aa39b)}
+.te-cb{width:18px;height:18px;accent-color:var(--nx-accent,#3ec79a);cursor:pointer}.te-cb:disabled{cursor:default;opacity:.85}
+.te-ap{font-weight:700;color:var(--nx-muted,#8aa39b)}.te-ap.ok{color:#5fd6a6}.te-ap.md{color:#f1c25b}.te-ap.ruim{color:#ff8f9b}
+@media(max-width:560px){.te-wrap{padding:12px}.te-head h3{font-size:18px}}
+.nx-ed-section-head h3:empty{display:none}.nx-ed-section-head:has(h3:empty){justify-content:flex-end}
+@media(max-width:700px){.te-tab td.te-top,.te-tab th.te-th-top{position:sticky;left:0;z-index:1;background:var(--nx-surface,#162320);min-width:150px;box-shadow:2px 0 0 var(--nx-line,#2d3e3a)}}
