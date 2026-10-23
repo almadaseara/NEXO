@@ -592,7 +592,7 @@ function telaEdital(s){
             + (q ? '<button type="button" class="nt-capq" data-nt="questoes" data-mod="' + u.mod + '">Questões</button>' : '') + '</span>';
         }).join('');
         return '<li class="' + (todos ? 'feito' : '') + '"><span class="nt-pdot p' + t.prio + '" title="' + PRIO_NOME[t.prio] + (t.estimada ? ' (estimativa)' : '') + '"></span><span class="nt-edt">' + escH(t.nome) + pTexto + (caps ? '<span class="nt-caps">' + caps + '</span>' + detalhes : '<small class="nt-semmat">sem material no NEXO</small>') + '</span>'
-          + (semPlano ? (todos ? '<span class="nt-ja">✓ lido</span>' : '<span></span>') : '<label class="nt-ja"><input type="checkbox" data-nt="ja" data-top="' + t.id + '"' + (todos || ja ? ' checked' : '') +  + '> já estudei</label>') + '</li>';
+          + (semPlano ? (todos ? '<span class="nt-ja">✓ lido</span>' : '<span></span>') : '<label class="nt-ja"><input type="checkbox" data-nt="ja" data-top="' + t.id + '"' + (ja ? ' checked' : '') +  + '> já estudei</label>') + '</li>';
       }).join('') : '<li class="nt-edvazio">Tudo concluído nesta disciplina.</li>') + '</ol></details>';
   }).join('');
 }
