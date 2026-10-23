@@ -53,13 +53,18 @@ function diasEstudados(){
 function semanaHtml(){
  var sel=d0(selectedDay),hoje=d0(Date.now()),seg=sel-((new Date(sel).getDay()+6)%7)*DIA,feitos=diasEstudados(),marcas=ls(KMARCA,{}),h='';
  for(var i=0;i<7;i++){
-  var t=seg+i*DIA,d=new Date(t),k=dateKey(d),ok=!!feitos[k];
-  h+='<button type="button" class="pn-dia'+(t===sel?' sel':'')+(t===hoje?' hoje':'')+(ok?' ok':'')+'" data-pn="dia" data-date="'+k+'" aria-pressed="'+(t===sel)+'" aria-label="'+NOMES[d.getDay()]+' '+d.getDate()+(ok?', estudado':'')+'"><span><small>'+NOMES[d.getDay()]+'</small><b>'+d.getDate()+'</b></span><i>'+(ok?CHECK:'')+'</i></button>';
+  var t=seg+i*DIA,d=new Date(t),k=dateKey(d),ok=!!feitos[k],manual=!!marcas[k],auto=ok&&!manual,futuro=t>hoje;
+  var nome=NOMES[d.getDay()]+' '+d.getDate();
+  h+='<div class="pn-dia'+(t===sel?' sel':'')+(t===hoje?' hoje':'')+(ok?' ok':'')+'"><button type="button" class="pn-dia-sel" data-pn="dia" data-date="'+k+'" aria-pressed="'+(t===sel)+'" aria-label="Ver o dia '+nome+'"><small>'+NOMES[d.getDay()]+'</small><b>'+d.getDate()+'</b></button>'
+   +'<button type="button" class="pn-bola'+(ok?' on':'')+'" data-pn="marcar" data-date="'+k+'" role="checkbox" aria-checked="'+ok+'" aria-label="'+(ok?'Desmarcar':'Marcar')+' '+nome+' como estudado"'
+   +(futuro?' disabled title="Não é possível marcar um dia futuro"':(auto?' disabled title="Estudo registrado automaticamente (questões ou trilha)"':' title="'+(ok?'Desmarcar dia estudado':'Marcar dia estudado')+'"'))+'>'+(ok?CHECK:'')+'</button></div>';
  }
- var futuro=sel>hoje,marcado=!!marcas[dateKey(new Date(sel))];
- return '<section class="pn-semana" aria-label="Semana de estudo"><div class="pn-dias">'+h+'</div><button type="button" class="pn-marcar'+(marcado?' on':'')+'" data-pn="marcar"'+(futuro?' disabled title="Não é possível marcar um dia futuro"':'')+' aria-pressed="'+marcado+'">'+CHECK+(marcado?'Dia estudado':'Marcar dia estudado')+'</button></section>';
+ return '<section class="pn-semana" aria-label="Semana de estudo"><div class="pn-dias">'+h+'</div></section>';
 }
 
+function selo(t){
+ try{var T=window.nexoTrilha;if(T&&T.edIcon&&t.discId&&t.sigla)return '<span class="nx-lab-pair" style="--badge:'+e(t.cor)+'"><span class="nx-lab-initial">'+e(t.sigla)+'</span><span class="nx-lab-symbol">'+T.edIcon(t.discId)+'</span></span>'}catch(x){}
+ return badgeFor(t.disc)}
 function trilhaHtml(it,match){
  var cab=function(sub,dir){return '<div class="pn-phead"><span class="pn-pico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9"/></svg></span><div><h2>Trilha do dia</h2><p>'+sub+'</p></div>'+(dir?'<span class="pn-meta">'+dir+'</span>':'')+'</div>'};
  var vazio=function(t,s,b,a){return '<section class="pn-panel pn-trilha">'+cab('Seu roteiro de estudos para o dia.')+'<div class="pn-vazio"><b>'+t+'</b><span>'+s+'</span>'+(b?'<button type="button" class="pn-btn" data-lab="trail">'+b+'</button>':'')+'</div></section>'};
@@ -72,7 +77,7 @@ function trilhaHtml(it,match){
  var linhas=l.map(function(t){
   var acao=t.mod&&t.tipo!=='questoes'?'estudar':'praticar';
   return '<li class="pn-item'+(t.feito?' feito':'')+'" style="--c:'+e(t.cor)+'"><button type="button" class="pn-chk" data-pn="feito" data-id="'+e(t.id)+'" aria-pressed="'+t.feito+'" aria-label="'+(t.feito?'Desmarcar':'Concluir')+': '+e(t.titulo||t.tipoNome)+'">'+(t.feito?CHECK:'')+'</button>'
-  +badgeFor(t.disc)+'<span class="pn-disc">'+e(t.disc)+'</span><span class="pn-tit"><b>'+e(t.titulo||t.tipoNome)+'</b><small>'+e(t.sub)+'</small></span><span class="pn-min">'+fmtMin(t.min)+'</span>'
+  +selo(t)+'<span class="pn-disc">'+e(t.disc)+'</span><span class="pn-tit"><b>'+e(t.titulo||t.tipoNome)+'</b><small>'+e(t.sub)+'</small></span><span class="pn-min">'+fmtMin(t.min)+'</span>'
   +'<span class="pn-estado'+(t.feito?' ok':'')+'">'+(t.feito?'Concluído':'Pendente')+'</span>'
   +(t.feito?'<span class="pn-play-vazio"></span>':'<button type="button" class="pn-play" data-nt="'+acao+'" data-id="'+e(t.id)+'" aria-label="Abrir: '+e(t.titulo||t.tipoNome)+'">'+PLAY+'</button>')+'</li>';
  }).join('');
@@ -99,9 +104,9 @@ function numerosHtml(){
 }
 
 function acessoHtml(){
- var c=function(i,t,d,a){return '<button type="button" class="pn-ac" data-lab="'+a+'"><span class="pn-pico">'+icon(i)+'</span><span><b>'+t+'</b><small>'+d+'</small></span>'+SETA+'</button>'};
+ var c=function(i,t,d,a,k){return '<button type="button" class="pn-ac pn-k-'+k+'" data-lab="'+a+'"><span class="pn-pico">'+icon(i)+'</span><span><b>'+t+'</b><small>'+d+'</small></span>'+SETA+'</button>'};
  return '<section class="pn-acesso" aria-labelledby="pn-ah"><div class="pn-ah"><span class="pn-raio"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12Z"/></svg></span><div><h2 id="pn-ah">Acesso rápido</h2><p>Ferramentas para turbinar seus estudos.</p></div></div><div class="pn-ac-grid">'
- +c('check','Praticar questões','Resolva questões por assunto','questions')+c('play','Fazer simulado','Treine com provas completas','simulados')+c('refresh','Revisar','Acesse seus resumos e flashcards','review')+c('book','Livros digitais','Estude pelos materiais do NEXO','books')+'</div></section>';
+ +c('check','Praticar questões','Resolva questões por assunto','questions','verde')+c('play','Fazer simulado','Treine com provas completas','simulados','azul')+c('refresh','Revisar','Acesse seus resumos e flashcards','review','roxo')+c('book','Livros digitais','Estude pelos materiais do NEXO','books','ambar')+'</div></section>';
 }
 
 function show(){
@@ -119,7 +124,7 @@ document.addEventListener('click',function(ev){
  var b=ev.target.closest('[data-lab],[data-pn]');if(!b||!document.querySelector('.pn'))return;
  var p=b.dataset.pn,a=b.dataset.lab;
  if(p==='dia'){selectedDay=new Date(b.dataset.date+'T12:00:00');show()}
- else if(p==='marcar'){if(!safeDate(selectedDay))return;var m=ls(KMARCA,{}),k=dateKey(selectedDay);m[k]=!m[k];localStorage.setItem(KMARCA,JSON.stringify(m));show()}
+ else if(p==='marcar'){var dm=new Date((b.dataset.date||'')+'T12:00:00');if(isNaN(dm)||!safeDate(dm))return;var m=ls(KMARCA,{}),k=b.dataset.date;if(m[k])delete m[k];else m[k]=true;localStorage.setItem(KMARCA,JSON.stringify(m));show()}
  else if(p==='feito'){if(window.nexoTrilha&&window.nexoTrilha.alternar)window.nexoTrilha.alternar(b.dataset.id);show()}
  else if(p==='meta'){var at=+ls(KMETA,0)||0,r=window.prompt('Quantas questões você quer resolver por dia?',at||'');if(r==null)return;var n=Math.round(+String(r).replace(',','.'));if(isFinite(n)&&n>0&&n<=1000)localStorage.setItem(KMETA,JSON.stringify(n));else if(String(r).trim()==='')localStorage.setItem(KMETA,'0');show()}
  else if(a==='contest'){var c=get();c.principal=b.dataset.id;localStorage.setItem('nexo_meus_concursos_v1',JSON.stringify(c));document.dispatchEvent(new CustomEvent('nexo:concursos-alterados',{detail:c}));show()}

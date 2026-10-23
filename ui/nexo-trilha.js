@@ -851,12 +851,12 @@ function tarefasDoDia(t){
   var lista = w ? (w.tarefas || []).filter(function(x){ return x.d === d; }) : [];
   return { plano:true, semana:!!w, edital:ED.id, cargo:s.plan.cargo, tarefas:lista.map(function(x){
     var dd = ED.disciplinas[x.disc] || {};
-    return { id:x.id, feito:!!x.feito, tipo:x.tipo, tipoNome:TIPO[x.tipo] || 'Estudo', mod:x.mod || null, disc:dd.nome || '', sigla:dd.sigla || '', cor:dd.cor || '#888', titulo:tituloTarefa(x), sub:subTarefa(x), min:x.min || 0 };
+    return { id:x.id, feito:!!x.feito, tipo:x.tipo, tipoNome:TIPO[x.tipo] || 'Estudo', mod:x.mod || null, discId:x.disc, disc:dd.nome || '', sigla:dd.sigla || '', cor:dd.cor || '#888', titulo:tituloTarefa(x), sub:subTarefa(x), min:x.min || 0 };
   }) };
 }
 function diasComTarefaFeita(){
   var s = st(), r = {}; Object.keys(s.weeks || {}).forEach(function(k){ (s.weeks[k].tarefas || []).forEach(function(x){ if(x.feito) r[iso(x.feito)] = 1; }); });
   return r;
 }
-window.nexoTrilha = { dia:tarefasDoDia, diasFeitos:diasComTarefaFeita, alternar:function(id){ var s = st(), r = tarefaPorId(s, id); if(r) alternarFeito(s, r.t); }, prioDisciplina:prioDisciplina, legendaPrio:legendaPrio, prioNome:function(n){ return PRIO_NOME[n]; }, gerarSemana:gerarSemana, gerarPlano:gerarPlano, topicos:topicos, unidades:unidades, progresso:progresso, editais:EDS, edital:function(){ return ED; } };
+window.nexoTrilha = { edIcon:nxEdIcon, dia:tarefasDoDia, diasFeitos:diasComTarefaFeita, alternar:function(id){ var s = st(), r = tarefaPorId(s, id); if(r) alternarFeito(s, r.t); }, prioDisciplina:prioDisciplina, legendaPrio:legendaPrio, prioNome:function(n){ return PRIO_NOME[n]; }, gerarSemana:gerarSemana, gerarPlano:gerarPlano, topicos:topicos, unidades:unidades, progresso:progresso, editais:EDS, edital:function(){ return ED; } };
 })();
