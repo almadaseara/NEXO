@@ -77,17 +77,18 @@ function render(){
 /* Painel por concurso: indicadores derivados somente de programas cadastrados.
    Não presume acertos nem percentual de edital sem dados confiáveis. */
 var painelAtivo=true;
-function renderPainel(){
- var root=document.getElementById('nx-concursos-root');if(!root)return;
+function renderPainel(embed){
+ var root=document.getElementById('nx-concursos-root');if(!root)return;embed=embed===true;
  var s=get(),p=s.items.find(function(x){return x.id===s.principal;})||s.items[0],available=p&&disciplinas(p);
  var c=p&&CATALOG.find(function(x){return x.id===p.id;});
  var other=s.items.filter(function(x){return !p||x.id!==p.id;});
- var h='<section class="nx-con-header nx-con-dashboard-head"><span class="nx-con-kicker">MINHA PREPARAÇÃO</span><h2>Painel por concurso</h2><p>Seus concursos em um único lugar, com foco no cargo principal.</p></section>';
+ var h=embed?'':'<section class="nx-con-header nx-con-dashboard-head"><span class="nx-con-kicker">MINHA PREPARAÇÃO</span><h2>Painel por concurso</h2><p>Seus concursos em um único lugar, com foco no cargo principal.</p></section>';
+ if(!p&&embed){root.innerHTML='<section class="nx-con-card"><h3>Concurso principal</h3><p class="nx-con-muted">Escolha uma turma acima para ver o resumo da sua preparação.</p></section>';return;}
  if(!p){h+='<section class="nx-con-card"><h3>Configure sua preparação</h3><p>Escolha pelo menos um concurso e seu cargo para iniciar.</p><button data-action="config">Selecionar concursos</button></section>';root.innerHTML=h;return;}
  h+='<section class="nx-con-card nx-con-main"><div class="nx-con-line"><div><span class="nx-con-kicker">CONCURSO PRINCIPAL</span><h3>'+esc(c.nome)+'</h3><p>'+esc((c.cargos.find(function(x){return x[0]===p.cargo;})||[])[1]||p.cargo)+'</p></div><span>Principal</span></div>';
  h+='<div class="nx-con-metrics"><div><strong>'+s.items.length+' / 3</strong><small>Concursos ativos</small></div><div><strong>'+(available?available.length:'—')+'</strong><small>Disciplinas cadastradas</small></div><div><strong>—</strong><small>Domínio do edital*</small></div></div>';
  h+='<p class="nx-con-muted">*O domínio do edital será exibido quando o progresso estiver vinculado aos tópicos deste cargo. Não estimamos porcentagens.</p>';
- h+='<div class="nx-con-actions"><button data-action="config">Gerenciar concursos</button><button data-action="edital" data-id="'+esc(p.id)+'">Ver edital verticalizado</button><button data-action="trilha">Abrir cronograma existente</button></div></section>';
+ h+='<div class="nx-con-actions">'+(embed?'':'<button data-action="config">Gerenciar concursos</button>')+'<button data-action="edital" data-id="'+esc(p.id)+'">Ver edital verticalizado</button><button data-action="trilha">Abrir cronograma existente</button></div></section>';
  h+='<section class="nx-con-card"><h3>Disciplinas do concurso principal</h3>';
  if(available){h+='<div class="nx-con-subjects">'+available.map(function(id){return '<span>'+esc(nomeDisc(id,[p]))+'</span>';}).join('')+'</div><p class="nx-con-muted">Lista do programa cadastrado; não indica conclusão ou cobertura dos materiais.</p>';}
  else h+='<p class="nx-con-muted">Conteúdo programático ainda não cadastrado para este concurso e cargo. Os indicadores ficam indisponíveis até a conferência do edital.</p>';
@@ -97,6 +98,7 @@ function renderPainel(){
  root.innerHTML=h;
 }
 function showPane(dashboard){
+ if(dashboard&&typeof window.nexoTurmasPainel==='function'){painelAtivo=true;window.nexoTurmasPainel();return;}
  painelAtivo=dashboard;
  var v=document.getElementById('view');if(!v)return;
  var head=document.getElementById('head');if(head)head.textContent=dashboard?'Painel por concurso':'Meus Concursos';
@@ -158,7 +160,7 @@ function open(){
  showPane(true);
  if(typeof window.current!=='undefined')window.current=null;
 }
-window.nexoMeusConcursos=open;
+window.nexoMeusConcursos=open;window.nexoConcursosResumo=function(){renderPainel(true)};
 window.nexoGerenciarConcursos=function(){showPane(false);};
 window.nexoConcursosSelecionados=function(){return get();};
 /* emblemas oficiais: imagem local em assets/brasoes/<id>.png (quando existir) e depois o endereço oficial; sem imagem, o escudo */
