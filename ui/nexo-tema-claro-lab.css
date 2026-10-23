@@ -1,0 +1,54 @@
+/* Lab: refinamento de cores e botoes (foco no tema claro) — Painel, Cronograma e Trilha */
+:root{--tc-sombra:0 1px 2px rgba(16,42,36,.06),0 4px 14px rgba(16,42,36,.05);--tc-sombra-h:0 2px 4px rgba(16,42,36,.08),0 8px 22px rgba(16,42,36,.10)}
+html:not([data-theme="dark"]){--tc-bg:#f1f5f3;--tc-btn:#2b7a64;--tc-btn-h:#226651;--tc-chip-bg:#eef6f2;--tc-chip-bd:#c5ddd2}
+html:not([data-theme="dark"]) body{background:var(--tc-bg)}
+
+/* Cartoes: borda mais firme + sombra suave */
+html:not([data-theme="dark"]) .pn-panel,html:not([data-theme="dark"]) .nx-pd,html:not([data-theme="dark"]) .pn-dia,
+html:not([data-theme="dark"]) .nt-prova,html:not([data-theme="dark"]) .nt-card{border-color:#d3e0da;box-shadow:var(--tc-sombra)}
+
+/* Botao principal unico (Iniciar, Retomar, Ajustar etc.) */
+.pn-iniciar{background:var(--tc-btn,var(--nx-accent))!important;color:#fff!important;border-radius:10px;padding:9px 20px;box-shadow:0 1px 2px rgba(0,0,0,.18);transition:background .15s,transform .1s,box-shadow .15s}
+.pn-iniciar:hover{background:var(--tc-btn-h,var(--nx-accent))!important;filter:none;box-shadow:0 3px 10px rgba(34,102,81,.35)}
+.pn-iniciar:active{transform:translateY(1px)}
+html[data-theme="dark"] .pn-iniciar{--tc-btn:var(--nx-accent);--tc-btn-h:var(--nx-accent)}
+html[data-theme="dark"] .pn-iniciar{color:var(--nx-accent-ink)!important}
+
+/* Chips Questoes/Revisar/Cards/Resumos */
+.pn-chipb{font-weight:600;transition:background .15s,border-color .15s,color .15s,transform .1s}
+html:not([data-theme="dark"]) .pn-chipb{background:var(--tc-chip-bg);border-color:var(--tc-chip-bd);color:#1f5a49}
+html:not([data-theme="dark"]) .pn-chipb:hover{background:var(--tc-btn);border-color:var(--tc-btn);color:#fff}
+.pn-chipb:active{transform:translateY(1px)}
+html:not([data-theme="dark"]) .pn-sessao [data-pn="concluir"],html:not([data-theme="dark"]) .pn-concluir{border-color:#c9d6d0;color:#4a5f57;background:#fff}
+html:not([data-theme="dark"]) .pn-sessao [data-pn="concluir"]:hover,html:not([data-theme="dark"]) .pn-concluir:hover{border-color:var(--tc-btn);color:var(--tc-btn)}
+
+/* Dias da semana */
+html:not([data-theme="dark"]) .pn-dia small{color:#5d726a;font-weight:600}
+html:not([data-theme="dark"]) .pn-dia:hover:not(.sel){border-color:var(--tc-chip-bd);background:#f7fbf9}
+html:not([data-theme="dark"]) .pn-dia.sel{background:#e3f2ec;border-color:var(--tc-btn);box-shadow:inset 0 0 0 1px var(--tc-btn),var(--tc-sombra)}
+html:not([data-theme="dark"]) .pn-dia .pn-bola::before{border-color:#b9cbc3}
+
+/* Segmentos (Semana / Plano / Edital) e botoes secundarios */
+html:not([data-theme="dark"]) .nx-seg{background:#fff;border-color:#cfdcd6;box-shadow:var(--tc-sombra)}
+html:not([data-theme="dark"]) .nx-seg button{color:#3d5149;font-weight:700}
+html:not([data-theme="dark"]) .nx-seg button:hover:not([aria-pressed="true"]){background:var(--tc-chip-bg);color:#1f5a49}
+html:not([data-theme="dark"]) .nx-seg button[aria-pressed="true"]{background:var(--tc-btn);color:#fff;box-shadow:0 1px 3px rgba(34,102,81,.35)}
+html:not([data-theme="dark"]) .nx-btn.ghost{background:#fff;border:1px solid #c5ddd2;color:#1f5a49;font-weight:700;border-radius:10px;box-shadow:var(--tc-sombra);transition:background .15s,border-color .15s}
+html:not([data-theme="dark"]) .nx-btn.ghost:hover{background:var(--tc-chip-bg);border-color:var(--tc-btn)}
+html:not([data-theme="dark"]) .nx-btn.primary,html:not([data-theme="dark"]) .nx-btn:not(.ghost):not(.perigo):not(.small){background:var(--tc-btn);border-color:var(--tc-btn);color:#fff;font-weight:700;border-radius:10px;box-shadow:0 1px 3px rgba(34,102,81,.35)}
+html:not([data-theme="dark"]) .nx-btn.primary:hover{background:var(--tc-btn-h);border-color:var(--tc-btn-h)}
+html:not([data-theme="dark"]) .nt-pdot,html:not([data-theme="dark"]) .nt-link{color:#1f5a49}
+
+/* Colunas da semana (cronograma) */
+html:not([data-theme="dark"]) .nt-colh{background:#e6eeea;border:1px solid #d3e0da}
+html:not([data-theme="dark"]) .nt-colh b{color:#16352c}
+html:not([data-theme="dark"]) .nt-colh small{color:#586d65}
+html:not([data-theme="dark"]) .nt-col.hoje .nt-colh{background:var(--tc-btn);border-color:var(--tc-btn);box-shadow:0 2px 8px rgba(34,102,81,.3)}
+html:not([data-theme="dark"]) .nt-col.hoje .nt-colh b,html:not([data-theme="dark"]) .nt-col.hoje .nt-colh small{color:#fff}
+html:not([data-theme="dark"]) .nt-col.passou .nt-colh{opacity:.8}
+html:not([data-theme="dark"]) .nt-tarefa,html:not([data-theme="dark"]) .nt-task{box-shadow:var(--tc-sombra);border-color:#d3e0da;transition:box-shadow .15s,transform .15s}
+html:not([data-theme="dark"]) .nt-tarefa:hover,html:not([data-theme="dark"]) .nt-task:hover{box-shadow:var(--tc-sombra-h);transform:translateY(-1px)}
+html:not([data-theme="dark"]) .nt-aviso{background:#e9f1ee;border:1px solid #d3e0da;color:#34493f}
+
+/* Foco visivel */
+.pn-iniciar:focus-visible,.pn-chipb:focus-visible,.nx-seg button:focus-visible{outline:2px solid var(--nx-accent);outline-offset:2px}
