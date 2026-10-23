@@ -778,6 +778,32 @@ html[data-theme="dark"] .nx-page.nt .nx-ed-big-ring{
  box-shadow:0 0 16px rgba(67,224,174,.10);
 }
 html[data-theme="dark"] .nx-page.nt .nx-ed-big-ring:before{background:#1b252e!important}
+
+/* Padrão visual global de conclusão — somente tema escuro no laboratório. */
+html[data-theme="dark"]{
+ --nx-progress-neon:#43e0ae;
+ --nx-progress-track:#34444b;
+}
+html[data-theme="dark"] .nt-bar,
+html[data-theme="dark"] .nx-ed-progress,
+html[data-theme="dark"] .progress-bar,
+html[data-theme="dark"] .nx-progress{
+ background:#34444b!important;border-radius:999px!important;overflow:hidden!important;
+}
+html[data-theme="dark"] .nt-bar>i,
+html[data-theme="dark"] .nx-ed-progress>span,
+html[data-theme="dark"] .progress-bar>span,
+html[data-theme="dark"] .nx-progress>span{
+ background:#43e0ae!important;box-shadow:0 0 7px rgba(67,224,174,.19)!important;border-radius:999px!important;
+}
+html[data-theme="dark"] .progress-ring,
+html[data-theme="dark"] .circle-progress{
+ background:conic-gradient(#43e0ae var(--p),#34444b 0)!important;
+ box-shadow:0 0 9px rgba(67,224,174,.10)!important;color:#eaf7f3!important;
+}
+html[data-theme="dark"] .progress-ring:before,
+html[data-theme="dark"] .circle-progress:before{background:#1b252e!important}
+
 </style>
 </head>
 <body class="logged-out">
