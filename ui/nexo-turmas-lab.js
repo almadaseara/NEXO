@@ -45,17 +45,19 @@ function lista(){
   var cont=document.getElementById('tm-cont');if(cont)cont.textContent=s.items.length+'/'+LIMITE+' selecionados';
   return (l.length?'<div class="tm-grade">'+l.map(function(c){return cartao(c,s)}).join('')+'</div>':'<p class="tm-vazio">Nenhuma turma encontrada.</p>')+detalhe(s);
 }
-function pintar(){var el=document.getElementById('tm-lista');if(el)el.innerHTML=lista()}
+function resumo(){try{if(window.nexoConcursosResumo)window.nexoConcursosResumo()}catch(e){}}
+function pintar(){var el=document.getElementById('tm-lista');if(el)el.innerHTML=lista();resumo()}
 function mostrar(){
   var v=document.getElementById('view');if(!v)return;
   try{if(typeof closeMobileNav==='function')closeMobileNav()}catch(e){}
-  var h=document.getElementById('head');if(h)h.textContent='Turmas';
+  var h=document.getElementById('head');if(h)h.textContent='Painel por concurso';
   if(typeof window.current!=='undefined')try{window.current=null}catch(e){}
   var s=sel();
-  v.innerHTML='<div class="nx-page tm"><div class="tm-topo"><div><h1>Turmas</h1><p>Escolha até três concursos e o cargo de cada um. O principal define sua trilha e o painel de estudos.</p></div><strong id="tm-cont" class="tm-cont">'+s.items.length+'/'+LIMITE+' selecionados</strong></div>'
+  v.innerHTML='<div class="nx-page tm"><div class="tm-topo"><div><span class="tm-kick">MINHA PREPARAÇÃO</span><h1>Painel por concurso</h1><p>Escolha até três concursos e o cargo de cada um. O principal define sua trilha e o painel de estudos.</p></div><strong id="tm-cont" class="tm-cont">'+s.items.length+'/'+LIMITE+' selecionados</strong></div>'
    +'<label class="tm-busca"><input type="search" id="tm-busca" placeholder="Pesquisar turmas" value="'+esc(busca)+'" autocomplete="off" aria-label="Pesquisar turmas"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></label>'
-   +'<div id="tm-lista">'+lista()+'</div>'
-   +'<p class="tm-nota">As seleções ficam salvas neste aparelho e não alteram seu cronograma, questões ou dados na conta. <button type="button" class="tm-link" data-tm="comparar">Ver disciplinas em comum</button></p></div>';
+   +'<div id="tm-lista">'+lista()+'</div><div id="nx-concursos-root" class="nx-concursos tm-resumo"></div>'
+   +'<p class="tm-nota">As seleções ficam salvas neste aparelho e não alteram seu cronograma, questões ou dados na conta.</p></div>';
+  resumo();
 }
 document.addEventListener('input',function(e){
   if(e.target&&e.target.id==='tm-busca'){busca=norm(e.target.value.trim());pintar()}
@@ -77,6 +79,6 @@ document.addEventListener('click',function(e){
 });
 window.nexoGerenciarConcursosClassico=window.nexoGerenciarConcursos;
 window.nexoGerenciarConcursos=mostrar;
-window.nexoTurmas=mostrar;
+window.nexoTurmas=mostrar;window.nexoTurmasPainel=mostrar;
 window.nexoTurmas.escudo=escudo;window.nexoTurmas.nome=function(id){return NOME[id]};
 })();
