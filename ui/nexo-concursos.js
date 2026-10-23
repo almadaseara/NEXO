@@ -86,7 +86,7 @@ document.addEventListener('change',function(e){
 });
 function init(){
  var nav=document.getElementById('nav');if(!nav||document.getElementById('nx-con-nav'))return;
- var btn=document.createElement('button');btn.id='nx-con-nav';btn.type='button';btn.textContent='🎯 Meus Concursos (até 3)';
+ var btn=document.createElement('button');btn.id='nx-con-nav';btn.type='button';btn.textContent='Meus concursos';
  btn.className='nx-con-nav';btn.addEventListener('click',open);nav.parentNode.insertBefore(btn,nav);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
