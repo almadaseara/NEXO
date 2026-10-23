@@ -177,7 +177,7 @@ function configHtml(){
   if(ns.indexOf(cfg.n)<0)cfg.n=ns[Math.min(1,ns.length-1)];
   var dur=fmtDur(P.n*seg/60);
   var sel=cs.find(function(x){return x.id===cfg.concurso});
-  var emb=sel&&window.nexoBrasaoImg?window.nexoBrasaoImg(sel.id):'';
+  var emb=sel&&window.nexoTurmas&&window.nexoTurmas.escudo?window.nexoTurmas.escudo(sel.id):'';
   var H=P.H,taxa=H.tot?Math.round(H.ok/H.tot*100):null;
   var nenhum=!P.total;
   return '<div class="nx-page sa"><div class="sa-hero"><div><span class="sa-eyebrow">'+svg('raio',14)+' Simulado inteligente</span><h1>Simulado adaptativo</h1><p>A prova se monta com o seu histórico e se ajusta a cada bloco de '+BLK+' questões. A correção só aparece quando você entrega.</p></div></div>'

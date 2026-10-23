@@ -165,7 +165,7 @@ window.nexoConcursosSelecionados=function(){return get();};
 var BRASAO_LOCAL=[];
 var BRASAO_REMOTO={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image'};
 window.nexoBrasaoErro=function(i){var a=i.getAttribute('data-alt');if(a){i.setAttribute('data-alt','');i.src=a}else i.remove()};
-window.nexoBrasaoImg=function(id){var u=[];if(BRASAO_LOCAL.indexOf(id)>=0)u.push('assets/brasoes/'+id+'.png');if(BRASAO_REMOTO[id])u.push(BRASAO_REMOTO[id]);if(!u.length)return '';return '<img src="'+esc(u[0])+'" data-alt="'+esc(u[1]||'')+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="nexoBrasaoErro(this)">';};
+window.nexoBrasaoImg=function(id){var u=[];u.push('assets/brasoes/'+id+'.png');if(BRASAO_REMOTO[id])u.push(BRASAO_REMOTO[id]);return '<img src="'+esc(u[0])+'" data-alt="'+esc(u[1]||'')+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="nexoBrasaoErro(this)">';};
 restaurar();document.addEventListener('nexo:conta',restaurar);
 window.nexoConcursosCatalogo=CATALOG;window.nexoConcursosSalvar=save;
 document.addEventListener('click',function(e){
