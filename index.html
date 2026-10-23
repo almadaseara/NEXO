@@ -890,7 +890,28 @@ html[data-theme="dark"] .nx-ed-view button:hover:not(.active){background:#343438
 .nx-lab-symbol svg{width:18px;height:18px}
 .nx-lab-shield:has(img){background:transparent!important;border:0!important;padding:1px!important;width:52px!important;height:52px!important;flex-basis:52px!important}
 .nx-lab-shield img{object-fit:contain!important;background:transparent!important;border-radius:0!important}
-</style></head>
+</style><style id="nexo-approved-dashboard-patch">
+.nx-home-lab{background:#171719!important;color:#f2f2f3!important;max-width:none!important}
+.nx-home-lab .nx-lab-days{padding:5px 8px!important;margin-bottom:12px!important;min-height:53px!important;background:#202023!important;border-color:#37373c!important}
+.nx-home-lab .nx-lab-days button{padding:2px!important;min-height:37px!important}
+.nx-home-lab .nx-lab-days button.selected{background:#173a32!important;border-color:#43e0ae!important}
+.nx-home-lab .nx-lab-cols{grid-template-columns:minmax(0,3fr) minmax(300px,2fr)!important;gap:14px!important}
+.nx-home-lab .nx-lab-panel,.nx-home-lab .nx-lab-metrics>div{background:#202023!important;border-color:#39393e!important}
+.nx-home-lab .nx-lab-task,.nx-home-lab .nx-lab-contest{background:#252528!important;border-color:#38383d!important}
+.nx-home-lab .nx-lab-pair{display:inline-flex!important;gap:4px!important;align-items:center!important;flex-shrink:0!important}
+.nx-home-lab .nx-lab-initial,.nx-home-lab .nx-lab-symbol{width:34px!important;height:34px!important;border-radius:8px!important;display:grid!important;place-items:center!important;font-weight:800!important}
+.nx-home-lab .nx-lab-symbol{background:color-mix(in srgb,var(--badge) 44%,#171719)!important;color:#fff!important}
+.nx-home-lab .nx-lab-mark-inline{display:flex!important;justify-content:flex-end!important;margin:-4px 0 10px!important}
+.nx-home-lab .nx-lab-mark-inline button{color:#dffff2!important;border:1px solid #358c70!important;background:#173e33!important}
+.nx-home-lab .nx-lab-quick{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.nx-home-lab .nx-lab-quick button{background:#242427!important;color:#f5f5f6!important;border:1px solid #38574d!important;min-width:0!important;display:flex!important;gap:10px!important;align-items:center!important}
+.nx-home-lab .nx-lab-quickicon{color:#43e0ae!important;background:#163b32!important}
+.nx-home-lab .nx-lab-shield:has(img){width:48px!important;height:48px!important;flex-basis:48px!important;background:transparent!important}
+.nx-home-lab .nx-lab-shield img{height:100%!important;width:100%!important;object-fit:contain!important;background:transparent!important}
+@media(max-width:950px){.nx-home-lab .nx-lab-cols{grid-template-columns:1fr!important}}
+@media(max-width:650px){.nx-home-lab .nx-lab-quick{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nx-home-lab .nx-lab-pair .nx-lab-initial,.nx-home-lab .nx-lab-pair .nx-lab-symbol{width:29px!important;height:29px!important}}
+</style>
+</head>
 <body class="logged-out">
 
 <section id="landing-page" class="landing-page" aria-label="Página inicial do NEXO Revisão">
