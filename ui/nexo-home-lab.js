@@ -42,7 +42,7 @@ function show(){
  h+='<p class="nx-lab-note">PC-BA e PF: emblemas dos portais institucionais; demais instituições com ícones provisórios.</p></section></div>';
  var hist;try{hist=window.nexoEstudo&&window.nexoEstudo.historico&&window.nexoEstudo.historico()}catch(x){}
  h+='<div class="nx-lab-metrics"><div><small>Questões resolvidas</small><strong>—</strong><p>Conectando ao histórico de questões</p></div><div><small>Taxa de acerto</small><strong>—</strong><p>Sem estatística confirmada nesta tela</p></div></div>';
- h+='<h2 class="nx-lab-quick-title">Acesso rápido</h2><div class="nx-lab-quick">'+[['Praticar questões','questions'],['Fazer simulado','simulados'],['Revisar','review'],['Livros digitais','books']].map(function(a){return '<button data-lab="'+a[1]+'"><span class="nx-lab-quickicon">'+icon(({questions:'check',simulados:'play',review:'refresh',books:'book'})[a[1]])+'</span>'+a[0]+' <span>↗</span></button>'}).join('')+'</div>';
+ h+='<h2 class="nx-lab-quick-title">Acesso rápido</h2><div class="nx-lab-quick">'+[['Praticar questões','questions'],['Fazer simulado','simulados'],['Revisar','review'],['Livros digitais','books']].map(function(a){return '<button type="button" aria-label="'+e(a[0])+'" data-lab="'+a[1]+'"><span class="nx-lab-quickicon">'+icon(({questions:'check',simulados:'play',review:'refresh',books:'book'})[a[1]])+'</span>'+a[0]+' <span>↗</span></button>'}).join('')+'</div>';
  h+='</div>';
  view.innerHTML=h;document.getElementById('head').textContent='Painel de estudos';
 }
