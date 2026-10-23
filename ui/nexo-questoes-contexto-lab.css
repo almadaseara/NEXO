@@ -1,0 +1,35 @@
+/* NEXO Lab — painel de contexto nas Questões (tokens do tema) */
+.qx-lock{display:flex;gap:12px;align-items:center;margin-top:12px;padding:12px 14px;border:1px dashed var(--nx-line,#cfdcd6);border-radius:12px;background:var(--nx-surface-2,#f1f5f3);color:var(--nx-muted,#6b7f78);font-size:13.5px}
+.qx-lock i{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--nx-surface,#fff);flex:none}.qx-lock i svg{width:18px;height:18px}.qx-lock b{display:block;color:var(--nx-ink,#223a32)}
+.qx-ctx{margin-top:16px;border:1px solid var(--nx-line,#cfdcd6);border-radius:14px;padding:14px 16px;background:var(--nx-surface,#fff);color:var(--nx-ink,#223a32)}
+.qx-tabs{display:flex;gap:2px;border-bottom:1px solid var(--nx-line,#cfdcd6);margin:-4px -4px 14px}
+.qx-tabs button{flex:1;background:none;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;padding:10px 8px;font:inherit;font-weight:700;font-size:13.5px;color:var(--nx-muted,#6b7f78);cursor:pointer;border-radius:0}
+.qx-tabs button.on{color:var(--nx-accent,#2b7a64);border-color:var(--nx-accent,#2b7a64);background:none}
+.qx-pane{display:none}.qx-pane.on{display:block}
+.qx-blk{margin-bottom:18px}.qx-blk:last-child{margin-bottom:0}
+.qx-blk h3{display:flex;gap:10px;align-items:center;font-size:15px;margin:0 0 10px;color:var(--nx-ink,#223a32)}
+.qx-ic{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;flex:none}.qx-ic svg{width:17px;height:17px}
+.qx-ic.l,.qx-ic.r,.qx-ic.q{background:#3b82f622;color:#3b78d8}.qx-ic.j{background:#a56ae826;color:#9a52e0}.qx-ic.a{background:#e8a23a26;color:#b8791a}
+.qx-box{background:var(--nx-surface-2,#f1f5f3);border:1px solid var(--nx-line,#cfdcd6);border-radius:12px;padding:12px 14px;font-size:14px;margin-bottom:8px;color:var(--nx-ink,#223a32)}
+.qx-box ul{margin:6px 0 0;padding-left:18px}.qx-box li{margin:4px 0;line-height:1.5}.qx-warn{color:#b8791a}.qx-ju p{margin:4px 0 0;line-height:1.5}
+.qx-det{border:1px solid var(--nx-line,#cfdcd6);border-radius:12px;background:var(--nx-surface-2,#f1f5f3);margin-bottom:8px;overflow:hidden}
+.qx-det>summary{cursor:pointer;padding:11px 14px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;list-style:none}.qx-det>summary::-webkit-details-marker{display:none}
+.qx-det>summary b{color:var(--nx-ink,#223a32);font-size:14px}.qx-det>summary span{color:var(--nx-muted,#6b7f78);font-size:12.5px}
+.qx-det>summary::after{content:'›';margin-left:auto;color:var(--nx-muted,#6b7f78);transition:transform .15s}.qx-det[open]>summary::after{transform:rotate(90deg)}
+.qx-lei{padding:4px 14px 14px;font-size:14px;line-height:1.65;border-top:1px solid var(--nx-line,#cfdcd6)}
+.qx-more{display:block;margin:8px 0 0 auto;border:1px solid var(--nx-line,#cfdcd6);background:var(--nx-surface-2,#f1f5f3);color:var(--nx-ink,#223a32);border-radius:10px;padding:7px 14px;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.qx-more:hover{border-color:var(--nx-accent,#2b7a64);color:var(--nx-accent,#2b7a64)}
+.qx-sq{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--nx-line,#cfdcd6);padding:10px 0;font:inherit;font-size:13.5px;color:var(--nx-ink,#223a32);cursor:pointer;border-radius:0}
+.qx-sq:hover b{color:var(--nx-accent,#2b7a64)}.qx-sq i{font-style:normal;width:24px;height:24px;border-radius:6px;background:#3b82f622;color:#3b78d8;display:grid;place-items:center;font-weight:700;font-size:12px}
+.qx-sq b span{display:block;font-weight:400;color:var(--nx-muted,#6b7f78);font-size:12px}.qx-sq em{font-style:normal;font-size:12px;color:var(--nx-muted,#6b7f78)}.qx-sq em.ok{color:var(--nx-good,#1fa97a)}.qx-sq em.no{color:var(--nx-bad,#d64545)}
+.qx-ind{font-size:12.5px;color:var(--nx-muted,#6b7f78);margin:6px 0 0}
+.qx-ctx button:focus-visible{outline:2px solid var(--nx-accent,#2b7a64);outline-offset:2px}
+html[data-theme="dark"] .qx-ctx,html[data-theme="dark"] .qx-lock i{background:var(--nx-surface,#171b1e)}
+@media(max-width:560px){.qx-ctx{padding:12px}.qx-tabs button{font-size:12.5px;padding:10px 4px}}
+/* neutraliza o estilo global de botões do NEXO dentro do painel */
+.qx-ctx .qx-sq{background:transparent!important;color:var(--nx-ink,#223a32)!important;border:0!important;border-bottom:1px solid var(--nx-line,#cfdcd6)!important;border-radius:0!important;box-shadow:none!important;min-height:0!important;width:100%!important;margin:0!important;text-align:left!important}
+.qx-ctx .qx-more{background:var(--nx-surface-2,#f1f5f3)!important;color:var(--nx-ink,#223a32)!important;border:1px solid var(--nx-line,#cfdcd6)!important;box-shadow:none!important;min-height:0!important;width:auto!important}
+.qx-ctx .qx-more:hover{color:var(--nx-accent,#2b7a64)!important;border-color:var(--nx-accent,#2b7a64)!important}
+.qx-ctx .qx-tabs button{background:none!important;box-shadow:none!important;min-height:0!important;width:auto!important;margin-bottom:-1px!important;border:0!important;border-bottom:2px solid transparent!important;color:var(--nx-muted,#6b7f78)!important}
+.qx-ctx .qx-tabs button.on{color:var(--nx-accent,#2b7a64)!important;border-bottom-color:var(--nx-accent,#2b7a64)!important}
+.qx-ctx .qx-sq b{color:inherit}.qx-ctx .qx-sq:hover b{color:var(--nx-accent,#2b7a64)}
