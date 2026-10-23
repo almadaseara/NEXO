@@ -698,6 +698,44 @@ html[data-theme="dark"] aside .nx-con-nav-icon{color:#55d4aa!important}
 /* Marca NEXO conceitual usando CSS/SVG, sem depender de arquivo externo */
 .brand .brand-mark{font-size:0!important;position:relative;background:transparent!important;border:0!important;box-shadow:none!important}
 .brand .brand-mark:after{content:'';display:block;width:39px;height:35px;background:linear-gradient(135deg,#a8d6cc,#21685b);clip-path:polygon(0 100%,0 0,21% 0,79% 65%,79% 0,100% 0,100% 100%,79% 100%,21% 35%,21% 100%)}
+
+/* Versão de layout fiel ao modelo visual aprovado: cabeçalho, cards e acabamento. */
+.nx-page.nt:has(.nx-ed-dashboard){max-width:none!important;width:100%;padding:20px 28px!important;background:#f8fbfa;color:#172338}
+.nx-page.nt:has(.nx-ed-dashboard)>.nx-head,.nx-page.nt:has(.nx-ed-dashboard)>.nt-tabsleg{display:none!important}
+.nx-page.nt:has(.nx-ed-dashboard)>.nt-edtools{margin:0 0 20px}
+.nx-page.nt:has(.nx-ed-dashboard) .nt-edital-switch{max-width:660px}
+.nx-ed-dashboard{gap:20px!important}
+.nx-ed-welcome{display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap;margin:7px 0 2px}
+.nx-ed-welcome h2{font-size:31px!important;font-weight:800;letter-spacing:-.035em;color:#10213a}
+.nx-ed-welcome p{font-size:14px;color:#66758b!important}
+.nx-ed-motivation{display:flex;align-items:center;gap:12px;background:#eaf7f2;border:1px solid #d2ede4;padding:15px 17px;border-radius:13px;min-width:420px}
+.nx-ed-motivation-icon{display:grid;place-items:center;width:45px;height:45px;background:white;border-radius:50%;color:#087657;font-size:32px}
+.nx-ed-motivation div{display:grid;gap:5px;flex:1}.nx-ed-motivation b{font-size:13px;color:#143d34}.nx-ed-motivation small{font-size:11px;color:#637e78}
+.nx-ed-motivation button{background:#064c3c;border:0;border-radius:8px;color:#fff;padding:13px 14px;white-space:nowrap;cursor:pointer;font-size:12px}
+.nx-ed-summary{background:#fff!important;border-color:#e0e8e7!important;padding:23px 28px!important;box-shadow:0 2px 11px #112a2710!important}
+.nx-ed-summary-main h3{font-size:19px!important;color:#172338}
+.nx-ed-summary-main p{font-size:14px;color:#738298!important}.nx-ed-big-ring:before{background:#fff!important}
+.nx-ed-big-ring strong{color:#12213d!important}
+.nx-ed-kpis{margin-top:19px!important;gap:24px!important;color:#697993!important}.nx-ed-kpis b{font-size:17px;color:#172338!important}
+.nx-ed-section-head h3{font-size:23px!important;color:#172338}
+.nx-ed-section-head p{font-size:13px;color:#697993!important}
+.nx-ed-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+.nx-edcard{background:#fff!important;border-color:#e1e9e8!important;box-shadow:0 2px 7px #092d2710;min-height:210px!important;padding:16px!important;gap:10px!important;color:#152239!important}
+.nx-edcard-icon{width:46px;height:46px;border-radius:12px!important;display:flex;justify-content:center;align-items:center}
+.nx-edcard-icon svg{width:24px;height:24px}
+.nx-edcard strong{font-size:14px!important;color:#152239}
+.nx-edcard-desc{color:#728098!important;line-height:1.4!important;font-size:12px!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.nx-edcard-ring{color:#12233a!important}.nx-edcard-ring:before{background:#fff!important}
+.nx-edcard-foot small{background:#f0f4f7!important;color:#273b50!important;font-weight:700}
+.nx-ed-view{background:white!important;border-color:#e4eceb!important}.nx-ed-view button{color:#5f7591!important}.nx-ed-view button.active{background:#e4f5ef!important;color:#084b39!important}
+.nx-ed-footer{background:#fff;border:1px solid #e7ecec;border-radius:12px;padding:14px 22px;display:flex;align-items:center;gap:17px;color:#114e3c}
+.nx-ed-footer>span{font-size:26px}.nx-ed-footer>div{display:grid;gap:3px;flex:1}.nx-ed-footer b{color:#1a2a3b;font-size:12px}.nx-ed-footer small{color:#738298;font-size:11px}.nx-ed-footer strong{font-size:21px;white-space:nowrap}.nx-ed-footer strong small{display:block;letter-spacing:.27em;font-size:9px;color:#114e3c}.nx-ed-footer em{font-size:9px;letter-spacing:.18em;font-style:normal;color:#506a78;border-left:1px solid #d5dedc;padding-left:18px}
+html[data-theme="dark"] .nx-page.nt:has(.nx-ed-dashboard){background:#111a1b;color:#e7f3ef}
+html[data-theme="dark"] .nx-ed-summary,html[data-theme="dark"] .nx-edcard,html[data-theme="dark"] .nx-ed-footer{background:#1b2828!important;border-color:#355047!important}
+html[data-theme="dark"] .nx-edcard-ring:before,html[data-theme="dark"] .nx-ed-big-ring:before{background:#1b2828!important}
+html[data-theme="dark"] .nx-ed-welcome h2,html[data-theme="dark"] .nx-edcard strong,html[data-theme="dark"] .nx-ed-summary-main h3,html[data-theme="dark"] .nx-ed-section-head h3,html[data-theme="dark"] .nx-ed-big-ring strong,html[data-theme="dark"] .nx-edcard-ring,html[data-theme="dark"] .nx-ed-kpis b,html[data-theme="dark"] .nx-ed-footer b{color:#e8f5ef!important}
+@media(max-width:1300px){.nx-ed-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}@media(max-width:970px){.nx-ed-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nx-ed-motivation{min-width:0;width:100%}}@media(max-width:550px){.nx-page.nt:has(.nx-ed-dashboard){padding:14px!important}.nx-ed-grid{grid-template-columns:1fr!important}.nx-ed-motivation{flex-wrap:wrap}.nx-ed-footer em,.nx-ed-footer strong{display:none}}
+
 </style>
 </head>
 <body class="logged-out">
