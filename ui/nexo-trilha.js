@@ -445,6 +445,33 @@ function telaPlano(s){
 
 /* Seletor opcional: preserva o plano existente e a estrutura da aba. */
 var editalSelecionadoLab=null;
+
+var nxEditalVista='cards';
+function painelCardsEdital(s,sel,ed){
+ var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
+ var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
+ var plano=noPlano?s.plan:null, pr=noPlano?progresso(s):{};
+ var completed=0,total=0;
+ var cards=ids.map(function(id,i){
+  var d=ed.disciplinas[id];if(!d)return '';
+  var ts=d.topicos||[],us=unidades(id),por={};
+  us.forEach(function(u){(por[u.top]=por[u.top]||[]).push(u);});
+  var feitos=ts.filter(function(top){
+   var uu=por[top[0]]||[];
+   return !!((plano&&plano.ja&&plano.ja[top[0]]) ||(noPlano&&uu.length&&uu.every(function(u){return !!(pr[ch(u.id)]||{}).e;})));
+  }).length;
+  total+=ts.length;completed+=feitos;
+  var pct=ts.length?Math.round(feitos/ts.length*100):0;
+  var cor=d.cor||'#269a78', desc=ts.slice(0,2).map(function(x){return x[1];}).join(' · ');
+  return '<button type="button" class="nx-edcard" data-nt="ed-disc" data-ed-disc="'+escH(id)+'" style="--ed-color:'+escH(cor)+'"><span class="nx-edcard-top"><span class="nx-edcard-icon">'+escH(d.sigla||String(i+1))+'</span><span class="nx-edcard-ring" style="--p:'+pct+'%">'+pct+'%</span></span><strong>'+escH(d.nome)+'</strong><span class="nx-edcard-desc">'+escH(desc)+'</span><span class="nx-edcard-foot"><small>'+ts.length+' tópicos</small><span aria-hidden="true">→</span></span></button>';
+ }).join('');
+ var pct=total?Math.round(completed/total*100):0;
+ return '<div class="nx-ed-dashboard"><header class="nx-ed-welcome"><div><span class="nx-ed-eyebrow">ORGANIZAÇÃO DA PREPARAÇÃO</span><h2>Seu edital, sua evolução.</h2><p>Acompanhe as disciplinas do concurso selecionado.</p></div></header>'
+ +'<section class="nx-ed-summary"><div class="nx-ed-big-ring" style="--p:'+pct+'%"><strong>'+pct+'%</strong><small>concluído</small></div><div class="nx-ed-summary-main"><h3>Progresso geral</h3><p>'+completed+' de '+total+' tópicos concluídos</p><div class="nx-ed-progress"><span style="width:'+pct+'%"></span></div><div class="nx-ed-kpis"><span><b>'+completed+'</b> tópicos concluídos</span><span><b>'+total+'</b> tópicos no programa</span><span><b>'+ids.length+'</b> disciplinas</span></div></div></section>'
+ +(noPlano?'':'<p class="nt-aviso">Consulta ao programa: para contabilizar conclusão, configure um plano de estudos para este cargo. Nenhum progresso foi presumido.</p>')
+ +'<div class="nx-ed-section-head"><div><h3>Disciplinas do edital</h3><p>Acesse os tópicos de cada disciplina sem perder a estrutura original.</p></div><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards" class="active">Cards</button><button type="button" data-nt="ed-view" data-v="lista">Lista do edital</button></div></div><div class="nx-ed-grid">'+cards+'</div></div>';
+}
+
 function escolherEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
  if(!items.length)return '';
@@ -466,7 +493,7 @@ function telaEditalLab(s){
    var atual=mesmoPlano?s:{plan:null,progress:{},weeks:{}};
    /* O plano de outro cargo nunca é aplicado à seleção de leitura. */
    if(!mesmoPlano)atual={plan:{cargo:sel.cargo,discs:null,ja:{}},progress:{},weeks:{},_somenteConsulta:true};
-   return selector+(mesmoPlano?'':'<p class="nt-aviso">Visualização do programa deste cargo. Seu cronograma e histórico existente não foram alterados. Para registrar progresso vinculado à trilha, configure um plano para este cargo.</p>')+telaEdital(atual);
+   return selector+(nxEditalVista==='cards'?painelCardsEdital(atual,sel,ed):'<div class="nx-ed-section-head"><h3>Lista do edital</h3><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards">Cards</button><button type="button" data-nt="ed-view" data-v="lista" class="active">Lista do edital</button></div></div>'+ (mesmoPlano?'':'<p class="nt-aviso">Visualização do programa deste cargo. Seu cronograma e histórico existente não foram alterados.</p>')+telaEdital(atual));
  }finally{ED=anterior;}
 }
 
@@ -588,6 +615,8 @@ document.addEventListener('submit', function(e){
 document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-nt]'); if(!b || b.tagName === 'INPUT') return;
   var a = b.dataset.nt, s = st();
+  if(a === 'ed-view'){nxEditalVista=b.dataset.v==='lista'?'lista':'cards';window.nexoCronograma('edital');return;}
+  if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
   if(a === 'aba'){ window.nexoCronograma(b.dataset.aba); return; }
   if(a === 'editar'){ editando = true; window.nexoCronograma(); return; }
   if(a === 'cancelar'){ editando = false; window.nexoCronograma(); return; }
