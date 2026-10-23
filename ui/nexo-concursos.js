@@ -180,7 +180,7 @@ document.addEventListener('change',function(e){
 });
 function init(){
  var nav=document.getElementById('nav');if(!nav||document.getElementById('nx-con-nav'))return;
- var btn=document.createElement('button');btn.id='nx-con-nav';btn.type='button';btn.textContent='Painel por concurso';
+ var btn=document.createElement('button');btn.id='nx-con-nav';btn.type='button';btn.innerHTML='<span class="nx-con-nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="2"></rect><rect x="13" y="3" width="8" height="5" rx="2"></rect><rect x="13" y="10" width="8" height="11" rx="2"></rect><rect x="3" y="13" width="8" height="8" rx="2"></rect></svg></span><span class="nx-con-nav-label">Painel por concurso</span>';
  btn.className='nx-con-nav';btn.addEventListener('click',open);nav.parentNode.insertBefore(btn,nav);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
