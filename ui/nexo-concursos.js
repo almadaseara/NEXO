@@ -157,6 +157,7 @@ function open(){
 window.nexoMeusConcursos=open;
 window.nexoGerenciarConcursos=function(){showPane(false);};
 window.nexoConcursosSelecionados=function(){return get();};
+window.nexoConcursosCatalogo=CATALOG;window.nexoConcursosSalvar=save;
 document.addEventListener('click',function(e){
  var b=e.target.closest('#nx-concursos-root button[data-action]');if(!b)return;
  var s=get(),id=b.dataset.id,act=b.dataset.action;
