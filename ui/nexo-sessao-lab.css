@@ -1,0 +1,22 @@
+/* Sessão de estudo (lab) */
+.sx{max-width:860px;margin:0 auto}
+.sx-topo{margin-bottom:14px}
+.sx-eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--nx-muted,#8aa39d);font-weight:700}
+.sx-cab h1{margin:6px 0 4px;font-size:28px;line-height:1.2}
+.sx-cab p{margin:0;color:var(--nx-ink-2)}
+.sx-prog{display:flex;align-items:center;gap:12px;margin:16px 0 22px;font-size:13px;color:var(--nx-ink-2)}
+.sx-barra{flex:1;height:8px;border-radius:5px;background:var(--nx-surface-2,#1d2b27);overflow:hidden}
+.sx-barra i{display:block;height:100%;border-radius:5px;background:var(--c,#3ec79a)}
+.sx-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.sx-et{display:grid;grid-template-columns:30px 44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px 18px;border:1px solid var(--nx-line,#2d3e3a);border-left:3px solid var(--c,#3ec79a);border-radius:14px;background:var(--nx-surface,#162320)}
+.sx-et.ok{opacity:.85}
+.sx-n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:13px;border:1px solid var(--nx-line,#2d3e3a);color:var(--nx-ink-2)}
+.sx-et.ok .sx-n{background:var(--c,#3ec79a);border-color:var(--c,#3ec79a);color:#08231b}
+.sx-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--c,#3ec79a) 20%,transparent);color:var(--c,#3ec79a)}
+.sx-tx{display:grid;gap:3px;min-width:0}.sx-tx small{color:var(--nx-ink-2);font-size:13px}
+.sx-ac{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.sx-fim{display:grid;gap:8px;justify-items:start;margin-top:22px}.sx-fim small{color:var(--nx-muted)}.sx-ok{color:var(--nx-accent);font-weight:700}
+.sx-fim .nx-btn:disabled{opacity:.45;cursor:not-allowed}
+#sx-volta{white-space:nowrap;position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:60;border:0;border-radius:999px;padding:11px 20px;font:inherit;font-weight:700;font-size:14px;background:var(--nx-accent,#3ec79a);color:#08231b;box-shadow:0 8px 24px rgba(0,0,0,.4);cursor:pointer}
+@media(min-width:861px){#sx-volta{bottom:24px;left:auto;right:24px;transform:none}}
+@media(max-width:700px){.sx-et{grid-template-columns:28px minmax(0,1fr);grid-template-areas:"n tx" ". ac"}.sx-ic{display:none}.sx-n{grid-area:n}.sx-tx{grid-area:tx}.sx-ac{grid-area:ac;justify-content:flex-start}}

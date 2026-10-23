@@ -10,7 +10,11 @@ var CATALOG=[
  {id:'pmpe',nome:'Polícia Militar de Pernambuco (PM-PE)',cargos:[['soldado','Soldado'],['oficial','Oficial']]}
 ];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+var BKP=KEY+'_bkp';
+/* cópia de segurança das matrículas: se a principal sumir (limpeza do navegador, saída da conta), volta daqui */
+function restaurar(){try{var v=localStorage.getItem(KEY);if(!v&&localStorage.getItem(BKP))localStorage.setItem(KEY,localStorage.getItem(BKP));else if(v&&v!==localStorage.getItem(BKP))localStorage.setItem(BKP,v);}catch(e){}}
 function get(){
+ restaurar();
  var s;try{s=JSON.parse(localStorage.getItem(KEY)||'{}');}catch(e){s={};}
  var seen={}, items=(Array.isArray(s.items)?s.items:[]).filter(function(x){
   var c=CATALOG.find(function(y){return y.id===x.id;});
@@ -19,7 +23,7 @@ function get(){
  }).slice(0,LIMIT);
  return {items:items,principal:items.some(function(x){return x.id===s.principal;})?s.principal:(items[0]||{}).id||null};
 }
-function save(s){localStorage.setItem(KEY,JSON.stringify(s));document.dispatchEvent(new CustomEvent('nexo:concursos-alterados',{detail:s}));}
+function save(s){var j=JSON.stringify(s);localStorage.setItem(KEY,j);try{localStorage.setItem(BKP,j);}catch(e){}document.dispatchEvent(new CustomEvent('nexo:concursos-alterados',{detail:s}));}
 function edital(id){return (window.NEXO_EDITAIS||{})[id]||null;}
 function disciplinas(item){
  var e=edital(item.id),cargo=e&&e.cargos&&e.cargos[item.cargo];
@@ -157,6 +161,12 @@ function open(){
 window.nexoMeusConcursos=open;
 window.nexoGerenciarConcursos=function(){showPane(false);};
 window.nexoConcursosSelecionados=function(){return get();};
+/* emblemas oficiais: imagem local em assets/brasoes/<id>.png (quando existir) e depois o endereço oficial; sem imagem, o escudo */
+var BRASAO_LOCAL=[];
+var BRASAO_REMOTO={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image'};
+window.nexoBrasaoErro=function(i){var a=i.getAttribute('data-alt');if(a){i.setAttribute('data-alt','');i.src=a}else i.remove()};
+window.nexoBrasaoImg=function(id){var u=[];if(BRASAO_LOCAL.indexOf(id)>=0)u.push('assets/brasoes/'+id+'.png');if(BRASAO_REMOTO[id])u.push(BRASAO_REMOTO[id]);if(!u.length)return '';return '<img src="'+esc(u[0])+'" data-alt="'+esc(u[1]||'')+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="nexoBrasaoErro(this)">';};
+restaurar();document.addEventListener('nexo:conta',restaurar);
 window.nexoConcursosCatalogo=CATALOG;window.nexoConcursosSalvar=save;
 document.addEventListener('click',function(e){
  var b=e.target.closest('#nx-concursos-root button[data-action]');if(!b)return;

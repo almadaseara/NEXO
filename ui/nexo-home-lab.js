@@ -67,7 +67,7 @@ function selo(t){
  try{var T=window.nexoTrilha;if(T&&T.edIcon&&t.discId&&t.sigla)return '<span class="nx-lab-pair" style="--badge:'+e(t.cor)+'"><span class="nx-lab-symbol">'+T.edIcon(t.discId)+'</span></span>'}catch(x){}
  return badgeFor(t.disc)}
 function trilhaHtml(it,match){
- var cab=function(sub,dir){return '<div class="pn-phead"><span class="pn-pico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9"/></svg></span><div><h2>Trilha do dia</h2><p>'+sub+'</p></div>'+(dir?'<span class="pn-meta">'+dir+'</span>':'')+'</div>'};
+ var cab=function(sub,dir){return '<div class="pn-phead"><span class="pn-pico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9"/></svg></span><div><h2>Tarefas do dia</h2><p>'+sub+'</p></div>'+(dir?'<span class="pn-meta">'+dir+'</span>':'')+'</div>'};
  var vazio=function(t,s,b,a){return '<section class="pn-panel pn-trilha">'+cab('Seu roteiro de estudos para o dia.')+'<div class="pn-vazio"><b>'+t+'</b><span>'+s+'</span>'+(b?'<button type="button" class="pn-btn" data-lab="trail">'+b+'</button>':'')+'</div></section>'};
  if(!it)return vazio('Escolha um concurso','Selecione um concurso em Meus concursos para ver sua trilha.','','');
  if(!match)return vazio('O cronograma deste cargo ainda não está configurado','Sua trilha atual foi preservada. Configure o plano deste cargo quando quiser.','Configurar trilha');
@@ -79,19 +79,21 @@ function trilhaHtml(it,match){
  var pend=l.length-feitas;
  var linhas=l.map(function(t){
   var acao=t.mod&&t.tipo!=='questoes'?'estudar':'praticar';
-  var chips=(t.mod?'<button type="button" class="pn-chipb" data-nt="estudar" data-id="'+e(t.id)+'">Material</button>':'')+'<button type="button" class="pn-chipb" data-nt="praticar" data-id="'+e(t.id)+'">Questões</button><button type="button" class="pn-chipb" onclick="nexoRevisarHub()">Revisar</button>';
+  window.__pnTarefas=window.__pnTarefas||{};window.__pnTarefas[t.id]=t;
+  var esc=e(t.mod?'m:'+t.mod:'d:'+t.disc);
+  var chips='<button type="button" class="pn-chipb" data-nt="praticar" data-id="'+e(t.id)+'">Questões</button><button type="button" class="pn-chipb" onclick="'+(t.disc?"nexoRevisarDisc('"+String(t.disc).replace(/'/g,"\\'")+"')":'nexoRevisarHub()')+'">Revisar</button><button type="button" class="pn-chipb" data-fx-scope="'+esc+'">Cards</button>'+(t.mod?'<button type="button" class="pn-chipb" data-nt="estudar" data-id="'+e(t.id)+'" data-tab="resumo">Resumos</button>':'');
   return '<li class="pn-sessao'+(t.feito?' feito':'')+'" style="--c:'+e(t.cor)+'"><div class="pn-s-top">'+selo(t)+'<span class="pn-disc">'+e(t.disc)+'</span><span class="pn-min">'+CLOCK+fmtMin(t.min)+'</span>'
-  +(t.feito?'<span class="pn-estado ok">Concluído</span>':'<button type="button" class="pn-iniciar" data-nt="'+acao+'" data-id="'+e(t.id)+'">Iniciar</button>')+'</div>'
+  +(t.feito?'<span class="pn-estado ok">Concluído</span>':'<button type="button" class="pn-iniciar" data-pn="sessao" data-id="'+e(t.id)+'">Iniciar</button>')+'</div>'
   +'<p class="pn-s-tit"><b>'+e(t.titulo||t.tipoNome)+'</b>'+(t.sub?'<small>'+e(t.sub)+'</small>':'')+'</p>'
   +'<div class="pn-s-acoes">'+chips+'<button type="button" class="pn-chk" data-pn="feito" data-id="'+e(t.id)+'" aria-pressed="'+t.feito+'" aria-label="'+(t.feito?'Desmarcar':'Concluir')+': '+e(t.titulo||t.tipoNome)+'">'+(t.feito?CHECK:'')+'<span>'+(t.feito?'Concluído':'Concluir')+'</span></button></div></li>';
  }).join('');
- return '<section class="pn-panel pn-trilha"><div class="pn-phead"><div><h2>Trilha do dia</h2><p>Seu roteiro de estudos. Conclua os itens e mantenha a consistência.</p></div><button type="button" class="pn-cal" data-lab="trail" aria-label="Abrir a trilha">'+CAL+'</button></div>'
+ return '<section class="pn-panel pn-trilha"><div class="pn-phead"><div><h2>Tarefas do dia</h2><p>Seu roteiro de estudos para hoje.</p></div><button type="button" class="pn-cal" data-lab="trail" aria-label="Abrir a trilha">'+CAL+'</button></div>'
   +'<div class="pn-aviso"><span class="pn-aviso-i">'+CAL+'</span><span>'+(pend?'Você tem <b>'+pend+'</b> '+(pend===1?'sessão':'sessões')+' de estudo '+(pend===1?'pendente':'pendentes')+' · '+feitas+' de '+l.length+' concluídas · '+fmtMin(min):'Todas as <b>'+l.length+'</b> sessões deste dia estão concluídas. Bom trabalho!')+'</span></div><ul class="pn-sessoes">'+linhas+'</ul></section>';
 }
 
 function concursosHtml(x,it){
  var itens=x.items.map(function(z){
-  var on=it&&it.id===z.id,img=official[z.id]?'<img src="'+official[z.id]+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'';
+  var on=it&&it.id===z.id,img=window.nexoBrasaoImg?window.nexoBrasaoImg(z.id):'';
   return '<button type="button" class="pn-conc'+(on?' on':'')+'" data-lab="contest" data-id="'+e(z.id)+'" aria-pressed="'+on+'"><span class="pn-brasao">'+ESCUDO+img+'</span><span class="pn-conc-t"><b>'+e(NOMES_CONC[z.id]||z.id)+'</b><span class="pn-chip">'+e(SIGLA_CONC[z.id]||z.id.toUpperCase())+'</span><small>'+e(CARGOS[z.cargo]||z.cargo)+'</small></span><i class="pn-radio" aria-hidden="true"></i></button>';
  }).join('');
  return '<section class="pn-panel pn-conc-box"><div class="pn-phead"><span class="pn-pico">'+ESCUDO+'</span><div><h2>Meus concursos</h2><p>Selecione um concurso para ver sua trilha personalizada.</p></div><button type="button" class="pn-add" data-lab="manage">+ Adicionar</button></div>'+(itens||'<div class="pn-vazio"><span>Nenhum concurso selecionado.</span></div>')+'<button type="button" class="pn-btn ghost pn-todos" data-lab="manage">Ver todos os concursos '+SETA+'</button></section>';
@@ -135,8 +137,9 @@ document.addEventListener('click',function(ev){
  else if(p==='marcar'){var dm=new Date((b.dataset.date||'')+'T12:00:00');if(isNaN(dm)||!safeDate(dm))return;var m=ls(KMARCA,{}),k=b.dataset.date;if(m[k])delete m[k];else m[k]=true;localStorage.setItem(KMARCA,JSON.stringify(m));show()}
  else if(p==='feito'){if(window.nexoTrilha&&window.nexoTrilha.alternar)window.nexoTrilha.alternar(b.dataset.id);show()}
  else if(p==='meta'){var at=+ls(KMETA,0)||0,r=window.prompt('Quantas questões você quer resolver por dia?',at||'');if(r==null)return;var n=Math.round(+String(r).replace(',','.'));if(isFinite(n)&&n>0&&n<=1000)localStorage.setItem(KMETA,JSON.stringify(n));else if(String(r).trim()==='')localStorage.setItem(KMETA,'0');show()}
- else if(a==='contest'){var c=get();c.principal=b.dataset.id;localStorage.setItem('nexo_meus_concursos_v1',JSON.stringify(c));document.dispatchEvent(new CustomEvent('nexo:concursos-alterados',{detail:c}));show()}
+ else if(a==='contest'){var c=get();c.principal=b.dataset.id;if(window.nexoConcursosSalvar)window.nexoConcursosSalvar(c);else localStorage.setItem('nexo_meus_concursos_v1',JSON.stringify(c));show()}
  else if(a==='manage'){chamar(['nexoGerenciarConcursos'])}
+ else if(p==='sessao'){var tk=(window.__pnTarefas||{})[b.dataset.id];if(tk&&window.nexoSessao)window.nexoSessao.abrir(tk)}
  else if(a==='trail'){chamar(['nexoCronograma'])}
  else if(a==='questions'){if(typeof window.openLibrary==='function')window.openLibrary('quest');else chamar(['renderPracticeQuestionsPage'])}
  else if(a==='simulados'){chamar(['nexoSimulado'])}

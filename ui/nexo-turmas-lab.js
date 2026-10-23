@@ -18,7 +18,7 @@ function salvar(items,principal){
   window.nexoConcursosSalvar(s);
 }
 function escudo(id){
-  var img=EMBLEMA[id]?'<img src="'+esc(EMBLEMA[id])+'" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'';
+  var img=window.nexoBrasaoImg?window.nexoBrasaoImg(id):'';
   return '<span class="tm-arte" style="--c:'+(COR[id]||'#3ec79a')+'"><svg viewBox="0 0 64 72" aria-hidden="true"><path d="M32 3 7 12v22c0 17 10 29 25 35 15-6 25-18 25-35V12z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg><b>'+esc(SIGLA[id]||id.toUpperCase())+'</b>'+img+'</span>';
 }
 function cartao(c,s){

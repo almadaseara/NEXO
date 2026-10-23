@@ -235,3 +235,14 @@
 .pn-numeros{align-items:stretch}.pn-numeros .pn-panel{height:100%}
 @media(max-width:860px){.pn-s-top .pn-disc{font-size:15px}.pn-iniciar{padding:8px 14px}.pn-s-acoes .pn-chk{margin-left:0}.pn-chipb{min-width:0;padding:7px 14px}}
 .pn-numeros .pn-num{align-items:center}.pn-numeros .pn-taxa{align-content:center}
+
+/* Tarefas do dia — estrutura mais compacta */
+.pn-aviso{margin:10px 0 2px;padding:10px 12px;font-size:13.5px}.pn-aviso-i{width:28px;height:28px;border-radius:8px}.pn-aviso-i svg{width:17px;height:17px}
+.pn-sessao{gap:7px;padding:12px 2px}
+.pn-s-top .pn-disc{font-size:14.5px}
+.pn-s-top .pn-min{padding:3px 8px;font-size:12px}
+.pn-iniciar{padding:7px 15px;font-size:13px}
+.pn-sessao .nx-lab-symbol{width:28px!important;height:28px!important;border-radius:8px!important}.pn-sessao .nx-lab-symbol svg{width:16px;height:16px}
+.pn-s-tit{font-size:14px}.pn-s-tit small{font-size:12.5px}
+.pn-chipb{padding:5px 13px;font-size:12.5px;min-width:0}
+.pn-s-acoes{gap:7px}.pn-s-acoes .pn-chk{padding:5px 11px;font-size:12px}
