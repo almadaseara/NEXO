@@ -160,7 +160,7 @@ function anel(p, cor){
 var pagina = { mod:null, tab:null }, abertos = {};
 function lateralHTML(m, key){
   var L = livroDoModulo(m), caps = capitulos(L.id), pl = pctLivro(L.id), tl = caps.reduce(function(a, id){ return a + minutos(modulo(id)); }, 0);
-  return '<div class="lv-topo"><span class="nt-sig" style="--c:' + L.cor + ';background:' + L.cor + '">' + L.sigla + '</span><div><b>' + escH(L.nome) + '</b><small>Livro digital · ' + caps.length + ' capítulos</small></div><button type="button" class="lv-fechar" data-lv="fechar" aria-label="Fechar capítulos">' + IC.x + '</button></div>'
+  return '<div class="lv-topo"><span class="nt-sig" style="--c:' + L.cor + ';background:' + L.cor + '">' + icoDisc(L) + '</span><div><b>' + escH(L.nome) + '</b><small>Livro digital · ' + caps.length + ' capítulos</small></div><button type="button" class="lv-fechar" data-lv="fechar" aria-label="Fechar capítulos">' + IC.x + '</button></div>'
     + '<div class="lv-tempo"><b>' + fmtTempo(minutos(m)) + '</b><span>Tempo estimado de leitura do capítulo</span><small>Livro inteiro: ' + fmtTempo(tl) + '</small></div>'
     + '<div class="lv-prog"><div class="lv-barra"><i style="width:' + pl + '%;background:' + L.cor + '"></i></div><span>' + pl + '% concluído</span></div>'
     + '<ol class="lv-caps">' + caps.map(function(id, i){
@@ -257,6 +257,7 @@ document.addEventListener('nexo:leitura', function(){ if(pagina.mod) redesenharL
 
 /* ---------- página "Livros digitais" ---------- */
 var abertosLivros = {};
+function icoDisc(L){ try{ return window.nexoDisciplineSvg(window.nexoDisciplineIcon(L.nome)); }catch(e){ return ''; } }
 var ICO_REVISAR = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 0 1-13.7 5.6"/><path d="M4 12a8 8 0 0 1 13.7-5.6"/><path d="M18 3v4h-4"/><path d="M6 21v-4h4"/><path d="m9.5 14.5.5-2 4-4 1.5 1.5-4 4z"/></svg>';
 var NOME_PRIO = { 3:'alta', 2:'média', 1:'baixa' };
 function prioLivro(L){
@@ -270,7 +271,7 @@ window.nexoLivros = function(){
   var cards = LIVROS.map(function(L){
     var caps = capitulos(L.id), pl = pctLivro(L.id), c = continuar(L.id), tm = caps.reduce(function(s, id){ return s + minutos(modulo(id)); }, 0);
     var cm = c && modulo(c.mod), ci = c ? caps.indexOf(c.mod) + 1 : 0, aberto = abertosLivros[L.id];
-    return '<section class="lv-livro" style="--c:' + L.cor + '"><div class="lv-capa"><span class="lv-capa-sig">' + L.sigla + '</span><span class="lv-capa-tit">' + escH(L.nome) + '</span><span class="lv-capa-pct">' + pl + '%</span></div>'
+    return '<section class="lv-livro" style="--c:' + L.cor + '"><div class="lv-capa"><span class="lv-capa-sig">' + icoDisc(L) + '</span><span class="lv-capa-tit">' + escH(L.nome) + '</span><span class="lv-capa-pct">' + pl + '%</span></div>'
       + '<div class="lv-info"><h2>' + escH(L.nome) + '</h2>' + prioLivro(L) + '<p class="nx-sub">' + caps.length + ' capítulos · cerca de ' + Math.round(tm / 60) + ' h de leitura</p>'
       + '<div class="lv-prog"><div class="lv-barra"><i style="width:' + pl + '%;background:' + L.cor + '"></i></div><span>' + pl + '% concluído</span></div>'
       + (cm ? '<p class="lv-cont">' + (pl ? 'Continue em' : 'Comece por') + ' <b>Capítulo ' + ci + ': ' + escH(cm.title) + '</b></p>' : '')

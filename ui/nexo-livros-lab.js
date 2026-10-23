@@ -17,6 +17,7 @@ function recs(){var a=ls(KREC,[]);return (Array.isArray(a)?a:[]).filter(function
 var SETA='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>';
 var DOC='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h8l4 4v14H5V3h2zm8 0v5h5M9 12h7M9 16h7"/></svg>';
 var ESTRELA=function(on){return '<svg viewBox="0 0 24 24" width="18" height="18" fill="'+(on?'currentColor':'none')+'" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1 6.2-5.5-3-5.5 3 1-6.2L3 9.7l6.2-.9z"/></svg>'};
+function icoL(Lv){try{return window.nexoDisciplineSvg(window.nexoDisciplineIcon(Lv.nome))}catch(e){return ''}}
 function livroDe(mod){var m=modulo(mod);return m&&NL().livroDoModulo(m)}
 
 function capLinha(id,i,mostrarLivro){
@@ -35,29 +36,45 @@ function livroBloco(Lv,chave){
   if(busca&&!vis.length)return '';
   var open=busca?true:!!abertos[chave];
   var c=NL().continuar(Lv.id);
-  return '<details class="pl-livro" data-k="'+esc(chave)+'"'+(open?' open':'')+' style="--c:'+esc(Lv.cor)+'"><summary><span class="pl-sig">'+esc(Lv.sigla)+'</span><span class="pl-liv-t"><b>'+esc(Lv.nome)+'</b><small>'+done+' de '+caps.length+' concluídos <i>'+pct+'%</i></small></span><span class="pl-chev" aria-hidden="true">⌄</span></summary>'
+  return '<details class="pl-livro" data-k="'+esc(chave)+'"'+(open?' open':'')+' style="--c:'+esc(Lv.cor)+'"><summary><span class="pl-sig">'+icoL(Lv)+'</span><span class="pl-liv-t"><b>'+esc(Lv.nome)+'</b><small>'+done+' de '+caps.length+' concluídos <i>'+pct+'%</i></small></span><span class="pl-chev" aria-hidden="true">⌄</span></summary>'
    +'<div class="pl-liv-corpo"><div class="pl-barra"><i style="width:'+pct+'%"></i></div>'+(c&&!busca?'<button type="button" class="nx-btn primary small pl-cont" data-pl="continuar" data-livro="'+esc(Lv.id)+'">'+(pct?'Continuar leitura':'Começar a ler')+'</button>':'')
    +'<ol class="pl-caps">'+vis.map(function(x){return capLinha(x.id,x.i,false)}).join('')+'</ol></div></details>';
 }
 function porDisciplina(){
-  return NL().livros.map(function(Lv){return livroBloco(Lv,'d:'+Lv.id)}).join('');
+  /* formato anterior (capas, progresso, sumário): reaproveita o desenho clássico sem mexer na página */
+  var v=document.getElementById('view'),h='',fr=document.createDocumentFragment();
+  while(v&&v.firstChild)fr.appendChild(v.firstChild);
+  try{window.nexoLivrosClassico();var w=document.querySelector('#view .lv-livros');h=w?w.innerHTML:''}catch(e){}
+  if(v){v.innerHTML='';v.appendChild(fr)}
+  if(busca){
+    var t=document.createElement('div');t.innerHTML=h;
+    Array.prototype.forEach.call(t.querySelectorAll('.lv-livro'),function(n){var h2=n.querySelector('h2');if(norm(h2?h2.textContent:n.textContent).indexOf(busca)<0)n.remove()});
+    h=t.innerHTML;
+  }
+  return h?'<div class="lv-livros">'+h+'</div>':'';
+}
+var CARR={};
+function cargosDe(c){return (c&&c.cargos)||[]}
+function brasao(id){
+  var T=window.nexoTurmas;if(T&&T.escudo)return T.escudo(id);
+  return '<span class="pl-org">'+esc(id.toUpperCase())+'</span>';
 }
 function porCarreira(){
-  var E=window.NEXO_EDITAIS||{},out='';
-  Object.keys(E).forEach(function(eid){
-    var ed=E[eid];Object.keys(ed.cargos||{}).forEach(function(cid){
-      var cg=ed.cargos[cid],ids=[].concat(cg.gerais||[],cg.especificos||[]);
-      var lv=NL().livros.filter(function(Lv){return ids.indexOf(Lv.id)>=0});
-      if(!lv.length)return;
-      var corpo=lv.map(function(Lv){return livroBloco(Lv,'c:'+eid+':'+cid+':'+Lv.id)}).join('');
-      if(busca&&!corpo)return;
-      var tot=0,ok=0;lv.forEach(function(Lv){var cs=NL().capitulos(Lv.id);tot+=cs.length;ok+=cs.filter(function(id){return NL().pctModulo(id)>=100}).length});
-      var ch='car:'+eid+':'+cid,open=busca?true:!!abertos[ch];
-      out+='<details class="pl-carr" data-k="'+esc(ch)+'"'+(open?' open':'')+'><summary><span class="pl-liv-t"><b>'+esc(ed.nome)+' · '+esc(cg.nome)+'</b><small>'+lv.length+' livros · '+ok+' de '+tot+' capítulos concluídos</small></span><span class="pl-chev" aria-hidden="true">⌄</span></summary><div class="pl-carr-corpo">'+corpo+'</div></details>';
-    });
+  var cat=window.nexoConcursosCatalogo||[],E=window.NEXO_EDITAIS||{},out='';
+  cat.forEach(function(c){
+    var cargos=cargosDe(c);if(!cargos.length)return;
+    var sel=CARR[c.id]||cargos[0][0],ed=E[c.id],cg=ed&&ed.cargos&&ed.cargos[sel];
+    var nome=(window.nexoTurmas&&window.nexoTurmas.nome&&window.nexoTurmas.nome(c.id))||c.nome;
+    var ids=cg?[].concat(cg.gerais||[],cg.especificos||[]):[];
+    var lv=NL().livros.filter(function(Lv){return ids.indexOf(Lv.id)>=0});
+    var corpo=lv.map(function(Lv){return livroBloco(Lv,'c:'+c.id+':'+sel+':'+Lv.id)}).join('');
+    if(busca&&!corpo&&norm(nome+' '+c.id).indexOf(busca)<0)return;
+    var msg=!ed?'Programa ainda não cadastrado para este concurso. Os livros aparecem aqui quando o edital for conferido.':(!lv.length?'Nenhum livro digital ligado a este cargo ainda.':'');
+    var ch='car:'+c.id,open=busca?true:!!abertos[ch];
+    out+='<details class="pl-carr" data-k="'+esc(ch)+'"'+(open?' open':'')+'><summary>'+brasao(c.id)+'<span class="pl-liv-t"><b>'+esc(nome)+'</b><small>'+(lv.length?lv.length+' livros':'sem livros ainda')+'</small></span>'
+     +'<label class="pl-cargo" onclick="event.stopPropagation()"><span>Cargo</span><select data-pl="cargo" data-id="'+esc(c.id)+'" aria-label="Cargo de '+esc(nome)+'">'+cargos.map(function(z){return '<option value="'+esc(z[0])+'"'+(z[0]===sel?' selected':'')+'>'+esc(z[1])+'</option>'}).join('')+'</select></label>'
+     +'<span class="pl-chev" aria-hidden="true">⌄</span></summary><div class="pl-carr-corpo">'+(msg?'<p class="pl-nota">'+msg+'</p>':corpo)+'</div></details>';
   });
-  var sel=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),sem=((sel&&sel.items)||[]).filter(function(x){return !E[x.id]});
-  if(!busca&&sem.length)out+='<p class="pl-nota">Programa ainda não cadastrado para: '+sem.map(function(x){return esc(x.id.toUpperCase())}).join(', ')+'. Os livros aparecem aqui quando o edital for conferido.</p>';
   return out;
 }
 function favoritosHtml(){
@@ -101,6 +118,9 @@ document.addEventListener('input',function(e){
 document.addEventListener('toggle',function(e){
   var d=e.target;if(d&&d.classList&&d.dataset&&d.dataset.k&&(d.classList.contains('pl-livro')||d.classList.contains('pl-carr'))&&!busca)abertos[d.dataset.k]=d.open;
 },true);
+document.addEventListener('change',function(e){
+  var t=e.target;if(t&&t.dataset&&t.dataset.pl==='cargo'){CARR[t.dataset.id]=t.value;abertos['car:'+t.dataset.id]=true;pintarLista()}
+});
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-pl]');if(!b)return;
   var a=b.dataset.pl;

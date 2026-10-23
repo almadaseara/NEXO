@@ -170,3 +170,22 @@
 .pn-ac[class*="pn-k-"] .pn-pico{background:color-mix(in srgb,var(--k) 24%,transparent);color:var(--k)}
 .pn-ac[class*="pn-k-"]:hover{border-color:var(--k);background:color-mix(in srgb,var(--k) 20%,var(--nx-surface))}
 .pn-ac[class*="pn-k-"]>svg{color:var(--k)}
+
+/* taxa de acerto em pizza */
+.pn-taxa{display:grid;gap:14px;align-content:start}
+.pn-taxa-t{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pn-taxa-t small{font-size:13.5px;color:var(--nx-ink-2)}
+.pn-taxa-t .pn-delta{margin-left:0}
+.pn-taxa-c{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.pn-pizza{width:112px;height:112px;border-radius:50%;flex:none;display:grid;place-items:center;position:relative;background:conic-gradient(var(--nx-accent) 0 var(--a),color-mix(in srgb,var(--nx-bad,#e5484d) 70%,transparent) var(--a) 360deg)}
+.pn-pizza b{font-size:21px;font-weight:800;background:var(--nx-surface,#1b1b1d);border-radius:50%;width:66px;height:66px;display:grid;place-items:center}
+.pn-leg{list-style:none;margin:0;padding:0;display:grid;gap:8px;flex:1;min-width:140px}
+.pn-leg li{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--nx-ink-2)}
+.pn-leg li b{margin-left:auto;color:var(--nx-ink,#fff);font-weight:800}
+.pn-leg i{width:11px;height:11px;border-radius:50%;flex:none}
+.pn-leg i.ac{background:var(--nx-accent)}.pn-leg i.er{background:color-mix(in srgb,var(--nx-bad,#e5484d) 70%,transparent)}
+.pn-leg li.tt{border-top:1px solid var(--nx-line,#2d3e3a);padding-top:7px}
+.nx-lab-initial{display:none!important}
+.pn-leg li.big b{font-size:30px;line-height:1;color:var(--nx-accent,#3ec79a)}
+.pn-leg li.big{align-items:baseline}
+.pn-pizza{box-shadow:0 0 0 3px var(--nx-surface,#1b1b1d),0 0 0 4px var(--nx-line,#2d3e3a)}

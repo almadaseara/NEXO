@@ -19,7 +19,7 @@ else if(/inform/.test(x)){sig='IN';color='#1368aa';ico='monitor'}
 else if(/penal/.test(x)){sig='DP';color='#139b76';ico='scale'}
 else if(/constitucional/.test(x)){sig='DC';color='#2779cc';ico='file'}
 else if(/administrativo/.test(x)){sig='DA';color='#bb5a28';ico='file'}
-return '<span class="nx-lab-pair" style="--badge:'+color+'"><span class="nx-lab-initial">'+sig+'</span><span class="nx-lab-symbol">'+icon(ico)+'</span></span>'}
+return '<span class="nx-lab-pair" style="--badge:'+color+'"><span class="nx-lab-symbol">'+icon(ico)+'</span></span>'}
 window.nexoSubjectBadge=badgeFor;
 function taskLabel(t){var names={penal:'Direito Penal',constitucional:'Direito Constitucional',administrativo:'Direito Administrativo',medicina_legal:'Medicina Legal',portugues:'Língua Portuguesa',rlm:'Raciocínio Lógico',informatica:'Informática'};return names[t.disc]||t.disc||'Estudo'}
 function safeDate(d){var today=new Date();today.setHours(23,59,59,999);return d<=today}
@@ -63,7 +63,7 @@ function semanaHtml(){
 }
 
 function selo(t){
- try{var T=window.nexoTrilha;if(T&&T.edIcon&&t.discId&&t.sigla)return '<span class="nx-lab-pair" style="--badge:'+e(t.cor)+'"><span class="nx-lab-initial">'+e(t.sigla)+'</span><span class="nx-lab-symbol">'+T.edIcon(t.discId)+'</span></span>'}catch(x){}
+ try{var T=window.nexoTrilha;if(T&&T.edIcon&&t.discId&&t.sigla)return '<span class="nx-lab-pair" style="--badge:'+e(t.cor)+'"><span class="nx-lab-symbol">'+T.edIcon(t.discId)+'</span></span>'}catch(x){}
  return badgeFor(t.disc)}
 function trilhaHtml(it,match){
  var cab=function(sub,dir){return '<div class="pn-phead"><span class="pn-pico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 6 1.5 1.5L8 5M4 12l1.5 1.5L8 11M4 18l1.5 1.5L8 17M11 6h9M11 12h9M11 18h9"/></svg></span><div><h2>Trilha do dia</h2><p>'+sub+'</p></div>'+(dir?'<span class="pn-meta">'+dir+'</span>':'')+'</div>'};
@@ -100,7 +100,8 @@ function numerosHtml(){
  var pct=meta?Math.min(100,Math.round(hojeQ.length/meta*100)):0;
  var ico=function(n){return '<span class="pn-pico">'+({barras:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',alvo:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>'})[n]+'</span>'};
  return '<div class="pn-numeros"><section class="pn-panel pn-num">'+ico('barras')+'<div class="pn-num-c"><small>Questões resolvidas hoje</small><div class="pn-num-v"><b>'+hojeQ.length+'</b><span>'+(meta?'de '+meta+' previstas':'sem meta definida')+'</span></div><div class="pn-num-b">'+(meta?'<div class="pn-barra" role="img" aria-label="'+pct+'% da meta"><i style="width:'+pct+'%"></i></div><span class="pn-pct">'+pct+'%</span>':'')+'<button type="button" class="pn-link" data-pn="meta">'+(meta?'Alterar meta':'Definir meta diária')+'</button></div></div></section>'
- +'<section class="pn-panel pn-num">'+ico('alvo')+'<div class="pn-num-c"><small>Taxa de acerto · 7 dias</small><div class="pn-num-v"><b>'+(p==null?'—':p+'%')+'</b>'+(delta!=null?'<em class="pn-delta '+(delta>=0?'up':'down')+'">'+(delta>=0?'+':'')+delta+'% vs. semana anterior</em>':'')+'</div><span class="pn-num-s">'+(s7.length?ok7+' de '+s7.length+' questões corretas':'Responda questões para ver sua taxa')+'</span>'+(p!=null?'<div class="pn-barra"><i style="width:'+p+'%"></i></div>':'')+'</div></section></div>';
+ +'<section class="pn-panel pn-taxa"><div class="pn-taxa-t"><small>Taxa de acerto · 7 dias</small>'+(delta!=null?'<em class="pn-delta '+(delta>=0?'up':'down')+'">'+(delta>=0?'+':'')+delta+'% vs. semana anterior</em>':'')+'</div>'
+ +(s7.length?'<div class="pn-taxa-c"><div class="pn-pizza" role="img" aria-label="'+ok7+' acertos e '+(s7.length-ok7)+' erros nos últimos 7 dias" style="--a:'+(p*3.6)+'deg"></div><ul class="pn-leg"><li class="big"><span>Taxa</span><b>'+p+'%</b></li><li><i class="ac"></i><span>Acertos</span><b>'+ok7+'</b></li><li><i class="er"></i><span>Erros</span><b>'+(s7.length-ok7)+'</b></li><li class="tt"><span>Total</span><b>'+s7.length+'</b></li></ul></div>':'<p class="pn-num-s">Responda questões para ver sua taxa de acerto.</p>')+'</section></div>';
 }
 
 function acessoHtml(){

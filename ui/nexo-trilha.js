@@ -360,7 +360,7 @@ function cartao(t){
   return '<article class="nt-task' + (t.feito ? ' done' : '') + (exp ? ' open' : '') + '" style="--c:' + (d.cor || '#888') + '" data-ntid="' + t.id + '">'
     + '<button type="button" class="nt-check" data-nt="feito" data-id="' + t.id + '" aria-pressed="' + !!t.feito + '" aria-label="' + (t.feito ? 'Desmarcar' : 'Marcar como feita') + '">' + ICON.ok + '</button>'
     + '<button type="button" class="nt-body" data-nt="abrirCard" data-id="' + t.id + '" aria-expanded="' + exp + '">'
-    + '<span class="nt-meta"><span class="nt-sig">' + (d.sigla || '') + '</span><span>' + TIPO[t.tipo] + '</span><span>' + fmtMin(t.min) + '</span>' + (t.pendente ? '<span class="nt-pend">pendente</span>' : '') + '</span>'
+    + '<span class="nt-meta"><span class="nt-sig nx-nt-icon">' + nxSigIco(d) + '</span><span>' + TIPO[t.tipo] + '</span><span>' + fmtMin(t.min) + '</span>' + (t.pendente ? '<span class="nt-pend">pendente</span>' : '') + '</span>'
     + '<b>' + escH(tituloTarefa(t)) + '</b><small>' + escH(subTarefa(t)) + '</small></button>'
     + (exp ? detalhe(t, d) : '') + '</article>';
 }
@@ -436,7 +436,7 @@ function telaPlano(s){
   return resumoPlano(s) + '<ol class="nt-semanas">' + ks.map(function(k, i){
     var w = s.weeks[k], ini = deIso(k), est = w.tarefas.filter(function(t){ return t.tipo === 'estudo'; }), feitas = w.tarefas.filter(function(t){ return t.feito; }).length;
     var min = w.tarefas.reduce(function(a, t){ return a + t.min; }, 0), vistos = {};
-    var chips = est.filter(function(t){ if(vistos[t.un]) return false; vistos[t.un] = 1; return true; }).map(function(t){ var d = ED.disciplinas[t.disc] || {}; return '<span class="nt-chip" style="--c:' + (d.cor || '#888') + '"><span class="nt-sig">' + (d.sigla || '') + '</span>' + escH(tituloTarefa(t)) + '</span>'; }).join('');
+    var chips = est.filter(function(t){ if(vistos[t.un]) return false; vistos[t.un] = 1; return true; }).map(function(t){ var d = ED.disciplinas[t.disc] || {}; return '<span class="nt-chip" style="--c:' + (d.cor || '#888') + '"><span class="nt-sig nx-nt-icon">' + nxSigIco(d) + '</span>' + escH(tituloTarefa(t)) + '</span>'; }).join('');
     var rev = w.tarefas.filter(function(t){ return t.tipo !== 'estudo'; }).length;
     return '<li class="nt-sem' + (k === atual ? ' atual' : '') + '"><button type="button" class="nt-semb" data-nt="sem" data-k="' + k + '"><span class="nt-semn">' + (i + 1) + '</span><span class="nt-semt"><b>' + dm(ini) + ' a ' + dm(ini + 6 * DIA) + (k === atual ? ' · semana atual' : '') + '</b><small>' + fmtMin(min) + ' · ' + est.length + ' estudos · ' + rev + ' revisões e questões' + (feitas ? ' · ' + feitas + ' feitas' : '') + '</small></span></button><div class="nt-chips">' + (chips || '<span class="nt-semmat">Revisões e questões</span>') + '</div></li>';
   }).join('') + '</ol>';
@@ -447,6 +447,7 @@ function telaPlano(s){
 var editalSelecionadoLab=null;
 
 var nxEditalVista='cards';
+function nxSigIco(d){ try{ return window.nexoDisciplineSvg(window.nexoDisciplineIcon(d.nome||'')); }catch(e){ return ''; } }
 function nxEdIcon(id){
  var paths={
  constitucional:'<path d="M3 10h18M5 10V20m5-10v10m4-10v10m5-10v10M2 21h20M12 3l10 6H2z"/>',
@@ -832,7 +833,7 @@ document.addEventListener('nexo:estudo', function(e){ if(e.detail === 'sincroniz
       el.innerHTML = '<div class="nt-hoje-txt"><b>Monte seu plano de estudos</b><span>Escolha o concurso, o cargo, os dias e o tempo de estudo. A NEXO monta a trilha capítulo a capítulo até concluir o edital.</span></div><button type="button" class="nx-btn primary" onclick="nexoCronograma()">Montar plano</button>';
     }else{
       var k = semanaKeyDe(s, hoje0()), w = k && s.weeks[k], d = w ? Math.round((hoje0() - deIso(k)) / DIA) : -1, lista = w ? w.tarefas.filter(function(t){ return t.d === d; }) : [];
-      var itens = lista.map(function(t){ var dd = ED.disciplinas[t.disc] || {}; return '<li class="' + (t.feito ? 'feito' : '') + '" style="--c:' + (dd.cor || '#888') + '"><span class="nt-sig">' + (dd.sigla || '') + '</span><span>' + TIPO[t.tipo] + ': ' + escH(tituloTarefa(t)) + '</span><small>' + fmtMin(t.min) + '</small></li>'; }).join('');
+      var itens = lista.map(function(t){ var dd = ED.disciplinas[t.disc] || {}; return '<li class="' + (t.feito ? 'feito' : '') + '" style="--c:' + (dd.cor || '#888') + '"><span class="nt-sig nx-nt-icon">' + nxSigIco(dd) + '</span><span>' + TIPO[t.tipo] + ': ' + escH(tituloTarefa(t)) + '</span><small>' + fmtMin(t.min) + '</small></li>'; }).join('');
       var feitas = lista.filter(function(t){ return t.feito; }).length;
       el.innerHTML = '<div class="nt-hoje-txt"><b>Hoje na sua trilha</b><span>' + (!w ? 'Abra a trilha para recalcular o plano desta semana.' : lista.length ? feitas + ' de ' + lista.length + ' tarefas feitas' : 'Dia de folga no seu cronograma.') + '</span>' + (itens ? '<ul>' + itens + '</ul>' : '') + '</div><button type="button" class="nx-btn primary" onclick="nexoCronograma(\'semana\')">Abrir a trilha</button>';
     }

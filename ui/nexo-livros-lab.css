@@ -32,3 +32,18 @@
 .pl-vazio,.pl-nota{margin:0;padding:18px;border:1px dashed var(--nx-line,#2d3e3a);border-radius:12px;color:var(--nx-muted,#8aa39b);font-size:13.5px;text-align:center}
 .pl-nota{text-align:left;font-size:12.5px}
 @media(max-width:560px){.pl-abas button{font-size:11.5px;letter-spacing:0}.pl-liv-t b{font-size:14.5px}}
+
+/* siglas extintas: só símbolos */
+.pl-sig svg,.lv-capa-sig svg,.nt-sig svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.lv-capa-sig svg{width:34px;height:34px}
+/* por carreira: órgão + cargo ao lado */
+.pl-carr>summary{flex-wrap:wrap}
+.pl-carr>summary .tm-arte{width:46px;height:52px;flex:none}
+.pl-carr>summary .pl-liv-t{flex:1;min-width:150px}
+.pl-cargo{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--nx-muted,#8aa39d)}
+.pl-cargo select{max-width:230px;background:var(--nx-surface-2,#1d2b27);color:var(--nx-ink,#fff);border:1px solid var(--nx-line,#2d3e3a);border-radius:9px;padding:8px 10px;font:inherit;font-size:13px}
+@media(max-width:650px){.pl-cargo{order:3;width:100%}.pl-cargo select{flex:1;max-width:none}}
+.pl-carr>summary .tm-arte{width:54px;height:58px;border-radius:12px}
+.pl-carr>summary .tm-arte svg{width:32px;height:36px}
+.pl-carr>summary .tm-arte b{font-size:9px;margin-top:1px}
+.pl-carr>summary .tm-arte:has(img) b,.pl-carr>summary .tm-arte:has(img) svg{opacity:0}

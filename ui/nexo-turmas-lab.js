@@ -71,4 +71,5 @@ document.addEventListener('click',function(e){
 window.nexoGerenciarConcursosClassico=window.nexoGerenciarConcursos;
 window.nexoGerenciarConcursos=mostrar;
 window.nexoTurmas=mostrar;
+window.nexoTurmas.escudo=escudo;window.nexoTurmas.nome=function(id){return NOME[id]};
 })();
