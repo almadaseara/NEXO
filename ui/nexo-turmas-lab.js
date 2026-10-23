@@ -3,7 +3,7 @@
    Não altera cronograma, questões nem Supabase. Brasões: fallback em escudo com a sigla. */
 (function(){
 'use strict';
-var busca='',aberta=null,LIMITE=3;
+var busca='',aberta=null,confirmando=null,LIMITE=3;
 var NOME={pcba:'Polícia Civil da Bahia',pcpe:'Polícia Civil de Pernambuco',pf:'Polícia Federal',prf:'Polícia Rodoviária Federal',pmpe:'Polícia Militar de Pernambuco'};
 var SIGLA={pcba:'PC-BA',pcpe:'PC-PE',pf:'PF',prf:'PRF',pmpe:'PM-PE'};
 var COR={pcba:'#3a6ea5',pcpe:'#b23b3b',pf:'#8a6d1f',prf:'#2f7d5b',pmpe:'#5b4aa8'};
@@ -13,6 +13,7 @@ function norm(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').to
 function cat(){return window.nexoConcursosCatalogo||[]}
 function sel(){return window.nexoConcursosSelecionados?window.nexoConcursosSelecionados():{items:[],principal:null}}
 function salvar(items,principal){
+  items=items.slice(0,LIMITE);
   var s={items:items,principal:items.some(function(x){return x.id===principal})?principal:(items[0]||{}).id||null};
   window.nexoConcursosSalvar(s);
 }
@@ -33,9 +34,10 @@ function detalhe(s){
   var info=ed?'Programa cadastrado e conferido ('+esc(ed.nome)+').':'Conteúdo programático ainda pendente de cadastro e conferência.';
   return '<section class="tm-det" id="tm-det" aria-live="polite"><div class="tm-det-t"><b>'+esc(c.nome)+'</b><button type="button" class="tm-x" data-tm="fechar" aria-label="Fechar">×</button></div><p class="tm-info">'+info+'</p>'
    +'<label class="tm-cargo">Cargo<select id="tm-cargo">'+c.cargos.map(function(z){return '<option value="'+esc(z[0])+'"'+(z[0]===cargoSel?' selected':'')+'>'+esc(z[1])+'</option>'}).join('')+'</select></label>'
-   +'<div class="tm-acoes">'
-   +(on?'<button type="button" class="nx-btn primary small" data-tm="salvarcargo" data-id="'+esc(c.id)+'">Salvar cargo</button>'+(s.principal!==c.id?'<button type="button" class="nx-btn small" data-tm="principal" data-id="'+esc(c.id)+'">Definir como principal</button>':'')+'<button type="button" class="nx-btn ghost small" data-tm="remover" data-id="'+esc(c.id)+'">Remover da preparação</button>'
-      :(cheio?'<p class="tm-info">Limite de três concursos atingido. Remova um para adicionar este.</p>':'<button type="button" class="nx-btn primary small" data-tm="adicionar" data-id="'+esc(c.id)+'">Adicionar à preparação</button>'))
+   +(on&&confirmando===c.id?'<div class="tm-conf"><p>Para desmatricular de <b>'+esc(NOME[c.id]||c.nome)+'</b>, digite <b>confirma</b> abaixo. Seu progresso neste aparelho não é apagado.</p><input type="text" id="tm-conf-in" autocomplete="off" autocapitalize="off" placeholder="Digite confirma" aria-label="Digite confirma para desmatricular"><div class="tm-acoes"><button type="button" class="nx-btn danger small" id="tm-conf-ok" data-tm="remover" data-id="'+esc(c.id)+'" disabled>Confirmar desmatrícula</button><button type="button" class="nx-btn ghost small" data-tm="cancelar">Cancelar</button></div></div>':'')
+   +'<div class="tm-acoes"'+(on&&confirmando===c.id?' hidden':'')+'>'
+   +(on?'<button type="button" class="nx-btn primary small" data-tm="salvarcargo" data-id="'+esc(c.id)+'">Salvar cargo</button>'+(s.principal!==c.id?'<button type="button" class="nx-btn small" data-tm="principal" data-id="'+esc(c.id)+'">Definir como principal</button>':'')+'<button type="button" class="nx-btn ghost small" data-tm="desmatricular" data-id="'+esc(c.id)+'">Desmatricular</button>'
+      :(cheio?'<p class="tm-info">Limite de três concursos atingido. Desmatricule um para matricular neste.</p>':'<button type="button" class="nx-btn primary small" data-tm="adicionar" data-id="'+esc(c.id)+'">Matricular</button>'))
    +'</div></section>';
 }
 function lista(){
@@ -55,18 +57,23 @@ function mostrar(){
    +'<div id="tm-lista">'+lista()+'</div>'
    +'<p class="tm-nota">As seleções ficam salvas neste aparelho e não alteram seu cronograma, questões ou dados na conta. <button type="button" class="tm-link" data-tm="comparar">Ver disciplinas em comum</button></p></div>';
 }
-document.addEventListener('input',function(e){if(e.target&&e.target.id==='tm-busca'){busca=norm(e.target.value.trim());pintar()}});
+document.addEventListener('input',function(e){
+  if(e.target&&e.target.id==='tm-busca'){busca=norm(e.target.value.trim());pintar()}
+  if(e.target&&e.target.id==='tm-conf-in'){var ok=document.getElementById('tm-conf-ok');if(ok)ok.disabled=e.target.value.trim().toLowerCase()!=='confirma'}
+});
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-tm]');if(!b||!document.getElementById('tm-lista'))return;
   var a=b.dataset.tm,id=b.dataset.id,s=sel(),items=s.items.slice();
-  if(a==='abrir'){aberta=aberta===id?null:id;pintar();var d=document.getElementById('tm-det');if(d&&d.scrollIntoView)try{d.scrollIntoView({block:'nearest',behavior:'smooth'})}catch(x){}return}
-  if(a==='fechar'){aberta=null;pintar();return}
+  if(a==='abrir'){confirmando=null;aberta=aberta===id?null:id;pintar();var d=document.getElementById('tm-det');if(d&&d.scrollIntoView)try{d.scrollIntoView({block:'nearest',behavior:'smooth'})}catch(x){}return}
+  if(a==='fechar'){aberta=null;confirmando=null;pintar();return}
+  if(a==='desmatricular'){confirmando=id;pintar();var ci=document.getElementById('tm-conf-in');if(ci)ci.focus();return}
+  if(a==='cancelar'){confirmando=null;pintar();return}
   if(a==='comparar'){if(window.nexoGerenciarConcursosClassico)window.nexoGerenciarConcursosClassico();return}
   var cargo=document.getElementById('tm-cargo'),cg=cargo&&cargo.value;
   if(a==='adicionar'&&items.length<LIMITE&&!items.some(function(x){return x.id===id})){items.push({id:id,cargo:cg});salvar(items,s.principal||id);pintar();return}
   if(a==='salvarcargo'){items.forEach(function(x){if(x.id===id)x.cargo=cg});salvar(items,s.principal);pintar();return}
   if(a==='principal'){salvar(items,id);pintar();return}
-  if(a==='remover'){items=items.filter(function(x){return x.id!==id});salvar(items,s.principal===id?null:s.principal);aberta=null;pintar();return}
+  if(a==='remover'){var ci2=document.getElementById('tm-conf-in');if(confirmando!==id||!ci2||ci2.value.trim().toLowerCase()!=='confirma')return;confirmando=null;items=items.filter(function(x){return x.id!==id});salvar(items,s.principal===id?(items[0]||{}).id:s.principal);aberta=null;pintar();return}
 });
 window.nexoGerenciarConcursosClassico=window.nexoGerenciarConcursos;
 window.nexoGerenciarConcursos=mostrar;

@@ -169,7 +169,7 @@ document.addEventListener('click',function(e){
   var c=document.getElementById('nx-con-add'),job=document.getElementById('nx-con-job');
   if(!c||!job||s.items.length>=LIMIT||s.items.some(function(x){return x.id===c.value;}))return;
   s.items.push({id:c.value,cargo:job.value});if(!s.principal)s.principal=c.value;
- }else if(act==='remove'){s.items=s.items.filter(function(x){return x.id!==id;});if(s.principal===id)s.principal=(s.items[0]||{}).id||null;
+ }else if(act==='remove'){var rp=window.prompt('Para desmatricular, digite confirma:');if(!rp||rp.trim().toLowerCase()!=='confirma')return;s.items=s.items.filter(function(x){return x.id!==id;});if(s.principal===id)s.principal=(s.items[0]||{}).id||null;
  }else if(act==='principal'){if(s.items.some(function(x){return x.id===id;}))s.principal=id;}
  else return;
  save(s);if(painelAtivo)renderPainel();else render();
