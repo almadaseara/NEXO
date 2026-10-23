@@ -442,6 +442,34 @@ function telaPlano(s){
   }).join('') + '</ol>';
 }
 
+
+/* Seletor opcional: preserva o plano existente e a estrutura da aba. */
+var editalSelecionadoLab=null;
+function escolherEditalLab(s){
+ var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
+ if(!items.length)return '';
+ var ativo=editalSelecionadoLab||((s.plan||{}).edital)||pref.principal||items[0].id;
+ return '<div class="nt-edtools"><label>Concurso e cargo <select id="nt-edital-lab-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select></label></div>';
+}
+function telaEditalLab(s){
+ var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
+ var id=editalSelecionadoLab||((s.plan||{}).edital)||pref&&pref.principal;
+ var sel=items.find(function(x){return x.id===id;});
+ var selector=escolherEditalLab(s);
+ if(!sel)return selector+telaEdital(s);
+ var ed=EDS[sel.id],cargo=ed&&ed.cargos&&ed.cargos[sel.cargo];
+ if(!cargo)return selector+'<p class="nt-aviso">O conteúdo programático deste cargo ainda não está cadastrado e conferido. Selecione um concurso com programa disponível.</p>';
+ var anterior=ED;
+ try{
+   ED=ed;
+   var mesmoPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
+   var atual=mesmoPlano?s:{plan:null,progress:{},weeks:{}};
+   /* O plano de outro cargo nunca é aplicado à seleção de leitura. */
+   if(!mesmoPlano)atual={plan:{cargo:sel.cargo,discs:null,ja:{}},progress:{},weeks:{},_somenteConsulta:true};
+   return selector+(mesmoPlano?'':'<p class="nt-aviso">Visualização do programa deste cargo. Seu cronograma e histórico existente não foram alterados. Para registrar progresso vinculado à trilha, configure um plano para este cargo.</p>')+telaEdital(atual);
+ }finally{ED=anterior;}
+}
+
 var soFalta = false;
 function telaEdital(s){
   var semPlano = !s.plan, plan = s.plan || { cargo:Object.keys(ED.cargos)[0], discs:null, ja:{} };
@@ -494,11 +522,11 @@ window.nexoCronograma = function(a){
   var topo = '<div class="nx-head"><div><h1>Minha trilha</h1><p>' + (s.plan ? (ED.cargos[s.plan.cargo] || {}).nome + ' · ' : '') + ED.nome + ' · ' + ED.banca + '</p></div>'
     + '<div class="nt-prova"><b>' + (faltam > 0 ? faltam : 0) + '</b><span>dias para a prova<br>' + dma(deIso(ED.prova)) + '</span></div></div>';
   var conta = E().conectado() ? '' : '<p class="nt-aviso">Seu plano está salvo neste navegador. Entre na sua conta para guardar o plano, o progresso dos livros e as marcações e usar em outros aparelhos.</p>';
-  if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEdital(s) + '</div>'; v.scrollTop = 0; return; }
+  if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEditalLab(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
   var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
     + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>';
-  v.innerHTML = '<div class="nx-page nt">' + topo + conta + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEdital(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
+  v.innerHTML = '<div class="nx-page nt">' + topo + conta + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
 };
 
 function tarefaPorId(s, id){ for(var k in s.weeks){ var x = (s.weeks[k].tarefas || []).find(function(y){ return y.id === id; }); if(x) return { t:x, k:k }; } return null; }
@@ -529,7 +557,9 @@ document.addEventListener('change', function(e){
     }
     totalForm(); return;
   }
+  if(el.id === 'nt-edital-lab-select'){ editalSelecionadoLab=el.value;window.nexoCronograma('edital');return; }
   if(el.dataset && el.dataset.nt === 'sofalta'){ soFalta = !!el.checked; window.nexoCronograma('edital'); return; }
+  if(el.dataset && el.dataset.nt === 'ja' && document.querySelector('.nt-aviso') && document.querySelector('.nt-aviso').textContent.indexOf('Visualização do programa deste cargo')>=0)return;
   if(el.dataset && el.dataset.nt === 'ja'){
     var s2 = st(); s2.plan.ja = s2.plan.ja || {};
     if(el.checked) s2.plan.ja[el.dataset.top] = Date.now(); else delete s2.plan.ja[el.dataset.top];
