@@ -673,6 +673,22 @@ button:disabled { opacity: .35; cursor: not-allowed; }
     display:block!important;visibility:visible!important;white-space:nowrap!important;
   }
 }
+
+/* Contraste do acesso ao painel nos dois temas. */
+html[data-theme="light"] aside .nx-con-nav,
+html:not([data-theme="dark"]) aside .nx-con-nav {
+ color:#173b36!important;
+ background:#e9f4ef!important;
+ border-color:#b7d7c8!important;
+}
+html[data-theme="light"] aside .nx-con-nav-label,
+html:not([data-theme="dark"]) aside .nx-con-nav-label{color:#173b36!important;opacity:1!important}
+html[data-theme="light"] aside .nx-con-nav-icon,
+html:not([data-theme="dark"]) aside .nx-con-nav-icon{color:#197a61!important}
+html[data-theme="light"] aside .nx-con-nav:hover,
+html:not([data-theme="dark"]) aside .nx-con-nav:hover{background:#dceee5!important}
+html[data-theme="dark"] aside .nx-con-nav-label{color:#e2f4ed!important;opacity:1!important}
+html[data-theme="dark"] aside .nx-con-nav-icon{color:#55d4aa!important}
 </style>
 </head>
 <body class="logged-out">
