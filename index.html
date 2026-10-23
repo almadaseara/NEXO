@@ -736,6 +736,15 @@ html[data-theme="dark"] .nx-edcard-ring:before,html[data-theme="dark"] .nx-ed-bi
 html[data-theme="dark"] .nx-ed-welcome h2,html[data-theme="dark"] .nx-edcard strong,html[data-theme="dark"] .nx-ed-summary-main h3,html[data-theme="dark"] .nx-ed-section-head h3,html[data-theme="dark"] .nx-ed-big-ring strong,html[data-theme="dark"] .nx-edcard-ring,html[data-theme="dark"] .nx-ed-kpis b,html[data-theme="dark"] .nx-ed-footer b{color:#e8f5ef!important}
 @media(max-width:1300px){.nx-ed-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}@media(max-width:970px){.nx-ed-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nx-ed-motivation{min-width:0;width:100%}}@media(max-width:550px){.nx-page.nt:has(.nx-ed-dashboard){padding:14px!important}.nx-ed-grid{grid-template-columns:1fr!important}.nx-ed-motivation{flex-wrap:wrap}.nx-ed-footer em,.nx-ed-footer strong{display:none}}
 
+
+/* Subdivisões dos capítulos — progresso granular exibido no edital. */
+.nx-ed-topic-percent{display:inline-block;margin:7px 0 3px;padding:4px 9px;border-radius:7px;background:#e7f4ee;color:#176d53;font-size:11px;font-weight:750}
+.nx-ed-divisions{margin:9px 0 5px;border:1px solid var(--line,#dde8e5);border-radius:10px;max-width:720px;overflow:hidden}
+.nx-ed-divisions>summary{padding:10px 12px;cursor:pointer;font-size:12px;font-weight:700;color:var(--text,#193b32);background:var(--panel2,#f5faf8)}
+.nx-ed-divisions ol{margin:0;padding:8px 14px;list-style:none}.nx-ed-divisions li{display:flex;gap:10px;align-items:baseline;padding:7px 1px;border-bottom:1px solid var(--line,#e3e9e7);font-size:12px;line-height:1.45}
+.nx-ed-divisions li:last-child{border-bottom:0}.nx-ed-divisions li>span:first-child{font-weight:800;color:var(--muted,#899b94)}.nx-ed-divisions li.nx-ed-done>span:first-child{color:#15956e}.nx-ed-divisions li.nx-ed-done>span:last-child{color:var(--muted,#83938d)}
+.nx-ed-divisions>small{display:block;padding:9px 13px 12px;color:var(--muted,#6c7e77);font-size:11px}
+
 </style>
 </head>
 <body class="logged-out">
