@@ -10,6 +10,17 @@ function dayTasks(s,d){if(!s||!s.weeks)return [];var dt=new Date(d);dt.setHours(
 function saved(){try{return JSON.parse(localStorage.getItem('nexo_dias_estudados_lab_v1')||'{}')}catch(x){return {}}}
 function icon(name){var p={book:'<path d="M3 5h8a3 3 0 0 1 3 3v13H6a3 3 0 0 0-3 0zm11 3a3 3 0 0 1 3-3h4v16h-7"/>',scale:'<path d="M12 3v18M5 7h14M5 7l-3 6h6zm14 0l-3 6h6zM7 21h10"/>',brain:'<path d="M12 5a4 4 0 0 0-8 1v2a4 4 0 0 0-1 7 4 4 0 0 0 5 5h4V5zm0 0a4 4 0 0 1 8 1v2a4 4 0 0 1 1 7 4 4 0 0 1-5 5h-4"/>',medical:'<path d="M12 4v16M4 12h16M5 5l14 14"/>',monitor:'<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 22h8m-4-4v4"/>',file:'<path d="M6 2h8l5 5v15H6zM14 2v5h5M9 12h7m-7 4h7"/>',check:'<path d="m4 12 5 5L20 6"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v6"/>',play:'<circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4z"/>',refresh:'<path d="M20 8A8 8 0 0 0 6 6L4 8m0-5v5h5M4 16a8 8 0 0 0 14 2l2-2m0 5v-5h-5"/>',list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h1M3 12h1M3 18h1"/>'};return '<svg class="nx-lab-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">'+(p[name]||p.book)+'</svg>'}
 function disciplineIcon(d){var x=String(d||'').toLowerCase();return /penal|jurídic/.test(x)?'scale':/medic|legal/.test(x)?'medical':/lógic|racioc/.test(x)?'brain':/inform/.test(x)?'monitor':/portug|literat/.test(x)?'book':'file'}
+function badgeFor(d){var x=String(d||'').toLowerCase(),sig='ED',color='#4c6970',ico='file';
+if(/portug/.test(x)){sig='LP';color='#b12f68';ico='book'}
+else if(/racioc|lógic/.test(x)){sig='RL';color='#a77a09';ico='brain'}
+else if(/medic/.test(x)){sig='ML';color='#5444bb';ico='medical'}
+else if(/legisla|lei/.test(x)){sig='LE';color='#6738c4';ico='scale'}
+else if(/inform/.test(x)){sig='IN';color='#1368aa';ico='monitor'}
+else if(/penal/.test(x)){sig='DP';color='#139b76';ico='scale'}
+else if(/constitucional/.test(x)){sig='DC';color='#2779cc';ico='file'}
+else if(/administrativo/.test(x)){sig='DA';color='#bb5a28';ico='file'}
+return '<span class="nx-lab-pair" style="--badge:'+color+'"><span class="nx-lab-initial">'+sig+'</span><span class="nx-lab-symbol">'+icon(ico)+'</span></span>'}
+window.nexoSubjectBadge=badgeFor;
 function taskLabel(t){var names={penal:'Direito Penal',constitucional:'Direito Constitucional',administrativo:'Direito Administrativo',medicina_legal:'Medicina Legal',portugues:'Língua Portuguesa',rlm:'Raciocínio Lógico',informatica:'Informática'};return names[t.disc]||t.disc||'Estudo'}
 function safeDate(d){var today=new Date();today.setHours(23,59,59,999);return d<=today}
 window.nexoDisciplineSvg=icon;window.nexoDisciplineIcon=disciplineIcon;
