@@ -449,7 +449,7 @@ function escolherEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
  if(!items.length)return '';
  var ativo=editalSelecionadoLab||((s.plan||{}).edital)||pref.principal||items[0].id;
- return '<div class="nt-edtools"><label>Concurso e cargo <select id="nt-edital-lab-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select></label></div>';
+ return '<div class="nt-edtools"><div class="nt-edital-switch"><label class="nt-edital-label" for="nt-edital-lab-select">Preparação ativa</label><div class="nt-edital-selectwrap"><select id="nt-edital-lab-select" class="nt-edital-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select><span class="nt-edital-caret" aria-hidden="true">⌄</span></div></div></div>';
 }
 function telaEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
