@@ -189,3 +189,49 @@
 .pn-leg li.big b{font-size:30px;line-height:1;color:var(--nx-accent,#3ec79a)}
 .pn-leg li.big{align-items:baseline}
 .pn-pizza{box-shadow:0 0 0 3px var(--nx-surface,#1b1b1d),0 0 0 4px var(--nx-line,#2d3e3a)}
+
+/* trilha do dia — modelo "Estudo do dia" */
+.pn-trilha .pn-phead{align-items:center}
+.pn-cal{margin-left:auto;border:0;background:none;color:var(--nx-ink-2);cursor:pointer;padding:6px;border-radius:10px}.pn-cal:hover{color:var(--nx-accent)}
+.pn-aviso{display:flex;align-items:center;gap:12px;margin:14px 0 6px;padding:14px 16px;border:1px solid var(--nx-line);border-radius:12px;background:var(--nx-surface-2);font-size:14.5px}
+.pn-aviso-i{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:color-mix(in srgb,var(--nx-accent) 16%,transparent);color:var(--nx-accent);flex:none}
+.pn-sessoes{list-style:none;margin:0;padding:0;display:grid}
+.pn-sessao{display:grid;gap:10px;padding:18px 2px;border-bottom:1px solid var(--nx-line)}
+.pn-sessao:last-child{border-bottom:0;padding-bottom:4px}
+.pn-s-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pn-s-top .pn-disc{font-size:17px;font-weight:800;letter-spacing:.01em;text-transform:uppercase}
+.pn-s-top .pn-min{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:8px;background:var(--nx-surface-2);font-size:13px;color:var(--nx-ink-2)}
+.pn-iniciar{margin-left:auto;border:0;border-radius:8px;padding:9px 18px;font:inherit;font-weight:700;font-size:14px;cursor:pointer;background:var(--c,var(--nx-accent));color:#fff}
+.pn-iniciar:hover{filter:brightness(1.1)}
+.pn-s-top .pn-estado{margin-left:auto}
+.pn-s-tit{margin:0;display:grid;gap:3px;font-size:15px}.pn-s-tit small{color:var(--nx-ink-2);font-size:13px}
+.pn-s-acoes{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pn-chipb{border:1px solid var(--nx-line);background:transparent;color:var(--nx-ink);border-radius:999px;padding:7px 18px;font:inherit;font-size:13.5px;cursor:pointer;min-width:84px}
+.pn-chipb:hover{border-color:var(--nx-accent);color:var(--nx-accent)}
+.pn-s-acoes .pn-chk{margin-left:auto;display:inline-flex;align-items:center;gap:8px;width:auto;height:auto;border-radius:999px;padding:7px 14px;font-size:13px;background:transparent;border:1px solid var(--nx-line);color:var(--nx-ink-2)}
+.pn-s-acoes .pn-chk svg{width:14px;height:14px}
+.pn-sessao.feito .pn-chk{background:var(--nx-accent);border-color:var(--nx-accent);color:#08231b}
+.pn-sessao.feito .pn-s-tit b{color:var(--nx-ink-2)}
+.pn-sessao .nx-lab-symbol{width:34px!important;height:34px!important;border-radius:9px!important}
+/* gráfico de taxa moderno */
+.pn-anel{position:relative;width:132px;height:132px;flex:none;color:var(--nx-ink);filter:drop-shadow(0 6px 18px color-mix(in srgb,var(--nx-accent) 28%,transparent))}
+.pn-anel>div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.pn-anel b{font-size:32px;line-height:1;font-weight:800}.pn-anel b i{font-style:normal;font-size:16px;opacity:.7}
+.pn-anel span{font-size:11.5px;color:var(--nx-ink-2);margin-top:3px}
+.pn-taxa-c{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.pn-taxa-d{flex:1;min-width:150px;display:grid;gap:14px}
+.pn-chips{display:flex;gap:8px;flex-wrap:wrap}
+.pn-chips span{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--nx-surface-2)}
+.pn-chips i{width:8px;height:8px;border-radius:50%}.pn-chips .ac i{background:#4fd1a5}.pn-chips .er i{background:#e5646a}
+.pn-spark{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;height:62px;align-items:end}
+.pn-sp{display:grid;grid-template-rows:1fr auto;height:100%;justify-items:center;gap:4px}
+.pn-sp i{align-self:end;width:100%;max-width:22px;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#7ae8c3,#2aa57f)}
+.pn-sp.vz i{background:var(--nx-line)}
+.pn-sp em{font-style:normal;font-size:10.5px;color:var(--nx-muted)}
+/* proporção das colunas */
+.pn-cols{align-items:stretch}
+.pn-col:first-child{grid-template-rows:auto 1fr}
+.pn-conc-box{display:flex;flex-direction:column;gap:12px}.pn-conc-box .pn-todos{margin-top:auto}
+.pn-numeros{align-items:stretch}.pn-numeros .pn-panel{height:100%}
+@media(max-width:860px){.pn-s-top .pn-disc{font-size:15px}.pn-iniciar{padding:8px 14px}.pn-s-acoes .pn-chk{margin-left:0}.pn-chipb{min-width:0;padding:7px 14px}}
+.pn-numeros .pn-num{align-items:center}.pn-numeros .pn-taxa{align-content:center}

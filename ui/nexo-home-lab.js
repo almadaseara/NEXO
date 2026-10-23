@@ -62,6 +62,7 @@ function semanaHtml(){
  return '<section class="pn-semana" aria-label="Semana de estudo"><div class="pn-dias">'+h+'</div></section>';
 }
 
+var CLOCK='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 function selo(t){
  try{var T=window.nexoTrilha;if(T&&T.edIcon&&t.discId&&t.sigla)return '<span class="nx-lab-pair" style="--badge:'+e(t.cor)+'"><span class="nx-lab-symbol">'+T.edIcon(t.discId)+'</span></span>'}catch(x){}
  return badgeFor(t.disc)}
@@ -74,14 +75,18 @@ function trilhaHtml(it,match){
  if(!T.plano||!T.semana)return vazio('Atualize o plano desta semana','Abra o cronograma e a NEXO recalcula a trilha com o que você já concluiu.','Abrir cronograma');
  var l=T.tarefas;if(!l.length)return vazio('Dia de folga no seu cronograma','Quer adiantar? Abra a trilha da semana ou pratique questões.','Abrir a trilha');
  var feitas=l.filter(function(x){return x.feito}).length,min=l.reduce(function(a,x){return a+(x.min||0)},0);
+ var CAL='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17M8.5 14.5l2 2 4-4"/></svg>';
+ var pend=l.length-feitas;
  var linhas=l.map(function(t){
   var acao=t.mod&&t.tipo!=='questoes'?'estudar':'praticar';
-  return '<li class="pn-item'+(t.feito?' feito':'')+'" style="--c:'+e(t.cor)+'"><button type="button" class="pn-chk" data-pn="feito" data-id="'+e(t.id)+'" aria-pressed="'+t.feito+'" aria-label="'+(t.feito?'Desmarcar':'Concluir')+': '+e(t.titulo||t.tipoNome)+'">'+(t.feito?CHECK:'')+'</button>'
-  +selo(t)+'<span class="pn-disc">'+e(t.disc)+'</span><span class="pn-tit"><b>'+e(t.titulo||t.tipoNome)+'</b><small>'+e(t.sub)+'</small></span><span class="pn-min">'+fmtMin(t.min)+'</span>'
-  +'<span class="pn-estado'+(t.feito?' ok':'')+'">'+(t.feito?'Concluído':'Pendente')+'</span>'
-  +(t.feito?'<span class="pn-play-vazio"></span>':'<button type="button" class="pn-play" data-nt="'+acao+'" data-id="'+e(t.id)+'" aria-label="Abrir: '+e(t.titulo||t.tipoNome)+'">'+PLAY+'</button>')+'</li>';
+  var chips=(t.mod?'<button type="button" class="pn-chipb" data-nt="estudar" data-id="'+e(t.id)+'">Material</button>':'')+'<button type="button" class="pn-chipb" data-nt="praticar" data-id="'+e(t.id)+'">Questões</button><button type="button" class="pn-chipb" onclick="nexoRevisarHub()">Revisar</button>';
+  return '<li class="pn-sessao'+(t.feito?' feito':'')+'" style="--c:'+e(t.cor)+'"><div class="pn-s-top">'+selo(t)+'<span class="pn-disc">'+e(t.disc)+'</span><span class="pn-min">'+CLOCK+fmtMin(t.min)+'</span>'
+  +(t.feito?'<span class="pn-estado ok">Concluído</span>':'<button type="button" class="pn-iniciar" data-nt="'+acao+'" data-id="'+e(t.id)+'">Iniciar</button>')+'</div>'
+  +'<p class="pn-s-tit"><b>'+e(t.titulo||t.tipoNome)+'</b>'+(t.sub?'<small>'+e(t.sub)+'</small>':'')+'</p>'
+  +'<div class="pn-s-acoes">'+chips+'<button type="button" class="pn-chk" data-pn="feito" data-id="'+e(t.id)+'" aria-pressed="'+t.feito+'" aria-label="'+(t.feito?'Desmarcar':'Concluir')+': '+e(t.titulo||t.tipoNome)+'">'+(t.feito?CHECK:'')+'<span>'+(t.feito?'Concluído':'Concluir')+'</span></button></div></li>';
  }).join('');
- return '<section class="pn-panel pn-trilha">'+cab('Seu roteiro de estudos. Conclua os itens e mantenha a consistência.',feitas+' de '+l.length+' '+(l.length===1?'item':'itens')+' · '+fmtMin(min))+'<ul class="pn-lista">'+linhas+'</ul></section>';
+ return '<section class="pn-panel pn-trilha"><div class="pn-phead"><div><h2>Trilha do dia</h2><p>Seu roteiro de estudos. Conclua os itens e mantenha a consistência.</p></div><button type="button" class="pn-cal" data-lab="trail" aria-label="Abrir a trilha">'+CAL+'</button></div>'
+  +'<div class="pn-aviso"><span class="pn-aviso-i">'+CAL+'</span><span>'+(pend?'Você tem <b>'+pend+'</b> '+(pend===1?'sessão':'sessões')+' de estudo '+(pend===1?'pendente':'pendentes')+' · '+feitas+' de '+l.length+' concluídas · '+fmtMin(min):'Todas as <b>'+l.length+'</b> sessões deste dia estão concluídas. Bom trabalho!')+'</span></div><ul class="pn-sessoes">'+linhas+'</ul></section>';
 }
 
 function concursosHtml(x,it){
@@ -97,11 +102,13 @@ function numerosHtml(){
  var s7=q.filter(function(x){return x.t>=h0-6*DIA}),a7=q.filter(function(x){return x.t>=h0-13*DIA&&x.t<h0-6*DIA});
  var pc=function(a){return a.length?Math.round(a.filter(function(x){return x.ok}).length/a.length*100):null};
  var p=pc(s7),pa=pc(a7),ok7=s7.filter(function(x){return x.ok}).length,delta=p!=null&&pa!=null?p-pa:null;
+ var dias7='';for(var di=6;di>=0;di--){var ini=h0-di*DIA,dq=q.filter(function(x){return x.t>=ini&&x.t<ini+DIA}),dok=dq.filter(function(x){return x.ok}).length,pp=dq.length?Math.round(dok/dq.length*100):0,nm=['D','S','T','Q','Q','S','S'][new Date(ini+DIA/2).getDay()];dias7+='<span class="pn-sp'+(dq.length?'':' vz')+'" title="'+(dq.length?dok+' de '+dq.length+' ('+pp+'%)':'sem questões')+'"><i style="height:'+(dq.length?Math.max(8,pp):6)+'%"></i><em>'+nm+'</em></span>'}
  var pct=meta?Math.min(100,Math.round(hojeQ.length/meta*100)):0;
  var ico=function(n){return '<span class="pn-pico">'+({barras:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',alvo:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>'})[n]+'</span>'};
  return '<div class="pn-numeros"><section class="pn-panel pn-num">'+ico('barras')+'<div class="pn-num-c"><small>Questões resolvidas hoje</small><div class="pn-num-v"><b>'+hojeQ.length+'</b><span>'+(meta?'de '+meta+' previstas':'sem meta definida')+'</span></div><div class="pn-num-b">'+(meta?'<div class="pn-barra" role="img" aria-label="'+pct+'% da meta"><i style="width:'+pct+'%"></i></div><span class="pn-pct">'+pct+'%</span>':'')+'<button type="button" class="pn-link" data-pn="meta">'+(meta?'Alterar meta':'Definir meta diária')+'</button></div></div></section>'
- +'<section class="pn-panel pn-taxa"><div class="pn-taxa-t"><small>Taxa de acerto · 7 dias</small>'+(delta!=null?'<em class="pn-delta '+(delta>=0?'up':'down')+'">'+(delta>=0?'+':'')+delta+'% vs. semana anterior</em>':'')+'</div>'
- +(s7.length?'<div class="pn-taxa-c"><div class="pn-pizza" role="img" aria-label="'+ok7+' acertos e '+(s7.length-ok7)+' erros nos últimos 7 dias" style="--a:'+(p*3.6)+'deg"></div><ul class="pn-leg"><li class="big"><span>Taxa</span><b>'+p+'%</b></li><li><i class="ac"></i><span>Acertos</span><b>'+ok7+'</b></li><li><i class="er"></i><span>Erros</span><b>'+(s7.length-ok7)+'</b></li><li class="tt"><span>Total</span><b>'+s7.length+'</b></li></ul></div>':'<p class="pn-num-s">Responda questões para ver sua taxa de acerto.</p>')+'</section></div>';
+ +'<section class="pn-panel pn-taxa"><div class="pn-taxa-t"><small>Taxa de acerto · 7 dias</small>'+(delta!=null?'<em class="pn-delta '+(delta>=0?'up':'down')+'">'+(delta>=0?'▲ +':'▼ ')+delta+'% vs. semana anterior</em>':'')+'</div>'
+ +(s7.length?'<div class="pn-taxa-c"><div class="pn-anel" role="img" aria-label="'+ok7+' acertos e '+(s7.length-ok7)+' erros nos últimos 7 dias"><svg viewBox="0 0 120 120" width="132" height="132" aria-hidden="true"><defs><linearGradient id="pnG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7ae8c3"/><stop offset="1" stop-color="#2aa57f"/></linearGradient></defs><circle cx="60" cy="60" r="48" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="11"/><circle cx="60" cy="60" r="48" fill="none" stroke="url(#pnG)" stroke-width="11" stroke-linecap="round" stroke-dasharray="'+(p*3.0159)+' 301.59" transform="rotate(-90 60 60)"/></svg><div><b>'+p+'<i>%</i></b><span>de acerto</span></div></div>'
+ +'<div class="pn-taxa-d"><div class="pn-chips"><span class="ac"><i></i>'+ok7+' acertos</span><span class="er"><i></i>'+(s7.length-ok7)+' erros</span></div><div class="pn-spark" aria-label="Acerto por dia">'+dias7+'</div></div></div>':'<p class="pn-num-s">Responda questões para ver sua taxa de acerto.</p>')+'</section></div>';
 }
 
 function acessoHtml(){
