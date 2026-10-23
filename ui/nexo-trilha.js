@@ -466,6 +466,29 @@ function nxEdIcon(id){
  return '<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(paths[id]||'<path d="M4 4h16v16H4zM8 10h8M8 14h8"/>')+'</svg>';
 }
 
+
+/* Progresso granular: divisões reais de teoria dos Livros Digitais. */
+function nxDivisoesModulo(mod){
+ var m=modulo(mod),lv=LV();if(!m||!lv||typeof lv.partes!=='function')return [];
+ try{return (lv.partes(m)||[]).filter(function(p){return !!p.teoria;});}catch(e){return [];}
+}
+function nxFatiaModulo(mod,state,pr){
+ var partes=nxDivisoesModulo(mod),leitura=(state.progress&&state.progress.leitura)||{};
+ var completo=!!((pr[ch('cap:'+mod)]||{}).e);
+ if(!partes.length)return {feito:completo?1:0,total:1,partes:[]};
+ var lidas=partes.filter(function(p){return !!leitura[mod+'|'+p.key];}).length;
+ return {feito:completo?partes.length:lidas,total:partes.length,partes:partes};
+}
+function nxProgressoTopico(top,state,pr){
+ var mods=top.mods||[];
+ if(!mods.length){
+   var checked=!!((state.plan&&state.plan.ja&&state.plan.ja[top.id])||(pr[ch('top:'+top.id)]||{}).e);
+   return {feito:checked?1:0,total:1,semModulo:true};
+ }
+ return mods.reduce(function(acc,mod){var f=nxFatiaModulo(mod,state,pr);acc.feito+=f.feito;acc.total+=f.total;return acc;},{feito:0,total:0});
+}
+function nxNomeParte(p,i){return p.titulo||p.nome||p.label||p.title||('Divisão '+(i+1));}
+
 function painelCardsEdital(s,sel,ed){
  var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
  var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
@@ -473,20 +496,15 @@ function painelCardsEdital(s,sel,ed){
  var completed=0,total=0;
  var cards=ids.map(function(id,i){
   var d=ed.disciplinas[id];if(!d)return '';
-  var ts=d.topicos||[],us=unidades(id),por={};
-  us.forEach(function(u){(por[u.top]=por[u.top]||[]).push(u);});
-  var feitos=ts.filter(function(top){
-   var uu=por[top[0]]||[];
-   return !!((plano&&plano.ja&&plano.ja[top[0]]) ||(noPlano&&uu.length&&uu.every(function(u){return !!(pr[ch(u.id)]||{}).e;})));
-  }).length;
-  total+=ts.length;completed+=feitos;
-  var pct=ts.length?Math.round(feitos/ts.length*100):0;
+  var ts=topicos(id),frac=ts.reduce(function(acc,top){var f=nxProgressoTopico(top,s,pr);acc.feito+=f.feito;acc.total+=f.total;return acc;},{feito:0,total:0});
+  total+=frac.total;completed+=frac.feito;
+  var pct=frac.total?Math.round(frac.feito/frac.total*100):0;
   var cor=d.cor||'#269a78', desc=ts.slice(0,2).map(function(x){return x[1];}).join(' · ');
   return '<button type="button" class="nx-edcard" data-nt="ed-disc" data-ed-disc="'+escH(id)+'" style="--ed-color:'+escH(cor)+'"><span class="nx-edcard-top"><span class="nx-edcard-icon">'+nxEdIcon(id)+'</span><span class="nx-edcard-ring" style="--p:'+pct+'%">'+pct+'%</span></span><strong>'+escH(d.nome)+'</strong><span class="nx-edcard-desc">'+escH(desc)+'</span><span class="nx-edcard-foot"><small>'+ts.length+' tópicos</small><span aria-hidden="true">→</span></span></button>';
  }).join('');
  var pct=total?Math.round(completed/total*100):0;
  return '<div class="nx-ed-dashboard"><header class="nx-ed-welcome"><div><h2>Olá, Estudante!</h2><p>Acompanhe seu progresso no edital verticalizado e mantenha o foco na sua aprovação.</p></div><div class="nx-ed-motivation"><span class="nx-ed-motivation-icon">◎</span><div><b>Disciplina hoje?</b><small>Continue de onde parou e evolua mais um pouco.</small></div><button type="button" data-nt="ed-retomar">▶ Retomar estudos</button></div></header>'
- +'<section class="nx-ed-summary"><div class="nx-ed-big-ring" style="--p:'+pct+'%"><strong>'+pct+'%</strong><small>concluído</small></div><div class="nx-ed-summary-main"><h3>Progresso geral</h3><p>'+completed+' de '+total+' tópicos concluídos</p><div class="nx-ed-progress"><span style="width:'+pct+'%"></span></div><div class="nx-ed-kpis"><span><b>'+completed+'</b> tópicos concluídos</span><span><b>'+total+'</b> tópicos no programa</span><span><b>'+ids.length+'</b> disciplinas</span></div></div></section>'
+ +'<section class="nx-ed-summary"><div class="nx-ed-big-ring" style="--p:'+pct+'%"><strong>'+pct+'%</strong><small>concluído</small></div><div class="nx-ed-summary-main"><h3>Progresso geral</h3><p>'+completed+' de '+total+' divisões concluídas</p><div class="nx-ed-progress"><span style="width:'+pct+'%"></span></div><div class="nx-ed-kpis"><span><b>'+completed+'</b> divisões concluídas</span><span><b>'+total+'</b> divisões no programa</span><span><b>'+ids.length+'</b> disciplinas</span></div></div></section>'
  +(noPlano?'':'<p class="nt-aviso">Consulta ao programa: para contabilizar conclusão, configure um plano de estudos para este cargo. Nenhum progresso foi presumido.</p>')
  +'<div class="nx-ed-section-head"><div><h3>Disciplinas do edital</h3><p>Explore os conteúdos do seu concurso de forma organizada e verticalizada.</p></div><div class="nx-ed-view"><button type="button" data-nt="ed-view" data-v="cards" class="active">Cards</button><button type="button" data-nt="ed-view" data-v="lista">Lista do edital</button></div></div><div class="nx-ed-grid">'+cards+'</div></div>';
 }
@@ -526,14 +544,14 @@ function telaEdital(s){
   var tot = 0, ok = 0, semMat = 0, grupo = { gerais:[0, 0], especificos:[0, 0] }, dados = {};
   lista.forEach(function(id){
     var us = unidades(id), porTop = {}; us.forEach(function(u){ (porTop[u.top] = porTop[u.top] || []).push(u); });
-    var ts = topicos(id), f = ts.filter(function(t){ return feitoTop(t, porTop); }).length;
+    var ts = topicos(id), fract=ts.reduce(function(acc,t){var f=nxProgressoTopico(t,s,prog);acc.feito+=f.feito;acc.total+=f.total;return acc;},{feito:0,total:0}), f=fract.feito;
     dados[id] = { porTop:porTop, ts:ts, f:f };
-    tot += ts.length; ok += f; semMat += ts.filter(function(t){ return !(porTop[t.id] || []).some(function(u){ return u.mod; }); }).length;
-    var g = dc.gerais.indexOf(id) >= 0 ? 'gerais' : 'especificos'; grupo[g][0] += f; grupo[g][1] += ts.length;
+    tot += fract.total; ok += f; semMat += ts.filter(function(t){ return !(porTop[t.id] || []).some(function(u){ return u.mod; }); }).length;
+    var g = dc.gerais.indexOf(id) >= 0 ? 'gerais' : 'especificos'; grupo[g][0] += f; grupo[g][1] += fract.total;
   });
   var pc = function(a, b){ return b ? Math.round(a / b * 100) : 0; };
   var cargoNome = (ED.cargos[plan.cargo] || {}).nome || '';
-  var h = '<section class="nt-edres" aria-label="Resumo do edital"><div class="nt-edres-main"><b>' + pc(ok, tot) + '%</b><span>do edital concluído<br><small>' + ok + ' de ' + tot + ' assuntos · ' + escH(cargoNome) + '</small></span></div>'
+  var h = '<section class="nt-edres" aria-label="Resumo do edital"><div class="nt-edres-main"><b>' + pc(ok, tot) + '%</b><span>do edital concluído<br><small>' + ok + ' de ' + tot + ' divisões · ' + escH(cargoNome) + '</small></span></div>'
     + '<div class="nt-edres-g"><span>Conhecimentos gerais <b>' + pc(grupo.gerais[0], grupo.gerais[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.gerais[0], grupo.gerais[1]) + '%"></i></span>'
     + '<span>Conhecimentos específicos <b>' + pc(grupo.especificos[0], grupo.especificos[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.especificos[0], grupo.especificos[1]) + '%"></i></span></div></section>';
   if(semPlano) h += '<p class="nt-aviso">Você ainda não montou seu plano. O progresso abaixo vem dos capítulos que você já leu no livro digital. Para marcar assuntos como estudados e receber a trilha semana a semana, <button type="button" class="nx-btn primary small" data-nt="editar">monte seu plano</button>.</p>';
@@ -542,16 +560,26 @@ function telaEdital(s){
   return h + lista.map(function(id){
     var d = ED.disciplinas[id], x = dados[id], porTop = x.porTop;
     var itens = x.ts.filter(function(t){ return !soFalta || !feitoTop(t, porTop); });
-    return '<details class="nt-ed" style="--c:' + d.cor + '"' + (soFalta && itens.length ? ' open' : '') + '><summary><span class="nt-sig">' + d.sigla + '</span><b>' + escH(d.nome) + '</b><span class="nt-edn">' + x.f + '/' + x.ts.length + ' · ' + pc(x.f, x.ts.length) + '%</span><span class="nt-bar sm"><i style="width:' + pc(x.f, x.ts.length) + '%"></i></span></summary><ol>'
+    return '<details class="nt-ed" style="--c:' + d.cor + '"' + (soFalta && itens.length ? ' open' : '') + '><summary><span class="nt-sig">' + d.sigla + '</span><b>' + escH(d.nome) + '</b><span class="nt-edn">' + x.f + '/' + x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0) + ' · ' + pc(x.f, x.ts.reduce(function(a,t){return a+nxProgressoTopico(t,s,prog).total;},0)) + '%</span><span class="nt-bar sm"><i style="width:' + pc(x.f, x.ts.length) + '%"></i></span></summary><ol>'
       + (itens.length ? itens.map(function(t){
         var uu = porTop[t.id] || [], todos = feitoTop(t, porTop), algum = uu.some(function(u){ return (prog[ch(u.id)] || {}).e; });
         var ja = plan.ja && plan.ja[t.id];
+        var fr=nxProgressoTopico(t,s,prog),topicPct=fr.total?Math.round(fr.feito/fr.total*100):0;
+        var pTexto='<span class="nx-ed-topic-percent">'+fr.feito+'/'+fr.total+' divisões · '+topicPct+'%</span>';
+        var detalhes=t.mods.map(function(mod){
+          var dados=nxFatiaModulo(mod,s,prog);
+          if(!dados.partes.length)return '';
+          var leitura=(s.progress&&s.progress.leitura)||{},whole=dados.feito===dados.total;
+          return '<details class="nx-ed-divisions"><summary>Divisões do Cap. '+escH(String(numCap(mod)||''))+' · '+dados.feito+'/'+dados.total+'</summary><ol>'+dados.partes.map(function(p,i){
+            return '<li class="'+(whole||leitura[mod+'|'+p.key]?'nx-ed-done':'')+'"><span aria-hidden="true">'+(whole||leitura[mod+'|'+p.key]?'✓':'○')+'</span><span>'+escH(nxNomeParte(p,i))+'</span></li>';
+          }).join('')+'</ol><small>Conclua cada divisão no Livro Digital para atualizar o progresso automaticamente.</small></details>';
+        }).join('');
         var caps = uu.filter(function(u){ return u.mod; }).map(function(u){
           var xx = prog[ch(u.id)] || {}, pl = LV() ? LV().pctModulo(u.mod) : 0, q = abaQuestoes(u.mod);
           return '<span class="nt-capw"><button type="button" class="nt-capl' + (xx.e ? ' feito' : '') + '" data-nt="modulo" data-mod="' + u.mod + '">' + (xx.e ? '✓ ' : '') + 'Cap. ' + (numCap(u.mod) || '') + ' · ' + escH(u.nome) + (pl && !xx.e ? ' <small>' + pl + '% lido</small>' : '') + '</button>'
             + (q ? '<button type="button" class="nt-capq" data-nt="questoes" data-mod="' + u.mod + '">Questões</button>' : '') + '</span>';
         }).join('');
-        return '<li class="' + (todos ? 'feito' : '') + '"><span class="nt-pdot p' + t.prio + '" title="' + PRIO_NOME[t.prio] + (t.estimada ? ' (estimativa)' : '') + '"></span><span class="nt-edt">' + escH(t.nome) + (caps ? '<span class="nt-caps">' + caps + '</span>' : '<small class="nt-semmat">sem material no NEXO</small>') + '</span>'
+        return '<li class="' + (todos ? 'feito' : '') + '"><span class="nt-pdot p' + t.prio + '" title="' + PRIO_NOME[t.prio] + (t.estimada ? ' (estimativa)' : '') + '"></span><span class="nt-edt">' + escH(t.nome) + pTexto + (caps ? '<span class="nt-caps">' + caps + '</span>' + detalhes : '<small class="nt-semmat">sem material no NEXO</small>') + '</span>'
           + (semPlano ? (todos ? '<span class="nt-ja">✓ lido</span>' : '<span></span>') : '<label class="nt-ja"><input type="checkbox" data-nt="ja" data-top="' + t.id + '"' + (todos || ja ? ' checked' : '') + (algum && !ja ? ' disabled' : '') + '> já estudei</label>') + '</li>';
       }).join('') : '<li class="nt-edvazio">Tudo concluído nesta disciplina.</li>') + '</ol></details>';
   }).join('');
