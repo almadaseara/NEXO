@@ -626,6 +626,16 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 <link rel="stylesheet" href="ui/nexo-ui.css?v=20261015j">
 <link rel="stylesheet" href="ui/nexo-acervo.css?v=20261019c">
 <script>try{var nxT=JSON.parse(localStorage.getItem('nexo_theme')||'null');if(nxT!=='dark'&&nxT!=='light')nxT=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',nxT)}catch(e){}</script>
+<style id="nx-concursos-style">
+.nx-con-nav{margin:8px 12px;width:calc(100% - 24px);border:1px solid #2e8866;background:#173b33;color:#dfffea;border-radius:10px;padding:12px;cursor:pointer;text-align:left;font-weight:700}
+.nx-concursos{max-width:900px;margin:0 auto;display:grid;gap:16px;color:var(--text)}
+.nx-con-header,.nx-con-card{padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+.nx-con-header h2{margin:0 0 8px}.nx-con-header p,.nx-con-muted{color:var(--muted);font-size:13px;line-height:1.5}
+.nx-con-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.nx-con-card{display:grid;gap:12px}.nx-con-card h3{margin:0}.nx-con-line{display:flex;justify-content:space-between;gap:8px}.nx-con-line span{font-size:12px;color:var(--green)}
+.nx-con-card label{display:grid;gap:6px;font-size:13px}.nx-con-card select{width:100%;padding:10px;border-radius:8px;background:var(--panel2);color:var(--text);border:1px solid var(--line)}
+.nx-con-card button{border:1px solid #39865d;background:#19392c;color:#e5fff0;border-radius:8px;padding:10px;cursor:pointer}.nx-con-actions{display:flex;flex-wrap:wrap;gap:8px}.nx-con-primary{font-weight:700}
+</style>
 </head>
 <body class="logged-out">
 
@@ -2134,5 +2144,6 @@ syncAccess();
 <script src="ui/nexo-importar.js?v=20261018"></script>
 <script src="ui/nexo-caderno.js?v=20261020a"></script>
 <script src="ui/nexo-revisar-aluno.js?v=20261020a"></script>
+<script src="ui/nexo-concursos.js?v=20261022"></script>
 </body>
 </html>
