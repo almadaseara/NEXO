@@ -1,0 +1,30 @@
+/* NEXO Lab — Turmas (grade de concursos) */
+.tm{max-width:1000px;margin:0 auto}
+.tm-topo{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.tm-topo h1{margin:0 0 4px}.tm-topo p{margin:0;color:var(--nx-muted,#8aa39b);font-size:14px;max-width:560px}
+.tm-cont{font-size:13px;padding:7px 12px;border-radius:99px;background:var(--nx-accent-soft,#17352c);color:var(--nx-accent,#3ec79a);white-space:nowrap}
+.tm-busca{display:flex;align-items:center;gap:10px;padding:0 14px;border:1px solid var(--nx-line,#2d3e3a);border-radius:12px;background:var(--nx-surface,#162320);margin-bottom:16px;color:var(--nx-muted,#8aa39b)}
+.tm-busca input{flex:1;min-width:0;font:inherit;font-size:14px;padding:13px 0;background:transparent;border:0;outline:0;color:var(--nx-ink,#eaf3f0)}
+.tm-grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.tm-card{all:unset;box-sizing:border-box;cursor:pointer;position:relative;display:flex;flex-direction:column;border:1px solid var(--nx-line,#2d3e3a);border-radius:14px;background:var(--nx-surface,#162320);overflow:hidden}
+.tm-card:hover{border-color:var(--nx-accent,#3ec79a)}.tm-card:focus-visible{outline:2px solid var(--nx-accent,#3ec79a);outline-offset:2px}
+.tm-card.on{border-color:var(--nx-accent,#3ec79a);box-shadow:inset 0 0 0 1px var(--nx-accent,#3ec79a)}
+.tm-card.aberta{background:var(--nx-accent-soft,#17352c)}
+.tm-star{position:absolute;top:8px;right:10px;z-index:2;color:#f1c25b;font-size:18px}
+.tm-arte{position:relative;display:grid;place-items:center;height:130px;color:var(--c);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 30%,#0e1614),color-mix(in srgb,var(--c) 8%,#0e1614));overflow:hidden}
+.tm-arte svg{width:62px;height:70px;opacity:.9}.tm-arte b{position:absolute;font-size:13px;color:#fff;letter-spacing:.02em;margin-top:2px}
+.tm-arte img{position:absolute;inset:0;margin:auto;max-width:62%;max-height:82%;object-fit:contain;background:transparent}
+.tm-nome{flex:1;align-content:start;display:grid;gap:2px;padding:11px 12px 13px;text-align:center;background:var(--nx-surface-2,#1f2f2b)}
+.tm-nome b{font-size:15px;color:var(--nx-ink,#eaf3f0)}.tm-nome small{font-size:12px;color:var(--nx-muted,#8aa39b);line-height:1.3}
+.tm-nome em{font-style:normal;font-size:11.5px;color:var(--nx-accent,#3ec79a);font-weight:700;margin-top:3px}
+.tm-det{margin-top:16px;padding:16px;border:1px solid var(--nx-accent,#3ec79a);border-radius:14px;background:var(--nx-surface,#162320);display:grid;gap:12px}
+.tm-det-t{display:flex;justify-content:space-between;align-items:center;gap:10px}.tm-det-t b{font-size:16px}
+.tm-x{cursor:pointer;font-size:22px;line-height:1;background:transparent;border:0;color:var(--nx-muted,#8aa39b)}
+.tm-info{margin:0;font-size:13px;color:var(--nx-muted,#8aa39b)}
+.tm-cargo{display:grid;gap:6px;font-size:13px;color:var(--nx-ink-2,#cfe0da)}
+.tm-cargo select{font:inherit;padding:11px 12px;border-radius:10px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1f2f2b);color:var(--nx-ink,#eaf3f0)}
+.tm-acoes{display:flex;flex-wrap:wrap;gap:8px}
+.tm-vazio{padding:18px;border:1px dashed var(--nx-line,#2d3e3a);border-radius:12px;text-align:center;color:var(--nx-muted,#8aa39b)}
+.tm-nota{margin:18px 0 0;font-size:12.5px;color:var(--nx-muted,#8aa39b)}.tm-link{cursor:pointer;font:inherit;background:transparent;border:0;color:var(--nx-accent,#3ec79a);text-decoration:underline;padding:0}
+@media(max-width:560px){.tm-grade{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tm-arte{height:104px}}
+.tm-conf{display:grid;gap:10px;padding:12px;border:1px solid color-mix(in srgb,var(--nx-bad,#e5484d) 60%,transparent);border-radius:12px;background:color-mix(in srgb,var(--nx-bad,#e5484d) 10%,transparent)}.tm-conf p{margin:0;font-size:13.5px}.tm-conf input{padding:10px 12px;border-radius:9px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1d2b27);color:inherit;font:inherit}.tm-conf .nx-btn.danger{background:var(--nx-bad,#e5484d);color:#fff}.tm-conf .nx-btn:disabled{opacity:.45;cursor:not-allowed}
