@@ -135,6 +135,7 @@ function continuar(livroId){
 var pedida = null;
 function abrir(mod, key){
   var m = modulo(mod); if(!m) return;
+  try{ document.dispatchEvent(new CustomEvent('nexo:livro-aberto', { detail:{ mod:mod } })); }catch(e){}
   var p = parteDe(m, key || partes(m)[0].key) || partes(m)[0];
   pedida = { mod:mod, key:p.key };
   if(typeof openModule === 'function') openModule(mod, p.tab);
