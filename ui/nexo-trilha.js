@@ -472,7 +472,7 @@ function telaEditalLab(s){
 
 var soFalta = false;
 function telaEdital(s){
-  var semPlano = !s.plan, plan = s.plan || { cargo:Object.keys(ED.cargos)[0], discs:null, ja:{} };
+  var semPlano = !s.plan || !!s._somenteConsulta, plan = s.plan || { cargo:Object.keys(ED.cargos)[0], discs:null, ja:{} };
   var prog = progresso(semPlano ? { weeks:{}, plan:plan, progress:s.progress } : s), dc = discsDoCargo(plan.cargo);
   var lista = dc.gerais.concat(dc.especificos).filter(function(x){ return !plan.discs || plan.discs.indexOf(x) >= 0; });
   var feitoTop = function(t, porTop){ var uu = porTop[t.id] || []; return !!((plan.ja && plan.ja[t.id]) || (uu.length && uu.every(function(u){ return (prog[ch(u.id)] || {}).e; }))); };
