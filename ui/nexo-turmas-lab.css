@@ -31,3 +31,8 @@
 /* Painel por concurso = Turmas + resumo do principal */
 .tm-kick{display:block;font-size:12px;letter-spacing:1.4px;font-weight:700;color:var(--nx-muted,#6b7f78);margin-bottom:4px}
 .tm-resumo{margin-top:22px}.tm-resumo .nx-con-card{margin-bottom:14px}
+
+.tm-fase{justify-self:center;margin-top:4px;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.02em;border:1px solid var(--nx-line,#2d413b)}
+.tm-fase.pos{color:var(--nx-accent,#3ec79a);border-color:var(--nx-accent,#3ec79a)}
+.tm-fase.pre{color:var(--nx-muted,#8aa39b)}
+.tm-info b{color:var(--nx-ink,#eaf3f0)}
