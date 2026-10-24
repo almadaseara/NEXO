@@ -8,6 +8,24 @@ var NOME={pcba:'Polícia Civil da Bahia',pcpe:'Polícia Civil de Pernambuco',pf:
 var SIGLA={pcba:'PC-BA',pcpe:'PC-PE',pf:'PF',prf:'PRF',pmpe:'PM-PE'};
 var COR={pcba:'#3a6ea5',pcpe:'#b23b3b',pf:'#8a6d1f',prf:'#2f7d5b',pmpe:'#5b4aa8'};
 var EMBLEMA={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image'};
+/* fase de cada concurso: pós-edital (edital publicado) ou pré-edital (ainda sem edital). Datas conforme os editais conferidos em 23/10/2026. */
+var FASE={
+  pcba:{pos:true,ref:'Edital SAEB nº 02/2026 (Instituto AOCP)'},
+  pcpe:{pos:true,ref:'Edital nº 1 – PCPE, de 02/10/2026 (Cebraspe)'},
+  pmpe:{pos:true,ref:'Edital de Abertura nº 001/2026, de 29/09/2026 (Instituto AOCP)',prova:'2027-02-21'},
+  pf:{pos:false,ref:'Último edital: nº 1/2025, de 20/05/2025 (Cebraspe). Novo edital ainda não publicado.'},
+  prf:{pos:false,ref:'Edital ainda não publicado.'}
+};
+function fase(id){return FASE[id]||{pos:false,ref:'Edital ainda não publicado.'}}
+function provaDe(id,cargo){var f=fase(id),e=(window.NEXO_EDITAIS||{})[id],cg=e&&e.cargos&&e.cargos[cargo];return (cg&&cg.prova)||f.prova||(e&&e.prova)||null}
+function dmy(iso){var p=String(iso).split('-');return p[2]+'/'+p[1]+'/'+p[0]}
+function dias(iso){var p=String(iso).split('-'),d=new Date(+p[0],+p[1]-1,+p[2]),h=new Date();h.setHours(0,0,0,0);return Math.round((d-h)/864e5)}
+function etiqueta(id){var f=fase(id);return '<span class="tm-fase '+(f.pos?'pos':'pre')+'">'+(f.pos?'Pós-edital':'Pré-edital')+'</span>'}
+function faseInfo(id,cargo){
+  var f=fase(id),pv=provaDe(id,cargo),n=pv?dias(pv):null;
+  if(f.pos)return '<b>Pós-edital.</b> '+esc(f.ref)+'.'+(pv?' Prova em '+dmy(pv)+(n>0?' ('+n+' dias).':n===0?' (hoje).':'.'):'');
+  return '<b>Pré-edital.</b> '+esc(f.ref)+' Até o edital sair, qualquer plano seria previsão; ele é refeito com o programa oficial quando o edital for publicado.';
+}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function norm(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
 function cat(){return window.nexoConcursosCatalogo||[]}
@@ -25,7 +43,7 @@ function cartao(c,s){
   var it=s.items.find(function(x){return x.id===c.id}),on=!!it,prin=on&&s.principal===c.id,job=on&&(c.cargos.find(function(z){return z[0]===it.cargo})||[])[1];
   return '<button type="button" class="tm-card'+(on?' on':'')+(aberta===c.id?' aberta':'')+'" data-tm="abrir" data-id="'+esc(c.id)+'" aria-pressed="'+on+'">'
    +(prin?'<span class="tm-star" title="Principal">★</span>':'')+escudo(c.id)
-   +'<span class="tm-nome"><b>'+esc(SIGLA[c.id]||c.id.toUpperCase())+'</b><small>'+esc(NOME[c.id]||c.nome)+'</small>'+(on?'<em>✓ '+(prin?'Principal':'Selecionado')+(job?' · '+esc(job):'')+'</em>':'')+'</span></button>';
+   +'<span class="tm-nome"><b>'+esc(SIGLA[c.id]||c.id.toUpperCase())+'</b><small>'+esc(NOME[c.id]||c.nome)+'</small>'+etiqueta(c.id)+(on?'<em>✓ '+(prin?'Principal':'Selecionado')+(job?' · '+esc(job):'')+'</em>':'')+'</span></button>';
 }
 function trilhaBloco(c,it,on){
   if(!on||(confirmando===c.id))return '';
@@ -38,8 +56,9 @@ function detalhe(s){
   var c=cat().find(function(x){return x.id===aberta});if(!c)return '';
   var it=s.items.find(function(x){return x.id===c.id}),on=!!it,cheio=!on&&s.items.length>=LIMITE;
   var ed=(window.NEXO_EDITAIS||{})[c.id],cargoSel=on?it.cargo:c.cargos[0][0];
-  var info=ed?'Programa cadastrado e conferido ('+esc(ed.nome)+').':'Conteúdo programático ainda pendente de cadastro e conferência.';
-  return '<section class="tm-det" id="tm-det" aria-live="polite"><div class="tm-det-t"><b>'+esc(c.nome)+'</b><button type="button" class="tm-x" data-tm="fechar" aria-label="Fechar">×</button></div><p class="tm-info">'+info+'</p>'
+  var pcg=ed&&ed.cargos&&ed.cargos[cargoSel],pars=(pcg&&pcg.parcial)||(ed&&ed.parcial);
+  var info=ed?(pars?'Programa parcial: '+esc(pars):'Programa cadastrado e conferido ('+esc(ed.nome)+').'):'Conteúdo programático ainda pendente de cadastro e conferência.';
+  return '<section class="tm-det" id="tm-det" aria-live="polite"><div class="tm-det-t"><b>'+esc(c.nome)+'</b><button type="button" class="tm-x" data-tm="fechar" aria-label="Fechar">×</button></div><p class="tm-info">'+faseInfo(c.id,cargoSel)+'</p><p class="tm-info">'+info+'</p>'
    +'<label class="tm-cargo">Cargo<select id="tm-cargo">'+c.cargos.map(function(z){return '<option value="'+esc(z[0])+'"'+(z[0]===cargoSel?' selected':'')+'>'+esc(z[1])+'</option>'}).join('')+'</select></label>'
    +(on&&confirmando===c.id?'<div class="tm-conf"><p>Para desmatricular de <b>'+esc(NOME[c.id]||c.nome)+'</b>, digite <b>confirma</b> abaixo. Seu progresso neste aparelho não é apagado.</p><input type="text" id="tm-conf-in" autocomplete="off" autocapitalize="off" placeholder="Digite confirma" aria-label="Digite confirma para desmatricular"><div class="tm-acoes"><button type="button" class="nx-btn danger small" id="tm-conf-ok" data-tm="remover" data-id="'+esc(c.id)+'" disabled>Confirmar desmatrícula</button><button type="button" class="nx-btn ghost small" data-tm="cancelar">Cancelar</button></div></div>':'')
    +trilhaBloco(c,it,on)
