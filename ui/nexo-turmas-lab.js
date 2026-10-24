@@ -17,12 +17,12 @@ var FASE={
   prf:{pos:false,ref:'Edital ainda não publicado.'}
 };
 function fase(id){return FASE[id]||{pos:false,ref:'Edital ainda não publicado.'}}
-function provaDe(id){var f=fase(id),e=(window.NEXO_EDITAIS||{})[id];return f.prova||(e&&e.prova)||null}
+function provaDe(id,cargo){var f=fase(id),e=(window.NEXO_EDITAIS||{})[id],cg=e&&e.cargos&&e.cargos[cargo];return (cg&&cg.prova)||f.prova||(e&&e.prova)||null}
 function dmy(iso){var p=String(iso).split('-');return p[2]+'/'+p[1]+'/'+p[0]}
 function dias(iso){var p=String(iso).split('-'),d=new Date(+p[0],+p[1]-1,+p[2]),h=new Date();h.setHours(0,0,0,0);return Math.round((d-h)/864e5)}
 function etiqueta(id){var f=fase(id);return '<span class="tm-fase '+(f.pos?'pos':'pre')+'">'+(f.pos?'Pós-edital':'Pré-edital')+'</span>'}
-function faseInfo(id){
-  var f=fase(id),pv=provaDe(id),n=pv?dias(pv):null;
+function faseInfo(id,cargo){
+  var f=fase(id),pv=provaDe(id,cargo),n=pv?dias(pv):null;
   if(f.pos)return '<b>Pós-edital.</b> '+esc(f.ref)+'.'+(pv?' Prova em '+dmy(pv)+(n>0?' ('+n+' dias).':n===0?' (hoje).':'.'):'');
   return '<b>Pré-edital.</b> '+esc(f.ref)+' Até o edital sair, qualquer plano seria previsão; ele é refeito com o programa oficial quando o edital for publicado.';
 }
@@ -56,8 +56,9 @@ function detalhe(s){
   var c=cat().find(function(x){return x.id===aberta});if(!c)return '';
   var it=s.items.find(function(x){return x.id===c.id}),on=!!it,cheio=!on&&s.items.length>=LIMITE;
   var ed=(window.NEXO_EDITAIS||{})[c.id],cargoSel=on?it.cargo:c.cargos[0][0];
-  var info=ed?'Programa cadastrado e conferido ('+esc(ed.nome)+').':'Conteúdo programático ainda pendente de cadastro e conferência.';
-  return '<section class="tm-det" id="tm-det" aria-live="polite"><div class="tm-det-t"><b>'+esc(c.nome)+'</b><button type="button" class="tm-x" data-tm="fechar" aria-label="Fechar">×</button></div><p class="tm-info">'+faseInfo(c.id)+'</p><p class="tm-info">'+info+'</p>'
+  var pcg=ed&&ed.cargos&&ed.cargos[cargoSel],pars=(pcg&&pcg.parcial)||(ed&&ed.parcial);
+  var info=ed?(pars?'Programa parcial: '+esc(pars):'Programa cadastrado e conferido ('+esc(ed.nome)+').'):'Conteúdo programático ainda pendente de cadastro e conferência.';
+  return '<section class="tm-det" id="tm-det" aria-live="polite"><div class="tm-det-t"><b>'+esc(c.nome)+'</b><button type="button" class="tm-x" data-tm="fechar" aria-label="Fechar">×</button></div><p class="tm-info">'+faseInfo(c.id,cargoSel)+'</p><p class="tm-info">'+info+'</p>'
    +'<label class="tm-cargo">Cargo<select id="tm-cargo">'+c.cargos.map(function(z){return '<option value="'+esc(z[0])+'"'+(z[0]===cargoSel?' selected':'')+'>'+esc(z[1])+'</option>'}).join('')+'</select></label>'
    +(on&&confirmando===c.id?'<div class="tm-conf"><p>Para desmatricular de <b>'+esc(NOME[c.id]||c.nome)+'</b>, digite <b>confirma</b> abaixo. Seu progresso neste aparelho não é apagado.</p><input type="text" id="tm-conf-in" autocomplete="off" autocapitalize="off" placeholder="Digite confirma" aria-label="Digite confirma para desmatricular"><div class="tm-acoes"><button type="button" class="nx-btn danger small" id="tm-conf-ok" data-tm="remover" data-id="'+esc(c.id)+'" disabled>Confirmar desmatrícula</button><button type="button" class="nx-btn ghost small" data-tm="cancelar">Cancelar</button></div></div>':'')
    +trilhaBloco(c,it,on)

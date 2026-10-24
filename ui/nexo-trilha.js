@@ -38,8 +38,11 @@ function fmtMin(m){ m = Math.round(m); if(m < 60) return m + ' min'; var h = Mat
 function setCur(v){ try{ current = v; }catch(e){} }
 function curAtual(){ try{ return current; }catch(e){ return null; } }
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
-function grupoNome(g){ return (ED.grupos && ED.grupos[g]) || (g === 'gerais' ? 'Conhecimentos gerais' : 'Conhecimentos específicos'); }
-function usar(s){ var id = (s && s.plan && s.plan.edital) || (rascunho && rascunho.edital); ED = EDS[id] || EDS.pcba; return ED; }
+function grupoNome(g, cargo){ var cg = ED.cargos && ED.cargos[cargo]; return (cg && cg.grupos && cg.grupos[g]) || (ED.grupos && ED.grupos[g]) || (g === 'gerais' ? 'Conhecimentos gerais' : 'Conhecimentos específicos'); }
+var CARGO_ATUAL = null;
+function usar(s){ var id = (s && s.plan && s.plan.edital) || (rascunho && rascunho.edital); ED = EDS[id] || EDS.pcba; CARGO_ATUAL = (s && s.plan && s.plan.cargo) || (rascunho && rascunho.cargo) || null; return ED; }
+/* data da prova: a do cargo, se o edital marcar uma por cargo (ex.: Delegado do PC-PE) */
+function provaISO(){ return ((ED.cargos && ED.cargos[CARGO_ATUAL]) || {}).prova || ED.prova || null; }
 
 /* ---------- programa: tópicos e unidades (capítulos) ---------- */
 function topicos(discId){
@@ -144,7 +147,7 @@ function gerarSemana(st, inicio, op){
   op = op || {};
   var plan = st.plan, prog = progresso(st), uid = 0, manter = op.manter || [];
   var cap = [];
-  for(var d = 0; d < 7; d++){ var t = inicio + d * DIA; cap.push(d < (op.desdeDia || 0) || t > deIso(ED.prova) ? 0 : +(plan.minutos[new Date(t).getDay()] || 0)); }
+  for(var d = 0; d < 7; d++){ var t = inicio + d * DIA; cap.push(d < (op.desdeDia || 0) || t > provaT() ? 0 : +(plan.minutos[new Date(t).getDay()] || 0)); }
   manter.forEach(function(t){ if(t.d >= 0 && t.d < 7) cap[t.d] = Math.max(0, cap[t.d] - t.min); });
   var total = cap.reduce(function(a, b){ return a + b; }, 0);
   var nova = function(o){ o.id = 't' + (++uid) + '-' + Math.random().toString(36).slice(2, 7); o.feito = 0; return o; };
@@ -173,11 +176,12 @@ function gerarSemana(st, inicio, op){
   var orc = Math.max(0, total * (Object.keys(prog).length ? .8 : .88) - usado);
   var dc = discsDoCargo(plan.cargo);
   var g = dc.gerais.filter(function(x){ return plan.discs.indexOf(x) >= 0; }), e = dc.especificos.filter(function(x){ return plan.discs.indexOf(x) >= 0; });
-  var pv = ED.provas || { gerais:40, especificos:60 }, fg = pv.gerais / ((pv.gerais + pv.especificos) || 1);
+  var pv = (ED.cargos[plan.cargo] || {}).provas || ED.provas || { gerais:40, especificos:60 }, fg = pv.gerais / ((pv.gerais + pv.especificos) || 1);
   var pg = e.length && g.length ? fg : 1, pe = e.length && g.length ? 1 - fg : 1, peso = {};
-  var soma = function(l){ return l.reduce(function(s, x){ return s + (x === 'atualidades' ? .5 : 1); }, 0); };
-  g.forEach(function(x){ peso[x] = pg * (x === 'atualidades' ? .5 : 1) / soma(g); });
-  e.forEach(function(x){ peso[x] = pe / soma(e); });
+  var pesoD = function(x){ return x === 'atualidades' ? .5 : ((ED.disciplinas[x] || {}).peso || 1); };
+  var soma = function(l){ return l.reduce(function(s, x){ return s + pesoD(x); }, 0); };
+  g.forEach(function(x){ peso[x] = pg * pesoD(x) / soma(g); });
+  e.forEach(function(x){ peso[x] = pe * pesoD(x) / soma(e); });
   var deficit = {}, filas = {}, travadas = {};
   Object.keys(peso).forEach(function(x){
     var saldo = antes && st.weeks[antes].saldo ? +(st.weeks[antes].saldo[x] || 0) : 0;
@@ -272,7 +276,7 @@ function gerarPlano(s, inicio){
   Object.keys(s.weeks).forEach(function(k){ if(deIso(k) >= inicio) delete s.weeks[k]; });
   if(manter.length) s.weeks[k0] = { ini:k0, tarefas:manter };
   var sim = clone(s); sim.__sim = false;
-  var prova = deIso(ED.prova), fimEstudo = null;
+  var prova = provaT(), fimEstudo = null;
   for(var w = 0; w < 60; w++){
     var ini = inicio + w * 7 * DIA; if(ini > prova) break;
     var semana = gerarSemana(sim, ini, w === 0 ? { manter:manter, desdeDia:Math.max(0, Math.round((hoje0() - inicio) / DIA)) } : { semCarregar:false, soRevisao:fimEstudo != null });
@@ -312,7 +316,9 @@ var ICON = {
   esq:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>',
   dir:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>'
 };
-function contagem(){ return Math.ceil((deIso(ED.prova) - hoje0()) / DIA); }
+/* sem data de prova (edital ainda não publicado) o plano cobre até 12 meses */
+function provaT(){ var v = provaISO(); return v ? deIso(v) : hoje0() + 364 * DIA; }
+function contagem(){ var v = provaISO(); return v ? Math.ceil((deIso(v) - hoje0()) / DIA) : null; }
 function tituloTarefa(t){
   var u = t.un && unidade(t.un), n = t.mod && numCap(t.mod);
   return (n ? 'Cap. ' + n + ' · ' : '') + (u ? u.nome : '');
@@ -331,7 +337,9 @@ function telaConfig(s){
   var p = s.plan || { edital:ED.id, cargo:(rascunho && ED.cargos[rascunho.cargo] ? rascunho.cargo : Object.keys(ED.cargos)[0]), minutos:[0, 120, 120, 120, 120, 120, 180], discs:null };
   var dc = discsDoCargo(p.cargo), sel = p.discs || dc.gerais.concat(dc.especificos);
   var horas = [0, 30, 45, 60, 90, 120, 150, 180, 240, 300, 360, 480];
+  var PV = (ED.cargos[p.cargo] || {}).provas || ED.provas;
   var bloco = function(nome, lista, nota){
+    if(!lista.length) return '';
     return '<fieldset class="nt-disc"><legend>' + nome + ' <small>' + nota + '</small></legend>' + lista.map(function(id){
       var d = ED.disciplinas[id], comMat = topicos(id).some(function(t){ return t.mods.length; });
       return '<label class="nt-chk" style="--c:' + d.cor + '"><input type="checkbox" name="nt-disc" value="' + id + '"' + (sel.indexOf(id) >= 0 ? ' checked' : '') + '><span class="nt-sig nx-nt-icon">' + (window.nexoDisciplineSvg&&window.nexoDisciplineIcon?window.nexoDisciplineSvg(window.nexoDisciplineIcon(d.nome)):escH(d.sigla)) + '</span><span>' + escH(d.nome) + (comMat ? '<small>livro digital no NEXO</small>' : '<small>sem material no NEXO ainda</small>') + '</span></label>';
@@ -346,8 +354,8 @@ function telaConfig(s){
     + [1, 2, 3, 4, 5, 6, 0].map(function(w){ return '<label class="nt-dia"><span>' + DIAS[w] + '</span><select name="nt-min-' + w + '">' + horas.map(function(m){ return '<option value="' + m + '"' + (+p.minutos[w] === m ? ' selected' : '') + '>' + (m ? fmtMin(m) : 'Folga') + '</option>'; }).join('') + '</select></label>'; }).join('')
     + '</div><p class="nt-total" id="nt-total"></p>'
     + '<label class="nt-revfinal"><input type="checkbox" name="nt-revisar"' + (p.revisarAteProva !== false ? ' checked' : '') + '> Depois de concluir o conteúdo, continuar com revisões e questões até a prova</label></section>'
-    + '<section class="nx-panel"><h2>3. Disciplinas</h2><p class="nx-sub">' + (ED.provas ? (ED.grupos ? 'No edital são ' + ED.provas.gerais + ' questões em “' + grupoNome('gerais') + '” e ' + ED.provas.especificos + ' em “' + grupoNome('especificos') + '”' : 'Na prova são ' + ED.provas.gerais + ' questões de conhecimentos gerais e ' + ED.provas.especificos + ' de específicos') + '; a trilha divide o tempo nessa proporção.' : '') + '</p><div id="nt-discs">'
-    + bloco(grupoNome('gerais'), dc.gerais, ED.provas ? ED.provas.gerais + ' questões' : '') + bloco(grupoNome('especificos'), dc.especificos, ED.provas ? ED.provas.especificos + ' questões' : '') + '</div></section>'
+    + '<section class="nx-panel"><h2>3. Disciplinas</h2><p class="nx-sub">' + ((((ED.cargos[p.cargo] || {}).parcial) || ED.parcial) ? (((ED.cargos[p.cargo] || {}).parcial) || ED.parcial) + ' ' : '') + (ED.resumoProva ? ED.resumoProva + '; a trilha divide o tempo pelo peso de cada bloco.' : PV ? (ED.grupos ? 'No edital são ' + PV.gerais + ' questões em “' + grupoNome('gerais', p.cargo) + '” e ' + PV.especificos + ' em “' + grupoNome('especificos', p.cargo) + '”' : 'Na prova são ' + PV.gerais + ' questões de conhecimentos gerais e ' + PV.especificos + ' de específicos') + '; a trilha divide o tempo nessa proporção.' : '') + '</p><div id="nt-discs">'
+    + bloco(grupoNome('gerais', p.cargo), dc.gerais, PV ? PV.gerais + ' questões' : '') + bloco(grupoNome('especificos', p.cargo), dc.especificos, PV ? PV.especificos + ' questões' : '') + '</div></section>'
     + '<div class="nt-acoes">' + ((s.plan || rascunho) ? '<button type="button" class="nx-btn ghost" data-nt="cancelar">Cancelar</button>' : '') + '<button type="submit" class="nx-btn primary">' + (s.plan ? 'Salvar e recalcular o plano' : 'Montar meu plano de estudos') + '</button></div>'
     + '</form>';
 }
@@ -405,8 +413,9 @@ function detalhe(t, d){
 function resumoPlano(s){
   var ks = Object.keys(s.weeks || {}).sort(), prog = progresso(s), falta = restantesDoPlano(s, prog);
   var tot = (s.plan.discs || []).filter(function(d){ return d !== 'atualidades' && ED.disciplinas[d]; }).reduce(function(a, d){ return a + unidades(d).length; }, 0);
-  var feitos = tot - falta, pct = tot ? Math.round(feitos / tot * 100) : 0, fim = s.plan.fimPrevisto, prova = deIso(ED.prova);
-  var aviso = !fim ? '<span class="nt-alerta">No ritmo atual, o conteúdo não termina antes da prova. Aumente o tempo por semana ou tire disciplinas.</span>'
+  var feitos = tot - falta, pct = tot ? Math.round(feitos / tot * 100) : 0, fim = s.plan.fimPrevisto, prova = provaT(), semData = !provaISO();
+  var aviso = semData ? (!fim ? '<span class="nt-alerta">No ritmo atual, o conteúdo não termina em 12 meses. Aumente o tempo por semana ou tire disciplinas.</span>' : '<span>Conclusão prevista do conteúdo: <b>' + dma(fim) + '</b>. Ainda não há data de prova; refaça o plano quando o edital sair.</span>')
+    : !fim ? '<span class="nt-alerta">No ritmo atual, o conteúdo não termina antes da prova. Aumente o tempo por semana ou tire disciplinas.</span>'
     : fim > prova ? '<span class="nt-alerta">Conclusão prevista depois da prova.</span>' : '<span>Conclusão prevista do conteúdo: <b>' + dma(fim) + '</b>' + (prova - fim > 7 * DIA ? ', com ' + Math.floor((prova - fim) / 7 / DIA) + ' semanas para revisar antes da prova' : '') + '.</span>';
   return '<div class="nt-plano"><div><span class="nt-kicker">Plano completo · ' + ks.length + ' semanas</span><b>' + feitos + ' de ' + tot + ' capítulos e assuntos estudados (' + pct + '%)</b><div class="nt-bar"><i style="width:' + pct + '%"></i></div>' + aviso + '</div></div>';
 }
@@ -612,8 +621,8 @@ function telaEdital(s){
   var pc = function(a, b){ return b ? Math.round(a / b * 100) : 0; };
   var cargoNome = (ED.cargos[plan.cargo] || {}).nome || '';
   var h = '<section class="nt-edres" aria-label="Resumo do edital"><div class="nt-edres-main"><b>' + pc(ok, tot) + '%</b><span>do edital concluído<br><small>' + ok + ' de ' + tot + ' divisões · ' + escH(cargoNome) + '</small></span></div>'
-    + '<div class="nt-edres-g"><span>' + grupoNome('gerais') + ' <b>' + pc(grupo.gerais[0], grupo.gerais[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.gerais[0], grupo.gerais[1]) + '%"></i></span>'
-    + '<span>' + grupoNome('especificos') + ' <b>' + pc(grupo.especificos[0], grupo.especificos[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.especificos[0], grupo.especificos[1]) + '%"></i></span></div></section>';
+    + '<div class="nt-edres-g">' + (grupo.gerais[1] ? '<span>' + grupoNome('gerais', plan.cargo) + ' <b>' + pc(grupo.gerais[0], grupo.gerais[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.gerais[0], grupo.gerais[1]) + '%"></i></span>' : '')
+    + '<span>' + grupoNome('especificos', plan.cargo) + ' <b>' + pc(grupo.especificos[0], grupo.especificos[1]) + '%</b></span><span class="nt-bar sm"><i style="width:' + pc(grupo.especificos[0], grupo.especificos[1]) + '%"></i></span></div></section>';
   if(semPlano) h += '<p class="nt-aviso">Você ainda não montou seu plano. O progresso abaixo vem dos capítulos que você já leu no livro digital. Para marcar assuntos como estudados e receber a trilha semana a semana, <button type="button" class="nx-btn primary small" data-nt="editar">monte seu plano</button>.</p>';
   h += '<div class="nt-edtools"><p class="nx-sub nt-legenda">Assuntos na ordem de estudo. Cada capítulo mostra quanto você já leu; "Questões" abre as questões daquele capítulo.' + (semMat ? ' ' + semMat + ' assuntos ainda não têm material no NEXO.' : '') + '</p>'
     + '<label class="nt-ja nt-sofalta"><input type="checkbox" data-nt="sofalta"' + (soFalta ? ' checked' : '') + '> Mostrar só o que falta</label></div>';
@@ -666,7 +675,7 @@ window.nexoCronograma = function(a){
   var recalculou = !editando && replanejarSeNecessario(s); if(recalculou) s = st();
   var faltam = contagem();
   var topo = '<div class="nx-head"><div><h1>Minha trilha</h1><p>' + (s.plan ? (ED.cargos[s.plan.cargo] || {}).nome + ' · ' : '') + ED.nome + ' · ' + ED.banca + '</p></div>'
-    + '<div class="nt-prova"><b>' + (faltam > 0 ? faltam : 0) + '</b><span>dias para a prova<br>' + dma(deIso(ED.prova)) + '</span></div></div>';
+    + (provaISO() ? '<div class="nt-prova"><b>' + (faltam > 0 ? faltam : 0) + '</b><span>dias para a prova<br>' + dma(deIso(provaISO())) + '</span></div></div>' : '<div class="nt-prova"><b>—</b><span>edital ainda<br>não publicado</span></div></div>');
   var conta = E().conectado() ? '' : '<p class="nt-aviso">Seu plano está salvo neste navegador. Entre na sua conta para guardar o plano, o progresso dos livros e as marcações e usar em outros aparelhos.</p>';
   if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEditalLab(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
