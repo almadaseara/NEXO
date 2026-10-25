@@ -87,7 +87,7 @@ function revisaoRapida(T){
 }
 function disciplina(m){
   var d = (m && (m.discipline || m.disciplina)) || '';
-  if(!d && m){ var id = m.id || ''; d = /^ml_/.test(id) ? 'Medicina Legal' : /^pp_/.test(id) ? 'Direito Processual Penal' : /^ext_/.test(id) ? 'Direito Penal' : /^ba_/.test(id) ? 'Legislação Geral' : /^penal|^crime/.test(id) ? 'Direito Penal' : /^adm/.test(id) ? 'Direito Administrativo' : 'Direito Constitucional'; }
+  if(!d && m){ var id = m.id || ''; d = /^ml_/.test(id) ? 'Medicina Legal' : /^pp_/.test(id) ? 'Direito Processual Penal' : /^ext_/.test(id) ? 'Legislação Extravagante' : /^ba_/.test(id) ? 'Legislação Geral' : /^penal|^crime/.test(id) ? 'Direito Penal' : /^adm/.test(id) ? 'Direito Administrativo' : 'Direito Constitucional'; }
   return d;
 }
 function revisaoVisual(m){
