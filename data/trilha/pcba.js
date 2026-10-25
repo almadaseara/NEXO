@@ -194,8 +194,8 @@ E.pcba = {
       ['le-invest', 'Leis 12.830/2013 (investigação pelo delegado), 12.037/2009 (identificação criminal) e 5.553/1968', ['ext_identificacao'], 2, 1],
       ['le-protecao', 'Lei 9.807/1999 — Proteção a vítimas e testemunhas', [], 1, 0.5],
       ['le-lep', 'Lei 7.210/1984 — Execução penal', [], 2, 1.5],
-      ['le-lcp', 'Decreto-Lei 3.688/1941 — Contravenções penais', [], 1, 0.5],
-      ['le-economicos', 'Crimes financeiros, tributários e contra o consumidor (Leis 7.492/1986, 8.137/1990, 8.078/1990)', ['ext_sfn'], 1, 1.5],
+      ['le-lcp', 'Decreto-Lei 3.688/1941 — Contravenções penais', ['ext_lcp'], 1, 0.5],
+      ['le-economicos', 'Crimes financeiros, tributários e contra o consumidor (Leis 7.492/1986, 8.137/1990, 8.078/1990)', ['ext_sfn', 'ext_tributario', 'ext_cdc'], 1, 1.5],
       ['le-outros', 'Código Eleitoral, Lei Geral do Esporte, Improbidade (Lei 8.429/1992) e DUDH', [], 1, 1.5]
     ]},
     estatistica:{ nome:'Estatística', sigla:'ES', cor:'#a0522d', topicos:[
