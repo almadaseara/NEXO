@@ -177,8 +177,8 @@ E.pcba = {
     extravagante:{ nome:'Legislação Penal e Processual Extravagante', sigla:'LE', cor:'#7a3f9b', topicos:[
       ['le-drogas', 'Lei 11.343/2006 — Drogas', [], 3, 2],
       ['le-abuso', 'Lei 13.869/2019 — Abuso de autoridade', ['ext_abuso'], 3, 1.5],
-      ['le-desarm', 'Lei 10.826/2003 — Estatuto do Desarmamento', [], 3, 1.5],
-      ['le-mp', 'Lei 11.340/2006 — Maria da Penha; Lei 14.344/2022 — Henry Borel', [], 3, 1.5],
+      ['le-desarm', 'Lei 10.826/2003 — Estatuto do Desarmamento', ['ext_desarmamento'], 3, 1.5],
+      ['le-mp', 'Lei 11.340/2006 — Maria da Penha; Lei 14.344/2022 — Henry Borel', ['ext_mariapenha'], 3, 1.5],
       ['le-hediondos', 'Lei 8.072/1990 — Crimes hediondos', ['ext_hediondos'], 3, 1],
       ['le-tortura', 'Lei 9.455/1997 — Tortura', ['ext_tortura'], 2, 0.5],
       ['le-orcrim', 'Lei 12.850/2013 — Organizações criminosas; Lei 15.358/2026 — Marco legal contra o crime organizado', ['ext_orcrim'], 3, 2],
