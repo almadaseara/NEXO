@@ -95,8 +95,9 @@ function mostrarSync(d){
 }
 
 window.nexoSairAcervo = function(){
+  setCur(null);
   if(typeof window.home === 'function') window.home();
-  else { setCur(null); try{ syncAccess(); }catch(e){} }
+  try{ syncAccess(); }catch(e){}
   try{ window.scrollTo(0, 0); }catch(e){}
 };
 function frame(criar){
