@@ -105,5 +105,5 @@ document.addEventListener('click',function(e){
 window.nexoGerenciarConcursosClassico=window.nexoGerenciarConcursos;
 window.nexoGerenciarConcursos=mostrar;
 window.nexoTurmas=mostrar;window.nexoTurmasPainel=mostrar;
-window.nexoTurmas.escudo=escudo;window.nexoTurmas.nome=function(id){return NOME[id]};
+window.nexoTurmas.escudo=escudo;window.nexoTurmas.etiqueta=etiqueta;window.nexoTurmas.sigla=function(id){return SIGLA[id]||id.toUpperCase()};window.nexoTurmas.nome=function(id){return NOME[id]};
 })();

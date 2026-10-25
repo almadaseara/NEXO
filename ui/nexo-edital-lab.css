@@ -116,3 +116,9 @@ html .nx-ed-gerir:hover{border-color:var(--nx-accent,#3ec79a)}
 .te-mat svg{width:13px;height:13px}.te-mat:hover{border-color:var(--nx-accent,#3ec79a)}
 .te-tab th small{font-weight:500;color:var(--nx-muted,#8aa39b)}
 .te-tab{min-width:900px}
+
+html .ed-seletor{align-items:flex-start;justify-content:space-between}
+html .ed-conc-grade{flex:1 1 100%;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+html .ed-conc-grade .tm-arte{height:84px}
+html .ed-conc-grade .tm-arte img{max-height:78%}
+@media(max-width:560px){html .ed-conc-grade{grid-template-columns:repeat(2,minmax(0,1fr))}}

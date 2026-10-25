@@ -548,8 +548,13 @@ function painelCardsEdital(s,sel,ed){
 function escolherEditalLab(s){
  var pref=window.nexoConcursosSelecionados&&window.nexoConcursosSelecionados(),items=pref&&pref.items||[];
  if(!items.length)return '';
+ var T=window.nexoTurmas||{};
  var ativo=editalSelecionadoLab||((s.plan||{}).edital)||pref.principal||items[0].id;
- return '<div class="nt-edtools"><div class="nt-edital-switch"><label class="nt-edital-label" for="nt-edital-lab-select">Preparação ativa</label><div class="nt-edital-selectwrap"><select id="nt-edital-lab-select" class="nt-edital-select">'+items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo];return '<option value="'+escH(x.id)+'"'+(ativo===x.id?' selected':'')+'>'+escH(ed?ed.nome:x.id.toUpperCase())+' · '+escH(job?job.nome:x.cargo)+'</option>';}).join('')+'</select><span class="nt-edital-caret" aria-hidden="true">⌄</span></div></div><button type="button" class="nx-ed-gerir" onclick="window.nexoGerenciarConcursos&&window.nexoGerenciarConcursos()">Gerenciar concurso/cargo</button></div>';
+ var cards=items.map(function(x){var ed=EDS[x.id],job=ed&&ed.cargos&&ed.cargos[x.cargo],on=ativo===x.id;
+  var nome=(T.nome&&T.nome(x.id))||(ed?ed.nome:x.id.toUpperCase());
+  return '<button type="button" class="tm-card ed-conc'+(on?' on':'')+'" data-nt="ed-conc" data-id="'+escH(x.id)+'" aria-pressed="'+on+'">'
+   +(T.escudo?T.escudo(x.id):'')+'<span class="tm-nome"><b>'+escH((T.sigla&&T.sigla(x.id))||x.id.toUpperCase())+'</b><small>'+escH(nome)+'</small>'+(T.etiqueta?T.etiqueta(x.id):'')+'<em>'+(on?'✓ ':'')+escH(job?job.nome:x.cargo)+'</em></span></button>';}).join('');
+ return '<div class="nt-edtools ed-seletor"><div class="tm-grade ed-conc-grade" role="group" aria-label="Preparação ativa">'+cards+'</div><button type="button" class="nx-ed-gerir" onclick="window.nexoGerenciarConcursos&&window.nexoGerenciarConcursos()">Gerenciar concurso/cargo</button></div>';
 }
 
 /* ===== Edital verticalizado em tabela (lab): Teoria, R1–R6 e aproveitamento por tópico ===== */
@@ -771,6 +776,7 @@ document.addEventListener('click', function(e){
   }
   if(a === 'ed-pct'){nxEdPct=!nxEdPct;var w=document.getElementById('te-wrap');if(w)w.classList.toggle('pct',nxEdPct);b.classList.toggle('on',nxEdPct);return;}
   if(a === 'ed-refresh'){window.nexoCronograma('edital');return;}
+  if(a === 'ed-conc'){ editalSelecionadoLab=b.dataset.id; window.nexoCronograma('edital'); return; }
   if(a === 'ed-view'){nxEditalVista=b.dataset.v==='lista'?'lista':'cards';window.nexoCronograma('edital');return;}
   if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.te-disc,.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
   if(a === 'aba'){ window.nexoCronograma(b.dataset.aba); return; }
