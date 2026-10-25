@@ -22,6 +22,7 @@ Situação em 14/10/2026: **69 módulos completos** — Direito Penal (28), Medi
 |---|---|
 | Penal | `crimes-contra-o-patrimonio.js`, `penal-geral.js`, `penal-pessoa-a.js` a `-d.js`, `penal-sexual.js`, `penal-fe-publica.js`, `penal-adm-func.js`, `penal-adm-particular.js`, `penal-adm-justica.js`, `penal-incolumidade.js`, `penal-punibilidade.js` |
 | Medicina Legal | `ml-a.js` (introdução, perícias, documentos, identificação), `ml-b.js` (traumatologia, tanatologia, lesões), `ml-c.js` (sexologia, asfixiologia, psicopatologia) |
+| Direito Processual Penal | `pp-inquerito.js` (inquérito policial), `pp-prova-geral.js` (teoria geral, ilicitude, perícia, cadeia de custódia), `pp-prova-orais.js` (interrogatório, confissão, ofendido, testemunha, reconhecimento), `pp-prova-docs-busca.js` (documentos, indícios, busca e apreensão), `pp-flagrante.js` (flagrante e custódia) |
 | Constitucional | `const-a.js` a `const-f.js` |
 | Administrativo | `adm-a.js` a `adm-c.js` |
 

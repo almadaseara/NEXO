@@ -153,7 +153,8 @@ var DISCIPLINAS = [
   { nome:'Direito Constitucional', sigla:'DC', cor:'var(--nx-d1)', tinta:'#9cc8ff', id:'const-folder' },
   { nome:'Direito Administrativo', sigla:'DA', cor:'var(--nx-d2)', tinta:'#ffbb98', id:'adm-folder' },
   { nome:'Medicina Legal', sigla:'ML', cor:'var(--nx-d3)', tinta:'#c9c1ff', id:'med-folder' },
-  { nome:'Direito Penal', sigla:'DP', cor:'var(--nx-d4)', tinta:'#86e6c2', id:'penal-folder' }
+  { nome:'Direito Penal', sigla:'DP', cor:'var(--nx-d4)', tinta:'#86e6c2', id:'penal-folder' },
+  { nome:'Direito Processual Penal', sigla:'PP', cor:'var(--nx-d5)', tinta:'#7fe0e0', id:'pp-folder' }
 ];
 /* nó = id do módulo (texto) ou [rótulo, [filhos]] */
 var ARVORE = {
@@ -194,10 +195,16 @@ var ARVORE = {
       ['Crimes contra a fé pública', ['penal_fe_publica']],
       ['Crimes contra a Administração Pública', ['penal_adm_func', 'penal_adm_particular', 'penal_adm_justica', 'penal_adm_financas']]
     ]]
+  ],
+  'Direito Processual Penal': [
+    ['Investigação', ['pp_inquerito']],
+    ['Provas', ['pp_prova_geral', 'pp_prova_orais', 'pp_prova_docs_busca']],
+    ['Prisões', ['pp_flagrante']]
   ]
 };
 /* rótulos curtos dentro do grupo (o título completo continua no módulo) */
 var ROTULOS = {
+  pp_inquerito:'Inquérito policial', pp_prova_geral:'Teoria geral, ilicitude, perícia e cadeia de custódia', pp_prova_orais:'Interrogatório, testemunhas e reconhecimento', pp_prova_docs_busca:'Documentos, indícios e busca e apreensão', pp_flagrante:'Prisão em flagrante e audiência de custódia',
   principios_fundamentais:'Princípios fundamentais e teoria da Constituição', normas_constitucionais:'Normas constitucionais: eficácia', teoria_direitos:'Teoria geral dos direitos fundamentais',
   art5_parte1:'Art. 5º, incisos I a XXXI', art5_parte2:'Art. 5º, incisos XXXII a LXXIX', direitos_politicos:'Cidadania e direitos políticos',
   organizacao_estado:'Organização político-administrativa', sistema_tributario_orcamento:'Sistema tributário e orçamento', ordem_economica_social:'Ordem econômica e social',
@@ -1022,7 +1029,7 @@ function escurecer(hex, f){
 }
 function corDisc(nome){
   var escuro = temaAtual() === 'dark';
-  var mapa = { 'Direito Constitucional':['#2a78d6', '#3987e5'], 'Direito Administrativo':['#eb6834', '#d95926'], 'Medicina Legal':['#6250d6', '#9085e9'], 'Direito Penal':['#1baf7a', '#199e70'] };
+  var mapa = { 'Direito Constitucional':['#2a78d6', '#3987e5'], 'Direito Administrativo':['#eb6834', '#d95926'], 'Medicina Legal':['#6250d6', '#9085e9'], 'Direito Penal':['#1baf7a', '#199e70'], 'Direito Processual Penal':['#0f8a8a', '#2bb3b3'] };
   var c = mapa[nome]; return c ? c[escuro ? 1 : 0] : (escuro ? '#8e8e96' : '#8a9694');
 }
 function desenharRosca(box, cfg){

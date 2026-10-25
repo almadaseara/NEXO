@@ -21,7 +21,7 @@ else if(/constitucional/.test(x)){sig='DC';color='#2779cc';ico='file'}
 else if(/administrativo/.test(x)){sig='DA';color='#bb5a28';ico='file'}
 return '<span class="nx-lab-pair" style="--badge:'+color+'"><span class="nx-lab-symbol">'+icon(ico)+'</span></span>'}
 window.nexoSubjectBadge=badgeFor;
-function taskLabel(t){var names={penal:'Direito Penal',constitucional:'Direito Constitucional',administrativo:'Direito Administrativo',medicina_legal:'Medicina Legal',portugues:'Língua Portuguesa',rlm:'Raciocínio Lógico',informatica:'Informática'};return names[t.disc]||t.disc||'Estudo'}
+function taskLabel(t){var names={penal:'Direito Penal',constitucional:'Direito Constitucional',administrativo:'Direito Administrativo',medicina_legal:'Medicina Legal',proc_penal:'Direito Processual Penal',portugues:'Língua Portuguesa',rlm:'Raciocínio Lógico',informatica:'Informática'};return names[t.disc]||t.disc||'Estudo'}
 function safeDate(d){var today=new Date();today.setHours(23,59,59,999);return d<=today}
 window.nexoDisciplineSvg=icon;window.nexoDisciplineIcon=disciplineIcon;
 /* ---- Painel de estudos: layout aprovado (versão 2) ----
