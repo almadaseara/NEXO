@@ -147,5 +147,5 @@ document.addEventListener('click',function(ev){
  else if(a==='books'){chamar(['nexoLivros'])}
 });
 document.addEventListener('nexo:historico',function(){if(document.querySelector('.pn'))show()});
-window.home=function(){if(typeof closeMobileNav==='function')closeMobileNav();show()};
+window.home=function(){if(typeof closeMobileNav==='function')closeMobileNav();try{current=null}catch(e){}try{if(typeof renderNav==='function')renderNav()}catch(e){}try{if(typeof syncAccess==='function')syncAccess()}catch(e){}show()};
 })();
