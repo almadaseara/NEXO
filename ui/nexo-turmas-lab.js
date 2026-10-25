@@ -9,22 +9,19 @@ var SIGLA={pcba:'PC-BA',pcpe:'PC-PE',pf:'PF',prf:'PRF',pmpe:'PM-PE'};
 var COR={pcba:'#3a6ea5',pcpe:'#b23b3b',pf:'#8a6d1f',prf:'#2f7d5b',pmpe:'#5b4aa8'};
 var EMBLEMA={pcba:'https://www.ba.gov.br/policiacivil/sites/site-pcba/files/2024-08/Conheca_a_PCBA_BrasaoHistorico_PCBA_0.jpg',pf:'https://www.gov.br/pf/pt-br/principios-fundamentais/simbolos-da-policia-federal-2/emblema.png/@@images/image'};
 /* fase de cada concurso: pós-edital (edital publicado) ou pré-edital (ainda sem edital). Datas conforme os editais conferidos em 23/10/2026. */
-var FASE={
-  pcba:{pos:true,ref:'Edital SAEB nº 02/2026 (Instituto AOCP)'},
-  pcpe:{pos:true,ref:'Edital nº 1 – PCPE, de 02/10/2026 (Cebraspe)'},
-  pmpe:{pos:true,ref:'Edital de Abertura nº 001/2026, de 29/09/2026 (Instituto AOCP)',prova:'2027-02-21'},
-  pf:{pos:false,ref:'Último edital: nº 1/2025, de 20/05/2025 (Cebraspe). Novo edital ainda não publicado.'},
-  prf:{pos:false,ref:'Edital ainda não publicado.'}
-};
-function fase(id){return FASE[id]||{pos:false,ref:'Edital ainda não publicado.'}}
-function provaDe(id,cargo){var f=fase(id),e=(window.NEXO_EDITAIS||{})[id],cg=e&&e.cargos&&e.cargos[cargo];return (cg&&cg.prova)||f.prova||(e&&e.prova)||null}
+/* fase de cada concurso: vem do edital vigente (pós-edital = edital publicado; pré-edital = baseado no edital anterior) */
+function edVig(id){return (window.NEXO_EDITAIS||{})[id]||null}
+function fase(id){var e=edVig(id);if(!e)return {pos:false,ref:'Edital ainda não publicado.'};
+  if(e.fase==='pos')return {pos:true,ref:(e.edital||e.nome)+(e.banca?' ('+e.banca+')':'')};
+  return {pos:false,ref:'Edital novo ainda não publicado. A trilha se baseia no '+(e.baseEdital||'edital anterior')+'.'}}
+function provaDe(id,cargo){var f=fase(id),e=(window.NEXO_EDITAIS||{})[id],cg=e&&e.cargos&&e.cargos[cargo];return (cg&&cg.prova)||(e&&e.prova)||null}
 function dmy(iso){var p=String(iso).split('-');return p[2]+'/'+p[1]+'/'+p[0]}
 function dias(iso){var p=String(iso).split('-'),d=new Date(+p[0],+p[1]-1,+p[2]),h=new Date();h.setHours(0,0,0,0);return Math.round((d-h)/864e5)}
 function etiqueta(id){var f=fase(id);return '<span class="tm-fase '+(f.pos?'pos':'pre')+'">'+(f.pos?'Pós-edital':'Pré-edital')+'</span>'}
 function faseInfo(id,cargo){
   var f=fase(id),pv=provaDe(id,cargo),n=pv?dias(pv):null;
   if(f.pos)return '<b>Pós-edital.</b> '+esc(f.ref)+'.'+(pv?' Prova em '+dmy(pv)+(n>0?' ('+n+' dias).':n===0?' (hoje).':'.'):'');
-  return '<b>Pré-edital.</b> '+esc(f.ref)+' Até o edital sair, qualquer plano seria previsão; ele é refeito com o programa oficial quando o edital for publicado.';
+  return '<b>Pré-edital.</b> '+esc(f.ref)+' Quando o edital sair, é criada uma trilha nova, pós-edital, com o programa oficial.';
 }
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function norm(s){return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase()}
@@ -108,5 +105,5 @@ document.addEventListener('click',function(e){
 window.nexoGerenciarConcursosClassico=window.nexoGerenciarConcursos;
 window.nexoGerenciarConcursos=mostrar;
 window.nexoTurmas=mostrar;window.nexoTurmasPainel=mostrar;
-window.nexoTurmas.escudo=escudo;window.nexoTurmas.nome=function(id){return NOME[id]};
+window.nexoTurmas.escudo=escudo;window.nexoTurmas.etiqueta=etiqueta;window.nexoTurmas.sigla=function(id){return SIGLA[id]||id.toUpperCase()};window.nexoTurmas.nome=function(id){return NOME[id]};
 })();

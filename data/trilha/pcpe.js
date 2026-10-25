@@ -16,7 +16,7 @@
 var E = window.NEXO_EDITAIS = window.NEXO_EDITAIS || {};
 
 E.pcpe = {
-  id:'pcpe', nome:'PC-PE 2026', banca:'Cebraspe', edital:'Edital nº 1 – PCPE (02/10/2026)',
+  id:'pcpe', concurso:'pcpe', fase:'pos', nome:'PC-PE 2026', banca:'Cebraspe', edital:'Edital nº 1 – PCPE (02/10/2026)',
   prova:'2027-03-07', conferido:'23/10/2026',
   provas:{ gerais:20, especificos:40 },
   grupos:{ gerais:'Prova 1 · Noções de Direito', especificos:'Prova 2 · Conhecimentos específicos' },

@@ -1,8 +1,10 @@
 /* Programa da PM-PE 2026 (Soldado e 2º Tenente QOPM) para o cronograma e a trilha do NEXO. Fonte: Edital de Abertura nº 001/2026, Instituto AOCP, tabelas de prova objetiva (itens 10.1 e 10.2). Cada tópico: [id, nome, módulos do NEXO, prioridade, horas]. PROGRAMA PARCIAL: o edital lista as disciplinas, mas os tópicos detalhados de cada uma ainda não foram cadastrados. Nas disciplinas de lei com capítulo no NEXO (Constitucional, Administrativo, Penal, Medicina Legal), os assuntos são os capítulos do próprio NEXO; nas demais, há um único tópico por disciplina e as horas são ESTIMATIVA da NEXO. Quando o texto oficial dos tópicos for conferido, esta lista é substituída pelo programa do edital. */
 (function(){
 var E = window.NEXO_EDITAIS = window.NEXO_EDITAIS || {};
-E.pmpe = {
+E["pmpe"] = {
  "id": "pmpe",
+ "concurso": "pmpe",
+ "fase": "pos",
  "nome": "PM-PE 2026",
  "banca": "Instituto AOCP",
  "edital": "Edital de Abertura nº 001/2026 (29/09/2026)",

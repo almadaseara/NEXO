@@ -1,8 +1,11 @@
 /* Programa da PRF (referência: edital de 2021, Cebraspe) para o cronograma e a trilha do NEXO. Nenhum edital novo foi publicado até 23/10/2026. Cada tópico: [id, nome, módulos do NEXO, prioridade, horas]. PROGRAMA PARCIAL: o edital lista as disciplinas, mas os tópicos detalhados de cada uma ainda não foram cadastrados. Nas disciplinas de lei com capítulo no NEXO (Constitucional, Administrativo, Penal, Medicina Legal), os assuntos são os capítulos do próprio NEXO; nas demais, há um único tópico por disciplina e as horas são ESTIMATIVA da NEXO. Quando o texto oficial dos tópicos for conferido, esta lista é substituída pelo programa do edital. */
 (function(){
 var E = window.NEXO_EDITAIS = window.NEXO_EDITAIS || {};
-E.prf = {
- "id": "prf",
+E["prf-pre"] = {
+ "id": "prf-pre",
+ "concurso": "prf",
+ "fase": "pre",
+ "baseEdital": "Edital nº 1 – PRF, de 18/01/2021 (Cebraspe)",
  "nome": "PRF (referência: edital 2021)",
  "banca": "Cebraspe",
  "edital": "Edital nº 1 – PRF, de 18/01/2021 (edital de referência)",

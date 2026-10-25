@@ -1,8 +1,11 @@
 /* Programa da PF (referência: último edital, nº 1/2025, Cebraspe) para o cronograma e a trilha do NEXO. Fontes: edital nº 1/2025 e páginas de preparação que reproduzem sua estrutura. Delegado e Perito não estão incluídos. Cada tópico: [id, nome, módulos do NEXO, prioridade, horas]. PROGRAMA PARCIAL: o edital lista as disciplinas, mas os tópicos detalhados de cada uma ainda não foram cadastrados. Nas disciplinas de lei com capítulo no NEXO (Constitucional, Administrativo, Penal, Medicina Legal), os assuntos são os capítulos do próprio NEXO; nas demais, há um único tópico por disciplina e as horas são ESTIMATIVA da NEXO. Quando o texto oficial dos tópicos for conferido, esta lista é substituída pelo programa do edital. */
 (function(){
 var E = window.NEXO_EDITAIS = window.NEXO_EDITAIS || {};
-E.pf = {
- "id": "pf",
+E["pf-pre"] = {
+ "id": "pf-pre",
+ "concurso": "pf",
+ "fase": "pre",
+ "baseEdital": "Edital nº 1 – PF, de 20/05/2025 (Cebraspe)",
  "nome": "PF (referência: edital 2025)",
  "banca": "Cebraspe",
  "edital": "Edital nº 1 – PF, de 20/05/2025 (último publicado)",

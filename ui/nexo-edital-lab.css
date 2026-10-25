@@ -116,3 +116,10 @@ html .nx-ed-gerir:hover{border-color:var(--nx-accent,#3ec79a)}
 .te-mat svg{width:13px;height:13px}.te-mat:hover{border-color:var(--nx-accent,#3ec79a)}
 .te-tab th small{font-weight:500;color:var(--nx-muted,#8aa39b)}
 .te-tab{min-width:900px}
+
+html .ed-seletor{align-items:flex-start;justify-content:space-between}
+html .ed-conc-grade{flex:1 1 100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+html .ed-conc-grade .tm-arte{height:110px}
+html .ed-conc-grade{max-width:760px}
+html .ed-conc-grade .tm-arte img{max-height:82%}
+@media(max-width:560px){html .ed-conc-grade{gap:6px}html .ed-conc-grade .tm-arte{height:70px}html .ed-conc-grade .tm-arte svg{width:40px;height:46px}html .ed-conc-grade .tm-arte b{font-size:10px}html .ed-conc-grade .tm-nome{padding:7px 4px 9px}html .ed-conc-grade .tm-nome b{font-size:13px}html .ed-conc-grade .tm-nome small{font-size:10px}html .ed-conc-grade .tm-nome em{font-size:10px}html .ed-conc-grade .tm-fase{font-size:9px;padding:1px 6px}html .ed-conc-grade .tm-star{font-size:14px;top:4px;right:6px}}
