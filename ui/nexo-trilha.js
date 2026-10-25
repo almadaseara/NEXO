@@ -12,6 +12,16 @@
 'use strict';
 
 var EDS = window.NEXO_EDITAIS || {}; if(!EDS.pcba) return;
+/* Fases do edital: cada edital tem id (sua chave), concurso e fase ('pre' = baseado no edital anterior, 'pos' = edital publicado).
+   EDS[<concurso>] sempre aponta para o edital VIGENTE do concurso: o pós-edital, se existir, senão o pré-edital.
+   Quando sair o edital novo, basta criar o arquivo dele (fase 'pos'); o pré-edital fica guardado e o plano antigo é sinalizado. */
+(function(){
+  var por = {};
+  Object.keys(EDS).forEach(function(k){ var e = EDS[k]; if(!e || e.id !== k) return; (por[e.concurso || k] = por[e.concurso || k] || []).push(e); });
+  Object.keys(por).forEach(function(c){ EDS[c] = por[c].filter(function(x){ return x.fase === 'pos'; })[0] || por[c][0]; });
+  window.nexoMesmoEdital = function(a, b){ return !!EDS[a] && EDS[a] === EDS[b]; };
+})();
+function vigente(e){ return !!e && EDS[e.concurso || e.id] === e; }
 var ED = EDS.pcba;
 var DIA = 864e5;
 var DIAS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
@@ -40,7 +50,7 @@ function curAtual(){ try{ return current; }catch(e){ return null; } }
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
 function grupoNome(g, cargo){ var cg = ED.cargos && ED.cargos[cargo]; return (cg && cg.grupos && cg.grupos[g]) || (ED.grupos && ED.grupos[g]) || (g === 'gerais' ? 'Conhecimentos gerais' : 'Conhecimentos específicos'); }
 var CARGO_ATUAL = null;
-function usar(s){ var id = (s && s.plan && s.plan.edital) || (rascunho && rascunho.edital); ED = EDS[id] || EDS.pcba; CARGO_ATUAL = (s && s.plan && s.plan.cargo) || (rascunho && rascunho.cargo) || null; return ED; }
+function usar(s){ var id = (rascunho && rascunho.edital) || (s && s.plan && s.plan.edital); ED = EDS[id] || EDS.pcba; CARGO_ATUAL = (rascunho && rascunho.cargo) || (s && s.plan && s.plan.cargo) || null; return ED; }
 /* data da prova: a do cargo, se o edital marcar uma por cargo (ex.: Delegado do PC-PE) */
 function provaISO(){ return ((ED.cargos && ED.cargos[CARGO_ATUAL]) || {}).prova || ED.prova || null; }
 
@@ -334,7 +344,7 @@ function subTarefa(t){
 }
 
 function telaConfig(s){
-  var p = s.plan || { edital:ED.id, cargo:(rascunho && ED.cargos[rascunho.cargo] ? rascunho.cargo : Object.keys(ED.cargos)[0]), minutos:[0, 120, 120, 120, 120, 120, 180], discs:null };
+  var p = (rascunho && s.plan) ? Object.assign({}, s.plan, { edital:ED.id, cargo:(ED.cargos[rascunho.cargo] ? rascunho.cargo : Object.keys(ED.cargos)[0]), discs:null }) : s.plan || { edital:ED.id, cargo:(rascunho && ED.cargos[rascunho.cargo] ? rascunho.cargo : Object.keys(ED.cargos)[0]), minutos:[0, 120, 120, 120, 120, 120, 180], discs:null };
   var dc = discsDoCargo(p.cargo), sel = p.discs || dc.gerais.concat(dc.especificos);
   var horas = [0, 30, 45, 60, 90, 120, 150, 180, 240, 300, 360, 480];
   var PV = (ED.cargos[p.cargo] || {}).provas || ED.provas;
@@ -345,7 +355,7 @@ function telaConfig(s){
       return '<label class="nt-chk" style="--c:' + d.cor + '"><input type="checkbox" name="nt-disc" value="' + id + '"' + (sel.indexOf(id) >= 0 ? ' checked' : '') + '><span class="nt-sig nx-nt-icon">' + (window.nexoDisciplineSvg&&window.nexoDisciplineIcon?window.nexoDisciplineSvg(window.nexoDisciplineIcon(d.nome)):escH(d.sigla)) + '</span><span>' + escH(d.nome) + (comMat ? '<small>livro digital no NEXO</small>' : '<small>sem material no NEXO ainda</small>') + '</span></label>';
     }).join('') + '</fieldset>';
   };
-  var concursos = Object.keys(EDS).map(function(k){ var x = EDS[k]; return '<option value="' + k + '"' + (ED.id === k ? ' selected' : '') + '>' + escH(x.nome + ' · ' + x.banca) + '</option>'; }).join('');
+  var concursos = Object.keys(EDS).filter(function(k){ return EDS[k].id === k && vigente(EDS[k]); }).map(function(k){ var x = EDS[k]; return '<option value="' + k + '"' + (ED.id === k ? ' selected' : '') + '>' + escH(x.nome + ' · ' + x.banca + (x.fase === 'pre' ? ' · pré-edital' : '')) + '</option>'; }).join('');
   return '<form class="nt-form" id="nt-form">'
     + '<section class="nx-panel"><h2>1. Concurso e cargo</h2><p class="nx-sub">A trilha usa as disciplinas e os assuntos do edital do cargo escolhido. Quando um novo edital entrar na plataforma, ele aparece aqui.</p>'
     + '<label class="nt-concurso"><span>Concurso</span><select name="nt-edital">' + concursos + '</select></label>'
@@ -516,7 +526,7 @@ function nxUltimoPonto(id,estado,pr){
 var NXKI={ok:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',livro:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>',camadas:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5zM3 13l9 5 9-5"/></svg>',barras:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 20v-6M12 20V6M18 20v-9"/></svg>'};
 function painelCardsEdital(s,sel,ed){
  var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
- var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
+ var noPlano=!!(s.plan&&window.nexoMesmoEdital(s.plan.edital,sel.id)&&s.plan.cargo===sel.cargo);
  var plano=noPlano?s.plan:null, pr=noPlano?progresso(s):{};
  var completed=0,total=0,topFeitos=0,topTotal=0;
  var cards=ids.map(function(id,i){
@@ -554,7 +564,7 @@ function questoesPorModulo(){
 var TE_LIVRO='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>';
 function tabelaEditalLab(s,sel,ed){
  var cargo=ed.cargos[sel.cargo],ids=Array.from(new Set([].concat(cargo.gerais||[],cargo.especificos||[])));
- var noPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
+ var noPlano=!!(s.plan&&window.nexoMesmoEdital(s.plan.edital,sel.id)&&s.plan.cargo===sel.cargo);
  var ciclo=nxEdEscopo==='ciclo',semCiclo=ciclo&&!noPlano;
  if(ciclo&&noPlano&&s.plan.discs&&s.plan.discs.length)ids=ids.filter(function(x){return s.plan.discs.indexOf(x)>=0;});
  if(semCiclo)ids=[];
@@ -595,7 +605,7 @@ function telaEditalLab(s){
  var anterior=ED;
  try{
    ED=ed;
-   var mesmoPlano=!!(s.plan&&s.plan.edital===sel.id&&s.plan.cargo===sel.cargo);
+   var mesmoPlano=!!(s.plan&&window.nexoMesmoEdital(s.plan.edital,sel.id)&&s.plan.cargo===sel.cargo);
    var atual=mesmoPlano?s:{plan:null,progress:{},weeks:{}};
    /* O plano de outro cargo nunca é aplicado à seleção de leitura. */
    if(!mesmoPlano)atual={plan:{cargo:sel.cargo,discs:null,ja:{}},progress:{},weeks:{},_somenteConsulta:true};
@@ -661,7 +671,7 @@ window.nexoCronogramaCriar = function(edital, cargo){
   window.nexoCronograma(); return true;
 };
 window.nexoCronogramaTem = function(edital, cargo){
-  var p = (E() && E().plano() || {}).plan; return !!(p && p.edital === edital && p.cargo === cargo);
+  var p = (E() && E().plano() || {}).plan; return !!(p && window.nexoMesmoEdital(p.edital, edital) && p.cargo === cargo);
 };
 window.nexoCronogramaDisponivel = function(edital, cargo){ var e = EDS[edital]; return !!(e && e.cargos && e.cargos[cargo]); };
 window.nexoCronograma = function(a){
@@ -676,12 +686,14 @@ window.nexoCronograma = function(a){
   var faltam = contagem();
   var topo = '<div class="nx-head"><div><h1>Minha trilha</h1><p>' + (s.plan ? (ED.cargos[s.plan.cargo] || {}).nome + ' · ' : '') + ED.nome + ' · ' + ED.banca + '</p></div>'
     + (provaISO() ? '<div class="nt-prova"><b>' + (faltam > 0 ? faltam : 0) + '</b><span>dias para a prova<br>' + dma(deIso(provaISO())) + '</span></div></div>' : '<div class="nt-prova"><b>—</b><span>edital ainda<br>não publicado</span></div></div>');
+  var vel = s.plan && ED && !vigente(ED) ? EDS[ED.concurso || ED.id] : null;
+  var aviso2 = vel ? '<p class="nt-aviso">Saiu o edital deste concurso (' + escH(vel.edital || vel.nome) + '). Seu plano ainda é o do pré-edital. <button type="button" class="nx-btn primary small" data-nt="novoedital" data-ed="' + escH(vel.id) + '">Criar a trilha do pós-edital</button></p>' : '';
   var conta = E().conectado() ? '' : '<p class="nt-aviso">Seu plano está salvo neste navegador. Entre na sua conta para guardar o plano, o progresso dos livros e as marcações e usar em outros aparelhos.</p>';
   if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEditalLab(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
   var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
     + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>';
-  v.innerHTML = '<div class="nx-page nt">' + topo + conta + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
+  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
 };
 
 function tarefaPorId(s, id){ for(var k in s.weeks){ var x = (s.weeks[k].tarefas || []).find(function(y){ return y.id === id; }); if(x) return { t:x, k:k }; } return null; }
@@ -763,6 +775,7 @@ document.addEventListener('click', function(e){
   if(a === 'ed-disc'){nxEditalVista='lista';window.nexoCronograma('edital');var disc=b.dataset.edDisc;setTimeout(function(){var e=document.querySelector('.nt-ed[style*="--c:"]');var all=Array.from(document.querySelectorAll('.te-disc,.nt-ed'));var ed=EDS[editalSelecionadoLab||((st().plan||{}).edital)||'pcba'];var ids=ed&&ed.cargos&&ed.cargos[(st().plan||{}).cargo];var names=ed&&ed.disciplinas;var target=all.find(function(el){return names&&names[disc]&&el.querySelector('summary b')&&el.querySelector('summary b').textContent===names[disc].nome;});if(target){target.open=true;target.scrollIntoView({behavior:'smooth',block:'start'});}},0);return;}
   if(a === 'aba'){ window.nexoCronograma(b.dataset.aba); return; }
   if(a === 'editar'){ editando = true; if(!s.plan && editalSelecionadoLab && EDS[editalSelecionadoLab]){ var mt = (window.nexoConcursosSelecionados ? window.nexoConcursosSelecionados().items : []).find(function(x){ return x.id === editalSelecionadoLab; }); rascunho = { edital:editalSelecionadoLab, cargo:mt ? mt.cargo : null }; } window.nexoCronograma(); return; }
+  if(a === 'novoedital'){ rascunho = { edital:b.dataset.ed, cargo:s.plan && s.plan.cargo }; editando = true; window.nexoCronograma(); return; }
   if(a === 'cancelar'){ editando = false; var sempl = !s.plan; rascunho = null; if(sempl && typeof window.nexoTurmasPainel === 'function'){ window.nexoTurmasPainel(); return; } window.nexoCronograma(); return; }
   if(a === 'sem'){ if(b.dataset.k){ vendoSemana = b.dataset.k; aberta = null; window.nexoCronograma('semana'); } return; }
   if(a === 'gerar' || a === 'refazer'){

@@ -122,7 +122,7 @@ function acessoHtml(){
 function show(){
  var view=document.getElementById('view');if(!view)return;
  var x=get(),it=x.items.find(function(z){return z.id===x.principal})||x.items[0],s=plan();
- var match=!!(it&&s&&s.plan&&s.plan.edital===it.id&&s.plan.cargo===it.cargo);
+ var match=!!(it&&s&&s.plan&&(window.nexoMesmoEdital?window.nexoMesmoEdital(s.plan.edital,it.id):s.plan.edital===it.id)&&s.plan.cargo===it.cargo);
  view.innerHTML='<div class="pn"><div class="pn-topo"><div class="pn-eyebrow">'+saudacao().toUpperCase()+', ESTUDANTE.</div><h1>Painel de <span>estudos</span></h1><p>Acompanhe sua trilha diária e mantenha o foco na sua aprovação.</p></div>'
   +semanaHtml()+'<div class="pn-cols"><div class="pn-col">'+trilhaHtml(it,match)+numerosHtml()+'</div><div class="pn-col">'+concursosHtml(x,it)+'</div></div>'+acessoHtml()+'</div>';
  var hd=document.getElementById('head');if(hd)hd.textContent='Painel de estudos';

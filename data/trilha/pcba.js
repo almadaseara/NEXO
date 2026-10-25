@@ -14,7 +14,7 @@
 var E = window.NEXO_EDITAIS = window.NEXO_EDITAIS || {};
 
 E.pcba = {
-  id:'pcba', nome:'PC-BA 2026', banca:'Instituto AOCP', edital:'Edital SAEB nº 02/2026',
+  id:'pcba', concurso:'pcba', fase:'pos', nome:'PC-BA 2026', banca:'Instituto AOCP', edital:'Edital SAEB nº 02/2026',
   prova:'2026-12-06', conferido:'14/10/2026',
   provas:{ gerais:40, especificos:60, minimo:70 },
   cargos:{
