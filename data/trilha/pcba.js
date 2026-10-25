@@ -103,7 +103,7 @@ E.pcba = {
     ]},
     leg_geral:{ nome:'Legislação Geral', sigla:'LG', cor:'#4f7a3a', topicos:[
       ['lg-6677', 'Lei estadual 6.677/1994 — Estatuto do Servidor da Bahia', [], 3, 2],
-      ['lg-11370', 'Lei estadual 11.370/2009 — Lei Orgânica da Polícia Civil da Bahia', [], 3, 2],
+      ['lg-11370', 'Lei estadual 11.370/2009 — Lei Orgânica da Polícia Civil da Bahia', ['ba_pc_organizacao', 'ba_pc_estatuto'], 3, 2],
       ['lg-12209', 'Lei estadual 12.209/2011 — processo administrativo na Bahia', [], 2, 1.5],
       ['lg-14634', 'Lei estadual 14.634/2023 — licitações e contratos na Bahia', [], 2, 1.5],
       ['lg-8906', 'Lei 8.906/1994 — Estatuto da Advocacia', [], 1, 1]
@@ -171,7 +171,7 @@ E.pcba = {
       ['da-controle', 'Controle da Administração Pública', ['adm_controle'], 2, 1.5],
       ['da-resp', 'Responsabilidade civil do Estado', ['adm_responsabilidade_estado'], 3, 1.5],
       ['da-improb', 'Improbidade administrativa', ['adm_improbidade'], 3, 1.5],
-      ['da-lopc', 'Lei estadual 11.370/2009 — Lei Orgânica da Polícia Civil da Bahia', [], 3, 2],
+      ['da-lopc', 'Lei estadual 11.370/2009 — Lei Orgânica da Polícia Civil da Bahia', ['ba_pc_organizacao', 'ba_pc_estatuto'], 3, 2],
       ['da-6677', 'Lei estadual 6.677/1994 — Estatuto do Servidor da Bahia', [], 2, 1.5]
     ]},
     extravagante:{ nome:'Legislação Penal e Processual Extravagante', sigla:'LE', cor:'#7a3f9b', topicos:[
