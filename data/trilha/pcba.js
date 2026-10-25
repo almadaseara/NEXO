@@ -189,7 +189,7 @@ E.pcba = {
       ['le-eca', 'Lei 8.069/1990 — ECA (crimes e ato infracional)', [], 2, 1.5],
       ['le-idoso-pcd', 'Estatuto da Pessoa Idosa e Estatuto da Pessoa com Deficiência (crimes)', [], 1, 1],
       ['le-racismo', 'Lei 7.716/1989 — Crimes de preconceito', ['ext_racismo'], 2, 0.5],
-      ['le-ambiental', 'Lei 9.605/1998 — Crimes ambientais', [], 2, 1],
+      ['le-ambiental', 'Lei 9.605/1998 — Crimes ambientais', ['ext_ambiental'], 2, 1],
       ['le-lavagem', 'Lei 9.613/1998 — Lavagem de dinheiro', ['ext_lavagem'], 2, 1],
       ['le-invest', 'Leis 12.830/2013 (investigação pelo delegado), 12.037/2009 (identificação criminal) e 5.553/1968', ['ext_identificacao'], 2, 1],
       ['le-protecao', 'Lei 9.807/1999 — Proteção a vítimas e testemunhas', [], 1, 0.5],
