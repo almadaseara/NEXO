@@ -194,7 +194,8 @@ var ARVORE = {
       ['Crimes contra a incolumidade pública', ['penal_incolumidade']],
       ['Crimes contra a fé pública', ['penal_fe_publica']],
       ['Crimes contra a Administração Pública', ['penal_adm_func', 'penal_adm_particular', 'penal_adm_justica', 'penal_adm_financas']]
-    ]]
+    ]],
+    /*EXT-A*/['Legislação extravagante', [['Investigação e prova', ['ext_identificacao', 'ext_temporaria', 'ext_interceptacao', 'ext_orcrim']], ['Processo e execução', ['ext_jecrim']], ['Crimes em leis especiais', ['ext_racismo']]]]/*/EXT-A*/
   ],
   'Direito Processual Penal': [
     ['Investigação', ['pp_inquerito']],
@@ -204,6 +205,7 @@ var ARVORE = {
 };
 /* rótulos curtos dentro do grupo (o título completo continua no módulo) */
 var ROTULOS = {
+  /*EXT-R*/ext_identificacao:"Lei 5.553/1968: retenção de documentos", ext_temporaria:"Lei 7.960/1989: prisão temporária", ext_interceptacao:"Lei 9.296/1996: interceptação", ext_orcrim:"Lei 12.850/2013: organizações criminosas", ext_jecrim:"Leis 9.099/1995 e 10.259/2001: JECRIM", ext_racismo:"Lei 7.716/1989: crimes de preconceito",/*/EXT-R*/
   pp_inquerito:'Inquérito policial', pp_prova_geral:'Teoria geral, ilicitude, perícia e cadeia de custódia', pp_prova_orais:'Interrogatório, testemunhas e reconhecimento', pp_prova_docs_busca:'Documentos, indícios e busca e apreensão', pp_flagrante:'Prisão em flagrante e audiência de custódia',
   principios_fundamentais:'Princípios fundamentais e teoria da Constituição', normas_constitucionais:'Normas constitucionais: eficácia', teoria_direitos:'Teoria geral dos direitos fundamentais',
   art5_parte1:'Art. 5º, incisos I a XXXI', art5_parte2:'Art. 5º, incisos XXXII a LXXIX', direitos_politicos:'Cidadania e direitos políticos',
