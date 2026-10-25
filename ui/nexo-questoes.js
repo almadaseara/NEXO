@@ -34,7 +34,8 @@ var DISC = [
   ['Direito Constitucional', 'DC', 'var(--nx-d1,#2a78d6)'],
   ['Direito Administrativo', 'DA', 'var(--nx-d2,#eb6834)'],
   ['Direito Penal', 'DP', 'var(--nx-d4,#1baf7a)'],
-  ['Medicina Legal', 'ML', 'var(--nx-d3,#6250d6)']
+  ['Medicina Legal', 'ML', 'var(--nx-d3,#6250d6)'],
+  ['Direito Processual Penal', 'PP', 'var(--nx-d5,#0f8a8a)']
 ];
 function discDe(m){ return (m && m.discipline) || 'Direito Constitucional'; }
 

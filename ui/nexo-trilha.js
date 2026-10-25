@@ -28,7 +28,7 @@ var DIAS = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábad
 var DCURTO = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 var PRIO_MOD = { 'MUITO ALTA':3, 'ALTA':2, 'MÉDIA':2, 'COMPLEMENTAR':1 };
 var PRIO_NOME = { 3:'Prioridade alta', 2:'Prioridade média', 1:'Prioridade baixa' };
-var DISC_SITE = { penal:'Direito Penal', constitucional:'Direito Constitucional', administrativo:'Direito Administrativo', medicina_legal:'Medicina Legal' };
+var DISC_SITE = { penal:'Direito Penal', constitucional:'Direito Constitucional', administrativo:'Direito Administrativo', medicina_legal:'Medicina Legal', proc_penal:'Direito Processual Penal' };
 /* tópicos iguais em duas disciplinas do edital contam como um só */
 var IGUAIS = { 'top:da-lopc':'top:lg-11370', 'top:da-6677':'top:lg-6677', 'top:le-racismo':'top:ig-7716' };
 function ch(id){ return IGUAIS[id] || id; }

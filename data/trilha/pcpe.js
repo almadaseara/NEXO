@@ -86,9 +86,9 @@ E.pcpe = {
     ]},
     proc_penal:{ nome:'Direito Processual Penal', sigla:'PP', cor:'#0f8a8a', topicos:[
       ['pe-pp-lei', 'Aplicação da lei processual penal no tempo, no espaço e em relação às pessoas', [], 2, 1],
-      ['pe-pp-ip', 'Inquérito policial', [], 3, 2.5],
-      ['pe-pp-prova', 'Prova: exame de corpo de delito e perícias, interrogatório, confissão, testemunhas, reconhecimento, acareação, documentos, indícios, busca e apreensão', [], 3, 3],
-      ['pe-pp-prisao', 'Prisão e liberdade provisória', [], 3, 2.5],
+      ['pe-pp-ip', 'Inquérito policial', ['pp_inquerito'], 3, 2.5],
+      ['pe-pp-prova', 'Prova: exame de corpo de delito e perícias, interrogatório, confissão, testemunhas, reconhecimento, acareação, documentos, indícios, busca e apreensão', ['pp_prova_geral', 'pp_prova_orais', 'pp_prova_docs_busca'], 3, 3],
+      ['pe-pp-prisao', 'Prisão e liberdade provisória', ['pp_flagrante'], 3, 2.5],
       ['pe-pp-cautelares', 'Medidas cautelares diversas da prisão', [], 3, 1.5],
       ['pe-pp-temp', 'Prisão temporária (Lei nº 7.960/1989)', [], 3, 0.5],
       ['pe-pp-jecrim', 'Juizados especiais criminais (Lei nº 9.099/1995)', [], 2, 1.5],

@@ -8,7 +8,7 @@
   --nx-accent:#2f7968; --nx-accent-ink:#ffffff; --nx-accent-soft:#e2efeb; --nx-gold:#c99a4a;
   --nx-good:#0ca30c; --nx-bad:#d03b3b; --nx-warn:#b7791f;
   --nx-paper:#fdfdfa; --nx-rule:#cfe0ef; --nx-margin:#e7a2a2;
-  --nx-d1:#2a78d6; --nx-d2:#eb6834; --nx-d3:#6250d6; --nx-d4:#1baf7a;
+  --nx-d1:#2a78d6; --nx-d2:#eb6834; --nx-d3:#6250d6; --nx-d4:#1baf7a; --nx-d5:#0f8a8a;
   --nx-rail:76px; --nx-open:292px;
   --nx-shadow:0 1px 2px rgba(20,43,48,.06),0 8px 24px rgba(20,43,48,.06);
 }
@@ -19,7 +19,7 @@ html[data-theme="dark"]{
   --nx-ink:#ececee; --nx-ink-2:#b9b9c0; --nx-muted:#8e8e96;
   --nx-accent:#62c3a6; --nx-accent-ink:#0a1d17; --nx-accent-soft:#1f3a32; --nx-gold:#e2bd74;
   --nx-paper:#1e1e21; --nx-rule:#323238; --nx-margin:#7a3c42;
-  --nx-d1:#3987e5; --nx-d2:#d95926; --nx-d3:#9085e9; --nx-d4:#199e70;
+  --nx-d1:#3987e5; --nx-d2:#d95926; --nx-d3:#9085e9; --nx-d4:#199e70; --nx-d5:#2bb3b3;
   --nx-shadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px rgba(0,0,0,.3);
   /* variáveis já usadas pelo site e pelos temas aprofundados */
   --bg:#141416; --panel:#1e1e21; --panel2:#27272b; --line:#36363c; --text:#ececee; --muted:#9a9aa2;

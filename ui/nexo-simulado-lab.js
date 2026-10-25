@@ -12,7 +12,7 @@ var MODOS=[
  {id:'equilibrio',t:'Equilíbrio por disciplina',d:'Distribuição equilibrada conforme o peso do edital.',i:'balanca'},
  {id:'tempo',t:'Pressão de tempo',d:'60 s por questão. Encerra sozinho no fim do tempo.',i:'relogio'}
 ];
-var CORES={'Direito Penal':'#22c18a','Direito Constitucional':'#3b82f6','Direito Administrativo':'#f97316','Medicina Legal':'#8b5cf6'};
+var CORES={'Direito Penal':'#22c18a','Direito Constitucional':'#3b82f6','Direito Administrativo':'#f97316','Medicina Legal':'#8b5cf6','Direito Processual Penal':'#0f8a8a'};
 var EXTRA=['#ec4899','#eab308','#06b6d4','#94a3b8','#84cc16'];
 var S=null, perfil=null, semente=1, tick=null;
 
