@@ -175,7 +175,7 @@ E.pcba = {
       ['da-6677', 'Lei estadual 6.677/1994 — Estatuto do Servidor da Bahia', [], 2, 1.5]
     ]},
     extravagante:{ nome:'Legislação Penal e Processual Extravagante', sigla:'LE', cor:'#7a3f9b', topicos:[
-      ['le-drogas', 'Lei 11.343/2006 — Drogas', [], 3, 2],
+      ['le-drogas', 'Lei 11.343/2006 — Drogas', ['ext_drogas'], 3, 2],
       ['le-abuso', 'Lei 13.869/2019 — Abuso de autoridade', ['ext_abuso'], 3, 1.5],
       ['le-desarm', 'Lei 10.826/2003 — Estatuto do Desarmamento', ['ext_desarmamento'], 3, 1.5],
       ['le-mp', 'Lei 11.340/2006 — Maria da Penha; Lei 14.344/2022 — Henry Borel', ['ext_mariapenha'], 3, 1.5],
