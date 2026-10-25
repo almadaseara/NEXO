@@ -104,7 +104,7 @@ E.pcba = {
     leg_geral:{ nome:'Legislação Geral', sigla:'LG', cor:'#4f7a3a', topicos:[
       ['lg-6677', 'Lei estadual 6.677/1994 — Estatuto do Servidor da Bahia', ['ba_servidores_1', 'ba_servidores_2', 'ba_servidores_3'], 3, 2],
       ['lg-11370', 'Lei estadual 11.370/2009 — Lei Orgânica da Polícia Civil da Bahia', ['ba_pc_organizacao', 'ba_pc_estatuto'], 3, 2],
-      ['lg-12209', 'Lei estadual 12.209/2011 — processo administrativo na Bahia', [], 2, 1.5],
+      ['lg-12209', 'Lei estadual 12.209/2011 — processo administrativo na Bahia', ['ba_proc_adm_1', 'ba_proc_adm_2', 'ba_proc_adm_3'], 2, 1.5],
       ['lg-14634', 'Lei estadual 14.634/2023 — licitações e contratos na Bahia', [], 2, 1.5],
       ['lg-8906', 'Lei 8.906/1994 — Estatuto da Advocacia', [], 1, 1]
     ]},
