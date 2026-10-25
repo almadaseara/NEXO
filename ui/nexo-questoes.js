@@ -35,7 +35,9 @@ var DISC = [
   ['Direito Administrativo', 'DA', 'var(--nx-d2,#eb6834)'],
   ['Direito Penal', 'DP', 'var(--nx-d4,#1baf7a)'],
   ['Medicina Legal', 'ML', 'var(--nx-d3,#6250d6)'],
-  ['Direito Processual Penal', 'PP', 'var(--nx-d5,#0f8a8a)']
+  ['Direito Processual Penal', 'PP', 'var(--nx-d5,#0f8a8a)'],
+  ['Legislação Extravagante', 'LE', '#7a3f9b'],
+  ['Legislação Geral', 'LG', '#b8860b']
 ];
 function discDe(m){ return (m && m.discipline) || 'Direito Constitucional'; }
 
