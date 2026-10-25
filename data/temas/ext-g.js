@@ -1,0 +1,150 @@
+/* Legislação Extravagante (VII): Lei 9.503/1997 (Código de Trânsito Brasileiro, crimes de trânsito).
+   Conferido em 25/10/2026. Texto legal transcrito do material de estudo PC-BA e de memória (confira no Planalto);
+   base didática reescrita com palavras próprias. */
+(function(){
+var T = window.NEXO_TEMAS = window.NEXO_TEMAS || {};
+var AT = "25/10/2026";
+var STJJ = "https://scon.stj.jus.br/SCON/";
+var STFJ = "https://jurisprudencia.stf.jus.br/pages/search";
+
+/* ======================= LEI 9.503/1997 (CTB, parte penal) ======================= */
+T.ext_ctb = {
+meta:{ tema:"Lei 9.503/1997 (CTB): crimes de trânsito", atualizado:AT,
+  foco:"Parte geral penal (arts. 291 a 301): JECRIM, suspensão/proibição de dirigir, multa reparatória, agravantes, socorro; crimes dos arts. 302 a 312-A.",
+  aviso:"Dos arts. 306 (limites de alcoolemia) e 302/303 (§§ de embriaguez) há trechos citados de memória ou do material; confira a redação atual no Planalto." },
+secoes:[
+{ id:"geral", titulo:"Parte geral: aplicação, penalidades e agravantes", curto:"Parte geral",
+  rapido:["A parte penal vai do <b>art. 291 ao 312-A</b>: geral (291 a 301) e especial (302 a 312). Os crimes de <b>dano</b> são só os culposos dos <b>arts. 302 e 303</b>; os dos arts. 304 a 312 são <b>de perigo</b> (concreto ou abstrato) e <b>dolosos</b>. Aplica-se primeiro o CTB, e subsidiariamente CP, CPP e Lei 9.099.",
+    "Art. 291, § 1º: na <b>lesão corporal culposa</b> aplicam-se composição de danos civis, <b>transação penal</b> e exigência de <b>representação</b> (Lei 9.099, arts. 74, 76 e 88), <b>exceto</b> se o agente estiver: sob influência de álcool ou outra substância psicoativa que determine dependência; em <b>corrida/“racha”</b> ou exibição não autorizada; ou a mais de <b>50 km/h acima</b> da velocidade máxima da via.",
+    "Suspensão ou proibição de obter permissão/habilitação (arts. 292 e 293): pode ser isolada ou cumulada, de <b>2 meses a 5 anos</b>; se o condenado está preso, conta-se da saída. Após o trânsito em julgado, ele deve entregar a CNH em <b>48 horas</b>. Como <b>cautelar</b> (art. 294), o juiz pode decretar a suspensão em qualquer fase, de ofício, a requerimento do MP ou por representação da autoridade policial, para garantia da ordem pública.",
+    "<b>Multa reparatória</b> (art. 297): depósito judicial em favor da vítima ou sucessores, calculada pelo art. 49, § 1º, do CP, quando houver prejuízo material; é sanção de natureza civil, limitada ao prejuízo demonstrado, com abatimento de eventual reparação civil.",
+    "Agravantes gerais (art. 298): dano potencial a 2 ou mais pessoas ou risco de grave dano patrimonial; veículo sem placas, com placas falsas ou adulteradas; sem CNH/PPD; com categoria diferente; profissão que exija cuidados especiais com passageiros ou carga; veículo com equipamentos adulterados; sobre faixa de pedestres.",
+    "Art. 301: quem presta <b>pronto e integral socorro</b> à vítima não sofre <b>prisão em flagrante</b> nem se lhe exige <b>fiança</b>."],
+  teoria:[
+    { h:"Dolo eventual e embriaguez", p:[
+      "A embriaguez ao volante, por si só, <b>não</b> implica dolo eventual (STJ, REsp 1.689.173): é preciso outros elementos que mostrem a aceitação do resultado morte, como velocidade muito acima, zigue-zague, ultrapassagens perigosas, desrespeito a semáforo. Sem eles, a figura é a culposa do art. 302."]},
+    { h:"Prova e contraprova no art. 306", p:[
+      "Desde 2012 a alteração da capacidade psicomotora pode ser provada por teste de alcoolemia ou toxicológico, exame clínico, perícia, vídeo, testemunhas e outros meios, respeitado o direito à contraprova. Não depende só do bafômetro."]}],
+  pegadinhas:["A lesão culposa de trânsito tem benefícios da Lei 9.099, <b>salvo</b> embriaguez, racha ou excesso de 50 km/h.",
+    "Suspensão/proibição: <b>2 meses a 5 anos</b>; cassação é outra coisa (administrativa).",
+    "Multa reparatória não é pena criminal e não pode superar o prejuízo demonstrado.",
+    "Prestar socorro afasta flagrante e fiança só quando o socorro é <b>pronto e integral</b>."] },
+{ id:"crimes", titulo:"Crimes em espécie (arts. 302 a 312-A)", curto:"Crimes em espécie",
+  rapido:["<b>Art. 302</b> (homicídio culposo): detenção de 2 a 4 anos + suspensão/proibição. Aumento de <b>1/3 à metade</b> (§ 1º): sem CNH/PPD; em faixa de pedestres ou calçada; deixar de prestar socorro (possível, sem risco pessoal); transporte de passageiros em atividade profissional (mesmo vazio). § 3º: sob influência de álcool ou substância psicoativa — <b>reclusão de 5 a 8 anos</b>. Perdão judicial: STJ exige vínculo afetivo ou sequelas físicas gravíssimas.",
+    "<b>Art. 303</b> (lesão culposa): detenção de 6 meses a 2 anos + suspensão/proibição; aumento do § 1º do art. 302; § 2º: embriaguez e lesão grave ou gravíssima — <b>reclusão de 2 a 5 anos</b>.",
+    "<b>Art. 304</b> (omissão de socorro): detenção de 6 meses a 1 ano ou multa, se não for crime mais grave; vale ainda que terceiros socorram ou a vítima morra de imediato ou tenha lesões leves. <b>Art. 305</b> (fuga do local): 6 meses a 1 ano ou multa; STF afastou a tese de inconstitucionalidade por autoincriminação (RE 971.959).",
+    "<b>Art. 306</b> (embriaguez ao volante): detenção de 6 meses a 3 anos, multa e suspensão/proibição. <b>Art. 307</b> (violar suspensão ou proibição; ou não entregar a CNH em 48 h): 6 meses a 1 ano e multa, com nova imposição de idêntico prazo.",
+    "<b>Art. 308</b> (racha): detenção de 6 meses a 3 anos, multa e suspensão/proibição; resultado lesão grave sem dolo — reclusão de 3 a 6 anos; morte sem dolo — reclusão de 5 a 10 anos. Tomada de tempo individual e exibição de perícia também são puníveis; espectadores e passageiros podem ser partícipes.",
+    "<b>Art. 309</b> (sem habilitação, gerando perigo de dano): 6 meses a 1 ano ou multa; <b>Súmula 720 STF</b> (derrogou a contravenção do art. 32 da LCP). <b>Art. 310</b>: 6 meses a 1 ano ou multa; <b>perigo abstrato</b> (STJ, Tema 901). <b>Art. 311</b> (velocidade incompatível perto de escolas etc., gerando perigo): 6 meses a 1 ano ou multa. <b>Art. 312</b> (fraude processual em acidente com vítima): 6 meses a 1 ano ou multa, mesmo antes de iniciado o procedimento.",
+    "<b>Art. 312-A</b>: se houver substituição da pena privativa por restritiva em crimes dos arts. 302 a 312, a pena será de prestação de serviços em atividades ligadas ao resgate, atendimento e recuperação de vítimas de trânsito (resgate dos bombeiros, pronto-socorro, clínicas de reabilitação)."],
+  teoria:[
+    { h:"Detalhes que caem em prova", p:[
+      "CNH vencida: só há crime se passados <b>mais de 30 dias</b> do vencimento (art. 309). Habilitado que apenas não porta o documento comete infração administrativa. Estado de necessidade pode excluir o crime (por exemplo, conduzir sem habilitação para socorro urgente).",
+      "Art. 305: só responde quem se envolveu ao menos culposamente no acidente. Se foge sem socorrer, responde também pelo art. 304. O art. 304 tem como sujeito passivo a vítima e exige dolo; o terceiro que não socorre responde pelo art. 135 do CP.",
+      "Art. 311: se a alta velocidade causa morte, o crime é absorvido pelo homicídio (culposo ou doloso).",
+      "Art. 308, §§ 1º e 2º: qualificadoras preterdolosas — o agente não quis nem assumiu o risco do resultado. Se assumiu, responde pelo crime doloso do CP."]}],
+  pegadinhas:["Só os arts. <b>302 e 303</b> são culposos; os arts. 304 a 312 são dolosos de perigo.",
+    "Aumento do § 1º do art. 302 por omissão de socorro só vale no homicídio/lesão culposos; fora disso é o art. 304.",
+    "Embriaguez + lesão grave/gravíssima (art. 303, § 2º): <b>reclusão</b> de 2 a 5 anos.",
+    "O art. 310 é crime de <b>perigo abstrato</b>; o 309 exige <b>perigo de dano</b>."] }
+],
+lei:[
+{ art:"Lei 9.503/1997, arts. 291 a 301", nome:"Parte geral penal", sec:"geral", itens:[
+  { id:"l9503a291", rot:"Art. 291",
+    t:"Aos crimes cometidos na direção de veículos automotores, previstos neste Código, aplicam-se as normas gerais do <b class='g1'>Código Penal e do Código de Processo Penal</b>, se este Capítulo não dispuser de modo diverso, bem como a <b class='g1'>Lei nº 9.099/1995</b>, no que couber. § 1º Aplica-se aos crimes de trânsito de <b class='g1'>lesão corporal culposa</b> o disposto nos arts. 74, 76 e 88 da Lei nº 9.099/1995, <b class='g3'>exceto</b> se o agente estiver: I - sob a influência de <b class='g1'>álcool ou qualquer outra substância psicoativa</b> que determine dependência; II - participando, em via pública, de <b class='g1'>corrida, disputa ou competição</b> automobilística, de exibição ou demonstração de perícia em manobra de veículo automotor, não autorizada pela autoridade competente; III - transitando em velocidade superior à máxima permitida para a via em <b class='g2'>50 km/h</b>.", c:["ct1","ct2"] },
+  { id:"l9503a293", rot:"Arts. 292 a 294",
+    t:"<b>Art. 292.</b> A suspensão ou a proibição de se obter a permissão ou a habilitação para dirigir veículo automotor pode ser imposta <b class='g1'>isolada ou cumulativamente</b> com outras penalidades. <b>Art. 293.</b> A penalidade de suspensão ou de proibição de se obter a permissão ou a habilitação, para dirigir veículo automotor, tem a duração de <b class='g2'>dois meses a cinco anos</b>. <b>Art. 294.</b> Em qualquer fase da investigação ou da ação penal, havendo necessidade para a <b class='g1'>garantia da ordem pública</b>, poderá o juiz, como <b class='g1'>medida cautelar</b>, de ofício, ou a requerimento do Ministério Público ou ainda mediante representação da autoridade policial, decretar, em decisão motivada, a suspensão da permissão ou da habilitação para dirigir veículo automotor, ou a proibição de sua obtenção.", c:["ct3","ct4"] },
+  { id:"l9503a297", rot:"Art. 297",
+    t:"A penalidade de <b class='g1'>multa reparatória</b> consiste no pagamento, mediante <b class='g1'>depósito judicial em favor da vítima</b>, ou seus sucessores, de quantia calculada com base no disposto no § 1º do art. 49 do Código Penal, sempre que houver <b class='g1'>prejuízo material</b> resultante do crime.", c:["ct5"] },
+  { id:"l9503a298", rot:"Art. 298",
+    t:"São circunstâncias que <b class='g1'>sempre agravam</b> as penalidades dos crimes de trânsito ter o condutor do veículo cometido a infração: I - com dano potencial para duas ou mais pessoas ou com grande risco de grave dano patrimonial a terceiros; II - utilizando o veículo sem placas, com placas falsas ou adulteradas; III - sem possuir Permissão para Dirigir ou Carteira de Habilitação; IV - com Permissão para Dirigir ou Carteira de Habilitação de categoria diferente da do veículo; V - quando a sua profissão ou atividade exigir cuidados especiais com o transporte de passageiros ou de carga; VI - utilizando veículo em que tenham sido adulterados equipamentos ou características que afetem a sua segurança ou o seu funcionamento; VII - sobre faixa de trânsito temporária ou permanentemente destinada a pedestres.", c:["ct6"] },
+  { id:"l9503a301", rot:"Art. 301",
+    t:"Ao condutor de veículo, nos casos de acidentes de trânsito de que resulte vítima, <b class='g1'>não se imporá a prisão em flagrante, nem se exigirá fiança</b>, se prestar <b class='g1'>pronto e integral socorro</b> àquela.", c:["ct7"] }]},
+{ art:"Lei 9.503/1997, arts. 302 a 312-A", nome:"Crimes em espécie", sec:"crimes", itens:[
+  { id:"l9503a302", rot:"Art. 302",
+    t:"Praticar <b class='g1'>homicídio culposo</b> na direção de veículo automotor: Penas - detenção, de <b class='g2'>dois a quatro anos</b>, e suspensão ou proibição de se obter a permissão ou a habilitação para dirigir veículo automotor. § 1º No homicídio culposo cometido na direção de veículo automotor, a pena é aumentada de <b class='g2'>1/3 (um terço) à metade</b>, se o agente: I - não possuir Permissão para Dirigir ou Carteira de Habilitação; II - praticá-lo em <b class='g1'>faixa de pedestres ou na calçada</b>; III - deixar de prestar socorro, quando possível fazê-lo sem risco pessoal, à vítima do acidente; IV - no exercício de sua profissão ou atividade, estiver conduzindo veículo de <b class='g1'>transporte de passageiros</b>. § 3º Se o agente conduz veículo automotor sob a influência de <b class='g1'>álcool ou de qualquer outra substância psicoativa</b> que determine dependência: Penas - <b class='g1'>reclusão, de cinco a oito anos</b>, e suspensão ou proibição do direito de se obter a permissão ou a habilitação para dirigir veículo automotor.", c:["ct8","ct9"], j:["stj-resp1689173","stj-resp1455178"] },
+  { id:"l9503a303", rot:"Art. 303",
+    t:"Praticar <b class='g1'>lesão corporal culposa</b> na direção de veículo automotor: Penas - detenção, de <b class='g2'>seis meses a dois anos</b> e suspensão ou proibição de se obter a permissão ou a habilitação para dirigir veículo automotor. § 1º Aumenta-se a pena de um terço à metade, se ocorrer qualquer das hipóteses do § 1º do art. 302. § 2º A pena privativa de liberdade é de <b class='g1'>reclusão de dois a cinco anos</b>, sem prejuízo das outras penas previstas neste artigo, se o agente conduz o veículo com capacidade psicomotora alterada em razão da influência de álcool ou de outra substância psicoativa que determine dependência, e se do crime resultar <b class='g1'>lesão corporal de natureza grave ou gravíssima</b>.", c:["ct10"] },
+  { id:"l9503a304", rot:"Arts. 304 e 305",
+    t:"<b>Art. 304.</b> Deixar o condutor do veículo, na ocasião do acidente, de prestar <b class='g1'>imediato socorro à vítima</b>, ou, não podendo fazê-lo diretamente, por justa causa, deixar de solicitar auxílio da autoridade pública: Penas - detenção, de <b class='g2'>seis meses a um ano</b>, ou multa, se o fato não constituir elemento de crime mais grave. Parágrafo único. Incide nas penas previstas neste artigo o condutor do veículo, <b class='g3'>ainda que a sua omissão seja suprida por terceiros</b> ou que se trate de vítima com morte instantânea ou com ferimentos leves. <b>Art. 305.</b> <b class='g1'>Afastar-se o condutor do veículo do local do acidente</b>, para fugir à responsabilidade penal ou civil que lhe possa ser atribuída: Penas - detenção, de <b class='g2'>seis meses a um ano</b>, ou multa.", c:["ct11","ct12"], j:["stf-re971959"] },
+  { id:"l9503a306", rot:"Art. 306",
+    t:"<b class='g1'>Conduzir veículo automotor com capacidade psicomotora alterada</b> em razão da influência de álcool ou de outra substância psicoativa que determine dependência: Penas - detenção, de <b class='g2'>seis meses a três anos</b>, multa e suspensão ou proibição de se obter a permissão ou a habilitação para dirigir veículo automotor.",
+    nota:"Os §§ 1º e 2º (limites de alcoolemia: 6 dg/L de sangue ou 0,3 mg/L de ar alveolar; meios de prova) não constam do trecho do material; confira no Planalto.", c:["ct13"] },
+  { id:"l9503a307", rot:"Art. 307",
+    t:"<b class='g1'>Violar a suspensão ou a proibição</b> de se obter a permissão ou a habilitação para dirigir veículo automotor imposta com fundamento neste Código: Penas - detenção, de <b class='g2'>seis meses a um ano</b> e multa, com nova imposição adicional de idêntico prazo de suspensão ou de proibição. Parágrafo único. Nas mesmas penas incorre o condenado que deixa de entregar, no prazo estabelecido no § 1º do art. 293, a Permissão para Dirigir ou a Carteira de Habilitação.", c:["ct14"] },
+  { id:"l9503a308", rot:"Art. 308",
+    t:"<b class='g1'>Participar, na direção de veículo automotor, em via pública, de corrida, disputa ou competição</b> automobilística ou ainda de exibição ou demonstração de perícia em manobra de veículo automotor, não autorizada pela autoridade competente, gerando situação de risco à incolumidade pública ou privada: Penas - detenção, de <b class='g2'>6 (seis) meses a 3 (três) anos</b>, multa e suspensão ou proibição de se obter a permissão ou a habilitação. § 1º Se resultar <b class='g1'>lesão corporal de natureza grave</b>, e as circunstâncias demonstrarem que o agente não quis o resultado nem assumiu o risco de produzi-lo, a pena é de <b class='g1'>reclusão, de 3 (três) a 6 (seis) anos</b>. § 2º Se resultar <b class='g1'>morte</b>, nas mesmas circunstâncias, a pena é de <b class='g1'>reclusão de 5 (cinco) a 10 (dez) anos</b>.", c:["ct15"] },
+  { id:"l9503a309", rot:"Art. 309",
+    t:"<b class='g1'>Dirigir veículo automotor, em via pública, sem a devida Permissão para Dirigir ou Habilitação</b> ou, ainda, se cassado o direito de dirigir, <b class='g1'>gerando perigo de dano</b>: Penas - detenção, de <b class='g2'>seis meses a um ano</b>, ou multa.", c:["ct16"], j:["stf-sumula720"] },
+  { id:"l9503a310", rot:"Art. 310",
+    t:"<b class='g1'>Permitir, confiar ou entregar a direção</b> de veículo automotor a pessoa não habilitada, com habilitação cassada ou com o direito de dirigir suspenso, ou, ainda, a quem, por seu estado de saúde, física ou mental, ou por embriaguez, não esteja em condições de conduzi-lo com segurança: Penas - detenção, de <b class='g2'>seis meses a um ano</b>, ou multa.", c:["ct17"], j:["stj-resp1485830"] },
+  { id:"l9503a311", rot:"Arts. 311 e 312",
+    t:"<b>Art. 311.</b> Trafegar em <b class='g1'>velocidade incompatível com a segurança</b> nas proximidades de escolas, hospitais, estações de embarque e desembarque de passageiros, logradouros estreitos, ou onde haja grande movimentação ou concentração de pessoas, gerando perigo de dano: Penas - detenção, de <b class='g2'>seis meses a um ano</b>, ou multa. <b>Art. 312.</b> <b class='g1'>Inovar artificiosamente</b>, em caso de acidente automobilístico com vítima, na pendência do respectivo procedimento policial preparatório, inquérito policial ou processo penal, o estado de lugar, de coisa ou de pessoa, a fim de induzir a erro o agente policial, o perito, ou juiz: Penas - detenção, de <b class='g2'>seis meses a um ano</b>, ou multa. Parágrafo único. Aplica-se o disposto neste artigo, <b class='g3'>ainda que não iniciados</b>, quando da inovação, o procedimento preparatório, o inquérito ou o processo.", c:["ct18"] },
+  { id:"l9503a312a", rot:"Art. 312-A",
+    t:"Para os crimes relacionados nos <b class='g1'>arts. 302 a 312</b> deste Código, nas situações em que o juiz aplicar a <b class='g1'>substituição de pena privativa de liberdade por pena restritiva de direitos</b>, esta deverá ser de <b class='g1'>prestação de serviço à comunidade ou a entidades públicas</b>, em uma das seguintes atividades: I - trabalho, aos fins de semana, em equipes de resgate dos corpos de bombeiros e em outras unidades móveis especializadas no atendimento a vítimas de trânsito; II - trabalho em unidades de pronto-socorro de hospitais da rede pública que recebem vítimas de acidente de trânsito e politraumatizados; III - trabalho em clínicas ou instituições especializadas na recuperação de acidentados de trânsito; IV - outras atividades relacionadas ao resgate, atendimento e recuperação de vítimas de acidentes de trânsito.", c:["ct19"] }]}
+],
+juris:[
+{ id:"stj-resp1689173", trib:"STJ", tipo:"REsp", num:"REsp 1.689.173/SC", sec:"crimes", status:"vigente", data:"21/11/2017",
+  titulo:"Embriaguez ao volante não implica, por si só, dolo eventual",
+  texto:"A embriaguez ao volante, isoladamente, não configura dolo eventual no homicídio de trânsito; exigem-se outras circunstâncias que indiquem a anuência com o resultado (velocidade muito acima do permitido, zigue-zague, ultrapassagens perigosas, desrespeito a semáforo etc.).",
+  explica:"Resumo do material de estudo (Info 623). Confira o acórdão.", lei:["l9503a302"], fonte:STJJ },
+{ id:"stj-resp1455178", trib:"STJ", tipo:"REsp", num:"REsp 1.455.178/DF", sec:"crimes", status:"vigente", data:"05/06/2014",
+  titulo:"Perdão judicial no homicídio culposo de trânsito",
+  texto:"O perdão judicial não pode ser concedido ao autor do homicídio culposo na direção de veículo que, embora abalado moralmente, não tinha vínculo afetivo com a vítima nem sofreu sequelas físicas gravíssimas e permanentes.",
+  explica:"Resumo do material de estudo; confira o acórdão.", lei:["l9503a302"], fonte:STJJ },
+{ id:"stf-re971959", trib:"STF", tipo:"RE", num:"RE 971.959/RS", sec:"crimes", status:"vigente", data:"2018 (confira)",
+  titulo:"Art. 305 e direito de não se autoincriminar",
+  texto:"Segundo o material de estudo, a tese de inconstitucionalidade do art. 305 do CTB por violar o direito à não incriminação foi rejeitada pelo STF.",
+  explica:"Confira a data e a tese fixada no acórdão (repercussão geral).", lei:["l9503a304"], fonte:STFJ },
+{ id:"stf-sumula720", trib:"STF", tipo:"Súmula", num:"Súmula 720", sec:"crimes", status:"vigente", data:"2003",
+  titulo:"Direção sem habilitação: CTB derrogou a LCP",
+  texto:"O art. 309 do CTB, que reclama decorra do fato perigo de dano, derrogou o art. 32 da Lei das Contravenções Penais no tocante à direção sem habilitação em vias terrestres.",
+  explica:"Antes do CTB a conduta era contravenção; hoje é crime se houver perigo de dano.", lei:["l9503a309"], fonte:STFJ },
+{ id:"stj-resp1485830", trib:"STJ", tipo:"REsp (Tema 901)", num:"REsp 1.485.830/MG", sec:"crimes", status:"vigente", data:"11/03/2015",
+  titulo:"Art. 310 é crime de perigo abstrato",
+  texto:"O crime do art. 310 do CTB é de perigo abstrato; não se exige lesão nem perigo concreto de dano para sua configuração (recurso repetitivo, Tema 901).",
+  explica:"Contraste com o art. 309 (perigo de dano). Confira o acórdão.", lei:["l9503a310"], fonte:STJJ }
+],
+cards:[
+{ id:"ct1", tipo:"distincao", sec:"geral", f:"Quais crimes de trânsito são de dano? E os de perigo?",
+  v:"De <b>dano</b>: só os culposos dos <b>arts. 302 e 303</b>. De <b>perigo</b> (concreto ou abstrato) e dolosos: arts. 304 a 312.", lei:["l9503a291"] },
+{ id:"ct2", tipo:"caso", sec:"geral", f:"Lesão corporal culposa no trânsito com condutor 60 km/h acima do limite da via. Cabe transação penal?",
+  v:"<b>Não.</b> O art. 291, § 1º, III afasta os benefícios da Lei 9.099 quando o excesso for superior a <b>50 km/h</b>; o mesmo para embriaguez e racha.", lei:["l9503a291"] },
+{ id:"ct3", tipo:"numero", sec:"geral", f:"Duração da suspensão ou proibição de dirigir como penalidade?",
+  v:"<b>2 meses a 5 anos</b> (art. 293), isolada ou cumulada; entrega da CNH em 48 h após o trânsito em julgado.", lei:["l9503a293"] },
+{ id:"ct4", tipo:"caso", sec:"geral", f:"Quem pode provocar a suspensão cautelar da habilitação (art. 294)?",
+  v:"O <b>juiz</b>, de ofício, a requerimento do <b>MP</b> ou por representação da <b>autoridade policial</b>, em qualquer fase, para garantia da ordem pública.", lei:["l9503a293"] },
+{ id:"ct5", tipo:"distincao", sec:"geral", f:"Natureza e limite da multa reparatória do CTB?",
+  v:"Sanção de natureza <b>civil</b>, paga por depósito judicial à vítima; não pode exceder o <b>prejuízo material demonstrado</b>, com desconto de reparação civil.", lei:["l9503a297"] },
+{ id:"ct6", tipo:"lacuna", sec:"geral", f:"Agravantes do art. 298: dano potencial a ____ ou mais pessoas; veículo sem placas ou com placas ____; sem ____; categoria ____; sobre faixa de ____.",
+  v:"<b>Duas</b>; <b>falsas ou adulteradas</b>; <b>CNH/PPD</b>; <b>diferente</b>; <b>pedestres</b> (e ainda profissão de transporte e equipamentos adulterados).", lei:["l9503a298"] },
+{ id:"ct7", tipo:"caso", sec:"geral", f:"Condutor atropela pedestre, presta pronto e integral socorro. Pode ser preso em flagrante?",
+  v:"<b>Não</b>, nem se exige fiança (art. 301).", lei:["l9503a301"] },
+{ id:"ct8", tipo:"numero", sec:"crimes", f:"Pena do homicídio culposo de trânsito e aumento do § 1º?",
+  v:"Detenção de <b>2 a 4 anos</b> + suspensão/proibição; aumento de <b>1/3 à metade</b> (sem CNH, faixa de pedestres/calçada, sem socorro, transporte de passageiros). Com álcool (§ 3º): <b>reclusão 5 a 8 anos</b>.", lei:["l9503a302"] },
+{ id:"ct9", tipo:"ce", sec:"crimes", f:"(C/E) Embriaguez ao volante e morte da vítima levam automaticamente ao reconhecimento de dolo eventual.",
+  v:"<b>Errado</b> (STJ): a embriaguez isolada não basta; exigem-se outras circunstâncias de anuência ao resultado.", lei:["l9503a302"], j:["stj-resp1689173"] },
+{ id:"ct10", tipo:"numero", sec:"crimes", f:"Lesão corporal culposa de trânsito: pena e forma qualificada por embriaguez?",
+  v:"<b>Detenção 6 meses a 2 anos</b>; com embriaguez e lesão grave/gravíssima: <b>reclusão de 2 a 5 anos</b> (§ 2º).", lei:["l9503a303"] },
+{ id:"ct11", tipo:"caso", sec:"crimes", f:"Motorista não socorre, mas outras pessoas socorrem a vítima. Há art. 304?",
+  v:"<b>Sim.</b> O parágrafo único mantém o crime ainda que o socorro seja suprido por terceiros ou a morte seja instantânea.", lei:["l9503a304"] },
+{ id:"ct12", tipo:"distincao", sec:"crimes", f:"Art. 304 × art. 305?",
+  v:"304: <b>omitir socorro</b> à vítima. 305: <b>afastar-se do local</b> para fugir da responsabilidade. Pena igual (6 meses a 1 ano ou multa). Exige envolvimento ao menos culposo no acidente (305).", lei:["l9503a304"], j:["stf-re971959"] },
+{ id:"ct13", tipo:"numero", sec:"crimes", f:"Pena da embriaguez ao volante (art. 306)?",
+  v:"Detenção de <b>6 meses a 3 anos</b>, multa e suspensão/proibição. Prova: alcoolemia, toxicológico, exame clínico, perícia, vídeo, testemunhas, com direito à contraprova.", lei:["l9503a306"] },
+{ id:"ct14", tipo:"caso", sec:"crimes", f:"Condenado suspenso não entrega a CNH em 48 horas. Crime?",
+  v:"<b>Sim</b>, art. 307, parágrafo único (mesma pena de violar a suspensão), com nova imposição de igual prazo.", lei:["l9503a307"] },
+{ id:"ct15", tipo:"numero", sec:"crimes", f:"Penas do racha (art. 308) e das qualificadoras?",
+  v:"Detenção de <b>6 meses a 3 anos</b>; lesão grave: <b>reclusão 3 a 6 anos</b>; morte: <b>reclusão 5 a 10 anos</b> (resultado sem dolo).", lei:["l9503a308"] },
+{ id:"ct16", tipo:"ce", sec:"crimes", f:"(C/E) Condutor habilitado que esqueceu a CNH em casa pratica o crime do art. 309.",
+  v:"<b>Errado.</b> É só infração administrativa. CNH vencida só gera crime se passados <b>mais de 30 dias</b>; o crime exige <b>perigo de dano</b>.", lei:["l9503a309"], j:["stf-sumula720"] },
+{ id:"ct17", tipo:"caso", sec:"crimes", f:"Pai entrega o carro ao filho sem habilitação, que não causa nenhum incidente. Crime?",
+  v:"<b>Sim</b>: art. 310 é de <b>perigo abstrato</b> (Tema 901 do STJ), sem necessidade de perigo concreto.", lei:["l9503a310"], j:["stj-resp1485830"] },
+{ id:"ct18", tipo:"distincao", sec:"crimes", f:"Art. 311 e art. 312: o que punem?",
+  v:"311: <b>velocidade incompatível</b> perto de escolas, hospitais etc., gerando perigo. 312: <b>fraude processual</b> em acidente com vítima (apagar marcas, mover veículos/corpo), mesmo antes de iniciado o inquérito.", lei:["l9503a311"] },
+{ id:"ct19", tipo:"distincao", sec:"crimes", f:"Como deve ser a pena restritiva substitutiva nos crimes dos arts. 302 a 312?",
+  v:"Prestação de serviço à comunidade <b>ligada a resgate, atendimento e recuperação de vítimas de trânsito</b> (art. 312-A).", lei:["l9503a312a"] }
+],
+questoes:[]
+};
+})();
