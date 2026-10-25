@@ -19,7 +19,9 @@ var LIVROS = [
   { id:'constitucional', nome:'Direito Constitucional', sigla:'DC', cor:'var(--nx-d1,#2a78d6)', disc:'Direito Constitucional' },
   { id:'administrativo', nome:'Direito Administrativo', sigla:'DA', cor:'var(--nx-d2,#eb6834)', disc:'Direito Administrativo' },
   { id:'medicina_legal', nome:'Medicina Legal', sigla:'ML', cor:'var(--nx-d3,#6250d6)', disc:'Medicina Legal' },
-  { id:'proc_penal', nome:'Direito Processual Penal', sigla:'PP', cor:'var(--nx-d5,#0f8a8a)', disc:'Direito Processual Penal' }
+  { id:'proc_penal', nome:'Direito Processual Penal', sigla:'PP', cor:'var(--nx-d5,#0f8a8a)', disc:'Direito Processual Penal' },
+  { id:'extravagante', nome:'Legislação Extravagante', sigla:'LE', cor:'#7a3f9b', disc:'Legislação Extravagante' },
+  { id:'leg_geral', nome:'Legislação Geral', sigla:'LG', cor:'#4f7a3a', disc:'Legislação Geral' }
 ];
 function livroDoModulo(m){ var d = (m && m.discipline) || 'Direito Constitucional'; return LIVROS.find(function(l){ return l.disc === d; }); }
 
