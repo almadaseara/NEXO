@@ -109,6 +109,57 @@ cards:[
 { id:"lv13", tipo:"ce", sec:"processo", f:"(C/E) O Coaf pode quebrar o sigilo bancário dos investigados por conta própria.",
   v:"<b>Errado.</b> Não tem competência para quebra de sigilo; dados protegidos exigem ordem judicial.", lei:["l9613a10"], j:["stf-re389808"] }
 ],
+importancia:{ nivel:5,
+  texto:"Lavagem de dinheiro cai com frequência em provas de legislação extravagante. A banca cobra a pena, a ausência de rol de crimes antecedentes, as condutas equiparadas e a competência.",
+  decore:[
+    ["Pena do art. 1º, caput","<b>reclusão de 3 a 10 anos</b> e multa"],
+    ["Infração antecedente","<b>qualquer infração penal</b> (crime ou contravenção)"],
+    ["Fases","<b>colocação, ocultação (dissimulação) e integração</b>"],
+    ["Modalidade culposa","<b>não existe</b>; só dolo"],
+    ["Delação (§ 5º)","redução de <b>1 a 2/3</b>, regime aberto ou semiaberto, perdão ou substituição"],
+    ["Interdição (art. 7º, II)","pelo <b>dobro</b> da pena privativa de liberdade"],
+    ["Perda de bens","em favor da <b>União</b> (ou do Estado, na Justiça estadual)"],
+    ["Competência federal (art. 2º, III)","sistema financeiro, ordem econômico-financeira, bens da União ou antecedente federal"],
+    ["Coaf","<b>não quebra sigilo bancário</b>; exige ordem judicial"],
+    ["Liberação de bens (art. 4º, § 3º)","<b>comparecimento pessoal</b>"]],
+  macetes:[
+    ["Co-I-O: colocação, ocultação, integração","As três fases: o dinheiro entra no sistema, ganha camadas e volta à economia com aparência lícita."],
+    ["Sem rol, sem lista","Desde a terceira geração, qualquer infração penal serve de antecedente. Basta indício suficiente."],
+    ["Dobro","Interdição do cargo pelo dobro da pena de prisão."]] },
+comparativo:{ titulo:"Caput × condutas equiparadas (§§ 1º e 2º)", head:["Caput do art. 1º","Condutas equiparadas (§§ 1º e 2º)"], rows:[
+  ["<b>Conduta:</b> ocultar ou dissimular natureza, origem, localização, disposição, movimentação ou propriedade","<b>Conduta:</b> converter em ativos lícitos; adquirir, receber, trocar, negociar, guardar, movimentar, transferir; importar ou exportar com valores não correspondentes"],
+  ["<b>Finalidade:</b> esconder a origem ilícita dos bens","<b>Finalidade:</b> § 1º: ocultar ou dissimular a utilização dos bens; § 2º, I: usar os bens na atividade econômica ou financeira"],
+  ["<b>Pena:</b> reclusão de 3 a 10 anos e multa","<b>Pena:</b> a mesma do caput"],
+  ["<b>Elemento subjetivo:</b> dolo, sabendo da origem ilícita","<b>Elemento subjetivo:</b> dolo; no § 2º, II, saber que a atividade do grupo, associação ou escritório visa aos crimes da lei"],
+  ["<b>Natureza:</b> permanente na modalidade de ocultação (STF)","<b>Natureza:</b> condutas autônomas, com a mesma pena, sem forma culposa"]]},
+prova:[
+  { tipo:"ce", enun:"Após a Lei 12.683/2012, qualquer infração penal pode ser antecedente do crime de lavagem de dinheiro, não havendo rol taxativo de crimes antecedentes.", gab:"Certo", com:"É a chamada lavagem de terceira geração." },
+  { tipo:"ce", enun:"A lavagem de dinheiro pode ser punida a título de culpa quando o agente deveria saber da origem ilícita dos bens.", gab:"Errado", com:"Só há lavagem dolosa. O agente precisa saber da origem ilícita." },
+  { tipo:"ce", enun:"A punibilidade da lavagem depende da condenação do autor da infração antecedente.", gab:"Errado", com:"O processo é autônomo. Basta indício suficiente da antecedente, mesmo com autor desconhecido ou punibilidade extinta (art. 2º, § 1º)." },
+  { tipo:"ce", enun:"O Coaf pode, por conta própria, quebrar o sigilo bancário dos investigados.", gab:"Errado", com:"A quebra exige ordem judicial; o Coaf recebe, examina e identifica ocorrências suspeitas." },
+  { tipo:"ce", enun:"A condenação por lavagem acarreta a interdição do exercício de cargo ou função pública pelo dobro do tempo da pena privativa de liberdade aplicada.", gab:"Certo", com:"Art. 7º, II." },
+  { tipo:"caso", enun:"Réu com bens bloqueados quer a liberação e envia apenas seu advogado, com documentos que comprovam a origem lícita. O juiz deve apreciar o pedido?", com:"Não. O pedido exige comparecimento pessoal do acusado ou da interposta pessoa (art. 4º, § 3º)." }],
+resumo:[
+  "<b>Lavagem</b>: ocultar ou dissimular a origem de bens de infração penal. Pena: reclusão de 3 a 10 anos e multa.",
+  "Qualquer infração penal pode ser antecedente (sem rol), basta <b>indício suficiente</b>.",
+  "Fases: colocação, ocultação e integração; não precisam ocorrer todas. Não existe lavagem culposa.",
+  "O § 1º e o § 2º trazem condutas equiparadas com a mesma pena do caput.",
+  "A tentativa é punível. Há aumento de pena (reiteração, organização criminosa, ativo virtual) e <b>delação</b> com redução de 1 a 2/3.",
+  "Condenação: perda dos bens em favor da União (ou do Estado) e interdição pelo <b>dobro</b> da pena.",
+  "Competência federal em casos de sistema financeiro, bens da União ou antecedente federal; caso contrário, estadual.",
+  "O Coaf não quebra sigilo bancário. As medidas assecuratórias alcançam bens em nome de interpostas pessoas; a liberação exige comparecimento pessoal."],
+checklist:[
+  "Pena e condutas do art. 1º, caput, e dos §§ 1º e 2º",
+  "As três fases da lavagem",
+  "Por que qualquer infração penal pode ser antecedente",
+  "Autonomia do processo em relação ao crime antecedente",
+  "Ausência de forma culposa",
+  "Delação do § 5º e seus benefícios",
+  "Efeitos da condenação (perda e interdição)",
+  "Critérios de competência da Justiça Federal",
+  "Deveres das pessoas obrigadas (art. 10)",
+  "Papel do Coaf e a necessidade de ordem judicial",
+  "Medidas assecuratórias e liberação de bens"],
 questoes:[]
 };
 })();

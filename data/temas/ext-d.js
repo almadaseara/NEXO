@@ -146,6 +146,56 @@ cards:[
 { id:"rc15", tipo:"distincao", sec:"efeitos", f:"O que determinam os arts. 20-C e 20-D?",
   v:"20-C: critério para o juiz reconhecer o tratamento <b>discriminatório</b> (constrangimento, humilhação, medo). 20-D: a vítima deve ter <b>advogado ou defensor público</b> em todos os atos.", lei:["l7716a20c"] }
 ],
+importancia:{ nivel:5,
+  texto:"A Lei 14.532/2023 trouxe a injúria racial para a Lei 7.716 e a banca cobra penas, majorantes e a distinção entre racismo e injúria. Decorar as faixas de pena evita a maior parte dos erros.",
+  decore:[
+    ["Racismo (CF, art. 5º, XLII)","<b>inafiançável e imprescritível</b>, reclusão"],
+    ["Injúria racial (art. 2º-A)","<b>2 a 5 anos</b> e multa; concurso de pessoas: <b>+ metade</b>"],
+    ["Art. 20, caput","<b>1 a 3 anos</b> e multa"],
+    ["Art. 20, §§ 1º, 2º e 2º-A (suástica, mídia/internet, eventos públicos)","<b>2 a 5 anos</b>; § 2º-A soma <b>proibição de frequência por 3 anos</b>"],
+    ["Cargo público e emprego privado (arts. 3º e 4º)","<b>2 a 5 anos</b>"],
+    ["Ensino e hospedagem (arts. 6º e 7º)","<b>3 a 5 anos</b>; ensino contra menor de 18: <b>+ 1/3</b>"],
+    ["Comércio, bares, clubes, salões, entradas sociais, transporte (arts. 5º, 8º a 12)","<b>1 a 3 anos</b>"],
+    ["Forças Armadas e casamento (arts. 13 e 14)","<b>2 a 4 anos</b>"],
+    ["Majorantes dos arts. 20-A e 20-B","<b>1/3 até a metade</b>"],
+    ["Efeitos da condenação (art. 18)","<b>não automáticos</b>, declarados na sentença"]],
+  macetes:[
+    ["Quanto mais perto do dia a dia, menor a pena","Comércio, restaurante, clube, salão e transporte: 1 a 3. Escola e hotel: 3 a 5."],
+    ["Metade fixa, fração variável","Concurso de pessoas na injúria racial aumenta <b>metade</b>. Descontração (20-A) e funcionário público (20-B) aumentam de <b>1/3 até a metade</b>."],
+    ["Racismo é do grupo, injúria é da pessoa","Mesmo assim, ambos estão na Lei 7.716 e são imprescritíveis."]] },
+comparativo:{ titulo:"Qualificado × majorado no art. 20 e nas majorantes da lei", head:["Formas qualificadas do art. 20 (§§ 1º, 2º e 2º-A)","Majorantes (arts. 20-A, 20-B e 2º-A, parágrafo único)"], rows:[
+  ["<b>O que faz:</b> cria nova faixa de pena (2 a 5 anos, em vez de 1 a 3)","<b>O que faz:</b> aumenta a pena já fixada, em fração"],
+  ["<b>Em que depende:</b> do meio ou do contexto do crime (suástica, internet e mídia, evento público)","<b>Em que depende:</b> de circunstância do fato ou do agente (concurso de pessoas, recreação, funcionário público)"],
+  ["<b>Natureza:</b> objetiva, ligada ao meio de execução ou ao local","<b>Natureza:</b> mista, ligada ao contexto (20-A) e à qualidade do agente (20-B)"],
+  ["<b>Fração:</b> não há, a pena já vem prevista no parágrafo","<b>Fração:</b> metade (2º-A), 1/3 até a metade (20-A e 20-B), 1/3 (art. 6º, menor de 18)"],
+  ["<b>Alcance:</b> só o art. 20","<b>Alcance:</b> 20-A vale para todos os crimes; 20-B só para os arts. 2º-A e 20"]]},
+prova:[
+  { tipo:"ce", enun:"Desde a Lei 14.532/2023, a injúria racial está tipificada no art. 2º-A da Lei 7.716/1989, com pena de reclusão de 2 a 5 anos e multa, e não mais no art. 140, § 3º, do Código Penal.", gab:"Certo", com:"A lei transferiu a injúria racial para a Lei 7.716 e endureceu a pena." },
+  { tipo:"ce", enun:"A injúria racial é crime de ação penal pública condicionada à representação e prescreve no prazo comum.", gab:"Errado", com:"A ação é pública incondicionada e o crime é imprescritível, como espécie de racismo." },
+  { tipo:"ce", enun:"A perda do cargo público é efeito automático da condenação por crime da Lei 7.716/1989.", gab:"Errado", com:"Os efeitos do art. 16 não são automáticos: precisam ser declarados motivadamente na sentença (art. 18)." },
+  { tipo:"ce", enun:"A majorante do art. 20-B, aplicável ao funcionário público no exercício das funções, vale para todos os crimes previstos na lei.", gab:"Errado", com:"O art. 20-B aplica-se apenas aos arts. 2º-A e 20." },
+  { tipo:"ce", enun:"Recusar matrícula de aluno em escola privada por motivo de cor é crime punido com reclusão de 3 a 5 anos, aumentada de 1/3 se a vítima for menor de 18 anos.", gab:"Certo", com:"É o art. 6º e seu parágrafo único." },
+  { tipo:"caso", enun:"Durante um jogo, um torcedor grita, por meio de megafone, ofensas racistas contra uma etnia, incitando a discriminação. Qual o enquadramento?", com:"Art. 20, § 2º-A: contexto de atividade esportiva aberta ao público. Reclusão de 2 a 5 anos, mais proibição de frequentar esses locais por 3 anos." }],
+resumo:[
+  "A lei pune a discriminação ou o preconceito de <b>raça, cor, etnia, religião ou procedência nacional</b>. Os crimes são dolosos e de ação pública incondicionada.",
+  "Racismo é <b>inafiançável e imprescritível</b>. A <b>injúria racial</b> (art. 2º-A) também, e tem pena de 2 a 5 anos, aumentada de metade em concurso de pessoas.",
+  "Art. 20: caput de 1 a 3 anos; suástica, internet e mídia, e eventos públicos sobem para 2 a 5 anos.",
+  "Crimes de acesso: cargo e emprego, 2 a 5 anos; escola e hotel, 3 a 5; comércio, bares, clubes, salões, edifícios e transporte, 1 a 3; Forças Armadas e casamento, 2 a 4.",
+  "Efeitos da condenação (perda do cargo, suspensão do estabelecimento por até 3 meses) <b>não são automáticos</b>.",
+  "Arts. 20-A e 20-B aumentam de 1/3 até a metade. O 20-B só atinge os arts. 2º-A e 20.",
+  "A vítima deve estar acompanhada de advogado ou defensor público em todos os atos (art. 20-D).",
+  "Homofobia e transfobia entram na lei por decisão do STF (ADO 26), não por texto legal."],
+checklist:[
+  "Motivações abrangidas pela lei e o caráter doloso dos crimes",
+  "Diferença entre racismo e injúria racial e por que ambos são imprescritíveis",
+  "Pena e majorante do art. 2º-A",
+  "Penas do art. 20 e de cada parágrafo",
+  "Penas dos crimes de acesso, em três blocos (1 a 3, 2 a 5, 3 a 5)",
+  "Exigência de local aberto ao público nos arts. 8º, 9º, 11 e 12",
+  "Efeitos da condenação e por que não são automáticos",
+  "Majorantes dos arts. 20-A e 20-B e seus alcances",
+  "Papel da vítima assistida por advogado (art. 20-D)",
+  "O que decidiu o STF na ADO 26"],
 questoes:[]
 };
 })();

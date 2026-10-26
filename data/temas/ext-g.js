@@ -145,6 +145,58 @@ cards:[
 { id:"ct19", tipo:"distincao", sec:"crimes", f:"Como deve ser a pena restritiva substitutiva nos crimes dos arts. 302 a 312?",
   v:"Prestação de serviço à comunidade <b>ligada a resgate, atendimento e recuperação de vítimas de trânsito</b> (art. 312-A).", lei:["l9503a312a"] }
 ],
+importancia:{ nivel:5,
+  texto:"Crimes de trânsito caem em quase toda prova de legislação extravagante. A banca testa a diferença entre crimes culposos e de perigo, as exceções aos benefícios da Lei 9.099 e as penas dos arts. 302, 303, 306 e 308.",
+  decore:[
+    ["Crimes de dano","só os culposos dos <b>arts. 302 e 303</b>"],
+    ["Art. 302 (homicídio culposo)","detenção de <b>2 a 4 anos</b> + suspensão/proibição"],
+    ["Art. 302, § 1º (majorantes)","<b>+ 1/3 à metade</b>"],
+    ["Art. 302, § 3º (embriaguez)","<b>reclusão de 5 a 8 anos</b>"],
+    ["Art. 303 (lesão culposa)","detenção de <b>6 meses a 2 anos</b>; § 2º (embriaguez e lesão grave): <b>reclusão de 2 a 5 anos</b>"],
+    ["Art. 306 (embriaguez ao volante)","detenção de <b>6 meses a 3 anos</b>"],
+    ["Art. 308 (racha)","<b>6 meses a 3 anos</b>; lesão grave: <b>3 a 6 anos</b>; morte: <b>5 a 10 anos</b>"],
+    ["Suspensão ou proibição de dirigir","<b>2 meses a 5 anos</b>; entrega da CNH em <b>48 horas</b>"],
+    ["Exceções ao JECRIM (art. 291, § 1º)","álcool, racha, mais de <b>50 km/h</b> acima do limite"],
+    ["Arts. 304, 305, 309, 310, 311 e 312","<b>6 meses a 1 ano</b> ou multa"]],
+  macetes:[
+    ["Só dois são culposos","Arts. 302 e 303 são culposos e de dano. Do 304 ao 312, dolosos e de perigo."],
+    ["Álcool tira o benefício","Embriaguez, racha e mais de 50 km/h afastam composição, transação e exigência de representação na lesão culposa."],
+    ["CNH vencida: 30 dias","Só há crime do art. 309 se vencida há mais de 30 dias e gerando perigo de dano. Esquecer o documento é infração administrativa."]] },
+comparativo:{ titulo:"Qualificado × majorado no homicídio culposo de trânsito", head:["Qualificado por embriaguez (art. 302, § 3º)","Majorado (art. 302, § 1º)"], rows:[
+  ["<b>O que faz:</b> cria nova faixa de pena, de reclusão de 5 a 8 anos","<b>O que faz:</b> aumenta de 1/3 à metade a pena do caput (detenção de 2 a 4 anos)"],
+  ["<b>Gatilho:</b> condutor sob influência de álcool ou substância psicoativa que determine dependência","<b>Gatilho:</b> sem CNH ou PPD; em faixa de pedestres ou calçada; deixar de prestar socorro quando possível; transporte de passageiros em atividade profissional"],
+  ["<b>Natureza:</b> condição pessoal do condutor, ligada ao motivo do risco","<b>Natureza:</b> circunstância do fato e do agente, aplicada na terceira fase"],
+  ["<b>Efeito processual:</b> afasta os benefícios da Lei 9.099 na lesão culposa (art. 291, § 1º)","<b>Efeito processual:</b> a pena continua sendo de detenção"],
+  ["<b>Embriaguez sozinha:</b> não prova dolo eventual (STJ); sem outros elementos, segue culposo","<b>Omissão de socorro:</b> a majorante vale só no culposo; fora dele, aplica-se o art. 304"]]},
+prova:[
+  { tipo:"ce", enun:"No CTB, são crimes de dano apenas o homicídio culposo e a lesão corporal culposa na direção de veículo automotor; os demais, dos arts. 304 a 312, são dolosos e de perigo.", gab:"Certo", com:"Só os arts. 302 e 303 são culposos e de dano." },
+  { tipo:"ce", enun:"Na lesão corporal culposa de trânsito, é cabível a transação penal mesmo quando o condutor trafegava a 60 km/h acima da velocidade máxima da via.", gab:"Errado", com:"O excesso superior a 50 km/h afasta os benefícios da Lei 9.099 (art. 291, § 1º)." },
+  { tipo:"ce", enun:"Segundo o STJ, a embriaguez ao volante, por si só, implica o reconhecimento de dolo eventual no homicídio de trânsito.", gab:"Errado", com:"É necessário que outros elementos revelem a aceitação do resultado morte." },
+  { tipo:"ce", enun:"A suspensão ou a proibição de obter permissão ou habilitação para dirigir pode durar de dois meses a cinco anos.", gab:"Certo", com:"Art. 293." },
+  { tipo:"ce", enun:"Quem presta pronto e integral socorro à vítima de acidente de trânsito não sofre prisão em flagrante nem se lhe exige fiança.", gab:"Certo", com:"Art. 301." },
+  { tipo:"caso", enun:"Maria, habilitada, esqueceu a CNH em casa e foi parada em blitz, sem ter causado perigo a ninguém. Responde pelo art. 309?", com:"Não. O art. 309 exige direção sem habilitação gerando perigo de dano. Esquecer o documento é infração administrativa." }],
+resumo:[
+  "A parte penal vai dos <b>arts. 291 a 312-A</b>. Os crimes de dano são só os culposos dos arts. 302 e 303.",
+  "Na lesão culposa valem composição, transação e representação, <b>exceto</b> com álcool, racha ou mais de 50 km/h acima do limite.",
+  "Suspensão ou proibição de dirigir: 2 meses a 5 anos, com entrega da CNH em 48 horas. A cautelar pode ser decretada em qualquer fase.",
+  "<b>Art. 302</b>: detenção de 2 a 4 anos, com aumento de 1/3 à metade; com álcool, reclusão de 5 a 8 anos. <b>Art. 303</b>: 6 meses a 2 anos; com álcool e lesão grave, reclusão de 2 a 5 anos.",
+  "Embriaguez isolada não prova dolo eventual (STJ).",
+  "Art. 306: 6 meses a 3 anos, com prova por vários meios e direito à contraprova. Art. 308 (racha): resultados lesão grave e morte são preterdolosos.",
+  "Arts. 304, 305, 309, 310, 311 e 312: 6 meses a 1 ano ou multa. O art. 310 é de perigo abstrato.",
+  "Quem socorre de imediato e integralmente não é preso em flagrante. Penas restritivas nos arts. 302 a 312 envolvem serviço ligado ao atendimento de vítimas de trânsito (art. 312-A)."],
+checklist:[
+  "Diferença entre crimes de dano (culposos) e de perigo (dolosos)",
+  "Exceções ao JECRIM na lesão culposa (art. 291, § 1º)",
+  "Prazo da suspensão ou proibição e a regra das 48 horas",
+  "Agravantes do art. 298",
+  "Multa reparatória e seu limite",
+  "Penas dos arts. 302 e 303 e suas formas qualificadas",
+  "Majorantes do § 1º do art. 302",
+  "Dolo eventual e embriaguez ao volante",
+  "Penas e provas do art. 306",
+  "Racha e os resultados preterdolosos do art. 308",
+  "Requisitos do art. 309 e CNH vencida há mais de 30 dias",
+  "Efeito do socorro sobre flagrante e fiança"],
 questoes:[]
 };
 })();

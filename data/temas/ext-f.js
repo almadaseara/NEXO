@@ -168,6 +168,57 @@ cards:[
 { id:"ab25", tipo:"caso", sec:"investigacao", f:"Responsável pela investigação declara em rede social a culpa do suspeito antes do fim das apurações.",
   v:"<b>Art. 38</b>: antecipar a atribuição de culpa antes de concluídas as apurações e formalizada a acusação (6 meses a 2 anos).", lei:["l13869a36"] }
 ],
+importancia:{ nivel:5,
+  texto:"Lei muito cobrada para carreiras policiais, porque o servidor é o sujeito ativo. A banca mistura o dolo específico, as exceções (flagrante, hermenêutica) e as duas faixas de pena dos arts. 9º a 38.",
+  decore:[
+    ["Sujeito ativo","<b>agente público</b>, ainda que transitório ou sem remuneração"],
+    ["Dolo específico (art. 1º, § 1º)","prejudicar outrem, beneficiar a si ou a terceiro, ou <b>capricho ou satisfação pessoal</b>"],
+    ["Ação penal","<b>pública incondicionada</b>; privada subsidiária em <b>6 meses</b>"],
+    ["Inabilitação","<b>1 a 5 anos</b>, exige reincidência"],
+    ["Suspensão do cargo (art. 5º)","<b>1 a 6 meses</b>, com perda de vencimentos"],
+    ["Crime exclusivo de magistrado","<b>art. 9º</b> (1 a 4 anos)"],
+    ["Nota de culpa","<b>24 horas</b> (art. 12)"],
+    ["Interrogatório do preso","vedado no <b>repouso noturno</b> (art. 18)"],
+    ["Mandado de busca domiciliar","não cumprir entre <b>21h e 5h</b> (art. 22, § 1º, III)"],
+    ["Procedimento (art. 39)","<b>CPP e Lei 9.099/1995</b>, no que couber"]],
+  macetes:[
+    ["Sem finalidade, sem crime","Não basta a ilegalidade: precisa de dolo específico (prejudicar, beneficiar ou capricho)."],
+    ["Dois pares de pena","Os crimes giram em 1 a 4 anos (mais graves) ou 6 meses a 2 anos. Decore o par de cada artigo."],
+    ["Hermenêutica não é crime","Divergência na interpretação da lei ou na avaliação de fatos e provas não configura abuso."]] },
+comparativo:{ titulo:"Crimes de 1 a 4 anos × crimes de 6 meses a 2 anos", head:["Detenção de 1 a 4 anos e multa","Detenção de 6 meses a 2 anos e multa"], rows:[
+  ["<b>Prisão:</b> art. 9º (privação de liberdade ilegal, só juiz) e art. 21 (presos de sexos diferentes na mesma cela)","<b>Prisão:</b> art. 12 (falta de comunicação, nota de culpa em 24 horas, alvará de soltura) e art. 18 (interrogatório em repouso noturno)"],
+  ["<b>Condução e constrangimento:</b> arts. 10, 13 e 15","<b>Identificação e advogado:</b> art. 16 (identificar-se ao preso) e art. 20 (entrevista com o advogado)"],
+  ["<b>Domicílio e prova:</b> art. 22 (invasão), art. 23 (inovação artificiosa), art. 25 (prova ilícita)","<b>Investigação sem indício:</b> art. 27 (procedimento sem qualquer indício)"],
+  ["<b>Persecução:</b> art. 30 (sem justa causa ou contra quem sabe inocente) e art. 28 (divulgar gravação)","<b>Andamento:</b> art. 31 (estender a investigação), art. 32 (negar acesso aos autos), art. 37 (demora na vista)"],
+  ["<b>Patrimônio:</b> art. 36 (indisponibilidade exacerbada)","<b>Exigências e culpa antecipada:</b> art. 33 (exigência sem amparo legal) e art. 38 (atribuir culpa antes da acusação)"]]},
+prova:[
+  { tipo:"ce", enun:"Os crimes de abuso de autoridade exigem a finalidade específica de prejudicar outrem, beneficiar a si mesmo ou a terceiro, ou agir por mero capricho ou satisfação pessoal.", gab:"Certo", com:"É o dolo específico do art. 1º, § 1º." },
+  { tipo:"ce", enun:"A divergência na interpretação da lei ou na avaliação de fatos e provas configura, por si só, abuso de autoridade.", gab:"Errado", com:"Não há crime de hermenêutica (art. 1º, § 2º)." },
+  { tipo:"ce", enun:"A inabilitação para o exercício de cargo e a perda do cargo são efeitos automáticos da condenação por abuso de autoridade.", gab:"Errado", com:"Exigem reincidência e declaração motivada na sentença (art. 4º)." },
+  { tipo:"ce", enun:"O delegado de polícia que decreta prisão manifestamente ilegal comete o crime do art. 9º da Lei 13.869/2019.", gab:"Errado", com:"O art. 9º é crime próprio de autoridade judiciária." },
+  { tipo:"ce", enun:"Cumprir mandado de busca e apreensão domiciliar entre 21h e 5h configura conduta equiparada à invasão de domicílio prevista na Lei de Abuso de Autoridade.", gab:"Certo", com:"É o art. 22, § 1º, III." },
+  { tipo:"caso", enun:"Policial entra em residência, sem mandado, ao ouvir gritos de socorro vindos de dentro. Há abuso de autoridade?", com:"Não. Socorro, flagrante com fundados indícios e desastre excluem o crime (art. 22, § 2º)." }],
+resumo:[
+  "Os crimes são <b>próprios</b>: só o agente público, ainda que transitório ou sem remuneração, de qualquer Poder.",
+  "Exige-se <b>dolo específico</b>: prejudicar, beneficiar a si ou a terceiro, ou capricho. Divergência de interpretação não é crime.",
+  "Ação <b>pública incondicionada</b>; cabe ação privada subsidiária em 6 meses, sem extinguir a punibilidade.",
+  "Efeitos: certeza da indenização; inabilitação de 1 a 5 anos e perda do cargo, esses dois só na reincidência e com declaração motivada.",
+  "Penas restritivas: prestação de serviços e suspensão do cargo de 1 a 6 meses, com perda de vencimentos.",
+  "Instâncias independentes, salvo inexistência do fato, negativa de autoria ou excludente de ilicitude reconhecidos no juízo criminal.",
+  "Prisão e preso: art. 9º só de juiz; nota de culpa em 24 horas; sem interrogatório noturno; sem celas mistas.",
+  "Domicílio e investigação: sem mandado fora de socorro, flagrante ou desastre; sem busca entre 21h e 5h; prova manifestamente ilícita e persecução sem justa causa são crimes."],
+checklist:[
+  "Quem pode ser sujeito ativo e o conceito de agente público",
+  "O dolo específico e a ausência de crime de hermenêutica",
+  "Natureza da ação penal e prazo da privada subsidiária",
+  "Efeitos da condenação e o que exige reincidência",
+  "Relação entre as esferas criminal, civil e administrativa",
+  "Crimes ligados à prisão: arts. 9º, 10, 12, 13 e 15",
+  "Interrogatório noturno e identificação na prisão",
+  "Direitos do advogado (art. 20)",
+  "Invasão de domicílio, horário do mandado e exceções",
+  "Prova ilícita, procedimento sem indício e persecução sem justa causa",
+  "Violência institucional e suas majorantes (art. 15-A)"],
 questoes:[]
 };
 })();

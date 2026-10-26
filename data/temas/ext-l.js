@@ -82,6 +82,56 @@ cards:[
 { id:"lc15", tipo:"caso", sec:"especie", f:"Médico sabe de crime de ação penal privada e não comunica. Art. 66?", v:"<b>Fato atípico</b>: o art. 66 só cobre crime de ação pública incondicionada; sujeito ativo é servidor público ou profissional de saúde (sem expor o cliente).", lei:["lcpa66"] },
 { id:"lc16", tipo:"distincao", sec:"especie", f:"Recusar dados × declarar falso (art. 68)?", v:"Recusar: <b>multa</b>. Declarar inverídico: prisão simples de 1 a 6 meses e multa, se não houver infração mais grave.", lei:["lcpa66"] }
 ],
+importancia:{ nivel:4,
+  texto:"A LCP cai quase sempre em pegadinhas de parte geral (tentativa, competência, penas) e na dúvida sobre quais contravenções ainda vigoram depois do Estatuto do Desarmamento e do CTB.",
+  decore:[
+    ["Tentativa de contravenção","<b>não é punível</b> (art. 4º)"],
+    ["Penas principais","<b>prisão simples</b> e <b>multa</b>"],
+    ["Prisão simples","máximo de <b>5 anos</b>, regime aberto ou semiaberto"],
+    ["Ação penal","pública <b>incondicionada</b> (art. 17)"],
+    ["Competência","<b>Justiça estadual</b>, mesmo com interesse da União"],
+    ["Vias de fato (art. 21)","<b>15 dias a 3 meses</b> ou multa; idoso <b>+1/3 até 1/2</b>; mulher por razão do sexo feminino <b>em triplo</b>"],
+    ["Jogo de azar (art. 50)","<b>3 meses a 1 ano</b> e multa; apostador e ponteiro só <b>multa</b>"],
+    ["Perturbação do sossego (art. 42)","<b>15 dias a 3 meses</b> ou multa"],
+    ["Fingir-se funcionário público (art. 45)","<b>1 a 3 meses</b> ou multa"],
+    ["Declaração falsa de identidade (art. 68, p.u.)","<b>1 a 6 meses</b> e multa"]],
+  macetes:[
+    ["Contravenção não tem “ão” de reclusão","Nunca há reclusão nem detenção: só prisão simples e multa."],
+    ["Sem tentativa, sem extradição","Tentativa não é punível, e a contravenção não admite extradição; só vale no território nacional."],
+    ["Regra de reincidência","Qualquer crime antes (Brasil ou exterior) vale; contravenção antes só vale se for no Brasil; contravenção antes de crime não gera reincidência."] ] },
+comparativo:{ titulo:"Crime × contravenção", head:["Crime","Contravenção"], rows:[
+  ["<b>Pena:</b> reclusão ou detenção, e multa","<b>Pena:</b> prisão simples e multa"],
+  ["<b>Tentativa:</b> punível (CP, art. 14)","<b>Tentativa:</b> não punível (LCP, art. 4º)"],
+  ["<b>Ação penal:</b> pública (condicionada ou incondicionada) ou privada","<b>Ação penal:</b> sempre pública incondicionada (art. 17)"],
+  ["<b>Extraterritorialidade:</b> a lei pode alcançar fatos no exterior","<b>Extraterritorialidade:</b> só se aplica no território nacional (art. 2º); não cabe extradição"],
+  ["<b>Competência:</b> estadual ou federal, conforme a CF","<b>Competência:</b> Justiça estadual, mesmo se atingir bem ou interesse da União (salvo foro do autor)"],
+  ["<b>Gravidade:</b> menor ou maior potencial ofensivo","<b>Gravidade:</b> sempre infração de menor potencial ofensivo (Lei 9.099/95)"]]},
+prova:[
+  { tipo:"ce", enun:"A tentativa de contravenção penal é punível com a pena da contravenção consumada diminuída de 1/3 a 2/3.", gab:"Errado", com:"A tentativa de contravenção não é punível (art. 4º)." },
+  { tipo:"ce", enun:"Contravenção penal praticada em detrimento de bem da União é julgada pela Justiça Federal.", gab:"Errado", com:"A CF, art. 109, não prevê contravenções. A competência é da Justiça estadual, salvo foro especial do autor." },
+  { tipo:"ce", enun:"Para fins de reincidência na LCP, a condenação anterior por contravenção cometida no exterior produz o mesmo efeito da condenação por crime.", gab:"Errado", com:"Condenação no exterior só vale se for por crime. Contravenção só gera reincidência se praticada no Brasil (art. 7º)." },
+  { tipo:"ce", enun:"A contravenção do art. 47 (exercício ilegal de profissão) alcança qualquer atividade econômica exercida sem registro, ainda que a lei não a regulamente.", gab:"Errado", com:"Só há contravenção se a profissão ou atividade for regulamentada; fora disso o fato é atípico." },
+  { tipo:"caso", enun:"Um homem dá um tapa em sua companheira, sem causar lesão, por razões da condição do sexo feminino. Qual a infração e a pena?", com:"Vias de fato (art. 21), se o fato não constituir crime. Como é contra a mulher por razões do sexo feminino (art. 121-A, §1º do CP), a pena é aplicada em triplo (§2º, incluído em 2024)." },
+  { tipo:"caso", enun:"Um médico toma conhecimento, no exercício da profissão, de crime de ação penal pública condicionada à representação e não comunica à autoridade. Há a contravenção do art. 66?", com:"Não. O art. 66 só cobre crime de ação pública que não dependa de representação, e a comunicação não pode expor o cliente a procedimento criminal." }],
+resumo:[
+  "Infração penal é gênero; <b>crime</b> e <b>contravenção</b> são espécies, e toda contravenção é de <b>menor potencial ofensivo</b>.",
+  "A <b>tentativa</b> de contravenção <b>não é punível</b>; a lei brasileira só se aplica a fato no <b>território nacional</b>.",
+  "As penas principais são <b>prisão simples</b> (máximo de 5 anos, regime aberto ou semiaberto) e <b>multa</b>.",
+  "A ação penal é sempre <b>pública incondicionada</b> e a competência é da <b>Justiça estadual</b>.",
+  "<b>Reincidência</b>: contravenção após crime (Brasil ou exterior) ou após contravenção no Brasil; contravenção seguida de crime não gera reincidência.",
+  "Vários artigos foram <b>revogados ou derrogados</b>: arma de fogo (Estatuto do Desarmamento), veículo sem habilitação (CTB), crueldade com animais (Lei 9.605) e importunação (CP, art. 215-A).",
+  "A forma majorada do <b>art. 21</b> (vias de fato): +1/3 a 1/2 contra maior de 60 anos e pena <b>em triplo</b> contra a mulher por razões do sexo feminino. A contravenção é subsidiária: havendo crime, ele absorve.",
+  "Em <b>jogo de azar</b> o organizador responde com prisão simples e multa; o apostador, só com multa."],
+checklist:[
+  "Diferenciar crime e contravenção em pena, tentativa, ação penal, extradição e competência.",
+  "Citar as penas principais e os limites da prisão simples.",
+  "Aplicar a regra de reincidência do art. 7º nos quatro cenários.",
+  "Explicar por que contravenção contra a União é julgada na Justiça estadual.",
+  "Dizer o que sobrou dos arts. 28, 32 e 34 depois do Estatuto do Desarmamento e do CTB.",
+  "Explicar as majorações do art. 21 e seu caráter subsidiário.",
+  "Saber que o art. 42 exige perturbação de número considerável de pessoas (entendimento do STF).",
+  "Distinguir recusar dados de identidade (multa) de declarar falso (prisão simples e multa).",
+  "Dizer que o art. 47 só alcança profissão regulamentada e que o art. 66 só cobre crime de ação pública incondicionada."],
 questoes:[]
 };
 })();

@@ -46,6 +46,51 @@ cards:[
 { id:"pd9", tipo:"ce", sec:"crimes", f:"(C/E) O art. 91 exige finalidade especial de obter vantagem indevida.", v:"<b>Certo.</b> Reter ou utilizar cartão, meio eletrônico ou documento <b>com o fim de obter vantagem indevida</b> para si ou para outrem.", lei:["l13146a91"] },
 { id:"pd10", tipo:"caso", sec:"crimes", f:"Familiar guarda o cartão do benefício da pessoa com deficiência 'para ajudar' e faz compras para si. Que crime?", v:"Art. 91 (reter/utilizar cartão com fim de vantagem indevida); se for tutor ou curador, +1/3. Se se apropriou dos valores, pode haver também o art. 89, conforme o caso.", lei:["l13146a91","l13146a89"] }
 ],
+importancia:{ nivel:4,
+  texto:"Os quatro crimes do Estatuto da Pessoa com Deficiência são cobrados quase sempre por pena, natureza (reclusão ou detenção) e causas de aumento. A banca troca números e o fim especial do art. 91.",
+  decore:[
+    ["Art. 88 (discriminação)","reclusão de <b>1 a 3 anos</b>, e multa"],
+    ["Art. 88, § 1º","<b>+ 1/3</b> se a vítima está sob cuidado e responsabilidade do agente"],
+    ["Art. 88, § 2º (meios de comunicação)","reclusão de <b>2 a 5 anos</b>, e multa"],
+    ["Art. 89 (apropriação de rendimentos)","reclusão de <b>1 a 4 anos</b>, e multa; <b>+ 1/3</b> (tutor, curador, ofício ou profissão)"],
+    ["Art. 90 (abandono)","reclusão de <b>6 meses a 3 anos</b>, e multa; sem aumento"],
+    ["Art. 91 (retenção de cartão ou documento)","<b>detenção</b> de <b>6 meses a 2 anos</b>, e multa; <b>+ 1/3</b> (tutor ou curador)"],
+    ["Única pena de detenção","<b>art. 91</b>"],
+    ["Art. 88, § 3º","medidas cautelares até <b>antes do inquérito</b>, ouvido o MP ou a pedido dele"],
+    ["Art. 88, § 4º","efeito da condenação: <b>destruição</b> do material apreendido"]],
+  macetes:[
+    ["Reclusão, reclusão, reclusão, detenção","Nos arts. 88 a 91 só o último (art. 91) é detenção. Os demais são reclusão."],
+    ["Só o art. 90 não tem aumento de 1/3","Os arts. 88, 89 e 91 têm aumento de 1/3. O abandono (art. 90) não tem."],
+    ["Art. 91 é crime de intenção","Reter ou usar cartão ou documento só é crime com o fim de obter vantagem indevida."]] },
+comparativo:{ titulo:"Art. 89 × art. 91", head:["Art. 89 (apropriação ou desvio)","Art. 91 (retenção ou uso de cartão e documento)"], rows:[
+  ["<b>Conduta:</b> apropriar-se de ou desviar bens, proventos, pensão, benefícios, remuneração ou rendimento","<b>Conduta:</b> reter ou utilizar cartão magnético, meio eletrônico ou documento destinado a receber benefícios ou operar finanças"],
+  ["<b>Pena:</b> reclusão de 1 a 4 anos, e multa","<b>Pena:</b> detenção de 6 meses a 2 anos, e multa"],
+  ["<b>Elemento especial:</b> não exige fim específico no texto","<b>Elemento especial:</b> exige o fim de obter vantagem indevida para si ou para outrem"],
+  ["<b>Aumento de 1/3:</b> tutor, curador, síndico, liquidatário, inventariante, testamenteiro, depositário judicial, ou quem agiu em razão de ofício ou profissão","<b>Aumento de 1/3:</b> apenas tutor ou curador"],
+  ["<b>Objeto:</b> o patrimônio e os rendimentos em si","<b>Objeto:</b> o instrumento de acesso aos rendimentos (cartão, meio eletrônico, documento)"]]},
+prova:[
+  { tipo:"ce", enun:"Praticar, induzir ou incitar discriminação de pessoa em razão de sua deficiência é crime punido com reclusão de 1 a 3 anos, e multa.", gab:"Certo", com:"É a pena do caput do art. 88 da Lei 13.146/2015." },
+  { tipo:"ce", enun:"Se a discriminação é praticada por meio de comunicação social ou de publicação de qualquer natureza, a pena passa a ser de reclusão de 1 a 3 anos, aumentada de 1/3.", gab:"Errado", com:"O § 2º do art. 88 prevê pena própria: reclusão de 2 a 5 anos, e multa. O aumento de 1/3 do § 1º é outra hipótese (vítima sob cuidado e responsabilidade do agente)." },
+  { tipo:"ce", enun:"Na hipótese de discriminação por meio de comunicação social, o juiz pode determinar a busca e apreensão do material discriminatório mesmo antes do inquérito policial, ouvido o Ministério Público ou a pedido deste.", gab:"Certo", com:"É o art. 88, § 3º, que prevê também a interdição de mensagens ou páginas na internet, sob pena de desobediência." },
+  { tipo:"ce", enun:"Entre os crimes dos arts. 88 a 91 do Estatuto, apenas o de retenção de cartão ou documento (art. 91) é punido com detenção.", gab:"Certo", com:"Os arts. 88, 89 e 90 preveem reclusão. O art. 91 prevê detenção de 6 meses a 2 anos, e multa." },
+  { tipo:"caso", enun:"Marta, curadora de um idoso com deficiência, passou a sacar mensalmente o benefício dele e a usar o dinheiro em despesas próprias. Qual crime ela praticou e há causa de aumento?", com:"Art. 89 (apropriação de rendimentos de pessoa com deficiência), com aumento de 1/3 por ser curadora (parágrafo único, I)." },
+  { tipo:"caso", enun:"Um sobrinho guarda o cartão do benefício da tia com deficiência, dizendo ajudá-la, mas faz compras para si. Qual crime se configura?", com:"Art. 91, pois reteve ou utilizou o cartão com o fim de obter vantagem indevida. Se for tutor ou curador, há aumento de 1/3." }],
+resumo:[
+  "Os crimes do Estatuto da Pessoa com Deficiência estão nos <b>arts. 88 a 91</b> da Lei 13.146/2015.",
+  "<b>Art. 88:</b> discriminação, reclusão de <b>1 a 3 anos</b>, e multa; <b>+ 1/3</b> se a vítima está sob cuidado e responsabilidade do agente.",
+  "<b>Art. 88, § 2º:</b> por meio de comunicação social ou publicação, reclusão de <b>2 a 5 anos</b>, e multa. Nesse caso cabem medidas judiciais antes do inquérito e, na condenação, destruição do material.",
+  "<b>Art. 89:</b> apropriação ou desvio de rendimentos, reclusão de <b>1 a 4 anos</b>, e multa; <b>+ 1/3</b> para tutor, curador, síndico, liquidatário, inventariante, testamenteiro, depositário judicial ou quem agiu em razão de ofício ou profissão.",
+  "<b>Art. 90:</b> abandono em hospital, casa de saúde ou entidade de abrigamento, reclusão de <b>6 meses a 3 anos</b>, e multa. A mesma pena vale para quem não provê as necessidades básicas quando obrigado por lei ou mandado.",
+  "<b>Art. 91:</b> retenção ou uso de cartão, meio eletrônico ou documento <b>com o fim de vantagem indevida</b>, <b>detenção</b> de 6 meses a 2 anos, e multa; <b>+ 1/3</b> para tutor ou curador.",
+  "Só o art. 91 é <b>detenção</b>; só o art. 90 <b>não tem aumento</b> de 1/3."],
+checklist:[
+  "Dizer a pena de cada um dos quatro crimes (arts. 88 a 91).",
+  "Indicar qual dos crimes é punido com detenção.",
+  "Explicar o aumento de 1/3 do art. 88, § 1º, e a pena própria do § 2º.",
+  "Citar as medidas do art. 88, § 3º, e o efeito da condenação do § 4º.",
+  "Listar quem sofre o aumento de 1/3 no art. 89 e quem sofre no art. 91.",
+  "Explicar o fim especial exigido pelo art. 91.",
+  "Diferenciar o abandono em entidade da omissão de sustento, ambos no art. 90."],
 questoes:[]
 };
 })();

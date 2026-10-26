@@ -153,6 +153,55 @@ cards:[
 { id:"fp21", tipo:"numero", sec:"identidade", f:"Art. 311: pena do caput e do desmanche comercial (§3º).", v:"Caput: <b>3 a 6</b>. §3º: <b>4 a 8</b> (sem ANPP — mínimo de 4).", lei:["cp311"] },
 { id:"fp22", tipo:"caso", sec:"identidade", f:"Funcionário da banca vaza a prova uma semana antes; a candidata beneficiada é reprovada. Crime consumado?", v:"<b>Sim.</b> 311-A consuma-se com a divulgação; +1/3 se o autor for funcionário público.", lei:["cp311a"] }
 ],
+importancia:{ nivel:5,
+  texto:"Falsidade material × ideológica, documento público por equiparação, uso de documento falso e as Súmulas 17, 73, 522 e 546 do STJ são cobradas em quase toda prova; moeda falsa e o art. 311 completam o quadro.",
+  decore:[
+    ["Moeda falsa (289)","reclusão de <b>3 a 12 anos</b> e multa; privilegiada (§ 2º): detenção de 6 meses a 2 anos"],
+    ["Falsificação de documento público (297)","reclusão de <b>2 a 6 anos</b>; +1/6 se funcionário"],
+    ["Falsificação de documento particular (298)","reclusão de <b>1 a 5 anos</b>"],
+    ["Falsidade ideológica (299)","<b>1 a 5</b> (público) ou <b>1 a 3</b> (particular)"],
+    ["Falsa identidade (307)","detenção de <b>3 meses a 1 ano</b>; típica perante a polícia (<b>Súmula 522</b>)"],
+    ["Adulteração de sinal de veículo (311)","reclusão de <b>3 a 6 anos</b>; desmanche e comércio: <b>4 a 8</b>"],
+    ["Fraude em certames (311-A)","reclusão de <b>1 a 4 anos</b>; dano à administração: 2 a 6"],
+    ["Súmula 17 do STJ","falso absorvido pelo estelionato quando nele se exaure"],
+    ["Súmula 546 do STJ","competência pelo uso: órgão <b>a quem o documento foi apresentado</b>"],
+    ["Súmula 73 do STJ","falsificação grosseira usada em estelionato: <b>Justiça Estadual</b>"]],
+  macetes:[
+    ["Forma × conteúdo","Material: a forma é falsa. Ideológica: a forma é verdadeira, o conteúdo é falso."],
+    ["Particular pesa mais que ideológica","Falsificar documento particular (1 a 5) tem pena maior que a falsidade ideológica de documento particular (1 a 3)."],
+    ["Quem apresenta, define","No uso de documento falso, a competência segue o órgão a quem se apresentou (Súmula 546)."]] },
+comparativo:{ titulo:"Falsidade material × falsidade ideológica", head:["Falsidade material (297 e 298)","Falsidade ideológica (299)"], rows:[
+  ["<b>O que é falso:</b> a forma do documento (fabricado ou adulterado)","<b>O que é falso:</b> o conteúdo; a forma é verdadeira"],
+  ["<b>Conduta:</b> falsificar no todo ou em parte, ou alterar documento verdadeiro","<b>Conduta:</b> omitir declaração ou inserir declaração falsa ou diversa da que devia constar"],
+  ["<b>Dolo:</b> consciência da falsificação","<b>Dolo específico:</b> prejudicar direito, criar obrigação ou alterar a verdade sobre fato juridicamente relevante"],
+  ["<b>Exemplo:</b> funcionário da imobiliária muda o valor no formulário preenchido por outra pessoa","<b>Exemplo:</b> o próprio declarante informa renda que não tem"],
+  ["<b>Pena:</b> público 2 a 6; particular 1 a 5","<b>Pena:</b> público 1 a 5; particular 1 a 3"],
+  ["<b>Folha em branco:</b> material se foi obtida ilicitamente","<b>Folha em branco:</b> ideológica se preenchida de modo abusivo por quem a recebeu em confiança"]]},
+prova:[
+  { tipo:"ce", enun:"A falsificação grosseira, facilmente perceptível, não configura crime de moeda falsa, podendo configurar estelionato, de competência da Justiça Estadual.", gab:"Certo", com:"Súmula 73 do STJ: falta imitatio veri para o art. 289; o enganado responde por estelionato." },
+  { tipo:"ce", enun:"Atribuir-se falsa identidade perante a autoridade policial, para ocultar maus antecedentes, é fato atípico por força da autodefesa.", gab:"Errado", com:"Súmula 522 do STJ: a conduta é típica mesmo em situação de alegada autodefesa." },
+  { tipo:"ce", enun:"A competência para julgar o uso de documento falso é fixada pelo órgão que expediu o documento.", gab:"Errado", com:"Súmula 546 do STJ: depende da entidade ou órgão a quem o documento foi apresentado." },
+  { tipo:"ce", enun:"Cheque e nota promissória equiparam-se a documento público para a falsificação do art. 297, por serem títulos transmissíveis por endosso.", gab:"Certo", com:"Art. 297, § 2º: título ao portador ou transmissível por endosso é equiparado a documento público." },
+  { tipo:"ce", enun:"Quem falsifica um documento e depois o utiliza responde pelos crimes de falsificação e de uso, em concurso material.", gab:"Errado", com:"Prevalece que o uso pelo próprio falsário é pós-fato impunível, respondendo apenas pela falsificação." },
+  { tipo:"caso", enun:"Uma pessoa retira a placa traseira da própria motocicleta para evitar fiscalização eletrônica. Há crime?", com:"Sim. Desde a Lei 14.562/2023, o art. 311 pune também suprimir sinal identificador do veículo (reclusão de 3 a 6 anos)." }],
+resumo:[
+  "Moeda falsa (289): 3 a 12 anos; exige imitatio veri. Privilegiada para quem recebeu de boa-fé e restitui à circulação após descobrir.",
+  "Documento público (297) 2 a 6; particular (298) 1 a 5; cartão de crédito ou débito equipara-se a particular.",
+  "Rol do art. 297, § 2º é taxativo: paraestatal, título ao portador ou endossável, ações, livros mercantis e testamento particular.",
+  "Falsidade ideológica (299) exige fim de prejudicar direito, criar obrigação ou alterar a verdade juridicamente relevante.",
+  "Súmula 17: falso exaurido no estelionato é absorvido. Súmula 546: competência pelo órgão a quem o documento foi apresentado.",
+  "Falsa identidade (307) é típica perante a polícia (Súmula 522); com documento falso é o art. 304.",
+  "Art. 311: adulterar, remarcar ou suprimir sinal identificador, 3 a 6 anos; desmanche e comércio, 4 a 8.",
+  "Fraude em certames (311-A): 1 a 4 anos; consuma-se com a utilização ou divulgação indevida do conteúdo sigiloso."],
+checklist:[
+  "Diferenciar falsidade material e ideológica com exemplos",
+  "Listar os documentos equiparados a público (§ 2º do art. 297)",
+  "Aplicar as Súmulas 17, 73, 522 e 546 do STJ",
+  "Saber as penas de 2 a 6, 1 a 5 e 1 a 3",
+  "Explicar por que o uso pelo falsário é pós-fato impunível",
+  "Diferenciar falsa identidade (307), uso de documento falso (304) e uso de documento alheio (308)",
+  "Aplicar o art. 311 após a Lei 14.562/2023 (incluindo suprimir)",
+  "Reconhecer a fraude em certames e sua consumação"],
 questoes:[]
 };
 

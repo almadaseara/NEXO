@@ -101,6 +101,52 @@ cards:[
 { id:"in11", tipo:"caso", sec:"divisoes", f:"Ramo que discute ética, moral e bioética no exercício da medicina.", v:"<b>Medicina Legal Filosófica</b> (divisão histórica). A <b>doutrinária</b> fundamenta institutos jurídicos com conhecimento biológico.", lei:[] },
 { id:"in12", tipo:"caso", sec:"divisoes", f:"Em qual capítulo se estuda a pesquisa de reação vital nas lesões?", v:"<b>Tanatologia</b> (lesões intra vitam × post mortem).", lei:[] }
 ],
+importancia:{ nivel:3,
+  texto:"Abre a disciplina e rende questões de memória: quem disse o quê, datas e nomes da história e a classificação das divisões. É cobrança literal, a banca troca o autor, a data ou o termo.",
+  decore:[
+    ["Conceito de França","<b>medicina</b> a serviço das ciências jurídicas e sociais"],
+    ["Hélio Gomes","conhecimentos médicos <b>e paramédicos</b>: elaboração, interpretação e execução das leis"],
+    ["Pai da Medicina Legal","<b>Ambroise Paré</b> (1575); para muitos, <b>Zacchias</b>"],
+    ["Marco legislativo","<b>Carolina</b> (Carlos V), <b>1532</b>"],
+    ["Cadeiras no Brasil","RJ e BA, <b>1832</b>"],
+    ["Fase de transição","<b>Souza Lima</b>, RJ, <b>1877</b>"],
+    ["Fase de nacionalização","<b>Nina Rodrigues</b>, BA, <b>1895</b>"],
+    ["Fases de Oscar Freire","<b>três</b>: estrangeira, transição e nacionalização"],
+    ["Diceologia","<b>direitos</b> do médico (deontologia = deveres)"],
+    ["Perícia médica e exames médico-legais","privativos do médico (Lei 12.842/2013, art. 4º, XII)"]],
+  macetes:[
+    ["Diceologia tem \"D\" de direitos","Diceologia = direitos; deontologia = deveres. A banca troca os dois."],
+    ["Três fases, três lugares","Estrangeira (até 1877), transição (Rio, Souza Lima), nacionalização (Bahia, Nina Rodrigues)."],
+    ["Ciência x medicina","Para França, é a <b>medicina</b> a serviço do Direito. Se a assertiva disser \"ciência\", desconfie."]] },
+comparativo:{ titulo:"Divisão profissional × divisão doutrinária", head:["Divisão profissional","Divisão doutrinária"], rows:[
+  ["<b>Critério:</b> quem exerce a atividade","<b>Critério:</b> ramo do Direito a que serve"],
+  ["<b>Partes:</b> pericial, criminalística e antropologia médico-legal","<b>Partes:</b> penal, civil, canônica, trabalhista e administrativa"],
+  ["<b>Órgãos:</b> IML, Instituto de Criminalística e Instituto de Identificação","<b>Exemplos:</b> lesões e homicídio (penal); paternidade e capacidade (civil); infortunística (trabalho)"],
+  ["<b>Base legal:</b> peritos criminais, médico-legistas e odontolegistas (Lei 12.030/2009, art. 5º)","<b>Função:</b> fundamentar institutos jurídicos com conhecimento biológico"]]},
+prova:[
+  { tipo:"ce", enun:"Segundo França, a Medicina Legal é a ciência a serviço das ciências jurídicas e sociais.", gab:"Errado", com:"Para França é a medicina a serviço das ciências jurídicas e sociais. A troca de \"medicina\" por \"ciência\" é a pegadinha." },
+  { tipo:"ce", enun:"A diceologia médica estuda os deveres do médico, enquanto a deontologia trata dos seus direitos.", gab:"Errado", com:"É o inverso: deontologia estuda os deveres e diceologia os direitos do médico." },
+  { tipo:"ce", enun:"Na classificação de Oscar Freire, a fase de nacionalização da Medicina Legal brasileira tem como marco a atuação de Nina Rodrigues na Bahia.", gab:"Certo", com:"Nina Rodrigues assumiu a cátedra na Bahia em 1895 e nacionalizou a disciplina." },
+  { tipo:"ce", enun:"A realização de exames laboratoriais toxicológicos e genéticos é atividade privativa de médico.", gab:"Errado", com:"A Lei 12.842/2013, art. 4º, XII, reserva ao médico a perícia e os exames médico-legais, mas exceta os exames laboratoriais de análises clínicas, toxicológicas, genéticas e de biologia molecular." },
+  { tipo:"caso", enun:"Em qual capítulo da Medicina Legal especial se estuda a pesquisa de reação vital em lesões, para distinguir lesão em vida de lesão após a morte?", com:"Na tanatologia (lesões intra vitam e post mortem), e não na traumatologia nem na vitimologia." }],
+resumo:[
+  "A Medicina Legal é a <b>medicina</b> a serviço das ciências jurídicas e sociais (França); é ciência e arte.",
+  "Hélio Gomes: conhecimentos <b>médicos e paramédicos</b> que cooperam na elaboração, auxiliam na interpretação e colaboram na execução das leis.",
+  "Perícia médica e exames médico-legais são privativos de médico, exceto os exames laboratoriais de análises clínicas, toxicológicas, genéticas e de biologia molecular.",
+  "Marcos: Carolina (1532), Paré (1575), Leipzig (1650), Gomide (1814), cadeiras no RJ e na BA (1832), Souza Lima (1877), Nina Rodrigues (1895).",
+  "Oscar Freire divide a história brasileira em três fases: estrangeira, de transição e de nacionalização.",
+  "Divisão histórica: pericial, legislativa, doutrinária e filosófica. Profissional: pericial, criminalística e antropologia. Doutrinária: penal, civil, canônica, trabalhista e administrativa.",
+  "Didática: geral (deontologia e diceologia) e especial (antropologia, traumatologia, sexologia, tanatologia, toxicologia, asfixiologia, psiquiatria forense e outras).",
+  "Os peritos criminais são peritos criminais, médico-legistas e odontolegistas (Lei 12.030/2009, art. 5º)."],
+checklist:[
+  "Dizer o conceito de França e o de Hélio Gomes sem trocar \"medicina\" por \"ciência\".",
+  "Diferenciar deontologia (deveres) de diceologia (direitos).",
+  "Ordenar os marcos históricos mundiais e brasileiros.",
+  "Citar as três fases de Oscar Freire e o nome-chave de cada uma.",
+  "Explicar as divisões histórica, profissional, doutrinária e didática.",
+  "Dizer o que cada capítulo da Medicina Legal especial estuda.",
+  "Aplicar a exceção do ato médico para exames laboratoriais.",
+  "Relacionar a Medicina Legal aos ramos do Direito (penal, civil, trabalho, administrativo)."],
 questoes:[]
 };
 
@@ -251,6 +297,57 @@ cards:[
 { id:"pe19", tipo:"distincao", sec:"exames", f:"Elementos de segurança de 1º, 2º e 3º nível.", v:"<b>1º</b>: leigo, sem equipamento (marca-d'água, fio, registro coincidente). <b>2º</b>: equipamento simples (fibras luminescentes, microtexto). <b>3º</b>: perito e microscópio (nanotexto, tinta no infravermelho).", lei:["cpp174"] },
 { id:"pe20", tipo:"caso", sec:"exames", f:"Lei 15.295/2025: o perfil genético colhido do preso pode ser usado para estimar cor dos olhos e ancestralidade?", v:"<b>Não.</b> Uso exclusivo para identificação; <b>vedada a fenotipagem genética</b>.", lei:["l15295"] }
 ],
+importancia:{ nivel:5,
+  texto:"Núcleo de Medicina Legal e de Processo Penal em provas policiais: a banca cobra a letra do CPP (arts. 158 a 184), a cadeia de custódia e a distinção entre exame indireto e prova testemunhal.",
+  decore:[
+    ["Exame de corpo de delito","indispensável se há vestígio; <b>confissão não supre</b> (art. 158)"],
+    ["Perito oficial × não oficial","<b>1</b> oficial; na falta, <b>2</b> idôneos com curso superior (art. 159)"],
+    ["Laudo","prazo de <b>10 dias</b>, prorrogável a pedido dos peritos (art. 160)"],
+    ["Oitiva do perito em juízo","pedido com <b>10 dias</b> de antecedência (art. 159, § 5º)"],
+    ["Autópsia","pelo menos <b>6 horas</b> após o óbito (art. 162)"],
+    ["Exame complementar (art. 129, § 1º, I, CP)","logo que decorram <b>30 dias</b> do crime (art. 168, § 2º)"],
+    ["Cadeia de custódia","<b>10 etapas</b>, do reconhecimento ao descarte (arts. 158-A e 158-B)"],
+    ["Assistente técnico","atua após a admissão pelo juiz e <b>depois do laudo oficial</b>"],
+    ["Perícia que não pode ser negada","<b>exame de corpo de delito</b> (art. 184)"],
+    ["Perfil genético (Lei 15.295/2025)","reclusão em <b>regime inicial fechado</b>; vedada a fenotipagem"]],
+  macetes:[
+    ["R-I-F-C-A-T-R-P-A-D","Reconhecimento, Isolamento, Fixação, Coleta, Acondicionamento, Transporte, Recebimento, Processamento, Armazenamento, Descarte."],
+    ["Fixar é descrever, coletar é recolher","Fixação = descrição, foto, croqui. Coleta = recolher o vestígio. A banca inverte."],
+    ["Indireto tem laudo, suprimento tem testemunha","Se o perito escreveu laudo com dados verossímeis, é indireto. Se só depuseram testemunhas, é suprimento (art. 167)."],
+    ["6 horas é piso","A autópsia só antes das 6 horas se os sinais de morte forem evidentes e o perito declarar no auto."]] },
+comparativo:{ titulo:"Exame indireto × suprimento testemunhal", head:["Exame de corpo de delito indireto","Suprimento pela prova testemunhal (art. 167)"], rows:[
+  ["<b>Há laudo?</b> Sim, feito por perito","<b>Há laudo?</b> Não: é prova testemunhal, não perícia"],
+  ["<b>Base:</b> dados verossímeis (prontuário, atestado, fotos)","<b>Base:</b> depoimento de quem viu o vestígio"],
+  ["<b>Quando:</b> não é possível o exame direto, mas há registros do vestígio","<b>Quando:</b> desapareceram os vestígios"],
+  ["<b>Exemplo:</b> perito afirma que o atestado do médico particular é compatível com a lesão narrada","<b>Exemplo:</b> corpo nunca encontrado: materialidade do homicídio por testemunhas e outros elementos"],
+  ["<b>Falta do exame:</b> nulidade (art. 564, III, b)","<b>Falta do exame:</b> o art. 564, III, b ressalva o art. 167, logo não há nulidade"]]},
+prova:[
+  { tipo:"ce", enun:"Havendo vestígios da infração, a confissão do acusado pode suprir o exame de corpo de delito quando for corroborada em juízo.", gab:"Errado", com:"O art. 158 do CPP veda que a confissão supra o exame, sem exceção para confissão corroborada." },
+  { tipo:"ce", enun:"Na falta de perito oficial, o exame será realizado por duas pessoas idôneas, portadoras de diploma de curso superior, preferencialmente na área específica, que prestarão compromisso.", gab:"Certo", com:"É a redação do art. 159, §§ 1º e 2º, do CPP." },
+  { tipo:"ce", enun:"O assistente técnico acompanha a realização do exame pelo perito oficial e pode intervir durante a necropsia.", gab:"Errado", com:"O assistente técnico atua a partir da admissão pelo juiz e após a conclusão dos exames e a elaboração do laudo oficial (art. 159, § 4º)." },
+  { tipo:"ce", enun:"A quebra da cadeia de custódia gera, automaticamente, nulidade da prova, segundo a jurisprudência do STJ.", gab:"Errado", com:"Segundo a jurisprudência indicada no tema (HC 653.515/RJ), a inobservância dos arts. 158-A a 158-F não gera nulidade automática: o juiz afere a confiabilidade da prova pelos demais elementos." },
+  { tipo:"caso", enun:"Um parente da vítima entra em local de crime isolado e recolhe o celular dela antes da liberação pelo perito responsável. Qual a consequência?", com:"Fraude processual (CPP, art. 158-C, § 2º): é proibida a entrada em local isolado e a remoção de vestígios antes da liberação pelo perito." },
+  { tipo:"caso", enun:"O delegado entende desnecessário o exame de corpo de delito requerido pela defesa no inquérito. Pode negá-lo?", com:"Não. O art. 184 permite negar perícias desnecessárias, salvo o exame de corpo de delito." }],
+resumo:[
+  "Infração que deixa vestígios exige <b>exame de corpo de delito, direto ou indireto</b>; a confissão não o supre (art. 158).",
+  "Desaparecidos os vestígios, a <b>prova testemunhal</b> pode suprir a falta (art. 167); a falta do exame onde havia vestígio é <b>nulidade</b> (art. 564, III, b).",
+  "A cadeia de custódia vai do <b>reconhecimento ao descarte</b>, em <b>10 etapas</b>, e começa com a preservação do local.",
+  "Quem reconhece o vestígio fica responsável por sua preservação; entrar em local isolado ou remover vestígio antes da liberação pelo perito é <b>fraude processual</b>.",
+  "Perito oficial é <b>um</b>; peritos não oficiais são <b>dois</b>, com compromisso. O assistente técnico atua <b>depois do laudo oficial</b>.",
+  "Laudo em <b>10 dias</b>; o juiz <b>não fica adstrito ao laudo</b> (art. 182); divergência entre peritos leva a um terceiro (art. 180).",
+  "Autópsia pelo menos <b>6 horas</b> após o óbito, salvo sinais evidentes de morte; cadáveres são sempre fotografados na posição em que foram encontrados.",
+  "Exame complementar de lesão para o art. 129, § 1º, I, do CP: logo que decorram <b>30 dias</b>; sua falta pode ser suprida por testemunhas.",
+  "Perfil genético: reclusão em regime inicial fechado, coleta obrigatória, amostra só para identificação (vedada a fenotipagem)."],
+checklist:[
+  "Diferenciar exame direto, indireto e suprimento testemunhal.",
+  "Citar as 10 etapas da cadeia de custódia na ordem e definir fixação e coleta.",
+  "Dizer quantos peritos são necessários (oficial e não oficial) e quando atuam o assistente técnico e os quesitos.",
+  "Lembrar os prazos: laudo (10 dias), oitiva do perito (10 dias de antecedência), autópsia (6 horas) e exame complementar (30 dias).",
+  "Explicar por que o delegado não pode negar o exame de corpo de delito (art. 184).",
+  "Reconhecer a fraude processual do art. 158-C, § 2º.",
+  "Explicar o que fazer na divergência entre peritos (art. 180).",
+  "Apontar os elementos de segurança de 1º, 2º e 3º nível de um documento.",
+  "Descrever o perfil genético da Lei 15.295/2025 e a vedação à fenotipagem."],
 questoes:[]
 };
 
@@ -333,6 +430,54 @@ cards:[
 { id:"dc10", tipo:"caso", sec:"obito", f:"Psiquiatra do réu é arrolado como testemunha sobre o que ouviu na terapia. Deve depor?", v:"<b>É proibido de depor</b>, salvo se desobrigado pelo paciente <b>e</b> se quiser depor (CPP, art. 207).", lei:["cp154"] },
 { id:"dc11", tipo:"ce", sec:"obito", f:"Certo ou errado: a violação de segredo profissional (CP, 154) é de ação penal pública incondicionada.", v:"<b>Errado.</b> Somente se procede mediante <b>representação</b>.", lei:["cp154"] }
 ],
+importancia:{ nivel:4,
+  texto:"Cobrança frequente e literal: as partes do relatório e do parecer, a diferença entre auto e laudo, os crimes dos arts. 302 e 269 do CP e as regras de sigilo e de cremação.",
+  decore:[
+    ["Relatório médico-legal","<b>7 partes</b>; a mais importante é a <b>descrição</b>"],
+    ["Parecer","<b>4 partes</b>; a mais importante é a <b>discussão</b>"],
+    ["Auto × laudo","auto é <b>ditado</b> ao escrivão; laudo é <b>redigido</b> pelo perito"],
+    ["Atestado médico falso (CP, art. 302)","detenção de <b>1 mês a 1 ano</b>; com fim de lucro, também multa"],
+    ["Omissão de notificação compulsória (CP, art. 269)","detenção de <b>6 meses a 2 anos</b> e multa"],
+    ["Violação de segredo (CP, art. 154)","detenção de <b>3 meses a 1 ano</b> ou multa; ação por <b>representação</b>"],
+    ["Cremação (Lei 6.015, art. 77, § 2º)","atestado de <b>2 médicos ou 1 legista</b>; morte violenta exige <b>autorização judicial</b>"],
+    ["Morte violenta ou suspeita","declaração de óbito pelo <b>legista do IML</b>"],
+    ["Morte natural sem assistência","<b>Serviço de Verificação de Óbito</b>, onde houver"],
+    ["Guarda do prontuário (Lei 13.787/2018)","mínimo de <b>20 anos</b> a partir do último registro"]],
+  macetes:[
+    ["Auto é Ditado, Laudo é Livre","No auto o perito dita ao escrivão diante da autoridade; no laudo ele mesmo redige."],
+    ["Relatório descreve, parecer discute","Parte mais importante: descrição (relatório) e discussão (parecer)."],
+    ["Histórico = comemorativo = anamnese","Três nomes para a mesma parte do relatório."]] },
+comparativo:{ titulo:"Relatório (auto e laudo) × parecer", head:["Relatório médico-legal","Parecer"], rows:[
+  ["<b>Função:</b> responde à requisição da autoridade, descrevendo o que o perito viu","<b>Função:</b> opinião fundamentada de especialista sobre fato já periciado"],
+  ["<b>Tipo de perícia:</b> percipiendi","<b>Tipo de perícia:</b> deducendi"],
+  ["<b>Partes:</b> 7 (preâmbulo, quesitos, histórico, descrição, discussão, conclusão, respostas aos quesitos)","<b>Partes:</b> 4 (preâmbulo, exposição, discussão, conclusões)"],
+  ["<b>Parte mais importante:</b> descrição (visum et repertum)","<b>Parte mais importante:</b> discussão"],
+  ["<b>Formas:</b> auto (ditado ao escrivão) ou laudo (redigido pelos peritos)","<b>Quem costuma pedir:</b> as partes; raramente prevalece sobre o exame oficial"]]},
+prova:[
+  { tipo:"ce", enun:"O relatório médico-legal compõe-se de sete partes, sendo a descrição a mais importante, e o parecer, de quatro partes, sendo a discussão a mais importante.", gab:"Certo", com:"Relatório: preâmbulo, quesitos, histórico, descrição, discussão, conclusão e respostas aos quesitos. Parecer: preâmbulo, exposição, discussão e conclusões." },
+  { tipo:"ce", enun:"No auto, o perito redige pessoalmente o documento depois do exame; no laudo, o texto é ditado ao escrivão na presença da autoridade.", gab:"Errado", com:"Está invertido: o auto é ditado ao escrivão na presença da autoridade; o laudo é redigido pelos próprios peritos." },
+  { tipo:"ce", enun:"A notificação compulsória de doença pelo médico constitui violação do sigilo profissional, punível nos termos do art. 154 do Código Penal.", gab:"Errado", com:"A notificação compulsória é dever legal e, portanto, justa causa para revelar. Quem omite a notificação é que responde pelo art. 269 do CP." },
+  { tipo:"ce", enun:"A cremação de cadáver de vítima de morte violenta depende de autorização da autoridade judiciária, além do atestado de óbito firmado por dois médicos ou por um médico legista.", gab:"Certo", com:"Lei 6.015/1973, art. 77, § 2º." },
+  { tipo:"caso", enun:"Um médico entrega a um amigo atestado de 15 dias de repouso sem tê-lo examinado e sem cobrar. Há crime?", com:"Sim, o do art. 302 do CP (atestado falso por médico no exercício da profissão), com detenção de 1 mês a 1 ano. Se houvesse fim de lucro, aplicar-se-ia também multa." },
+  { tipo:"caso", enun:"O psiquiatra do réu é arrolado como testemunha para relatar o que ouviu em consultas. Deve depor?", com:"É proibido de depor, salvo se desobrigado pela parte interessada e quiser dar o testemunho (CPP, art. 207)." }],
+resumo:[
+  "Documentos médico-legais: notificações, atestados, relatórios (auto e laudo), pareceres, depoimentos orais e prontuários.",
+  "Atestado pode ser <b>oficioso</b> (particular), <b>administrativo</b> ou <b>judicial</b>; quanto ao conteúdo, idôneo, gracioso, imprudente ou falso.",
+  "Atestado falso por médico: <b>CP, art. 302</b>. Omitir notificação compulsória: <b>CP, art. 269</b>.",
+  "Relatório tem <b>7 partes</b> e a descrição é a mais importante; parecer tem <b>4 partes</b> e a discussão é a mais importante.",
+  "<b>Auto</b> é ditado ao escrivão; <b>laudo</b> é redigido pelo perito; relatório é perícia percipiendi e parecer é deducendi.",
+  "Sem declaração de óbito não há registro nem sepultamento; morte violenta ou suspeita vai ao IML e morte natural sem assistência, ao SVO.",
+  "Cremação: vontade em vida ou saúde pública, atestado de 2 médicos ou 1 legista e, em morte violenta, autorização judicial.",
+  "Segredo profissional: CP, art. 154 (ação por representação) e CPP, art. 207; o dever legal de notificar é justa causa."],
+checklist:[
+  "Listar as 7 partes do relatório e as 4 do parecer, com a parte mais importante de cada um.",
+  "Diferenciar auto de laudo e perícia percipiendi de deducendi.",
+  "Classificar atestados (oficioso, administrativo, judicial; idôneo, gracioso, imprudente, falso).",
+  "Aplicar os arts. 302 e 269 do CP com as respectivas penas.",
+  "Explicar por que a notificação compulsória não viola o sigilo.",
+  "Dizer quem declara o óbito em morte violenta e em morte natural sem assistência.",
+  "Citar os requisitos da cremação e a regra para morte violenta.",
+  "Explicar o art. 154 do CP e o art. 207 do CPP."],
 questoes:[]
 };
 
@@ -426,6 +571,56 @@ cards:[
 { id:"id13", tipo:"caso", sec:"criminal", f:"Preso em flagrante por estupro, com RG válido. Haverá identificação criminal com coleta de DNA?", v:"<b>Sim.</b> Crime contra a liberdade sexual está no art. 3º, VII; o art. 5º, §2º (Lei 15.295/2025), manda fazer a identificação com coleta de material biológico já no <b>flagrante</b>.", lei:["l12037a5","l12037a3"] },
 { id:"id12", tipo:"caso", sec:"criminal", f:"Defesa alega que o réu tinha 17 anos na data do fato, sem nenhum documento. Basta a palavra dele?", v:"<b>Não.</b> A menoridade exige <b>documento hábil</b> (Súmula 74/STJ); na falta, exame médico-legal de idade.", lei:["s74"], j:["stj-s74"] }
 ],
+importancia:{ nivel:4,
+  texto:"Tema de alta incidência em provas de perícia e de polícia judiciária: tipos fundamentais de Vucetich, requisitos dos métodos e hipóteses de identificação criminal, agora com a Lei 15.295/2025.",
+  decore:[
+    ["Requisitos do método","<b>unicidade, imutabilidade, perenidade, praticabilidade e classificabilidade</b>"],
+    ["Sistema adotado no Brasil","<b>datiloscópico de Vucetich</b> (desde 1903)"],
+    ["Papilas","surgem por volta do <b>6º mês</b> intrauterino"],
+    ["Arco","sem delta; polegar <b>A</b>, demais <b>1</b>"],
+    ["Presilha interna","delta à <b>direita</b>; polegar <b>I</b>, demais <b>2</b>"],
+    ["Presilha externa","delta à <b>esquerda</b>; polegar <b>E</b>, demais <b>3</b>"],
+    ["Verticilo","<b>dois</b> deltas; polegar <b>V</b>, demais <b>4</b>"],
+    ["Fórmula datiloscópica","mão direita = <b>série</b>; mão esquerda = <b>seção</b>; amputado = <b>0</b>; cicatriz = <b>X</b>"],
+    ["Identificação criminal","CF, art. 5º, LVIII; <b>Lei 12.037/2009, art. 3º</b>; novo inciso VII (Lei 15.295/2025)"],
+    ["Menoridade","prova por <b>documento hábil</b> (Súmula 74/STJ)"]],
+  macetes:[
+    ["Polegar em letra, resto em número","A, I, E, V para o polegar; 1, 2, 3, 4 para os outros dedos, na mesma ordem."],
+    ["Interna: delta à direita","Presilha interna tem o delta à direita do observador; externa, à esquerda."],
+    ["Direita em cima","Série (mão direita) é o numerador; seção (mão esquerda) é o denominador."],
+    ["Gêmeos idênticos","DNA nuclear igual, digitais diferentes."]] },
+comparativo:{ titulo:"Identificação médico-legal × policial ou judiciária", head:["Identificação médico-legal","Identificação policial ou judiciária"], rows:[
+  ["<b>Exige médico?</b> Sim, depende de conhecimento médico","<b>Exige médico?</b> Não"],
+  ["<b>Dados:</b> espécie, sexo, idade, estatura, ancestralidade, lesões e sinais individuais","<b>Dados:</b> papiloscopia, fotografia e assinalamento"],
+  ["<b>Aplicação típica:</b> cadáveres putrefeitos, carbonizados, ossadas e fragmentos","<b>Aplicação típica:</b> identificação civil e criminal de pessoas vivas"],
+  ["<b>Recursos decisivos:</b> odontologia legal e DNA","<b>Método central:</b> datiloscopia de Vucetich"],
+  ["<b>Sexo no esqueleto:</b> pelve (mais confiável), depois crânio","<b>Limite legal:</b> civilmente identificado não é submetido à identificação criminal, salvo hipóteses legais"]]},
+prova:[
+  { tipo:"ce", enun:"A bertillonagem, baseada em antropometria, foi abandonada depois do caso Will West e William West, em que duas pessoas de medidas quase idênticas foram distinguidas pelas impressões digitais.", gab:"Certo", com:"O caso (EUA, 1903) marcou o fim da antropometria como método de identificação." },
+  { tipo:"ce", enun:"No sistema de Vucetich, a presilha interna caracteriza-se por um delta à esquerda do observador e é simbolizada pela letra I no polegar.", gab:"Errado", com:"Na presilha interna o delta fica à direita do observador. O delta à esquerda caracteriza a presilha externa (E no polegar, 3 nos demais dedos)." },
+  { tipo:"ce", enun:"Gêmeos univitelinos possuem o mesmo DNA nuclear, mas impressões digitais diferentes.", gab:"Certo", com:"O DNA nuclear é igual; o desenho papilar se forma de modo individual." },
+  { tipo:"ce", enun:"Quem apresenta documento de identificação civil válido e sem rasura jamais pode ser submetido à identificação criminal.", gab:"Errado", com:"A CF, art. 5º, LVIII, ressalva as hipóteses legais, e o art. 3º da Lei 12.037/2009 prevê casos em que cabe identificação criminal mesmo com documento." },
+  { tipo:"ce", enun:"Para efeitos penais, a menoridade do réu pode ser provada por exame médico-legal de ossificação, independentemente da existência de documento.", gab:"Errado", com:"A Súmula 74/STJ exige prova por documento hábil. A estimativa médico-legal da idade é subsidiária, para quando falta documento." },
+  { tipo:"caso", enun:"Datilograma com um delta à esquerda do observador. Qual o tipo fundamental e qual o símbolo no polegar e nos demais dedos?", com:"Presilha externa: E no polegar e 3 nos demais dedos." }],
+resumo:[
+  "<b>Identidade</b> é o conjunto de caracteres que torna a pessoa igual só a si; <b>identificação</b> é o processo técnico; <b>reconhecimento</b> é subjetivo, feito pela memória.",
+  "Um bom método tem <b>unicidade, imutabilidade, perenidade, praticabilidade e classificabilidade</b>.",
+  "Bertillon: antropometria (abandonada após Will West). Galton: estudo científico das digitais. Vucetich: sistema datiloscópico adotado no Brasil. Locard: poroscopia e princípio da troca.",
+  "Papiloscopia: datiloscopia (dedos), quiroscopia (palmas), podoscopia (pés) e poroscopia (poros).",
+  "Tipos de Vucetich: arco (sem delta), presilha interna (delta à direita), presilha externa (delta à esquerda) e verticilo (dois deltas).",
+  "Na identificação médico-legal, o sexo no esqueleto se determina melhor pela pelve; DNA mitocondrial é de linhagem materna.",
+  "Identificação criminal: CF, art. 5º, LVIII, e Lei 12.037/2009, art. 3º; a Lei 15.295/2025 acrescentou o inciso VII e a coleta de material biológico.",
+  "Menoridade, para efeitos penais, prova-se por documento hábil (Súmula 74/STJ)."],
+checklist:[
+  "Diferenciar identidade, identificação e reconhecimento.",
+  "Citar os cinco requisitos técnicos de um método de identificação.",
+  "Distinguir Bertillon, Galton, Vucetich e Locard.",
+  "Classificar os quatro tipos fundamentais e dizer onde fica o delta.",
+  "Montar a lógica da fórmula datiloscópica: letras no polegar, números nos demais, série e seção.",
+  "Dizer como se determina sexo, idade e estatura em ossadas.",
+  "Explicar o papel do DNA nuclear, mitocondrial e do cromossomo Y.",
+  "Enumerar as hipóteses de identificação criminal mesmo com documento (Lei 12.037, art. 3º).",
+  "Aplicar a Súmula 74 do STJ."],
 questoes:[]
 };
 

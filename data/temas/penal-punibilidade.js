@@ -1527,6 +1527,55 @@ T.penal_punibilidade = {
       "j": []
     }
   ],
+importancia:{ nivel:5,
+  texto:"Prescrição é cobrança certa em prova de Direito Penal: a banca cobra a tabela do art. 109, a diferença entre pretensão punitiva e executória, os marcos do art. 117, a redução do art. 115 e as súmulas 18, 438 e 497.",
+  decore:[
+    ["Prazos do art. 109","<b>20, 16, 12, 8, 4 e 3 anos</b>, conforme o máximo da pena"],
+    ["PPP em abstrato","calculada pelo <b>máximo da pena cominada</b>"],
+    ["PPP retroativa e intercorrente","calculadas pela <b>pena aplicada</b>"],
+    ["Lei 12.234/2010","a retroativa <b>não alcança o período anterior à denúncia ou queixa</b>"],
+    ["Redução do art. 115","<b>metade</b>: menor de 21 ao tempo do <b>crime</b> ou maior de 70 na data da <b>sentença</b>"],
+    ["Exceção de 2025 (Lei 15.160/2025)","sem redução no crime de <b>violência sexual contra a mulher</b>"],
+    ["Prescrição da multa (art. 114, I)","<b>2 anos</b>, se for a única pena cominada ou aplicada"],
+    ["Reincidência","aumenta de <b>1/3</b> a prescrição da <b>pretensão executória</b>, não a punitiva"],
+    ["Decadência","<b>6 meses</b> (regra); violência doméstica contra a mulher: <b>12 meses</b> (Lei 15.438/2026)"],
+    ["Súmulas","<b>438</b> STJ (sem prescrição virtual); <b>18</b> STJ (perdão judicial é declaratório); <b>497</b> STF (continuidade fora do cálculo)"]],
+  macetes:[
+    ["Abstrato = máximo; concreto = aplicada","Sem pena aplicada estabilizada, usa-se o máximo cominado; com ela, a pena aplicada."],
+    ["Recebimento, não oferecimento","O recebimento da denúncia interrompe; oferecimento e indiciamento, não."],
+    ["Jovem no crime, idoso na sentença","21 anos olha para o dia do crime; 70 anos, para o dia da sentença."]] },
+comparativo:{ titulo:"Prescrição da pretensão punitiva × pretensão executória", head:["Pretensão punitiva (PPP)","Pretensão executória (PPE)"], rows:[
+  ["<b>Objeto:</b> o direito de punir, antes do título definitivo","<b>Objeto:</b> o direito de executar a pena já definitiva"],
+  ["<b>Cálculo:</b> pena máxima (abstrata) ou pena aplicada (retroativa e intercorrente)","<b>Cálculo:</b> pena concreta, com a tabela do art. 109"],
+  ["<b>Reincidência:</b> não aumenta o prazo","<b>Reincidência:</b> aumenta o prazo de um terço"],
+  ["<b>Trânsito:</b> ainda não há título definitivo para ambas as partes","<b>Trânsito:</b> exige trânsito para ambas as partes (Tema 788/STF)"],
+  ["<b>Efeito:</b> apaga também os efeitos da condenação","<b>Efeito:</b> impede a execução, mas não elimina automaticamente os efeitos secundários"],
+  ["<b>Prescrição virtual:</b> inadmitida (Súmula 438 do STJ)","<b>Marcos próprios:</b> início ou continuação do cumprimento e reincidência"]]},
+prova:[
+  { tipo:"ce", enun:"A extinção da punibilidade por prescrição afirma que o fato nunca existiu.", gab:"Errado", com:"Extinguir a punibilidade é retirar a possibilidade jurídica de punir, não negar o fato." },
+  { tipo:"ce", enun:"O prazo da prescrição da pretensão punitiva em abstrato é calculado pelo máximo da pena cominada ao crime.", gab:"Certo", com:"Sem pena concreta estabilizada, a referência é o máximo cominado, aplicada a tabela do art. 109." },
+  { tipo:"ce", enun:"O oferecimento da denúncia interrompe a prescrição, assim como o indiciamento.", gab:"Errado", com:"O marco é o recebimento da denúncia ou queixa; oferecimento e indiciamento não interrompem." },
+  { tipo:"ce", enun:"A reincidência aumenta de um terço o prazo da prescrição da pretensão executória, mas não o da pretensão punitiva.", gab:"Certo", com:"O aumento vale apenas para a PPE." },
+  { tipo:"ce", enun:"A Súmula 438 do STJ admite a prescrição em perspectiva, baseada na pena que provavelmente será aplicada.", gab:"Errado", com:"A súmula afasta a prescrição virtual ou em perspectiva." },
+  { tipo:"caso", enun:"O autor tinha 20 anos ao tempo do crime. Qual a consequência para os prazos prescricionais, e há ressalva?", com:"Os prazos caem à metade (art. 115), pois era menor de 21 anos ao tempo do crime. A ressalva da Lei 15.160/2025 afasta a redução em crime de violência sexual contra a mulher." }],
+resumo:[
+  "Extinguir a punibilidade retira a possibilidade jurídica de punir; o rol do art. 107 não é exaustivo.",
+  "Pelo art. 108, a extinção de um crime não se estende automaticamente ao conexo.",
+  "Decadência: 6 meses, ou 12 meses em violência doméstica contra a mulher (Lei 15.438/2026).",
+  "Prescrição em abstrato usa o máximo da pena; a tabela do art. 109 vai de 3 a 20 anos.",
+  "Retroativa e intercorrente usam a pena aplicada; a Lei 12.234/2010 impede retroagir ao período anterior à denúncia.",
+  "Redução do art. 115: menor de 21 ao tempo do crime ou maior de 70 na sentença, salvo violência sexual contra a mulher (Lei 15.160/2025).",
+  "Interrompem: recebimento da denúncia, pronúncia, confirmação da pronúncia e publicação da condenação recorrível; o acórdão confirmatório também interrompe.",
+  "Perdão judicial só nas hipóteses legais; afasta a reincidência e, pela Súmula 18 do STJ, é declaratório."],
+checklist:[
+  "Aplicar a tabela do art. 109",
+  "Diferenciar PPP em abstrato, retroativa, intercorrente e PPE",
+  "Explicar o limite da Lei 12.234/2010",
+  "Aplicar a redução do art. 115 e a exceção de 2025",
+  "Identificar os marcos interruptivos do art. 117",
+  "Diferenciar impedimento e suspensão (art. 116 e CPP, art. 366)",
+  "Distinguir decadência, perempção, renúncia e perdão",
+  "Aplicar as Súmulas 18 e 438 do STJ e 497 do STF"],
   "questoes": []
 };
 })();

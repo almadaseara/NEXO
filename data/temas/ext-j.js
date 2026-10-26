@@ -108,6 +108,58 @@ cards:[
 { id:"tb16", tipo:"caso", sec:"economica", f:"Fabricante sugere o preço e pratica crime de consumo. O revendedor responde?",
   v:"<b>Não</b>: o ato do fabricante não alcança distribuidor ou revendedor (art. 11, parágrafo único).", lei:["l8137a11"] }
 ],
+importancia:{ nivel:5,
+  texto:"Cai muito pela distinção entre crimes materiais e formais (SV 24), pela diferença de pena entre os arts. 1º e 2º e pelo art. 7º, que admite culpa só em três incisos.",
+  decore:[
+    ["Art. 1º","<b>reclusão de 2 a 5 anos</b> e multa"],
+    ["Art. 1º, I a IV","crimes <b>materiais</b>: exigem lançamento definitivo (<b>SV 24</b>)"],
+    ["Art. 1º, V e art. 2º","crimes <b>formais</b>"],
+    ["Art. 2º","<b>detenção de 6 meses a 2 anos</b> e multa"],
+    ["Agravantes do art. 12","<b>1/3 até a metade</b>"],
+    ["Crimes funcionais (art. 3º)","I e II: <b>3 a 8 anos</b>; III: <b>1 a 4 anos</b>"],
+    ["Multa (art. 8º)","<b>10 a 360 dias-multa</b>; ao décuplo no art. 10"],
+    ["Ordem econômica (art. 4º)","<b>reclusão de 2 a 5 anos</b> e multa"],
+    ["Consumo (art. 7º)","<b>detenção de 2 a 5 anos ou multa</b>"],
+    ["Culposo no art. 7º","só os incisos <b>II, III e IX</b>"],
+    ["Delação (art. 16, parágrafo único)","redução de <b>1 a 2/3</b>"]],
+  macetes:[
+    ["Um é reclusão, dois é detenção","Art. 1º: reclusão (2 a 5). Art. 2º: detenção (6 meses a 2 anos)."],
+    ["I a IV precisam do lançamento","Só o inciso V do art. 1º e o art. 2º dispensam o lançamento definitivo."],
+    ["Culposo: dois, três e nove","Art. 7º, incisos II, III e IX."]] },
+comparativo:{ titulo:"Art. 1º × art. 2º", head:["Art. 1º (supressão ou redução de tributo)","Art. 2º (condutas formais)"], rows:[
+  ["<b>Pena:</b> reclusão de 2 a 5 anos e multa","<b>Pena:</b> detenção de 6 meses a 2 anos e multa"],
+  ["<b>Natureza:</b> incisos I a IV materiais; inciso V formal","<b>Natureza:</b> formais, em regra"],
+  ["<b>Lançamento definitivo:</b> exigido nos incisos I a IV (SV 24)","<b>Lançamento definitivo:</b> dispensado"],
+  ["<b>Condutas:</b> omitir informação, declaração falsa, fraudar a fiscalização, falsificar nota, usar documento falso, negar nota","<b>Condutas:</b> declaração falsa para eximir-se, não recolher tributo descontado ou cobrado, desvio de incentivo fiscal, programa de contabilidade paralela"],
+  ["<b>Resultado:</b> exige supressão ou redução do tributo (nos materiais)","<b>Resultado:</b> basta a conduta, sem exigência de dano"]]},
+prova:[
+  { tipo:"ce", enun:"Os crimes do art. 1º, incisos I a IV, da Lei 8.137/1990 são materiais e só se consumam com o lançamento definitivo do tributo, conforme a Súmula Vinculante 24.", gab:"Certo", com:"O inciso V (não fornecer nota) e o art. 2º são formais." },
+  { tipo:"ce", enun:"O crime do art. 2º, II, da Lei 8.137/1990, deixar de recolher tributo descontado ou cobrado, é punido com reclusão de 2 a 5 anos.", gab:"Errado", com:"O art. 2º prevê detenção de 6 meses a 2 anos e multa." },
+  { tipo:"ce", enun:"A ação penal nos crimes da Lei 8.137/1990 é pública incondicionada, podendo qualquer pessoa provocar o Ministério Público por escrito.", gab:"Certo", com:"Art. 16 da lei." },
+  { tipo:"ce", enun:"Todos os incisos do art. 7º da Lei 8.137/1990 admitem forma culposa.", gab:"Errado", com:"Somente os incisos II, III e IX." },
+  { tipo:"ce", enun:"O cartel previsto no art. 4º da Lei 8.137/1990 é crime de mera conduta, bastando o ajuste, sem necessidade de que o grupo alcance o objetivo.", gab:"Certo", com:"Basta o acordo entre ofertantes para fixar preços, quantidades ou controlar mercado." },
+  { tipo:"caso", enun:"Um assistente administrativo, sem saber da fraude, apenas guardava documentos fiscais falsos da empresa. Responde pelo crime contra a ordem tributária?", com:"Não. Falta dolo, que é exigido no art. 11. Respondem os que concorreram dolosamente, como diretor, contador ciente e consultor." }],
+resumo:[
+  "<b>Art. 1º</b>: suprimir ou reduzir tributo por meios fraudulentos. Reclusão de 2 a 5 anos e multa.",
+  "Incisos I a IV são <b>materiais</b> e exigem lançamento definitivo (SV 24). O inciso V e o art. 2º são <b>formais</b>.",
+  "<b>Art. 2º</b>: detenção de 6 meses a 2 anos, com declaração falsa, apropriação indébita tributária e uso de contabilidade paralela.",
+  "Agravantes de 1/3 até a metade (dano à coletividade, servidor, bens essenciais) para particulares.",
+  "<b>Art. 3º</b>: três crimes funcionais ligados à administração fazendária; dois com reclusão de 3 a 8 anos e um com 1 a 4 anos.",
+  "Ação penal pública incondicionada; delação reduz a pena de 1 a 2/3 se revelar toda a trama.",
+  "<b>Art. 4º</b>: abuso de poder econômico e cartel, reclusão de 2 a 5 anos. Cartel é de mera conduta.",
+  "<b>Art. 7º</b>: crimes contra as relações de consumo, detenção de 2 a 5 anos ou multa. Culposo só nos incisos II, III e IX."],
+checklist:[
+  "Pena e condutas do art. 1º",
+  "Diferença entre crime material e formal e a SV 24",
+  "Pena e condutas do art. 2º",
+  "Agravantes e seus limites",
+  "Os três crimes funcionais do art. 3º",
+  "Multa e margem de ajuste do juiz",
+  "Ação penal e delação",
+  "Elementos do cartel e sua natureza de mera conduta",
+  "Condutas do art. 7º e pena alternativa",
+  "Incisos do art. 7º que admitem culpa",
+  "A exigência de dolo para quem concorre (art. 11)"],
 questoes:[]
 };
 })();

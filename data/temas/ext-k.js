@@ -17,6 +17,10 @@ secoes:[
     "<b>Agravantes (art. 76)</b>: crise econômica grave ou calamidade; grave dano individual ou coletivo; dissimulação da natureza ilícita; servidor público ou pessoa de condição econômico-social manifestamente superior à da vítima; vítima operário, rurícola, menor de 18, maior de 60 ou deficiente mental (interditado ou não); operações com alimentos, medicamentos ou outros produtos ou serviços essenciais.",
     "<b>Multa (art. 77)</b>: dias-multa, entre o mínimo e o máximo de dias da pena privativa cominada; individualização pelo art. 60, §1º do CP. <b>Restritivas (art. 78)</b>: interdição temporária de direitos; <b>publicação da condenação</b> em órgão de grande circulação às expensas do condenado; prestação de serviços à comunidade. <b>Fiança (art. 79)</b>: 100 a 200 mil BTN, podendo ser reduzida à metade ou aumentada até 20 vezes. <b>Assistência (art. 80)</b>: legitimados do art. 82, III e IV, podem intervir como assistentes do MP e propor ação penal subsidiária."],
   teoria:[
+    { h:"Formas do crime e circunstâncias no CDC", p:[
+      "Forma simples: os tipos dos arts. 63 a 74 em seu caput. Forma culposa: só nos arts. 63, §2º e 66, §2º (1 a 6 meses ou multa). Não há forma privilegiada nem qualificada: o aumento de gravidade vem das agravantes do art. 76, que valem para todos os crimes do código.",
+      "Não existe crime preterdoloso no CDC. No art. 65 o resultado lesão ou morte não qualifica o tipo: as penas do crime de perigo somam-se às do crime de dano (§1º).",
+      "Sobre o concurso de pessoas, o art. 75 manda punir cada um na medida da sua culpabilidade e alcança o dirigente que promove, permite ou aprova a conduta."]},
     { h:"Atenção", p:[
       "A pena de multa do art. 77 usa como referência a duração da pena privativa: no art. 69 (1 a 6 meses), por exemplo, o juiz fixa entre 30 e 180 dias-multa. O dia-multa varia de 1/30 a 5 salários mínimos, podendo triplicar (CP, art. 60, §1º)."]}],
   pegadinhas:["Não há responsabilidade penal da <b>pessoa jurídica</b> no CDC.",
@@ -78,6 +82,56 @@ cards:[
 { id:"cd15", tipo:"distincao", sec:"geral", f:"Como se calcula a multa e quais as penas restritivas?", v:"Dias-multa entre o mínimo e o máximo de dias da pena cominada (CP, art. 60, §1º). Restritivas: interdição temporária de direitos, publicação da condenação, prestação de serviços.", lei:["l8078a77"] },
 { id:"cd16", tipo:"caso", sec:"geral", f:"Quem pode ser assistente do MP e propor ação subsidiária nos crimes do CDC?", v:"Os legitimados do art. 82, III e IV (entidades e órgãos da administração e associações de defesa do consumidor), se a denúncia não for oferecida no prazo.", lei:["l8078a79"] }
 ],
+importancia:{ nivel:4,
+  texto:"Os crimes do CDC aparecem em provas de legislação extravagante pela simplicidade: a banca cobra pena de cada artigo, quais admitem forma culposa e a regra do art. 75 sobre quem responde.",
+  decore:[
+    ["Art. 63 (omitir alerta de nocividade)","detenção <b>6 meses a 2 anos</b> e multa; culposo <b>1 a 6 meses ou multa</b>"],
+    ["Art. 66 (informação falsa ou enganosa)","<b>3 meses a 1 ano</b> e multa; culposo <b>1 a 6 meses ou multa</b>"],
+    ["Art. 67 (publicidade enganosa ou abusiva)","<b>3 meses a 1 ano</b> e multa"],
+    ["Art. 68 (publicidade que induz comportamento perigoso)","<b>6 meses a 2 anos</b> e multa"],
+    ["Arts. 69, 73 e 74","<b>1 a 6 meses ou multa</b>"],
+    ["Art. 72 (acesso a cadastros)","<b>6 meses a 1 ano ou multa</b>"],
+    ["Art. 71 (cobrança vexatória)","<b>3 meses a 1 ano</b> e multa"],
+    ["Culposo previsto só em","arts. <b>63, §2º</b> e <b>66, §2º</b>"],
+    ["Responsabilização de dirigentes","art. <b>75</b>: quem promove, permite ou aprova"],
+    ["Penas restritivas (art. 78)","interdição, <b>publicação da condenação</b>, serviços à comunidade"]],
+  macetes:[
+    ["Dobro do 67","O art. 68 tem a mesma estrutura do 67, mas a pena é maior (6 meses a 2 anos) porque o risco é à saúde ou segurança."],
+    ["Só multa ou detenção, em alternativa","Arts. <b>69, 72, 73 e 74</b> trazem pena de detenção <b>ou</b> multa (não cumulativa). Os demais cumulam detenção e multa."],
+    ["63 na entrada, 64 na descoberta tardia","63: o produto já nasce perigoso e o alerta é omitido. 64: o risco só é conhecido depois da venda."]] },
+comparativo:{ titulo:"Art. 63 × Art. 64 (a dupla que a banca mais confunde)", head:["Art. 63 (omissão de alerta)","Art. 64 (risco conhecido depois)"], rows:[
+  ["<b>Conduta:</b> omitir dizeres ou sinais ostensivos sobre nocividade ou periculosidade","<b>Conduta:</b> deixar de comunicar nocividade ou periculosidade conhecida depois da colocação no mercado"],
+  ["<b>Momento:</b> na oferta, na embalagem, no invólucro ou na publicidade","<b>Momento:</b> conhecimento <b>posterior</b> à colocação do produto no mercado"],
+  ["<b>Pena:</b> detenção de 6 meses a 2 anos e multa","<b>Pena:</b> detenção de 6 meses a 2 anos e multa"],
+  ["<b>Forma culposa:</b> existe (§2º), com 1 a 6 meses ou multa","<b>Forma culposa:</b> não há"],
+  ["<b>Extensão:</b> o §1º alcança quem deixa de alertar sobre a periculosidade de serviço","<b>Extensão:</b> o parágrafo único alcança quem não retira do mercado o produto, quando a autoridade determina"],
+  ["<b>Comunicação:</b> o alerta é dirigido ao consumidor","<b>Comunicação:</b> deve ser feita à autoridade competente <b>e</b> aos consumidores"]]},
+prova:[
+  { tipo:"ce", enun:"Os crimes previstos no CDC admitem a responsabilização penal da pessoa jurídica fornecedora.", gab:"Errado", com:"O CDC não prevê responsabilidade penal da pessoa jurídica. Respondem as pessoas físicas que concorreram e os dirigentes do art. 75." },
+  { tipo:"ce", enun:"O gerente de uma empresa responde pelos crimes do CDC apenas por ocupar o cargo, ainda que não tenha promovido, permitido ou aprovado a conduta.", gab:"Errado", com:"O art. 75 não cria responsabilidade objetiva: exige que o dirigente promova, permita ou aprove a conduta proibida." },
+  { tipo:"ce", enun:"Entre os crimes dos arts. 63 a 74 do CDC, a forma culposa está prevista nos arts. 63, §2º e 66, §2º.", gab:"Certo", com:"São as duas hipóteses de crime culposo do bloco, ambas com detenção de 1 a 6 meses ou multa." },
+  { tipo:"ce", enun:"Incluir o nome do consumidor devedor em cadastro de inadimplentes configura, por si só, o crime de cobrança vexatória do art. 71.", gab:"Errado", com:"A inscrição em cadastro é meio legítimo. O crime exige ameaça, coação, constrangimento, afirmações falsas ou exposição ao ridículo, ou interferência no trabalho, descanso ou lazer." },
+  { tipo:"caso", enun:"Uma casa de shows permite a entrada de público acima do número fixado pela autoridade, e há feridos. Qual a consequência penal pelo CDC?", com:"Há o crime do art. 65 (via §2º, que remete ao art. 39, XIV), de 6 meses a 2 anos e multa, aplicado sem prejuízo das penas da lesão corporal ou da morte (§1º)." },
+  { tipo:"caso", enun:"Um fabricante descobre, meses após a venda, que seu produto é nocivo e silencia. Qual crime pode ter cometido?", com:"O art. 64: deixar de comunicar à autoridade e aos consumidores a nocividade conhecida após a colocação no mercado (6 meses a 2 anos e multa)." }],
+resumo:[
+  "Os crimes do CDC estão nos arts. <b>63 a 74</b>; o rito de penas, concurso e processo vai dos arts. 75 a 80.",
+  "Em regra são crimes de <b>perigo abstrato</b>; o CDC <b>não prevê</b> responsabilidade penal da pessoa jurídica.",
+  "O <b>art. 75</b> pune quem concorre e o dirigente que promove, permite ou aprova a conduta; não há responsabilidade objetiva.",
+  "A forma <b>culposa</b> só existe nos arts. <b>63, §2º</b> e <b>66, §2º</b> (1 a 6 meses ou multa). O CDC não traz crime preterdoloso: no art. 65 as penas somam-se às da lesão ou morte (§1º).",
+  "As <b>agravantes do art. 76</b> são genéricas (crise, grave dano, dissimulação, vítima vulnerável, bens essenciais) e incidem sobre qualquer crime do código.",
+  "A multa é fixada em <b>dias-multa</b>, entre o mínimo e o máximo de dias da pena privativa cominada (CP, art. 60, §1º).",
+  "Penas restritivas do art. 78: interdição temporária de direitos, <b>publicação da condenação</b> às expensas do condenado e prestação de serviços à comunidade.",
+  "No processo, os legitimados do art. 82, III e IV, podem ser <b>assistentes do MP</b> e propor <b>ação penal subsidiária</b> (art. 80)."],
+checklist:[
+  "Citar a pena de cada crime dos arts. 63 a 74 e dizer em quais ela é alternativa (detenção ou multa).",
+  "Indicar os dois crimes que admitem forma culposa.",
+  "Distinguir os arts. 63 e 64 pelo momento do conhecimento do risco.",
+  "Explicar por que o art. 75 não é responsabilidade objetiva.",
+  "Listar as agravantes do art. 76.",
+  "Explicar como se fixa a multa (dias-multa, art. 77) e quais as penas restritivas do art. 78.",
+  "Dizer quem pode atuar como assistente do MP e propor ação penal subsidiária.",
+  "Explicar por que a inscrição em cadastro de inadimplentes não configura o art. 71.",
+  "Lembrar que o valor da fiança do art. 79 está em BTN e que hoje prevalece o regime do CPP."],
 questoes:[]
 };
 })();

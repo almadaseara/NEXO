@@ -129,6 +129,58 @@ cards:[
 { id:"jc13", tipo:"distincao", sec:"procedimento", f:"Sursis processual × ANPP: critério de pena.",
   v:"<b>Sursis</b>: pena <b>mínima</b> ≤ 1 ano (pode haver violência). <b>ANPP</b>: pena <b>máxima</b> ≤ 4 anos e sem violência ou grave ameaça.", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"Tema clássico de legislação extravagante: a banca cobra o limite de pena do menor potencial ofensivo, quem propõe a transação penal e os requisitos do sursis processual, sempre misturando pena máxima com pena mínima.",
+  decore:[
+    ["Menor potencial ofensivo","contravenções e crimes com pena <b>máxima até 2 anos</b>"],
+    ["Citação no Juizado","<b>pessoal</b>, nunca por edital"],
+    ["Quem propõe a transação penal","<b>Ministério Público</b>, não o juiz"],
+    ["Vedação à nova transação","benefício anterior nos últimos <b>5 anos</b>"],
+    ["Denúncia no rito sumaríssimo","<b>oral</b>, de imediato (art. 77)"],
+    ["Recurso contra rejeição da denúncia e sentença","<b>apelação</b>, para turma de <b>3 juízes</b>"],
+    ["Sursis processual (art. 89)","pena <b>mínima até 1 ano</b>"],
+    ["Período de prova do sursis processual","<b>2 a 4 anos</b>"],
+    ["Contravenção no Juizado Federal","<b>não</b> é julgada (Lei 10.259, art. 2º)"]],
+  macetes:[
+    ["Máxima no Juizado, mínima no sursis","Menor potencial ofensivo olha o <b>teto</b> (2 anos). Suspensão do processo olha o <b>piso</b> (1 ano)."],
+    ["Sem edital","Não achou o acusado para citar? As peças vão ao <b>juízo comum</b>, não há edital no Juizado."],
+    ["Quem propõe é o MP","Transação penal nunca é de ofício. Na ação privada, a proposta cabe ao querelante."]] },
+comparativo:{ titulo:"Transação penal × suspensão condicional do processo", head:["Transação penal (art. 76)","Suspensão condicional do processo (art. 89)"], rows:[
+  ["<b>Critério de pena:</b> infração de menor potencial ofensivo (máxima até 2 anos)","<b>Critério de pena:</b> pena mínima igual ou inferior a 1 ano, dentro ou fora do Juizado"],
+  ["<b>Momento:</b> audiência preliminar, antes da denúncia","<b>Momento:</b> ao oferecer a denúncia"],
+  ["<b>Quem propõe:</b> Ministério Público","<b>Quem propõe:</b> Ministério Público"],
+  ["<b>Conteúdo:</b> pena restritiva de direitos ou multa, aplicada de imediato","<b>Conteúdo:</b> processo suspenso por 2 a 4 anos, com condições (reparar o dano, não frequentar certos lugares, não sair da comarca, comparecer mensalmente)"],
+  ["<b>Impedimento:</b> condenação anterior a pena privativa de liberdade ou benefício nos últimos 5 anos","<b>Impedimento:</b> acusado processado ou condenado por outro crime"],
+  ["<b>Descumprido:</b> segue-se a denúncia oral","<b>Revogação:</b> obrigatória (outro crime ou dano não reparado) ou facultativa (contravenção ou outra condição)"]]},
+prova:[
+  { tipo:"ce", enun:"Para fins de competência do Juizado Especial Criminal, consideram-se infrações de menor potencial ofensivo as contravenções penais e os crimes cuja pena máxima não seja superior a dois anos.", gab:"Certo", com:"Esse é o conceito do art. 61 da Lei 9.099/1995. O critério é a pena máxima." },
+  { tipo:"ce", enun:"Não sendo encontrado o acusado para citação no Juizado Especial Criminal, o juiz deve determinar a citação por edital e prosseguir o feito.", gab:"Errado", com:"A citação é pessoal. Não encontrado o acusado, as peças são encaminhadas ao juízo comum (art. 66)." },
+  { tipo:"ce", enun:"Na ação penal pública incondicionada, a proposta de transação penal cabe ao Ministério Público e, se ele a recusar sem fundamento, o juiz deve formulá-la de ofício.", gab:"Errado", com:"A proposta é do Ministério Público. O juiz não propõe a transação penal de ofício." },
+  { tipo:"ce", enun:"Da decisão que rejeita a denúncia no procedimento sumaríssimo cabe recurso em sentido estrito.", gab:"Errado", com:"Cabe apelação, julgada por turma de três juízes (art. 82)." },
+  { tipo:"ce", enun:"A suspensão condicional do processo pode ser proposta em crimes com pena mínima igual ou inferior a um ano, ainda que não sejam de competência do Juizado.", gab:"Certo", com:"O art. 89 abrange crimes de pena mínima até 1 ano, abrangidos ou não pela Lei 9.099." },
+  { tipo:"caso", enun:"Pedro foi beneficiado por transação penal há três anos. Agora responde por nova infração de menor potencial ofensivo. Cabe nova transação?", com:"Não. A lei veda a proposta se o agente foi beneficiado por transação nos últimos cinco anos (art. 76, § 2º, II). Segue-se a denúncia oral." }],
+resumo:[
+  "<b>Menor potencial ofensivo</b>: contravenções e crimes com pena máxima de até 2 anos. O Juizado Federal não julga contravenção.",
+  "Princípios do art. 62: oralidade, simplicidade, informalidade, economia processual e celeridade, com foco na <b>reparação do dano</b> e na pena não privativa de liberdade.",
+  "A <b>citação é pessoal</b>; sem edital. Acusado não encontrado: autos ao juízo comum.",
+  "A polícia lavra o <b>TCO</b>. Quem é encaminhado ao Juizado ou se compromete a comparecer não sofre prisão em flagrante nem paga fiança.",
+  "Composição dos danos homologada: título executivo civil e, em ação privada ou pública condicionada, renúncia ao direito de queixa ou representação.",
+  "<b>Transação penal</b>: proposta do MP, de pena restritiva de direitos ou multa. Vedada com condenação anterior a pena privativa de liberdade ou benefício nos últimos 5 anos.",
+  "Frustradas as tentativas, vem a <b>denúncia oral</b> e a audiência única de instrução e julgamento. Recurso: apelação para turma de três juízes.",
+  "<b>Sursis processual</b>: pena mínima até 1 ano, prova de 2 a 4 anos. Revogação obrigatória por outro crime ou dano não reparado; facultativa por contravenção ou outra condição."],
+checklist:[
+  "Conceito de infração de menor potencial ofensivo e o critério de pena",
+  "Princípios do art. 62",
+  "Por que não há citação por edital no Juizado",
+  "O que é o TCO e a regra do art. 69, parágrafo único",
+  "Efeitos da composição dos danos conforme o tipo de ação penal",
+  "Quem propõe a transação penal e em que casos ela não cabe",
+  "Como se desenrola a denúncia oral e a audiência única",
+  "Recurso cabível e quem o julga",
+  "Requisitos, prazo e condições da suspensão condicional do processo",
+  "Revogação obrigatória e facultativa do sursis processual",
+  "Diferença entre sursis processual e ANPP quanto à pena",
+  "Competência do Juizado Federal Criminal e a questão das contravenções"],
 questoes:[]
 };
 })();

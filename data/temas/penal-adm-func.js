@@ -70,7 +70,10 @@ secoes:[
       "Chefe que deixa de punir subordinado <b>por indulgência</b> = condescendência criminosa (320). Se deixar por medo ou interesse próprio = prevaricação."]},
     { h:"Facilitação de contrabando ou descaminho (318)", p:[
       "Funcionário com o <b>dever funcional</b> de reprimir (ex.: auditor da Receita) que facilita: 318 (3 a 8). O particular responde por contrabando ou descaminho — exceção pluralista.",
-      "Funcionário sem esse dever que ajuda: partícipe do contrabando ou descaminho. Consuma-se com a facilitação, ainda que o contrabando não se consume. Competência federal."]}
+      "Funcionário sem esse dever que ajuda: partícipe do contrabando ou descaminho. Consuma-se com a facilitação, ainda que o contrabando não se consume. Competência federal."]},
+    { h:"Formas do crime e circunstâncias", p:[
+      "<b>Simples</b>: o caput de cada tipo. <b>Majorada</b>: 327, § 2º (geral), 317, § 1º (corrupção), 313-B, parágrafo único (dano ao sistema). <b>Privilegiada</b>: 317, § 2º. <b>Qualificada</b>: 325, § 2º (dano). <b>Culposa</b>: apenas o peculato culposo (312, § 2º). Não há preterdolo nesses tipos.",
+      "Esses crimes não têm qualificadoras de meio ou de motivo; as circunstâncias são sobretudo a condição do agente e o resultado (dano). Por isso a banca cobra qual figura é majorada, privilegiada ou qualificada, e não a combinação entre elas."]}
   ],
   quadro:{ titulo:"Verbos que decidem a questão", head:["Conduta do funcionário","Crime","Pena"], rows:[
     ["Exige vantagem indevida","Concussão (316)","Reclusão 2 a 12 e multa"],
@@ -157,6 +160,54 @@ cards:[
 { id:"af20", tipo:"caso", sec:"outros", f:"Servidor do MP usa seu prestígio para convencer o chefe a mudar norma de estágio e favorecer a irmã.", v:"<b>Advocacia administrativa</b> (321).", lei:["cp321"] },
 { id:"af21", tipo:"caso", sec:"outros", f:"Policial empresta sua senha do sistema de antecedentes a um amigo detetive particular.", v:"<b>325, §1º, I</b> (violação de sigilo funcional por empréstimo de senha). Com dano: §2º (reclusão de 2 a 6).", lei:["cp325"] }
 ],
+importancia:{ nivel:5,
+  texto:"Corrupção passiva, concussão, peculato e prevaricação são clássicos de prova de delegado e investigador: a banca troca o verbo (exigir, solicitar, receber) e a pena, e cobra o conceito de funcionário do art. 327.",
+  decore:[
+    ["Peculato, concussão, corrupção passiva (caput)","<b>reclusão de 2 a 12 anos</b> e multa"],
+    ["Excesso de exação (316, § 1º)","<b>3 a 8 anos</b>"],
+    ["Facilitação de contrabando (318)","<b>3 a 8 anos</b>"],
+    ["Corrupção passiva: majorante (§ 1º)","<b>+1/3</b> se retarda, omite ou infringe dever"],
+    ["Corrupção passiva privilegiada (§ 2º)","detenção de <b>3 meses a 1 ano</b>, ou multa"],
+    ["Prevaricação (319)","detenção de <b>3 meses a 1 ano</b> e multa"],
+    ["Majorante do art. 327, § 2º","<b>+1/3</b>; não alcança autarquia"],
+    ["Peculato culposo: reparação do dano","antes do trânsito <b>extingue</b>; depois <b>reduz de metade</b>"],
+    ["Insignificância nos crimes contra a Administração","<b>Súmula 599 do STJ</b>: inaplicável"]],
+  macetes:[
+    ["Exigir × solicitar","<b>E</b>xigir = <b>c</b>oncussão (intimida); <b>s</b>olicitar/receber/aceitar = <b>c</b>orrupção passiva."],
+    ["Posse ou facilidade","Tem a posse: peculato-apropriação/desvio. Não tem a posse, mas usa a facilidade do cargo: peculato-furto."],
+    ["Favor ou interesse","Favor a pedido de alguém: corrupção privilegiada. Ato por interesse ou sentimento próprio: prevaricação."]] },
+comparativo:{ titulo:"Qualificado × majorado × privilegiado nos crimes funcionais", head:["Forma e efeito","Onde aparece"], rows:[
+  ["<b>Majorante geral (+1/3):</b> cargo em comissão ou função de direção/assessoramento","Art. 327, § 2º: administração direta, economia mista, empresa pública e fundação; <b>não</b> autarquia"],
+  ["<b>Majorante específica (+1/3):</b> em consequência da vantagem, retarda, omite ou infringe dever","Corrupção passiva, art. 317, § 1º"],
+  ["<b>Privilegiada (pena bem menor):</b> cede a pedido ou influência, sem vantagem","Corrupção passiva, art. 317, § 2º (detenção)"],
+  ["<b>Qualificada (pena maior):</b> resulta dano à Administração ou a outrem","Violação de sigilo funcional, art. 325, § 2º (reclusão de 2 a 6)"],
+  ["<b>Aumento de 1/3 até a metade:</b> dano na alteração de sistema","Art. 313-B, parágrafo único"],
+  ["<b>Culposa:</b> concorrer culposamente para crime de outrem","Peculato culposo, art. 312, § 2º (com extinção ou redução pela reparação)"]]},
+prova:[
+  { tipo:"ce", enun:"Estagiário não remunerado de um órgão público pode ser sujeito ativo de peculato, pois o conceito penal de funcionário abrange quem exerce função pública transitoriamente ou sem remuneração.", gab:"Certo", com:"Art. 327, caput: o exercício pode ser transitório ou sem remuneração." },
+  { tipo:"ce", enun:"Aplica-se a causa de aumento do art. 327, § 2º, do CP ao presidente de autarquia que pratica peculato.", gab:"Errado", com:"O § 2º não menciona autarquia; vale a legalidade estrita (STJ, APn 746)." },
+  { tipo:"ce", enun:"A reparação do dano pelo funcionário, antes do trânsito em julgado, extingue a punibilidade do peculato doloso.", gab:"Errado", com:"A reparação (art. 312, § 3º) só beneficia o peculato culposo. No doloso, é no máximo arrependimento posterior." },
+  { tipo:"ce", enun:"A corrupção passiva consuma-se com a mera solicitação de vantagem indevida, ainda que o funcionário não pratique ato algum.", gab:"Certo", com:"Crime formal: solicitar, receber ou aceitar promessa. O ato praticado ou omitido apenas gera a majorante do § 1º." },
+  { tipo:"caso", enun:"Fiscal municipal diz ao dono de um bar que só não interditará o local se receber R$ 5 mil. O comerciante recusa. Qual o crime e ele está consumado?", com:"Concussão (art. 316): exigir vantagem indevida. É crime formal e consuma-se com a exigência, ainda que não haja pagamento." },
+  { tipo:"caso", enun:"Servidor retarda, por vingança, a emissão de certidão de um desafeto, sem receber vantagem. Qual crime?", com:"Prevaricação (art. 319): ato de ofício retardado para satisfazer interesse ou sentimento pessoal." }],
+resumo:[
+  "Funcionário público para o CP (art. 327) inclui quem exerce função pública transitoriamente ou sem remuneração; entidade paraestatal e empresa contratada para atividade típica são equiparadas.",
+  "O art. 327, § 2º aumenta a pena em <b>1/3</b> para cargo em comissão ou função de direção/assessoramento; autarquia não entra.",
+  "Peculato (312): apropriação ou desvio com <b>posse</b>; peculato-furto sem posse, com <b>facilidade</b> do cargo; ambos de <b>2 a 12 anos</b>.",
+  "Peculato culposo: reparação antes do trânsito extingue a punibilidade; depois, reduz de metade. Peculato de uso é atípico para o STJ, salvo prefeito.",
+  "Concussão <b>exige</b>; corrupção passiva <b>solicita, recebe ou aceita promessa</b>; ambas de 2 a 12 anos. Violência ou grave ameaça alheia ao cargo é extorsão.",
+  "Corrupção passiva: +1/3 se retarda, omite ou infringe dever; privilegiada se cede a pedido ou influência, sem vantagem.",
+  "Prevaricação exige interesse ou sentimento pessoal; condescendência criminosa é a omissão por indulgência.",
+  "Violação de sigilo funcional tem forma qualificada por dano (reclusão de 2 a 6 anos). A Súmula 599 do STJ afasta a insignificância."],
+checklist:[
+  "Explicar o conceito penal de funcionário público e a equiparação do § 1º",
+  "Dizer quando incide e quando não incide a majorante do art. 327, § 2º",
+  "Distinguir peculato-apropriação, desvio, furto e culposo",
+  "Aplicar a reparação do dano no peculato culposo",
+  "Diferenciar concussão, corrupção passiva e extorsão pelo verbo",
+  "Distinguir corrupção privilegiada, prevaricação e condescendência criminosa",
+  "Citar as penas de 2 a 12 anos e as de 3 a 8 anos",
+  "Aplicar a Súmula 599 do STJ e o crime funcional próprio × impróprio"],
 questoes:[]
 };
 
