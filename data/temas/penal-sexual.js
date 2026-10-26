@@ -88,6 +88,11 @@ secoes:[
     "Art. 234-A: +1/2 a 2/3 se resulta <b>gravidez</b>; +1/3 a 2/3 se transmite <b>DST</b> que sabe ou deveria saber portar, ou se a vítima é <b>idosa ou com deficiência</b>.",
     "Art. 234-B: segredo de justiça; desde a Lei 15.035/2024, nome, CPF e tipificação do réu ficam públicos após a <b>condenação em 1ª instância</b> (213, 216-B, 217-A, 218-B, 227, 228, 229, 230), e o condenado é monitorado eletronicamente."],
   teoria:[
+    { h:"Formas do crime: simples, qualificada, majorada e preterdolo", p:[
+      "<b>Estupro (213)</b>: simples (6 a 10); <b>qualificado</b> por lesão grave ou vítima maior de 14 e menor de 18 (8 a 12) e por morte (12 a 30); <b>majorado</b> pelo art. 226 e pelo art. 234-A. Não há forma culposa, privilégio nem figura híbrida. <b>Estupro de vulnerável (217-A)</b>: simples (10 a 18); qualificado por lesão grave (12 a 24) e morte (20 a 40).",
+      "As qualificadoras do título são <b>objetivas</b> (resultado e idade da vítima); as majorantes do 226 tratam da <b>qualidade do agente</b> (parentesco, autoridade) e do modo (concurso de pessoas, estupro coletivo e corretivo). A finalidade do agente aparece como majorante no 218-C, § 1º (vingança ou humilhação).",
+      "Qualificadora define a pena-base do tipo; majorante incide na terceira fase e pode somar-se a ela (ex.: estupro com lesão grave por padrasto: qualificado e majorado em 1/2). Coletivo e corretivo podem cumular, se fundamentado (STJ).",
+      "<b>Preterdolo</b>: lesão grave e morte do estupro (e do estupro de vulnerável) são, em regra, resultados preterdolosos: dolo na violência sexual, culpa no resultado. Com dolo quanto ao resultado, há concurso com lesão corporal grave ou homicídio. Não existe \"homicídio preterdoloso\"."]},
     { h:"Detalhes", p:[
       "Estupro coletivo (226, IV, a) afasta o +1/4 do inciso I. Coletivo e corretivo podem ser aplicados cumulativamente, se fundamentado (STJ).",
       "Professor que pratica crime sexual contra aluno: +1/2 (226, II), pela autoridade sobre a vítima (STJ, Jurisprudência em Teses).",
@@ -220,6 +225,54 @@ cards:[
 { id:"sx27", tipo:"distincao", sec:"lenocinio", f:"Art. 227 × art. 228.", v:"<b>227</b>: induz a satisfazer a lascívia de <b>pessoa determinada</b>. <b>228</b>: leva à <b>prostituição</b> (clientela indeterminada).", lei:["cp227"] },
 { id:"sx28", tipo:"caso", sec:"lenocinio", f:"\"Coiote\" cobra R$ 30 mil para levar brasileiro ilegalmente aos EUA. Quem comete crime?", v:"Só o coiote: <b>232-A</b>. O migrante não comete crime (Lei de Migração, art. 3º, III).", lei:["cp232a"] }
 ],
+importancia:{ nivel:5,
+  texto:"Estupro, estupro de vulnerável, importunação e as novidades legislativas de 2025 e 2026 são cobrados em letra de lei e em tese do STJ; a banca troca penas, idade da vítima e a fronteira entre fraude, vulnerabilidade e importunação.",
+  decore:[
+    ["Estupro (213)","reclusão de <b>6 a 10</b>; lesão grave ou vítima de 14 a 17: <b>8 a 12</b>; morte: <b>12 a 30</b>"],
+    ["Estupro de vulnerável (217-A)","reclusão de <b>10 a 18</b>; lesão grave: 12 a 24; morte: <b>20 a 40</b>"],
+    ["Violação sexual mediante fraude (215)","reclusão de <b>2 a 6</b> anos"],
+    ["Importunação sexual (215-A)","reclusão de <b>1 a 5</b> anos, se não for crime mais grave"],
+    ["Assédio sexual (216-A)","detenção de <b>1 a 2</b> anos; até +1/3 se vítima menor de 18"],
+    ["Divulgação de cena íntima (218-C)","reclusão de <b>4 a 10</b> e multa (Lei 15.280/2025)"],
+    ["Ação penal (art. 225)","<b>pública incondicionada</b>"],
+    ["Majorante do art. 226","<b>+1/4</b> (concurso de pessoas); <b>+1/2</b> (parentesco ou autoridade); <b>+1/3 a 2/3</b> (coletivo e corretivo)"],
+    ["Art. 234-A","gravidez: <b>+1/2 a 2/3</b>; DST, idoso ou deficiente: <b>+1/3 a 2/3</b>"],
+    ["Vulnerabilidade (217-A, § 4º-A)","presunção <b>absoluta</b>; Súmula 593 e Tema 1121 do STJ"]],
+  macetes:[
+    ["Menor de 14 não tem meio-termo","Ato libidinoso com menor de 14 é estupro de vulnerável, sem desclassificação para importunação (Tema 1121)."],
+    ["Fraude vicia, vulnerabilidade anula","Fraude que só vicia a vontade é o art. 215; meio que anula a resistência (vítima dopada) é o 217-A, § 1º."],
+    ["Exatos 14 anos","No dia do aniversário de 14 anos, o estupro é simples (213), pois o § 1º pede maior de 14."]] },
+comparativo:{ titulo:"Qualificado × majorado nos crimes sexuais", head:["Qualificado (nova faixa de pena)","Majorado (aumento sobre a pena)"], rows:[
+  ["<b>Estupro com lesão grave ou vítima de 14 a 17:</b> 8 a 12","<b>Concurso de 2 ou mais pessoas</b> (art. 226, I): +1/4"],
+  ["<b>Estupro com morte:</b> 12 a 30","<b>Agente parente ou com autoridade</b> (226, II): +1/2"],
+  ["<b>Estupro de vulnerável com lesão grave:</b> 12 a 24","<b>Estupro coletivo ou corretivo</b> (226, IV): +1/3 a 2/3"],
+  ["<b>Estupro de vulnerável com morte:</b> 20 a 40","<b>Gravidez</b> (234-A, III): +1/2 a 2/3"],
+  ["<b>Natureza:</b> objetivas (resultado e idade da vítima); resultado em regra preterdoloso","<b>DST, vítima idosa ou com deficiência</b> (234-A): +1/3 a 2/3"]]},
+prova:[
+  { tipo:"ce", enun:"Para configurar o estupro de vulnerável, é necessário o emprego de violência ou grave ameaça contra a vítima menor de 14 anos.", gab:"Errado", com:"O art. 217-A dispensa violência ou grave ameaça; basta o ato libidinoso com menor de 14, sendo irrelevante o consentimento (Súmula 593 do STJ)." },
+  { tipo:"ce", enun:"O ato libidinoso praticado com menor de 14 anos pode ser desclassificado para importunação sexual quando for de menor gravidade.", gab:"Errado", com:"Tema 1121 do STJ: configura estupro de vulnerável, não cabendo desclassificação." },
+  { tipo:"ce", enun:"Após a Lei 13.718/2018, a ação penal nos crimes dos Capítulos I e II do Título VI é pública incondicionada.", gab:"Certo", com:"Art. 225 do CP." },
+  { tipo:"ce", enun:"A contemplação lasciva, sem contato físico, não pode consumar o estupro.", gab:"Errado", com:"A contemplação lasciva configura ato libidinoso e consuma os arts. 213 e 217-A (Jurisprudência em Teses do STJ)." },
+  { tipo:"ce", enun:"A pena do estupro é de 12 a 30 anos se da conduta resulta morte da vítima, sendo o resultado em regra preterdoloso.", gab:"Certo", com:"Art. 213, § 2º; com dolo quanto à morte, haveria concurso com homicídio." },
+  { tipo:"caso", enun:"Uma pessoa retira, sem avisar, o preservativo durante a relação consentida. Qual crime?", com:"Violação sexual mediante fraude (art. 215): a fraude vicia a vontade da vítima (stealthing). Não é estupro, pois não há violência ou grave ameaça." }],
+resumo:[
+  "Estupro (213): constranger mediante violência ou grave ameaça; conjunção carnal e ato libidinoso integram um só tipo, 6 a 10 anos.",
+  "Lesão grave ou vítima de 14 a 17: 8 a 12; morte: 12 a 30. Os resultados são preterdolosos.",
+  "Estupro de vulnerável (217-A): menor de 14 ou sem discernimento ou sem poder de resistência; 10 a 18; presunção absoluta (§ 4º-A).",
+  "Fraude que vicia a vontade é o art. 215; vítima dopada ou desacordada é 217-A, § 1º.",
+  "Importunação (215-A) é subsidiária e sem violência; assédio sexual (216-A) é crime próprio com superioridade hierárquica ou ascendência.",
+  "Divulgação de cena íntima (218-C): 4 a 10 anos; vingança ou relação íntima aumenta de 1/3 a 2/3.",
+  "Ação penal pública incondicionada; majorantes do art. 226 e do art. 234-A.",
+  "Art. 234-B: segredo de justiça, com nome do réu público após a condenação em 1ª instância nos crimes listados."],
+checklist:[
+  "Dizer as penas e qualificadoras do 213 e do 217-A",
+  "Distinguir estupro, fraude, importunação, assédio e estupro de vulnerável",
+  "Aplicar a Súmula 593 e o Tema 1121 do STJ",
+  "Explicar o resultado preterdoloso do estupro e o concurso quando há dolo no resultado",
+  "Listar as majorantes dos arts. 226 e 234-A",
+  "Aplicar o art. 225 (ação pública incondicionada)",
+  "Reconhecer o 218-C e a pornografia de vingança",
+  "Diferenciar 218, 218-A e 218-B"],
 questoes:[]
 };
 

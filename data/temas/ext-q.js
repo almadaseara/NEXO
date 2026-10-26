@@ -199,7 +199,7 @@ importancia:{ nivel:5,
     ["Falta grave: interrompe a progressão, não o livramento","Súmula 534 (progressão) e Súmula 441 (livramento); a 535 também afasta o indulto e a comutação."],
     ["Permissão é por urgência, saída temporária é por estudo","Permissão de saída: doença ou morte na família, concedida pelo <b>diretor</b>. Saída temporária: semiaberto, estudo, concedida pelo <b>juiz</b>."],
     ["Só o juiz põe no RDD","As sanções comuns (advertência, repreensão, isolamento, suspensão) saem do diretor. O RDD é judicial."],
-    ["Em branco no aberto: só estudo","A remição pelo trabalho vale no fechado e no semiaberto; no aberto e no livramento, só a remição pelo estudo."]] },
+    ["No aberto, só estudo","A remição pelo trabalho vale no fechado e no semiaberto; no aberto e no livramento, só a remição pelo estudo."]] },
 comparativo:{ titulo:"Permissão de saída × saída temporária", head:["Permissão de saída (art. 120)","Saída temporária (arts. 122 a 125)"], rows:[
   ["<b>Quem pode:</b> presos dos regimes fechado e semiaberto e provisórios","<b>Quem pode:</b> apenas condenados em regime semiaberto"],
   ["<b>Finalidade:</b> falecimento ou doença grave de familiar próximo, ou tratamento médico","<b>Finalidade:</b> frequência a curso supletivo profissionalizante ou de ensino médio ou superior, na comarca (Lei 14.843/2024)"],
