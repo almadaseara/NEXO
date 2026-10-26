@@ -151,6 +151,53 @@ cards:[
 { id:"pb13", tipo:"juris", sec:"busca-pessoal", f:"Tema 977 do STF (2025): acesso a celular apreendido.",
   v:"Em regra, depende de <b>ordem judicial</b> ou consentimento válido (atenção: tese trazida do material, a confirmar).", lei:[], j:["stf-t977"] }
 ],
+importancia:{ nivel:5,
+  texto:"Busca domiciliar e pessoal são campo de nulidade clássico: a banca cobra as hipóteses de entrada em casa, a exigência de ordem judicial, a fundada suspeita e a diferença entre documento, indício e prova ilícita.",
+  decore:[
+    ["Entrada em casa (CF, art. 5º, XI)","consentimento, flagrante, desastre ou socorro (<b>a qualquer hora</b>); ordem judicial (<b>só de dia</b>)"],
+    ["Quem expede mandado de busca domiciliar","<b>somente o juiz</b>"],
+    ["Fundadas razões (art. 240, § 1º)","rol <b>taxativo</b>"],
+    ["Busca pessoal sem mandado (art. 244)","<b>prisão</b>, <b>fundada suspeita</b> ou durante <b>busca domiciliar</b>"],
+    ["Fundada suspeita","elementos <b>objetivos e concretos</b>; nervosismo ou aparência não bastam"],
+    ["Auto da busca","assinado por <b>duas testemunhas</b> presenciais (art. 245, § 7º)"],
+    ["Carta particular obtida por meio criminoso (art. 233)","<b>inadmissível</b>"],
+    ["Indício (art. 239)","circunstância provada que, por <b>indução</b>, leva a outra"],
+    ["Súmula 74 do STJ","menoridade exige <b>prova documental</b>"]],
+  macetes:[
+    ["Dia ou noite","Flagrante, desastre e socorro valem a qualquer hora; a ordem judicial, só de dia."],
+    ["Só o juiz","O art. 241 do CPP, que permitia à autoridade policial expedir mandado, não foi recepcionado."],
+    ["Pescaria é proibida","Fishing expedition: busca especulativa, sem indício prévio, é ilícita."]] },
+comparativo:{ titulo:"Busca domiciliar × busca pessoal", head:["Busca domiciliar","Busca pessoal"], rows:[
+  ["<b>Regra:</b> exige ordem judicial, de dia","<b>Regra:</b> independe de mandado nas hipóteses do art. 244"],
+  ["<b>Exceções:</b> consentimento, flagrante, desastre e socorro","<b>Hipóteses:</b> prisão, fundada suspeita ou busca domiciliar em curso"],
+  ["<b>Quem determina:</b> juiz, nunca o delegado","<b>Quem faz:</b> a autoridade ou seus agentes, com fundada suspeita concreta"],
+  ["<b>Conceito de casa:</b> moradia, quarto de hotel, compartimento habitado e local de trabalho não aberto ao público","<b>Limite:</b> elementos concretos; vedada a filtragem racial"],
+  ["<b>Execução:</b> ler o mandado, intimar a abrir a porta, auto com duas testemunhas","<b>Vedação:</b> fishing expedition"]]},
+prova:[
+  { tipo:"ce", enun:"A autoridade policial pode expedir mandado de busca domiciliar, nos termos do art. 241 do CPP.", gab:"Errado", com:"Só o juiz expede o mandado de busca domiciliar; o art. 241 não foi recepcionado." },
+  { tipo:"ce", enun:"Em caso de flagrante delito, a entrada na casa sem mandado é permitida a qualquer hora do dia ou da noite.", gab:"Certo", com:"CF, art. 5º, XI: flagrante, desastre e socorro valem a qualquer hora." },
+  { tipo:"ce", enun:"O nervosismo do suspeito, isoladamente, autoriza a busca pessoal e a entrada em domicílio.", gab:"Errado", com:"A fundada suspeita exige elementos objetivos e concretos." },
+  { tipo:"ce", enun:"Cartas particulares obtidas por meio criminoso não são admitidas como prova.", gab:"Certo", com:"Art. 233 do CPP." },
+  { tipo:"ce", enun:"Os indícios, por serem prova indireta, nunca podem fundamentar condenação.", gab:"Errado", com:"Podem, desde que numerosos, graves e concordantes (art. 239)." },
+  { tipo:"caso", enun:"Policiais abordam um homem apenas porque ele aparentou nervosismo ao ver a viatura, e o revistam. Há fundada suspeita?", com:"Não. Nervosismo e aparência não são elementos objetivos e concretos; a busca é ilegal e a prova dela decorrente é contaminada." }],
+resumo:[
+  "Documento é todo suporte que registra fato ou ideia; as partes podem juntá-lo em qualquer fase (art. 231), com exceções.",
+  "Carta particular obtida por meio criminoso é inadmissível (art. 233).",
+  "Indício (art. 239) é prova indireta; vale se houver pluralidade, gravidade e concordância.",
+  "Casa é asilo inviolável: consentimento, flagrante, desastre e socorro a qualquer hora; ordem judicial só de dia.",
+  "Só o juiz expede mandado de busca domiciliar; o mandado indica casa, motivo e fins.",
+  "Conceito de casa inclui moradia, quarto de hotel, compartimento habitado e local de trabalho fechado ao público.",
+  "Busca pessoal sem mandado: prisão, fundada suspeita ou durante busca domiciliar.",
+  "Fundada suspeita exige elementos concretos; filtragem racial e fishing expedition são ilegais."],
+checklist:[
+  "Listar as hipóteses de entrada em casa sem ordem judicial",
+  "Explicar quem expede o mandado e o que ele deve conter",
+  "Aplicar o conceito de casa do art. 246",
+  "Saber como se executa a busca (leitura do mandado, auto, testemunhas)",
+  "Distinguir fundada suspeita de intuição ou nervosismo",
+  "Reconhecer a vedação à fishing expedition e à filtragem racial",
+  "Aplicar o art. 233 e a Súmula 74 do STJ",
+  "Diferenciar indício, prova indireta e prova ilícita"],
 questoes:[]
 };
 })();
