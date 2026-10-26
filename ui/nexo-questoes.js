@@ -46,6 +46,17 @@ var estadoBanco = { carregado:false, carregando:false, total:0, erro:'' };
 window.nexoBanco = estadoBanco;
 function cliente(){ try{ return typeof nexoSupabase !== 'undefined' ? nexoSupabase : null; }catch(e){ return null; } }
 
+/* questões de "marque V ou F": cada afirmativa "( )" vai para sua própria linha */
+function formatarVF(s){
+  var partes = String(s).split(/\s*\(\s*\)\s*/);
+  if(partes.length < 3) return s;
+  var intro = partes[0].trim(), itens = partes.slice(1).map(function(x){ return x.trim(); }), fecho = '';
+  var ult = itens[itens.length - 1], corte = ult.search(/\s*As afirmativas s[ãa]o/i);
+  if(corte >= 0){ fecho = ult.slice(corte).trim(); itens[itens.length - 1] = ult.slice(0, corte).trim(); }
+  return '<div class="nx-vf-intro" style="margin-bottom:10px">' + intro + '</div>'
+    + itens.map(function(x){ return '<div class="nx-vf-item" style="margin:0 0 10px 0">( ) ' + x + '</div>'; }).join('')
+    + (fecho ? '<div class="nx-vf-fecho" style="margin-top:6px">' + fecho + '</div>' : '');
+}
 function montarQuestao(r){
   var ce = r.question_type === 'true_false';
   var ops = Array.isArray(r.options) ? r.options : [];
@@ -80,7 +91,7 @@ function montarQuestao(r){
   return {
     num:'Q' + (r.question_number || ''), source:[banca, ano].filter(Boolean).join(' · '),
     collection:[cargo, inst].filter(Boolean).map(escH).join(' · ') || 'Banco de provas NEXO',
-    text:antes + escH(texto), options:ops, answer:resp, comment:com,
+    text:antes + formatarVF(escH(texto)), options:ops, answer:resp, comment:com,
     banco:true, ce:ce, board:banca, year:ano, role:cargo, bancoId:r.id
   };
 }
