@@ -594,7 +594,7 @@ comparativo:{ titulo:"Identificação médico-legal × policial ou judiciária",
   ["<b>Dados:</b> espécie, sexo, idade, estatura, ancestralidade, lesões e sinais individuais","<b>Dados:</b> papiloscopia, fotografia e assinalamento"],
   ["<b>Aplicação típica:</b> cadáveres putrefeitos, carbonizados, ossadas e fragmentos","<b>Aplicação típica:</b> identificação civil e criminal de pessoas vivas"],
   ["<b>Recursos decisivos:</b> odontologia legal e DNA","<b>Método central:</b> datiloscopia de Vucetich"],
-  ["<b>Sexo no esqueleto:</b> pelve (mais confiável), depois crânio","<b>Limite legal:</b> civilmente identificado não é submetido à identificação criminal, salvo hipóteses legais"]]},
+  ["<b>Sexo no esqueleto:</b> pelve (mais confiável), depois crânio","<b>Garantia:</b> civilmente identificado não é submetido à identificação criminal, salvo hipóteses legais"]]},
 prova:[
   { tipo:"ce", enun:"A bertillonagem, baseada em antropometria, foi abandonada depois do caso Will West e William West, em que duas pessoas de medidas quase idênticas foram distinguidas pelas impressões digitais.", gab:"Certo", com:"O caso (EUA, 1903) marcou o fim da antropometria como método de identificação." },
   { tipo:"ce", enun:"No sistema de Vucetich, a presilha interna caracteriza-se por um delta à esquerda do observador e é simbolizada pela letra I no polegar.", gab:"Errado", com:"Na presilha interna o delta fica à direita do observador. O delta à esquerda caracteriza a presilha externa (E no polegar, 3 nos demais dedos)." },
