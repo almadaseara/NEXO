@@ -55,6 +55,9 @@ assert.equal(isPoliceEvent({ eventoURL: 'PREF_BOA_VISTA_23_GUARDA', eventoNomeCo
 const cls = classifySchema([{ module_id: 'adm_atos', discipline_name: 'Direito Administrativo', subject_name: 'Atos' }]);
 assert.deepEqual(cls.properties.classificacoes.items.properties.module_id.enum, ['adm_atos', OUT_OF_CATALOG]);
 assert.match(buildExtractionInstructions({ board: 'CEBRASPE', year: 2021 }, { from: 51, to: 120 }), /SOMENTE as questões de número 51 a 120/);
+// disciplina do cabeçalho do bloco: campo obrigatório e nullable, com instrução de cópia (sem dedução pelo assunto)
+assert.ok(EXTRACTION_SCHEMA.properties.questoes.items.required.includes('disciplina'));
+assert.match(buildExtractionInstructions({ board: 'CEBRASPE', year: 2021 }), /`disciplina`: copie o nome da disciplina do cabeçalho/);
 
 // ---------- gabarito Cebraspe (tabela C/E/X) ----------
 const gab = parseCebraspeAnswerTable('1 2 3 4 5 6 C E X C E C 7 8 9 10 11 E E C C X');
