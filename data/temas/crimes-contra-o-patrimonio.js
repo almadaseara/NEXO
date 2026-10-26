@@ -104,6 +104,14 @@ NEXO.secoes = [
         "<b>2 a 8 anos</b> (§4º e §8º): rompimento de obstáculo; abuso de confiança, fraude, escalada ou destreza; chave falsa; concurso de duas ou mais pessoas; bens que comprometem órgãos públicos ou serviços essenciais (§4º, V); fios, cabos e equipamentos de energia, telefonia e dados, e material ferroviário ou metroviário (§8º, que admite expressamente o privilégio).",
         "<b>4 a 10 anos</b>: explosivo ou artefato análogo (§4º-A — <b>hediondo</b>); fraude por dispositivo eletrônico ou informático (§4º-B); veículo levado para outro Estado ou para o exterior (§5º); animal de produção ou animal doméstico (§6º, I); celular, computador, tablet e similares (§6º, II); explosivos e acessórios (§7º, I); <b>arma de fogo</b> (§7º, II); praticado por integrante de facção, milícia ou grupo paramilitar no contexto do grupo (§9º); combustíveis retirados de instalações de produção, armazenamento ou transporte (§10)."
       ]},
+    { h: "Qualificadoras objetivas × subjetivas e formas do furto",
+      p: [
+        "<b>Formas do furto</b>: simples (caput); <b>privilegiado</b> (§2º); <b>majorado</b> (repouso noturno, §1º, só no furto simples); <b>qualificado</b> (§§4º a 10, com limites próprios de pena); <b>qualificado-privilegiado</b> (só com qualificadora objetiva). Também há tentativa. <b>Não existe furto culposo</b> nem furto preterdoloso: o tipo não prevê resultado agravador culposo.",
+        "<b>Qualificadora × majorante</b>: a qualificadora cria novos limites de pena (2 a 8 ou 4 a 10 anos); a majorante é uma fração aplicada sobre a pena já calculada. Por isso o repouso noturno (majorante) não se soma ao furto qualificado (Tema 1087).",
+        "<b>Objetivas</b> (ligadas ao meio, ao modo ou ao objeto do crime): rompimento de obstáculo, escalada, destreza, chave falsa, concurso de pessoas, explosivo, dispositivo eletrônico, veículo levado a outro Estado, e as qualificadoras pela natureza da coisa (celular, arma de fogo, animal, fios e cabos). São compatíveis com o privilégio (Súmula 511).",
+        "<b>Subjetiva</b> (ligada à relação entre agente e vítima): o <b>abuso de confiança</b> é a que o tema trata como incompatível com o privilégio; segundo julgados recentes, também a <b>fraude</b>. Atenção: <b>concurso de pessoas é circunstância objetiva de modo</b> — qualifica o furto e, sendo objetiva, comunica-se ao coautor que dela tem conhecimento (no caso dos cabos, a coautora que ficou ao lado do poste responde pela escalada do parceiro).",
+        "<b>Combinação</b>: furto qualificado por circunstância objetiva + primário + pequeno valor = qualificado-privilegiado. Qualificado por abuso de confiança + pequeno valor = <b>sem privilégio</b>. O §8º (fios, cabos, material ferroviário) manda aplicar o §2º em qualquer caso."
+      ]},
     { h: "Majorantes do furto (causas de aumento)",
       p: [
         "Não são qualificadoras: não trocam os limites da pena; aumentam por fração na 3ª fase. Além do repouso noturno (§1º, só no furto simples), há majorantes próprias de duas formas qualificadas:",
@@ -181,6 +189,14 @@ NEXO.secoes = [
         "Consumação: morte consumada = latrocínio consumado, mesmo sem subtração (Súm. 610). Morte tentada = latrocínio tentado, mesmo com subtração consumada.",
         "Matar o comparsa de propósito para ficar com tudo = roubo + homicídio. Atirar na vítima e acertar o comparsa por erro = latrocínio (<i>aberratio ictus</i>).",
         "Várias mortes e um só patrimônio: o STJ tem decisões nos dois sentidos (crime único, como o STF, ou concurso formal impróprio). Tema sem consenso."
+      ]},
+    { h: "Formas do roubo: qualificado × majorado × resultado agravador",
+      p: [
+        "<b>Formas</b>: próprio e impróprio (§1º); <b>qualificado</b> pelo objeto (§1º-A, 6 a 12 anos); <b>majorado</b> (§2º, +1/3 até metade; §2º-A, +2/3; §2º-B, pena em dobro); <b>qualificado pelo resultado</b> (§3º, lesão grave ou morte); e a forma de facção ou milícia (§4º, pena em triplo, desprezadas as demais causas de aumento; §5º, latrocínio de 20 a 40 anos).",
+        "<b>Objetivas × subjetivas</b>: todas as majorantes do roubo são circunstâncias <b>objetivas</b> de meio, modo ou objeto (concurso de pessoas, arma, restrição de liberdade, transporte de valores, celular, arma de fogo subtraída, veículo levado a outro Estado). A única exigência de ordem subjetiva é a do inciso III: o agente precisa <b>conhecer</b> que a vítima transporta valores. Na facção (§§4º e 5º), não basta ser integrante: o crime tem de estar ligado à atuação do grupo.",
+        "<b>Concurso de pessoas</b>: no roubo é majorante (§2º, II); no furto é qualificadora (§4º, IV). É proibido levar a fração do roubo para o furto (Súmula 442).",
+        "<b>Preterdolo (§3º)</b>: o §3º é a hipótese em que o resultado (lesão grave ou morte) agrava o roubo. Se o resultado for <b>culposo</b>, há crime <b>preterdoloso</b> (dolo na violência, culpa no resultado). Se for <b>doloso</b>, o §3º continua se aplicando (latrocínio doloso), mas aí é crime qualificado pelo resultado, não preterdolo. Preterdolo só existe onde o tipo prevê resultado agravador culposo; a regra vale também para os resultados dos arts. 158, §2º e 159, §§2º e 3º.",
+        "Por ser forma qualificada pelo resultado, as majorantes do §2º <b>não</b> se aplicam ao §3º. E o resultado tem de decorrer da <b>violência</b> empregada no roubo."
       ]},
     { h: "Facções e milícias (§§4º e 5º)",
       p: [
@@ -268,6 +284,10 @@ NEXO.secoes = [
       p: [
         "Crime subsidiário: só se aplica se não houver crime mais específico (ex.: pichação é crime ambiental — Lei 9.605/98, art. 65). Não existe dano culposo no CP; o crime ambiental do art. 62 da Lei 9.605/98, que absorveu o art. 165, admite culpa.",
         "Dano qualificado contra patrimônio público <b>não</b> admite insignificância (STJ). Condômino que danifica coisa fungível dentro da sua cota não comete crime."
+      ]},
+    { h: "Dano qualificado: objetivas × subjetiva",
+      p: [
+        "No parágrafo único do art. 163 (6 meses a 3 anos): violência ou grave ameaça e inflamável ou explosivo são qualificadoras de <b>meio</b> (objetivas); patrimônio público ou de concessionária é qualificadora de <b>objeto</b> (objetiva); <b>motivo egoístico</b> é qualificadora <b>subjetiva</b> (finalidade do agente); o prejuízo considerável é de <b>resultado</b>. A natureza muda a ação penal: motivo egoístico ou prejuízo considerável = ação privada; patrimônio público = ação pública incondicionada."
       ]},
     { h: "Usurpação",
       p: [
@@ -755,6 +775,77 @@ NEXO.cards = [
 { id:"fc60", tipo:"caso", sec:"receptacao", f:"Fazendeiro compra, para revender, cães de raça que deveria saber terem sido furtados. Qual o crime?", v:"<b>Receptação de animal</b> (180-A): 3 a 8 anos. Desde 2026 abrange animal doméstico, com finalidade de produção ou comercialização.", lei:["180A"] },
 { id:"fc61", tipo:"caso", sec:"gerais", f:"Filho e amigo furtam o relógio do pai do filho, de 56 anos. Quem responde? E se o pai tivesse 60?", v:"56 anos: filho <b>isento</b> (181, II); amigo <b>responde</b> (183, II). 60 anos: <b>ambos</b> respondem (183, III).", lei:["181","183"] },
 { id:"fc62", tipo:"caso", sec:"gerais", f:"Sobrinho furta o celular da tia, com quem não mora. A ação depende de representação?", v:"<b>Não.</b> O art. 182, III exige que o agente <b>coabite</b> com o tio ou sobrinho. Sem coabitação: ação incondicionada.", lei:["182"] }
+];
+
+NEXO.importancia = {
+  nivel: 5,
+  texto: "É o tema de Penal que mais rende questão: a banca mistura qualificadora e majorante, cobra as penas novas de 2026 e pede o confronto entre furto, roubo, extorsão e estelionato em casos curtos.",
+  decore: [
+    ["Furto simples", "<b>1 a 6 anos</b> e multa"],
+    ["Repouso noturno (§1º)", "<b>+ metade</b>; só no furto simples (Tema 1087)"],
+    ["Furto qualificado (§4º)", "<b>2 a 8 anos</b>: obstáculo, abuso de confiança/fraude/escalada/destreza, chave falsa, concurso"],
+    ["Furto qualificado (§§4º-B, 5º, 6º, 7º, 9º, 10)", "<b>4 a 10 anos</b>: celular, arma de fogo, animal, outro Estado, eletrônico, facção"],
+    ["Roubo simples", "<b>6 a 10 anos</b> e multa"],
+    ["Majorantes do roubo (§2º)", "<b>+ 1/3 até metade</b>"],
+    ["Arma de fogo no roubo", "<b>+ 2/3</b> (§2º-A); <b>dobro</b> se de uso restrito ou proibido (§2º-B)"],
+    ["Roubo com resultado (§3º)", "Lesão grave <b>7 a 18</b>; morte (latrocínio) <b>24 a 30 anos</b>"],
+    ["Roubo por facção ou milícia", "<b>Triplo</b> da pena do caput (§4º); latrocínio <b>20 a 40 anos</b> (§5º)"],
+    ["Estelionato / receptação", "<b>1 a 5 anos</b> / <b>2 a 6 anos</b>"]
+  ],
+  macetes: [
+    ["Furto qualifica, roubo majora", "Concurso de pessoas <b>qualifica</b> o furto (2 a 8) e <b>majora</b> o roubo (1/3 a metade). Súmula 442: não se usa a fração do roubo no furto."],
+    ["Celular: o mesmo bem, duas leis", "No <b>furto</b> o celular <b>qualifica</b> (4 a 10 anos, §6º, II); no <b>roubo</b> ele <b>majora</b> (§2º, IX). A arma de fogo subtraída segue o mesmo desenho (155, §7º, II × 157, §2º, X)."],
+    ["Privilégio só com qualificadora objetiva", "Qualificado-privilegiado exige qualificadora de meio, modo ou objeto. Abuso de confiança (subjetiva) bloqueia o privilégio (Súmula 511)."],
+    ["Latrocínio olha a morte", "A morte consumada basta, mesmo sem subtração (Súmula 610 do STF). Julgamento pelo juiz singular (Súmula 603 do STF)."]
+  ]
+};
+
+NEXO.comparativo = {
+  titulo: "Qualificado × majorado",
+  head: ["Qualificado (novos limites de pena)", "Majorado (fração sobre a pena)"],
+  rows: [
+    ["<b>O que faz:</b> troca os limites mínimo e máximo. Furto: 2 a 8 (§4º) ou 4 a 10 anos. Roubo: 6 a 12 (§1º-A).", "<b>O que faz:</b> aumenta por fração na 3ª fase. Furto: repouso noturno, + metade. Roubo: §2º (1/3 a metade), §2º-A (+2/3), §2º-B (dobro)."],
+    ["<b>Concurso de pessoas no furto:</b> qualificadora (§4º, IV).", "<b>Concurso de pessoas no roubo:</b> majorante (§2º, II). Não se usa a fração do roubo no furto (Súmula 442)."],
+    ["<b>Celular e arma de fogo subtraídos no furto:</b> qualificadoras de 4 a 10 anos (§6º, II e §7º, II).", "<b>Celular e arma de fogo subtraídos no roubo:</b> majorantes de 1/3 a metade (§2º, IX e X)."],
+    ["<b>Privilégio:</b> o furto qualificado só admite privilégio se a qualificadora for objetiva (Súmula 511). Abuso de confiança bloqueia.", "<b>Repouso noturno:</b> não incide no furto qualificado (Tema 1087); o §1º é majorante só do furto simples."],
+    ["<b>Resultado no roubo (§3º):</b> lesão grave (7 a 18) ou morte (24 a 30). Preterdolo se o resultado é culposo; se doloso, qualificado pelo resultado.", "<b>Majorantes do §2º:</b> não se aplicam ao §3º. Com várias majorantes, passar de 1/3 exige fundamentação concreta (Súmula 443)."],
+    ["<b>Facção ou milícia no furto (§9º):</b> qualificadora de 4 a 10 anos, no contexto do grupo.", "<b>Facção ou milícia no roubo (§4º):</b> pena do caput em triplo, desprezadas as demais causas de aumento."],
+    ["<b>Dano (art. 163, p. único):</b> 6 meses a 3 anos; violência, explosivo e patrimônio público são objetivas; motivo egoístico é subjetivo.", "<b>Estelionato (§§2º-B, 3º e 4º):</b> majorantes por fração (servidor no exterior; entidade pública; idoso ou vulnerável)."]
+  ]
+};
+
+NEXO.prova = [
+  { tipo:"ce", enun:"Um furto qualificado pelo rompimento de obstáculo, cometido durante o repouso noturno, tem a pena aumentada de metade, pois o aumento do §1º do art. 155 alcança todas as formas do crime.", gab:"Errado", com:"O repouso noturno é majorante do furto simples. Segundo o Tema 1087, não incide no furto qualificado." },
+  { tipo:"ce", enun:"É possível reconhecer o privilégio do §2º do art. 155 em furto qualificado pelo rompimento de obstáculo, se o réu for primário e a coisa for de pequeno valor.", gab:"Certo", com:"Súmula 511: o furto qualificado-privilegiado é possível quando a qualificadora é de ordem objetiva, como o rompimento de obstáculo." },
+  { tipo:"ce", enun:"A babá primária que, abusando da confiança dos patrões, subtrai uma joia de pequeno valor responde por furto qualificado-privilegiado.", gab:"Errado", com:"O abuso de confiança é qualificadora de natureza subjetiva, incompatível com o privilégio." },
+  { tipo:"ce", enun:"Se, no curso de um roubo, a vítima morre, mas o agente não chega a levar nenhum bem, o crime é roubo tentado em concurso com homicídio.", gab:"Errado", com:"Súmula 610 do STF: há latrocínio consumado quando a morte se consuma, ainda que a subtração não se complete. A morte pode ser dolosa ou culposa, desde que decorra da violência." },
+  { tipo:"caso", enun:"Em junho de 2026, dois homens, em conjunto, ameaçam um pedestre com uma faca e levam seu celular. Qual o crime e como a pena é calculada?", com:"Roubo (6 a 10 anos), com as majorantes do §2º: concurso de pessoas (II), arma branca (VII) e subtração de celular (IX), todas de ordem objetiva. O aumento é de 1/3 até metade, e passar de 1/3 exige fundamentação concreta, não basta contar as majorantes (Súmula 443). Não é hediondo, porque a arma é branca." },
+  { tipo:"caso", enun:"Em junho de 2026, de madrugada, Carlos, réu primário, entra numa casa sem arrombar e leva um celular de pequeno valor, sem violência. Qual o enquadramento?", com:"Furto qualificado pelo celular (§6º, II), com pena de 4 a 10 anos. O repouso noturno (§1º) não se aplica ao furto qualificado (Tema 1087). Como a qualificadora é de ordem objetiva, a discussão sobre o privilégio do §2º depende apenas de primariedade e pequeno valor (até 1 salário mínimo), conforme a Súmula 511." }
+];
+
+NEXO.resumo = [
+  "<b>Qualificadora</b> troca os limites de pena (furto: 2 a 8 ou 4 a 10 anos; roubo: 6 a 12 no §1º-A); <b>majorante</b> aumenta por fração, na 3ª fase.",
+  "O <b>repouso noturno</b> (+ metade, desde 04/05/2026) é majorante do furto simples e não incide no furto qualificado (Tema 1087).",
+  "<b>Concurso de pessoas</b> qualifica o furto e majora o roubo; é circunstância objetiva de modo e não se troca a fração de um pelo outro (Súmula 442).",
+  "Qualificadoras <b>objetivas</b> (meio, modo, objeto) admitem o privilégio (Súmula 511); a <b>subjetiva</b> (abuso de confiança) não. No dano, o motivo egoístico é a qualificadora subjetiva.",
+  "Celular e arma de fogo <b>qualificam o furto</b> (4 a 10 anos) e <b>majoram o roubo</b> (1/3 a metade); a arma de fogo empregada no roubo soma 2/3, e vira o dobro se for de uso restrito ou proibido.",
+  "O roubo do §3º (lesão grave: 7 a 18; morte: 24 a 30) é a forma com resultado agravador: <b>preterdoloso</b> se o resultado é culposo, e qualificado pelo resultado se doloso. Os aumentos do §2º não se aplicam a ele.",
+  "Latrocínio consuma-se com a morte, mesmo sem subtração (Súmula 610), e é de competência do juiz singular (Súmula 603).",
+  "Facção ou milícia exige nexo com a atuação do grupo: furto qualificado (§9º), roubo em triplo (§4º) e latrocínio de 20 a 40 anos (§5º).",
+  "Leis de 2025 e 2026 mudaram as penas; lei mais grave não retroage."
+];
+
+NEXO.checklist = [
+  "Explicar a diferença entre qualificadora e majorante e dizer em que fase da pena cada uma atua.",
+  "Citar as qualificadoras do §4º do art. 155 e separar as objetivas da subjetiva.",
+  "Dizer quando cabe o furto qualificado-privilegiado e por que o abuso de confiança o impede.",
+  "Explicar por que o repouso noturno não se soma ao furto qualificado.",
+  "Comparar concurso de pessoas no furto (qualifica) e no roubo (majora) e citar a Súmula 442.",
+  "Comparar celular e arma de fogo no furto e no roubo.",
+  "Listar as majorantes do §2º do art. 157 e as frações dos §§2º-A e 2º-B.",
+  "Distinguir resultado culposo (preterdolo) de resultado doloso no §3º do art. 157, sem falar em homicídio preterdoloso.",
+  "Resolver as combinações de consumação e tentativa no latrocínio.",
+  "Diferenciar a qualificadora de facção no furto do triplo no roubo."
 ];
 
 // Questões do banco do NEXO ligadas ao tema (somente as conferidas).
