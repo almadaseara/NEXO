@@ -201,6 +201,16 @@ export interface ContextPlan { key: string; content: string; figure_refs: any[] 
 export interface InsertPlan { question_number: number; context_key: string | null; row: Record<string, unknown> }
 export interface UpdatePlan { id: string; question_number: number; context_key: string | null; patch: Record<string, unknown> }
 
+// Comando de bloco ("Julgue os próximos itens...") que ficou colado no fim do enunciado de uma questão que já
+// tem texto-base: é instrução do bloco, não do item. Remove só a última frase, e só se sobrar enunciado.
+export function tirarComandoFinal(enunciado: string, temContexto: boolean): string {
+  if (!temContexto) return enunciado;
+  const m = enunciado.match(/(^|[.!?]\s+)([^.!?]*\bjulgue\b[^.!?]*[.!?]?)\s*$/i);
+  if (!m) return enunciado;
+  const resto = enunciado.slice(0, (m.index ?? 0) + m[1].length).trim();
+  return resto.length >= 15 ? resto : enunciado;
+}
+
 // method: quem leu (claude_pdf_v1, gemini_pdf_v1, claude_routine_v1). only: números pedidos numa leitura
 // direcionada; o resto da resposta é ignorado. Toda leitura por IA leva o alerta "lido_por_ia" para a revisão.
 export function planIngestion(ai: any, existing: ExistingRow[], officialAnswers: Map<number, string>, src: SourceMeta & { exam_pdf_url?: string | null; answer_key_pdf_url?: string | null; provider?: string | null },
@@ -285,7 +295,7 @@ export function planIngestion(ai: any, existing: ExistingRow[], officialAnswers:
       question_number: n,
       context_key: ctxKey,
       row: {
-        question_number: n, statement, options, answer, question_type: isTF ? "true_false" : "multiple_choice",
+        question_number: n, statement: tirarComandoFinal(statement, !!ctxKey), options, answer, question_type: isTF ? "true_false" : "multiple_choice",
         board: src.board ?? null, year: src.year ?? null, institution: src.institution ?? null, role_name: src.role_name ?? null,
         status,
         validation_method: official ? "official_answer_key_pdf" : "ai_read_answer_key",

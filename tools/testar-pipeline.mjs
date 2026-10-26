@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { pairCebraspeFiles, isPoliceEvent, examSuffix, answerSuffix } from '../supabase/functions/source-resolver/cebraspe.ts';
 import {
   EXTRACTION_SCHEMA, planIngestion, parseCebraspeAnswerTable, splitRange, classifySchema, buildExtractionInstructions, OUT_OF_CATALOG,
+  tirarComandoFinal,
 } from '../supabase/functions/nexo-ai/lib.ts';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -55,6 +56,12 @@ assert.equal(isPoliceEvent({ eventoURL: 'PREF_BOA_VISTA_23_GUARDA', eventoNomeCo
 const cls = classifySchema([{ module_id: 'adm_atos', discipline_name: 'Direito Administrativo', subject_name: 'Atos' }]);
 assert.deepEqual(cls.properties.classificacoes.items.properties.module_id.enum, ['adm_atos', OUT_OF_CATALOG]);
 assert.match(buildExtractionInstructions({ board: 'CEBRASPE', year: 2021 }, { from: 51, to: 120 }), /SOMENTE as questões de número 51 a 120/);
+// comando de bloco colado no fim do enunciado: sai do item só quando há texto-base e sobra enunciado
+assert.equal(tirarComandoFinal('Os receptores de glicocorticoides são classificados como receptores intracelulares. Julgue os itens a seguir, relativos à farmacocinética.', true), 'Os receptores de glicocorticoides são classificados como receptores intracelulares.');
+assert.equal(tirarComandoFinal('A água ferve a 100 ºC ao nível do mar. Acerca de física, julgue os itens subsequentes.', true), 'A água ferve a 100 ºC ao nível do mar.');
+assert.equal(tirarComandoFinal('Os receptores de glicocorticoides são classificados como receptores intracelulares. Julgue os itens a seguir.', false), 'Os receptores de glicocorticoides são classificados como receptores intracelulares. Julgue os itens a seguir.');
+assert.equal(tirarComandoFinal('Julgue o item seguinte.', true), 'Julgue o item seguinte.');
+assert.equal(tirarComandoFinal('Julgue os itens: o item trata de X. A capital do Brasil é Brasília.', true), 'Julgue os itens: o item trata de X. A capital do Brasil é Brasília.');
 
 // ---------- gabarito Cebraspe (tabela C/E/X) ----------
 const gab = parseCebraspeAnswerTable('1 2 3 4 5 6 C E X C E C 7 8 9 10 11 E E C C X');
