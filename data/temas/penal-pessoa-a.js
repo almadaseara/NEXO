@@ -485,6 +485,50 @@ cards:[
 { id:"fm9", tipo:"caso", sec:"majorantes", f:"Agente mata a ex-companheira grávida, sabendo da gestação. Quais crimes?", v:"<b>Feminicídio majorado</b> (§2º, I) <b>+ aborto sem consentimento</b> (art. 125), em concurso. Sem bis in idem (STJ).", lei:["cp121a2"], j:["stj-fem-aborto"] },
 { id:"fm10", tipo:"juris", sec:"tipo", f:"No feminicídio, o motivo torpe ainda pode ser considerado?", v:"Sim, como <b>agravante genérica</b> (art. 61, II, a). A dupla qualificadora torpe + feminicídio era aceita pelo STJ antes da Lei 14.994.", lei:["cp121a"], j:["stj-torpe-fem"] }
 ],
+importancia:{ nivel:5,
+  texto:"Tipo novo e muito cobrado em letra de lei: a banca testa pena, vigência, razões de gênero, majorantes e a diferença para o homicídio qualificado.",
+  decore:[
+    ["Pena do feminicídio (art. 121-A)","<b>20 a 40 anos</b>, reclusão"],
+    ["Vigência da Lei 14.994/2024","<b>10/10/2024</b>; antes, é homicídio qualificado"],
+    ["Razões da condição do sexo feminino (§ 1º)","<b>violência doméstica e familiar</b> ou <b>menosprezo/discriminação</b> à mulher"],
+    ["Majorantes (§ 2º)","<b>1/3 até a metade</b>"],
+    ["Coautor (§ 3º)","elementares do § 1º <b>se comunicam</b>"],
+    ["Súmula 600 do STJ","violência doméstica <b>não exige coabitação</b>"],
+    ["Natureza","hediondo; júri"],
+    ["Legítima defesa da honra","<b>proibida</b> (ADPF 779)"]],
+  macetes:[
+    ["Mulher sozinha não basta","Precisa de razão de gênero: contexto doméstico/familiar ou menosprezo/discriminação."],
+    ["O que era qualificadora virou majorante","Meio cruel, recurso que dificulta a defesa e arma restrita agora aumentam de 1/3 até a metade."],
+    ["Lei mais grave não retroage","Fato até 09/10/2024: homicídio qualificado (12 a 30). Depois: 121-A (20 a 40)."]] },
+comparativo:{ titulo:"Qualificado × majorado no feminicídio e no homicídio", head:["Homicídio (art. 121)","Feminicídio (art. 121-A)"], rows:[
+  ["<b>Pena-base:</b> simples 6 a 20; qualificado 12 a 30","<b>Pena-base:</b> 20 a 40 anos, já no tipo"],
+  ["<b>Meio cruel, recurso que dificulta a defesa, arma restrita:</b> qualificadoras","<b>Mesmas circunstâncias:</b> majorantes de 1/3 até a metade"],
+  ["<b>Vítima menor de 14:</b> qualificadora (IX)","<b>Vítima menor de 14, maior de 60, com deficiência:</b> majorante (§ 2º, II)"],
+  ["<b>Coautor:</b> circunstância pessoal não se comunica (art. 30)","<b>Coautor:</b> elementares do § 1º se comunicam (§ 3º)"],
+  ["<b>Hediondez:</b> qualificado sempre; simples só em grupo de extermínio","<b>Hediondez:</b> sempre (Lei 8.072, art. 1º, I-B)"]]},
+prova:[
+  { tipo:"ce", enun:"Matar uma mulher em discussão de trânsito, sem vínculo com a vítima nem motivação de gênero, configura feminicídio.", gab:"Errado", com:"Faltam as razões da condição do sexo feminino. É homicídio." },
+  { tipo:"ce", enun:"O ex-namorado que nunca coabitou com a vítima e a mata por não aceitar o fim do namoro responde por feminicídio.", gab:"Certo", com:"Relação íntima de afeto basta; a coabitação não é exigida (Súmula 600 do STJ)." },
+  { tipo:"ce", enun:"O feminicídio praticado em 2023 é julgado pelo art. 121-A se o júri ocorrer em 2026.", gab:"Errado", com:"Aplica-se a lei do tempo do fato. A Lei 14.994/2024 é mais grave e não retroage." },
+  { tipo:"ce", enun:"Quem ajuda o marido a matar a esposa, conhecendo o contexto, responde por feminicídio.", gab:"Certo", com:"As elementares do § 1º se comunicam ao coautor ou partícipe (§ 3º)." },
+  { tipo:"ce", enun:"No feminicídio, o emprego de meio cruel é qualificadora que eleva a pena para 30 a 40 anos.", gab:"Errado", com:"No 121-A é majorante, com aumento de 1/3 até a metade sobre a pena de 20 a 40 anos." }],
+resumo:[
+  "Feminicídio é tipo autônomo (art. 121-A): matar mulher por razões da condição do sexo feminino, 20 a 40 anos, hediondo.",
+  "Razões de gênero: violência doméstica e familiar ou menosprezo/discriminação à condição de mulher.",
+  "Vigência em 10/10/2024. Antes, era qualificadora do homicídio (inciso VI); lei mais grave não retroage.",
+  "Majorantes do § 2º: 1/3 até a metade (gestação, menor de 14, maior de 60, presença de descendente/ascendente, medida protetiva descumprida, meio cruel, recurso que dificulta a defesa, arma restrita).",
+  "Coautor: elementares do § 1º se comunicam (§ 3º).",
+  "Súmula 600 do STJ: não se exige coabitação. Legítima defesa da honra é vedada (ADPF 779).",
+  "Feminicídio contra gestante e aborto sem consentimento podem ser imputados em conjunto (STJ)."],
+checklist:[
+  "Dizer a pena do feminicídio e a data de vigência da Lei 14.994/2024",
+  "Explicar as duas razões da condição do sexo feminino (§ 1º)",
+  "Diferenciar feminicídio de homicídio de mulher sem razão de gênero",
+  "Citar as majorantes do § 2º e o aumento de 1/3 até a metade",
+  "Explicar o que mudou de qualificadora para majorante",
+  "Aplicar o § 3º à coautoria e à participação",
+  "Aplicar a Súmula 600 do STJ",
+  "Resolver o direito intertemporal (fato anterior a 10/10/2024)"],
 questoes:[]
 };
 
@@ -542,6 +586,41 @@ cards:[
 { id:"vc6", tipo:"ce", sec:"majorantes", f:"Certo ou errado: aplica-se ao vicaricídio o aumento de 1/3 do art. 121, §4º, se a vítima tem mais de 60 anos.", v:"<b>Errado.</b> O 121-B tem majorantes próprias (inclui pessoa idosa no inciso II, de 1/3 até a metade).", lei:["cp121bpu"] },
 { id:"vc7", tipo:"numero", sec:"tipo", f:"Vicaricídio: pena, data de vigência e natureza.", v:"<b>20 a 40 anos</b>; vigência em <b>10/04/2026</b>; <b>hediondo</b> (Lei 8.072, art. 1º, I-C).", lei:["cp121b"] }
 ],
+importancia:{ nivel:4,
+  texto:"Tipo novo (Lei 15.384/2026). A cobrança tende a ser de letra da lei: vítimas, fim específico, contexto doméstico, pena e majorantes.",
+  decore:[
+    ["Pena do vicaricídio (art. 121-B)","<b>20 a 40 anos</b>, reclusão"],
+    ["Vigência","<b>10/04/2026</b>"],
+    ["Fim específico","causar à mulher <b>sofrimento, punição ou controle</b>"],
+    ["Contexto","<b>violência doméstica e familiar</b>"],
+    ["Majorantes","<b>1/3 até a metade</b>"],
+    ["Natureza","hediondo (Lei 8.072, art. 1º, I-C)"]],
+  macetes:[
+    ["Mata o terceiro para atingir a mulher","Descendente, ascendente, dependente, enteado ou pessoa sob guarda ou responsabilidade dela."],
+    ["Sem violência doméstica, não é 121-B","Fora do contexto, o crime é homicídio, em regra qualificado."]] },
+comparativo:{ titulo:"Feminicídio × vicaricídio", head:["Feminicídio (121-A)","Vicaricídio (121-B)"], rows:[
+  ["<b>Quem morre:</b> a mulher","<b>Quem morre:</b> descendente, ascendente, dependente, enteado ou pessoa sob guarda/responsabilidade da mulher"],
+  ["<b>Contexto:</b> violência doméstica OU menosprezo/discriminação","<b>Contexto:</b> somente violência doméstica e familiar"],
+  ["<b>Dolo:</b> comum","<b>Dolo:</b> com fim de causar sofrimento, punição ou controle à mulher"],
+  ["<b>Vigência:</b> 10/10/2024","<b>Vigência:</b> 10/04/2026"],
+  ["<b>Presença:</b> física ou virtual de descendente/ascendente","<b>Presença:</b> da mulher que se quer atingir"]]},
+prova:[
+  { tipo:"ce", enun:"O agiota que mata o pai da devedora para cobrar a dívida comete vicaricídio.", gab:"Errado", com:"Falta o contexto de violência doméstica e familiar contra a mulher. É homicídio." },
+  { tipo:"ce", enun:"O vicaricídio só se consuma se a mulher efetivamente sofrer.", gab:"Errado", com:"O fim específico precisa existir, mas não precisa ser alcançado. Consuma-se com a morte da vítima direta." },
+  { tipo:"ce", enun:"Aplica-se ao vicaricídio o aumento de 1/3 do art. 121, § 4º, para vítima maior de 60 anos.", gab:"Errado", com:"O art. 121-B tem majorantes próprias no parágrafo único." },
+  { tipo:"caso", enun:"Em maio de 2026, o ex-marido mata o filho do casal para fazer a ex-mulher sofrer. Qual o crime e a consequência de pena?", com:"Vicaricídio (art. 121-B), majorado de 1/3 até a metade por ser a vítima criança ou adolescente. Hediondo." }],
+resumo:[
+  "Vicaricídio (art. 121-B): matar descendente, ascendente, dependente, enteado ou pessoa sob guarda/responsabilidade da mulher.",
+  "Fim específico: causar sofrimento, punição ou controle, em contexto de violência doméstica e familiar.",
+  "Pena de 20 a 40 anos, hediondo, vigência em 10/04/2026; fatos anteriores seguem como homicídio qualificado.",
+  "Majorantes (1/3 até a metade): presença da mulher; vítima criança, adolescente, idosa ou com deficiência; medida protetiva descumprida.",
+  "Admite tentativa; a Lei Maria da Penha passou a prever a violência vicária."],
+checklist:[
+  "Listar as vítimas possíveis do vicaricídio",
+  "Explicar o fim específico e o contexto exigidos",
+  "Dizer pena, hediondez e vigência",
+  "Citar as majorantes do parágrafo único",
+  "Diferenciar vicaricídio de homicídio e de feminicídio"],
 questoes:[]
 };
 
