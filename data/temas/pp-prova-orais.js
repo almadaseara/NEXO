@@ -178,6 +178,54 @@ cards:[
 { id:"po15", tipo:"caso", sec:"confissao", f:"O réu confessa o fato mas alega legítima defesa. Aplica-se a atenuante da confissão?",
   v:"Sim, a jurisprudência admite a atenuante mesmo na confissão <b>qualificada</b>, geralmente em fração menor, desde que a confissão tenha servido de base para a condenação.", lei:["cpp200"] }
 ],
+importancia:{ nivel:5,
+  texto:"Interrogatório, confissão, ofendido, testemunha e reconhecimento são cobrados em detalhes: direito ao silêncio, limites do número de testemunhas, ordem das perguntas (art. 212) e o rito obrigatório do art. 226.",
+  decore:[
+    ["Interrogatório","natureza <b>mista</b>, com predomínio de <b>meio de defesa</b>; silêncio não abrange a <b>qualificação</b>"],
+    ["Condução coercitiva para interrogatório","<b>não recepcionada</b> (ADPF 395 e 444)"],
+    ["Valor da confissão (art. 197)","<b>relativo</b>; divisível e retratável"],
+    ["Confissão espontânea","<b>atenuante</b> (CP, art. 65, III, d), mesmo a qualificada"],
+    ["Ofendido","<b>sem compromisso</b>; mentira dele pode ser denunciação caluniosa, não falso testemunho"],
+    ["Número de testemunhas","<b>8</b> (ordinário), <b>5</b> (sumário), <b>3</b> (sumaríssimo), por fato"],
+    ["Recusa de depor (art. 206)","ascendente, descendente, cônjuge, irmão, etc.; ouvidos, não prestam compromisso (art. 208)"],
+    ["Inquirição (art. 212)","<b>sistema direto</b>: as partes perguntam; o juiz complementa"],
+    ["Reconhecimento (art. 226)","rito <b>obrigatório</b>: descrição, alinhamento, auto com duas testemunhas"],
+    ["Súmula 155 do STF","falta de intimação do ato deprecado: nulidade <b>relativa</b>"]],
+  macetes:[
+    ["Silêncio não cobre qualificação","O réu pode calar quanto aos fatos, mas deve se identificar."],
+    ["Ofendido não jura","Sem compromisso: não responde por falso testemunho."],
+    ["Fotografia é só o começo","Reconhecimento fotográfico é etapa preliminar, nunca a prova isolada."]] },
+comparativo:{ titulo:"Confissão × declarações do ofendido × testemunha", head:["Confissão e ofendido","Testemunha"], rows:[
+  ["<b>Compromisso:</b> o acusado e o ofendido não prestam compromisso de dizer a verdade","<b>Compromisso:</b> presta, sob pena de falso testemunho (CP, art. 342)"],
+  ["<b>Valor:</b> confissão é relativa, confrontada com as demais provas","<b>Valor:</b> depende da coerência com as demais provas; a indireta (de ouvir dizer) vale menos"],
+  ["<b>Crime em caso de mentira:</b> do ofendido, denunciação caluniosa; o acusado não responde","<b>Crime em caso de mentira:</b> falso testemunho"],
+  ["<b>Confissão extrajudicial:</b> só orienta outras provas, se documentada em estabelecimento oficial","<b>Recusa:</b> parentes próximos podem recusar-se (art. 206); informantes não juram (art. 208)"],
+  ["<b>Delação:</b> exige acordo, homologação e corroboração; sozinha não condena o delatado","<b>Perguntas:</b> sistema direto (art. 212), as partes perguntam e o juiz complementa"]]},
+prova:[
+  { tipo:"ce", enun:"O silêncio do acusado no interrogatório não importa confissão e não pode ser interpretado em prejuízo da defesa, mas não alcança a qualificação.", gab:"Certo", com:"Art. 186: o silêncio não abrange a qualificação, e não é confissão." },
+  { tipo:"ce", enun:"A condução coercitiva do investigado para interrogatório foi considerada não recepcionada pelo STF.", gab:"Certo", com:"ADPF 395 e 444." },
+  { tipo:"ce", enun:"A confissão é a rainha das provas e dispensa confronto com os demais elementos dos autos.", gab:"Errado", com:"Art. 197: a confissão tem valor relativo e é confrontada com as demais provas." },
+  { tipo:"ce", enun:"O ofendido que mente em juízo comete falso testemunho, pois presta compromisso como as testemunhas.", gab:"Errado", com:"O ofendido não presta compromisso e não responde por falso testemunho; pode haver denunciação caluniosa." },
+  { tipo:"ce", enun:"O rito de reconhecimento previsto no art. 226 do CPP é mera recomendação, de observância facultativa.", gab:"Errado", com:"O rito é obrigatório; o reconhecimento por fotografia é apenas etapa preliminar." },
+  { tipo:"caso", enun:"No rito ordinário, a defesa arrola 10 testemunhas para um único fato. Qual o limite?", com:"O limite é de 8 testemunhas por fato e por réu no rito ordinário (5 no sumário), observadas as hipóteses em que certas testemunhas não entram na conta." }],
+resumo:[
+  "Interrogatório é meio de defesa de natureza mista; o réu tem direito ao silêncio, que não abrange a qualificação.",
+  "Condução coercitiva para interrogatório foi considerada não recepcionada (ADPF 395 e 444).",
+  "Confissão tem valor relativo, é divisível e retratável; a espontânea é atenuante, mesmo a qualificada.",
+  "Confissão extrajudicial só vale se documentada em estabelecimento oficial e orienta a busca de outras provas.",
+  "O ofendido não presta compromisso e suas declarações têm especial relevância nos crimes clandestinos.",
+  "Testemunhas: 8 no ordinário, 5 no sumário, por fato; parentes podem recusar-se; informantes não prestam compromisso.",
+  "Inquirição no sistema direto (art. 212): as partes perguntam; o juiz apenas complementa.",
+  "Reconhecimento exige o rito do art. 226; acareação coloca frente a frente quem divergiu sobre fato relevante."],
+checklist:[
+  "Explicar a natureza do interrogatório e o direito ao silêncio",
+  "Citar a ADPF 395 e 444 sobre condução coercitiva",
+  "Distinguir confissão simples, qualificada e extrajudicial",
+  "Explicar o valor das declarações do ofendido",
+  "Dizer o limite de testemunhas por rito",
+  "Aplicar as hipóteses de recusa e de informante (arts. 206 a 208)",
+  "Descrever o sistema direto de perguntas (art. 212)",
+  "Descrever o rito do reconhecimento (art. 226) e a acareação"],
 questoes:[]
 };
 })();

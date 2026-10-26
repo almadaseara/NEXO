@@ -37,7 +37,10 @@ secoes:[
     "<b>Art. 32</b>: abuso, maus-tratos, ferir ou mutilar animais silvestres, domésticos ou domesticados, nativos ou exóticos: detenção de 3 meses a 1 ano e multa. §1º: experiência dolorosa ou cruel em animal vivo, ainda que para fins didáticos ou científicos, havendo alternativa. <b>§1º-A</b>: se cão ou gato, <b>reclusão de 2 a 5 anos</b>, multa e proibição da guarda. §1º-B: tatuagem ou piercing em cães e gatos por fins estéticos. §1º-C: provocar desastre ambiental que prejudique animais. <b>§2º</b>: aumento de <b>1/6 a 1/3</b> se há morte do animal.",
     "<b>Art. 30</b> exportar peles e couros de anfíbios e répteis em bruto sem autorização: reclusão de 1 a 3 anos e multa. <b>Art. 31</b> introduzir espécime animal sem parecer técnico oficial e licença: detenção de 3 meses a 1 ano e multa. <b>Art. 33</b> perecimento de fauna aquática por efluentes ou carreamento de materiais: detenção de 1 a 3 anos, multa ou ambas.",
     "<b>Pesca</b>: <b>art. 34</b> pescar em período proibido ou local interditado: detenção de 1 a 3 anos ou multa ou ambas (também espécies/tamanhos proibidos, quantidade excessiva, petrechos proibidos, transportar ou comercializar produto de pesca proibida). <b>Art. 35</b> pescar com <b>explosivos</b> (ou substância que produza efeito semelhante) ou <b>substâncias tóxicas</b>: <b>reclusão de 1 a 5 anos</b>. Insignificância: STJ afastou o crime quando o pescador devolve vivo o único peixe, sem atingir espécie ameaçada (REsp 1.409.051)."],
-  teoria:[],
+  teoria:[
+    { h:"Formas do crime contra a fauna", p:[
+      "Simples: art. 29, caput, e art. 32, caput. Qualificada: art. 32, §1º-A, quando a vítima é cão ou gato (reclusão de 2 a 5 anos). Majorada: art. 29 (metade em espécie rara ou ameaçada, período proibido, noite e outras hipóteses; até o triplo na caça profissional) e art. 32, §2º (1/6 a 1/3 se há morte do animal).",
+      "As circunstâncias do art. 29 são objetivas (espécie, época, lugar, meio); a caça profissional liga-se à condição do agente. Todas incidem na terceira fase da pena. Não há tipo preterdoloso nesses artigos."]}],
   pegadinhas:["Art. 29 é detenção; o maus-tratos de <b>cão ou gato</b> é reclusão (2 a 5 anos).",
     "Caça profissional: aumento <b>até o triplo</b>; demais majorantes: <b>metade</b>.",
     "Morte do animal (art. 32 §2º): <b>1/6 a 1/3</b>.",
@@ -159,6 +162,60 @@ cards:[
 { id:"am25", tipo:"numero", sec:"outros", f:"Prazos do processo administrativo ambiental (art. 71)?", v:"<b>20</b> dias para defesa; <b>30</b> dias para julgamento; <b>20</b> dias para recurso; <b>5</b> dias para pagar a multa.", lei:["l9605a71"] },
 { id:"am26", tipo:"distincao", sec:"outros", f:"Quem lavra o auto de infração ambiental e qual destino dos animais apreendidos?", v:"Servidores do <b>Sisnama</b> designados e agentes das <b>Capitanias dos Portos</b>. Animais: libertados em seu habitat; se inviável, zoológicos ou entidades.", lei:["l9605a71"] }
 ],
+importancia:{ nivel:4,
+  texto:"A Lei de Crimes Ambientais cai por causa da responsabilidade penal da pessoa jurídica, das penas alternativas diferenciadas (sursis de 3 anos) e dos tipos de maior incidência: art. 29, art. 32, arts. 54 e 56.",
+  decore:[
+    ["Sursis ambiental (art. 16)","condenação até <b>3 anos</b> (CP: 2)"],
+    ["Substituição por restritiva (art. 7º)","crime culposo <b>ou</b> pena inferior a <b>4 anos</b>"],
+    ["Interdição temporária (art. 10)","<b>5 anos</b> (doloso) e <b>3 anos</b> (culposo)"],
+    ["Art. 29 (fauna silvestre)","<b>detenção de 6 meses a 1 ano</b> e multa"],
+    ["Art. 32, §1º-A (cão ou gato)","<b>reclusão de 2 a 5 anos</b>, multa e proibição da guarda"],
+    ["Art. 35 (pesca com explosivos ou tóxicos)","<b>reclusão de 1 a 5 anos</b>"],
+    ["Art. 54 (poluição)","<b>reclusão de 1 a 4 anos</b> e multa; crime formal"],
+    ["Art. 56 (produto perigoso)","<b>reclusão de 1 a 4 anos</b> e multa; perigo abstrato"],
+    ["Art. 69-A (laudo falso)","<b>reclusão de 3 a 6 anos</b>"],
+    ["Prazos administrativos (art. 71)","<b>20 – 30 – 20 – 5</b> dias"]],
+  macetes:[
+    ["Detenção para animais, reclusão para cão e gato","O art. 29 e o caput do art. 32 são detenção; o §1º-A (cão ou gato) pula para reclusão de 2 a 5 anos."],
+    ["Metade, mas o profissional paga mais","Art. 29: aumento de metade nas hipóteses do §4º; <b>até o triplo</b> na caça profissional."],
+    ["Pessoa jurídica sem dupla imputação","O STF admite a responsabilização da PJ independentemente da pessoa física (RE 548.181)."],
+    ["Prazos 20-30-20-5","Defesa 20 dias, julgamento 30, recurso 20, pagamento da multa 5 dias."]] },
+comparativo:{ titulo:"Qualificado × majorado (arts. 29 e 32)", head:["Forma qualificada / tipo autônomo","Forma majorada (causa de aumento)"], rows:[
+  ["<b>O que faz:</b> cria nova faixa de pena (art. 32, §1º-A: cão ou gato, reclusão de 2 a 5 anos)","<b>O que faz:</b> soma fração à pena já calculada (art. 29, §4º e §5º; art. 32, §2º)"],
+  ["<b>Gatilho:</b> a espécie da vítima (cão ou gato)","<b>Gatilho no art. 29:</b> espécie rara ou ameaçada, período proibido, noite, abuso de licença, unidade de conservação, destruição em massa"],
+  ["<b>Gatilho no art. 32:</b> maus-tratos a cão ou gato","<b>Gatilho no art. 32, §2º:</b> morte do animal (aumento de 1/6 a 1/3)"],
+  ["<b>Natureza:</b> objetiva, ligada ao objeto material do crime","<b>Natureza:</b> objetiva (meio, tempo, lugar, resultado), com a caça profissional como circunstância do agente (até o triplo)"],
+  ["<b>Quando entra:</b> define a pena-base","<b>Quando entra:</b> terceira fase da dosimetria"],
+  ["<b>Efeito prático:</b> muda a natureza da pena de detenção para reclusão","<b>Efeito prático:</b> mantém a espécie da pena e eleva o patamar"]]},
+prova:[
+  { tipo:"ce", enun:"A responsabilidade penal da pessoa jurídica por crime ambiental depende da condenação simultânea de uma pessoa física que tenha atuado em seu nome.", gab:"Errado", com:"O STF (RE 548.181) admite a responsabilização da pessoa jurídica independentemente da pessoa física, abandonando a teoria da dupla imputação." },
+  { tipo:"ce", enun:"Na Lei de Crimes Ambientais, o sursis pode ser concedido às condenações de até 3 anos.", gab:"Certo", com:"Art. 16: o limite é de 3 anos, superior ao do CP." },
+  { tipo:"ce", enun:"A pena de maus-tratos a cão ou gato é a mesma do caput do art. 32: detenção de 3 meses a 1 ano e multa.", gab:"Errado", com:"O §1º-A prevê reclusão de 2 a 5 anos, multa e proibição da guarda." },
+  { tipo:"ce", enun:"O crime de poluição do art. 54 exige comprovação de dano efetivo à saúde humana por meio de perícia.", gab:"Errado", com:"É crime formal: bastam níveis de poluição que possam resultar em dano, sem perícia obrigatória (STJ, EREsp 1.417.279)." },
+  { tipo:"caso", enun:"Pescador pesca com dinamite em local permitido. Qual crime e qual a pena?", com:"Art. 35: pesca com explosivos ou substâncias tóxicas, reclusão de 1 a 5 anos. Não se aplica o art. 34 (período ou local proibido), que tem detenção de 1 a 3 anos ou multa." },
+  { tipo:"caso", enun:"Pessoa derruba floresta em terra pública para plantar e manter a própria família, necessitando daquilo para subsistência imediata. Há crime do art. 50-A?", com:"Não: o §1º exclui o crime quando a conduta é necessária à subsistência imediata do agente ou de sua família." }],
+resumo:[
+  "O <b>art. 2º</b> pune quem concorre e o dirigente que, sabendo do crime, deixa de impedi-lo (omissão imprópria).",
+  "A <b>pessoa jurídica</b> responde penalmente quando a infração decorre de decisão do representante ou do colegiado, em seu interesse ou benefício, sem excluir a responsabilidade das pessoas físicas.",
+  "Penas alternativas: restritivas substituem a privativa se o crime for culposo ou a pena for inferior a 4 anos; o <b>sursis</b> vai até 3 anos.",
+  "A ação penal é <b>pública incondicionada</b>; a transação penal exige composição prévia do dano ambiental.",
+  "Formas do crime: simples (art. 29), qualificada (art. 32, §1º-A, cão ou gato), majorada (art. 29, §4º e §5º; art. 32, §2º) e culposa em vários tipos (como os arts. 38, 41 e 54, §1º). A lei não traz tipo preterdoloso.",
+  "<b>Fauna</b>: art. 29 com detenção de 6 meses a 1 ano; pesca com explosivos (art. 35) é reclusão de 1 a 5 anos.",
+  "<b>Flora e urbano</b>: incêndio em floresta (art. 41) é reclusão; balões (art. 42) detenção; pichação (art. 65) é crime, grafite consentido não.",
+  "<b>Poluição</b> (art. 54) é crime formal e o <b>art. 56</b> é de perigo abstrato e norma penal em branco.",
+  "<b>Administrativo</b>: autuam servidores do Sisnama e das Capitanias dos Portos; prazos de 20, 30, 20 e 5 dias."],
+checklist:[
+  "Explicar as condições da responsabilidade penal da pessoa jurídica e o fim da dupla imputação.",
+  "Aplicar o art. 2º ao dirigente que se omite.",
+  "Dizer quando cabem restritivas de direitos e o sursis ambiental.",
+  "Citar as penas alternativas e as sanções da pessoa jurídica, inclusive a liquidação forçada.",
+  "Diferenciar a pena do art. 29, do art. 32 e do art. 32, §1º-A.",
+  "Listar as majorantes do art. 29 e a regra da caça profissional.",
+  "Distinguir pesca proibida (art. 34) de pesca com explosivos ou tóxicos (art. 35).",
+  "Explicar o art. 50-A e a hipótese de exclusão por subsistência imediata.",
+  "Explicar por que os arts. 54 e 56 dispensam perícia.",
+  "Distinguir pichação de grafite consentido.",
+  "Conhecer as sanções e os prazos da infração administrativa."],
 questoes:[]
 };
 })();

@@ -116,6 +116,54 @@ cards:[
 { id:"aj16", tipo:"caso", sec:"favorecimento", f:"Agente penitenciário cochila no plantão e o preso foge. Crime?", v:"<b>Fuga de pessoa presa culposa</b> (351, §4º) — detenção de 3 meses a 1 ano, ou multa.", lei:["cp351"] },
 { id:"aj17", tipo:"distincao", sec:"favorecimento", f:"Tráfico de influência × exploração de prestígio.", v:"<b>332</b>: a pretexto de influir em funcionário público (2 a 5; +1/2). <b>357</b>: em juiz, jurado, MP, perito, testemunha (1 a 5; +1/3).", lei:["cp351"] }
 ],
+importancia:{ nivel:4,
+  texto:"Denunciação caluniosa, falso testemunho, fraude processual, favorecimentos e o novo art. 338-A aparecem muito em prova de polícia, quase sempre em casos que exigem separar crimes de nome parecido.",
+  decore:[
+    ["Denunciação caluniosa (339)","reclusão de <b>2 a 8 anos</b> e multa"],
+    ["Denunciação: majorante e minorante","<b>+1/6</b> (anonimato ou nome suposto); <b>−1/2</b> (contravenção)"],
+    ["Falso testemunho (342)","reclusão de <b>2 a 4 anos</b> e multa"],
+    ["Retratação no falso testemunho","extingue a punibilidade <b>antes da sentença</b>"],
+    ["Descumprimento de medida protetiva (338-A)","reclusão de <b>2 a 5 anos</b> e multa; fiança só pelo juiz"],
+    ["Coação no curso do processo (344)","reclusão de <b>1 a 4 anos</b>; +1/3 até a metade se crime sexual"],
+    ["Fraude processual (347)","pena <b>em dobro</b> se for processo penal, ainda que não iniciado"],
+    ["Favorecimento pessoal (348)","isento de pena: <b>ascendente, descendente, cônjuge e irmão</b>"],
+    ["Falso testemunho na Justiça do Trabalho","competência da <b>Justiça Federal</b> (Súmula 165 do STJ)"]],
+  macetes:[
+    ["Denunciar movimenta o Estado","Denunciação caluniosa só existe se o procedimento for instaurado; sem acusar ninguém, é comunicação falsa (340)."],
+    ["Mão própria","Falso testemunho: participação sim, coautoria não. O advogado que instrui a mentir é partícipe."],
+    ["Pessoa × proveito","Favorecimento pessoal salva a pessoa do criminoso; o real, o proveito do crime."]] },
+comparativo:{ titulo:"Qualificado × majorado × privilegiado em crimes contra a Justiça", head:["Figura","Efeito e onde aparece"], rows:[
+  ["<b>Majorada (+1/6):</b> denunciação com anonimato ou nome suposto","Art. 339, § 1º: aumento de sexta parte"],
+  ["<b>Privilegiada (−1/2):</b> denunciação de mera contravenção","Art. 339, § 2º: redução de metade"],
+  ["<b>Majorada (+1/6 a 1/3):</b> falso testemunho mediante suborno ou para prova em processo penal","Art. 342, § 1º"],
+  ["<b>Majorada (+1/3 até a metade):</b> coação em processo sobre crime contra a dignidade sexual","Art. 344, parágrafo único"],
+  ["<b>Qualificada (reclusão):</b> fuga a mão armada, por mais de uma pessoa ou com arrombamento; ou por quem tem a custódia","Art. 351, §§ 1º e 3º; a forma culposa do custodiante é o § 4º (detenção)"],
+  ["<b>Em dobro:</b> fraude processual em processo penal","Art. 347, parágrafo único"]]},
+prova:[
+  { tipo:"ce", enun:"Quem comunica à polícia crime que sabe não ter ocorrido, sem apontar autor, pratica comunicação falsa de crime, e não denunciação caluniosa.", gab:"Certo", com:"A denunciação (339) exige imputar o crime a pessoa determinada que se sabe inocente e dar causa à instauração do procedimento." },
+  { tipo:"ce", enun:"O falso testemunho, por ser crime de mão própria, não admite participação, apenas coautoria.", gab:"Errado", com:"É o contrário: admite participação (ex.: o advogado que induz a testemunha), mas não coautoria." },
+  { tipo:"ce", enun:"A retratação da testemunha após a sentença do processo em que mentiu ainda extingue a punibilidade do falso testemunho.", gab:"Errado", com:"O art. 342, § 2º exige que a retratação ocorra antes da sentença." },
+  { tipo:"ce", enun:"O preso que foge sem violência contra a pessoa pratica o crime de evasão do art. 352.", gab:"Errado", com:"A evasão só é crime com violência contra a pessoa; a fuga simples é falta disciplinar." },
+  { tipo:"ce", enun:"A mãe que esconde o filho foragido, autor de roubo, pratica favorecimento pessoal, mas fica isenta de pena.", gab:"Certo", com:"Art. 348, § 2º: ascendente, descendente, cônjuge ou irmão ficam isentos de pena." },
+  { tipo:"caso", enun:"Após um homicídio, o autor lava o local e muda o corpo de posição para induzir o perito a erro. Qual o crime e a pena?", com:"Fraude processual (347), com a pena aplicada em dobro, pois visa processo penal. A autodefesa não protege essa conduta (STJ, HC 834.126/RS)." }],
+resumo:[
+  "Denunciação caluniosa (339): dar causa à instauração de procedimento contra quem se sabe inocente; 2 a 8 anos, +1/6 com anonimato, −1/2 se contravenção.",
+  "Comunicação falsa (340) não imputa a ninguém; autoacusação falsa (341) é acusar-se de crime inexistente ou alheio.",
+  "Falso testemunho (342): 2 a 4 anos, crime de mão própria; retratação antes da sentença torna o fato não punível.",
+  "Corromper testemunha ou perito é o art. 343; a testemunha subornada responde pelo 342 majorado.",
+  "Coação no curso do processo exige violência ou grave ameaça; o exercício arbitrário das próprias razões pode ter pretensão legítima.",
+  "Fraude processual (347) tem pena em dobro quando se destina a processo penal.",
+  "Favorecimento pessoal tem isenção para ascendente, descendente, cônjuge e irmão; o real protege o proveito do crime.",
+  "Descumprimento de medida protetiva: art. 338-A (2 a 5 anos); na Lei Maria da Penha, vale o art. 24-A."],
+checklist:[
+  "Diferenciar calúnia, denunciação caluniosa, comunicação falsa e autoacusação falsa",
+  "Explicar por que o falso testemunho é de mão própria e suas consequências",
+  "Aplicar a retratação (antes da sentença)",
+  "Distinguir favorecimento pessoal, real e receptação",
+  "Identificar quando a evasão e a fuga são crime",
+  "Citar as penas de 2 a 8, 2 a 4 e 2 a 5 anos",
+  "Reconhecer a fraude processual e sua pena em dobro",
+  "Diferenciar o art. 338-A do CP e o art. 24-A da Lei Maria da Penha"],
 questoes:[]
 };
 
@@ -203,6 +251,51 @@ cards:[
 { id:"lf7", tipo:"numero", sec:"financas", f:"359-C e 359-G: períodos.", v:"359-C: <b>dois últimos quadrimestres</b>. 359-G: <b>180 dias</b> antes do fim do mandato.", lei:["cp359a"] },
 { id:"lf8", tipo:"caso", sec:"financas", f:"Governador contrai empréstimo externo sem autorização legislativa. Crime?", v:"<b>359-A</b> (operação de crédito sem autorização) — reclusão de 1 a 2.", lei:["cp359a"] }
 ],
+importancia:{ nivel:3,
+  texto:"Licitações têm penas altas e jurisprudência herdada da Lei 8.666/93 (Súmula 645); as finanças públicas caem principalmente nos prazos de fim de mandato (dois últimos quadrimestres e 180 dias).",
+  decore:[
+    ["Contratação direta ilegal (337-E)","reclusão de <b>4 a 8 anos</b> e multa"],
+    ["Frustração do caráter competitivo (337-F)","reclusão de <b>4 a 8 anos</b> e multa"],
+    ["Modificação ou pagamento irregular (337-H) e fraude (337-L)","reclusão de <b>4 a 8 anos</b>"],
+    ["Fraude à licitação","crime <b>formal</b> (Súmula 645 do STJ)"],
+    ["Contratar inidôneo (337-M)","<b>3 a 6 anos</b>; admitir à licitação: 1 a 3"],
+    ["Assunção de obrigação sem caixa (359-C)","<b>dois últimos quadrimestres</b> do mandato; reclusão de 1 a 4"],
+    ["Aumento de despesa com pessoal (359-G)","<b>180 dias</b> antes do fim do mandato; reclusão de 1 a 4"],
+    ["Operação de crédito sem autorização (359-A)","reclusão de <b>1 a 2 anos</b>"],
+    ["Lei das licitações","<b>Lei 14.133/2021</b>; crimes no CP, arts. 337-E a 337-P"]],
+  macetes:[
+    ["Dois números de fim de mandato","359-C: dois últimos quadrimestres. 359-G: 180 dias."],
+    ["Quatro a oito","Contratação direta, frustração, modificação irregular e fraude: todas de 4 a 8 anos."],
+    ["Formal × dano","337-F é formal (Súmula 645); para STF e STJ, a contratação direta ilegal exige dolo específico e dano ao erário."]] },
+comparativo:{ titulo:"Formal × com dano ao erário nos crimes em licitação", head:["Crime formal","Exige dolo específico e dano"], rows:[
+  ["<b>337-F:</b> frustrar o caráter competitivo com intuito de vantagem","<b>337-E:</b> contratação direta fora das hipóteses legais, segundo STF e STJ"],
+  ["<b>Súmula 645 do STJ:</b> dispensa prova de prejuízo ou de vantagem","<b>Entendimento do STF e STJ:</b> dolo de causar dano ao erário e efetivo prejuízo"],
+  ["<b>Consumação:</b> com a fraude ou frustração","<b>Consumação:</b> depende do dano, nessa corrente"],
+  ["<b>Pena:</b> reclusão de 4 a 8 anos e multa","<b>Pena:</b> reclusão de 4 a 8 anos e multa"],
+  ["<b>Herança:</b> antigo art. 90 da Lei 8.666/93","<b>Herança:</b> antigo art. 89 da Lei 8.666/93"]]},
+prova:[
+  { tipo:"ce", enun:"Segundo a Súmula 645 do STJ, a fraude à licitação é crime formal e dispensa a comprovação de prejuízo ou de vantagem.", gab:"Certo", com:"É o enunciado da súmula, aplicada ao tipo hoje previsto no art. 337-F." },
+  { tipo:"ce", enun:"Os crimes em licitações e contratos passaram a ser previstos na Lei 8.666/93, que substituiu o Código Penal nessa matéria.", gab:"Errado", com:"Ocorreu o inverso: a Lei 14.133/2021 revogou os crimes da Lei 8.666/93 e os inseriu no CP (arts. 337-E a 337-P)." },
+  { tipo:"ce", enun:"Os crimes contra as finanças públicas dos arts. 359-A a 359-H admitem forma culposa.", gab:"Errado", com:"Todos são dolosos; não há forma culposa." },
+  { tipo:"ce", enun:"O art. 359-G pune o ato que aumenta a despesa com pessoal nos 180 dias anteriores ao fim do mandato.", gab:"Certo", com:"É o período do art. 359-G; o 359-C usa os dois últimos quadrimestres." },
+  { tipo:"caso", enun:"Empresas combinam preços para frustrar a competição em licitação, mas a Administração não sofre prejuízo comprovado. Há crime?", com:"Sim. Frustrar o caráter competitivo (337-F) é crime formal (Súmula 645 do STJ); não se exige prova de prejuízo." }],
+resumo:[
+  "A Lei 14.133/2021 revogou os crimes da Lei 8.666/93 e criou o Capítulo II-B do CP (337-E a 337-P), com penas maiores.",
+  "Contratação direta ilegal, frustração do caráter competitivo, modificação irregular e fraude em contrato: reclusão de 4 a 8 anos e multa.",
+  "Súmula 645 do STJ: a fraude à licitação é crime formal.",
+  "Para STF e STJ, a contratação direta ilegal exige dolo específico e dano ao erário.",
+  "Contratar inidôneo: 3 a 6 anos; admitir à licitação: 1 a 3 anos.",
+  "Finanças públicas (359-A a 359-H) vêm da Lei 10.028/2000; são crimes dolosos de agentes com poder de ordenar despesas.",
+  "359-C: dois últimos quadrimestres do mandato. 359-G: 180 dias antes do fim do mandato.",
+  "Fatos anteriores à Lei 14.133 seguem as penas da Lei 8.666/93."],
+checklist:[
+  "Citar a lei que trouxe os crimes de licitação para o Código Penal",
+  "Dizer a pena dos crimes de 4 a 8 anos",
+  "Aplicar a Súmula 645 do STJ",
+  "Explicar a exigência de dano e dolo específico na contratação direta",
+  "Diferenciar admitir e contratar o inidôneo",
+  "Saber os prazos dos arts. 359-C e 359-G",
+  "Reconhecer que os crimes de finanças públicas são dolosos e próprios"],
 questoes:[]
 };
 

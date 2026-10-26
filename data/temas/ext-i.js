@@ -117,6 +117,57 @@ cards:[
 { id:"sf17", tipo:"caso", sec:"crimes", f:"Brasileiro mantém no exterior depósito não declarado à Receita. Que crime?",
   v:"<b>Art. 22, parágrafo único</b> (evasão de divisas: manter depósito no exterior não declarado). 2 a 6 anos.", lei:["l7492a21"], j:["stj-aresp774523"] }
 ],
+importancia:{ nivel:4,
+  texto:"A Lei 7.492 cai principalmente pela competência (MPF e Justiça Federal), pelo conceito de instituição financeira e pelas penas de gestão fraudulenta e temerária, de evasão de divisas e de financiamento fraudulento.",
+  decore:[
+    ["Competência e titularidade","<b>Justiça Federal</b> e <b>MPF</b>, ação pública incondicionada"],
+    ["Instituição financeira","pública ou privada; captação, intermediação ou aplicação de recursos de terceiros"],
+    ["Equiparação","ativos virtuais e pessoa natural, ainda que eventual"],
+    ["Quem responde (art. 25)","controlador, administradores, interventor, liquidante e síndico"],
+    ["Delação (art. 25, § 2º)","redução de <b>1 a 2/3</b>, revelando <b>toda a trama</b>"],
+    ["Gestão fraudulenta (art. 4º)","<b>3 a 12 anos</b>"],
+    ["Gestão temerária (art. 4º, parágrafo único)","<b>2 a 8 anos</b>"],
+    ["Evasão de divisas (art. 22)","<b>2 a 6 anos</b>; inclui depósito no exterior não declarado"],
+    ["Financiamento fraudulento (art. 19)","<b>2 a 6 anos</b>; <b>+ 1/3</b> contra instituição oficial"],
+    ["Único com detenção entre os citados","<b>art. 21</b> (falsa identidade em câmbio)"]],
+  macetes:[
+    ["Fraudulenta pesa mais","Fraudulenta 3 a 12; temerária 2 a 8. Ambas são crimes residuais."],
+    ["MPF e Justiça Federal sempre","Mesmo que o prejuízo seja de instituição privada."],
+    ["Dois cuidados no art. 22","Exige finalidade de evasão e também pune manter depósito não declarado no exterior."]] },
+comparativo:{ titulo:"Gestão fraudulenta × gestão temerária", head:["Gestão fraudulenta (art. 4º, caput)","Gestão temerária (art. 4º, parágrafo único)"], rows:[
+  ["<b>Pena:</b> reclusão de 3 a 12 anos e multa","<b>Pena:</b> reclusão de 2 a 8 anos e multa"],
+  ["<b>Conduta:</b> atos de ardil, embuste ou desfalque na condução da instituição","<b>Conduta:</b> desrespeito às regras de cautela, assumindo risco excessivo"],
+  ["<b>Definição legal:</b> não há; vem da jurisprudência","<b>Definição legal:</b> não há; vem da jurisprudência"],
+  ["<b>Sujeito ativo:</b> controlador e administradores (art. 25)","<b>Sujeito ativo:</b> controlador e administradores (art. 25)"],
+  ["<b>Caráter residual:</b> havendo tipo específico (arts. 16 e 22), não se condena também pelo art. 4º","<b>Concurso:</b> o STJ admite concurso formal com o art. 17, por serem bens jurídicos diferentes"]]},
+prova:[
+  { tipo:"ce", enun:"Os crimes contra o Sistema Financeiro Nacional são de ação penal pública incondicionada, promovida pelo Ministério Público Federal perante a Justiça Federal, ainda que o prejuízo seja de instituição financeira privada.", gab:"Certo", com:"Art. 26 e CF, art. 109, VI; STF, HC 93.733." },
+  { tipo:"ce", enun:"Para a Lei 7.492/1986, somente a pessoa jurídica privada pode ser considerada instituição financeira.", gab:"Errado", com:"A instituição financeira pode ser pública ou privada (art. 1º)." },
+  { tipo:"ce", enun:"A gestão fraudulenta de instituição financeira é punida com reclusão de 3 a 12 anos, ao passo que a gestão temerária tem pena de reclusão de 2 a 8 anos.", gab:"Certo", com:"Art. 4º, caput e parágrafo único." },
+  { tipo:"ce", enun:"A colaboração premiada do art. 25, § 2º, reduz a pena de 1/3 a 2/3 e exige apenas a revelação de parte do esquema.", gab:"Errado", com:"A redução é de 1 a 2/3 e o coautor ou partícipe precisa revelar toda a trama delituosa, por confissão espontânea." },
+  { tipo:"ce", enun:"Todos os crimes da Lei 7.492/1986 são punidos com reclusão.", gab:"Errado", com:"O art. 21 (falsa identidade em operação de câmbio) tem pena de detenção de 1 a 4 anos." },
+  { tipo:"caso", enun:"Brasileiro mantém depósito no exterior sem declará-lo à repartição federal competente. Há crime nessa lei?", com:"Sim, evasão de divisas (art. 22, parágrafo único, parte final), com reclusão de 2 a 6 anos." }],
+resumo:[
+  "A lei protege o Sistema Financeiro Nacional contra o <b>risco sistêmico</b> (crimes de colarinho branco).",
+  "<b>Instituição financeira</b> é pessoa jurídica pública ou privada que capta, intermedeia ou aplica recursos de terceiros ou lida com valores mobiliários; ativos virtuais e pessoa natural podem ser equiparados.",
+  "Respondem controlador, administradores, interventor, liquidante e síndico. Alguns crimes são próprios.",
+  "Delação: redução de 1 a 2/3 para quem revelar toda a trama por confissão espontânea.",
+  "Ação penal pública incondicionada, do MPF, na Justiça Federal. BC e CVM devem informar o MPF ao constatar crime.",
+  "Gestão fraudulenta (3 a 12) e temerária (2 a 8) são crimes residuais.",
+  "Evasão de divisas: 2 a 6 anos; financiamento fraudulento (art. 19): 2 a 6 anos, mais 1/3 contra instituição oficial.",
+  "Art. 21 é punido com detenção; os demais citados, com reclusão."],
+checklist:[
+  "Conceito de instituição financeira e as equiparações",
+  "Quem pode ser sujeito ativo (art. 25)",
+  "Requisitos da delação do art. 25, § 2º",
+  "Titular da ação penal e Justiça competente",
+  "Dever de comunicação ao MPF (art. 28)",
+  "Penas e diferença entre gestão fraudulenta e temerária",
+  "Caráter residual da gestão fraudulenta",
+  "Penas dos arts. 2º a 7º",
+  "Evasão de divisas e as duas condutas do art. 22",
+  "Aumento do art. 19",
+  "Crime com pena de detenção (art. 21)"],
 questoes:[]
 };
 })();

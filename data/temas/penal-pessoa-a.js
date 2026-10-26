@@ -110,6 +110,54 @@ cards:[
 { id:"pp9", tipo:"numero", sec:"leis", f:"Penas do abandono de incapaz e dos maus-tratos após a Lei 15.163/2025.", v:"Simples: <b>2 a 5</b>. Lesão grave: <b>3 a 7</b>. Morte: <b>8 a 14</b> (todas de reclusão).", lei:[] },
 { id:"pp10", tipo:"juris", sec:"transversais", f:"O advogado do réu alega, no júri, que ele matou a companheira para defender a honra. Consequência?", v:"Tese inconstitucional (STF, ADPF 779). Seu uso pode gerar <b>nulidade</b> do ato e do julgamento.", lei:["pp-121a1"], j:["stf-adpf779"] }
 ],
+importancia:{ nivel:4,
+  texto:"Visão geral do Título I do CP e das leis de 2024 a 2026. A banca cobra o que vai a júri, a data de vigência de cada tipo novo e a mesma circunstância (gênero, facção, agente de segurança, escola) tratada de modo diferente no homicídio e na lesão.",
+  decore:[
+    ["Vão a júri","homicídio, feminicídio, vicaricídio, art. 122 (suicídio), infanticídio e aborto"],
+    ["Não vão a júri","automutilação (art. 122) e lesão seguida de morte (art. 129, §3º)"],
+    ["Feminicídio (art. 121-A)","<b>20 a 40 anos</b>; vigência em <b>10/10/2024</b>"],
+    ["Facção, milícia ou paramilitar","homicídio (121, §2º-D) e lesão seguida de morte (129, §3º-A): <b>20 a 40 anos</b>"],
+    ["Vicaricídio (art. 121-B)","Lei 15.384/2026; <b>hediondo</b>"],
+    ["Abandono de incapaz e maus-tratos","<b>2 a 5</b>; lesão grave <b>3 a 7</b>; morte <b>8 a 14</b>"],
+    ["Razões da condição do sexo feminino","<b>violência doméstica e familiar</b> ou <b>menosprezo/discriminação</b> à condição de mulher"],
+    ["Súmula 542 do STJ","lesão em violência doméstica contra a mulher: ação <b>incondicionada</b>"],
+    ["Qualificado-privilegiado","<b>não</b> é hediondo"],
+    ["Trabalho doméstico no art. 129, §9º","Lei 15.455/2026, vigência em <b>02/07/2026</b>"]],
+  macetes:[
+    ["Gênero muda de tamanho conforme o crime","Homicídio: tipo autônomo (121-A). Lesão leve: qualificadora (129, §13). Honra e ameaça: pena em dobro. Perseguição: aumento de metade."],
+    ["Preterdolo só no art. 129, §3º","Quer lesionar e mata sem querer nem assumir o risco: lesão seguida de morte. Não existe “homicídio preterdoloso”, nem júri, nem qualificadora do art. 121."],
+    ["Lei mais grave não retroage","Quase todas as leis recentes são <i>novatio legis in pejus</i>. Fato anterior segue a lei antiga, salvo crime permanente (Súmula 711 do STF)."]] },
+comparativo:{ titulo:"Qualificado × majorado: a mesma circunstância no homicídio e na lesão", head:["Homicídio (art. 121)","Lesão corporal (art. 129)"], rows:[
+  ["<b>Agente de segurança, em razão da função:</b> qualificadora (§2º, VII)","<b>Agente de segurança, em razão da função:</b> majorante de 1/3 a 2/3 (§12, I)"],
+  ["<b>Instituição de ensino:</b> qualificadora (§2º, X)","<b>Instituição de ensino:</b> majorante (§12, I, c; e §12, II, de 2/3 ao dobro)"],
+  ["<b>Facção, milícia ou paramilitar:</b> qualificadora (§2º-D), 20 a 40 anos","<b>Facção, milícia ou paramilitar:</b> majorante de 2/3 (§8º-A); se há morte preterdolosa, qualificadora do §3º-A (20 a 40)"],
+  ["<b>Gênero:</b> tipo autônomo (art. 121-A), 20 a 40 anos","<b>Gênero:</b> qualificadora da lesão leve (§13), reclusão de 2 a 5 anos"],
+  ["<b>Resultado morte:</b> dolo no homicídio; não há homicídio preterdoloso","<b>Resultado morte:</b> forma preterdolosa no §3º (dolo na lesão, culpa na morte), fora do júri"]]},
+prova:[
+  { tipo:"ce", enun:"A lesão corporal seguida de morte é julgada pelo Tribunal do Júri por se tratar de crime contra a vida.", gab:"Errado", com:"É crime preterdoloso, com dolo de lesionar. Não é crime doloso contra a vida e não vai ao júri." },
+  { tipo:"ce", enun:"O feminicídio praticado em 20/09/2024 deve ser enquadrado no art. 121-A do CP.", gab:"Errado", com:"O art. 121-A vigora desde 10/10/2024 e é mais grave: não retroage. O fato é homicídio qualificado pelo feminicídio (antigo art. 121, §2º, VI)." },
+  { tipo:"ce", enun:"A qualificadora do art. 121, §2º-D exige que o homicídio ocorra no contexto da atuação do grupo ou para a consecução de suas condutas, e não apenas que o agente seja integrante dele.", gab:"Certo", com:"A mera condição de integrante de facção, milícia ou grupo paramilitar não basta." },
+  { tipo:"ce", enun:"Ofender agente de segurança em razão da função é qualificadora do homicídio, mas, na lesão corporal dolosa, funciona como causa de aumento de pena.", gab:"Certo", com:"Homicídio: art. 121, §2º, VII. Lesão: art. 129, §12, I, de 1/3 a 2/3." },
+  { tipo:"ce", enun:"O induzimento à automutilação previsto no art. 122 é crime doloso contra a vida e vai a júri.", gab:"Errado", com:"Só a modalidade ligada ao suicídio é de competência do júri. A automutilação ofende a integridade física e vai ao juiz singular." },
+  { tipo:"caso", enun:"Homem ameaça de morte a ex-companheira, por não aceitar o fim do relacionamento. Qual o regime de pena e de ação penal?", com:"Ameaça por razões da condição do sexo feminino: pena em dobro (art. 147, §1º) e ação pública incondicionada (§2º, exceção da representação), para fatos a partir de 10/10/2024." }],
+resumo:[
+  "Título I (arts. 121 a 154-B): vida, lesão corporal, periclitação, rixa, honra e liberdade individual.",
+  "Vão a júri: homicídio, feminicídio, vicaricídio, art. 122 (suicídio), infanticídio e aborto. Automutilação e lesão seguida de morte ficam com o juiz singular.",
+  "A tendência recente é criar <b>tipos autônomos</b>: feminicídio (121-A), vicaricídio (121-B) e ameaça de facção (147-C).",
+  "Lei 14.994/2024 (10/10/2024) criou o feminicídio e agravou lesão, honra e ameaça de gênero. Lei 15.358/2026 trouxe as regras antifacção.",
+  "Razões da condição do sexo feminino: violência doméstica e familiar ou menosprezo/discriminação. A definição vale para vários artigos do Título.",
+  "A mesma circunstância pesa diferente: no homicídio, qualifica; na lesão, em geral, majora.",
+  "Ação penal: regra incondicionada. Exceções cobradas: lesão leve e culposa (representação, salvo violência doméstica contra a mulher), ameaça, perseguição, honra (queixa).",
+  "Mudanças mais graves só alcançam fatos posteriores à vigência (CF, art. 5º, XL), salvo crime permanente (Súm. 711 do STF)."],
+checklist:[
+  "Dizer quais crimes do Título I vão a júri e quais não",
+  "Citar a vigência e a pena do feminicídio e do vicaricídio",
+  "Explicar as razões da condição do sexo feminino",
+  "Comparar a mesma circunstância no homicídio (qualificadora) e na lesão (majorante)",
+  "Aplicar o direito intertemporal às leis de 2024 a 2026",
+  "Listar os crimes hediondos do Título I",
+  "Explicar o contexto exigido na legislação antifacção",
+  "Citar as exceções de ação penal no Título I"],
 questoes:[]
 };
 

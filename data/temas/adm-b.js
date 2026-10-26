@@ -68,6 +68,54 @@ cards:[
 { id:"at7", tipo:"distincao", sec:"extincao", f:"Cassação × caducidade × contraposição.", v:"<b>Cassação</b>: beneficiário descumpre condições. <b>Caducidade</b>: lei nova torna o ato incompatível. <b>Contraposição</b>: ato novo com efeito oposto.", lei:[] },
 { id:"at8", tipo:"distincao", sec:"elementos", f:"Ato complexo × ato composto.", v:"<b>Complexo</b>: vontades de órgãos diversos fundem-se num só ato. <b>Composto</b>: um ato principal + um acessório (visto, aprovação) de outro órgão.", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"Elementos, vícios, atributos e formas de extinção são cobrados em quase toda prova. A banca troca anulação por revogação, vício sanável por insanável e confunde motivo com motivação.",
+  decore:[
+    ["Elementos do ato","<b>COFIFOMOB</b>: competência, finalidade, forma, motivo, objeto"],
+    ["Elementos sempre vinculados","competência, finalidade e forma"],
+    ["Mérito administrativo","<b>motivo e objeto</b> nos atos discricionários"],
+    ["Vícios (Lei 4.717, art. 2º)","incompetência, forma, objeto, motivos, desvio de finalidade"],
+    ["Atributos","<b>PATI</b>: presunção, autoexecutoriedade, tipicidade, imperatividade"],
+    ["Decadência para anular (Lei 9.784, art. 54)","<b>5 anos</b>, salvo má-fé"],
+    ["Efeitos patrimoniais contínuos","prazo conta do <b>primeiro pagamento</b> (art. 54, § 1º)"],
+    ["Convalidação (art. 55)","só defeitos <b>sanáveis</b>, sem lesão ao interesse público nem a terceiros"],
+    ["Ato com efeitos concretos","desfazimento exige <b>processo</b> com contraditório (Tema 138)"]],
+  macetes:[
+    ["FOCO é sanável","<b>FO</b>rma e <b>CO</b>mpetência podem ser convalidadas; motivo, objeto e finalidade, não."],
+    ["Motivo é o porquê, motivação é a explicação","<b>Motivo</b> é elemento do ato; <b>motivação</b> é a exposição dos motivos e integra a forma."],
+    ["Cassação, caducidade e contraposição","Cassação: descumpriu condições. Caducidade: lei nova. Contraposição: ato novo de efeito oposto."]] },
+comparativo:{ titulo:"Ato complexo × ato composto", head:["Ato complexo","Ato composto"], rows:[
+  ["<b>Formação:</b> vontades de órgãos diferentes se fundem em um só ato","<b>Formação:</b> um ato principal e outro acessório"],
+  ["<b>Quantidade:</b> um único ato, que só se aperfeiçoa com todas as vontades","<b>Quantidade:</b> dois atos, o principal já existe e o acessório o complementa"],
+  ["<b>Papel do segundo órgão:</b> participa da formação do ato","<b>Papel do segundo órgão:</b> confirma ou verifica (visto, aprovação)"],
+  ["<b>Exemplo:</b> aposentadoria registrada pelo Tribunal de Contas (entendimento do STF)","<b>Exemplo:</b> ato que depende de visto"]]},
+prova:[
+  { tipo:"ce", enun:"Competência, finalidade e forma são elementos sempre vinculados do ato administrativo, mesmo nos atos discricionários.", gab:"Certo", com:"A discricionariedade, o mérito, está em motivo e objeto." },
+  { tipo:"ce", enun:"A presunção de legitimidade dos atos administrativos é absoluta, não admitindo prova em contrário.", gab:"Errado", com:"A presunção é relativa (juris tantum)." },
+  { tipo:"ce", enun:"A Administração pode convalidar ato com vício de objeto, desde que não haja prejuízo a terceiros.", gab:"Errado", com:"Vícios de objeto, motivo e finalidade são insanáveis; só competência (não exclusiva) e forma (não essencial) são sanáveis." },
+  { tipo:"ce", enun:"O Poder Judiciário pode revogar ato administrativo do Poder Executivo que considere inconveniente.", gab:"Errado", com:"A revogação é da própria Administração; o Judiciário só anula por ilegalidade." },
+  { tipo:"caso", enun:"Servidor recebe gratificação paga mensalmente desde março de 2020, por ato ilegal, e é de boa-fé. Até quando a Administração pode anulá-la?", com:"Até março de 2025: cinco anos contados do primeiro pagamento (art. 54, § 1º)." },
+  { tipo:"caso", enun:"A Administração corta, sem ouvi-lo, um adicional pago há dois anos a um servidor, por reconhecer ilegalidade. O ato é válido?", com:"Não. Como já produziu efeitos concretos, o desfazimento exige processo com contraditório e ampla defesa (Tema 138)." }],
+resumo:[
+  "Elementos do ato: <b>competência, finalidade, forma, motivo e objeto</b>. Os três primeiros são vinculados.",
+  "Vícios da Lei 4.717: incompetência, forma, objeto, motivos e desvio de finalidade.",
+  "Atributos (PATI): presunção relativa, autoexecutoriedade e imperatividade (nem todos os atos), tipicidade.",
+  "<b>Motivo</b> é pressuposto de fato e de direito; <b>motivação</b> integra a forma.",
+  "Anulação: ilegalidade, ex tunc, Administração ou Judiciário. Revogação: mérito, ex nunc, só a Administração.",
+  "Não se revogam atos vinculados, consumados, que geraram direito adquirido, enunciativos ou de procedimento superado.",
+  "Convalidação: só vícios de competência e forma, sem lesão ao interesse público ou a terceiros.",
+  "Decadência de 5 anos, salvo má-fé; Tema 138 exige processo quando há efeitos concretos."],
+checklist:[
+  "Listar os elementos do ato e dizer quais são vinculados.",
+  "Explicar o que é mérito administrativo.",
+  "Citar os cinco vícios do art. 2º da Lei 4.717.",
+  "Explicar os atributos do ato e os que nem todos possuem.",
+  "Diferenciar motivo e motivação.",
+  "Diferenciar ato simples, complexo e composto.",
+  "Diferenciar anulação, revogação, cassação, caducidade e contraposição.",
+  "Dizer quais vícios são sanáveis e quais não são.",
+  "Aplicar a decadência de 5 anos e o primeiro pagamento.",
+  "Explicar o Tema 138."],
 questoes:[]
 };
 
@@ -126,6 +174,54 @@ cards:[
 { id:"ct5", tipo:"caso", sec:"administrativo", f:"Servidor quer que o juiz reavalie as provas do PAD e troque a demissão por suspensão por achá-la excessiva. Pode?", v:"Só se a sanção for <b>manifestamente desproporcional</b>, flagrantemente ilegal ou teratológica (Súmula 665/STJ).", lei:["l9784a64"], j:["stj-s665"] },
 { id:"ct6", tipo:"caso", sec:"especies", f:"Juiz anula, por ilegalidade, ato de concessão de licença. E se achasse a licença apenas inconveniente?", v:"Ilegalidade: <b>pode anular</b>. Inconveniência (mérito): <b>não</b> pode revogar ato do Executivo.", lei:[] }
 ],
+importancia:{ nivel:4,
+  texto:"Cai a classificação do controle, o prazo dos recursos da Lei 9.784, as súmulas vinculantes 3, 5 e 21 e os limites do controle judicial do PAD (Súmula 665/STJ), muito relevantes para carreiras policiais.",
+  decore:[
+    ["Prazo do recurso administrativo (art. 59)","<b>10 dias</b>"],
+    ["Reconsideração (art. 56, § 1º)","<b>5 dias</b>"],
+    ["Decisão do recurso (art. 59, § 1º)","<b>30 dias</b>"],
+    ["Instâncias (art. 57)","no máximo <b>3</b>"],
+    ["Efeito suspensivo (art. 61)","em regra, <b>não tem</b>"],
+    ["Depósito prévio para recorrer","inconstitucional (<b>SV 21</b>)"],
+    ["PAD sem advogado","não ofende a Constituição (<b>SV 5</b>)"],
+    ["Contraditório perante o TCU","<b>SV 3</b>, salvo apreciação inicial de aposentadoria, reforma e pensão"],
+    ["Controle judicial do PAD","regularidade e legalidade (<b>Súmula 665/STJ</b>)"],
+    ["Sustação de ato normativo do Executivo","Congresso, art. <b>49, V</b>"]],
+  macetes:[
+    ["10, 5, 30, 3","Recurso 10 dias; reconsideração 5; decisão 30; três instâncias."],
+    ["Recurso agrava, revisão não","No recurso pode haver reformatio in pejus (com ciência). Na revisão, nunca."],
+    ["Mérito só a Administração controla","O Judiciário controla legalidade, inclusive razoabilidade e proporcionalidade, mas não o mérito."]] },
+comparativo:{ titulo:"Recurso × revisão", head:["Recurso administrativo (arts. 56 a 64)","Revisão do processo sancionador (art. 65)"], rows:[
+  ["<b>Quando cabe:</b> contra decisão administrativa, por razões de legalidade e de mérito","<b>Quando cabe:</b> quando surgirem fatos novos ou circunstâncias relevantes que justifiquem a inadequação da sanção"],
+  ["<b>Prazo:</b> 10 dias da ciência ou divulgação oficial","<b>Prazo:</b> a qualquer tempo"],
+  ["<b>Iniciativa:</b> do interessado","<b>Iniciativa:</b> a pedido ou de ofício"],
+  ["<b>Agravamento:</b> possível, desde que o recorrente seja cientificado para alegar","<b>Agravamento:</b> não pode resultar agravamento da sanção"],
+  ["<b>Efeito suspensivo:</b> em regra, não tem (art. 61)","<b>Objeto:</b> apenas processos de que resultem sanções"]]},
+prova:[
+  { tipo:"ce", enun:"Segundo a Lei 9.784/1999, o prazo para interpor recurso administrativo é de dez dias, contado da ciência ou divulgação oficial da decisão.", gab:"Certo", com:"Art. 59, caput." },
+  { tipo:"ce", enun:"É constitucional lei que exija depósito prévio de parte da multa para a admissibilidade de recurso administrativo.", gab:"Errado", com:"SV 21: é inconstitucional exigir depósito ou arrolamento prévios." },
+  { tipo:"ce", enun:"A ausência de advogado no processo administrativo disciplinar, por si só, gera nulidade por ofensa à ampla defesa.", gab:"Errado", com:"SV 5: a falta de defesa técnica por advogado no PAD não ofende a Constituição." },
+  { tipo:"ce", enun:"Na revisão de processo administrativo de que resultou sanção, é permitido agravar a penalidade quando surgirem fatos novos.", gab:"Errado", com:"Art. 65, parágrafo único: da revisão não pode resultar agravamento." },
+  { tipo:"caso", enun:"Servidor pede que o juiz reavalie as provas do PAD e troque a demissão por suspensão por achá-la excessiva. O Judiciário pode atender?", com:"Em regra não: o controle se limita à regularidade do procedimento e à legalidade. Só em caso de flagrante ilegalidade, teratologia ou manifesta desproporcionalidade da sanção (Súmula 665/STJ)." },
+  { tipo:"caso", enun:"O Congresso Nacional pode sustar decreto do Executivo que exorbite do poder regulamentar?", com:"Sim, nos termos do art. 49, V, da CF; trata-se de controle de legalidade." }],
+resumo:[
+  "O controle pode ser <b>administrativo, legislativo (com o Tribunal de Contas) e judicial</b>; interno ou externo; prévio, concomitante ou posterior.",
+  "Controle de <b>legalidade</b> cabe a todos os Poderes; o de <b>mérito</b>, só à própria Administração.",
+  "Controle finalístico (tutela) incide sobre a administração indireta, sem hierarquia.",
+  "Recurso administrativo: legalidade e mérito, <b>10 dias</b>, até 3 instâncias, sem efeito suspensivo em regra; decisão em <b>30 dias</b>.",
+  "No recurso pode haver reformatio in pejus (com ciência prévia); na revisão, não.",
+  "SV 21 veda depósito prévio; SV 5 dispensa advogado no PAD; SV 3 trata do contraditório no TCU.",
+  "Súmula 665/STJ limita o controle judicial do PAD à legalidade e à regularidade, salvo desproporção manifesta.",
+  "Absolvição penal por inexistência do fato ou negativa de autoria repercute na esfera administrativa; falta de provas, não."],
+checklist:[
+  "Classificar o controle quanto ao órgão, à posição, ao momento e ao aspecto.",
+  "Explicar o controle legislativo e o papel do Tribunal de Contas.",
+  "Citar os prazos do recurso (10, 5 e 30 dias) e o número de instâncias.",
+  "Dizer quando o recurso tem efeito suspensivo.",
+  "Diferenciar recurso e revisão quanto ao agravamento.",
+  "Aplicar as súmulas vinculantes 3, 5 e 21.",
+  "Explicar os limites do controle judicial do PAD (Súmula 665/STJ).",
+  "Explicar a independência das instâncias."],
 questoes:[]
 };
 
@@ -206,6 +302,55 @@ cards:[
 { id:"rc7", tipo:"caso", sec:"omissao", f:"Bala perdida em operação policial mata morador; a perícia não identifica a arma. O Estado responde?", v:"<b>Sim</b> (Tema 1.237): perícia inconclusiva não afasta; o Estado é que deve provar excludente.", lei:[], j:["stf-t1237r"] },
 { id:"rc8", tipo:"numero", sec:"acao", f:"Prazo para a vítima processar a Fazenda Pública.", v:"<b>5 anos</b> (Decreto 20.910/1932, segundo o STJ).", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"Um dos temas mais cobrados da disciplina: a banca mistura risco administrativo e integral, omissão específica, presos e foragidos e a dupla garantia. Os temas do STF são muito recorrentes em segurança pública.",
+  decore:[
+    ["Regra (art. 37, § 6º)","responsabilidade <b>objetiva</b>, risco administrativo"],
+    ["Sem excludentes","risco <b>integral</b>: dano nuclear e ambiental, terrorismo contra aeronaves"],
+    ["Excludentes","culpa exclusiva da vítima, caso fortuito ou força maior, fato de terceiro"],
+    ["Culpa concorrente da vítima","<b>reduz</b> a indenização"],
+    ["Dupla garantia (Tema 940)","a vítima processa o <b>Estado</b>; regresso contra o agente com dolo ou culpa"],
+    ["Morte de detento (Tema 592)","Estado responde se descumpre o dever específico de proteção"],
+    ["Foragido (Tema 362)","só com <b>nexo causal direto</b> entre a fuga e o crime"],
+    ["Operações policiais (Tema 1.237)","risco administrativo; <b>ônus das excludentes é do Estado</b>"],
+    ["Cartórios (Tema 777)","Estado responde objetivamente, com regresso <b>obrigatório</b>"],
+    ["Prescrição contra a Fazenda","<b>5 anos</b> (Decreto 20.910/1932)"]],
+  macetes:[
+    ["Duas portas, uma entrada","A vítima entra pelo Estado (Tema 940); o Estado depois cobra do agente, se houve dolo ou culpa."],
+    ["Fuga recente liga, fuga antiga desliga","Crime logo após a fuga: há nexo. Meses depois, em outra cidade: em regra, não."],
+    ["Omissão que a lei específica","Se o dever de agir era individualizado, a omissão é específica e o STF tem aplicado a responsabilidade objetiva."]] },
+comparativo:{ titulo:"Risco administrativo × risco integral", head:["Risco administrativo","Risco integral"], rows:[
+  ["<b>Natureza:</b> responsabilidade objetiva, regra do art. 37, § 6º","<b>Natureza:</b> responsabilidade objetiva, em casos excepcionais"],
+  ["<b>Excludentes:</b> admite culpa exclusiva da vítima, fortuito ou força maior e fato de terceiro","<b>Excludentes:</b> não admite"],
+  ["<b>Posição:</b> é a regra geral no Brasil","<b>Posição:</b> é exceção, para hipóteses específicas (Leis 10.309 e 10.744, dano nuclear e ambiental)"],
+  ["<b>Exemplos:</b> operações policiais, morte de detento","<b>Exemplos:</b> dano nuclear, dano ambiental, atentados terroristas e atos de guerra contra aeronaves brasileiras"],
+  ["<b>Elementos:</b> conduta, dano e nexo causal","<b>Elementos:</b> conduta, dano e nexo causal, sem as excludentes"]]},
+prova:[
+  { tipo:"ce", enun:"O art. 37, § 6º, da CF alcança também as pessoas jurídicas de direito privado prestadoras de serviço público, inclusive quanto a danos causados a terceiros não usuários.", gab:"Certo", com:"A responsabilidade objetiva abrange concessionárias e permissionárias, inclusive perante não usuários." },
+  { tipo:"ce", enun:"Segundo o STF, a vítima de dano causado por agente público no exercício da função pode ajuizar ação diretamente contra o agente, por ele ser o autor do ato.", gab:"Errado", com:"Tema 940: a ação é contra o Estado ou a prestadora; o agente é parte ilegítima." },
+  { tipo:"ce", enun:"O Estado responde objetivamente pela morte de detento, em caso de descumprimento do dever específico de proteção do art. 5º, XLIX.", gab:"Certo", com:"Tema 592 do STF." },
+  { tipo:"ce", enun:"Em operações de segurança pública, a perícia inconclusiva sobre a origem do disparo fatal basta para afastar a responsabilidade civil do Estado.", gab:"Errado", com:"Tema 1.237: a perícia inconclusiva não afasta, por si só, a responsabilidade; o ônus de provar excludentes é do Estado." },
+  { tipo:"caso", enun:"Preso foge e, oito meses depois, em outra cidade, comete latrocínio. O Estado indeniza a família da vítima?", com:"Em regra não: falta nexo causal direto entre a fuga e o crime (Tema 362)." },
+  { tipo:"caso", enun:"Preso cumpre dois meses além da pena fixada por falha da vara de execução. Qual o direito?", com:"Indenização, com base no art. 5º, LXXV, da CF." }],
+resumo:[
+  "Evolução: irresponsabilidade, culpa civil, culpa administrativa (<i>faute du service</i>), risco administrativo e risco integral.",
+  "No Brasil, a regra é a responsabilidade <b>objetiva</b> pelo <b>risco administrativo</b>: conduta, dano e nexo causal.",
+  "Alcança pessoas de direito público e privadas prestadoras de serviço público; exploradoras de atividade econômica respondem como empresas privadas.",
+  "Excludentes: culpa exclusiva da vítima, fortuito ou força maior, fato de terceiro. Culpa concorrente apenas reduz.",
+  "Risco integral, sem excludentes: dano nuclear, ambiental e terrorismo ou guerra contra aeronaves.",
+  "Omissão específica: o STF tem aplicado a responsabilidade objetiva; presos, foragidos e operações policiais seguem os Temas 592, 362 e 1.237.",
+  "<b>Dupla garantia</b> (Tema 940): ação contra o Estado e regresso contra o agente com dolo ou culpa.",
+  "Cartórios (Tema 777): Estado responde, regresso obrigatório. Prescrição contra a Fazenda: 5 anos."],
+checklist:[
+  "Explicar as teorias da responsabilidade do Estado.",
+  "Diferenciar risco administrativo e risco integral, com exemplos.",
+  "Listar as excludentes e dizer o efeito da culpa concorrente.",
+  "Explicar a omissão específica.",
+  "Aplicar os Temas 592, 362 e 1.237.",
+  "Explicar a dupla garantia e o direito de regresso.",
+  "Explicar a responsabilidade por atos de cartórios (Tema 777).",
+  "Citar o prazo prescricional contra a Fazenda.",
+  "Explicar o erro judiciário e a prisão além do tempo (art. 5º, LXXV)."],
 questoes:[]
 };
 
@@ -261,6 +406,54 @@ cards:[
 { id:"ag6", tipo:"numero", sec:"provimento", f:"Prescrição disciplinar (Lei 8.112).", v:"Demissão: <b>5 anos</b>; suspensão: <b>2 anos</b>; advertência: <b>180 dias</b> — do conhecimento do fato. Se também for crime: prazo penal.", lei:["l8112a142"] },
 { id:"ag7", tipo:"numero", sec:"provimento", f:"Prazo de conclusão do PAD (Lei 8.112).", v:"<b>60 dias</b>, prorrogáveis por igual período.", lei:["l8112a142"] }
 ],
+importancia:{ nivel:5,
+  texto:"Tema essencial para carreiras policiais: provimento e vacância, estabilidade, prazos de posse e exercício, PAD e prescrição disciplinar são cobrados com números exatos.",
+  decore:[
+    ["Posse (Lei 8.112, art. 13, § 1º)","<b>30 dias</b> da publicação do ato"],
+    ["Exercício (art. 15, § 1º)","<b>15 dias</b> da posse"],
+    ["Estabilidade (CF, art. 41)","<b>3 anos</b> de efetivo exercício + avaliação"],
+    ["Prescrição disciplinar: demissão","<b>5 anos</b>"],
+    ["Prescrição disciplinar: suspensão","<b>2 anos</b>"],
+    ["Prescrição disciplinar: advertência","<b>180 dias</b>"],
+    ["PAD (art. 152)","<b>60 dias</b>, prorrogáveis por igual prazo"],
+    ["Reintegração (CF, art. 41, § 2º)","demissão do estável invalidada por sentença"],
+    ["Ascensão e transferência","extintas (<b>SV 43</b>)"]],
+  macetes:[
+    ["30 e 15","Posse em 30 dias; exercício em 15 dias."],
+    ["Cinco, dois e meio ano","Prescrição: demissão 5 anos, suspensão 2 anos, advertência 180 dias (meio ano)."],
+    ["Reintegra quem foi demitido, reconduz quem perdeu a vaga","Reintegração: volta o demitido. Recondução: volta ao cargo de origem o ocupante da vaga ou o inabilitado em estágio."]] },
+comparativo:{ titulo:"Reintegração × recondução", head:["Reintegração","Recondução"], rows:[
+  ["<b>Quem volta:</b> o servidor estável demitido","<b>Quem volta:</b> o estável que ocupava o cargo, ou que foi inabilitado em estágio de outro cargo"],
+  ["<b>Causa:</b> demissão invalidada por sentença judicial (CF, art. 41, § 2º)","<b>Causa:</b> reintegração do anterior ocupante da vaga ou inabilitação no estágio probatório de outro cargo"],
+  ["<b>Destino:</b> o cargo de que foi demitido","<b>Destino:</b> o cargo de origem, anteriormente ocupado"],
+  ["<b>Ocupante da vaga:</b> sai, sem indenização, sendo reconduzido, aproveitado ou posto em disponibilidade","<b>Natureza:</b> forma derivada de provimento, assim como a reintegração"]]},
+prova:[
+  { tipo:"ce", enun:"Segundo a Lei 8.112/1990, a posse deve ocorrer em até trinta dias da publicação do ato de provimento, e o exercício, em até quinze dias contados da posse.", gab:"Certo", com:"Arts. 13, § 1º, e 15, § 1º." },
+  { tipo:"ce", enun:"Ascensão e transferência continuam sendo formas válidas de provimento derivado, desde que previstas em lei.", gab:"Errado", com:"SV 43: é inconstitucional o provimento em cargo de outra carreira sem concurso; essas formas deixaram de existir." },
+  { tipo:"ce", enun:"A ação disciplinar prescreve em cinco anos para infrações puníveis com demissão, contados da data em que o fato se tornou conhecido.", gab:"Certo", com:"Art. 142, I e § 1º. Se também for crime, vale o prazo penal." },
+  { tipo:"ce", enun:"A exoneração, por ser forma de vacância, tem sempre caráter punitivo.", gab:"Errado", com:"Exoneração não é sanção; demissão é." },
+  { tipo:"caso", enun:"Município contrata temporários, sucessivamente por dez anos, para funções permanentes de escola. A contratação é válida?", com:"Não. O art. 37, IX, exige necessidade temporária de excepcional interesse público." },
+  { tipo:"caso", enun:"Cargo de servidor estável é extinto. O que ocorre com ele?", com:"Fica em disponibilidade, com remuneração proporcional ao tempo de serviço, até seu aproveitamento (CF, art. 41, § 3º)." }],
+resumo:[
+  "Agentes públicos: políticos, administrativos (servidores, empregados, temporários), particulares em colaboração e militares.",
+  "<b>Cargo</b> é estatutário e criado por lei; <b>emprego</b> é celetista; <b>função</b> é atribuição sem cargo.",
+  "Temporários (art. 37, IX): necessidade temporária de excepcional interesse público, nunca para atividade permanente.",
+  "Provimento originário: nomeação. Derivados: promoção, readaptação, reversão, aproveitamento, reintegração e recondução.",
+  "Posse em <b>30 dias</b>; exercício em <b>15 dias</b>; estabilidade após <b>3 anos</b> de efetivo exercício.",
+  "Exoneração não é pena; demissão é sanção.",
+  "PAD: 60 dias, prorrogáveis. Prescrição: 5 anos, 2 anos e 180 dias, contada do conhecimento do fato; se também for crime, prazo penal.",
+  "Na PC-BA e na PC-PE valem os estatutos estaduais; a Lei 8.112 é modelo didático."],
+checklist:[
+  "Classificar os agentes públicos.",
+  "Diferenciar cargo, emprego e função.",
+  "Explicar o regime dos temporários.",
+  "Listar as formas de provimento originário e derivado.",
+  "Diferenciar reintegração, recondução, reversão e aproveitamento.",
+  "Citar os prazos de posse e de exercício.",
+  "Explicar estabilidade e estágio probatório.",
+  "Citar os prazos prescricionais disciplinares.",
+  "Dizer o prazo do PAD e da sindicância.",
+  "Lembrar que os estatutos estaduais prevalecem para PC-BA e PC-PE."],
 questoes:[]
 };
 

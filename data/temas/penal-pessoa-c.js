@@ -20,7 +20,11 @@ secoes:[
   teoria:[
     { h:"Ação penal", p:[
       "Regra: pública incondicionada. Leve e culposa: condicionada à representação (Lei 9.099, art. 88), salvo violência doméstica contra a mulher (incondicionada).",
-      "O STF, na ADI 4424, deu interpretação conforme à Lei Maria da Penha: a lesão em violência doméstica contra a mulher é de ação pública incondicionada, qualquer que seja a extensão."]}
+      "O STF, na ADI 4424, deu interpretação conforme à Lei Maria da Penha: a lesão em violência doméstica contra a mulher é de ação pública incondicionada, qualquer que seja a extensão."]},
+    { h:"Formas da lesão, privilégio e preterdolo", p:[
+      "Formas do crime: <b>simples</b> (leve, caput), <b>privilegiada</b> (§4º), <b>qualificada pelo resultado</b> (grave, §1º; gravíssima, §2º), <b>preterdolosa</b> (seguida de morte, §3º), <b>culposa</b> (§6º) e <b>majorada</b> (§§7º, 8º-A, 10, 11 e 12). Os §§9º e 13 acrescentam a lesão doméstica e a de gênero.",
+      "As qualificadoras dos §§1º a 3º são <b>objetivas</b>: dependem do resultado produzido, não do motivo do agente. O privilégio do §4º (relevante valor social ou moral, ou violenta emoção logo em seguida a injusta provocação) é <b>subjetivo</b>. Por isso a doutrina majoritária admite a combinação do privilégio com as formas dolosas qualificadas pelo resultado (lesão qualificada-privilegiada). O motivo torpe ou fútil não qualifica a lesão: entra na pena-base ou como agravante.",
+      "Preterdolo só existe onde o tipo prevê resultado agravador culposo, como no §3º: dolo na lesão e culpa na morte (art. 19). Se houve dolo quanto à morte, direto ou eventual, o crime é homicídio. <b>Não existe “homicídio preterdoloso”</b>, e a lesão seguida de morte não recebe as qualificadoras do art. 121 nem vai a júri. O crime preterdoloso não admite tentativa."]}
   ],
   pegadinhas:["A substituição da detenção por multa (§5º) não cabe em lesão grave: só a leve é punida com detenção."]},
 { id:"qualificadoras", titulo:"Grave, gravíssima, seguida de morte e violência doméstica", curto:"Qualificadoras",
@@ -145,6 +149,55 @@ cards:[
 { id:"lc14", tipo:"ce", sec:"simples", f:"Certo ou errado: na lesão grave recíproca, o juiz pode substituir a pena por multa.", v:"<b>Errado.</b> O §5º só vale \"não sendo graves as lesões\".", lei:["cp129p"] },
 { id:"lc15", tipo:"distincao", sec:"majorantes", f:"Agredir policial em razão da função: homicídio × lesão.", v:"Homicídio: <b>qualificadora</b> (121, §2º, VII). Lesão: <b>majorante</b> de 1/3 a 2/3 (129, §12, I). Lesão gravíssima ou seguida de morte nesse caso é hedionda.", lei:["cp129f"] }
 ],
+importancia:{ nivel:5,
+  texto:"Lesão corporal é muito cobrada em provas policiais: graduação (leve, grave, gravíssima), preterdolo, violência doméstica e de gênero, e as novas majorantes das Leis 14.994/2024, 15.159/2025, 15.358/2026 e 15.455/2026.",
+  decore:[
+    ["Lesão leve (caput)","detenção de <b>3 meses a 1 ano</b>"],
+    ["Lesão grave (§1º)","reclusão de <b>1 a 5 anos</b>; incapacidade por <b>mais de 30 dias</b>, perigo de vida, debilidade permanente, aceleração de parto"],
+    ["Lesão gravíssima (§2º)","reclusão de <b>2 a 8 anos</b>; incapacidade permanente, enfermidade incurável, perda ou inutilização, deformidade, aborto"],
+    ["Lesão seguida de morte (§3º)","reclusão de <b>4 a 12 anos</b>; preterdolo; fora do júri"],
+    ["Facção, milícia ou paramilitar","§3º-A: <b>20 a 40 anos</b>; §8º-A: <b>+2/3</b> nas demais lesões"],
+    ["Privilégio (§4º)","reduz <b>1/6 a 1/3</b>"],
+    ["Lesão culposa (§6º)","detenção de <b>2 meses a 1 ano</b>"],
+    ["Violência doméstica (§9º) e de gênero (§13)","reclusão de <b>2 a 5 anos</b>"],
+    ["Aumento no §10","<b>+1/3</b> nos §§1º a 3º com circunstâncias do §9º"],
+    ["Súmula 542 do STJ","lesão em violência doméstica contra a mulher: ação <b>incondicionada</b>"]],
+  macetes:[
+    ["Grave: “IPDA”","<b>I</b>ncapacidade por mais de 30 dias, <b>P</b>erigo de vida, <b>D</b>ebilidade permanente, <b>A</b>celeração de parto."],
+    ["Gravíssima: “IEPDA”","<b>I</b>ncapacidade permanente, <b>E</b>nfermidade incurável, <b>P</b>erda ou inutilização, <b>D</b>eformidade permanente, <b>A</b>borto."],
+    ["Preterdolo: dolo na ida, culpa na volta","Quer machucar e mata sem querer nem assumir o risco: art. 129, §3º. É a forma preterdolosa; não existe “homicídio preterdoloso”."],
+    ["Debilidade é grave, inutilização é gravíssima","Perder um olho ou um rim é debilidade (órgão duplo). Perda ou inutilização total da função é gravíssima."]] },
+comparativo:{ titulo:"Qualificado × majorado na lesão corporal", head:["Qualificada (novo patamar de pena)","Majorada (fração sobre a pena)"], rows:[
+  ["<b>O que faz:</b> cria outra moldura: §1º (1 a 5), §2º (2 a 8), §3º (4 a 12), §3º-A (20 a 40), §9º e §13 (2 a 5)","<b>O que faz:</b> fração aplicada na 3ª fase: §7º (+1/3), §8º-A (+2/3), §10 e §11 (+1/3), §12 (1/3 a 2/3 e 2/3 ao dobro)"],
+  ["<b>Natureza:</b> pelo resultado (§§1º a 3º, objetiva), pela relação (§9º) ou pelo gênero (§13)","<b>Natureza:</b> pela vítima, pelo local ou pelo autor: agente de segurança, instituição de ensino, deficiência, facção"],
+  ["<b>Facção:</b> lesão seguida de morte tem qualificadora (§3º-A)","<b>Facção:</b> nas demais lesões, majorante de 2/3 (§8º-A); não se soma à qualificadora do §3º-A"],
+  ["<b>Violência doméstica:</b> o §9º qualifica a lesão leve","<b>Violência doméstica:</b> o §10 aumenta 1/3 quando o resultado é grave, gravíssimo ou morte"],
+  ["<b>Privilégio (§4º):</b> redução de 1/6 a 1/3 por relevante valor social ou moral ou violenta emoção após injusta provocação","<b>Forma culposa:</b> não há graduação; só a majorante do §7º, que remete ao art. 121, §4º, e o perdão judicial do §8º"]]},
+prova:[
+  { tipo:"ce", enun:"A incapacidade para as ocupações habituais por exatamente 30 dias configura lesão corporal grave.", gab:"Errado", com:"A lei exige incapacidade por mais de 30 dias (31 ou mais). Com 30 dias, a lesão é leve." },
+  { tipo:"ce", enun:"A perda de um dos olhos configura lesão corporal gravíssima por perda de sentido.", gab:"Errado", com:"Por ser órgão duplo, a perda de um olho é debilidade de sentido, lesão grave (§1º, III)." },
+  { tipo:"ce", enun:"O agente que quer apenas machucar e, sem querer nem assumir o risco, causa a morte da vítima responde por lesão corporal seguida de morte, e não por homicídio.", gab:"Certo", com:"É a forma preterdolosa do art. 129, §3º (4 a 12 anos). O crime não vai a júri e não admite as qualificadoras do art. 121." },
+  { tipo:"ce", enun:"A lesão corporal culposa que deixa deformidade permanente na vítima é lesão culposa gravíssima.", gab:"Errado", com:"Não há gradação na lesão culposa: aplica-se sempre o §6º (detenção de 2 meses a 1 ano)." },
+  { tipo:"caso", enun:"Marido agride a esposa e a deixa 45 dias incapacitada para as ocupações habituais. Qual o enquadramento e a ação penal?", com:"Lesão grave (§1º, I) com aumento de 1/3 do §10, por serem as circunstâncias do §9º. Ação pública incondicionada (violência doméstica contra a mulher)." },
+  { tipo:"ce", enun:"A lesão corporal dolosa praticada contra agente de segurança em razão da função é qualificadora do art. 129, assim como o é no homicídio.", gab:"Errado", com:"No homicídio é qualificadora (art. 121, §2º, VII). Na lesão é causa de aumento de 1/3 a 2/3 (art. 129, §12, I)." }],
+resumo:[
+  "Lesão leve: detenção de 3 meses a 1 ano. Agressão sem lesão é vias de fato (LCP, art. 21).",
+  "Lesão grave (§1º) e gravíssima (§2º) são qualificadas pelo <b>resultado</b>; os resultados podem ser dolosos ou preterdolosos (art. 19).",
+  "Lesão seguida de morte (§3º): preterdolo, dolo na lesão e culpa na morte, de 4 a 12 anos, fora do júri. Com contexto de facção, 20 a 40 anos (§3º-A).",
+  "Privilégio (§4º) é subjetivo e reduz de 1/6 a 1/3. A substituição por multa (§5º) só vale se as lesões não são graves.",
+  "Lesão culposa (§6º): 2 meses a 1 ano; sem graduação; majorante do §7º e perdão judicial.",
+  "§9º (relação doméstica, inclusive trabalho doméstico, Lei 15.455/2026) e §13 (gênero): reclusão de 2 a 5 anos; §10 e §11 aumentam 1/3.",
+  "§12: majorante para agentes de segurança, Judiciário, MP e afins, e instituições de ensino. §8º-A: +2/3 para facção.",
+  "Violência doméstica contra a mulher: ação incondicionada (Súm. 542), sem transação e sursis (Súm. 536), sem restritivas (Súm. 588), sem insignificância (Súm. 589), sem coabitação (Súm. 600)."],
+checklist:[
+  "Listar os incisos da lesão grave e da gravíssima",
+  "Diferenciar debilidade de perda ou inutilização",
+  "Explicar o preterdolo do §3º e por que não há “homicídio preterdoloso”",
+  "Diferenciar o §3º-A (qualificadora) do §8º-A (majorante)",
+  "Aplicar os §§9º, 10, 11 e 13 em casos de violência doméstica",
+  "Comparar a circunstância no homicídio (qualifica) e na lesão (majora)",
+  "Aplicar as Súmulas 536, 542, 588, 589 e 600 do STJ",
+  "Explicar a lesão culposa, o §7º e o perdão judicial"],
 questoes:[]
 };
 
@@ -245,6 +298,52 @@ cards:[
 { id:"pc13", tipo:"caso", sec:"rixa", f:"Em rixa com 10 pessoas, uma morre por golpe de A. Como respondem A e os demais?", v:"Todos: <b>rixa qualificada</b>. A: rixa qualificada <b>+ homicídio</b> (prevalece).", lei:["cp137"] },
 { id:"pc14", tipo:"caso", sec:"rixa", f:"B entra na rixa depois que a vítima já morreu. Responde pela qualificada?", v:"<b>Não</b>: rixa simples. Quem saiu antes do resultado, ao contrário, responde pela qualificada.", lei:["cp137"] }
 ],
+importancia:{ nivel:4,
+  texto:"Crimes de perigo e rixa caem em letra de lei e em pegadinhas de pena. Após a Lei 15.163/2025 a banca cobra as novas penas do abandono de incapaz e dos maus-tratos, a omissão de socorro e os requisitos da rixa.",
+  decore:[
+    ["Art. 130 (contágio venéreo)","detenção de 3 meses a 1 ano, ou multa; <b>representação</b>; com intenção de transmitir (§1º), reclusão de 1 a 4"],
+    ["Art. 131","reclusão de <b>1 a 4 anos</b>; fim de transmitir moléstia grave"],
+    ["Art. 132 (perigo direto e iminente)","detenção de 3 meses a 1 ano, <b>se não houver crime mais grave</b>"],
+    ["Arts. 133 e 136 (após a Lei 15.163/2025)","<b>2 a 5</b>; lesão grave <b>3 a 7</b>; morte <b>8 a 14</b> (reclusão)"],
+    ["Art. 133, §3º e art. 136, §3º","<b>+1/3</b>"],
+    ["Art. 134 (recém-nascido)","detenção de 6 meses a 2 anos, para <b>ocultar desonra própria</b>"],
+    ["Omissão de socorro (art. 135)","detenção de 1 a 6 meses, ou multa; <b>+1/2</b> (lesão grave) e <b>triplicada</b> (morte)"],
+    ["Art. 135-A","detenção de 3 meses a 1 ano e multa; <b>até o dobro</b> e <b>até o triplo</b>"],
+    ["Rixa (art. 137)","detenção de <b>15 dias a 2 meses</b>, ou multa; qualificada: <b>6 meses a 2 anos</b>"],
+    ["Rixa","mínimo de <b>3</b> pessoas, sem grupos definidos"]],
+  macetes:[
+    ["Quem pode, ajuda; quem não pode, pede","Na omissão de socorro, quem pode prestar assistência sem risco pessoal deve prestá-la. Pedir socorro à autoridade só vale quando a ajuda direta não é possível."],
+    ["Artigo 134 ficou para trás","A Lei 15.163/2025 mudou os arts. 133 e 136, mas o art. 134 continua com detenção."],
+    ["Rixa qualificada pune todos","Morte ou lesão grave: todos os rixosos respondem pela forma qualificada, pelo fato da participação. Quem causou o resultado responde também pelo crime correspondente."]] },
+comparativo:{ titulo:"Qualificado pelo resultado × causa de aumento", head:["Resultado qualificador (arts. 133, 134 e 136, §§1º e 2º)","Causa de aumento (arts. 132, 133, 135, 135-A e 136)"], rows:[
+  ["<b>O que faz:</b> cria nova pena conforme o resultado: lesão grave (3 a 7 no 133 e no 136; 1 a 3 no 134) ou morte (8 a 14; 2 a 6 no 134)","<b>O que faz:</b> fração aplicada à pena: +1/3 (133, §3º; 136, §3º), +1/6 a 1/3 (132), +1/2 e triplo (135), até o dobro e triplo (135-A)"],
+  ["<b>Natureza:</b> resultado agravador (objetiva); o crime-base é de perigo","<b>Natureza:</b> objetiva, ligada ao local, à vítima, ao autor ou ao resultado"],
+  ["<b>Exemplos:</b> abandono do incapaz que acaba morrendo (133, §2º)","<b>Exemplos:</b> lugar ermo, agente ascendente, vítima maior de 60 anos, vítima menor de 14 (maus-tratos)"],
+  ["<b>No art. 135:</b> lesão grave e morte não criam nova moldura, são <b>aumento</b> (1/2 e triplicada)","<b>No art. 135-A:</b> lesão grave e morte são aumento (até o dobro e até o triplo)"]]},
+prova:[
+  { tipo:"ce", enun:"Dos crimes de periclitação da vida e da saúde, o art. 130 é o de ação penal condicionada à representação.", gab:"Certo", com:"Art. 130, §2º. Os demais são de ação pública incondicionada." },
+  { tipo:"ce", enun:"O art. 132 pune a exposição a perigo direto e iminente apenas se o fato não constituir crime mais grave.", gab:"Certo", com:"Subsidiariedade expressa. Se o agente quer matar, a hipótese é de tentativa de homicídio." },
+  { tipo:"ce", enun:"Após a Lei 15.163/2025, a pena do abandono de incapaz é de reclusão de 2 a 5 anos, e a do abandono de recém-nascido para ocultar desonra própria também foi alterada.", gab:"Errado", com:"O art. 133 passou a 2 a 5 anos, mas o art. 134 não mudou: segue com detenção de 6 meses a 2 anos." },
+  { tipo:"ce", enun:"Quem pode socorrer a pessoa ferida sem risco pessoal cumpre o art. 135 se apenas ligar para o serviço de emergência.", gab:"Errado", com:"A assistência indireta só basta quando a direta não é possível sem risco pessoal." },
+  { tipo:"caso", enun:"Em uma briga generalizada entre três pessoas, sem grupos definidos, uma delas morre pelo golpe de um dos participantes. Como respondem os participantes?", com:"Todos pela rixa qualificada (art. 137, parágrafo único), pelo fato da participação. Quem desferiu o golpe responde também pelo homicídio, em concurso, segundo a posição que prevalece." },
+  { tipo:"ce", enun:"O hospital que exige cheque-caução para atendimento emergencial responde pelo art. 135-A, com pena que pode ser aumentada até o triplo se o paciente morre.", gab:"Certo", com:"Art. 135-A e parágrafo único: até o dobro (lesão grave) e até o triplo (morte)." }],
+resumo:[
+  "Periclitação protege a vida e a saúde expostas a perigo (crimes de perigo).",
+  "Art. 130: exposição ao contágio de moléstia venérea por ato sexual; só ação por representação. Art. 131: fim de transmitir moléstia grave, forma livre e dolo específico.",
+  "Art. 132: perigo direto e iminente, subsidiário. Aumento de 1/6 a 1/3 no transporte irregular de trabalhadores.",
+  "Arts. 133 e 136 (Lei 15.163/2025): 2 a 5; 3 a 7 se lesão grave; 8 a 14 se morte; +1/3 nas majorantes do §3º.",
+  "Art. 134: recém-nascido para ocultar desonra própria, detenção. Maus-tratos exigem fim de educação, ensino, tratamento ou custódia.",
+  "Omissão de socorro: omissivo próprio, sem tentativa. Art. 135-A: exigência de garantia como condição do atendimento emergencial.",
+  "Rixa: três ou mais, sem grupos definidos; participar, salvo para separar. Qualificada com morte ou lesão grave.",
+  "Quem saiu antes do resultado responde pela rixa qualificada; quem entrou depois, pela simples."],
+checklist:[
+  "Dizer a pena e a ação penal dos arts. 130, 131 e 132",
+  "Citar as novas penas dos arts. 133 e 136 e a majorante do §3º",
+  "Diferenciar abandono de incapaz, abandono de recém-nascido e maus-tratos",
+  "Explicar a omissão de socorro e a assistência direta e indireta",
+  "Aplicar o art. 135-A",
+  "Distinguir rixa de briga entre grupos definidos",
+  "Resolver a rixa qualificada, inclusive para quem saiu antes ou entrou depois"],
 questoes:[]
 };
 

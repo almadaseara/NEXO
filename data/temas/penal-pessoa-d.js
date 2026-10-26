@@ -105,6 +105,53 @@ cards:[
 { id:"hn14", tipo:"caso", sec:"comuns", f:"Advogado ofende a parte contrária na petição; um jornalista publica o trecho. Quem responde?", v:"O advogado tem a imunidade do 142, I (injúria/difamação). O <b>jornalista</b> responde por dar publicidade (parágrafo único).", lei:["cp142"] },
 { id:"hn15", tipo:"juris", sec:"comuns", f:"Delegado é difamado por causa de uma investigação. Como se inicia a ação penal?", v:"<b>Queixa</b> ou <b>representação ao MP</b> — legitimidade concorrente (Súmula 714 do STF).", lei:["cp145"], j:["stf-s714"] }
 ],
+importancia:{ nivel:5,
+  texto:"Crimes contra a honra caem em quadros comparativos (calúnia, difamação e injúria), exceção da verdade, majorantes do art. 141 e ação penal. Recentemente, a banca explora a injúria racial na Lei 7.716/89 e o aumento por gênero e por redes sociais.",
+  decore:[
+    ["Calúnia (art. 138)","detenção de <b>6 meses a 2 anos</b> e multa; fato definido como <b>crime</b>, falso"],
+    ["Difamação (art. 139)","detenção de <b>3 meses a 1 ano</b> e multa; fato ofensivo à reputação"],
+    ["Injúria (art. 140)","detenção de <b>1 a 6 meses</b>, ou multa; dignidade ou decoro"],
+    ["Injúria real (§2º)","detenção de <b>3 meses a 1 ano</b> e multa, além da pena da violência"],
+    ["Injúria do §3º","religião, pessoa idosa ou com deficiência: reclusão de <b>1 a 3 anos</b> e multa"],
+    ["Injúria racial","Lei 7.716/89, art. 2º-A: reclusão de <b>2 a 5 anos</b>; imprescritível"],
+    ["Aumento do art. 141","<b>+1/3</b>; paga: <b>dobro</b>; redes sociais: <b>triplo</b>; mulher por gênero: <b>dobro</b>"],
+    ["Retratação (art. 143)","só <b>calúnia</b> e <b>difamação</b>, antes da sentença"],
+    ["Ação penal (art. 145)","regra: <b>queixa</b>"],
+    ["Súmula 714 do STF","ofensa a servidor em razão da função: legitimidade <b>concorrente</b>"]],
+  macetes:[
+    ["Calúnia imputa crime, difamação imputa fato, injúria imputa qualidade","Imputar contravenção é difamação. Chamar de “ladrão” é injúria, por falta de fato determinado."],
+    ["Quem sabe consuma","Calúnia e difamação: quando um terceiro toma conhecimento. Injúria: quando a própria vítima toma conhecimento."],
+    ["Só a calúnia alcança os mortos","Difamar e injuriar os mortos não é crime. A calúnia contra os mortos é punível (art. 138, §2º)."],
+    ["Redes sociais pesam o triplo","Paga ou promessa e gênero: em dobro. Redes sociais: em triplo."]] },
+comparativo:{ titulo:"Injúria qualificada × crimes majorados (arts. 140, §3º e 141)", head:["Injúria do art. 140, §3º (forma própria)","Majorantes do art. 141"], rows:[
+  ["<b>O que faz:</b> cria outra pena (reclusão de 1 a 3 anos e multa) quando a injúria usa elementos de religião ou da condição de pessoa idosa ou com deficiência","<b>O que faz:</b> fração aplicada à pena de calúnia, difamação ou injúria: +1/3, dobro ou triplo"],
+  ["<b>Cumulação:</b> o art. 141, IV exclui a hipótese do art. 140, §3º, para evitar duplo aumento pela mesma razão","<b>Cumulação:</b> o inciso IV (criança, adolescente, maior de 60 ou pessoa com deficiência) ressalva o art. 140, §3º"],
+  ["<b>Ação penal:</b> representação do ofendido (art. 145, parágrafo único)","<b>Ação penal:</b> queixa, em regra; requisição do Ministro da Justiça (art. 141, I) e representação (art. 141, II)"],
+  ["<b>Raça, cor, etnia e procedência nacional:</b> fora do CP, no art. 2º-A da Lei 7.716/89, ação incondicionada","<b>Gênero:</b> pena em dobro contra mulher por razões da condição do sexo feminino (§3º)"]]},
+prova:[
+  { tipo:"ce", enun:"Imputar falsamente a alguém a prática de contravenção penal configura calúnia.", gab:"Errado", com:"A calúnia exige imputação de fato definido como crime. Imputar contravenção é difamação." },
+  { tipo:"ce", enun:"A difamação exige que o fato imputado seja falso, e a ofensa à memória de pessoa morta é punível.", gab:"Errado", com:"Difamação não exige falsidade e não há difamação contra os mortos. Só a calúnia contra os mortos é punível." },
+  { tipo:"ce", enun:"A injúria consuma-se quando a própria vítima toma conhecimento da ofensa.", gab:"Certo", com:"Calúnia e difamação se consumam quando um terceiro toma conhecimento; a injúria, quando a vítima toma conhecimento." },
+  { tipo:"ce", enun:"A retratação cabal feita antes da sentença isenta de pena o querelado na calúnia, na difamação e na injúria.", gab:"Errado", com:"O art. 143 vale para a calúnia e a difamação, não para a injúria." },
+  { tipo:"ce", enun:"Se a calúnia é divulgada em redes sociais, a pena é aplicada em dobro.", gab:"Errado", com:"No art. 141, §2º, a pena é aplicada em triplo. O dobro vale para paga ou promessa e para o crime contra a mulher por razões de gênero." },
+  { tipo:"caso", enun:"Um delegado é difamado em razão de uma investigação que presidiu. Como pode ser iniciada a ação penal?", com:"Por queixa do ofendido ou por ação pública mediante sua representação, com legitimidade concorrente (Súmula 714 do STF; art. 145, parágrafo único)." }],
+resumo:[
+  "Calúnia (138): imputar falsamente fato definido como crime. Difamação (139): fato ofensivo à reputação. Injúria (140): ofensa à dignidade ou ao decoro.",
+  "Calúnia e difamação atingem a honra objetiva; a injúria, a subjetiva.",
+  "Exceção da verdade: na calúnia, em regra sim, com três exceções (art. 138, §3º); na difamação, só se o ofendido é funcionário público e a ofensa é ligada à função; na injúria, nunca.",
+  "Injúria real (violência aviltante); injúria do §3º (religião, idoso, deficiência); injúria racial na Lei 7.716/89, art. 2º-A.",
+  "Majorantes do art. 141: +1/3; paga ou promessa, dobro; redes sociais, triplo; contra mulher por razões de gênero, dobro.",
+  "O art. 142 afasta a injúria e a difamação puníveis (ofensa em juízo, crítica, parecer funcional), não a calúnia.",
+  "Retratação (143) só na calúnia e na difamação. Pedido de explicações em juízo (144).",
+  "Ação penal: queixa em regra. Exceções: injúria real com lesão, requisição do Ministro da Justiça, representação."],
+checklist:[
+  "Diferenciar calúnia, difamação e injúria quanto ao conteúdo e à consumação",
+  "Listar os casos em que não cabe exceção da verdade na calúnia",
+  "Dizer contra quem a calúnia é punível depois da morte",
+  "Aplicar as majorantes do art. 141 e os fatores dobro e triplo",
+  "Distinguir injúria do art. 140, §3º de injúria racial da Lei 7.716/89",
+  "Aplicar o art. 142 e o art. 143",
+  "Identificar a ação penal em cada hipótese, inclusive a Súmula 714 do STF"],
 questoes:[]
 };
 
@@ -259,6 +306,55 @@ cards:[
 { id:"lb19", tipo:"caso", sec:"domicilio", f:"Colega pega o celular desbloqueado de outro e lê e-mails e conversas de WhatsApp.", v:"<b>154-A, §3º</b> (obtenção de comunicações eletrônicas privadas) — reclusão de 2 a 5 anos. Não precisa violar senha.", lei:["cp154a"] },
 { id:"lb20", tipo:"caso", sec:"domicilio", f:"Invasão de computador de autarquia estadual. Precisa de representação?", v:"<b>Não.</b> Contra a administração direta ou indireta (ou concessionária), a ação é <b>incondicionada</b> (154-B).", lei:["cp154a"] }
 ],
+importancia:{ nivel:4,
+  texto:"Bloco extenso, com muitas leis novas (14.132/2021, 14.155/2021, 14.188/2021, 14.811/2024, 14.994/2024, 15.123/2025 e 15.358/2026). A banca cobra penas, majorantes e a ação penal de cada figura.",
+  decore:[
+    ["Constrangimento ilegal (art. 146)","detenção de 3 meses a 1 ano; <b>dobro e cumulativas</b> com mais de 3 pessoas ou armas"],
+    ["Ameaça (art. 147)","detenção de 1 a 6 meses; contra mulher por gênero: <b>dobro</b> e ação incondicionada"],
+    ["Ameaça de facção (art. 147-C)","reclusão de <b>1 a 3 anos</b>; tipo autônomo"],
+    ["Perseguição (art. 147-A)","reclusão de <b>6 meses a 2 anos</b> e multa; <b>+1/2</b>; representação"],
+    ["Violência psicológica (art. 147-B)","reclusão de <b>6 meses a 2 anos</b>; <b>+1/2</b> com IA (Lei 15.123/2025)"],
+    ["Sequestro (art. 148)","1 a 3; qualificado 2 a 5 (mais de <b>15 dias</b>, menor de 18, fins libidinosos); 2 a 8; facção <b>12 a 20</b>"],
+    ["Trabalho escravo (art. 149)","reclusão de <b>2 a 8 anos</b> e multa; <b>+1/2</b> contra criança ou adolescente"],
+    ["Tráfico de pessoas (art. 149-A)","reclusão de <b>4 a 8 anos</b> e multa"],
+    ["Violação de domicílio (art. 150)","detenção de 1 a 3 meses, ou multa; qualificada de 6 meses a 2 anos"],
+    ["Invasão de dispositivo (art. 154-A)","reclusão de <b>1 a 4 anos</b> e multa; §3º: <b>2 a 5</b>"]],
+  macetes:[
+    ["Constrangimento: mais de três","Constrangimento ilegal dobra com “mais de três pessoas” (quatro ou mais). Na perseguição, o concurso é de “duas ou mais”."],
+    ["Ameaça de gênero é incondicionada","A ameaça comum depende de representação. A ameaça contra mulher por razões de gênero tem pena em dobro e ação incondicionada. A perseguição de gênero continua condicionada."],
+    ["Sequestro por duração","O sequestro é qualificado quando dura <b>mais de 15 dias</b>. Fins libidinosos qualificam por finalidade, não por resultado."],
+    ["Domicílio: entrar ou permanecer","Entrar ou permanecer, clandestina, astuciosamente ou contra a vontade de quem de direito. Dia, com formalidades legais, para prisão ou diligência: não é crime."]] },
+comparativo:{ titulo:"Qualificado × majorado nos crimes contra a liberdade", head:["Qualificado (nova pena em abstrato)","Majorado (fração sobre a pena)"], rows:[
+  ["<b>Sequestro (art. 148):</b> §1º (2 a 5), §2º (2 a 8), §3º (12 a 20, facção)","<b>Perseguição (art. 147-A):</b> §1º, +1/2 contra criança, adolescente, idoso, mulher por gênero, concurso de pessoas ou arma"],
+  ["<b>Ameaça de facção:</b> art. 147-C é tipo autônomo (1 a 3 anos)","<b>Ameaça de gênero:</b> art. 147, §1º, pena em dobro"],
+  ["<b>Constrangimento ilegal:</b> não tem qualificadora; o §1º dobra e cumula as penas","<b>Trabalho escravo (art. 149):</b> §2º, +1/2 contra criança ou adolescente ou por preconceito"],
+  ["<b>Invasão de dispositivo:</b> §3º qualifica (2 a 5 anos) quando há conteúdo de comunicações privadas, segredos ou controle remoto","<b>Invasão de dispositivo:</b> §2º (1/3 a 2/3, prejuízo econômico), §4º (um a dois terços, divulgação) e §5º (1/3 à metade, autoridades)"],
+  ["<b>Violação de domicílio:</b> §1º qualifica (6 meses a 2 anos) à noite, em lugar ermo, com violência ou arma, ou por duas ou mais pessoas","<b>Tráfico de pessoas (art. 149-A):</b> §1º aumenta de 1/3 até a metade; o §2º reduz a pena para o primário que não integra organização criminosa"]]},
+prova:[
+  { tipo:"ce", enun:"No constrangimento ilegal, as penas são aplicadas cumulativamente e em dobro quando, para a execução do crime, se reúnem mais de três pessoas ou há emprego de armas.", gab:"Certo", com:"Art. 146, §1º. Além disso, aplicam-se as penas correspondentes à violência (§2º)." },
+  { tipo:"ce", enun:"A ameaça praticada contra a mulher por razões da condição do sexo feminino tem pena em dobro e depende de representação.", gab:"Errado", com:"A pena é em dobro, mas a ação é pública incondicionada (art. 147, §§1º e 2º). A representação é regra da ameaça comum." },
+  { tipo:"ce", enun:"A ameaça no contexto da atuação de facção, milícia ou grupo paramilitar é qualificadora do art. 147.", gab:"Errado", com:"É tipo autônomo, o art. 147-C (Lei 15.358/2026), com reclusão de 1 a 3 anos." },
+  { tipo:"ce", enun:"A perseguição (art. 147-A) é crime habitual: um ato isolado não basta para configurá-lo.", gab:"Certo", com:"O tipo exige conduta reiterada e, em regra, a ação depende de representação (§3º)." },
+  { tipo:"ce", enun:"O sequestro é qualificado quando a privação da liberdade dura mais de 15 dias, ou quando a vítima é menor de 18 anos.", gab:"Certo", com:"Art. 148, §1º, III e IV. Contra menor de 18, o sequestro é hediondo (Lei 8.072, art. 1º, XI)." },
+  { tipo:"caso", enun:"Policiais cumprem mandado de busca em residência às 22 horas. O que se aplica?", com:"Abuso de autoridade (Lei 13.869, art. 22, §1º, III): o mandado de busca cumprido entre 21h e 5h é irregular. O art. 150, §3º, I só afasta o crime de violação de domicílio quando a entrada ocorre durante o dia, com as formalidades legais." }],
+resumo:[
+  "Constrangimento ilegal: violência, grave ameaça ou redução da resistência. Crime material e subsidiário.",
+  "Bullying (146-A): multa; cyberbullying: reclusão de 2 a 4 anos. Ambos subsidiários.",
+  "Ameaça: mal injusto e grave. Gênero: dobro e ação incondicionada. Facção: art. 147-C, tipo autônomo.",
+  "Perseguição: reiterada, +1/2 em hipóteses do §1º, cúmulo com a violência, representação. Violência psicológica contra a mulher: dano emocional, +1/2 com IA.",
+  "Sequestro: 1 a 3; qualificado 2 a 5; grave sofrimento 2 a 8; facção 12 a 20. Crime permanente; hediondo contra menor de 18.",
+  "Trabalho escravo (149): trabalhos forçados, jornada exaustiva, condições degradantes ou dívida; não exige restrição de locomoção. Tráfico de pessoas (149-A): finalidades de órgãos, escravidão, servidão, adoção ilegal ou exploração sexual.",
+  "Domicílio: entrar ou permanecer; conceito de “casa” no §4º e exclusões no §5º; não é crime nas hipóteses do §3º.",
+  "Segredos: divulgar (153) × revelar (154). Invasão de dispositivo (154-A): 1 a 4; ação por representação, salvo contra a administração e concessionárias."],
+checklist:[
+  "Citar as penas e as majorantes de cada figura do bloco",
+  "Diferenciar ameaça (147), ameaça de facção (147-C) e perseguição (147-A)",
+  "Dizer a ação penal da ameaça, da ameaça de gênero e da perseguição",
+  "Distinguir sequestro de extorsão mediante sequestro e listar as qualificadoras do art. 148",
+  "Diferenciar trabalho escravo do tráfico de pessoas",
+  "Explicar o conceito de “casa” e as hipóteses do art. 150, §3º",
+  "Diferenciar divulgar (153) de revelar (154)",
+  "Aplicar o art. 154-A e a ação penal do art. 154-B"],
 questoes:[]
 };
 

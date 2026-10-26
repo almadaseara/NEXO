@@ -69,6 +69,52 @@ cards:[
 { id:"ic13", tipo:"distincao", sec:"genetico", f:"O que é o BNMID (art. 7º-C) e onde fica?", v:"Banco Nacional Multibiométrico e de Impressões Digitais, no <b>Ministério da Justiça e Segurança Pública</b>: biometria, digitais e, se possível, íris, face e voz, para investigações criminais federais, estaduais e distritais.", lei:["l12037a7c"] },
 { id:"ic14", tipo:"distincao", sec:"genetico", f:"Quais as travas do BNMID?", v:"Sigilo; <b>proibida a venda</b> da base; uso civil/administrativo/eleitoral só de <b>digitais e dados de identificação</b>; interoperação por <b>acordo ou convênio</b>; coincidência vira <b>laudo de perito oficial</b>; acesso por <b>requerimento ao juiz</b>.", lei:["l12037a7c"] }
 ],
+importancia:{ nivel:3,
+  texto:"Lei curta e muito literal. A banca cobra a regra do art. 5º, LVIII da CF, o rol de documentos do art. 2º, as hipóteses do art. 3º e as regras de exclusão do perfil genético e da foto.",
+  decore:[
+    ["Regra constitucional","civilmente identificado <b>não</b> é identificado criminalmente (CF, art. 5º, LVIII)"],
+    ["Art. 3º, IV","identificação essencial às investigações, por <b>despacho do juiz</b>"],
+    ["Quem pode provocar o inciso IV","<b>autoridade policial, MP ou defesa</b> (ou juiz de ofício)"],
+    ["Identificação criminal (art. 5º)","processo <b>datiloscópico</b> e <b>fotográfico</b>"],
+    ["Perfil genético (art. 5º, §1º)","incisos <b>IV e VII</b> do art. 3º"],
+    ["Exclusão do perfil (art. 7º-A)","absolvição; ou <b>20 anos</b> do cumprimento da pena, por requerimento"],
+    ["Retirada da foto (art. 7º)","não oferecimento ou rejeição da denúncia, absolvição, arquivamento ou trânsito em julgado"],
+    ["Atestados de antecedentes (art. 6º)","vedada a menção à identificação criminal antes do <b>trânsito em julgado</b>"],
+    ["Banco Nacional Multibiométrico (art. 7º-C)","Ministério da Justiça; <b>vedada a comercialização</b>"]],
+  macetes:[
+    ["Rol aberto do art. 2º","Qualquer documento público que permita identificar vale, e os militares são equiparados aos civis."],
+    ["Dúvida de identidade, quase sempre","Os incisos I, II, III, V e VI do art. 3º giram em torno de dúvida sobre quem é a pessoa. Só o IV (necessidade da investigação) e o VII (gravidade do crime) fogem disso."],
+    ["Foto sim, digital não","O art. 7º trata só da retirada da <b>foto</b>, não da datiloscopia."]] },
+comparativo:{ titulo:"Identificação civil × identificação criminal", head:["Identificação civil (art. 2º)","Identificação criminal (arts. 3º e 5º)"], rows:[
+  ["<b>Natureza:</b> comprovada por documento público (identidade, carteira de trabalho, profissional, passaporte, funcional ou outro)","<b>Natureza:</b> processo datiloscópico e fotográfico e, nos incisos IV e VII, também material biológico"],
+  ["<b>Regra:</b> quem a tem não é submetido à criminal (CF, art. 5º, LVIII)","<b>Regra:</b> só nas hipóteses do art. 3º, mesmo havendo documento"],
+  ["<b>Quem decide:</b> não há decisão; basta o documento","<b>Quem decide (inciso IV):</b> o juiz, e nunca o delegado"],
+  ["<b>Equiparação:</b> documentos militares valem como civis","<b>Cuidado:</b> a autoridade deve evitar constrangimento e responde por excesso (art. 4º)"],
+  ["<b>Efeito no atestado:</b> sem restrição","<b>Efeito no atestado:</b> sua menção é vedada antes do trânsito em julgado (art. 6º)"]]},
+prova:[
+  { tipo:"ce", enun:"Quem apresenta carteira de trabalho ao ser preso em flagrante não pode ser submetido a identificação criminal em nenhuma hipótese.", gab:"Errado", com:"A regra admite exceções legais do art. 3º, como rasura ou indício de falsificação, documentos conflitantes ou ordem judicial." },
+  { tipo:"ce", enun:"O despacho que determina a identificação criminal por ser essencial às investigações pode ser proferido pelo delegado de polícia.", gab:"Errado", com:"No inciso IV a decisão é do juiz, de ofício ou por representação da autoridade policial, do MP ou da defesa." },
+  { tipo:"ce", enun:"O perfil genético do condenado é excluído do banco de dados, mediante requerimento, 20 anos após o cumprimento da pena.", gab:"Certo", com:"Art. 7º-A, II. Na absolvição, a exclusão é a regra." },
+  { tipo:"ce", enun:"A informação genética armazenada no banco de perfis pode revelar traços somáticos e comportamentais do identificado, desde que sigilosa.", gab:"Errado", com:"Não pode revelar traços somáticos ou comportamentais, exceto a determinação genética de gênero." },
+  { tipo:"caso", enun:"O investigado foi absolvido definitivamente e pede a retirada de sua foto do processo. O que ele deve apresentar?", com:"Apresentar prova da identificação civil (art. 7º). O artigo trata só da foto, não da datiloscopia." },
+  { tipo:"caso", enun:"Acusado portava passaporte com sinais de rasura. Pode ser identificado criminalmente?", com:"Sim, pelo art. 3º, I (rasura ou indício de falsificação), que autoriza a identificação criminal mesmo com documento." }],
+resumo:[
+  "A <b>Lei 12.037/2009</b> regulamenta o art. 5º, LVIII da CF e substituiu a Lei 10.054/2000.",
+  "O <b>art. 2º</b> traz rol aberto de documentos que comprovam a identificação civil; os militares são equiparados.",
+  "O <b>art. 3º</b> lista sete hipóteses de identificação criminal mesmo com documento; o inciso IV exige despacho do <b>juiz</b>.",
+  "O inciso VII (recebimento da denúncia por crimes graves) prevê coleta de DNA; confira a redação vigente.",
+  "A identificação criminal inclui <b>datiloscopia e fotografia</b>; nos incisos IV e VII, também o <b>perfil genético</b>.",
+  "O perfil genético é <b>sigiloso</b> e é excluído por absolvição ou, na condenação, por requerimento após 20 anos do cumprimento da pena.",
+  "É vedada a menção à identificação criminal em atestados de antecedentes antes do <b>trânsito em julgado</b> (art. 6º).",
+  "O <b>Banco Nacional Multibiométrico</b> (art. 7º-C) é sigiloso, não pode ser comercializado e o acesso de polícia e MP exige pedido ao juiz."],
+checklist:[
+  "Enunciar a regra do art. 5º, LVIII da CF e suas exceções legais.",
+  "Listar os documentos do art. 2º e a equiparação dos militares.",
+  "Citar as hipóteses do art. 3º e quem decide o inciso IV.",
+  "Explicar o que compõe a identificação criminal e quando entra o perfil genético.",
+  "Explicar quando e como se exclui o perfil genético e a foto.",
+  "Dizer o que a lei veda em atestados de antecedentes.",
+  "Descrever as regras do Banco Nacional Multibiométrico (sigilo, acesso, vedação de venda)."],
 questoes:[]
 };
 
@@ -125,6 +171,51 @@ cards:[
 { id:"iv10", tipo:"distincao", sec:"funcao", f:"O que é o objeto da investigação criminal conduzida pelo delegado?", v:"Apurar <b>circunstâncias, materialidade e autoria</b> da infração, por inquérito ou outro procedimento previsto em lei.", lei:["l12830a2"] },
 { id:"iv11", tipo:"ce", sec:"funcao", f:"(C/E) As polícias militares exercem as funções de polícia judiciária descritas na Lei 12.830.", v:"<b>Errado.</b> Polícia judiciária é função das polícias civis e da Polícia Federal; a PM é ostensiva.", lei:["l12830a2"] }
 ],
+importancia:{ nivel:4,
+  texto:"A Lei 12.830/2013 é pequena, mas cai muito nas provas de delegado e de investigador: natureza da função, indiciamento privativo e fundamentado, avocação e redistribuição.",
+  decore:[
+    ["Natureza da função (art. 2º)","<b>jurídica</b>, essencial e <b>exclusiva de Estado</b>"],
+    ["Condução da investigação (§1º)","inquérito policial <b>ou outro procedimento</b> previsto em lei"],
+    ["Requisição (§2º)","perícia, informações, documentos e dados que interessem à apuração"],
+    ["Indiciamento (§6º)","<b>privativo</b> do delegado, por ato <b>fundamentado</b>"],
+    ["Avocação ou redistribuição (§4º)","só por <b>superior hierárquico</b>, despacho <b>fundamentado</b>"],
+    ["Motivos do §4º","<b>interesse público</b> ou <b>inobservância de procedimentos</b> que prejudique a investigação"],
+    ["Remoção (§5º)","somente por <b>ato fundamentado</b>"],
+    ["Requisito do cargo (art. 3º)","<b>bacharel em Direito</b>"],
+    ["Tratamento protocolar","o mesmo de magistrados, Defensoria, MP e advogados"]],
+  macetes:[
+    ["Motivos alternativos","No §4º os dois motivos são ligados por <b>ou</b>; a banca troca por “e”."],
+    ["Requisitar, não pedir","Perícia, dados e documentos são requisitados pelo delegado; não dependem de ordem do juiz."],
+    ["Bacharel, não advogado","O art. 3º exige bacharelado em Direito, e não inscrição na OAB."]] },
+comparativo:{ titulo:"Avocação ou redistribuição (§4º) × remoção (§5º)", head:["Avocação ou redistribuição do inquérito (art. 2º, §4º)","Remoção do delegado (art. 2º, §5º)"], rows:[
+  ["<b>Objeto:</b> o inquérito ou procedimento em curso","<b>Objeto:</b> a lotação do delegado"],
+  ["<b>Quem faz:</b> superior hierárquico","<b>Quem faz:</b> a lei não diz qual autoridade"],
+  ["<b>Forma:</b> despacho fundamentado","<b>Forma:</b> ato fundamentado"],
+  ["<b>Motivos:</b> interesse público ou inobservância de procedimentos regulamentares que prejudique a investigação","<b>Motivos:</b> a lei exige apenas motivação, sem listar hipóteses"],
+  ["<b>Garantia:</b> protege a condução do inquérito pelo delegado que o instaurou","<b>Garantia:</b> não equivale a inamovibilidade da magistratura"]]},
+prova:[
+  { tipo:"ce", enun:"O indiciamento é ato privativo do delegado de polícia, dispensada a fundamentação quando houver prova robusta da autoria.", gab:"Errado", com:"O art. 2º, §6º, exige ato fundamentado, mediante análise técnico-jurídica, indicando autoria, materialidade e circunstâncias." },
+  { tipo:"ce", enun:"O inquérito policial em curso só pode ser avocado ou redistribuído por superior hierárquico, mediante despacho fundamentado, por motivo de interesse público ou inobservância de procedimentos regulamentares que prejudique a eficácia da investigação.", gab:"Certo", com:"É a redação do art. 2º, §4º." },
+  { tipo:"ce", enun:"Para requisitar perícia e dados de interesse da investigação, o delegado deve obter autorização judicial prévia.", gab:"Errado", com:"O §2º confere ao delegado o poder de requisição, sem necessidade de pedir ao juiz." },
+  { tipo:"ce", enun:"O cargo de delegado de polícia é privativo de advogado inscrito na OAB.", gab:"Errado", com:"O art. 3º exige bacharel em Direito, não inscrição na OAB." },
+  { tipo:"caso", enun:"O delegado-geral retira um inquérito de um delegado, sem despacho, para entregá-lo a outro. É válido?", com:"Não: a avocação ou redistribuição exige despacho fundamentado de superior hierárquico, por interesse público ou inobservância de procedimentos que prejudique a eficácia da investigação." },
+  { tipo:"caso", enun:"Uma CPI encaminha pedido para que o delegado indicie determinado investigado. Pode a CPI indiciar?", com:"O indiciamento é privativo do delegado de polícia, por ato fundamentado. Segundo o material, nem as CPIs nem os procedimentos investigatórios do MP indiciam." }],
+resumo:[
+  "A função de polícia judiciária e a apuração de infrações penais pelo delegado são de natureza <b>jurídica, essenciais e exclusivas de Estado</b>.",
+  "O delegado conduz a investigação por <b>inquérito policial ou outro procedimento</b> previsto em lei, apurando circunstâncias, materialidade e autoria.",
+  "A <b>requisição</b> de perícia, informações, documentos e dados é prerrogativa do delegado, sem intermediação judicial.",
+  "O <b>indiciamento</b> é privativo e fundamentado: análise técnico-jurídica do fato.",
+  "O inquérito em curso só é avocado ou redistribuído por superior hierárquico, por despacho fundamentado, por <b>interesse público</b> ou <b>inobservância de procedimentos</b>.",
+  "A <b>remoção</b> exige ato fundamentado; a lei não equipara o delegado a magistrado.",
+  "O cargo é privativo de <b>bacharel em Direito</b>; a Lei 14.735/2023 acrescenta a exigência de 3 anos de atividade jurídica ou policial (confira)."],
+checklist:[
+  "Explicar por que a função do delegado é jurídica e exclusiva de Estado.",
+  "Diferenciar indiciamento de acusação e dizer quem pode indiciar.",
+  "Citar o conteúdo mínimo do ato de indiciamento.",
+  "Reproduzir as condições do §4º (superior, despacho fundamentado, dois motivos alternativos).",
+  "Dizer que a remoção exige ato fundamentado.",
+  "Explicar a requisição de perícia e dados, sem autorização judicial.",
+  "Saber o requisito do cargo e o tratamento protocolar."],
 questoes:[]
 };
 
@@ -200,6 +291,55 @@ cards:[
 { id:"pt14", tipo:"caso", sec:"colaborador", f:"Réu primário indica os comparsas, mas a vítima é encontrada morta. Cabe perdão do art. 13, II?", v:"Não pelo inciso II (exige integridade física preservada). Pode caber pelo inciso I (identificação dos coautores), se a colaboração foi efetiva e voluntária.", lei:["l9807a13"] },
 { id:"pt15", tipo:"numero", sec:"colaborador", f:"Sem perdão, qual o benefício do colaborador condenado?", v:"Redução de pena de <b>1/3 a 2/3</b> (art. 14, confira) e medidas de segurança, inclusive <b>local separado</b> se preso (art. 15).", lei:["l9807a14"] }
 ],
+importancia:{ nivel:4,
+  texto:"A Lei 9.807/1999 combina dois assuntos que a banca cobra com frequência: o programa de proteção a vítimas e testemunhas (quem decide, quem pede, prazo) e os benefícios do réu colaborador (perdão judicial e redução de pena).",
+  decore:[
+    ["Prazo máximo no programa (art. 10)","<b>2 anos</b>, prorrogável excepcionalmente"],
+    ["Órgão que decide o ingresso","<b>conselho deliberativo</b>, por maioria absoluta"],
+    ["Quem solicita o ingresso (art. 5º)","interessado, MP, autoridade policial, juiz ou órgãos de direitos humanos"],
+    ["Medidas do art. 7º","<b>9</b> medidas, com sigilo e anuência do protegido"],
+    ["Mudança de nome (art. 9º)","caso <b>excepcional</b>; juiz de registros públicos; segredo de justiça"],
+    ["Não entram no programa","condenados cumprindo pena e presos cautelares"],
+    ["Perdão judicial (art. 13)","acusado <b>primário</b> com colaboração <b>efetiva e voluntária</b>"],
+    ["Redução de pena (art. 14)","<b>1/3 a 2/3</b> (confira)"],
+    ["Prioridade de tramitação (art. 19-A)","inquérito e processo com protegidos e colaboradores"]],
+  macetes:[
+    ["Voluntária não é espontânea","Para o perdão basta que a colaboração seja livre de constrangimento; a ideia pode vir de terceiros (STF, HC 129.877)."],
+    ["Conselho decide, MP opina","O ingresso é do conselho deliberativo; o MP é consultado."],
+    ["Perdão extingue, redução reduz","Com perdão, extingue-se a punibilidade; sem perdão, o colaborador condenado tem a pena reduzida."]] },
+comparativo:{ titulo:"Perdão judicial (art. 13) × redução de pena (art. 14)", head:["Perdão judicial (art. 13)","Redução de pena (art. 14, confira)"], rows:[
+  ["<b>Efeito:</b> extingue a punibilidade","<b>Efeito:</b> reduz a pena de 1/3 a 2/3"],
+  ["<b>Quando:</b> acusado primário com colaboração efetiva e voluntária","<b>Quando:</b> não houve perdão, mas houve colaboração com os mesmos resultados e o colaborador foi condenado"],
+  ["<b>Resultado exigido:</b> identificação de coautores ou partícipes, localização da vítima com integridade física preservada ou recuperação total ou parcial do produto do crime","<b>Resultado exigido:</b> os mesmos resultados do art. 13"],
+  ["<b>Critérios do juiz:</b> personalidade, natureza, circunstâncias, gravidade e repercussão social do fato","<b>Critérios do juiz:</b> aplica-se na condenação, após a decisão de não conceder o perdão"],
+  ["<b>Primariedade:</b> exigida","<b>Primariedade:</b> não é pressuposto da redução"]]},
+prova:[
+  { tipo:"ce", enun:"O ingresso de uma testemunha no programa federal é decidido pelo conselho deliberativo, que consulta o Ministério Público.", gab:"Certo", com:"Os arts. 3º e 6º atribuem ao conselho a decisão, precedida de consulta ao MP." },
+  { tipo:"ce", enun:"Acusado preso cautelarmente pode ser incluído no programa de proteção a vítimas e testemunhas.", gab:"Errado", com:"O art. 2º exclui os condenados cumprindo pena e os indiciados ou acusados sob prisão cautelar." },
+  { tipo:"ce", enun:"A permanência no programa é de no mínimo 2 anos.", gab:"Errado", com:"O prazo é de no máximo 2 anos, prorrogável excepcionalmente (art. 10)." },
+  { tipo:"ce", enun:"Para o perdão judicial ao réu colaborador, é necessário que a colaboração seja espontânea, isto é, que a iniciativa parta do próprio agente.", gab:"Errado", com:"Segundo o STF (HC 129.877), basta que seja voluntária, ainda que a ideia tenha sido sugerida por terceiros." },
+  { tipo:"caso", enun:"Uma testemunha ameaçada precisa mudar de nome. Quem decide e como se processa o pedido?", com:"A mudança de nome é excepcional: o conselho deliberativo encaminha o pedido ao juiz de registros públicos, que ouve o MP, em segredo de justiça e rito sumaríssimo. A averbação é sigilosa." },
+  { tipo:"caso", enun:"Réu primário, ao colaborar, indica o local onde a vítima do sequestro está viva e sem lesões. Qual o benefício possível?", com:"Perdão judicial do art. 13, II, que extingue a punibilidade, considerados personalidade e natureza e gravidade do fato." }],
+resumo:[
+  "O programa protege <b>vítimas e testemunhas</b> coagidas ou expostas a grave ameaça, podendo alcançar familiares e dependentes.",
+  "Ficam fora: personalidade incompatível, <b>condenados cumprindo pena</b> e <b>presos cautelares</b>.",
+  "Cada programa tem um <b>conselho deliberativo</b>, que decide ingresso e exclusão por maioria absoluta, após consultar o MP.",
+  "A solicitação pode vir do interessado, MP, autoridade policial, juiz ou órgãos de direitos humanos.",
+  "O <b>art. 7º</b> traz nove medidas, e a permanência é de no máximo <b>2 anos</b>.",
+  "A <b>mudança de nome</b> é excepcional, judicial e sigilosa.",
+  "<b>Réu colaborador</b>: perdão judicial (art. 13) ao primário e redução de 1/3 a 2/3 (art. 14, confira).",
+  "Para o perdão, basta colaboração <b>voluntária</b>, não necessariamente espontânea (STF, HC 129.877).",
+  "O art. 19-A dá <b>prioridade de tramitação</b> a inquéritos e processos com protegidos e colaboradores."],
+checklist:[
+  "Dizer quem é protegido e quem é excluído do programa.",
+  "Explicar o papel do conselho deliberativo e do MP.",
+  "Listar quem pode solicitar o ingresso.",
+  "Citar as medidas do art. 7º e o prazo máximo de 2 anos.",
+  "Explicar a mudança de nome (requisitos e rito).",
+  "Descrever os requisitos do perdão judicial e seus três resultados.",
+  "Diferenciar perdão judicial de redução de pena.",
+  "Explicar a diferença entre colaboração voluntária e espontânea.",
+  "Lembrar que o programa federal é conduzido pelo órgão de direitos humanos (confira)."],
 questoes:[]
 };
 })();

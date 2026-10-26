@@ -149,6 +149,54 @@ cards:[
 { id:"ap18", tipo:"ce", sec:"previdencia", f:"Certo ou errado: cabe insignificância na sonegação previdenciária de R$ 5 mil.", v:"<b>Errado</b> (STF e STJ).", lei:["cp337a"], j:["stj-jt220-5"] },
 { id:"ap19", tipo:"caso", sec:"previdencia", f:"Dono de bar interditado rompe os lacres colocados pela Vigilância Sanitária. Crime?", v:"<b>Art. 336</b> (violar selo ou sinal empregado por ordem de funcionário).", lei:["cp336"] }
 ],
+importancia:{ nivel:5,
+  texto:"Desacato, resistência, desobediência, corrupção ativa e descaminho × contrabando são campeões de prova; a banca explora o verbo do tipo, a insignificância e a diferença entre crime e infração administrativa.",
+  decore:[
+    ["Resistência (329)","detenção de <b>2 meses a 2 anos</b>; ato não executado: reclusão de 1 a 3; soma a pena da violência"],
+    ["Desobediência (330)","detenção de <b>15 dias a 6 meses</b> e multa"],
+    ["Desacato (331)","detenção de <b>6 meses a 2 anos</b>, ou multa; recepcionado (ADPF 496)"],
+    ["Corrupção ativa (333)","reclusão de <b>2 a 12 anos</b>; verbos <b>oferecer ou prometer</b>"],
+    ["Tráfico de influência (332)","reclusão de <b>2 a 5 anos</b>; <b>+metade</b> se alega que o funcionário recebe"],
+    ["Descaminho (334) × contrabando (334-A)","<b>1 a 4</b> (mercadoria permitida) × <b>2 a 5</b> (proibida); dobro em transporte aéreo, marítimo ou fluvial"],
+    ["Insignificância no descaminho","até <b>R$ 20 mil</b>, sem reiteração (Temas 157 e 1218)"],
+    ["Cigarros e insignificância","até <b>1.000 maços</b>, sem reiteração (Tema 1143)"],
+    ["Sonegação previdenciária (337-A)","reclusão de <b>2 a 5 anos</b>; crime material (SV 24)"]],
+  macetes:[
+    ["Violência ou não","Com violência ou ameaça ao funcionário: resistência. Sem: desobediência. Ofensa: desacato."],
+    ["Corrupção ativa não tem \"dar\"","Quem só paga depois de exigência ou solicitação não comete o art. 333."],
+    ["Permitida ou proibida","Descaminho ilude tributo de mercadoria permitida; contrabando é mercadoria proibida."]] },
+comparativo:{ titulo:"Majorado × privilegiado × qualificado nos crimes de particular", head:["Forma ou circunstância","Onde aparece"], rows:[
+  ["<b>Qualificada pelo resultado frustrado:</b> o ato visado não se executa em razão da resistência (reclusão de 1 a 3)","Resistência, art. 329, § 1º"],
+  ["<b>Qualificada pela vantagem:</b> usurpação com vantagem (reclusão de 2 a 5)","Usurpação de função, art. 328, parágrafo único"],
+  ["<b>Majorada em metade:</b> insinua que a vantagem vai ao funcionário","Tráfico de influência, art. 332, parágrafo único"],
+  ["<b>Majorada em 1/3:</b> o funcionário retarda, omite ou infringe dever em razão da vantagem","Corrupção ativa, art. 333, parágrafo único"],
+  ["<b>Dobro:</b> transporte aéreo, marítimo ou fluvial","Descaminho e contrabando, arts. 334 e 334-A"],
+  ["<b>Cúmulo material:</b> pena do crime mais a da violência empregada","Resistência (329, § 2º)"]]},
+prova:[
+  { tipo:"ce", enun:"A resistência pressupõe ato legal, praticado por funcionário competente ou por quem lhe preste auxílio, e violência ou ameaça para impedi-lo.", gab:"Certo", com:"São os elementos do art. 329. Ato ilegal não gera resistência." },
+  { tipo:"ce", enun:"Quem paga propina ao policial depois de este exigi-la pratica corrupção ativa.", gab:"Errado", com:"O art. 333 pune oferecer ou prometer. Quem apenas cede à exigência não o pratica; o funcionário responde por concussão." },
+  { tipo:"ce", enun:"Para o STF (ADPF 496), o crime de desacato foi recepcionado pela Constituição de 1988.", gab:"Certo", com:"O STF fixou que o art. 331 do CP foi recepcionado." },
+  { tipo:"ce", enun:"O pagamento do tributo extingue a punibilidade do descaminho, como nos crimes tributários materiais.", gab:"Errado", com:"No descaminho, pagamento ou parcelamento não extinguem a punibilidade." },
+  { tipo:"ce", enun:"Quem é pego com 800 maços de cigarros estrangeiros, sem reiteração, pode ter reconhecida a insignificância no contrabando, segundo o Tema 1143 do STJ.", gab:"Certo", com:"O limite é de 1.000 maços, desde que não haja reiteração." },
+  { tipo:"caso", enun:"A cobra R$ 2 mil de B dizendo conhecer um servidor do Detran capaz de apagar multas, mas não tem tal intenção. Qual o crime de A e a situação de B?", com:"A pratica tráfico de influência (332). B é vítima do pretexto de influir, e não comete corrupção ativa." }],
+resumo:[
+  "Resistência exige violência ou ameaça contra ato legal; soma-se a pena da violência. Sem esses meios, é desobediência.",
+  "Desobediência (330) exige ordem legal; recusar o bafômetro não a configura. Fugir de blitz de trânsito é infração do CTB; fugir de policiamento ostensivo é desobediência (Tema 1060).",
+  "Desacato (331) exige nexo com a função e foi considerado recepcionado pelo STF (ADPF 496).",
+  "Tráfico de influência vende fumaça; a vítima não é coautora. A pena aumenta em metade se se insinua que o funcionário recebe.",
+  "Corrupção ativa (333): oferecer ou prometer, 2 a 12 anos, formal; não existe corrupção ativa subsequente nem pelo verbo dar.",
+  "Descaminho: mercadoria permitida (1 a 4). Contrabando: proibida (2 a 5). Pena em dobro nos transportes aéreo, marítimo ou fluvial.",
+  "Insignificância: R$ 20 mil no descaminho (sem reiteração); até 1.000 maços de cigarro; não vale nos crimes previdenciários.",
+  "Sonegação previdenciária (337-A) é material; a LC 225/2026 afasta benefícios de extinção para o devedor contumaz."],
+checklist:[
+  "Distinguir resistência, desobediência e desacato pelos meios e pelo bem atingido",
+  "Saber que o ato deve ser legal na resistência",
+  "Explicar a recepção do desacato (ADPF 496)",
+  "Diferenciar corrupção ativa, passiva, concussão e tráfico de influência",
+  "Explicar por que quem cede à exigência não comete o art. 333",
+  "Diferenciar descaminho e contrabando e citar suas penas",
+  "Aplicar os limites de insignificância (R$ 20 mil e 1.000 maços)",
+  "Identificar a natureza material do 337-A e a regra do devedor contumaz"],
 questoes:[]
 };
 

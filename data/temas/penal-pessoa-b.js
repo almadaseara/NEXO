@@ -82,6 +82,53 @@ cards:[
 { id:"sa10", tipo:"numero", sec:"qualificadoras", f:"Penas do art. 122: simples, lesão grave/gravíssima e morte.", v:"<b>6m a 2a</b>; <b>1 a 3</b>; <b>2 a 6</b> (reclusão).", lei:["cp122","cp122q"] },
 { id:"sa11", tipo:"distincao", sec:"tipo", f:"Art. 122: quando vai ao júri?", v:"Só na modalidade <b>suicídio</b> (crime doloso contra a vida). Automutilação: juiz singular.", lei:["cp122"], j:["stf-adi-122-jur"] }
 ],
+importancia:{ nivel:4,
+  texto:"Tipo reformado em 2019 e em 2024. A banca cobra o crime formal, a escada de resultados, o deslocamento para os arts. 129 e 121 quando a vítima é vulnerável, as majorantes digitais e o júri apenas na modalidade suicídio.",
+  decore:[
+    ["Caput","reclusão de <b>6 meses a 2 anos</b>; crime <b>formal</b>"],
+    ["Lesão grave ou gravíssima (§1º)","<b>1 a 3 anos</b>"],
+    ["Morte (§2º)","<b>2 a 6 anos</b>"],
+    ["§3º","pena <b>duplicada</b>: motivo egoístico, torpe ou fútil; vítima menor ou com resistência diminuída"],
+    ["§4º","aumento <b>até o dobro</b>: rede de computadores, rede social ou tempo real"],
+    ["§5º","pena <b>em dobro</b>: líder, coordenador ou administrador de grupo, comunidade ou rede virtual"],
+    ["§6º","vítima menor de 14 ou sem discernimento e lesão <b>gravíssima</b>: art. 129, §2º"],
+    ["§7º","vítima menor de 14 ou sem discernimento e morte: <b>homicídio</b> (art. 121)"],
+    ["Competência","júri só na modalidade <b>suicídio</b>; automutilação, juiz singular"],
+    ["Hediondez","caput e §4º por rede de computadores, rede social ou em tempo real (Lei 8.072, art. 1º, X)"]],
+  macetes:[
+    ["Escada de resultados","Nada ou lesão leve: caput. Grave ou gravíssima: §1º. Morte: §2º."],
+    ["Menor de 14: some o 122 se gravíssima ou morte","Lesão gravíssima vira art. 129, §2º; morte vira homicídio. Lesão grave (não gravíssima) continua no 122, §1º, com a pena duplicada."],
+    ["§4º varia, §5º dobra","§4º: aumento <b>até</b> o dobro. §5º: pena <b>em</b> dobro, para o líder ou administrador do grupo."],
+    ["Quem executa mata","Quem aperta o gatilho a pedido da vítima pratica homicídio. O art. 122 só pune induzir, instigar ou auxiliar materialmente."]] },
+comparativo:{ titulo:"Qualificado pelo resultado × majorado (art. 122)", head:["Qualificado pelo resultado (§§1º e 2º)","Majorado (§§3º a 5º)"], rows:[
+  ["<b>O que faz:</b> novo patamar de pena conforme o que acontece com a vítima: 1 a 3 anos (lesão grave ou gravíssima) ou 2 a 6 anos (morte)","<b>O que faz:</b> multiplica a pena já fixada: duplicada (§3º), até o dobro (§4º) ou em dobro (§5º)"],
+  ["<b>Natureza:</b> objetiva; depende do resultado","<b>Natureza:</b> o §3º, I é subjetivo (motivo egoístico, torpe ou fútil); o §3º, II, o §4º e o §5º são objetivos (vítima, meio digital, posição do autor)"],
+  ["<b>Vítima menor de 14 ou sem discernimento:</b> os §§6º e 7º deslocam para o art. 129, §2º (lesão gravíssima) ou para o art. 121 (morte)","<b>Vítima menor ou sem resistência:</b> o §3º, II duplica a pena nos demais casos, inclusive na lesão grave, que continua no art. 122, §1º"],
+  ["<b>Hediondez:</b> depende do meio, não do resultado","<b>Hediondez:</b> o caput e o §4º, quando por rede de computadores, rede social ou em tempo real, são hediondos"]]},
+prova:[
+  { tipo:"ce", enun:"Desde a Lei 13.968/2019, o crime do art. 122 é formal e se consuma com o induzimento, a instigação ou o auxílio, ainda que a vítima nada faça.", gab:"Certo", com:"Antes de 2019 era preciso morte ou lesão grave. Hoje lesão grave, gravíssima e morte são qualificadoras." },
+  { tipo:"ce", enun:"Site que incita genericamente os jovens ao suicídio, sem pessoa determinada, configura o crime do art. 122.", gab:"Errado", com:"O tipo exige vítima determinada. Incentivo genérico não configura o crime." },
+  { tipo:"ce", enun:"O agente que, a pedido da vítima, dispara a arma contra ela pratica induzimento ao suicídio.", gab:"Errado", com:"Quem pratica o ato executório da morte comete homicídio. O art. 122 só pune induzir, instigar ou auxiliar materialmente." },
+  { tipo:"ce", enun:"Induzida por terceiro, criança de 12 anos pula do telhado e morre. O agente responde pelo art. 122, §2º.", gab:"Errado", com:"Vítima menor de 14 e resultado morte: responde por homicídio (art. 122, §7º)." },
+  { tipo:"ce", enun:"O administrador de grupo virtual que instiga membro à automutilação tem a pena aumentada em metade, nos termos do art. 122, §5º.", gab:"Errado", com:"Desde a Lei 14.811/2024 a pena é aplicada em dobro (antes era aumento de metade). Mudança mais grave, não retroage." },
+  { tipo:"caso", enun:"Um adolescente de 13 anos é induzido a se automutilar e sofre lesão corporal grave, não gravíssima. Qual o enquadramento?", com:"Art. 122, §1º, com pena duplicada pelo §3º, II. O §6º só desloca para o art. 129, §2º quando a lesão é gravíssima." }],
+resumo:[
+  "Induzir (fazer nascer a ideia), instigar (reforçar) ou auxiliar materialmente quem vai se suicidar ou se automutilar: 6 meses a 2 anos.",
+  "Crime formal desde 2019. O auxílio material é acessório: quem executa o ato que mata responde por homicídio.",
+  "Vítima precisa ser pessoa determinada e ter alguma capacidade de resistência.",
+  "Qualificado pelo resultado: lesão grave ou gravíssima (1 a 3) e morte (2 a 6).",
+  "Vítima menor de 14 ou sem discernimento: lesão gravíssima vira art. 129, §2º; morte vira homicídio.",
+  "Pena duplicada (§3º); até o dobro pela internet ou em tempo real (§4º); em dobro para líder ou administrador de grupo (§5º, Lei 14.811/2024).",
+  "Hediondo quando praticado por rede de computadores, rede social ou em tempo real.",
+  "Júri: só o suicídio. Automutilação: juiz singular. Não existe forma culposa."],
+checklist:[
+  "Dizer as penas do caput, do §1º e do §2º",
+  "Explicar por que o crime é formal desde 2019",
+  "Distinguir induzir, instigar e auxiliar, e o auxílio do ato executório",
+  "Aplicar os §§6º e 7º à vítima menor de 14 ou sem discernimento",
+  "Diferenciar o §4º (até o dobro) do §5º (em dobro)",
+  "Dizer quando o art. 122 é hediondo",
+  "Dizer quando vai a júri"],
 questoes:[]
 };
 
@@ -131,6 +178,53 @@ cards:[
 { id:"if6", tipo:"numero", sec:"tipo", f:"Pena do infanticídio.", v:"Detenção de <b>2 a 6 anos</b>.", lei:["cp123"] },
 { id:"if7", tipo:"ce", sec:"tipo", f:"Certo ou errado: o \"logo após\" do art. 123 tem prazo fixo de 48 horas.", v:"<b>Errado.</b> Não há prazo legal; depende de a mãe ainda estar sob influência do estado puerperal (perícia).", lei:["cp123"] }
 ],
+importancia:{ nivel:4,
+  texto:"Crime especial e privilegiado em relação ao homicídio. A banca cobra as elementares, a comunicação ao partícipe (art. 30), a ausência de forma culposa e o marco com o aborto.",
+  decore:[
+    ["Pena","detenção de <b>2 a 6 anos</b>"],
+    ["Elementares","mãe, <b>estado puerperal</b>, próprio filho, durante o parto ou logo após"],
+    ["Marco com o aborto","<b>início do parto</b>: antes, aborto; durante ou logo após, infanticídio"],
+    ["Prazo do “logo após”","<b>não há prazo legal</b>; depende da influência do estado puerperal (perícia)"],
+    ["Terceiro que ajuda a mãe","responde por <b>infanticídio</b> (elementares se comunicam, art. 30)"],
+    ["Forma culposa","<b>não existe</b>: culpa da mãe em estado puerperal é homicídio culposo"],
+    ["Erro sobre a pessoa","vale a vítima visada (art. 20, §3º)"],
+    ["Competência","<b>júri</b>; admite tentativa"],
+    ["Mãe sem influência do puerpério","<b>homicídio</b> (qualificado, se vítima menor de 14)"],
+    ["Abandono de recém-nascido (art. 134)","para ocultar desonra própria; detenção de 6 meses a 2 anos"]],
+  macetes:[
+    ["Parto é a fronteira","Antes do parto: aborto. Durante ou logo após, sob o puerpério: infanticídio. Sem puerpério: homicídio."],
+    ["Elementar comunica","O estado puerperal e a condição de mãe são elementares e passam ao terceiro que os conhece e colabora."],
+    ["Não há qualificadora nem majorante","O art. 123 tem pena própria e não tem forma qualificada: é tipo especial em relação ao homicídio."]] },
+comparativo:{ titulo:"Infanticídio × homicídio", head:["Infanticídio (art. 123)","Homicídio (art. 121)"], rows:[
+  ["<b>Autora:</b> só a mãe (crime próprio)","<b>Autor:</b> qualquer pessoa"],
+  ["<b>Condição:</b> sob a influência do estado puerperal, elementar do tipo","<b>Condição:</b> não exige estado especial"],
+  ["<b>Tempo:</b> durante o parto ou logo após","<b>Tempo:</b> qualquer momento da vida extrauterina"],
+  ["<b>Pena:</b> detenção de 2 a 6 anos","<b>Pena:</b> reclusão; simples de 6 a 20 anos; qualificado de 12 a 30 anos"],
+  ["<b>Culposo:</b> não existe; a mãe em puerpério que mata por culpa responde por homicídio culposo","<b>Culposo:</b> existe (art. 121, §3º)"],
+  ["<b>Qualificadoras e majorantes:</b> o tipo não as prevê","<b>Qualificadoras e majorantes:</b> as dos §§2º e 4º, conforme o caso"]]},
+prova:[
+  { tipo:"ce", enun:"O estado puerperal é elementar do infanticídio e se comunica ao terceiro que, sabendo dele, auxilia a mãe a matar o recém-nascido.", gab:"Certo", com:"Art. 30: as elementares se comunicam. Prevalece que o terceiro responde por infanticídio." },
+  { tipo:"ce", enun:"A expressão “logo após o parto” do art. 123 corresponde a um prazo fixo de 48 horas.", gab:"Errado", com:"Não há prazo legal. A perícia verifica se a mãe ainda estava sob a influência do estado puerperal." },
+  { tipo:"ce", enun:"A mãe que, em estado puerperal, deixa o bebê cair por descuido e provoca sua morte responde por infanticídio culposo.", gab:"Errado", com:"Não existe infanticídio culposo. A mãe responde por homicídio culposo." },
+  { tipo:"ce", enun:"A pena do infanticídio é de reclusão de 2 a 6 anos.", gab:"Errado", com:"A pena é de detenção, de 2 a 6 anos." },
+  { tipo:"caso", enun:"Na maternidade, a puérpera, sob influência do estado puerperal, mata por engano o bebê de outra mulher, achando que era o seu filho. Qual o crime?", com:"Infanticídio. No erro sobre a pessoa consideram-se as qualidades da vítima pretendida (art. 20, §3º)." },
+  { tipo:"ce", enun:"A mãe que mata o filho recém-nascido por motivo alheio ao estado puerperal responde por infanticídio, por ser a autora e a vítima o próprio filho.", gab:"Errado", com:"Faltando a influência do estado puerperal, falta elementar do tipo: o crime é homicídio." }],
+resumo:[
+  "Infanticídio é matar, sob a influência do estado puerperal, o próprio filho, durante o parto ou logo após: detenção de 2 a 6 anos.",
+  "Crime próprio, mas as elementares (mãe e estado puerperal) se comunicam a quem concorre e as conhece (art. 30).",
+  "Só doloso. Culpa da mãe puérpera é homicídio culposo.",
+  "O início do parto separa o aborto do infanticídio. Sem influência do puerpério, o crime é homicídio.",
+  "Não há prazo fixo para o “logo após”: a análise é do caso concreto.",
+  "Erro sobre a pessoa não afasta o infanticídio (art. 20, §3º).",
+  "Crime doloso contra a vida: júri. Admite tentativa.",
+  "Abandono de recém-nascido para ocultar desonra, sem dolo de matar: art. 134."],
+checklist:[
+  "Enumerar as elementares do infanticídio",
+  "Explicar a comunicação ao partícipe pelo art. 30",
+  "Diferenciar infanticídio, homicídio e aborto pelo momento e pelo puerpério",
+  "Dizer a pena e a natureza da pena (detenção)",
+  "Explicar por que não há infanticídio culposo",
+  "Distinguir infanticídio de abandono de recém-nascido (art. 134)"],
 questoes:[]
 };
 
@@ -216,6 +310,53 @@ cards:[
 { id:"ab11", tipo:"juris", sec:"legal", f:"Interromper a gestação de feto anencéfalo é crime?", v:"<b>Não</b> (STF, ADPF 54, 2012).", lei:["cp128"], j:["stf-adpf54"] },
 { id:"ab12", tipo:"juris", sec:"legal", f:"O STF já descriminalizou o aborto até a 12ª semana?", v:"<b>Não.</b> A ADPF 442 teve julgamento iniciado e não concluído; os arts. 124 e 126 continuam em vigor.", lei:["cp124"], j:["stf-adpf442"] }
 ],
+importancia:{ nivel:4,
+  texto:"Aborto reúne penas, exceção pluralista, consentimento inválido, majorante do art. 127, aborto legal e a jurisprudência do STF (ADPF 54 e ADPF 442). A banca explora o que o STF decidiu e o que ainda está pendente.",
+  decore:[
+    ["Art. 124 (autoaborto ou consentimento)","detenção de <b>1 a 3 anos</b>; crime de mão própria"],
+    ["Art. 125 (sem consentimento)","reclusão de <b>3 a 10 anos</b>"],
+    ["Art. 126 (com consentimento)","reclusão de <b>1 a 4 anos</b>"],
+    ["Consentimento inválido","gestante <b>não maior de 14</b>, alienada ou débil mental, ou fraude, grave ameaça ou violência: pena do art. 125"],
+    ["Art. 127","<b>+1/3</b> se a gestante sofre lesão grave; pena <b>duplicada</b> se morre; só arts. 125 e 126"],
+    ["Aborto necessário (128, I)","médico; <b>não há outro meio</b> de salvar a vida da gestante; sem consentimento"],
+    ["Aborto sentimental (128, II)","médico; gravidez resultante de <b>estupro</b>; consentimento da gestante ou do representante legal"],
+    ["ADPF 54 (2012)","interrupção de gestação de feto <b>anencéfalo</b> não é crime"],
+    ["ADPF 442","interrupção até a 12ª semana: julgamento <b>não concluído</b>; arts. 124 e 126 em vigor"],
+    ["Ação penal","pública <b>incondicionada</b>"]],
+  macetes:[
+    ["Gestante consente, terceiro executa","Cada um no seu tipo: gestante no art. 124; terceiro no art. 126. É exceção pluralista à teoria monista."],
+    ["O art. 128 é para médico","O art. 128 exige que o aborto seja praticado por médico. Aborto necessário não exige consentimento; o sentimental exige."],
+    ["Art. 127 olha para a gestante","A majorante só vale para o aborto feito por terceiro, não para o autoaborto. Os resultados são culposos (preterdolo)."]] },
+comparativo:{ titulo:"Aborto sem consentimento × com consentimento (terceiro)", head:["Art. 125 (sem consentimento)","Art. 126 (com consentimento)"], rows:[
+  ["<b>Pena:</b> reclusão de 3 a 10 anos","<b>Pena:</b> reclusão de 1 a 4 anos"],
+  ["<b>Gestante:</b> é vítima, não responde","<b>Gestante:</b> responde pelo art. 124 (exceção à teoria monista)"],
+  ["<b>Consentimento:</b> ausente, ou inválido (gestante não maior de 14, alienada ou débil mental, ou obtido por fraude, grave ameaça ou violência)","<b>Consentimento:</b> válido e mantido até o fim da manobra; se a gestante desiste e o terceiro continua, aplica-se o art. 125"],
+  ["<b>Art. 127:</b> aplica-se (+1/3 na lesão grave; dobro na morte da gestante)","<b>Art. 127:</b> aplica-se nos mesmos termos"],
+  ["<b>Sujeitos passivos:</b> o produto da concepção e a gestante","<b>Sujeito passivo:</b> o produto da concepção"]]},
+prova:[
+  { tipo:"ce", enun:"O autoaborto é crime de mão própria: admite participação, mas não coautoria.", gab:"Certo", com:"Quem induz, instiga ou auxilia a gestante é partícipe do art. 124." },
+  { tipo:"ce", enun:"A gestante que consente que o médico provoque o aborto responde pelo art. 124, e o médico responde pelo art. 126.", gab:"Certo", com:"É a exceção pluralista à teoria monista adotada pelo CP." },
+  { tipo:"ce", enun:"O terceiro que provoca aborto com o consentimento de gestante de 13 anos responde pelo art. 126.", gab:"Errado", com:"O consentimento é inválido. Aplica-se a pena do art. 125 (art. 126, parágrafo único)." },
+  { tipo:"ce", enun:"O aumento do art. 127 aplica-se também ao autoaborto, quando a gestante sofre lesão grave.", gab:"Errado", com:"O art. 127 se refere aos “dois artigos anteriores” (125 e 126). Ninguém é punido por se lesionar." },
+  { tipo:"caso", enun:"Mulher grávida em decorrência de estupro procura o hospital sem boletim de ocorrência e consente no aborto. O médico pode realizá-lo sem cometer crime?", com:"Sim. O art. 128, II exige o consentimento e a prática por médico, mas não exige sentença, inquérito ou BO; bastam elementos seguros da ocorrência do estupro." },
+  { tipo:"ce", enun:"O STF já declarou, em decisão definitiva, a não punibilidade do aborto realizado até a 12ª semana de gestação.", gab:"Errado", com:"A ADPF 442 teve o julgamento iniciado e não concluído. A decisão definitiva do STF é sobre anencefalia (ADPF 54)." }],
+resumo:[
+  "Art. 124: a gestante provoca aborto em si ou consente (1 a 3 anos, detenção). Art. 125: sem consentimento (3 a 10). Art. 126: com consentimento (1 a 4).",
+  "Consentimento inválido (gestante não maior de 14, alienada, débil mental ou obtido com fraude, ameaça ou violência): terceiro responde pelo art. 125.",
+  "Só há aborto doloso. Aborto culposo não existe; a lesão culposa na gestante é outro crime.",
+  "Art. 127: +1/3 (lesão grave) e dobro (morte da gestante), só para os arts. 125 e 126.",
+  "Aborto legal (art. 128): necessário (sem outro meio de salvar a vida da gestante) e sentimental (estupro), ambos por médico.",
+  "ADPF 54 (2012): interromper gravidez de feto anencéfalo não é crime. ADPF 442: pendente.",
+  "Ação penal pública incondicionada. Admite tentativa. Crime doloso contra a vida: júri.",
+  "Matar gestante e provocar o aborto pode ser imputado em conjunto, sem bis in idem (STJ)."],
+checklist:[
+  "Dizer as penas dos arts. 124, 125 e 126",
+  "Explicar a exceção pluralista (gestante × terceiro)",
+  "Identificar quando o consentimento é inválido",
+  "Aplicar o art. 127 e dizer a quais crimes ele se refere",
+  "Diferenciar aborto necessário de sentimental",
+  "Citar o que o STF decidiu na ADPF 54 e o que está pendente na ADPF 442",
+  "Resolver a agressão a gestante com aborto culposo (lesão gravíssima)"],
 questoes:[]
 };
 

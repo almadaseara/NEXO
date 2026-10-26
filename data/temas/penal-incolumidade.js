@@ -163,6 +163,14 @@ T.penal_incolumidade = {
           ]
         },
         {
+          "h": "Formas do crime no título (simples, majorada, culposa, resultado agravador)",
+          "p": [
+            "<b>Simples dolosa</b>: o caput (ex.: incêndio, 3 a 6 anos). <b>Culposa</b>: só onde o artigo prevê expressamente (ex.: 250, § 2º; 254; 256; 270 a 272). <b>Majorada</b>: causas de aumento (250, § 1º, um terço; 265, um terço até metade; 268, um terço para os profissionais de saúde). <b>Com pena maior pelo desastre</b>: arts. 260, 261 e 262, quando o desastre ou sinistro ocorre.",
+            "As circunstâncias aqui são sobretudo <b>objetivas</b> (lugar, objeto, meio, desastre). A finalidade de vantagem pecuniária do art. 250, § 1º é a principal circunstância <b>subjetiva</b>, e opera como causa de aumento, não como qualificadora. Não há privilégio nem figura híbrida no título.",
+            "<b>Resultado agravador (preterdolo)</b>: o art. 258 liga lesão grave ou morte ao crime de perigo comum e exige ao menos culpa quanto ao resultado (art. 19 do CP). No perigo doloso, lesão grave aumenta de metade e morte dobra a pena; no perigo culposo, a lesão aumenta de metade e a morte leva à pena do homicídio culposo com acréscimo de um terço. Se havia intenção de matar, o caso é de homicídio, e não de resultado culposo."
+          ]
+        },
+        {
           "h": "Pragas e conflito ambiental",
           "p": [
             "A difusão do art. 259 protege bens vegetais e animais de relevância econômica. A potencialidade danosa descrita no tipo não equivale a exigência de destruição completa. O caput prevê dois a cinco anos e multa; na culpa, um a seis meses ou multa.",
@@ -1864,6 +1872,54 @@ T.penal_incolumidade = {
       "j": []
     }
   ],
+importancia:{ nivel:4,
+  texto:"Incêndio, epidemia, medicamentos (art. 273 e Tema 1003 do STF) e o art. 258 aparecem com frequência; a banca cobra penas, quais artigos admitem culpa e a distinção entre perigo comum e crimes contra a saúde pública.",
+  decore:[
+    ["Incêndio doloso (250)","reclusão de <b>3 a 6 anos</b> e multa; culposo: detenção de 6 meses a 2 anos"],
+    ["Majorante do incêndio (§ 1º)","<b>+1/3</b>"],
+    ["Explosão com dinamite ou análoga (251)","reclusão de <b>3 a 6 anos</b>; outra substância: 1 a 4"],
+    ["Art. 258, perigo doloso","lesão <b>grave</b>: <b>+metade</b>; morte: <b>pena em dobro</b>"],
+    ["Interrupção de comunicação (266)","<b>2 a 4 anos</b> e multa (Lei 15.397/2026)"],
+    ["Epidemia dolosa (267)","reclusão de <b>10 a 15 anos</b>; morte: pena em dobro"],
+    ["Envenenamento de água ou alimento (270)","dolo <b>10 a 15 anos</b>; culpa: 6 meses a 2 anos"],
+    ["Adulteração de alimento (272)","reclusão de <b>4 a 8 anos</b> e multa"],
+    ["Art. 273 e Tema 1003 do STF","pena literal <b>10 a 15 anos</b>; § 1º-B, I: <b>1 a 3 anos</b> e multa"],
+    ["Revogados","arts. <b>279 e 281</b>"]],
+  macetes:[
+    ["Culpa só se escrita","Incolumidade não tem culpa em todos os artigos: 255, 257, 268, 269 e 274 a 277 não a preveem."],
+    ["Epidemia tem regra própria","O art. 285 manda aplicar o 258, mas ressalva o 267: epidemia não usa a fórmula do 258."],
+    ["Dolo: lesão grave; culpa: qualquer lesão","No art. 258, o doloso exige lesão grave; o culposo aumenta com lesão corporal."]] },
+comparativo:{ titulo:"Qualificado × majorado no art. 258 e no art. 267", head:["Art. 258 (perigo comum)","Art. 267 (epidemia)"], rows:[
+  ["<b>Doloso + lesão grave:</b> pena aumentada de metade","<b>Doloso + morte:</b> pena em dobro (§ 1º)"],
+  ["<b>Doloso + morte:</b> pena em dobro","<b>Culposo:</b> detenção de 1 a 2 anos"],
+  ["<b>Culposo + lesão corporal:</b> aumento de metade","<b>Culposo + morte:</b> detenção de 2 a 4 anos (faixa própria)"],
+  ["<b>Culposo + morte:</b> pena do homicídio culposo + 1/3","<b>Remissão:</b> o art. 285 ressalva o 267; não se usa a fórmula do 258"],
+  ["<b>Exigência:</b> ao menos culpa no resultado (art. 19)","<b>Exigência:</b> causar a epidemia; a mera desobediência é o art. 268"]]},
+prova:[
+  { tipo:"ce", enun:"A incolumidade pública abrange apenas crimes sem resultado, pois todos os tipos do título se consumam com o simples perigo.", gab:"Errado", com:"O título tem figuras com resultado próprio (epidemia) e figuras agravadas por lesão ou morte." },
+  { tipo:"ce", enun:"O incêndio em imóvel do próprio agente pode configurar o art. 250 se expuser a perigo a vida, a integridade física ou o patrimônio de outrem.", gab:"Certo", com:"A propriedade do bem não afasta o crime; o que importa é o perigo comum." },
+  { tipo:"ce", enun:"O art. 257, que pune quem impede ou dificulta o serviço de combate ao perigo, exige o fim de lucro.", gab:"Errado", com:"O art. 257 não exige finalidade de enriquecimento." },
+  { tipo:"ce", enun:"A infração de determinação do poder público para impedir a propagação de doença contagiosa (art. 268) exige que a doença efetivamente se dissemine.", gab:"Errado", com:"O art. 268 não exige disseminação consumada, e não tem forma culposa." },
+  { tipo:"ce", enun:"Os arts. 279 e 281 do Código Penal estão revogados, não podendo ser apontados como crimes vigentes.", gab:"Certo", com:"Ambos foram expressamente revogados." },
+  { tipo:"caso", enun:"Em crime doloso de perigo comum resulta lesão corporal grave culposa em terceiro, e a pena fixada foi de 4 anos. Qual a pena final?", com:"Art. 258: lesão grave no perigo doloso aumenta a pena de metade; 4 anos passam a 6 anos. Se resultasse morte culposa, seria o dobro (8 anos)." }],
+resumo:[
+  "Incolumidade pública protege a coletividade; pessoas determinadas também podem ser vítimas. Perigo concreto precisa ser demonstrado; no abstrato, não.",
+  "Culpa só existe quando expressa: há em 250, 251, 252, 254, 256, 259, 260 a 262, 267, 270 a 272, 273, 278 e 280; não há em 255, 257, 268, 269 e 274 a 277.",
+  "Incêndio: 3 a 6 anos, +1/3 pelas situações do § 1º; explosão, inundação e desabamento têm penas próprias.",
+  "Art. 258: resultado agravador exige ao menos culpa; doloso com lesão grave +1/2, com morte dobro.",
+  "Epidemia (267): 10 a 15 anos, regra própria de resultado; difusão de praga (259) protege bens vegetais e animais.",
+  "Art. 268 é norma em branco sobre determinação sanitária; art. 269 só tem o médico como autor.",
+  "Arts. 270 a 272 protegem água e alimentos; o art. 272 pune também a redução do valor nutritivo.",
+  "Art. 273: pena literal de 10 a 15 anos, mas o Tema 1003 do STF fixou 1 a 3 anos para o § 1º-B, I; arts. 279 e 281 revogados."],
+checklist:[
+  "Diferenciar crime de perigo concreto e abstrato",
+  "Saber em quais artigos há culpa expressa",
+  "Aplicar o art. 258 em cada combinação de dolo, culpa, lesão e morte",
+  "Distinguir epidemia (267) de infração sanitária (268) e de praga (259)",
+  "Citar penas de incêndio, explosão, epidemia e envenenamento",
+  "Aplicar o Tema 1003 do STF ao art. 273, § 1º-B, I",
+  "Reconhecer os arts. 279 e 281 como revogados",
+  "Distinguir envenenar (270), poluir água (271) e adulterar alimento (272)"],
   "questoes": []
 };
 })();

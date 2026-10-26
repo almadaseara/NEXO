@@ -69,6 +69,53 @@ cards:[
 { id:"lc7", tipo:"ce", sec:"modalidades", f:"Certo ou errado: a Lei 14.133 admite convite para contratações de pequeno valor.", v:"<b>Errado.</b> Modalidades: pregão, concorrência, concurso, leilão e diálogo competitivo; vedadas outras e a combinação.", lei:["l14133a28"] },
 { id:"lc8", tipo:"caso", sec:"modalidades", f:"Polícia quer contratar solução tecnológica inovadora que o mercado ainda não oferece pronta. Modalidade adequada?", v:"<b>Diálogo competitivo</b>.", lei:["l14133a6"] }
 ],
+importancia:{ nivel:5,
+  texto:"A Lei 14.133/2021 é o regime único de licitações e cai em todas as provas de Direito Administrativo: modalidades, critérios de julgamento, agente de contratação e a ordem das fases.",
+  decore:[
+    ["Modalidades (art. 28)","<b>cinco</b>: pregão, concorrência, concurso, leilão, diálogo competitivo"],
+    ["Combinação ou criação de modalidades","<b>vedadas</b> (art. 28, § 2º)"],
+    ["Pregão","<b>obrigatório</b> para bens e serviços comuns; menor preço ou maior desconto"],
+    ["Leilão","alienação de imóveis e móveis inservíveis ou apreendidos; <b>maior lance</b>"],
+    ["Agente de contratação (art. 8º)","servidor <b>efetivo</b> ou empregado público permanente"],
+    ["Comissão de contratação","no mínimo <b>3 membros</b>"],
+    ["Fases (art. 17)","preparatória, edital, propostas e lances, <b>julgamento, habilitação</b>, recursal, homologação"],
+    ["Fase recursal: razões","<b>3 dias úteis</b>"],
+    ["Revogação da Lei 8.666, do Pregão e do RDC","<b>30/12/2023</b>"]],
+  macetes:[
+    ["Primeiro julga, depois habilita","A regra é julgamento antes da habilitação; a inversão exige ato motivado e previsão no edital."],
+    ["Quem conduz não fiscaliza","Segregação de funções: o mesmo agente não acumula funções incompatíveis."],
+    ["Fim do convite e da tomada de preços","Na Lei 14.133 só existem cinco modalidades."]] },
+comparativo:{ titulo:"Pregão × concorrência", head:["Pregão","Concorrência"], rows:[
+  ["<b>Objeto:</b> bens e serviços comuns, inclusive serviços comuns de engenharia","<b>Objeto:</b> bens e serviços especiais, e obras e serviços de engenharia, comuns ou especiais"],
+  ["<b>Obrigatoriedade:</b> obrigatório para bens e serviços comuns","<b>Obrigatoriedade:</b> usada quando o objeto é especial ou é obra"],
+  ["<b>Critérios:</b> menor preço ou maior desconto","<b>Critérios:</b> menor preço, maior desconto, melhor técnica ou conteúdo artístico, técnica e preço, maior retorno econômico"],
+  ["<b>Vedado para:</b> serviços técnicos especializados intelectuais e obras","<b>Admite:</b> objetos complexos e técnicos"],
+  ["<b>Condução:</b> pregoeiro, que é o agente de contratação","<b>Condução:</b> agente de contratação ou comissão de contratação"]]},
+prova:[
+  { tipo:"ce", enun:"A Lei 14.133/2021 mantém o convite e a tomada de preços como modalidades de licitação para contratações de menor valor.", gab:"Errado", com:"As modalidades são pregão, concorrência, concurso, leilão e diálogo competitivo; outras não podem ser criadas." },
+  { tipo:"ce", enun:"O pregão é a modalidade obrigatória para a aquisição de bens e serviços comuns.", gab:"Certo", com:"Art. 6º, XLI." },
+  { tipo:"ce", enun:"O agente de contratação pode ser ocupante exclusivamente de cargo em comissão, desde que designado pela autoridade competente.", gab:"Errado", com:"Deve ser servidor efetivo ou empregado público dos quadros permanentes (art. 8º)." },
+  { tipo:"ce", enun:"Em regra, a fase de julgamento antecede a de habilitação, mas esta pode anteceder aquela, mediante ato motivado e previsão no edital.", gab:"Certo", com:"Art. 17, § 1º." },
+  { tipo:"caso", enun:"Estado pretende vender veículos apreendidos e inservíveis. Qual a modalidade e o critério de julgamento?", com:"Leilão, com critério de maior lance." },
+  { tipo:"caso", enun:"A polícia quer contratar solução tecnológica inovadora que o mercado ainda não oferece pronta. Que modalidade é adequada?", com:"Diálogo competitivo, usado para objetos inovadores ou complexos." }],
+resumo:[
+  "A <b>Lei 14.133/2021</b> é o regime único; a Lei 8.666, a do Pregão e o RDC foram revogados em 30/12/2023.",
+  "Princípios novos: planejamento, transparência, segregação de funções, vinculação ao edital, julgamento objetivo, competitividade, entre outros, além do LIMPE.",
+  "A licitação é conduzida por <b>agente de contratação</b> (efetivo ou empregado permanente) até a homologação; o pregoeiro conduz o pregão.",
+  "Cinco modalidades: pregão, concorrência, concurso, leilão e diálogo competitivo; vedadas outras e a combinação.",
+  "Pregão: obrigatório para bens e serviços comuns. Concorrência: especiais e obras. Leilão: alienação, maior lance.",
+  "Critérios: menor preço, maior desconto, melhor técnica ou conteúdo artístico, técnica e preço, maior lance e maior retorno econômico.",
+  "Fases: preparatória, edital, propostas e lances, julgamento, habilitação, recursal e homologação.",
+  "Forma preferencialmente eletrônica; a sessão presencial, quando motivada, é gravada em áudio e vídeo."],
+checklist:[
+  "Citar os princípios novos do art. 5º.",
+  "Explicar a segregação de funções.",
+  "Diferenciar agente de contratação, pregoeiro e comissão de contratação.",
+  "Listar as cinco modalidades e o objeto de cada uma.",
+  "Citar os critérios de julgamento.",
+  "Dizer a ordem das fases e quando há inversão.",
+  "Explicar a preferência pela forma eletrônica.",
+  "Saber que a Lei 8.666 foi revogada."],
 questoes:[]
 };
 
@@ -132,6 +179,54 @@ cards:[
 { id:"cd6", tipo:"caso", sec:"dispensa", f:"Licitação de 3 meses atrás foi deserta. Pode contratar diretamente?", v:"<b>Sim</b>, mantidas todas as condições do edital (art. 75, III, a).", lei:["l14133a75"] },
 { id:"cd7", tipo:"distincao", sec:"dispensa", f:"Licitação dispensada × dispensável.", v:"<b>Dispensada</b> (art. 76): a lei afasta, sem margem (alienações específicas). <b>Dispensável</b> (art. 75): a Administração <b>pode</b> licitar ou não.", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"Dispensa e inexigibilidade caem em toda prova, e a banca explora valores atualizados, emergência e a diferença entre rol taxativo e exemplificativo. Há ainda o crime do art. 337-E do CP.",
+  decore:[
+    ["Dispensa por valor em 2026: obras, engenharia e veículos","abaixo de <b>R$ 130.984,20</b>"],
+    ["Dispensa por valor em 2026: demais serviços e compras","abaixo de <b>R$ 65.492,11</b>"],
+    ["Valores originais da lei","<b>R$ 100 mil</b> e <b>R$ 50 mil</b>"],
+    ["Licitação deserta ou fracassada","menos de <b>1 ano</b>, mantidas as condições do edital"],
+    ["Emergência ou calamidade","até <b>1 ano</b>; vedadas prorrogação e recontratação"],
+    ["Inexigibilidade (art. 74)","competição <b>inviável</b>; rol exemplificativo"],
+    ["Dispensa (art. 75)","rol <b>taxativo</b>"],
+    ["Serviços de publicidade","<b>vedada</b> inexigibilidade"],
+    ["Crime de contratação direta ilegal (CP, art. 337-E)","reclusão de <b>4 a 8 anos</b> e multa"]],
+  macetes:[
+    ["Inexigível não dá para competir, dispensável dá mas não precisa","Inexigibilidade: competição impossível. Dispensa: possível, mas a lei autoriza não licitar."],
+    ["Art. 74 aberto, art. 75 fechado","O rol da inexigibilidade é exemplificativo (em especial); o da dispensa é taxativo."],
+    ["Emergência não se prorroga","Nem prorrogação nem recontratação da mesma empresa com base no inciso."]] },
+comparativo:{ titulo:"Dispensa × inexigibilidade", head:["Dispensa (art. 75)","Inexigibilidade (art. 74)"], rows:[
+  ["<b>Competição:</b> possível, mas a lei permite não licitar","<b>Competição:</b> inviável"],
+  ["<b>Rol:</b> taxativo","<b>Rol:</b> exemplificativo (\"em especial\")"],
+  ["<b>Exemplos:</b> pequeno valor, licitação deserta, emergência ou calamidade","<b>Exemplos:</b> fornecedor exclusivo, artista consagrado, serviço técnico de notória especialização, credenciamento"],
+  ["<b>Valor:</b> hipóteses por valor abaixo dos limites atualizados por decreto","<b>Valor:</b> não depende de valor"],
+  ["<b>Publicidade:</b> a lei não proíbe expressamente o objeto","<b>Publicidade:</b> serviços de publicidade e divulgação nunca são contratados por inexigibilidade"]]},
+prova:[
+  { tipo:"ce", enun:"O rol de hipóteses de inexigibilidade do art. 74 da Lei 14.133/2021 é exemplificativo, enquanto o de dispensa do art. 75 é taxativo.", gab:"Certo", com:"O art. 74 usa a expressão \"em especial\"." },
+  { tipo:"ce", enun:"A inexigibilidade de licitação pode ser usada para contratar serviços de publicidade e divulgação, se a empresa tiver notória especialização.", gab:"Errado", com:"O art. 74, III, veda expressamente a inexigibilidade para publicidade e divulgação." },
+  { tipo:"ce", enun:"Na contratação emergencial, é permitida a prorrogação do contrato ou a recontratação da mesma empresa com base no mesmo inciso, se persistir a situação.", gab:"Errado", com:"O art. 75, VIII, veda a prorrogação e a recontratação." },
+  { tipo:"ce", enun:"É dispensável a licitação, mantidas as condições do edital, quando licitação realizada há menos de um ano restou deserta.", gab:"Certo", com:"Art. 75, III, a." },
+  { tipo:"caso", enun:"A prefeitura contrata cantor famoso por intermédio de empresário com carta de exclusividade válida apenas para a data do evento. A inexigibilidade é válida?", com:"Não por esse empresário: a lei exige empresário exclusivo, com contrato permanente de exclusividade, e não exclusividade restrita ao evento." },
+  { tipo:"caso", enun:"Um órgão fraciona a compra de materiais da mesma natureza em vários contratos pequenos para se manter abaixo do limite de dispensa. Isso é lícito?", com:"Não. Somam-se as despesas de mesma natureza no exercício e na unidade gestora; o fracionamento é ilegal e pode configurar crime." }],
+resumo:[
+  "<b>Licitação dispensada</b> (art. 76): a própria lei afasta, em alienações específicas, sem margem de escolha.",
+  "<b>Dispensável</b> (art. 75): a Administração pode licitar ou não; rol <b>taxativo</b>.",
+  "<b>Inexigível</b> (art. 74): competição inviável; rol <b>exemplificativo</b>.",
+  "Dispensa por valor em 2026: R$ 130.984,20 (obras, engenharia, veículos) e R$ 65.492,11 (demais), conforme o Decreto 12.807/2025.",
+  "Licitação deserta ou fracassada há menos de 1 ano permite contratação direta com as mesmas condições do edital.",
+  "Emergência: apenas o necessário, parcelas concluídas em até 1 ano, sem prorrogação nem recontratação.",
+  "Inexigibilidade: fornecedor exclusivo, artista consagrado, serviço técnico de notória especialização (nunca publicidade), credenciamento, imóvel singular.",
+  "O processo de contratação direta (art. 72) exige justificativa, parecer e autorização; contratação indevida pode ser crime (CP, art. 337-E)."],
+checklist:[
+  "Diferenciar dispensada, dispensável e inexigível.",
+  "Saber que o rol do art. 74 é exemplificativo e o do art. 75, taxativo.",
+  "Citar os valores de dispensa de 2026 e os originais da lei.",
+  "Explicar a licitação deserta ou fracassada.",
+  "Explicar as regras da contratação emergencial.",
+  "Citar as hipóteses de inexigibilidade e a vedação à publicidade.",
+  "Explicar o fracionamento ilegal.",
+  "Listar o conteúdo do processo de contratação direta (art. 72).",
+  "Citar os instrumentos auxiliares (credenciamento, pré-qualificação, PMI, SRP, registro cadastral)."],
 questoes:[]
 };
 
@@ -196,6 +291,54 @@ cards:[
 { id:"ca7", tipo:"caso", sec:"extincao", f:"Administração atrasa o pagamento há 70 dias. O contratado pode pedir a extinção?", v:"<b>Sim</b> — atraso superior a <b>2 meses</b> (art. 137, §2º, IV), ou optar pela suspensão das obrigações.", lei:[] },
 { id:"ca8", tipo:"distincao", sec:"alteracoes", f:"Fato do príncipe × fato da administração.", v:"<b>Fato do príncipe</b>: ato geral do Estado que repercute no contrato (novo tributo). <b>Fato da administração</b>: ação ou omissão da própria contratante sobre o contrato (não desapropriar a área).", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"Cláusulas exorbitantes, limites de alteração, equilíbrio econômico-financeiro e sanções são os pontos mais cobrados dos contratos da Lei 14.133, quase sempre com números.",
+  decore:[
+    ["Alteração unilateral (art. 125)","até <b>25%</b> do valor inicial atualizado"],
+    ["Reforma de edifício ou equipamento","acréscimos até <b>50%</b>"],
+    ["Serviços e fornecimentos contínuos","até <b>5 anos</b>, prorrogáveis até <b>10 anos</b>"],
+    ["Garantia","até <b>5%</b> do valor (até <b>10%</b> se complexo)"],
+    ["Extinção pelo contratado: atraso de pagamento","superior a <b>2 meses</b>"],
+    ["Extinção pelo contratado: suspensão por ordem da Administração","por mais de <b>3 meses</b>"],
+    ["Multa (art. 156)","de <b>0,5% a 30%</b> do valor do contrato"],
+    ["Impedimento de licitar e contratar","até <b>3 anos</b>, no ente que aplicou"],
+    ["Declaração de inidoneidade","<b>3 a 6 anos</b>, em todos os entes"],
+    ["Prerrogativas","art. <b>104</b>"]],
+  macetes:[
+    ["25 comum, 50 só para reforma","O limite geral é 25%; 50% vale só para acréscimos em reforma de edifício ou equipamento."],
+    ["Príncipe é geral, administração é específica","Fato do príncipe: ato geral do Estado. Fato da administração: ação ou omissão da própria contratante."],
+    ["Preço e prazo não se mexem sozinhos","Cláusulas econômico-financeiras não mudam sem concordância do contratado."]] },
+comparativo:{ titulo:"Impedimento de licitar × declaração de inidoneidade", head:["Impedimento de licitar e contratar (art. 156, III)","Declaração de inidoneidade (art. 156, IV)"], rows:[
+  ["<b>Alcance:</b> administração direta e indireta do ente que aplicou a sanção","<b>Alcance:</b> administração direta e indireta de todos os entes federativos"],
+  ["<b>Prazo:</b> máximo de 3 anos","<b>Prazo:</b> mínimo de 3 e máximo de 6 anos"],
+  ["<b>Gravidade:</b> menor","<b>Gravidade:</b> maior; no Executivo, competência de Ministro de Estado ou Secretário"],
+  ["<b>Regra de prazo:</b> só há teto","<b>Regra de prazo:</b> há piso e teto"]]},
+prova:[
+  { tipo:"ce", enun:"A Administração pode alterar unilateralmente as cláusulas econômico-financeiras do contrato, sem concordância do contratado, para atender ao interesse público.", gab:"Errado", com:"Art. 104, § 1º: exige prévia concordância; a alteração unilateral obriga a revisão do equilíbrio." },
+  { tipo:"ce", enun:"No caso de reforma de edifício, o contratado é obrigado a aceitar acréscimos de até 50% do valor inicial atualizado do contrato.", gab:"Certo", com:"Art. 125: 25% como regra e 50% para acréscimos em reforma de edifício ou equipamento." },
+  { tipo:"ce", enun:"A multa contratual prevista na Lei 14.133/2021 não pode ser inferior a 0,5% nem superior a 30% do valor do contrato.", gab:"Certo", com:"Art. 156, § 3º." },
+  { tipo:"ce", enun:"A sanção de impedimento de licitar e contratar produz efeitos em todos os entes da Federação.", gab:"Errado", com:"Vale no âmbito do ente que a aplicou; é a inidoneidade que alcança todos os entes." },
+  { tipo:"caso", enun:"A Administração atrasa o pagamento do contratado há 70 dias. Pode o contratado pedir a extinção?", com:"Sim. O atraso superior a dois meses autoriza pedir a extinção ou optar pela suspensão do cumprimento das obrigações." },
+  { tipo:"caso", enun:"Empresa de coleta de lixo abandona o serviço, e a prefeitura assume provisoriamente os caminhões dela. Qual a base legal?", com:"Ocupação provisória, prerrogativa do art. 104, V, a, em caso de risco à prestação de serviços essenciais." }],
+resumo:[
+  "O contrato administrativo é marcado pela supremacia da Administração e pelas <b>cláusulas exorbitantes</b> do art. 104.",
+  "Prerrogativas: modificar e extinguir unilateralmente, fiscalizar, aplicar sanções e ocupar provisoriamente.",
+  "Cláusulas econômico-financeiras só mudam com concordância do contratado; a alteração unilateral exige revisão do equilíbrio.",
+  "Alteração unilateral: até <b>25%</b>; em reforma de edifício ou equipamento, acréscimos até <b>50%</b>.",
+  "Contínuos: até 5 anos, prorrogáveis até 10 anos, com vantajosidade atestada.",
+  "Reequilíbrio: fato do príncipe, fato da administração, fortuito ou força maior e imprevisão; a matriz de riscos define quem arca com cada risco.",
+  "O contratado pode pedir extinção por atraso de pagamento acima de 2 meses ou suspensão superior a 3 meses.",
+  "Sanções: advertência, multa (0,5% a 30%), impedimento (até 3 anos, no ente) e inidoneidade (3 a 6 anos, todos os entes)."],
+checklist:[
+  "Listar as cláusulas exorbitantes do art. 104.",
+  "Citar os limites de alteração unilateral (25% e 50%).",
+  "Explicar as garantias contratuais e seus percentuais.",
+  "Citar os prazos de duração dos contratos contínuos.",
+  "Diferenciar fato do príncipe e fato da administração.",
+  "Explicar a matriz de riscos.",
+  "Citar as hipóteses de extinção pelo contratado e seus prazos.",
+  "Diferenciar impedimento de licitar e inidoneidade.",
+  "Saber os limites da multa contratual."],
 questoes:[]
 };
 
@@ -269,6 +412,56 @@ cards:[
 { id:"im6", tipo:"numero", sec:"acao", f:"Prazo prescricional da ação de improbidade.", v:"<b>8 anos</b> do fato ou da cessação da permanência. A intercorrente \"pela metade\" (4 anos) foi derrubada pelo STF (2026).", lei:["lia23"], j:["stf-adi7236"] },
 { id:"im7", tipo:"caso", sec:"acao", f:"Município lesado quer propor ação de improbidade contra ex-prefeito. Tem legitimidade?", v:"<b>Sim</b> — o STF restabeleceu a legitimidade da pessoa jurídica interessada (ADIs 7.042 e 7.043), ao lado do MP.", lei:["lia23"] }
 ],
+importancia:{ nivel:5,
+  texto:"A reforma da Lei 14.230/2021 e o julgamento do STF em 2026 geram muitas questões: dolo obrigatório, rol taxativo do art. 11, sanções por espécie, prescrição de 8 anos e legitimidade.",
+  decore:[
+    ["Elemento subjetivo","só <b>dolo</b>; não existe improbidade culposa"],
+    ["Art. 9º","enriquecimento ilícito; direitos políticos até <b>14 anos</b>"],
+    ["Art. 10","lesão ao erário (dano efetivo); direitos políticos até <b>12 anos</b>"],
+    ["Art. 11","violação de princípios; <b>rol taxativo</b>; sem suspensão de direitos políticos"],
+    ["Multa civil no art. 11","até <b>24 vezes</b> a remuneração"],
+    ["Proibição de contratar","art. 9º: <b>14 anos</b>; art. 10: <b>12 anos</b>; art. 11: <b>4 anos</b>"],
+    ["Prescrição (art. 23)","<b>8 anos</b> do fato"],
+    ["Prescrição intercorrente pela metade (art. 23, § 5º)","declarada <b>inconstitucional</b> pelo STF em 2026"],
+    ["Tema 1.199","dolo exigido; revogação da forma culposa é <b>irretroativa</b>"],
+    ["Ressarcimento por ato doloso","<b>imprescritível</b> (Tema 897)"]],
+  macetes:[
+    ["14, 12, 4","Art. 9º: 14 anos; art. 10: 12 anos; art. 11: 4 anos de proibição de contratar."],
+    ["Art. 11 é lista fechada","A conduta precisa estar em uma das hipóteses descritas na lei."],
+    ["Ressarcir não é punir","O ressarcimento do dano é obrigatório e não é sanção."]] },
+comparativo:{ titulo:"Art. 10 (lesão ao erário) × art. 11 (violação de princípios)", head:["Art. 10 — lesão ao erário","Art. 11 — violação de princípios"], rows:[
+  ["<b>Conduta:</b> ação ou omissão dolosa que causa perda patrimonial efetiva","<b>Conduta:</b> ação ou omissão dolosa que viola honestidade, imparcialidade e legalidade, em uma das condutas da lei"],
+  ["<b>Dolo:</b> exigido","<b>Dolo:</b> exigido"],
+  ["<b>Suspensão dos direitos políticos:</b> até 12 anos","<b>Suspensão dos direitos políticos:</b> não há"],
+  ["<b>Perda da função pública:</b> cabe","<b>Perda da função pública:</b> não cabe"],
+  ["<b>Multa:</b> equivalente ao valor do dano","<b>Multa:</b> até 24 vezes a remuneração"],
+  ["<b>Proibição de contratar:</b> até 12 anos","<b>Proibição de contratar:</b> até 4 anos"]]},
+prova:[
+  { tipo:"ce", enun:"Após a Lei 14.230/2021, a improbidade administrativa exige dolo em todas as suas espécies, não existindo mais a modalidade culposa.", gab:"Certo", com:"Art. 1º, §§ 1º e 2º, e Tema 1.199." },
+  { tipo:"ce", enun:"O rol de condutas do art. 11 da Lei 8.429/1992 é meramente exemplificativo.", gab:"Errado", com:"Após a Lei 14.230, o rol é taxativo, e o STF confirmou sua constitucionalidade." },
+  { tipo:"ce", enun:"No ato de improbidade que atenta contra os princípios da administração (art. 11) cabe suspensão dos direitos políticos de até quatro anos.", gab:"Errado", com:"No art. 11 cabem multa de até 24 vezes a remuneração e proibição de contratar por até 4 anos; não há suspensão dos direitos políticos." },
+  { tipo:"ce", enun:"A ação para aplicação das sanções por improbidade prescreve em oito anos, contados da ocorrência do fato.", gab:"Certo", com:"Art. 23, caput." },
+  { tipo:"caso", enun:"Servidor, por negligência e sem dolo, deixa prescrever créditos do Município, causando prejuízo. Há improbidade?", com:"Não. Sem dolo não há improbidade desde a Lei 14.230 (Tema 1.199), mas pode haver responsabilização disciplinar ou civil." },
+  { tipo:"caso", enun:"Município lesado quer propor ação de improbidade contra ex-prefeito. Tem legitimidade?", com:"Sim. O STF restabeleceu a legitimidade da pessoa jurídica interessada, ao lado do Ministério Público (ADIs 7.042 e 7.043)." }],
+resumo:[
+  "Improbidade exige <b>dolo</b>: vontade livre e consciente de alcançar o resultado ilícito; a mera voluntariedade não basta.",
+  "Espécies: art. 9º (enriquecimento ilícito), art. 10 (lesão ao erário, com perda efetiva) e art. 11 (princípios, rol taxativo).",
+  "Terceiro responde se induzir ou concorrer dolosamente; o STF afastou a exigência de benefício direto.",
+  "Sanções máximas: art. 9º, 14 anos; art. 10, 12 anos; art. 11, sem suspensão de direitos políticos, com contratar até 4 anos.",
+  "Perda da função e suspensão de direitos políticos só se efetivam com o trânsito em julgado.",
+  "Prescrição de <b>8 anos</b>; a intercorrente pela metade caiu no STF (2026), com duração máxima de 20 anos.",
+  "Legitimidade: Ministério Público e pessoa jurídica interessada.",
+  "Ressarcimento por ato doloso é imprescritível (Tema 897). Acordo de não persecução civil exige ressarcimento integral."],
+checklist:[
+  "Explicar o dolo exigido e a exclusão da modalidade culposa.",
+  "Explicar o Tema 1.199 e a irretroatividade.",
+  "Diferenciar os arts. 9º, 10 e 11.",
+  "Saber que o rol do art. 11 é taxativo.",
+  "Citar as sanções máximas por espécie.",
+  "Citar o prazo de prescrição e o que o STF mudou em 2026.",
+  "Dizer quem tem legitimidade para propor a ação.",
+  "Explicar a prescrição do ressarcimento por ato doloso.",
+  "Lembrar que o acórdão das ADIs 7.156 e 7.236 estava pendente: confirmar teses."],
 questoes:[]
 };
 
