@@ -151,6 +151,52 @@ cards:[
 { id:"pp18", tipo:"juris", sec:"constitucionais", f:"Injúria racial cometida em 2015 (então no art. 140, §3º, do CP). Prescreve?", v:"<b>Não.</b> O STF (HC 154.248, 2021) considerou a injúria racial espécie de racismo, logo imprescritível.", lei:["cf5-42"], j:["stf-hc154248"] },
 { id:"pp19", tipo:"distincao", sec:"constitucionais", f:"Quais crimes a CF declara imprescritíveis?", v:"Só dois: <b>racismo</b> (XLII) e <b>ação de grupos armados</b>, civis ou militares, contra a ordem constitucional e o Estado Democrático (XLIV).", lei:["cf5-42","cf5-44"] }
 ],
+importancia:{ nivel:4,
+  texto:"Tema de abertura de quase toda prova de Direito Penal. A banca cobra legalidade, insignificância (vetores e súmulas) e, sobretudo, as vedações do art. 5º, XLII a XLIV, da CF, onde as pegadinhas são sobre prescrição, fiança e anistia.",
+  decore:[
+    ["Limite de cumprimento das penas","<b>40 anos</b> (CP, art. 75)"],
+    ["Descaminho e tributos federais","insignificância até <b>R$ 20 mil</b> (Tema 157 do STJ)"],
+    ["Imprescritíveis na CF","só <b>racismo</b> e <b>ação de grupos armados</b>"],
+    ["Tortura, tráfico, terrorismo e hediondos","inafiançáveis, sem graça ou anistia, mas <b>prescrevem</b>"],
+    ["Execução imediata da pena","só no <b>júri</b> (Tema 1068 do STF)"],
+    ["Insignificância e Administração Pública","<b>não cabe</b> (Súmula 599 do STJ)"],
+    ["Insignificância e violência doméstica contra a mulher","<b>não cabe</b> (Súmula 589 do STJ)"],
+    ["Inquéritos e ações em curso","<b>não</b> agravam a pena-base (Súmula 444 do STJ)"],
+    ["Medida provisória","<b>não</b> cria crime nem pena (CF, art. 62, §1º, I, b)"]],
+  macetes:[
+    ["Só dois não prescrevem","<b>R</b>acismo e <b>A</b>ção de grupos armados: “RA”. Os 3TH (tortura, tráfico, terrorismo e hediondos) prescrevem."],
+    ["Analogia só a favor","Lacuna sem lei: analogia, permitida apenas <i>in bonam partem</i>. Exemplos seguidos de fórmula genérica na própria lei (“ou outro meio insidioso”): interpretação analógica, que vale até contra o réu."],
+    ["Insignificância mexe na tipicidade","O fato é formalmente típico e <b>materialmente</b> atípico. Não mexe na ilicitude nem na culpabilidade."]] },
+comparativo:{ titulo:"Racismo e grupos armados × 3TH (CF, art. 5º, XLII a XLIV)", head:["Racismo (XLII) e ação de grupos armados (XLIV)","Tortura, tráfico, terrorismo e hediondos (XLIII)"], rows:[
+  ["<b>Fiança:</b> inafiançáveis","<b>Fiança:</b> inafiançáveis (a liberdade provisória sem fiança continua possível)"],
+  ["<b>Prescrição:</b> imprescritíveis","<b>Prescrição:</b> prescrevem"],
+  ["<b>Graça e anistia:</b> a CF não veda","<b>Graça e anistia:</b> vedadas (o indulto é vedado pela Lei 8.072/90, não pela CF)"],
+  ["<b>Injúria racial:</b> espécie de racismo, logo imprescritível (STF, HC 154.248); hoje está no art. 2º-A da Lei 7.716/89","<b>Omissão:</b> respondem mandantes, executores e quem, podendo evitar o crime, se omite"]]},
+prova:[
+  { tipo:"ce", enun:"Medida provisória não pode criar crime nem pena, mas o STF já admitiu a edição de MP que beneficie o réu.", gab:"Certo", com:"A CF veda MP sobre Direito Penal (art. 62, §1º, I, b). A exceção admitida pelo STF é a MP favorável ao réu." },
+  { tipo:"ce", enun:"Como o tráfico de drogas é inafiançável e insuscetível de graça ou anistia, o crime também é imprescritível.", gab:"Errado", com:"O tráfico prescreve. Só racismo e ação de grupos armados são imprescritíveis na CF." },
+  { tipo:"ce", enun:"Na fase policial, o delegado deve deixar de lavrar o flagrante sempre que reconhecer a insignificância do fato.", gab:"Errado", com:"Prevalece que a análise da insignificância cabe ao MP e ao juiz; o delegado não deixa de lavrar o flagrante com base nela." },
+  { tipo:"ce", enun:"No descaminho, o STJ admite a insignificância quando o tributo iludido não ultrapassa R$ 20 mil.", gab:"Certo", com:"É a tese do Tema 157 do STJ para descaminho e crimes tributários federais." },
+  { tipo:"caso", enun:"Condenado pelo Tribunal do Júri a 12 anos de reclusão, o réu aguarda em liberdade a apreciação da apelação. Pode ser determinado o início imediato do cumprimento da pena?", com:"Sim. O STF (Tema 1068) entende que a soberania dos veredictos autoriza a execução imediata da condenação do júri, qualquer que seja a pena. Fora do júri, a execução provisória após a 2ª instância é vedada." },
+  { tipo:"ce", enun:"A Constituição veda penas de caráter perpétuo, e o CP limita o cumprimento das penas privativas de liberdade a 40 anos.", gab:"Certo", com:"CF, art. 5º, XLVII, b; CP, art. 75 (40 anos desde a Lei 13.964/2019)." }],
+resumo:[
+  "Só lei em sentido estrito, anterior ao fato, cria crime e pena (CF, art. 5º, XXXIX; CP, art. 1º). Medida provisória não cria crime.",
+  "Lei escrita, estrita, certa e prévia: ficam vedados o costume incriminador, a analogia contra o réu, o tipo vago e a retroatividade gravosa.",
+  "Norma penal em branco não fere a legalidade: o complemento só preenche o conteúdo de um tipo já criado por lei.",
+  "Intervenção mínima = subsidiariedade + fragmentariedade. A alteridade impede punir a autolesão.",
+  "A pena não passa da pessoa do condenado, mas a reparação do dano e o perdimento de bens podem alcançar os sucessores até o limite do patrimônio transferido.",
+  "Insignificância exclui a <b>tipicidade material</b>. Não cabe contra a Administração Pública (Súm. 599), na violência doméstica contra a mulher (Súm. 589), no roubo, no tráfico e na moeda falsa.",
+  "Presunção de inocência: sem execução provisória após a 2ª instância, salvo no júri (Tema 1068 do STF).",
+  "Imprescritíveis: racismo e grupos armados. 3TH: inafiançáveis, sem graça e anistia, mas prescrevem."],
+checklist:[
+  "Explicar reserva legal e anterioridade e por que a MP não cria crime",
+  "Diferenciar analogia de interpretação analógica",
+  "Citar os vetores da insignificância e os casos em que ela não se aplica",
+  "Dizer o teto do descaminho (R$ 20 mil) e a Súmula 599 do STJ",
+  "Diferenciar os crimes imprescritíveis dos inafiançáveis sem anistia",
+  "Explicar por que inafiançável não significa preso até o julgamento",
+  "Aplicar o Tema 1068 do STF ao júri",
+  "Citar o limite de 40 anos e as penas vedadas pela CF"],
 questoes:[]
 };
 
@@ -342,6 +388,55 @@ cards:[
 { id:"ap32", tipo:"ce", sec:"momento-lugar", f:"Certo ou errado: calculada a pena em 1 ano, 2 meses e 10 dias e meio, a fração de dia é arredondada para cima.", v:"<b>Errado.</b> As frações de dia são <b>desprezadas</b> (art. 11): 1 ano, 2 meses e 10 dias.", lei:["cp11"] },
 { id:"ap33", tipo:"caso", sec:"momento-lugar", f:"Uma lei penal especial não diz nada sobre legítima defesa. As regras do CP se aplicam aos crimes dessa lei?", v:"<b>Sim.</b> As regras gerais do CP valem para a legislação especial, se esta não dispuser de modo diverso (art. 12). Exemplo de disposição diversa: a LCP não pune a tentativa.", lei:["cp12"] }
 ],
+importancia:{ nivel:4,
+  texto:"Cobrada em letra de lei e em casos práticos: retroatividade benéfica, tempo e lugar do crime, extraterritorialidade e regras próprias da contravenção. O conflito aparente de normas aparece em casos com a Súmula 17 do STJ.",
+  decore:[
+    ["Tempo do crime","teoria da <b>atividade</b> (art. 4º)"],
+    ["Lugar do crime","teoria da <b>ubiquidade</b> (art. 6º)"],
+    ["Lei benéfica após o trânsito em julgado","retroage; quem aplica é o <b>juízo da execução</b> (Súm. 611 do STF)"],
+    ["Crime permanente ou continuado","lei mais grave vale se vigente antes de cessar (Súm. 711 do STF)"],
+    ["Contravenção","tentativa <b>não punível</b>; só no território nacional; prisão simples até <b>5 anos</b>"],
+    ["Competência nas contravenções","Justiça <b>Estadual</b>, mesmo contra a União (Súm. 38 do STJ)"],
+    ["Extraterritorialidade incondicionada","art. 7º, I: pune ainda que absolvido ou condenado no exterior"],
+    ["Estrangeiro contra brasileiro no exterior","art. 7º, §3º: extradição não pedida ou negada e <b>requisição do Ministro da Justiça</b>"],
+    ["Flagrante de parlamentar federal","autos à Casa em <b>24 horas</b>; decisão pela <b>maioria dos membros</b>"],
+    ["Falso e estelionato","falso que se esgota no estelionato é absorvido (Súm. 17 do STJ)"]],
+  macetes:[
+    ["LUTA","<b>L</b>ugar = <b>U</b>biquidade; <b>T</b>empo = <b>A</b>tividade."],
+    ["Abolitio apaga o penal, não o civil","Cessam a execução e os efeitos penais da condenação, mas o dever de indenizar permanece."],
+    ["Lei temporária é ultra-ativa","Lei excepcional ou temporária continua valendo para os fatos praticados durante sua vigência, mesmo depois de revogada."],
+    ["Conflito aparente: E-S-C-A","<b>E</b>specialidade, <b>S</b>ubsidiariedade, <b>C</b>onsunção e <b>A</b>lternatividade."]] },
+comparativo:{ titulo:"Extraterritorialidade incondicionada × condicionada", head:["Incondicionada (art. 7º, I)","Condicionada (art. 7º, II e §3º)"], rows:[
+  ["<b>Crimes:</b> vida ou liberdade do Presidente; patrimônio ou fé pública dos entes e entidades públicas; administração pública por quem a serve; genocídio por brasileiro ou domiciliado","<b>Crimes:</b> os que o Brasil se obrigou a reprimir por tratado; os praticados por brasileiro; os cometidos em aeronave ou embarcação brasileira privada no exterior, se lá não julgados"],
+  ["<b>Condições:</b> nenhuma","<b>Condições (cumulativas):</b> entrar no território; fato punível também no país do crime; crime extraditável; não absolvido nem pena cumprida lá; não perdoado nem punibilidade extinta"],
+  ["<b>Julgamento no exterior:</b> o agente é punido segundo a lei brasileira ainda que absolvido ou condenado lá (§1º)","<b>Julgamento no exterior:</b> absolvição ou pena cumprida lá impede a aplicação da lei brasileira"],
+  ["<b>Hipótese especial:</b> não há","<b>Hipótese especial:</b> estrangeiro contra brasileiro fora do Brasil (§3º): além das condições, extradição não pedida ou negada e requisição do Ministro da Justiça"]]},
+prova:[
+  { tipo:"ce", enun:"A lei posterior que de qualquer modo favoreça o agente aplica-se aos fatos anteriores, ainda que decididos por sentença condenatória transitada em julgado.", gab:"Certo", com:"CP, art. 2º, parágrafo único. Após o trânsito, a aplicação cabe ao juízo da execução (Súm. 611 do STF)." },
+  { tipo:"ce", enun:"A abolitio criminis extingue a punibilidade e os efeitos penais da condenação, mas não o dever de indenizar na esfera civil.", gab:"Certo", com:"Só os efeitos penais cessam; os extrapenais, como a reparação civil, permanecem." },
+  { tipo:"ce", enun:"Para fixar o tempo do crime, o CP adota a teoria do resultado.", gab:"Errado", com:"O CP adota a teoria da atividade (art. 4º): conta o momento da ação ou omissão." },
+  { tipo:"ce", enun:"A tentativa de contravenção penal é punida com a pena da contravenção consumada reduzida de um a dois terços.", gab:"Errado", com:"A tentativa de contravenção não é punível (LCP, art. 4º)." },
+  { tipo:"caso", enun:"Estrangeiro é absolvido no exterior pela prática de crime contra o patrimônio de uma autarquia federal brasileira. Pode ser processado no Brasil?", com:"Sim. É hipótese de extraterritorialidade incondicionada (art. 7º, I, b): o agente é punido segundo a lei brasileira ainda que absolvido ou condenado no estrangeiro (art. 7º, §1º)." },
+  { tipo:"ce", enun:"Quando o falso se exaure no estelionato, sem potencial lesivo posterior, ele é absorvido pelo estelionato, ainda que sua pena seja maior.", gab:"Certo", com:"Consunção, na forma da Súmula 17 do STJ." }],
+resumo:[
+  "Regra: lei da data do fato. A lei mais benéfica retroage, mesmo após o trânsito em julgado; a mais grave não retroage.",
+  "Abolitio criminis é causa extintiva da punibilidade: apaga os efeitos penais, mas não os civis.",
+  "Combinação de leis é vedada; aplica-se por inteiro a lei mais favorável no conjunto (Súm. 501 do STJ).",
+  "Tempo do crime: atividade (art. 4º). Lugar do crime: ubiquidade (art. 6º).",
+  "Territorialidade temperada (art. 5º); embarcações e aeronaves públicas brasileiras são território onde estiverem; as privadas, em alto-mar ou espaço aéreo correspondente.",
+  "Extraterritorialidade incondicionada (art. 7º, I) não tem condições; a condicionada (II e §3º) exige as condições do §2º.",
+  "Contravenção: sem tentativa punível, sem extraterritorialidade, prisão simples até 5 anos e julgamento na Justiça Estadual.",
+  "Conflito aparente de normas: unidade de fato e pluralidade de normas, resolvido por especialidade, subsidiariedade, consunção ou alternatividade."],
+checklist:[
+  "Diferenciar abolitio criminis de novatio legis in mellius",
+  "Aplicar as Súmulas 611 e 711 do STF",
+  "Diferenciar as teorias da atividade e da ubiquidade e dizer onde cada uma é usada",
+  "Listar os casos de extraterritorialidade incondicionada",
+  "Enumerar as condições da extraterritorialidade condicionada",
+  "Resolver o caso do estrangeiro contra brasileiro no exterior (art. 7º, §3º)",
+  "Citar as regras próprias das contravenções e a Súmula 38 do STJ",
+  "Distinguir sujeito passivo formal e material",
+  "Resolver casos de especialidade, subsidiariedade, consunção e alternatividade"],
 questoes:[]
 };
 
@@ -543,6 +638,56 @@ cards:[
 { id:"ft29", tipo:"ce", sec:"desistencia", f:"Certo ou errado: no roubo com amarração da vítima (violência imprópria), o arrependimento posterior é pacificamente admitido.", v:"<b>Errado.</b> Há divergência doutrinária sobre a violência imprópria. Pacífico é que violência contra coisa não impede e que violência ou grave ameaça à pessoa impede.", lei:["cp16"] },
 { id:"ft30", tipo:"distincao", sec:"classificacao", f:"Crime permanente × instantâneo de efeitos permanentes.", v:"<b>Permanente</b>: a consumação se prolonga (sequestro) — flagrante enquanto durar. <b>Instantâneo de efeitos permanentes</b>: consuma num instante; só os efeitos duram (homicídio).", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"É o coração da Parte Geral: conduta, nexo causal, tentativa e arrependimentos caem em todas as bancas, sempre em casos curtos e com pegadinhas de exceção.",
+  decore:[
+    ["Teoria da conduta no CP","<b>finalista</b>: dolo e culpa estão no fato típico"],
+    ["Regra do nexo causal","equivalência dos antecedentes; exceção no art. 13, §1º (causa superveniente relativamente independente que, por si só, produz o resultado)"],
+    ["Garantidor (art. 13, §2º)","lei, assunção de responsabilidade ou comportamento anterior, e precisa <b>poder</b> agir"],
+    ["Tentativa","pena do consumado <b>reduzida de 1/3 a 2/3</b>"],
+    ["Não admitem tentativa (CCHOUPE)","contravenção, culposo, habitual, omissivo próprio, unissubsistente, preterdoloso, de empreendimento"],
+    ["Desistência voluntária e arrependimento eficaz","responde só pelos <b>atos já praticados</b> (art. 15)"],
+    ["Arrependimento posterior","<b>reduz 1/3 a 2/3</b>; sem violência ou grave ameaça à pessoa; até o <b>recebimento</b> da denúncia"],
+    ["Crime impossível","ineficácia <b>absoluta</b> do meio ou impropriedade <b>absoluta</b> do objeto (art. 17)"],
+    ["Súmula 145 do STF","flagrante <b>preparado</b> é crime impossível; o esperado é válido"],
+    ["Súmula 567 do STJ","vigilância eletrônica ou segurança <b>não</b> torna o furto impossível"]],
+  macetes:[
+    ["Frank","Tentativa: “quero, mas não posso”. Desistência: “posso, mas não quero”."],
+    ["CCHOUPE","<b>C</b>ontravenções, <b>C</b>ulposos, <b>H</b>abituais, <b>O</b>missivos próprios, <b>U</b>nissubsistentes, <b>P</b>reterdolosos e de <b>E</b>mpreendimento não admitem tentativa."],
+    ["Concausa","Absolutamente independente sempre rompe o nexo. Relativamente independente só rompe se for superveniente e produzir o resultado por si só."],
+    ["Coação","Física irresistível exclui a conduta (fato típico). Moral irresistível exclui a culpabilidade."]] },
+comparativo:{ titulo:"Arrependimento eficaz × arrependimento posterior", head:["Desistência voluntária e arrependimento eficaz (art. 15)","Arrependimento posterior (art. 16)"], rows:[
+  ["<b>Momento:</b> durante a execução, ou depois de encerrá-la mas antes do resultado","<b>Momento:</b> depois da consumação, até o recebimento da denúncia ou queixa"],
+  ["<b>Crime:</b> o resultado não ocorre; não há crime consumado","<b>Crime:</b> já consumado"],
+  ["<b>Efeito:</b> responde só pelos atos já praticados","<b>Efeito:</b> pena reduzida de 1/3 a 2/3"],
+  ["<b>Natureza:</b> para a doutrina majoritária, afasta a tipicidade da tentativa (“ponte de ouro”)","<b>Natureza:</b> causa de diminuição de pena, de natureza objetiva"],
+  ["<b>Limite:</b> se o resultado ocorre apesar do socorro, não há o instituto, só a atenuante do art. 65, III, b","<b>Limite:</b> só em crime sem violência ou grave ameaça à pessoa; reparação depois do recebimento vale como atenuante"]]},
+prova:[
+  { tipo:"ce", enun:"A superveniência de causa relativamente independente que, por si só, produz o resultado exclui a imputação, e os fatos anteriores são imputados a quem os praticou.", gab:"Certo", com:"É a literalidade do art. 13, §1º. O agente responde pelos atos já praticados, em regra tentativa." },
+  { tipo:"ce", enun:"A hemofilia da vítima, causa preexistente, rompe o nexo causal entre a lesão e a morte.", gab:"Errado", com:"A concausa preexistente relativamente independente não rompe o nexo. O agente responde pelo resultado se agiu com dolo ou culpa quanto a ele." },
+  { tipo:"ce", enun:"O crime omissivo próprio admite tentativa, porque o agente pode ser impedido de se omitir.", gab:"Errado", com:"No omissivo próprio ou o agente se omite (consuma) ou age (não há crime). Não admite tentativa." },
+  { tipo:"ce", enun:"A existência de câmeras e de seguranças na loja torna impossível o furto e configura crime impossível.", gab:"Errado", com:"Súmula 567 do STJ: o sistema de vigilância, por si só, não torna impossível a configuração do furto. Há tentativa." },
+  { tipo:"caso", enun:"Depois de desferir uma facada em um desafeto, o agente, podendo continuar, desiste voluntariamente de golpeá-lo de novo. Como responde?", com:"Pelos atos já praticados (lesão corporal), por desistência voluntária (art. 15). Não responde por tentativa de homicídio." },
+  { tipo:"ce", enun:"Na tentativa, quanto mais próximo da consumação chegou o agente, maior deve ser a redução de pena.", gab:"Errado", com:"É o contrário: o agente que chegou mais perto da consumação recebe a menor redução (1/3); o que ficou longe, a maior (2/3)." }],
+resumo:[
+  "Fato típico = conduta, resultado, nexo causal e tipicidade. O CP é finalista: dolo e culpa ficam na conduta.",
+  "Omissão própria: o tipo descreve o não fazer. Omissão imprópria: só o garantidor que devia e podia agir responde pelo resultado (art. 13, §2º).",
+  "Coação física irresistível exclui a conduta; a moral, a culpabilidade. Atos reflexos, sonambulismo e força da natureza também excluem a conduta.",
+  "Nexo causal: equivalência dos antecedentes, com o freio do dolo ou culpa. Concausas absolutas rompem sempre; relativas só se supervenientes e causadoras do resultado por si sós.",
+  "Tipicidade formal (imediata ou mediata) e material. Insignificância e adequação social excluem a material.",
+  "Iter criminis: cogitação (impunível), preparação, execução e consumação. Tentativa: 1/3 a 2/3 de redução, conforme o caminho percorrido.",
+  "Crime impossível exige ineficácia ou impropriedade <b>absolutas</b>. Flagrante preparado é impossível; esperado é válido.",
+  "Desistência e arrependimento eficaz: só os atos já praticados. Arrependimento posterior: reduz 1/3 a 2/3 até o recebimento da denúncia."],
+checklist:[
+  "Diferenciar as teorias causal e finalista da conduta",
+  "Distinguir omissão própria de imprópria e listar os garantidores",
+  "Aplicar a coação física e a moral",
+  "Resolver os casos de concausa (preexistente, concomitante e superveniente)",
+  "Explicar a imputação objetiva em três filtros",
+  "Diferenciar crime material, formal e de mera conduta",
+  "Aplicar o CCHOUPE a casos concretos",
+  "Distinguir tentativa, desistência voluntária, arrependimento eficaz e posterior",
+  "Aplicar as Súmulas 145 do STF e 567 do STJ"],
 questoes:[]
 };
 
@@ -636,6 +781,55 @@ cards:[
 { id:"dc18", tipo:"caso", sec:"preterdolo", f:"No roubo, o agente atira para matar a vítima e ela sobrevive. Há tentativa?", v:"<b>Sim: latrocínio tentado.</b> O resultado agravador era doloso; o crime não é preterdoloso.", lei:["cp19"] },
 { id:"dc19", tipo:"distincao", sec:"preterdolo", f:"Crime preterdoloso × qualificado pelo resultado.", v:"Qualificado pelo resultado é o gênero (dolo/dolo, culpa/culpa, culpa/dolo, dolo/culpa). <b>Preterdoloso</b> é a espécie dolo no antecedente + culpa no consequente.", lei:["cp19"] }
 ],
+importancia:{ nivel:5,
+  texto:"Dolo eventual × culpa consciente, culpa e preterdolo são clássicos de prova. A banca mistura as figuras em casos curtos e costuma cobrar o art. 19 e a excepcionalidade do crime culposo.",
+  decore:[
+    ["Dolo (art. 18, I)","<b>quis</b> o resultado (direto) ou <b>assumiu o risco</b> (eventual)"],
+    ["Culpa (art. 18, II)","<b>imprudência, negligência ou imperícia</b>"],
+    ["Crime culposo","só com <b>previsão expressa</b> em lei (art. 18, parágrafo único)"],
+    ["Teorias do dolo no CP","<b>vontade</b> (direto) e <b>assentimento</b> (eventual); a representação não foi adotada"],
+    ["Dolo de 2º grau × eventual","2º grau: efeito colateral <b>certo</b>; eventual: apenas <b>possível</b> e aceito"],
+    ["Culpa consciente × dolo eventual","ambos preveem o resultado: <b>confia que não ocorre</b> × <b>aceita</b>"],
+    ["Art. 19","resultado que agrava a pena: só responde quem o causou <b>ao menos culposamente</b>"],
+    ["Preterdolo","<b>dolo no antecedente e culpa no consequente</b> (lesão seguida de morte, art. 129, §3º)"],
+    ["Compensação de culpas","<b>não existe</b>; só a culpa exclusiva da vítima afasta o crime"],
+    ["Embriaguez ao volante","<b>não</b> presume, por si só, o dolo eventual"]],
+  macetes:[
+    ["Dolo na ida, culpa na volta","Preterdolo: o agente quer lesionar e causa a morte sem querer nem assumir o risco."],
+    ["Só existe preterdolo onde o tipo prevê resultado agravador culposo","Exemplo clássico: art. 129, §3º. <b>Não existe “homicídio preterdoloso”</b>: não há qualificadora do art. 121 em lesão seguida de morte."],
+    ["Previsão igual, atitude diferente","Dolo eventual: “se acontecer, aconteceu”. Culpa consciente: “isso não vai acontecer comigo”."],
+    ["Imprudência, negligência e imperícia","Imprudência: age sem cautela. Negligência: deixa de tomar a precaução devida. Imperícia: falta de aptidão técnica em arte, profissão ou ofício."]] },
+comparativo:{ titulo:"Dolo eventual × culpa consciente", head:["Dolo eventual","Culpa consciente"], rows:[
+  ["<b>Previsão do resultado:</b> sim","<b>Previsão do resultado:</b> sim"],
+  ["<b>Atitude:</b> aceita o resultado, é indiferente a ele","<b>Atitude:</b> acredita sinceramente que o resultado não ocorrerá"],
+  ["<b>Base legal:</b> art. 18, I (assumiu o risco), teoria do assentimento","<b>Base legal:</b> art. 18, II (culpa), na modalidade consciente"],
+  ["<b>Previsão do tipo:</b> basta o tipo doloso","<b>Previsão do tipo:</b> só se punido se houver tipo culposo expresso (art. 18, parágrafo único)"],
+  ["<b>No trânsito:</b> exige circunstâncias concretas que mostrem a aceitação; a embriaguez isolada não basta (STF e STJ)","<b>No trânsito:</b> se não há prova de aceitação do resultado, afasta-se o dolo eventual; havendo indícios, a decisão costuma ficar com o júri"]]},
+prova:[
+  { tipo:"ce", enun:"Tanto o dolo eventual quanto a culpa consciente pressupõem a previsão do resultado; o que os distingue é a atitude do agente diante dele.", gab:"Certo", com:"No dolo eventual o agente aceita o resultado; na culpa consciente confia que não ocorrerá." },
+  { tipo:"ce", enun:"A lesão corporal seguida de morte (art. 129, §3º) é crime preterdoloso e, por isso, não admite tentativa.", gab:"Certo", com:"O resultado morte é culposo. Não se tenta produzir um resultado que não se quer." },
+  { tipo:"ce", enun:"O agente que quer lesionar e, sem querer a morte nem assumir o risco, mata a vítima, responde por homicídio preterdoloso qualificado.", gab:"Errado", com:"Não existe homicídio preterdoloso. O crime é lesão corporal seguida de morte (129, §3º), sem as qualificadoras do art. 121." },
+  { tipo:"ce", enun:"Havendo culpa concorrente da vítima, a culpa do agente é compensada e ele fica isento de pena.", gab:"Errado", com:"Não existe compensação de culpas. A culpa da vítima pode influir na pena (art. 59); só a culpa exclusiva da vítima afasta o crime." },
+  { tipo:"caso", enun:"Motorista embriagado, em disputa de racha, atropela e mata um pedestre. A acusação pede a pronúncia por homicídio com dolo eventual apenas por causa da embriaguez. O pedido se sustenta?", com:"Não só por isso. STF e STJ exigem que as circunstâncias concretas demonstrem a aceitação do resultado; a embriaguez, isolada, não basta para presumir o dolo eventual." },
+  { tipo:"ce", enun:"Todo crime doloso admite a modalidade culposa quando o agente atua com imprudência.", gab:"Errado", com:"O crime culposo é excepcional e depende de previsão expressa em lei (art. 18, parágrafo único). Exemplo: o dano culposo não é crime no CP." }],
+resumo:[
+  "Dolo: consciência e vontade. O CP adota as teorias da vontade (dolo direto) e do assentimento (dolo eventual), e rejeita a da representação.",
+  "Dolo direto de 2º grau: o efeito colateral é certo. Dolo eventual: o resultado é possível e aceito.",
+  "Dolo geral (<i>dolus generalis</i>): erro sucessivo sobre o nexo; responde por crime doloso consumado.",
+  "Culpa: violação do dever objetivo de cuidado, resultado involuntário e previsibilidade objetiva. Modalidades: imprudência, negligência e imperícia.",
+  "Culpa consciente prevê e confia; inconsciente não prevê o que era previsível. Culpa imprópria: age por erro evitável e quer o resultado; pune-se como culposo.",
+  "Crime culposo só existe com previsão expressa. Há concorrência, não compensação, de culpas. Admite-se coautoria, mas não participação dolosa.",
+  "Art. 19: ninguém responde por resultado agravador sem dolo ou culpa. Preterdolo é a espécie dolo-culpa e não admite tentativa.",
+  "Latrocínio é qualificado pelo resultado, mas não necessariamente preterdoloso: admite tentativa quando a morte é dolosa."],
+checklist:[
+  "Diferenciar dolo direto de 1º grau, de 2º grau, eventual, alternativo e geral",
+  "Distinguir dolo eventual de culpa consciente e aplicar ao trânsito",
+  "Explicar a excepcionalidade do crime culposo",
+  "Diferenciar imprudência, negligência e imperícia",
+  "Explicar a culpa imprópria e por que admite tentativa",
+  "Resolver casos de culpa concorrente e culpa exclusiva da vítima",
+  "Aplicar o art. 19 e definir preterdolo",
+  "Dizer por que não existe homicídio preterdoloso e qual é o crime correto"],
 questoes:[]
 };
 
@@ -806,6 +1000,56 @@ cards:[
 { id:"il25", tipo:"caso", sec:"imputabilidade", f:"Aos 17 anos, o agente sequestra a vítima; o cativeiro dura seis meses e ele completa 18 durante esse período. Responde pelo CP?", v:"<b>Sim.</b> Crime permanente: a conduta continuou após a maioridade.", lei:["cp27"] },
 { id:"il26", tipo:"ce", sec:"exigibilidade", f:"Certo ou errado: o empregado que cumpre ordem não manifestamente ilegal do patrão é beneficiado pela obediência hierárquica.", v:"<b>Errado.</b> Prevalece que a obediência hierárquica exige relação de direito público.", lei:["cp22"] }
 ],
+importancia:{ nivel:5,
+  texto:"Excludentes de ilicitude, excesso e imputabilidade são cobrados em casos concretos de segurança pública. A banca testa os requisitos (atual × iminente), o dever legal e a diferença entre excluir o crime e isentar de pena.",
+  decore:[
+    ["Excludentes (art. 23)","estado de necessidade, legítima defesa, estrito cumprimento do dever legal, exercício regular de direito"],
+    ["Estado de necessidade","perigo <b>atual</b>, não provocado por vontade, e sem dever legal de enfrentá-lo"],
+    ["Bem sacrificado de maior valor","pena reduzida de <b>1/3 a 2/3</b> (art. 24, §2º)"],
+    ["Legítima defesa","agressão injusta <b>atual ou iminente</b>, meios necessários, uso moderado"],
+    ["Refém (art. 25, parágrafo único)","agente de segurança pública que repele agressão a vítima refém"],
+    ["Legítima defesa da honra","<b>inconstitucional</b> (ADPF 779)"],
+    ["Excesso (art. 23, parágrafo único)","punível se doloso ou culposo, em <b>qualquer</b> excludente"],
+    ["Doença mental (art. 26)","incapacidade total: <b>isento</b>; parcial: pena reduzida de <b>1/3 a 2/3</b>"],
+    ["Menores de 18 anos","inimputáveis; vale a idade na <b>conduta</b>; prova por documento (Súm. 74 do STJ)"],
+    ["Embriaguez","voluntária ou culposa <b>não</b> exclui; acidental completa <b>isenta</b>; incompleta reduz de 1/3 a 2/3"]],
+  macetes:[
+    ["Atual × iminente","Estado de necessidade só aceita perigo <b>atual</b>. Legítima defesa aceita agressão atual <b>ou iminente</b>."],
+    ["Policial que mata em troca de tiros","É legítima defesa, não estrito cumprimento do dever legal: nenhuma lei manda matar."],
+    ["Coação física × moral","Física irresistível exclui a conduta. Moral irresistível exclui a culpabilidade e só o coator responde."],
+    ["Emoção e paixão","Não excluem a imputabilidade (art. 28, I). Podem reduzir a pena."]] },
+comparativo:{ titulo:"Estado de necessidade × legítima defesa", head:["Estado de necessidade (art. 24)","Legítima defesa (art. 25)"], rows:[
+  ["<b>Situação:</b> perigo atual, de qualquer origem","<b>Situação:</b> injusta agressão humana, atual ou iminente"],
+  ["<b>Reação:</b> sacrifica bem de terceiro inocente (agressivo) ou de quem causou o perigo (defensivo)","<b>Reação:</b> volta-se contra o agressor"],
+  ["<b>Fuga:</b> se podia evitar o perigo de outro modo, não há excludente","<b>Fuga:</b> o agredido não precisa fugir (<i>commodus discessus</i>)"],
+  ["<b>Dever legal de enfrentar o perigo:</b> impede a alegação (§1º)","<b>Contra inimputável:</b> cabe, porque a agressão é injusta"],
+  ["<b>Bem de valor maior sacrificado:</b> há crime, com redução de 1/3 a 2/3 (§2º)","<b>Reciprocidade:</b> real contra real é impossível; contra o excesso cabe (legítima defesa sucessiva)"]]},
+prova:[
+  { tipo:"ce", enun:"Quem tem o dever legal de enfrentar o perigo não pode alegar estado de necessidade.", gab:"Certo", com:"Art. 24, §1º. O bombeiro, por exemplo, não pode invocar a excludente para fugir do dever, dentro dos limites razoáveis do cargo." },
+  { tipo:"ce", enun:"Na legítima defesa, o agredido que tem possibilidade de fuga deve fugir antes de reagir.", gab:"Errado", com:"Não se exige fuga (<i>commodus discessus</i>). A inevitabilidade é requisito do estado de necessidade." },
+  { tipo:"ce", enun:"Cabe legítima defesa real contra outra legítima defesa real.", gab:"Errado", com:"Quem se defende legitimamente pratica agressão justa. Cabe legítima defesa contra o excesso (sucessiva) e contra a legítima defesa putativa." },
+  { tipo:"ce", enun:"O policial que, em troca de tiros, mata o criminoso age em estrito cumprimento do dever legal.", gab:"Errado", com:"Nenhuma lei impõe o dever de matar. A hipótese é de legítima defesa." },
+  { tipo:"caso", enun:"Uma senhora, aterrorizada, continua golpeando o assaltante já desacordado e o fere gravemente. Como pode ser analisada a sua conduta?", com:"Houve excesso, mas a doutrina admite o excesso exculpante (medo, pânico): a culpabilidade pode ser afastada por inexigibilidade de conduta diversa. O excesso exculpante afasta a culpabilidade, não a ilicitude." },
+  { tipo:"ce", enun:"A embriaguez voluntária e completa isenta de pena, porque retira a capacidade de entender o caráter ilícito do fato.", gab:"Errado", com:"A embriaguez voluntária ou culposa não exclui a imputabilidade (actio libera in causa). Só a embriaguez completa por caso fortuito ou força maior isenta (art. 28, §1º)." }],
+resumo:[
+  "Fato típico é indício de ilicitude. Na excludente o fato continua típico, mas não é crime (art. 23).",
+  "Toda excludente exige o conhecimento da situação justificante (elemento subjetivo).",
+  "Estado de necessidade: perigo atual, não provocado voluntariamente, inevitável e sem dever legal de enfrentar. O CP adota a teoria unitária.",
+  "Legítima defesa: agressão injusta atual ou iminente, meios necessários, moderação. Cabe contra inimputável; não existe legítima defesa recíproca real × real.",
+  "Legítima defesa da honra é inconstitucional (ADPF 779). Agente de segurança pode agir em legítima defesa em favor de refém (art. 25, parágrafo único).",
+  "Excesso doloso ou culposo é punível em qualquer excludente (art. 23, parágrafo único). Intensivo: meio desproporcional. Extensivo: reação após cessar a causa.",
+  "Culpabilidade (teoria normativa pura): imputabilidade, potencial consciência da ilicitude e exigibilidade de conduta diversa.",
+  "Inimputável total: absolvição imprópria com medida de segurança. Semi-imputável: condenado, com redução de 1/3 a 2/3 ou medida de segurança (sistema vicariante)."],
+checklist:[
+  "Listar as excludentes legais e a supralegal (consentimento do ofendido)",
+  "Enumerar os requisitos do estado de necessidade e da legítima defesa",
+  "Diferenciar atual de iminente",
+  "Aplicar o art. 24, §1º (dever legal) e o art. 25, parágrafo único (refém)",
+  "Explicar os tipos de excesso e o excesso exculpante",
+  "Aplicar a ADPF 779",
+  "Diferenciar inimputável e semi-imputável e a absolvição imprópria",
+  "Resolver casos de embriaguez (voluntária, preordenada, acidental, patológica)",
+  "Diferenciar coação moral, coação física e obediência hierárquica"],
 questoes:[]
 };
 
@@ -916,6 +1160,55 @@ cards:[
 { id:"er18", tipo:"caso", sec:"aberratio", f:"Atira na pessoa para matá-la, erra e acerta apenas uma vidraça. Por qual crime responde?", v:"<b>Tentativa de homicídio.</b> Dano culposo não é crime.", lei:["cp74"] },
 { id:"er19", tipo:"caso", sec:"erro-proibicao", f:"Homem simples acha um relógio de ouro na rua e fica com ele, sem saber que isso é crime. Que erro há?", v:"<b>Erro de proibição</b>: conhece a realidade (coisa alheia perdida), mas acha a conduta lícita. Se inevitável, isenta; se evitável, reduz de 1/6 a 1/3.", lei:["cp21"] }
 ],
+importancia:{ nivel:4,
+  texto:"Erro de tipo, descriminantes putativas e aberratio ictus são cobrados com casos curtos e consequências diferentes: a banca quer saber se você identifica o erro certo e a pena correspondente.",
+  decore:[
+    ["Erro de tipo (art. 20)","<b>exclui o dolo</b>; o evitável permite punir a culpa, se prevista"],
+    ["Erro de tipo inevitável","exclui dolo e culpa: fato <b>atípico</b>"],
+    ["Descriminante putativa (art. 20, §1º)","erro plenamente justificado: <b>isento de pena</b>; se derivado de culpa, pune-se a culpa"],
+    ["Erro determinado por terceiro (§2º)","responde o <b>terceiro</b> que determinou o erro"],
+    ["Erro sobre a pessoa (§3º)","valem as qualidades da vítima <b>visada</b>"],
+    ["Aberratio ictus (art. 73)","atinge pessoa diversa; se atinge também a visada, concurso formal"],
+    ["Aberratio criminis (art. 74)","bem de natureza diversa: responde por culpa, se prevista"],
+    ["Erro de proibição inevitável","<b>isenta</b> de pena (art. 21)"],
+    ["Erro de proibição evitável","reduz a pena de <b>1/6 a 1/3</b>"],
+    ["Desconhecimento da lei","<b>inescusável</b> (art. 21)"]],
+  macetes:[
+    ["“Não sei o que faço” × “sei o que faço, acho permitido”","O primeiro é erro de tipo (atinge o dolo). O segundo, erro de proibição (atinge a culpabilidade)."],
+    ["Ictus é pontaria, pessoa é confusão","Erro sobre a pessoa: acerta quem mirou, mas era outro. <i>Aberratio ictus</i>: mira um e o tiro acerta outro."],
+    ["Pessoa × coisa","<i>Aberratio criminis</i> é o caso de atingir pessoa em vez de coisa, ou o contrário. Dano culposo não é crime."],
+    ["Culpa imprópria","Quer o resultado, mas erra de forma evitável sobre a situação de fato de uma excludente: responde como culposo."]] },
+comparativo:{ titulo:"Erro de tipo × erro de proibição", head:["Erro de tipo","Erro de proibição"], rows:[
+  ["<b>Sobre o quê:</b> elemento do tipo, a realidade do fato","<b>Sobre o quê:</b> a ilicitude do fato, a regra"],
+  ["<b>Elemento atingido:</b> o dolo, no fato típico","<b>Elemento atingido:</b> a potencial consciência da ilicitude, na culpabilidade"],
+  ["<b>Inevitável:</b> exclui dolo e culpa; fato atípico","<b>Inevitável:</b> isenta de pena"],
+  ["<b>Evitável:</b> afasta o dolo; pune-se a culpa, se prevista em lei","<b>Evitável:</b> a pena pode ser reduzida de 1/6 a 1/3"],
+  ["<b>Descriminante putativa:</b> erro sobre os fatos que sustentam a excludente (tipo permissivo, art. 20, §1º)","<b>Descriminante putativa:</b> erro sobre a existência ou os limites da excludente (proibição indireto, art. 21)"]]},
+prova:[
+  { tipo:"ce", enun:"Tanto o erro de tipo evitável quanto o inevitável excluem o dolo.", gab:"Certo", com:"O erro sobre elemento do tipo sempre exclui o dolo. O evitável ainda permite punir a culpa, se houver forma culposa." },
+  { tipo:"ce", enun:"O desconhecimento da lei é inescusável, mas o erro inevitável sobre a ilicitude do fato isenta de pena.", gab:"Certo", com:"Art. 21: o desconhecimento da lei não escusa; o erro inevitável sobre a ilicitude do fato isenta de pena." },
+  { tipo:"caso", enun:"O agente atira em A, desafeto que mirou com precisão, mas o projétil desvia e atinge B, que morre. Como responde?", com:"Aberratio ictus (art. 73): responde como se tivesse atingido A, considerando-se as condições da vítima visada. Se também atinge A, aplica-se o concurso formal (art. 70)." },
+  { tipo:"ce", enun:"No erro sobre a pessoa, consideram-se as condições e qualidades da pessoa efetivamente atingida.", gab:"Errado", com:"Art. 20, §3º: consideram-se as qualidades da pessoa contra quem o agente queria praticar o crime." },
+  { tipo:"ce", enun:"O agente que atira para matar uma pessoa e acerta apenas uma planta do jardim responde por tentativa de homicídio.", gab:"Certo", com:"Aberratio criminis: o dano culposo não é crime. Subsiste a tentativa contra a pessoa." },
+  { tipo:"ce", enun:"O pai que, de madrugada, atira em um vulto achando que era ladrão, mas era o filho, e cujo erro era evitável, responde por homicídio culposo.", gab:"Certo", com:"Descriminante putativa por erro de tipo permissivo: o erro evitável permite punir a culpa (art. 20, §1º, parte final)." }],
+resumo:[
+  "Erro de tipo: falsa percepção da realidade sobre elemento do tipo. Sempre exclui o dolo; se evitável, pune-se a culpa, quando prevista.",
+  "Descriminante putativa por erro sobre os fatos é erro de tipo permissivo (teoria limitada da culpabilidade): inevitável isenta; evitável gera punição por culpa.",
+  "Erro provocado por terceiro: responde quem determinou o erro (autoria mediata).",
+  "Delito putativo é o inverso: o agente acha que comete crime, mas o fato é atípico.",
+  "Erro sobre a pessoa: não exclui o crime; valem as qualidades da vítima visada (art. 20, §3º).",
+  "Dolo geral e erro sobre o nexo causal: responde pelo crime doloso consumado.",
+  "Aberratio ictus (art. 73): pessoa × pessoa. Aberratio criminis (art. 74): bem de natureza diversa. Atingidos ambos: concurso formal.",
+  "Erro de proibição: inevitável isenta, evitável reduz de 1/6 a 1/3. O desconhecimento da lei é inescusável."],
+checklist:[
+  "Diferenciar erro de tipo de erro de proibição em caso concreto",
+  "Aplicar as consequências do erro de tipo evitável e inevitável",
+  "Explicar descriminante putativa e a teoria limitada da culpabilidade",
+  "Resolver a autoria mediata por erro provocado (art. 20, §2º)",
+  "Diferenciar erro sobre a pessoa de aberratio ictus",
+  "Aplicar a aberratio criminis, inclusive quando só a coisa é atingida",
+  "Resolver o dolo geral",
+  "Citar as frações do erro de proibição evitável"],
 questoes:[]
 };
 
@@ -1079,6 +1372,56 @@ cards:[
 { id:"cp17c", tipo:"ce", sec:"autoria", f:"Certo ou errado: crimes de mão própria não admitem coautoria nem participação.", v:"<b>Errado.</b> Não admitem coautoria (nem, em regra, autoria mediata), mas admitem <b>participação</b> (ex.: instigar a testemunha a mentir).", lei:["cp29"] },
 { id:"cp18c", tipo:"caso", sec:"participacao", f:"Funcionário esquece a repartição aberta e um particular a furta durante a noite. Há concurso de pessoas?", v:"<b>Não</b>, falta liame. O particular responde por <b>furto</b> e o funcionário por <b>peculato culposo</b> (art. 312, §2º).", lei:["cp29"] }
 ],
+importancia:{ nivel:5,
+  texto:"Concurso de pessoas é cobrado em casos de segurança pública (roubo, homicídio, crimes funcionais). A banca explora o art. 30, a cooperação dolosamente distinta, a acessoriedade da participação e a autoria colateral.",
+  decore:[
+    ["Teoria do CP","<b>monista temperada</b>: um só crime, cada um na medida da sua culpabilidade (art. 29)"],
+    ["Participação de menor importância","pena reduzida de <b>1/6 a 1/3</b> (só o partícipe)"],
+    ["Cooperação dolosamente distinta (§2º)","pena do crime menos grave, <b>aumentada até a metade</b> se o mais grave era previsível"],
+    ["Art. 30","circunstâncias pessoais <b>não</b> se comunicam, salvo <b>elementares</b>"],
+    ["Art. 31","ajuste e instigação só são puníveis se o crime for <b>ao menos tentado</b>"],
+    ["Requisitos","pluralidade de agentes, relevância causal, liame subjetivo, identidade de infração e fato punível"],
+    ["Acessoriedade da participação","<b>limitada</b>: fato principal típico e ilícito"],
+    ["Autoria incerta","todos respondem por <b>tentativa</b>"],
+    ["Crime de mão própria","<b>sem</b> coautoria; admite participação"],
+    ["Multidão delinquente","atenuante para quem foi influenciado (art. 65, III, e); agravante para quem lidera (art. 62, I)"]],
+  macetes:[
+    ["Induzir cria, instigar reforça","Induzimento faz nascer a ideia; instigação reforça a que já existia. Ambos são participação moral."],
+    ["Elementar comunica, desde que conhecida","Funcionário público no peculato é elementar: o particular que sabe da condição responde por peculato; se não sabe, por furto."],
+    ["Colateral sem liame, coautoria com liame","Sem liame, cada um responde pelo que causou (se não se sabe quem acertou, ambos por tentativa). Com liame, todos respondem pelo consumado."],
+    ["Coação moral é mediata, coação física é direta","Na moral, o coator é autor mediato. Na física, o coagido nem tem conduta e o coator é autor direto."]] },
+comparativo:{ titulo:"Autor (coautor) × partícipe", head:["Autor ou coautor","Partícipe"], rows:[
+  ["<b>Conduta:</b> realiza o verbo do tipo ou tem o domínio do fato (ação, vontade ou função)","<b>Conduta:</b> colabora sem realizar o verbo e sem dominar o fato"],
+  ["<b>Tipicidade:</b> adequação imediata ao tipo","<b>Tipicidade:</b> adequação mediata, pela norma de extensão do art. 29"],
+  ["<b>Redução do art. 29, §1º:</b> não se aplica","<b>Redução do art. 29, §1º:</b> 1/6 a 1/3 se a participação for de menor importância"],
+  ["<b>Crime de mão própria:</b> não admite coautoria","<b>Crime de mão própria:</b> admite participação, como instigar a testemunha a mentir"],
+  ["<b>Dependência:</b> responde pelo fato que pratica","<b>Dependência:</b> acessória; exige fato principal típico e ilícito (acessoriedade limitada) e ao menos tentado (art. 31)"]]},
+prova:[
+  { tipo:"ce", enun:"O Código Penal adota a teoria pluralista como regra do concurso de pessoas, punindo cada participante por crime próprio.", gab:"Errado", com:"A regra é a teoria monista (temperada). A pluralista só aparece nas exceções previstas em lei, como corrupção ativa e passiva e os arts. 124 e 126." },
+  { tipo:"ce", enun:"O liame subjetivo exige acordo prévio entre os agentes e que o autor saiba da ajuda recebida.", gab:"Errado", com:"Basta que o colaborador adira conscientemente à conduta do outro. Não se exige combinação prévia nem que o autor conheça a ajuda." },
+  { tipo:"ce", enun:"A redução de 1/6 a 1/3 do art. 29, §1º, aplica-se ao coautor cuja contribuição foi de menor importância.", gab:"Errado", com:"A redução é só para o partícipe. O coautor, por definição, realiza o fato como autor." },
+  { tipo:"ce", enun:"Se o resultado mais grave era previsível, o concorrente que quis participar de crime menos grave responde pela pena deste, aumentada até a metade.", gab:"Certo", com:"Art. 29, §2º, cooperação dolosamente distinta. O aumento incide sobre a pena do crime menos grave." },
+  { tipo:"ce", enun:"O particular que, sabendo que o comparsa é servidor, o ajuda a se apropriar de bem da repartição responde por peculato.", gab:"Certo", com:"A condição de funcionário público é elementar e se comunica ao coautor que a conhece (art. 30)." },
+  { tipo:"ce", enun:"Pela acessoriedade limitada, o partícipe responde ainda que o autor seja inimputável, desde que o fato principal seja típico e ilícito.", gab:"Certo", com:"A inimputabilidade do autor afeta a culpabilidade dele, não o fato principal. O partícipe não é beneficiado." }],
+resumo:[
+  "Concurso de pessoas é a colaboração de duas ou mais pessoas para a mesma infração. O CP adota a teoria monista temperada: um só crime, pena na medida da culpabilidade (art. 29).",
+  "Exceções pluralistas: aborto (arts. 124 e 126), corrupção ativa e passiva, falso testemunho e o crime do art. 343.",
+  "Requisitos: pluralidade de agentes e condutas, relevância causal, liame subjetivo, identidade de infração e fato punível (ao menos tentado, art. 31).",
+  "Autor: objetivo-formal completado pelo domínio do fato. Crime de mão própria: sem coautoria, com participação. Crime próprio: admite coautoria e participação.",
+  "Autoria colateral: sem liame. Autoria incerta: ambos respondem por tentativa. Autoria mediata: instrumento em erro, coagido moralmente ou inimputável sem discernimento.",
+  "Participação: moral (induzir ou instigar) ou material (auxílio); acessoriedade limitada; menor importância reduz de 1/6 a 1/3.",
+  "Art. 30: circunstâncias e condições pessoais não se comunicam; elementares sim, se conhecidas.",
+  "Cooperação dolosamente distinta e multidão delinquente têm regras próprias (art. 29, §2º; arts. 62, I, e 65, III, e)."],
+checklist:[
+  "Explicar o monismo temperado e citar as exceções pluralistas",
+  "Enumerar os cinco requisitos do concurso",
+  "Distinguir ajuda combinada antes da ajuda posterior (art. 348, 349 e receptação)",
+  "Diferenciar coautoria, autoria colateral e autoria incerta",
+  "Identificar autoria mediata nas três hipóteses mais cobradas",
+  "Explicar a acessoriedade limitada e a participação de menor importância",
+  "Aplicar o art. 30 a elementares e circunstâncias",
+  "Resolver a cooperação dolosamente distinta",
+  "Explicar o concurso em crime culposo e a multidão delinquente"],
 questoes:[]
 };
 
@@ -1100,7 +1443,11 @@ secoes:[
       "Leis de 2025: a Lei 15.160/2025 afastou a atenuante da idade (menor de 21 ou maior de 70) e a redução do prazo prescricional (art. 115) nos crimes que envolvem violência sexual contra a mulher; a Lei 15.159/2025 incluiu agravante para crimes nas dependências de instituição de ensino (art. 61)."]},
     { h:"Regime inicial", p:[
       "Pena superior a 8 anos: fechado. Acima de 4 até 8, não reincidente: semiaberto. Até 4, não reincidente: aberto (art. 33, §2º). Reincidente com pena até 4 anos e circunstâncias favoráveis: pode iniciar no semiaberto (Súmula 269).",
-      "Gravidade abstrata do crime não justifica regime mais severo que o permitido pela pena (Súmula 440 do STJ; Súmulas 718 e 719 do STF)."]}
+      "Gravidade abstrata do crime não justifica regime mais severo que o permitido pela pena (Súmula 440 do STJ; Súmulas 718 e 719 do STF)."]},
+    { h:"Qualificadora, privilégio e majorante: onde cada uma entra", p:[
+      "A <b>qualificadora</b> cria nova pena em abstrato (novos mínimo e máximo) e a 1ª fase já parte desse patamar. Havendo mais de uma, uma qualifica o crime e as demais, em regra, servem como agravante (quando prevista no art. 61) ou como circunstância judicial.",
+      "As <b>causas de aumento</b> (majorantes) e de <b>diminuição</b> (como a tentativa e o privilégio) são frações aplicadas na 3ª fase e podem ultrapassar os limites da pena em abstrato.",
+      "Qualificadora <b>objetiva</b> (meio e modo) convive com o privilégio, que é <b>subjetivo</b>; qualificadora <b>subjetiva</b> (motivo, finalidade) não convive. No homicídio qualificado-privilegiado, o privilégio prepondera e afasta a hediondez."]}
   ],
   quadro:{ titulo:"As três fases", head:["Fase","O que entra","Pode sair dos limites da pena?"], rows:[["1ª — pena-base","Art. 59 (8 circunstâncias)","Não"],["2ª — intermediária","Agravantes e atenuantes","Não (Súm. 231)"],["3ª — definitiva","Causas de aumento e diminuição","Sim"]]},
   pegadinhas:["Súmula 231 continua valendo: atenuante não leva a pena abaixo do mínimo (STJ, 2024).","Qualificadora altera a pena em abstrato (mínimo e máximo); majorante é fração na 3ª fase."]}
@@ -1135,6 +1482,52 @@ cards:[
 { id:"ds9", tipo:"ce", sec:"trifasico", f:"Certo ou errado: a reincidência pode ser usada para agravar a pena-base e, de novo, como agravante.", v:"<b>Errado.</b> Súmula 241 do STJ.", lei:["cp63"], j:["stj-s241"] },
 { id:"ds10", tipo:"caso", sec:"trifasico", f:"Crime de violência sexual contra mulher praticado em 2026 por agente de 19 anos. Incide a atenuante da menoridade relativa?", v:"<b>Não</b>, para fatos após a Lei 15.160/2025, que excluiu a atenuante (art. 65, I) e a redução da prescrição (art. 115) nesses crimes.", lei:["cp68"] }
 ],
+importancia:{ nivel:5,
+  texto:"A dosimetria é cobrada em casos numéricos e em súmulas. A banca explora as fases, os limites da 2ª fase (Súmula 231), a reincidência e o regime inicial, além da diferença entre qualificadora e majorante.",
+  decore:[
+    ["Sistema trifásico (art. 68)","pena-base, depois agravantes e atenuantes, por fim causas de aumento e diminuição"],
+    ["Circunstâncias judiciais (art. 59)","<b>8</b>: culpabilidade, antecedentes, conduta social, personalidade, motivos, circunstâncias, consequências e comportamento da vítima"],
+    ["2ª fase","não ultrapassa mínimo nem máximo (<b>Súm. 231</b> do STJ)"],
+    ["3ª fase","pode ficar <b>abaixo do mínimo</b> ou acima do máximo"],
+    ["Reincidência","novo crime após trânsito em julgado; período depurador de <b>5 anos</b> (art. 64, I)"],
+    ["Súmula 241 do STJ","reincidência não pode ser agravante e circunstância judicial ao mesmo tempo"],
+    ["Súmula 444 do STJ","inquéritos e ações em curso <b>não</b> agravam a pena-base"],
+    ["Regime inicial (não reincidente)","acima de 8: fechado; acima de 4 até 8: semiaberto; até 4: aberto"],
+    ["Reincidente com até 4 anos","semiaberto possível se as circunstâncias forem favoráveis (Súm. 269 do STJ)"],
+    ["Concurso de causas da parte especial","o juiz pode aplicar só a que mais aumente ou diminua (art. 68, parágrafo único)"]],
+  macetes:[
+    ["Qualificadora muda a moldura, majorante muda a fração","Qualificadora cria novos mínimo e máximo. Majorante é fração aplicada na 3ª fase sobre a pena já calculada."],
+    ["Só a 3ª fase foge dos limites","Fases 1 e 2 ficam entre o mínimo e o máximo do tipo. A 3ª pode ultrapassá-los."],
+    ["Reincidência: trânsito antes do novo crime","Sem trânsito em julgado anterior ao novo fato, não há reincidência. Depois de 5 anos do cumprimento ou extinção, ela deixa de prevalecer."]] },
+comparativo:{ titulo:"Qualificadora × causa de aumento (majorante)", head:["Qualificadora","Causa de aumento (majorante)"], rows:[
+  ["<b>O que faz:</b> cria novos limites mínimo e máximo de pena","<b>O que faz:</b> aplica uma fração sobre a pena já calculada"],
+  ["<b>Fase:</b> define o ponto de partida da pena-base, na 1ª fase","<b>Fase:</b> 3ª fase"],
+  ["<b>Limites:</b> nas fases 1 e 2, a pena não sai do novo mínimo e máximo (Súm. 231)","<b>Limites:</b> pode ficar abaixo do mínimo ou acima do máximo do tipo"],
+  ["<b>Várias:</b> uma qualifica; as demais, em regra, servem como agravante (se prevista) ou circunstância judicial","<b>Várias da parte especial:</b> o juiz pode aplicar só a que mais aumente (art. 68, parágrafo único)"]]},
+prova:[
+  { tipo:"ce", enun:"A incidência de circunstância atenuante pode conduzir a pena abaixo do mínimo legal na 2ª fase da dosimetria.", gab:"Errado", com:"Súmula 231 do STJ, mantida em 2024. Só as causas de diminuição da 3ª fase podem levar abaixo do mínimo." },
+  { tipo:"ce", enun:"Na 3ª fase, as causas de aumento e de diminuição podem conduzir a pena para além dos limites abstratos do tipo.", gab:"Certo", com:"É a diferença para as fases 1 e 2, que ficam entre o mínimo e o máximo." },
+  { tipo:"ce", enun:"O juiz pode elevar a pena-base por maus antecedentes com fundamento em inquéritos policiais e ações penais em curso.", gab:"Errado", com:"Súmula 444 do STJ: é vedada a utilização de inquéritos e ações em curso para agravar a pena-base." },
+  { tipo:"ce", enun:"Condenação anterior cuja pena foi extinta há mais de cinco anos antes do novo crime não prevalece para efeito de reincidência.", gab:"Certo", com:"Art. 64, I: período depurador de 5 anos entre o cumprimento ou extinção da pena e a infração posterior." },
+  { tipo:"caso", enun:"Réu primário é condenado a 6 anos de reclusão, com circunstâncias judiciais favoráveis. Qual o regime inicial?", com:"Semiaberto. Para o não reincidente, pena acima de 4 e até 8 anos começa no semiaberto (art. 33, §2º). Acima de 8, fechado; até 4, aberto." },
+  { tipo:"ce", enun:"A qualificadora altera os limites da pena em abstrato, enquanto a causa de aumento é fração aplicada na 3ª fase.", gab:"Certo", com:"É a distinção clássica entre qualificadora e majorante." }],
+resumo:[
+  "A pena é fixada em três fases (art. 68): pena-base, agravantes e atenuantes, causas de aumento e diminuição.",
+  "Pena-base: oito circunstâncias judiciais do art. 59. Inquéritos e ações em curso não servem para agravá-la (Súm. 444).",
+  "Na 2ª fase, agravantes e atenuantes não ultrapassam os limites da pena em abstrato (Súm. 231, mantida em 2024).",
+  "A 3ª fase pode ultrapassar os limites. No concurso de causas da parte especial, o juiz pode aplicar só a que mais aumente ou diminua.",
+  "Reincidência: novo crime após o trânsito em julgado; depuração em 5 anos. Crimes militares próprios e políticos não geram reincidência. Vedado o bis in idem (Súm. 241).",
+  "Regime inicial: acima de 8 anos, fechado; acima de 4 até 8, semiaberto (não reincidente); até 4, aberto. Reincidente com até 4 anos pode ir ao semiaberto (Súm. 269).",
+  "Gravidade abstrata não justifica regime mais severo (Súm. 440 do STJ; Súms. 718 e 719 do STF).",
+  "Qualificadora é parte da moldura penal; majorante e minorante são frações da 3ª fase."],
+checklist:[
+  "Enumerar as oito circunstâncias judiciais do art. 59",
+  "Aplicar a Súmula 231 do STJ à 2ª fase",
+  "Explicar o que pode e o que não pode ser usado como maus antecedentes",
+  "Resolver casos de reincidência e período depurador",
+  "Escolher o regime inicial pela pena e pela reincidência",
+  "Diferenciar qualificadora, majorante e privilégio na dosimetria",
+  "Aplicar o art. 68, parágrafo único, ao concurso de causas"],
 questoes:[]
 };
 
