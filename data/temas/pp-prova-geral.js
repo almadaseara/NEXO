@@ -187,6 +187,53 @@ cards:[
 { id:"pg15", tipo:"numero", sec:"pericia", f:"Quando se pode fazer a autópsia?",
   v:"<b>Pelo menos 6 horas</b> depois do óbito, salvo evidência de sinais de morte que permita antecipar, o que consta do auto (art. 162).", lei:["cpp162"] }
 ],
+importancia:{ nivel:5,
+  texto:"Teoria geral da prova, provas ilícitas e derivadas, perícia e cadeia de custódia são cobradas em todas as provas de Processo Penal: sistemas de valoração, ônus, frutos da árvore envenenada e dez etapas da cadeia de custódia.",
+  decore:[
+    ["Sistema de valoração","<b>livre convencimento motivado</b> (art. 155); íntima convicção só no júri"],
+    ["Standards de prova","investigar: <b>possibilidade</b>; denunciar: <b>probabilidade</b>; condenar: <b>além da dúvida razoável</b>"],
+    ["Prova ilícita × ilegítima","ilícita viola norma <b>material</b>; ilegítima, norma <b>processual</b>"],
+    ["Exceções à contaminação","<b>sem nexo causal</b>, <b>fonte independente</b> e <b>descoberta inevitável</b>"],
+    ["Exame de corpo de delito","<b>indispensável</b> se há vestígios; <b>não é suprido pela confissão</b> (art. 158)"],
+    ["Laudo pericial","<b>10 dias</b> (art. 160); juiz não é adstrito (art. 182)"],
+    ["Peritos","<b>oficial</b> com curso superior ou <b>dois</b> peritos não oficiais com diploma"],
+    ["Cadeia de custódia","<b>10 etapas</b> (art. 158-B), do reconhecimento ao descarte"],
+    ["Quebra da cadeia de custódia","<b>não anula</b> automaticamente; avalia-se a confiabilidade"]],
+  macetes:[
+    ["Ilícita = material, ilegítima = processual","Ilícita é desentranhada; ilegítima segue o regime de nulidades."],
+    ["Confissão não supre perícia","Se o crime deixa vestígios, o exame é indispensável; sumindo os vestígios, a prova testemunhal pode suprir."],
+    ["Local isolado","Entrar em local isolado e remover vestígio sem liberação do perito é fraude processual."]] },
+comparativo:{ titulo:"Prova ilícita × prova ilegítima", head:["Prova ilícita","Prova ilegítima"], rows:[
+  ["<b>Norma violada:</b> material (constitucional ou legal)","<b>Norma violada:</b> processual"],
+  ["<b>Exemplo:</b> prova obtida por violação de domicílio","<b>Exemplo:</b> ouvir pessoa proibida de depor"],
+  ["<b>Consequência:</b> inadmissível e desentranhada (art. 157)","<b>Consequência:</b> regime das nulidades, sem desentranhamento automático"],
+  ["<b>Provas derivadas:</b> contaminadas, salvo nexo tênue, fonte independente ou descoberta inevitável","<b>Provas derivadas:</b> seguem a sorte do ato nulo, conforme o prejuízo"],
+  ["<b>Em favor do réu:</b> admitida (proporcionalidade pro reo)","<b>Fundamento:</b> art. 5º, LVI, da CF e art. 157 do CPP"]]},
+prova:[
+  { tipo:"ce", enun:"No sistema do livre convencimento motivado, o juiz valora a prova livremente, mas deve fundamentar sua decisão.", gab:"Certo", com:"Art. 155 do CPP e art. 93, IX, da CF." },
+  { tipo:"ce", enun:"A confissão do acusado supre a falta do exame de corpo de delito em crime que deixa vestígios.", gab:"Errado", com:"Art. 158: o exame é indispensável e não pode ser suprido pela confissão." },
+  { tipo:"ce", enun:"Prova obtida por violação de norma processual é prova ilícita e deve ser desentranhada.", gab:"Errado", com:"Violação de norma processual gera prova ilegítima; ilícita é a que viola norma material." },
+  { tipo:"ce", enun:"O juiz fica vinculado ao laudo pericial e não pode rejeitá-lo.", gab:"Errado", com:"Art. 182: sistema liberatório; o juiz aceita ou rejeita o laudo, no todo ou em parte, motivadamente." },
+  { tipo:"ce", enun:"A quebra da cadeia de custódia acarreta, por si só, a nulidade automática do processo.", gab:"Errado", com:"O juiz examina se houve prejuízo à confiabilidade da prova; não há nulidade automática." },
+  { tipo:"caso", enun:"A polícia obtém uma prova por meio ilícito e, a partir dela, chega a outra prova. Esta última é válida?", com:"Em regra, é contaminada (frutos da árvore envenenada), salvo se não houver nexo causal, se existir fonte independente ou se a descoberta fosse inevitável (art. 157, § 2º)." }],
+resumo:[
+  "O sistema é o do livre convencimento motivado; íntima convicção só no júri; prova tarifada é exceção.",
+  "Não precisam de prova fatos notórios, evidentes, presumidos por lei e inúteis.",
+  "Quem alega prova; o ônus da acusação abrange autoria, materialidade e dolo.",
+  "Standards crescentes: possibilidade, probabilidade e certeza além da dúvida razoável.",
+  "Prova ilícita viola norma material e é inadmissível; ilegítima viola norma processual.",
+  "A prova derivada da ilícita é contaminada, salvo nexo tênue, fonte independente ou descoberta inevitável.",
+  "Crime com vestígios exige exame de corpo de delito; laudo em 10 dias; juiz não é adstrito ao laudo.",
+  "A cadeia de custódia tem dez etapas (art. 158-B); a quebra não gera nulidade automática."],
+checklist:[
+  "Distinguir livre convencimento, íntima convicção e prova tarifada",
+  "Explicar o ônus da prova e os standards",
+  "Diferenciar prova ilícita, ilegítima e derivada",
+  "Citar as exceções à contaminação",
+  "Aplicar o art. 158 e o art. 167",
+  "Dizer quem pode ser perito e os direitos das partes",
+  "Listar as etapas da cadeia de custódia",
+  "Explicar a consequência da quebra da cadeia"],
 questoes:[]
 };
 })();
