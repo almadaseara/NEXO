@@ -250,6 +250,54 @@ cards:[
 { id:"pi14", tipo:"caso", sec:"diligencias", f:"Policial militar mata suspeito em confronto. Ao ser investigado, é obrigado a constituir advogado na hora?",
   v:"Art. 14-A: é <b>citado</b> e tem <b>48 horas</b> para constituir defensor; se não o fizer, a instituição indica um em outras 48 horas (preferencialmente Defensoria).", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"Inquérito policial é o tema mais cobrado de Processo Penal em prova de delegado e investigador: a banca testa as características, o sigilo e a SV 14, a instauração por tipo de ação, os prazos e o arquivamento.",
+  decore:[
+    ["Prazo geral (art. 10)","<b>10 dias</b> se preso; <b>30 dias</b> se solto (só o do solto é prorrogável na regra geral)"],
+    ["Lei de Drogas","<b>30 dias</b> preso; <b>90 dias</b> solto, duplicáveis"],
+    ["Justiça Federal","<b>15 + 15 dias</b> preso; <b>30 dias</b> solto"],
+    ["Economia popular","<b>10 dias</b> em ambos os casos"],
+    ["Representação (art. 38)","decadência em <b>6 meses</b> do conhecimento da autoria"],
+    ["Indiciamento","ato <b>privativo do delegado</b> (Lei 12.830/2013)"],
+    ["Delegado e arquivamento","<b>não arquiva</b> o inquérito (art. 17)"],
+    ["Dados cadastrais (art. 13-A)","sem juiz, resposta em <b>24 horas</b>; localização por sinal (13-B) exige juiz"],
+    ["Súmula Vinculante 14","advogado acessa o que já foi <b>documentado</b>"],
+    ["Súmula 524 do STF","reabertura só com <b>provas novas</b>"]],
+  macetes:[
+    ["IDOSO + I","Inquisitivo, Dispensável, Oficial, Sigiloso, Obrigatório (oficioso), Indisponível: o delegado conduz, mas não arquiva."],
+    ["Sigilo é externo","O sigilo não alcança o advogado, exceto diligências em curso e não documentadas."],
+    ["Preso 10, solto 30","Na regra geral; drogas dobra para 30 e 90."]] },
+comparativo:{ titulo:"Instauração do inquérito por tipo de ação penal", head:["Ação pública (incondicionada e condicionada)","Ação privada"], rows:[
+  ["<b>Incondicionada:</b> de ofício, por requisição do MP, requerimento do ofendido, comunicação de qualquer pessoa ou flagrante","<b>Somente a requerimento</b> de quem pode propor a queixa (art. 5º, § 5º)"],
+  ["<b>Condicionada:</b> exige representação (ou requisição do Ministro da Justiça nos casos legais)","<b>Quem pede:</b> o ofendido, seu representante ou, em caso de morte, cônjuge, ascendente, descendente ou irmão"],
+  ["<b>Prazo:</b> representação decai em 6 meses da ciência da autoria","<b>Após o IP:</b> os autos aguardam em juízo a iniciativa do ofendido (art. 19)"],
+  ["<b>Flagrante:</b> em crime condicionado, solta-se em 24 horas se não houver representação","<b>Requisição do MP ou do delegado de ofício:</b> não é possível"],
+  ["<b>Requisição do MP:</b> cumpre-se, salvo manifesta ilegalidade","<b>Titular:</b> a vítima, por meio de queixa"]]},
+prova:[
+  { tipo:"ce", enun:"A irregularidade praticada no inquérito policial, por ser peça meramente informativa, não anula a ação penal posteriormente proposta.", gab:"Certo", com:"O IP é procedimento informativo; vício pode apenas fragilizar a prova ali produzida." },
+  { tipo:"ce", enun:"O delegado de polícia pode arquivar o inquérito quando entender que faltam provas de autoria.", gab:"Errado", com:"Art. 17: a autoridade policial não pode mandar arquivar autos de inquérito." },
+  { tipo:"ce", enun:"O sigilo do inquérito policial pode ser oposto ao advogado do investigado em relação a todos os elementos de prova já documentados.", gab:"Errado", com:"Súmula Vinculante 14: o advogado tem acesso aos elementos já documentados; o sigilo alcança apenas diligências em curso." },
+  { tipo:"ce", enun:"Em crime de ação penal pública condicionada, o inquérito só pode ser instaurado mediante representação da vítima ou do representante legal.", gab:"Certo", com:"Art. 5º, § 4º, do CPP." },
+  { tipo:"ce", enun:"Na regra geral do CPP, o inquérito deve ser concluído em 10 dias se o indiciado estiver preso e em 30 dias se estiver solto.", gab:"Certo", com:"Art. 10 do CPP; o prazo do preso não é prorrogável na regra geral, o do solto é." },
+  { tipo:"caso", enun:"O promotor deixa de denunciar um dos investigados sem justificar, e o juiz recebe a denúncia contra os demais. Há arquivamento implícito?", com:"Não: o STF não aceita o arquivamento implícito. O MP pode aditar a denúncia depois para incluir o investigado omitido." }],
+resumo:[
+  "O IP é procedimento administrativo, pré-processual e informativo; inquisitivo, escrito, dispensável, discricionário e indisponível para o delegado.",
+  "Infração de menor potencial ofensivo dispensa IP e leva ao TCO.",
+  "O sigilo é externo; a SV 14 garante ao advogado acesso ao que já foi documentado.",
+  "Instauração: de ofício, requisição do MP, requerimento, comunicação ou flagrante (incondicionada); representação (condicionada); requerimento (privada).",
+  "Representação decai em 6 meses do conhecimento da autoria; requisição do Ministro da Justiça não tem decadência e não vincula o MP.",
+  "Indiciamento é privativo do delegado e fundamentado; prazos: 10 dias preso e 30 solto, com exceções de drogas, Justiça Federal e economia popular.",
+  "Arquivamento é decisão do MP; arquivado por falta de provas, reabre só com provas novas (Súmula 524 do STF).",
+  "Pelo art. 155, não se condena só com o IP, salvo provas cautelares, não repetíveis e antecipadas; o MP investiga, mas não preside o IP."],
+checklist:[
+  "Listar as características do inquérito e explicar cada uma",
+  "Explicar o alcance do sigilo e da Súmula Vinculante 14",
+  "Distinguir a instauração conforme a ação penal",
+  "Aplicar o prazo de 6 meses da representação",
+  "Dizer os prazos do inquérito (geral, drogas, federal, economia popular)",
+  "Explicar o indiciamento e a competência do delegado",
+  "Distinguir arquivamento por falta de provas e por atipicidade",
+  "Aplicar o art. 155 e o poder investigatório do MP"],
 questoes:[]
 };
 

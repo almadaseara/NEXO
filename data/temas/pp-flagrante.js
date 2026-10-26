@@ -156,6 +156,53 @@ cards:[
 { id:"pf15", tipo:"ce", sec:"custodia", f:"(C/E) A audiência de custódia destina-se a examinar a legalidade da prisão e eventual ocorrência de maus-tratos, sem apreciar o mérito do crime.",
   v:"<b>Certo.</b> Resolução CNJ 213/2015 e Pacto de São José, art. 7º, 5.", lei:["cpp310"], j:["cnj-res213"] }
 ],
+importancia:{ nivel:5,
+  texto:"Flagrante e audiência de custódia são tema certo para delegado e investigador: a banca explora as espécies do art. 302, os flagrantes ilegais (preparado, forjado), os prazos de 24 horas e a Súmula 676 do STJ.",
+  decore:[
+    ["Espécies (art. 302)","<b>próprio</b>, <b>impróprio</b> (perseguição) e <b>presumido</b> (encontro com objetos)"],
+    ["Flagrante do particular × autoridade","<b>facultativo</b> × <b>obrigatório</b> (art. 301)"],
+    ["Ordem das oitivas (art. 304)","<b>condutor, testemunhas, conduzido</b>"],
+    ["Prazo do auto ao juiz e da nota de culpa","<b>24 horas</b> (art. 306)"],
+    ["Audiência de custódia","em até <b>24 horas</b> da prisão"],
+    ["Decisões do juiz (art. 310)","<b>relaxar</b>, <b>converter em preventiva</b> ou <b>conceder liberdade provisória</b>"],
+    ["Súmula 145 do STF","flagrante <b>preparado</b> que impede a consumação: crime impossível"],
+    ["Súmula 676 do STJ","juiz <b>não converte de ofício</b> o flagrante em preventiva"],
+    ["Menor de 18 anos","<b>apreensão</b> (ECA), não prisão em flagrante"]],
+  macetes:[
+    ["Perseguiu: impróprio","Se há perseguição, é impróprio; se só há encontro com os objetos, é presumido."],
+    ["Esperar pode, induzir não","Flagrante esperado é válido; preparado, que impede a consumação, gera crime impossível."],
+    ["Custódia não julga o mérito","A audiência verifica a legalidade da prisão e eventual tortura ou maus-tratos."]] },
+comparativo:{ titulo:"Flagrante esperado × preparado × forjado × diferido", head:["Figura","Efeito"], rows:[
+  ["<b>Esperado:</b> a polícia apenas aguarda a prática, sem induzir","<b>Válido</b>"],
+  ["<b>Preparado ou provocado:</b> a polícia induz o agente e impede a consumação","<b>Crime impossível</b> (Súmula 145 do STF)"],
+  ["<b>Forjado:</b> fabricação de provas contra inocente","<b>Ilegal</b>, com responsabilidade penal de quem forjou"],
+  ["<b>Diferido (ação controlada):</b> adia a intervenção para colher mais provas","<b>Válido</b>, em regra com autorização judicial (Lei 12.850, art. 8º)"],
+  ["<b>Exceção ao preparado:</b> crime permanente, como ter em depósito (tráfico)","O flagrante pode subsistir, pois a conduta já existia"]]},
+prova:[
+  { tipo:"ce", enun:"No flagrante impróprio, o agente é perseguido logo após o crime em situação que faça presumir a autoria.", gab:"Certo", com:"Art. 302, III: há perseguição contínua, sem lapso." },
+  { tipo:"ce", enun:"O flagrante é facultativo para as autoridades policiais e obrigatório para qualquer do povo.", gab:"Errado", com:"É o contrário: facultativo para qualquer do povo e obrigatório para autoridades e agentes (art. 301)." },
+  { tipo:"ce", enun:"Ao lavrar o auto, a autoridade ouve primeiro o preso, depois as testemunhas e, por último, o condutor.", gab:"Errado", com:"A ordem do art. 304 é condutor, testemunhas e conduzido." },
+  { tipo:"ce", enun:"Na audiência de custódia, o juiz pode, de ofício, converter a prisão em flagrante em preventiva.", gab:"Errado", com:"Súmula 676 do STJ: exige requerimento do MP, da autoridade policial ou do querelante." },
+  { tipo:"ce", enun:"A audiência de custódia examina o mérito da acusação e a prova da autoria.", gab:"Errado", com:"Verifica a legalidade da prisão e a ocorrência de tortura ou maus-tratos." },
+  { tipo:"caso", enun:"A polícia induz alguém a vender droga e o prende de modo a impedir a consumação do crime. Que flagrante é este e qual o efeito?", com:"Flagrante preparado ou provocado, que gera crime impossível (Súmula 145 do STF). O flagrante é ilegal e deve ser relaxado." }],
+resumo:[
+  "Flagrante é medida cautelar administrativa e precária; dura até a decisão do juiz (art. 310).",
+  "Facultativo para o particular e obrigatório para autoridades e agentes policiais (art. 301).",
+  "Próprio: acaba de cometer. Impróprio: perseguição logo após. Presumido: encontro com instrumentos ou objetos.",
+  "Em crime permanente, há flagrante enquanto não cessar a permanência (art. 303).",
+  "Preparado gera crime impossível (Súmula 145 do STF); esperado e diferido são válidos; forjado é ilegal.",
+  "Auto: oitivas na ordem condutor, testemunhas e conduzido; em 24 horas, envio ao juiz, cópia à Defensoria e nota de culpa.",
+  "Audiência de custódia em 24 horas: o juiz relaxa, converte em preventiva ou concede liberdade provisória.",
+  "O juiz não converte de ofício em preventiva (Súmula 676 do STJ); menor de 18 anos sofre apreensão."],
+checklist:[
+  "Distinguir flagrante próprio, impróprio e presumido",
+  "Explicar o flagrante facultativo e o obrigatório",
+  "Citar a ordem das oitivas do art. 304",
+  "Saber os prazos de 24 horas do art. 306",
+  "Diferenciar flagrante esperado, preparado, forjado e diferido",
+  "Aplicar as Súmulas 145 do STF e 676 do STJ",
+  "Listar as três decisões do juiz na custódia",
+  "Identificar quem não pode ser preso em flagrante (menor, Presidente, imunidades)"],
 questoes:[]
 };
 })();

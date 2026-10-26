@@ -50,6 +50,50 @@ cards:[
 { id:"id4", tipo:"ce", sec:"regra", f:"(C/E) A retenção de documento de identificação é crime punido com detenção de 1 a 3 meses.",
   v:"<b>Errado.</b> É <b>contravenção penal</b> (prisão simples de 1 a 3 meses ou multa), art. 3º.", lei:["l5553a3"] }
 ],
+importancia:{ nivel:3,
+  texto:"Lei curta, mas a banca cobra os detalhes: proibição de reter inclusive a cópia autenticada, prazo de 5 dias, devolução imediata na portaria e a natureza de contravenção da infração.",
+  decore:[
+    ["Retenção de documento de identificação","<b>proibida</b> a qualquer pessoa, física ou jurídica, pública ou privada"],
+    ["Cópia autenticada ou pública-forma","também <b>não</b> pode ser retida"],
+    ["Prazo para extrair os dados","até <b>5 dias</b> (art. 2º)"],
+    ["Depois dos 5 dias","somente por <b>ordem judicial</b> (art. 2º, § 1º)"],
+    ["Entrada em órgão público ou particular","anota-se e devolve-se <b>imediatamente</b> (art. 2º, § 2º)"],
+    ["Natureza da infração","<b>contravenção penal</b> (art. 3º)"],
+    ["Pena","prisão simples de <b>1 a 3 meses</b> ou multa"],
+    ["Responsável quando há preposto","quem <b>ordenou</b> a retenção"]],
+  macetes:[
+    ["Exigir pode, reter não","A lei não proíbe pedir o documento, mas proíbe ficar com ele além do tempo necessário para extrair os dados."],
+    ["Cinco dias e depois só juiz","Passado o prazo, nem o MP nem a autoridade administrativa podem manter o documento: é ordem judicial."],
+    ["Portaria devolve na hora","Para entrar em prédio, o documento volta imediatamente ao titular, sem ficar guardado."],
+    ["Prisão simples é de contravenção","Não confunda com detenção ou reclusão, que são penas de crime."]] },
+comparativo:{ titulo:"Exigir × reter o documento", head:["Exigir a apresentação","Reter o documento"], rows:[
+  ["<b>Situação:</b> permitida, quando a lei ou o ato exigirem identificação","<b>Situação:</b> proibida como regra (art. 1º)"],
+  ["<b>Prazo:</b> o suficiente para extrair os dados, no máximo 5 dias","<b>Prazo:</b> após 5 dias, só por ordem judicial"],
+  ["<b>Portaria ou entrada em prédio:</b> anota-se e devolve-se na hora","<b>Portaria ou entrada em prédio:</b> guardar o documento até a saída é ilícito"],
+  ["<b>Cópia autenticada:</b> pode ser apresentada para conferência","<b>Cópia autenticada:</b> também não pode ser retida"],
+  ["<b>Consequência:</b> nenhuma","<b>Consequência:</b> contravenção penal do art. 3º, com prisão simples de 1 a 3 meses ou multa"]]},
+prova:[
+  { tipo:"ce", enun:"A Lei 5.553/1968 proíbe a retenção de documento de identificação pessoal, ainda que apresentado em fotocópia autenticada.", gab:"Certo", com:"Art. 1º. A proibição alcança qualquer pessoa, física ou jurídica, e abrange a cópia autenticada ou pública-forma." },
+  { tipo:"ce", enun:"A retenção de documento de identificação, nos termos da Lei 5.553/1968, constitui crime punido com detenção de um a três meses.", gab:"Errado", com:"É contravenção penal, punida com prisão simples de 1 a 3 meses ou multa (art. 3º)." },
+  { tipo:"ce", enun:"Para a entrada de pessoa em órgão público ou particular, o documento de identidade pode ser mantido na portaria até a saída do visitante.", gab:"Errado", com:"Art. 2º, § 2º: os dados são anotados no ato e o documento é devolvido imediatamente." },
+  { tipo:"ce", enun:"Decorrido o prazo de cinco dias para extração dos dados, a retirada do documento de identificação só pode ocorrer por ordem judicial.", gab:"Certo", com:"Art. 2º, § 1º." },
+  { tipo:"caso", enun:"A infração à Lei 5.553/1968 foi praticada por um preposto de empresa que cumpria ordem de seu superior. Quem responde?", com:"Quem houver ordenado o ato que ensejou a retenção, a menos que o executante tenha desobedecido ou descumprido ordens ou instruções expressas, caso em que ele será o infrator (art. 3º, parágrafo único)." }],
+resumo:[
+  "Nenhuma pessoa, física ou jurídica, de direito público ou privado, pode <b>reter</b> documento de identificação pessoal (art. 1º).",
+  "A proibição alcança a <b>fotocópia autenticada</b> e a pública-forma.",
+  "Quem exige o documento tem até <b>5 dias</b> para extrair os dados e devolvê-lo (art. 2º).",
+  "Após os 5 dias, somente por <b>ordem judicial</b> o documento pode ser retirado ou mantido.",
+  "Para entrada em órgãos públicos ou particulares, anotam-se os dados e devolve-se o documento <b>imediatamente</b>.",
+  "A retenção é <b>contravenção penal</b>, punida com prisão simples de 1 a 3 meses ou multa (art. 3º).",
+  "Se a infração é de preposto ou agente de pessoa jurídica, responde <b>quem ordenou</b>, salvo desobediência do executante a ordens expressas.",
+  "Se o agente se apropria do documento, pode haver também crime comum, pois a lei só define a contravenção."],
+checklist:[
+  "O que a lei proíbe e o que ela não proíbe",
+  "Quais documentos e cópias estão protegidos",
+  "Prazo para extrair os dados e o que acontece depois",
+  "Regra especial para entrada em prédios",
+  "Natureza e pena da infração do art. 3º",
+  "Quem responde quando a retenção é feita por preposto"],
 questoes:[]
 };
 
@@ -107,6 +151,57 @@ cards:[
 { id:"tp6", tipo:"ce", sec:"cabimento", f:"(C/E) O preso temporário pode ficar junto com presos definitivos, desde que em cela separada por gênero.",
   v:"<b>Errado.</b> Os presos temporários devem ficar <b>separados dos demais detentos</b> (art. 3º).", lei:["l7960a3"] }
 ],
+importancia:{ nivel:5,
+  texto:"A prisão temporária é tema típico de prova de Investigador e Delegado. A banca cobra prazos (5+5 e 30+30), quem pode pedir, o prazo de 24 horas, a vedação à decretação de ofício e o rol de crimes.",
+  decore:[
+    ["Fase em que cabe","somente na <b>investigação</b> (inquérito policial)"],
+    ["Quem decreta","o <b>juiz</b>, nunca de ofício"],
+    ["Quem pede","<b>autoridade policial</b> (representação) ou <b>Ministério Público</b> (requerimento)"],
+    ["Prazo da decisão","<b>24 horas</b> do recebimento do pedido"],
+    ["Prazo da prisão","<b>5 dias</b>, prorrogável por <b>mais 5</b>"],
+    ["Crimes hediondos e equiparados","<b>30 + 30 dias</b> (Lei 8.072, art. 2º, § 4º)"],
+    ["Vencido o prazo","soltura <b>imediata</b>, salvo preventiva decretada"],
+    ["Custódia","presos temporários <b>separados</b> dos demais"],
+    ["Leitura majoritária dos incisos","<b>III</b> combinado com <b>I</b> ou com <b>II</b>"],
+    ["Terrorismo","crimes da Lei 13.260/2016 entraram no rol (alínea p)"]],
+  macetes:[
+    ["Cinco mais cinco, trinta mais trinta","Comum: 5+5. Hediondo e equiparado: 30+30."],
+    ["III sozinho não basta","O rol de crimes só vale combinado com a imprescindibilidade (I) ou com a falta de residência ou identidade (II)."],
+    ["Só no inquérito","Depois de iniciada a ação penal, a temporária não tem mais cabimento."],
+    ["Juiz não age de ofício","Sem representação da polícia ou requerimento do MP, a temporária não é decretada."]] },
+comparativo:{ titulo:"Prisão temporária × prisão preventiva", head:["Prisão temporária (Lei 7.960/1989)","Prisão preventiva (CPP)"], rows:[
+  ["<b>Fase:</b> somente na investigação, no inquérito policial","<b>Fase:</b> investigação e ação penal"],
+  ["<b>Prazo:</b> definido em lei, 5+5 dias, ou 30+30 nos hediondos","<b>Prazo:</b> sem prazo fixo na lei, mantida enquanto subsistirem os motivos"],
+  ["<b>Pedido:</b> representação da autoridade policial ou requerimento do MP","<b>Pedido:</b> MP, querelante, assistente ou representação da autoridade policial"],
+  ["<b>Cabimento:</b> hipóteses do art. 1º, com rol de crimes","<b>Cabimento:</b> pressupostos e hipóteses do CPP"],
+  ["<b>Fim do prazo:</b> soltura imediata, salvo preventiva decretada","<b>Fim do prazo:</b> não há termo automático; exige revisão periódica dos fundamentos"]]},
+prova:[
+  { tipo:"ce", enun:"A prisão temporária pode ser decretada pelo juiz de ofício, quando houver fundadas razões de autoria em crime de homicídio doloso.", gab:"Errado", com:"Só é decretada em face de representação da autoridade policial ou de requerimento do Ministério Público (art. 2º)." },
+  { tipo:"ce", enun:"A prisão temporária somente é cabível durante a fase de investigação, não sendo admitida para assegurar a instrução processual.", gab:"Certo", com:"É medida cautelar da fase de inquérito policial." },
+  { tipo:"ce", enun:"O prazo da prisão temporária nos crimes hediondos é de cinco dias, prorrogável por igual período.", gab:"Errado", com:"Nos hediondos e equiparados o prazo é de 30 dias, prorrogável por mais 30, em caso de extrema e comprovada necessidade (Lei 8.072, art. 2º, § 4º)." },
+  { tipo:"ce", enun:"O despacho que decreta a prisão temporária deve ser fundamentado e prolatado no prazo de vinte e quatro horas, contado do recebimento da representação ou do requerimento.", gab:"Certo", com:"Art. 2º, § 2º." },
+  { tipo:"ce", enun:"Os presos temporários podem ficar custodiados no mesmo local dos presos definitivos.", gab:"Errado", com:"Art. 3º: devem permanecer obrigatoriamente separados dos demais detentos." },
+  { tipo:"caso", enun:"Vencidos os cinco dias da temporária de um suspeito de roubo, sem prorrogação nem decretação de preventiva, qual deve ser a conduta da autoridade?", com:"Colocar o preso imediatamente em liberdade (art. 2º, § 7º), pois o prazo findou e não há outra prisão cautelar decretada." }],
+resumo:[
+  "A prisão temporária é <b>cautelar</b> e só cabe na <b>investigação</b>, nunca depois de iniciada a ação penal.",
+  "O <b>juiz</b> a decreta, por representação da autoridade policial ou requerimento do MP. <b>Não há decretação de ofício</b>.",
+  "Hipóteses do art. 1º: imprescindível para o inquérito (I); sem residência fixa ou identidade não esclarecida (II); fundadas razões de autoria em crimes do rol (III).",
+  "A posição majoritária exige o <b>inciso III combinado com o I ou o II</b>.",
+  "O juiz decide em <b>24 horas</b>, em despacho fundamentado.",
+  "Prazo de <b>5 dias</b>, prorrogável por mais 5, em caso de extrema e comprovada necessidade. Nos hediondos e equiparados, <b>30 + 30 dias</b>.",
+  "Vencido o prazo, o preso é solto imediatamente, <b>salvo</b> se já decretada a preventiva.",
+  "O preso temporário fica <b>separado</b> dos demais detentos.",
+  "O rol do inciso III não foi atualizado (crimes revogados e nomes antigos): confira o texto, e lembre que terrorismo entrou em 2016."],
+checklist:[
+  "Natureza e fase em que cabe a prisão temporária",
+  "Quem pode pedir e quem decreta",
+  "Hipóteses do art. 1º e a leitura majoritária",
+  "Prazo comum e prazo nos crimes hediondos",
+  "Prazo para o juiz decidir e quem é ouvido antes",
+  "O que fazer quando vence o prazo",
+  "Regra de separação dos presos temporários",
+  "Alguns crimes do rol do inciso III",
+  "Por que o rol do inciso III exige cuidado na leitura"],
 questoes:[]
 };
 
@@ -230,6 +325,58 @@ cards:[
 { id:"it12", tipo:"distincao", sec:"conceitos", f:"Interceptação × escuta × gravação telefônica.",
   v:"<b>Interceptação</b>: terceiro, sem ciência dos dois. <b>Escuta</b>: terceiro, com ciência de um. <b>Gravação</b>: feita por um dos interlocutores.", lei:[] }
 ],
+importancia:{ nivel:5,
+  texto:"A Lei 9.296 é campeã em provas de legislação especial. A banca cobra os casos de não admissão (art. 2º), o prazo de 15 dias, quem pode pedir, a diferença entre interceptação, escuta e gravação, a captação ambiental e as penas dos arts. 10 e 10-A.",
+  decore:[
+    ["Competência","juiz da <b>ação principal</b>, sob segredo de justiça"],
+    ["Não cabe se","sem <b>indícios razoáveis</b>; prova por outros meios; crime punido, no máximo, com <b>detenção</b>"],
+    ["Quem pede","<b>delegado</b> (só na investigação) ou <b>MP</b> (investigação e instrução); juiz pode de ofício, pelo texto legal"],
+    ["Decisão do juiz","em até <b>24 horas</b>, fundamentada, sob pena de nulidade"],
+    ["Prazo da interceptação","<b>15 dias</b>, renovável por igual tempo"],
+    ["Autos","<b>apartados</b>, apensados, com sigilo"],
+    ["Auto circunstanciado","enviado pela polícia ao juiz ao fim da diligência"],
+    ["Captação ambiental (art. 8º-A)","pena máxima <b>superior a 4 anos</b>; <b>15 dias</b>; instalação noturna, <b>exceto na casa</b>"],
+    ["Crime do art. 10","<b>reclusão de 2 a 4 anos</b> e multa"],
+    ["Crime do art. 10-A","<b>reclusão de 2 a 4 anos</b> e multa; não há crime se feita por <b>um dos interlocutores</b>"]],
+  macetes:[
+    ["Detenção veda, reclusão libera","O art. 2º, III, afasta a interceptação quando o crime tem no máximo detenção. Crime conexo de detenção pode ser aproveitado (HC 83.515)."],
+    ["Interceptação: terceiro sem ciência de ninguém","Escuta: terceiro com ciência de um dos interlocutores. Gravação: feita por um dos interlocutores."],
+    ["Polícia pede só no inquérito","O MP pede em qualquer momento. A autoridade policial, apenas na investigação."],
+    ["Captação ambiental: quatro anos","Exige pena máxima superior a 4 anos. A interceptação exige apenas que a pena não seja só de detenção."]] },
+comparativo:{ titulo:"Interceptação telefônica × captação ambiental", head:["Interceptação (arts. 1º a 9º)","Captação ambiental (art. 8º-A)"], rows:[
+  ["<b>Objeto:</b> comunicações telefônicas e do fluxo de informática e telemática","<b>Objeto:</b> sinais eletromagnéticos, ópticos ou acústicos do ambiente"],
+  ["<b>Gravidade do crime:</b> não pode ser punido apenas com detenção","<b>Gravidade do crime:</b> pena máxima superior a 4 anos, ou infrações conexas"],
+  ["<b>Quem pede:</b> delegado (investigação), MP (investigação e instrução); juiz pode agir de ofício, segundo a lei","<b>Quem pede:</b> autoridade policial ou MP, a requerimento"],
+  ["<b>Prazo:</b> 15 dias, renovável por igual tempo","<b>Prazo:</b> 15 dias, renovável se houver atividade criminal permanente, habitual ou continuada"],
+  ["<b>Local:</b> não há regra específica sobre instalação","<b>Local:</b> instalação possível por operação disfarçada ou à noite, exceto na casa"],
+  ["<b>Crime sem autorização:</b> art. 10, reclusão de 2 a 4 anos e multa","<b>Crime sem autorização:</b> art. 10-A, reclusão de 2 a 4 anos e multa; não há crime se feita por um dos interlocutores"]]},
+prova:[
+  { tipo:"ce", enun:"Não será admitida a interceptação de comunicações telefônicas quando o fato investigado constituir infração penal punida, no máximo, com pena de detenção.", gab:"Certo", com:"Art. 2º, III. O STF admite, porém, aproveitar prova de crime conexo punido com detenção, descoberto na interceptação lícita (HC 83.515)." },
+  { tipo:"ce", enun:"O prazo da interceptação telefônica é de quinze dias, renovável por igual tempo, desde que comprovada a indispensabilidade do meio de prova.", gab:"Certo", com:"Art. 5º. Os tribunais admitem renovações sucessivas, desde que fundamentadas." },
+  { tipo:"ce", enun:"A autoridade policial pode requerer a interceptação telefônica tanto na investigação criminal quanto na instrução processual penal.", gab:"Errado", com:"A autoridade policial só pode requerer na investigação. O Ministério Público pode na investigação e na instrução (art. 3º)." },
+  { tipo:"ce", enun:"A captação ambiental realizada por um dos interlocutores, sem autorização judicial, configura o crime do art. 10-A da Lei 9.296/1996.", gab:"Errado", com:"Art. 10-A, § 1º: não há crime se a captação é feita por um dos interlocutores." },
+  { tipo:"caso", enun:"Autorizada interceptação para apurar tráfico de drogas, a diligência revela um crime conexo punido com detenção. É possível denunciar também por esse crime?", com:"Sim. Segundo o STF (HC 83.515), as provas colhidas em interceptação lícita podem subsidiar denúncia por crime conexo punido com detenção." },
+  { tipo:"caso", enun:"Qual a diferença entre interceptação telefônica, escuta e gravação clandestina?", com:"Interceptação: terceiro capta a conversa sem o conhecimento de nenhum interlocutor. Escuta: terceiro capta com o conhecimento de um deles. Gravação: feita por um dos interlocutores. Só a interceptação em sentido estrito depende da Lei 9.296." }],
+resumo:[
+  "A interceptação depende de ordem do <b>juiz competente da ação principal</b>, sob segredo de justiça, e vale também para sistemas de informática e telemática.",
+  "<b>Não é admitida</b> sem indícios razoáveis de autoria, se a prova puder ser feita por outros meios ou se o crime for punido, no máximo, com detenção.",
+  "Podem pedir o <b>delegado</b> (só na investigação) e o <b>MP</b> (investigação e instrução). O texto legal ainda prevê atuação de ofício do juiz.",
+  "O juiz decide em <b>24 horas</b>, com decisão fundamentada sob pena de nulidade. Prazo de <b>15 dias</b>, renovável por igual tempo.",
+  "A polícia conduz a diligência, dá ciência ao MP e envia o resultado com <b>auto circunstanciado</b>. Tudo corre em <b>autos apartados</b>.",
+  "A gravação que não interessar à prova é <b>inutilizada</b> por decisão judicial, com acompanhamento do MP.",
+  "<b>Captação ambiental</b>: pena máxima superior a 4 anos, 15 dias, instalação noturna possível, <b>exceto na casa</b>.",
+  "Art. 10: interceptar sem autorização ou com fim não autorizado é <b>reclusão de 2 a 4 anos</b> e multa, inclusive para o juiz. Art. 10-A tem a mesma pena.",
+  "Não há crime na captação feita por um dos interlocutores; a pena é <b>em dobro</b> para o funcionário público que quebra o sigilo."],
+checklist:[
+  "Quem decide e em que fase a interceptação é possível",
+  "As três hipóteses de não admissão do art. 2º",
+  "Quem pode requerer e em que momento",
+  "Prazo para o juiz decidir e prazo da diligência",
+  "Procedimento: autos apartados, auto circunstanciado e inutilização",
+  "Diferença entre interceptação, escuta e gravação",
+  "Requisitos e limites da captação ambiental",
+  "Penas dos arts. 10 e 10-A e a exceção do interlocutor",
+  "Aproveitamento da prova de crime conexo punido com detenção"],
 questoes:[]
 };
 })();
