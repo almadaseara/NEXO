@@ -2,7 +2,7 @@
 
 Projeto: **NEXO Revisão** — plataforma de estudos para concursos policiais (PC-BA e PC-PE).
 
-Antes de qualquer alteração de conteúdo, **leia `docs/GUIA-TEMAS.md`**. Ele descreve o formato dos temas, as regras e o passo a passo.
+Antes de qualquer alteração de conteúdo, **leia `docs/GUIA-TEMAS.md`**. Ele descreve o formato dos temas, as regras e o passo a passo. Todo material novo ou revisado segue o **padrão NEXO de material** (seção 3-A do guia; tema de referência: Homicídio, `penal_pessoa_01`).
 
 Regras que nunca podem ser quebradas:
 

@@ -133,6 +133,36 @@ Tipos: `caso` (situação concreta), `numero` (prazos, penas, quóruns), `distin
 
 ---
 
+## 3-A. Padrão NEXO de material (referência absoluta, aprovado em 25/10/2026)
+
+Todo tema deve ser lido na ordem: **sumário → explicação por tópicos → comparativo → nota de importância → como cai em prova → pegadinhas da banca → resumo do material → diagnóstico final marcável**. O tema de referência é `penal_pessoa_01` (Homicídio), em `data/temas/penal-pessoa-a.js`.
+
+O site monta tudo isso a partir do próprio tema. Os campos abaixo são opcionais; quando faltam, `temas/temas-ricos.js` monta uma reserva com o conteúdo já conferido do tema (cartões de número, de distinção, de certo/errado e de caso, e os `rapido` das seções). **Prefira sempre preencher os campos à mão**, porque a reserva é genérica.
+
+```js
+meta:{ ..., caminho:["Direito Penal","Crimes contra a pessoa","Crimes contra a vida"] },
+importancia:{ nivel:5,                       // 1 a 5; sem o campo, usa a prioridade do módulo no index.html
+  texto:"Por que o assunto é central em prova.",
+  decore:[["Homicídio simples","<b>6 a 20 anos</b>"]],          // no máximo 12 linhas: tem que dar para decorar
+  macetes:[["Os três “V” do privilégio","<b>V</b>alor social, <b>V</b>alor moral, <b>V</b>iolenta emoção."]] },
+comparativo:{ titulo:"Qualificado × majorado", head:["Coluna A","Coluna B"], rows:[["<b>O que faz:</b> ...","<b>O que faz:</b> ..."]] },   // sempre 2 colunas
+prova:[{ tipo:"ce", enun:"Afirmativa.", gab:"Certo", com:"Por quê." }, { tipo:"caso", enun:"Caso.", com:"Resposta." }],
+resumo:["Frase curta de revisão."],
+checklist:["O que o aluno precisa saber explicar sem consultar."],
+```
+
+Regras do padrão:
+
+- **Explicação hierárquica**: cada `secao` é um grupo (A, B, C…) e cada bloco de `teoria` é um subtópico (A.1, A.2…). Ex.: Crimes contra a pessoa › Homicídio › simples, qualificadoras, majorantes.
+- **Direito Penal**: quando o crime tem circunstâncias, explique as **objetivas (meio e modo)** e as **subjetivas (motivo e finalidade)**, **todas as combinações possíveis entre elas e com o privilégio**, **todas as formas do crime** (simples, privilegiada, qualificada, híbrida, majorada, culposa) e o **preterdolo** quando existir. Atenção: não existe “homicídio preterdoloso”; o preterdolo do art. 129, § 3º é lesão corporal seguida de morte.
+- As `pegadinhas` de cada seção são reunidas no bloco “Pegadinhas da banca”.
+- **`prova` são questões-modelo autorais**, escritas no estilo das bancas e identificadas como tais na tela. **Nunca** apresente uma questão inventada como questão real de prova (regra 1). As questões reais continuam na aba Questões.
+- No Livro digital, cada seção é uma página e o capítulo termina com três páginas de fechamento (comparativo e importância; prova e pegadinhas; resumo e diagnóstico).
+- O diagnóstico final guarda os itens marcados no navegador (`localStorage`: `nexo-checklist`).
+- `node tools/validar-temas.js` confere o formato desses campos.
+
+---
+
 ## 4. Passo a passo para criar ou atualizar um tema
 
 1. `git pull --rebase origin main` (o robô faz commits frequentes).

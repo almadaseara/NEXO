@@ -51,6 +51,22 @@
   + '.tr-op.ok{border-color:#15803d;background:#dcfce7}.tr-op.no{border-color:#b91c1c;background:#fee2e2}'
   + '.tr-com{background:var(--panel2,#edf3f2);border-radius:10px;padding:10px 12px}'
   + '.tr-alert{background:#fef3c7;color:#422006;border-radius:8px;padding:8px 10px;font-size:13.5px}'
+  + '.tr-wrap [hidden]{display:none!important}'
+  + '.tr-crumb{font-size:12.5px;color:var(--muted,#778585)}.tr-crumb b{color:var(--text,#243739);font-weight:700}'
+  + '.tr-bh{display:flex;align-items:center;gap:10px;margin:22px 0 2px;padding-bottom:6px;border-bottom:3px solid var(--green,#24766b);scroll-margin-top:90px}'
+  + '.tr-bh h2{margin:0;font-size:18px}.tr-bn{background:var(--green,#24766b);color:#fff;border-radius:7px;min-width:26px;height:26px;display:grid;place-items:center;font-weight:800;font-size:13px}'
+  + '.tr-sum{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:4px}.tr-sum ul{margin:2px 0 6px 34px;padding:0;list-style:none;display:grid;gap:1px}'
+  + '.tr-sum button{background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer;padding:4px 0;line-height:1.4}.tr-sum ul button{font-size:13.5px;color:var(--muted,#778585)}'
+  + '.tr-sumb{font-weight:700;display:flex;gap:10px;align-items:baseline}.tr-sumb b,.tr-sl{background:var(--panel2,#edf3f2);color:var(--green,#24766b);border-radius:6px;padding:0 7px;font-size:12.5px;font-weight:800}'
+  + '.tr-sl{margin-right:8px;font-size:14px}'
+  + '.tr-imp{border:2px solid var(--green,#24766b);background:var(--panel2,#edf3f2);border-radius:14px;padding:14px 16px;display:grid;gap:10px}.tr-imp p{margin:0;line-height:1.55}'
+  + '.tr-imp-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.tr-nv{display:inline-flex;gap:3px}.tr-nv i{width:22px;height:6px;border-radius:3px;background:var(--line,#e3e9e8)}.tr-nv i.on{background:var(--green,#24766b)}'
+  + '.tr-dl{margin-top:2px}.tr-decore{margin:0;display:grid;gap:0}.tr-decore div{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--line,#e3e9e8);font-size:14.5px;line-height:1.45}.tr-decore dt{margin:0}.tr-decore dd{margin:0;text-align:right;font-weight:700;color:var(--green,#24766b)}'
+  + '.tr-macs{display:grid;gap:8px}.tr-mac{background:var(--panel,#fff);border-radius:10px;padding:9px 12px;display:grid;gap:2px;font-size:14px;line-height:1.5}.tr-mac b{color:var(--green,#24766b)}'
+  + '.tr-modelo{margin:2px 0 0}.tr-pv p{margin:0;line-height:1.6}.tr-gab{display:inline-block;font-weight:800;font-size:12.5px;border-radius:6px;padding:1px 8px}.tr-gab-c{background:#dcfce7;color:#15803d}.tr-gab-e{background:#fee2e2;color:#b91c1c}'
+  + '.tr-traps-box{background:#fff4f1;border-radius:12px;border-left:4px solid #be123c;padding:10px 14px}.tr-traps-box li{margin:7px 0}.tr-traps-box .tr-lbl{display:inline-block;margin-right:6px}'
+  + '.tr-res h3{margin:8px 0 2px;font-size:14px;color:var(--green,#24766b)}.tr-res ul{margin:2px 0 6px 18px;padding:0}.tr-res li{margin:4px 0;line-height:1.5;font-size:14.5px}'
+  + '.tr-ck td{vertical-align:middle}.tr-ck input[type=checkbox]{width:20px;height:20px;accent-color:var(--green,#24766b)}.tr-ck label{display:block;cursor:pointer;line-height:1.4}.tr-prog{margin:0;font-weight:700;color:var(--green,#24766b)}'
   + '.tr-flash{animation:trfl 1.6s ease}@keyframes trfl{0%,40%{box-shadow:0 0 0 3px var(--green,#24766b)}100%{box-shadow:none}}'
   + '@media (prefers-reduced-motion:reduce){.tr-flash{animation:none;outline:3px solid var(--green,#24766b)}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
@@ -117,21 +133,106 @@
     return partes.join('');
   }
 
+  /* ===== Padrão NEXO de material (modelo aprovado em 25/10/2026) =====
+     Ordem da aba Resumo: caminho e sumário → explicação por tópicos → comparativo → nota de importância
+     (com "Decore isto") → como cai em prova → pegadinhas da banca → resumo do material → diagnóstico final marcável.
+     Campos opcionais no tema (todos têm reserva montada com o conteúdo que o próprio tema já tem):
+       meta.caminho:["Direito Penal","Crimes contra a pessoa","Crimes contra a vida"]
+       importancia:{ nivel:1-5, texto:"", decore:[["rótulo","<b>valor</b>"]], macetes:[["Título","texto"]] }
+       comparativo:{ titulo, head:[..2 colunas..], rows:[[a,b]] }
+       prova:[{ tipo:"ce"|"caso", enun, gab:"Certo"|"Errado", com }]   (questões-modelo autorais, não são de prova real)
+       resumo:["frase", ...]      checklist:["o que o aluno deve saber", ...] */
+  var NIVEL_PRIO = {'MUITO ALTA':5,'ALTA':4,'MÉDIA':3,'COMPLEMENTAR':1};
+  var NIVEL_TXT = {5:'muito alta',4:'alta',3:'média',2:'baixa',1:'complementar'};
+  var chk = {}; try { chk = JSON.parse(localStorage.getItem('nexo-checklist')||'{}') } catch(e) {}
+  function saveChk(){ try{ localStorage.setItem('nexo-checklist', JSON.stringify(chk)) }catch(e){} }
+
+  function ceDeCard(c){
+    var v=String(c.v), gab=/^\s*<b>\s*Certo/i.test(v)?'Certo':/^\s*<b>\s*Errado/i.test(v)?'Errado':null;
+    if(!gab) return null;
+    return { tipo:'ce', enun:strip(c.f).replace(/^Certo ou errado:\s*/i,''), gab:gab, com:v.replace(/^\s*<b>[^<]*<\/b>\.?\s*/,'') };
+  }
+  function padrao(m,T){
+    var I=T.importancia||{}, P={};
+    P.caminho=(T.meta.caminho||[m.discipline,m.parent_subject]).filter(Boolean);
+    P.imp={ nivel:I.nivel||NIVEL_PRIO[m.priority]||3, texto:I.texto||'', macetes:I.macetes||[],
+      decore:I.decore||T.cards.filter(function(c){return c.tipo==='numero'}).slice(0,6).map(function(c){return [strip(c.f),c.v]}) };
+    /* reserva: poucos números no tema → "Decore isto" usa a ideia central de cada seção */
+    if(P.imp.decore.length<3){ P.imp.pontos=T.secoes.slice(0,6).map(function(s){return [s.curto,s.rapido[0]]}); }
+    if(T.prova) P.prova=T.prova;
+    else {
+      P.prova=T.cards.map(ceDeCard).filter(Boolean).slice(0,4)
+        .concat(T.cards.filter(function(c){return c.tipo==='caso'}).slice(0,2).map(function(c){return {tipo:'caso',enun:strip(c.f),com:c.v}}));
+    }
+    P.comparativo=T.comparativo||(function(){
+      var d=T.cards.filter(function(c){return c.tipo==='distincao'}).slice(0,8);
+      return d.length?{titulo:'Distinções que a banca cobra',head:['Compare','Como diferenciar'],rows:d.map(function(c){return [c.f,c.v]})}:null;
+    })();
+    P.resumo=T.resumo?[{t:'',itens:T.resumo}]:T.secoes.map(function(s){return {t:s.curto,itens:s.rapido}});
+    P.checklist=T.checklist||(function(){
+      var l=[]; T.secoes.forEach(function(s){ if(s.teoria.length>1) s.teoria.forEach(function(t){l.push(strip(t.h))}); else l.push(strip(s.titulo)); });
+      return l.slice(0,14);
+    })();
+    P.pegadinhas=[]; T.secoes.forEach(function(s){ (s.pegadinhas||[]).forEach(function(x){P.pegadinhas.push({sec:s.curto,t:x})}) });
+    (T.pegadinhas||[]).forEach(function(x){P.pegadinhas.push({sec:'Geral',t:x})});
+    return P;
+  }
+  function bloco(n,titulo,id){ return '<div class="tr-bh" id="'+id+'"><span class="tr-bn">'+n+'</span><h2>'+titulo+'</h2></div>'; }
+  function grupo(nome,html){ return '<div class="tr-grupo" data-trbloco="'+nome+'">'+html+'</div>'; }
+  function barras(n){var h='';for(var i=1;i<=5;i++)h+='<i class="'+(i<=n?'on':'')+'"></i>';return '<span class="tr-nv" role="img" aria-label="Importância '+n+' de 5">'+h+'</span>'}
+  function tabela(q){return '<div class="tr-tbl"><table><caption>'+q.titulo+'</caption><thead><tr>'+q.head.map(function(c){return '<th scope="col">'+c+'</th>'}).join('')+'</tr></thead><tbody>'+q.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+colorir(c)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>'}
+
   function rResumo(T){
-    var h=T.meta.aviso?'<div class="tr-notice"><b>Atualizado em '+T.meta.atualizado+'.</b> '+esc(T.meta.aviso)+'</div>':'';
-    h+='<div class="tr-bar">'+T.secoes.map(function(s){return '<button class="tr-pill" type="button" data-trjump="tr-s-'+s.id+'">'+s.curto+'</button>'}).join('')+'</div>';
+    var m=modulo2(lastModule), P=padrao(m,T), n=1, h='', G=function(nome,html){ h+='<div class="tr-grupo" data-trbloco="'+nome+'">'+html+'</div>'; };
+    if(T.meta.aviso) h+='<div class="tr-notice"><b>Atualizado em '+T.meta.atualizado+'.</b> '+esc(T.meta.aviso)+'</div>';
+    h+='<nav class="tr-crumb" aria-label="Caminho do assunto">'+P.caminho.map(esc).concat(['<b>'+esc(T.meta.tema)+'</b>']).join(' <span aria-hidden="true">›</span> ')+'</nav>';
     h+='<div class="tr-legenda" aria-label="Legenda das cores"><span><b style="color:var(--rd-key)">Conceito-chave</b></span><span><span class="tr-ref">art. 1º</span>lei, súmula, julgado</span><span><span class="tr-num">1/3</span>número, fração, prazo</span><span><i style="color:var(--rd-lat)">latim</i></span></div>';
-    T.secoes.forEach(function(s){
-      h+='<section class="tr-card" id="tr-s-'+s.id+'"><h2>'+s.titulo+'</h2>';
+    /* 1. Sumário */
+    G('sumario', bloco(n++,'O que você vai ver','tr-b-sumario')+'<ol class="tr-sum">'+T.secoes.map(function(s,i){
+      return '<li><button class="tr-sumb" type="button" data-trjump="tr-s-'+s.id+'"><b>'+String.fromCharCode(65+i)+'</b>'+s.titulo+'</button>'
+        +(s.teoria.length>1?'<ul>'+s.teoria.map(function(t,k){return '<li><button type="button" data-trjump="tr-t-'+s.id+'-'+k+'">'+t.h+'</button></li>'}).join('')+'</ul>':'')+'</li>';
+    }).join('')+'</ol>');
+    /* 2. Explicação por tópicos (cada seção é uma página no Livro digital) */
+    h+=bloco(n++,'Explicação do assunto','tr-b-explicacao');
+    T.secoes.forEach(function(s,i){
+      h+='<section class="tr-card" id="tr-s-'+s.id+'"><h2><span class="tr-sl" aria-hidden="true">'+String.fromCharCode(65+i)+'</span>'+s.titulo+'</h2>';
       h+='<div class="tr-quick"><div class="tr-lbl">Em 30 segundos</div><ul>'+s.rapido.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
-      if(s.teoria.length>1) h+='<nav class="tr-indice" aria-label="Tópicos desta seção"><span class="tr-lbl">Tópicos</span>'+s.teoria.map(function(t,i){return '<button class="tr-chip" type="button" data-trjump="tr-t-'+s.id+'-'+i+'"><b>'+(i+1)+'</b> '+t.h+'</button>'}).join('')+'</nav>';
-      h+='<div class="tr-read tr-cor tr-topicos'+(s.teoria.length>1?'':' tr-um')+'">'+s.teoria.map(function(t,i){return '<article class="tr-topico" id="tr-t-'+s.id+'-'+i+'"><h3><span class="tr-tn" aria-hidden="true">'+(i+1)+'</span>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+colorir(p)+'</p>'}).join('')+'</article>'}).join('')+'</div>';
-      if(s.quadro)h+='<div class="tr-tbl"><table><caption>'+s.quadro.titulo+'</caption><thead><tr>'+s.quadro.head.map(function(c){return '<th scope="col">'+c+'</th>'}).join('')+'</tr></thead><tbody>'+s.quadro.rows.map(function(r){return '<tr>'+r.map(function(c){return '<td>'+c+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table></div>';
-      if(s.pegadinhas&&s.pegadinhas.length)h+='<div class="tr-traps"><div class="tr-lbl">Pegadinhas</div><ul>'+s.pegadinhas.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
+      h+='<div class="tr-read tr-cor tr-topicos'+(s.teoria.length>1?'':' tr-um')+'">'+s.teoria.map(function(t,k){return '<article class="tr-topico" id="tr-t-'+s.id+'-'+k+'"><h3><span class="tr-tn" aria-hidden="true">'+String.fromCharCode(65+i)+'.'+(k+1)+'</span>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+colorir(p)+'</p>'}).join('')+'</article>'}).join('')+'</div>';
+      if(s.quadro) h+=tabela(s.quadro);
       h+=counts(T,s.id)+'</section>';
     });
+    /* 3. Comparativo */
+    if(P.comparativo) G('comparativo', bloco(n++,'Comparativo final','tr-b-comparativo')+tabela(P.comparativo));
+    /* 4. Nota de importância */
+    var I=P.imp, g='';
+    g+=bloco(n++,'Nota de importância','tr-b-importancia');
+    g+='<div class="tr-imp" role="note" aria-label="Nota de importância"><div class="tr-imp-top"><b>Importância: '+NIVEL_TXT[I.nivel]+'</b>'+barras(I.nivel)+'<span class="muted small">'+I.nivel+' de 5</span></div>';
+    if(I.texto) g+='<p>'+colorir(I.texto)+'</p>';
+    if(I.decore.length) g+='<div class="tr-lbl tr-dl">Decore isto</div><dl class="tr-decore">'+I.decore.map(function(r){return '<div><dt>'+colorir(r[0])+'</dt><dd>'+colorir(r[1])+'</dd></div>'}).join('')+'</dl>';
+    if(I.pontos) g+='<div class="tr-lbl tr-dl">'+(I.decore.length?'Mais para fixar':'Decore isto')+'</div><div class="tr-macs">'+I.pontos.map(function(x){return '<div class="tr-mac"><b>'+x[0]+'</b><span>'+colorir(x[1])+'</span></div>'}).join('')+'</div>';
+    if(I.macetes.length) g+='<div class="tr-lbl tr-dl">Macetes</div><div class="tr-macs">'+I.macetes.map(function(x){return '<div class="tr-mac"><b>'+x[0]+'</b><span>'+colorir(x[1])+'</span></div>'}).join('')+'</div>';
+    G('importancia', g+'</div>');
+    /* 5. Como cai em prova */
+    if(P.prova.length) G('prova', bloco(n++,'Como cai em prova','tr-b-prova')
+      +'<p class="muted small tr-modelo">Questões-modelo escritas pelo NEXO no estilo das bancas. Não são questões de prova real; as oficiais ficam na aba Questões.</p>'
+      +P.prova.map(function(q){return '<article class="tr-card tr-pv"><div class="tr-lbl">'+(q.tipo==='ce'?'Certo ou errado':'Caso prático')+'</div><p>'+colorir(q.enun)+'</p>'+(q.gab?'<p><span class="tr-gab tr-gab-'+(q.gab==='Certo'?'c':'e')+'">'+q.gab+'</span> '+colorir(q.com)+'</p>':'<p class="tr-resp"><b>Resposta:</b> '+colorir(q.com)+'</p>')+'</article>'}).join(''));
+    /* 6. Pegadinhas */
+    if(P.pegadinhas.length) G('pegadinhas', bloco(n++,'Pegadinhas da banca','tr-b-pegadinhas')
+      +'<div class="tr-traps tr-traps-box"><ul>'+P.pegadinhas.map(function(x){return '<li><span class="tr-lbl">'+esc(x.sec)+'</span> '+colorir(x.t)+'</li>'}).join('')+'</ul></div>');
+    /* 7. Resumo */
+    G('resumo', bloco(n++,'Resumo do material','tr-b-resumo')
+      +'<div class="tr-card tr-res">'+P.resumo.map(function(g){return (g.t?'<h3>'+esc(g.t)+'</h3>':'')+'<ul>'+g.itens.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul>'}).join('')+'</div>');
+    /* 8. Diagnóstico final marcável */
+    var feitos=chk[m.id]||[], total=P.checklist.length, ok=P.checklist.filter(function(x){return feitos.indexOf(x)>=0}).length;
+    G('diagnostico', bloco(n++,'Diagnóstico final','tr-b-diagnostico')
+      +'<p class="muted small">Marque cada item quando conseguir explicar sem consultar o material. Se tiver dúvida, volte ao tópico.</p>'
+      +'<div class="tr-tbl tr-ck"><table><thead><tr><th scope="col" style="width:48px">Ok</th><th scope="col">O que você precisa saber ao final deste resumo</th></tr></thead><tbody>'
+      +P.checklist.map(function(x,i){var id='trck-'+i;return '<tr><td><input type="checkbox" id="'+id+'" data-trck="'+esc(x)+'"'+(feitos.indexOf(x)>=0?' checked':'')+'></td><td><label for="'+id+'">'+esc(x)+'</label></td></tr>'}).join('')
+      +'</tbody></table></div><p class="tr-prog" id="tr-prog" aria-live="polite">'+progTxt(ok,total)+'</p>');
     return h;
   }
+  function modulo2(id){ return modules.find(function(x){return x.id===id})||{}; }
+  function progTxt(n,t){return n+' de '+t+' itens marcados'+(n===t&&t?' — pronto para seguir':'')}
   function rLei(T){
     var h='<div class="tr-bar"><span class="tr-g1">núcleo e elementares</span> <span class="tr-g2">pena, número, fração</span> <span class="tr-g3">exceção e condição</span></div>';
     h+='<div class="tr-bar"><button class="tr-pill" type="button" data-trtoggle="novo" aria-pressed="'+UI.novo+'">Só o que mudou em 2024–2026</button><button class="tr-pill" type="button" data-trtoggle="grifos" aria-pressed="'+(!UI.grifos)+'">Ler sem grifos</button></div>'+secBar(T);
@@ -245,6 +346,14 @@
       t.parentNode.querySelectorAll('.tr-op').forEach(function(b){ b.classList.remove('ok','no'); if(b.dataset.trk===q.gab) b.classList.add('ok'); });
       if(d.trk!==q.gab) t.classList.add('no');
       var com=document.getElementById('tr-c-'+q.id); if(com) com.hidden=false; return; }
+  });
+  document.addEventListener('change', function(e){
+    var t=e.target; if(!t || !t.dataset || t.dataset.trck===undefined || !lastModule) return;
+    var arr=chk[lastModule]||[], x=t.dataset.trck, k=arr.indexOf(x);
+    if(t.checked && k<0) arr.push(x); else if(!t.checked && k>=0) arr.splice(k,1);
+    chk[lastModule]=arr; saveChk();
+    var all=document.querySelectorAll('input[data-trck]'), n=0; all.forEach(function(c){ if(c.checked) n++ });
+    var p=document.getElementById('tr-prog'); if(p) p.textContent=progTxt(n,all.length);
   });
   document.addEventListener('keydown', function(e){
     var t=e.target; if(t && t.dataset && t.dataset.trflip && (e.key===' '||e.key==='Enter')){ e.preventDefault(); t.click(); }
