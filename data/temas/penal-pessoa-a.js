@@ -116,8 +116,32 @@ questoes:[]
 /* ======================= HOMICÍDIO ======================= */
 T.penal_pessoa_01 = {
 meta:{ tema:"Homicídio simples, privilegiado, qualificado e culposo", atualizado:AT,
-  foco:"Tipo do art. 121, privilégio, as dez qualificadoras (incluindo as novas de 2025–2026), majorantes, homicídio culposo e perdão judicial, com a jurisprudência do STJ e do STF." },
+  caminho:["Direito Penal","Crimes contra a pessoa","Crimes contra a vida"],
+  foco:"Todas as formas do art. 121 (simples, privilegiado, qualificado, híbrido, majorado e culposo), qualificadoras objetivas e subjetivas e suas combinações, preterdolo, perdão judicial e a jurisprudência do STJ e do STF." },
 secoes:[
+{ id:"formas", titulo:"Mapa: todas as formas de homicídio", curto:"Formas",
+  rapido:["O art. 121 tem <b>três faces dolosas</b> (simples, privilegiada, qualificada), uma <b>culposa</b> e as <b>majorantes</b>. Feminicídio e vicaricídio saíram dele e viraram crimes autônomos (arts. 121-A e 121-B).",
+    "<b>Preterdolo não é forma de homicídio</b>: querer lesionar e causar a morte sem querer é lesão corporal seguida de morte (art. 129, § 3º).",
+    "Sempre pergunte, nesta ordem: houve <b>dolo de matar</b>? Há <b>privilégio</b>? Há <b>qualificadora</b> (objetiva ou subjetiva)? Há <b>majorante</b>?"],
+  teoria:[
+    { h:"Raciocínio para resolver qualquer questão", p:[
+      "<b>1º) Dolo ou culpa?</b> Dolo direto ou eventual é homicídio doloso (júri). Culpa (inclusive consciente) é homicídio culposo. Dolo só na conduta e culpa na morte é <b>preterdolo</b> (outro crime).",
+      "<b>2º) Privilégio?</b> Valor social, valor moral ou violenta emoção (os três “V”). Reduz de 1/6 a 1/3.",
+      "<b>3º) Qualificadora?</b> Classifique em objetiva (meio e modo) ou subjetiva (motivo e finalidade). Isso decide se ela convive com o privilégio.",
+      "<b>4º) Majorante?</b> Aumento de fração na 3ª fase da pena: idade da vítima, milícia ou grupo de extermínio, e as majorantes dos §§ 2º-B e 2º-C."]}
+  ],
+  quadro:{ titulo:"Formas do homicídio e crimes vizinhos", head:["Forma","Pena","O que marcar"], rows:[
+    ["Simples (caput)","Reclusão de 6 a 20 anos","Só é hediondo se for atividade típica de grupo de extermínio"],
+    ["Privilegiado (§ 1º)","Reduz de 1/6 a 1/3","Sempre subjetivo; direito do réu se reconhecido pelos jurados"],
+    ["Qualificado (§ 2º)","Reclusão de 12 a 30 anos","Hediondo"],
+    ["Qualificado-privilegiado (híbrido)","Pena do qualificado, reduzida","Só com qualificadora <b>objetiva</b>; não é hediondo"],
+    ["Facção, milícia ou grupo paramilitar (§ 2º-D)","Reclusão de 20 a 40 anos","Lei 15.358/2026; exige ligação com a atuação do grupo"],
+    ["Majorado (§§ 2º-B, 2º-C, 4º, 6º)","Fração sobre a pena","Não cria nova pena: soma na 3ª fase"],
+    ["Culposo (§ 3º)","Detenção de 1 a 3 anos","Admite perdão judicial (§ 5º); não admite qualificadoras"],
+    ["Culposo majorado (§ 4º, 1ª parte)","+ 1/3","Regra técnica, omissão de socorro, não diminuir consequências, fuga"],
+    ["Feminicídio (art. 121-A)","Reclusão de 20 a 40 anos","Crime autônomo desde 10/10/2024; deixou de ser inciso VI"],
+    ["Lesão seguida de morte (art. 129, § 3º)","Reclusão de 4 a 12 anos","Preterdolo; não vai a júri"]]},
+  pegadinhas:["O examinador chama de “homicídio” tudo que termina em morte. Só há homicídio quando existe <b>dolo de matar</b> (ou culpa, no culposo)."]},
 { id:"simples", titulo:"Homicídio simples e privilegiado", curto:"Simples",
   rapido:["\"Matar alguém\": reclusão de <b>6 a 20 anos</b>. Bem jurídico: vida extrauterina (a partir do início do parto).",
     "Privilégio (§1º): <b>relevante valor social ou moral</b> ou <b>domínio de violenta emoção logo em seguida a injusta provocação</b> da vítima — redução de <b>1/6 a 1/3</b>.",
@@ -165,6 +189,32 @@ secoes:[
     ["VIII","Arma de fogo de uso restrito ou proibido","Objetiva","Sim"],
     ["IX / X","Menor de 14 / instituição de ensino","Objetiva","Sim"]]},
   pegadinhas:["Feminicídio não é mais o inciso VI (revogado). Em questão de fato posterior a 10/10/2024, procure o art. 121-A.","No §2º-D a pena (20 a 40) é maior que a do §2º (12 a 30)."]},
+{ id:"obj-subj", titulo:"Qualificadoras objetivas × subjetivas e como se combinam", curto:"Objetivas × subjetivas",
+  rapido:["<b>Objetivas</b> falam do <b>como</b> (meio e modo: incisos III, IV e VIII). <b>Subjetivas</b> falam do <b>porquê</b> (motivo e finalidade: incisos I, II e V).",
+    "Só as <b>objetivas convivem com o privilégio</b> (homicídio qualificado-privilegiado, não hediondo). Subjetiva + privilégio é impossível.",
+    "Subjetiva + objetiva no mesmo crime é possível: <b>uma qualifica</b>, as demais viram agravante (2ª fase) ou circunstância da pena-base.",
+    "Todas as qualificadoras exigem <b>dolo de matar</b>: não existe homicídio culposo qualificado."],
+  teoria:[
+    { h:"Objetivas: o meio e o modo", p:[
+      "Descrevem a forma de execução: veneno, fogo, explosivo, asfixia, tortura, meio insidioso, cruel ou de perigo comum (III); traição, emboscada, dissimulação ou recurso que dificulte a defesa (IV); arma de fogo de uso restrito ou proibido (VIII).",
+      "Pela doutrina, <b>comunicam-se</b> ao coautor que as conhecia. Convivem com o privilégio porque o privilégio é subjetivo. O STJ já admitiu meio cruel com dolo eventual (REsp 1.829.601/PR)."]},
+    { h:"Subjetivas: o motivo e a finalidade", p:[
+      "Descrevem a razão do agente: paga ou promessa de recompensa e motivo torpe (I), motivo fútil (II) e conexão com outro crime (V).",
+      "São circunstâncias de <b>caráter pessoal</b> (art. 30 do CP): em regra não se comunicam aos coautores. A paga ou promessa ao mandante tem decisões do STJ nos dois sentidos.",
+      "<b>Não convivem com o privilégio</b>: não se mata ao mesmo tempo por motivo nobre e por motivo torpe ou fútil."]},
+    { h:"Todas as combinações possíveis", p:[
+      "<b>Subjetiva + objetiva</b> (ex.: motivo torpe + veneno): possível. Pelo STJ, uma qualifica e as outras vão para a 2ª fase, se forem agravantes previstas em lei, ou para a pena-base.",
+      "<b>Privilégio + objetiva</b>: homicídio qualificado-privilegiado (híbrido). Aplica-se a pena do qualificado com a redução de 1/6 a 1/3, e o crime <b>não é hediondo</b>.",
+      "<b>Privilégio + subjetiva</b>: impossível, por incompatibilidade lógica.",
+      "<b>Qualificadora + culpa</b>: impossível, porque todas exigem dolo de matar."]}
+  ],
+  quadro:{ titulo:"Combinações entre privilégio e qualificadoras", head:["Combinação","Possível?","Resultado"], rows:[
+    ["Subjetiva + objetiva","<b>Sim</b>","Uma qualifica; as outras agravam a pena"],
+    ["Privilégio + objetiva","<b>Sim</b>","Qualificado-privilegiado; não hediondo"],
+    ["Privilégio + subjetiva","<b>Não</b>","Incompatibilidade lógica"],
+    ["Qualificadora + culpa","<b>Não</b>","Exige dolo de matar"],
+    ["Qualificadora objetiva + dolo eventual","<b>Sim</b>","Meio cruel com dolo eventual: STJ, REsp 1.829.601/PR"]]},
+  pegadinhas:["Se o enunciado traz “motivo torpe” e “relevante valor moral” no mesmo homicídio, a alternativa que admite privilégio está errada.","“Duplamente qualificado” não gera nova pena: há só um homicídio qualificado.","Circunstância subjetiva não se comunica ao coautor; a objetiva comunica quando ele a conhecia."]},
 { id:"majorantes", titulo:"Majorantes do homicídio doloso", curto:"Majorantes",
   rapido:["Doloso: +1/3 se a vítima é <b>menor de 14 ou maior de 60</b> (§4º, parte final); +1/3 a 1/2 se praticado por <b>milícia privada</b> (pretexto de segurança) ou <b>grupo de extermínio</b> (§6º).",
     "§2º-B (vítima menor de 14, inciso IX) e §2º-C (instituição de ensino, inciso X): frações de <b>1/3 a 1/2</b> ou <b>2/3</b> sobre o homicídio já qualificado."],
@@ -191,7 +241,87 @@ secoes:[
       "O STJ admite o perdão quando o agente sofre sequelas gravíssimas (tetraplegia, estado vegetativo) ou quando mata, culposamente, pessoa com quem tinha vínculo afetivo (ex.: irmão). A doutrina majoritária exige laço prévio quando o fundamento é o sofrimento psicológico."]}
   ],
   pegadinhas:["As majorantes do §4º, primeira parte (deixar de socorrer, fugir), são só do homicídio culposo."]},
+{ id:"preterdolo", titulo:"Preterdolo: existe homicídio preterdoloso?", curto:"Preterdolo",
+  rapido:["<b>Preterdolo</b> = dolo na conduta antecedente + <b>culpa no resultado</b> mais grave. “Dolo na ida, culpa na volta.”",
+    "Não existe “homicídio preterdoloso”. Quem quer só lesionar e causa a morte sem querer nem assumir o risco comete <b>lesão corporal seguida de morte</b> (art. 129, § 3º): reclusão de <b>4 a 12 anos</b>.",
+    "<b>Não existe preterdolo qualificado no art. 121</b>: as qualificadoras exigem dolo de matar. O que existe são crimes <b>qualificados pelo resultado morte</b>."],
+  teoria:[
+    { h:"Preterdolo × dolo eventual × culpa consciente", p:[
+      "<b>Preterdolo</b>: o agente quer lesionar e a morte vem sem que ele a quisesse ou assumisse o risco. Crime: lesão corporal seguida de morte.",
+      "<b>Dolo eventual</b>: prevê a morte e <b>assume o risco</b>, aceitando a possibilidade. Crime: homicídio doloso (júri), inclusive em tentativa.",
+      "<b>Culpa consciente</b>: prevê a morte, mas <b>confia sinceramente</b> que não ocorrerá. Crime: homicídio culposo."]},
+    { h:"Crimes qualificados pelo resultado morte", p:[
+      "<b>Lesão corporal seguida de morte</b> (art. 129, § 3º): 4 a 12 anos. No contexto de facção, milícia ou grupo paramilitar (§ 3º-A, Lei 15.358/2026): 20 a 40 anos.",
+      "<b>Tortura</b> com morte culposa: tortura qualificada pelo resultado (Lei 9.455/97, art. 1º, § 3º).",
+      "<b>Latrocínio</b> (art. 157, § 3º, II): roubo com resultado morte, que pode ser doloso ou culposo. Pena de 24 a 30 anos pela Lei 15.397/2026."]},
+    { h:"Consequências práticas", p:[
+      "<b>Júri</b>: só os crimes dolosos contra a vida. A lesão seguida de morte é julgada pelo juiz singular.",
+      "<b>Hediondez</b>: a lesão seguida de morte só é hedionda nas hipóteses do art. 1º, I-A, da Lei 8.072/90 (agentes de segurança e familiares, membros do Judiciário e do MP e instituição de ensino).",
+      "<b>Tentativa</b>: o crime preterdoloso, em regra, não admite tentativa, porque o resultado agravador é culposo."]}
+  ],
+  quadro:{ titulo:"Resposta rápida: preterdolo e qualificadoras", head:["Pergunta de prova","Resposta"], rows:[
+    ["Existe homicídio preterdoloso qualificado?","<b>Não</b>. Qualificadoras exigem dolo de matar"],
+    ["Quem quer lesionar e mata sem querer responde por…","Lesão corporal seguida de morte (art. 129, § 3º)"],
+    ["Quem assume o risco de matar responde por…","Homicídio doloso, com dolo eventual"],
+    ["Quem confia que a morte não ocorrerá responde por…","Homicídio culposo, com culpa consciente"],
+    ["Vai a júri?","Homicídio doloso, sim. Lesão seguida de morte, não"]]},
+  pegadinhas:["A banca chama a lesão seguida de morte de “homicídio preterdoloso” e pergunta se cabe qualificadora: <b>não cabe</b>, porque é outro crime.","Dolo eventual não é preterdolo: no dolo eventual o agente assumiu o risco de matar.","O resultado morte do preterdolo é culposo: quem responde por lesão seguida de morte não vai a júri."]},
 ],
+importancia:{ nivel:5,
+  texto:"Tema mais cobrado dos crimes contra a vida em provas policiais. A banca explora qualificadoras, privilégio, hediondez e as leis de 2024 a 2026.",
+  decore:[
+    ["Homicídio simples (caput)","<b>6 a 20 anos</b>"],
+    ["Privilégio (§ 1º)","reduz <b>1/6 a 1/3</b>"],
+    ["Homicídio qualificado (§ 2º)","<b>12 a 30 anos</b>"],
+    ["Facção, milícia ou paramilitar (§ 2º-D)","<b>20 a 40 anos</b>"],
+    ["Homicídio culposo (§ 3º)","<b>1 a 3 anos</b> de detenção"],
+    ["Majorante: maior de 60 anos (§ 4º)","<b>+ 1/3</b>"],
+    ["Milícia ou grupo de extermínio (§ 6º)","<b>+ 1/3 até 1/2</b>"],
+    ["Lesão seguida de morte (art. 129, § 3º)","<b>4 a 12 anos</b>"],
+    ["Hediondez","qualificado: <b>sempre</b>; simples: só em grupo de extermínio"],
+    ["Feminicídio","art. <b>121-A</b>, não é mais inciso VI"]],
+  macetes:[
+    ["Os três “V” do privilégio","<b>V</b>alor social, <b>V</b>alor moral e <b>V</b>iolenta emoção."],
+    ["O piso dobra, o teto sobe dez","Simples: 6 a 20. Qualificado: 12 a 30. O mínimo dobra (6 para 12) e o máximo sobe 10 (20 para 30)."],
+    ["Objetiva é o “como”, subjetiva é o “porquê”","Meio e modo (III, IV, VIII) convivem com o privilégio. Motivos e conexão (I, II, V) não convivem."],
+    ["Preterdolo: dolo na ida, culpa na volta","Quer lesionar e mata sem querer: art. 129, § 3º. Não é homicídio e não tem qualificadora."]] },
+comparativo:{ titulo:"Qualificado × majorado", head:["Homicídio qualificado (§ 2º)","Homicídio majorado (§§ 2º-B, 2º-C, 4º e 6º)"], rows:[
+  ["<b>O que faz:</b> cria outro patamar de pena, de 12 a 30 anos","<b>O que faz:</b> soma uma fração à pena já calculada"],
+  ["<b>Quando entra:</b> define a pena-base da dosimetria","<b>Quando entra:</b> 3ª fase da dosimetria"],
+  ["<b>Exemplos:</b> motivo torpe ou fútil, meio cruel, recurso que dificulte a defesa, menor de 14 anos, instituição de ensino","<b>Exemplos:</b> maior de 60 anos (+ 1/3); milícia ou grupo de extermínio (+ 1/3 até 1/2); autor ascendente ou professor, nos §§ 2º-B e 2º-C (+ 2/3)"],
+  ["<b>Hediondez:</b> o homicídio qualificado é sempre hediondo","<b>Hediondez:</b> a majorante sozinha não torna hediondo; o simples só é hediondo em atividade típica de grupo de extermínio"],
+  ["<b>Idade da vítima:</b> menor de 14 anos qualifica (inciso IX)","<b>Idade da vítima:</b> menor de 14 só majora (§ 4º) se outra qualificadora já qualificou o crime (sem bis in idem)"]]},
+prova:[
+  { tipo:"ce", enun:"Carlos matou o vizinho depois de uma discussão por causa de uma vaga de garagem. Incide a qualificadora do motivo fútil.", gab:"Certo", com:"O motivo foi ínfimo e desproporcional ao resultado." },
+  { tipo:"ce", enun:"Para o STJ, matar sem qualquer motivo equivale a matar por motivo fútil e qualifica o homicídio.", gab:"Errado", com:"A ausência de motivo não é motivo fútil: seria analogia contra o réu. A doutrina majoritária diverge, mas o STJ não aplica a qualificadora." },
+  { tipo:"ce", enun:"É possível o homicídio qualificado-privilegiado quando a qualificadora é de natureza objetiva.", gab:"Certo", com:"O privilégio é subjetivo e só convive com qualificadora objetiva (meio ou modo)." },
+  { tipo:"ce", enun:"O homicídio praticado por motivo torpe pode ser reconhecido como privilegiado, com redução de 1/6 a 1/3.", gab:"Errado", com:"Motivo torpe é qualificadora subjetiva e não convive com o privilégio." },
+  { tipo:"ce", enun:"Quem agride a vítima apenas para machucá-la e, sem querer nem assumir o risco, causa a morte responde por homicídio preterdoloso qualificado.", gab:"Errado", com:"Não existe homicídio preterdoloso. O crime é lesão corporal seguida de morte (art. 129, § 3º), sem as qualificadoras do art. 121." },
+  { tipo:"ce", enun:"O homicídio simples e o homicídio qualificado são sempre hediondos.", gab:"Errado", com:"O qualificado é sempre hediondo. O simples só é hediondo se praticado em atividade típica de grupo de extermínio." }],
+resumo:[
+  "Homicídio é <b>matar alguém</b>: crime comum, de forma livre e material. Simples: reclusão de 6 a 20 anos.",
+  "Privilégio (§ 1º): relevante valor social ou moral ou violenta emoção após injusta provocação. Reduz de 1/6 a 1/3.",
+  "Qualificado (§ 2º): 12 a 30 anos. Objetivas (III, IV, VIII) falam do meio e do modo. Subjetivas (I, II, V) falam do motivo e da finalidade.",
+  "Só qualificadora objetiva convive com o privilégio (híbrido, não hediondo). Subjetiva não convive.",
+  "Várias qualificadoras: uma qualifica, as outras agravam a pena. Todas exigem dolo de matar.",
+  "Majorantes (§§ 2º-B, 2º-C, 4º e 6º) somam fração na 3ª fase. Idade de menor de 14 não qualifica e majora ao mesmo tempo.",
+  "Culposo (§ 3º): 1 a 3 anos de detenção, com perdão judicial possível (§ 5º). Culposo não admite qualificadora.",
+  "Preterdolo não é homicídio: lesão seguida de morte é art. 129, § 3º, de 4 a 12 anos, fora do júri.",
+  "Hediondo: qualificado sempre; simples só em atividade típica de grupo de extermínio. Feminicídio é o art. 121-A."],
+checklist:[
+  "Pena do homicídio simples e bem jurídico protegido",
+  "Requisitos do privilégio e a fração de redução",
+  "Diferença entre violenta emoção como privilégio e como atenuante",
+  "Pena do homicídio qualificado",
+  "Qualificadoras objetivas (meio e modo) e subjetivas (motivo e finalidade)",
+  "Quais combinações são possíveis entre privilégio e qualificadoras",
+  "Homicídio qualificado-privilegiado e por que não é hediondo",
+  "O que fazer quando há várias qualificadoras",
+  "Majorantes do homicídio doloso e frações",
+  "Diferença entre qualificadora e majorante",
+  "Homicídio culposo, majorantes do § 4º e perdão judicial",
+  "O que é preterdolo e por que não existe homicídio preterdoloso qualificado",
+  "Quando o homicídio é hediondo"],
 lei:[
 { art:"CP, art. 121", nome:"Homicídio", sec:"simples", itens:[
   { id:"cp121", rot:"Art. 121, caput e §1º", t:"<b class='g1'>Matar alguém</b>:<br>Pena - reclusão, de <b class='g2'>seis a vinte anos</b>.<br>§ 1º Se o agente comete o crime impelido por motivo de <b class='g1'>relevante valor social ou moral</b>, ou <b class='g1'>sob o domínio de violenta emoção, logo em seguida a injusta provocação da vítima</b>, o juiz pode reduzir a pena de <b class='g2'>um sexto a um terço</b>.", c:["hm1","hm2","hm3"] }
@@ -260,7 +390,16 @@ cards:[
 { id:"hm13", tipo:"numero", sec:"qualificadoras", f:"Pena do homicídio do §2º-D (facção, milícia ou grupo paramilitar).", v:"Reclusão de <b>20 a 40 anos</b> (Lei 15.358/2026).", lei:["cp121d"] },
 { id:"hm14", tipo:"ce", sec:"culposo", f:"Certo ou errado: no homicídio doloso, fugir para evitar o flagrante aumenta a pena em 1/3.", v:"<b>Errado.</b> Essa majorante é só do homicídio <b>culposo</b>.", lei:["cp121c"] },
 { id:"hm15", tipo:"caso", sec:"culposo", f:"Motorista atropela pedestre culposamente e foge. Qual dispositivo?", v:"<b>CTB, art. 302</b> (especialidade), com o aumento do §1º, III do próprio CTB — não o art. 121, §3º do CP.", lei:["cp121c"] },
-{ id:"hm16", tipo:"juris", sec:"culposo", f:"Sentença que concede perdão judicial gera reincidência?", v:"<b>Não.</b> É declaratória da extinção da punibilidade (Súmula 18 do STJ; art. 120).", lei:["cp121p"], j:["stj-s18"] }
+{ id:"hm16", tipo:"juris", sec:"culposo", f:"Sentença que concede perdão judicial gera reincidência?", v:"<b>Não.</b> É declaratória da extinção da punibilidade (Súmula 18 do STJ; art. 120).", lei:["cp121p"], j:["stj-s18"] },
+{ id:"hm17", tipo:"distincao", sec:"obj-subj", f:"Qualificadora objetiva × subjetiva no homicídio.", v:"<b>Objetiva</b>: meio e modo (III, IV, VIII), o “como”; convive com o privilégio. <b>Subjetiva</b>: motivo e finalidade (I, II, V), o “porquê”; não convive.", lei:["cp121q"] },
+{ id:"hm18", tipo:"caso", sec:"obj-subj", f:"A mata B com veneno por motivo torpe. Quantas qualificadoras? Qual pena?", v:"Duas hipóteses (motivo torpe e veneno), mas <b>um só homicídio qualificado</b> (12 a 30 anos). Uma qualifica; a outra agrava a pena ou entra na pena-base.", lei:["cp121q"], j:["stj-multiqual"] },
+{ id:"hm19", tipo:"ce", sec:"obj-subj", f:"Certo ou errado: o homicídio culposo pode ser qualificado pelo meio cruel.", v:"<b>Errado.</b> Todas as qualificadoras exigem dolo de matar.", lei:["cp121q"] },
+{ id:"hm20", tipo:"caso", sec:"obj-subj", f:"Pai mata o estuprador da filha, de surpresa, atacando-o pelas costas. Qual crime?", v:"Homicídio <b>qualificado-privilegiado</b>: privilégio (relevante valor moral) com qualificadora objetiva (recurso que dificulta a defesa). Não é hediondo.", lei:["cp121","cp121q"], j:["stj-hibrido"] },
+{ id:"hm21", tipo:"distincao", sec:"preterdolo", f:"Preterdolo × dolo eventual × culpa consciente.", v:"<b>Preterdolo</b>: quer lesionar, a morte vem sem querer (art. 129, § 3º). <b>Dolo eventual</b>: assume o risco de matar (homicídio doloso). <b>Culpa consciente</b>: prevê, mas confia que a morte não ocorrerá (culposo).", lei:[] },
+{ id:"hm22", tipo:"ce", sec:"preterdolo", f:"Certo ou errado: é possível homicídio preterdoloso qualificado.", v:"<b>Errado.</b> As qualificadoras do art. 121 exigem dolo de matar. O preterdolo é lesão corporal seguida de morte, outro crime.", lei:[] },
+{ id:"hm23", tipo:"numero", sec:"preterdolo", f:"Pena da lesão corporal seguida de morte (art. 129, § 3º) e no contexto de facção (§ 3º-A).", v:"Reclusão de <b>4 a 12 anos</b>; no contexto de facção, milícia ou grupo paramilitar, de <b>20 a 40 anos</b>.", lei:[] },
+{ id:"hm24", tipo:"caso", sec:"preterdolo", f:"Quem é julgado pelo júri: o autor de homicídio doloso ou o de lesão corporal seguida de morte?", v:"Só o autor de <b>homicídio doloso</b>. A lesão seguida de morte é julgada pelo juiz singular.", lei:[] },
+{ id:"hm25", tipo:"numero", sec:"formas", f:"Penas do homicídio simples, qualificado e do § 2º-D.", v:"Simples: <b>6 a 20</b>. Qualificado: <b>12 a 30</b>. Facção, milícia ou paramilitar: <b>20 a 40</b>.", lei:["cp121","cp121q","cp121d"] }
 ],
 questoes:[]
 };

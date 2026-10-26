@@ -69,6 +69,10 @@ function partes(m){
       var w = (sc.rapido || []).reduce(function(a, x){ return a + palavras(x); }, 0) + (sc.teoria || []).reduce(function(a, bl){ return a + (bl.p || []).reduce(function(c, x){ return c + palavras(x); }, 0); }, 0) + (sc.pegadinhas || []).reduce(function(a, x){ return a + palavras(x); }, 0) + (sc.quadro ? palavras(JSON.stringify(sc.quadro.rows)) : 0);
       p.push({ key:'resumo#' + sc.id, tab:'resumo', sec:sc.id, teoria:true, nome:curtoTitulo(sc.titulo) + ' - Teoria', min:Math.max(3, Math.round(w / 160)) });
     });
+    /* padrão NEXO de material: páginas de fechamento do capítulo (não entram em "teoria lida", para não zerar quem já leu) */
+    [['_fecho1','Comparativo e nota de importância',['comparativo','importancia'],4],['_fecho2','Como cai em prova e pegadinhas',['prova','pegadinhas'],4],['_fecho3','Resumo e diagnóstico final',['resumo','diagnostico'],3]].forEach(function(f){
+      p.push({ key:'resumo#' + f[0], tab:'resumo', blocos:f[2], nome:f[1] + ' - ' + nomeCap, min:f[3] });
+    });
   }else{
     p.push({ key:'resumo', tab:'resumo', teoria:true, nome:nomeCap + ' - Teoria', min:Math.max(5, Math.round((m.summary || []).reduce(function(a, x){ return a + palavras(x); }, 0) / 160)) });
   }
@@ -200,10 +204,12 @@ function montar(m, tab){
   var p = parteDe(m, key);
   pagina.mod = m.id; pagina.tab = tab; pagina.key = key;
   /* uma seção por página, como num livro */
-  if(p.sec){
+  if(p.sec || p.blocos){
     var cards = rc.querySelectorAll('.tr-card[id^="tr-s-"]');
-    Array.prototype.forEach.call(cards, function(c){ c.hidden = c.id !== 'tr-s-' + p.sec; });
+    Array.prototype.forEach.call(cards, function(c){ c.hidden = !p.sec || c.id !== 'tr-s-' + p.sec; });
     var barra = rc.querySelector('.tr-wrap > .tr-bar'); if(barra && cards.length) barra.hidden = true;
+    Array.prototype.forEach.call(rc.querySelectorAll('[data-trbloco]'), function(b){ b.hidden = !(p.blocos && p.blocos.indexOf(b.getAttribute('data-trbloco')) >= 0); });
+    var he = rc.querySelector('#tr-b-explicacao'); if(he) he.hidden = true;
   }
   if(p.banca){
     (m.official_questions || []).forEach(function(q, i){ var c = document.getElementById('card_official_' + m.id + '_' + i); var w = c && (c.closest('.practice-question-card') || c); if(w) w.hidden = bancaQ(q) !== p.banca; });

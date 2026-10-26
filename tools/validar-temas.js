@@ -52,6 +52,26 @@ for (const [id, T] of Object.entries(ctx.NEXO_TEMAS || {})) {
     if (!s.titulo || !s.curto) erro(id + '/' + s.id, 'seção sem titulo ou curto');
     if (!Array.isArray(s.rapido) || !s.rapido.length) erro(id + '/' + s.id, 'seção sem "rapido"');
   });
+  /* padrão de material (opcional; o site monta uma reserva quando falta) */
+  if (T.meta && T.meta.caminho && !(Array.isArray(T.meta.caminho) && T.meta.caminho.every(x => typeof x === 'string'))) erro(id, 'meta.caminho deve ser lista de textos');
+  if (T.importancia) {
+    const I = T.importancia;
+    if (!Number.isInteger(I.nivel) || I.nivel < 1 || I.nivel > 5) erro(id, 'importancia.nivel deve ser inteiro de 1 a 5');
+    (I.decore || []).forEach((r, k) => { if (!Array.isArray(r) || r.length !== 2) erro(id, 'importancia.decore[' + k + '] deve ser [rótulo, valor]'); });
+    (I.macetes || []).forEach((r, k) => { if (!Array.isArray(r) || r.length !== 2) erro(id, 'importancia.macetes[' + k + '] deve ser [título, texto]'); });
+    if ((I.decore || []).length > 12) erro(id, 'importancia.decore: no máximo 12 itens (precisa dar para decorar)');
+  }
+  if (T.comparativo) {
+    const q = T.comparativo;
+    if (!q.titulo || !Array.isArray(q.head) || q.head.length !== 2) erro(id, 'comparativo precisa de titulo e head com 2 colunas');
+    (q.rows || []).forEach((r, k) => { if (!Array.isArray(r) || r.length !== 2) erro(id, 'comparativo.rows[' + k + '] deve ter 2 colunas'); });
+  }
+  (T.prova || []).forEach((q, k) => {
+    if (!['ce', 'caso'].includes(q.tipo)) erro(id, 'prova[' + k + '].tipo deve ser ce ou caso');
+    if (q.tipo === 'ce' && !['Certo', 'Errado'].includes(q.gab)) erro(id, 'prova[' + k + '].gab deve ser Certo ou Errado');
+    if (!q.enun || !q.com) erro(id, 'prova[' + k + '] precisa de enun e com');
+  });
+  ['resumo', 'checklist'].forEach(c => { if (T[c] && !(Array.isArray(T[c]) && T[c].length && T[c].every(x => typeof x === 'string'))) erro(id, c + ' deve ser lista não vazia de textos'); });
   const L = new Set(), J = new Set(), C = new Set(), Q = new Set();
   const dup = (set, x, onde) => { if (set.has(x)) erro(id, 'id repetido em ' + onde + ': ' + x); set.add(x); };
   (T.lei || []).forEach(a => { if (!S.has(a.sec)) erro(id, 'grupo de lei "' + a.art + '" aponta para seção inexistente: ' + a.sec);
