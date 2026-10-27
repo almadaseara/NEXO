@@ -5,7 +5,7 @@
 'use strict';
 var orig=window.renderPracticeQuestionsPage;if(typeof orig!=='function')return;
 var KFS='nexo_questoes_fonte_lab_v1';
-var qi=0,qiAlvo=null,primeiro='',folhaAberta=null;
+var qi=0,qiAlvo=null,primeiro='',folhaAberta=null,entrada=false;
 function mobile(){return window.matchMedia&&window.matchMedia('(max-width:700px)').matches}
 function $(s,r){return (r||document).querySelector(s)}
 function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
@@ -20,7 +20,7 @@ function pad(n){return n<10?'0'+n:String(n)}
 
 /* ---------- folha (bottom sheet) ---------- */
 function fecharFolha(){var f=document.getElementById('nxm-folha');if(f)f.hidden=true;document.body.classList.remove('nxm-trava');folhaAberta=null}
-function abrirFolha(k){var f=document.getElementById('nxm-folha');if(!f)return;$$('.nxm-sec',f).forEach(function(s){s.hidden=s.dataset.k!==k});f.hidden=false;folhaAberta=k;document.body.classList.add('nxm-trava');if(k==='mais')preencherMais()}
+function abrirFolha(k){var f=document.getElementById('nxm-folha');if(!f)return;$$('.nxm-sec',f).forEach(function(s){s.hidden=s.dataset.k!==k});f.hidden=false;f.classList.toggle('nxm-cheia',k==='filtros');folhaAberta=k;document.body.classList.add('nxm-trava');if(k==='mais')preencherMais()}
 function contarFiltros(){
   var n=0;$$('#nxm-folha [data-nxf]').forEach(function(el){if(el.dataset.nxf==='kw')return;if(el.type==='checkbox'){if(el.dataset.nxf==='com'&&el.checked)n++;if(el.dataset.nxf==='anul'&&!el.checked)n++}else if(el.value)n++});
   var kw=$('.nxm-kw [data-nxf="kw"]');if(kw&&kw.value)n++;
@@ -80,7 +80,7 @@ function montar(){
   /* folha */
   var f=document.createElement('div');f.id='nxm-folha';f.hidden=true;f.className='nxm-folha';
   f.innerHTML='<div class="nxm-fundo" data-nxm="fechar"></div><div class="nxm-painel" role="dialog" aria-modal="true"><div class="nxm-alca"></div>'
-   +'<section class="nxm-sec" data-k="filtros"><div class="nxm-t"><b>Filtros</b><button type="button" class="nxm-x" data-nxm="fechar" aria-label="Fechar">×</button></div><div class="nxm-corpo" id="nxm-corpo"></div><div class="nxm-rodape"><button type="button" class="nxm-limpar" data-nxm="limpar">Limpar filtros</button><button type="button" class="nxm-ver" id="nxm-ver" data-nxm="fechar">Ver questões</button></div></section>'
+   +'<section class="nxm-sec" data-k="filtros"><div class="nxm-t"><b>Filtros</b><button type="button" class="nxm-x" data-nxm="fechar" aria-label="Fechar">×</button></div><div class="nxm-corpo" id="nxm-corpo"></div><div class="nxm-rodape"><button type="button" class="nxm-limpar" data-nxm="limpar">Limpar filtros</button><button type="button" class="nxm-ver" id="nxm-ver" data-nxm="fechar">Filtrar</button></div></section>'
    +'<section class="nxm-sec" data-k="mais" hidden><div class="nxm-t"><b>Mais opções</b><button type="button" class="nxm-x" data-nxm="fechar" aria-label="Fechar">×</button></div><div class="nxm-lista"></div></section></div>';
   document.body.appendChild(f);
   var corpo=$('#nxm-corpo',f);corpo.appendChild(grid);corpo.appendChild(rod);if(aviso)corpo.appendChild(aviso);
@@ -97,9 +97,15 @@ function montar(){
 
 window.renderPracticeQuestionsPage=function(){
   var r=orig.apply(this,arguments);
-  try{if(mobile())montar();else{var o=document.getElementById('nxm-folha');if(o)o.remove()}}catch(e){}
+  try{
+    if(mobile()){montar();if(entrada){entrada=false;if(contarFiltros()===0)abrirFolha('filtros')}}
+    else{var o=document.getElementById('nxm-folha');if(o)o.remove()}
+  }catch(e){}
   return r;
 };
+/* ao entrar em Questões pelo menu, sem filtros aplicados, a primeira tela é a de filtros */
+var abrirBiblioteca=window.openLibrary;
+if(typeof abrirBiblioteca==='function')window.openLibrary=function(r){if(r==='quest')entrada=true;return abrirBiblioteca.apply(this,arguments)};
 
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-nxm]');if(!b)return;

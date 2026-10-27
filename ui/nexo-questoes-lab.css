@@ -61,6 +61,9 @@
   .nxm-folha[hidden]{display:none}
   .nxm-fundo{position:absolute;inset:0;background:rgba(0,0,0,.55)}
   .nxm-painel{position:relative;width:100%;max-height:88vh;display:flex;flex-direction:column;background:var(--nx-surface,#162320);border-radius:20px 20px 0 0;border-top:1px solid var(--nx-line,#2d3e3a);padding:8px 16px calc(14px + env(safe-area-inset-bottom))}
+  .nxm-cheia .nxm-painel{height:100%;max-height:none;border-radius:0;border-top:0}
+  .nxm-cheia .nxm-alca{display:none}
+  .nxm-cheia .nxm-t b{font-size:15px;letter-spacing:.08em;text-transform:uppercase}
   .nxm-alca{width:42px;height:4px;border-radius:99px;background:var(--nx-line,#2d3e3a);margin:2px auto 8px}
   .nxm-sec{display:flex;flex-direction:column;min-height:0}.nxm-sec[hidden]{display:none}
   .nxm-t{display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px}.nxm-t b{font-size:17px}
