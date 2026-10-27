@@ -1,12 +1,12 @@
 /* NEXO Lab — Questões no celular: filtros em folha (bottom sheet), uma questão por vez com
    navegação Anterior / Ir para / Próximo, menu "⋯" (fonte, compartilhar, reportar, detalhes).
-   Só age em telas de até 700px; no computador a tela original continua igual. */
+   Só age em telas de até 1024px (celular e tablet); no computador a tela original continua igual. */
 (function(){
 'use strict';
 var orig=window.renderPracticeQuestionsPage;if(typeof orig!=='function')return;
 var KFS='nexo_questoes_fonte_lab_v1';
 var qi=0,qiAlvo=null,primeiro='',folhaAberta=null,entrada=false;
-function mobile(){return window.matchMedia&&window.matchMedia('(max-width:700px)').matches}
+function mobile(){return window.matchMedia&&window.matchMedia('(max-width:1024px)').matches}
 function $(s,r){return (r||document).querySelector(s)}
 function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -15,7 +15,9 @@ function setFonte(n){try{localStorage.setItem(KFS,String(n))}catch(e){}aplicarFo
 function aplicarFonte(){var v=document.getElementById('view');if(v){v.classList.remove('nxm-f0','nxm-f1','nxm-f2','nxm-f3');v.classList.add('nxm-f'+fonte())}}
 function cards(){return $$('#nxq-res > .practice-question-card')}
 function total(){var t=$('#nxq-count'),m=t&&t.textContent.match(/(\d+)/);return m?+m[1]:cards().length}
-function alturaBarra(){var b=$('.access-bar');return b?b.offsetHeight:66}
+function alturaBarra(){var b=$('.access-bar');if(!b)return 66;try{return getComputedStyle(b).position==='fixed'?b.offsetHeight:0}catch(e){return b.offsetHeight}}
+/* no tablet a barra de navegação acompanha a coluna de conteúdo (há menu lateral); no celular ocupa a largura toda */
+function ajustarNav(){var n=document.getElementById('nxm-nav'),v=document.getElementById('view');if(!n||!v)return;var w=window.innerWidth;if(w<=700){n.style.left='';n.style.right='';return}var r=v.getBoundingClientRect();n.style.left=Math.max(0,r.left)+'px';n.style.right=Math.max(0,w-r.right)+'px'}
 function pad(n){return n<10?'0'+n:String(n)}
 
 /* ---------- folha (bottom sheet) ---------- */
@@ -89,7 +91,7 @@ function montar(){
   nav.innerHTML='<button type="button" id="nxm-ant" data-nxm="ant" aria-label="Questão anterior">‹ Anterior</button><button type="button" id="nxm-pos" class="nxm-pos" data-nxm="ir" aria-label="Ir para questão">01 de 0</button><button type="button" id="nxm-prox" data-nxm="prox" aria-label="Próxima questão">Próxima ›</button><button type="button" class="nxm-mais" data-nxm="mais" aria-label="Mais opções">⋯</button>'
    +'<div id="nxm-ir" class="nxm-ir" hidden><label>Ir para a questão <input type="number" id="nxm-ir-n" min="1" inputmode="numeric"></label><button type="button" data-nxm="ir-ok">Ir</button></div>';
   view.appendChild(nav);
-  document.documentElement.style.setProperty('--nxm-b',alturaBarra()+'px');
+  document.documentElement.style.setProperty('--nxm-b',alturaBarra()+'px');ajustarNav();
   var ob=new MutationObserver(function(){focar()});ob.observe(res,{childList:true});
   pintarBotaoFiltros();focar();
   if(folhaAberta)abrirFolha(folhaAberta);
@@ -106,6 +108,7 @@ window.renderPracticeQuestionsPage=function(){
 /* ao entrar em Questões pelo menu, sem filtros aplicados, a primeira tela é a de filtros */
 var abrirBiblioteca=window.openLibrary;
 if(typeof abrirBiblioteca==='function')window.openLibrary=function(r){if(r==='quest')entrada=true;return abrirBiblioteca.apply(this,arguments)};
+window.addEventListener('resize',ajustarNav);
 
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-nxm]');if(!b)return;
