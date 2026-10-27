@@ -89,3 +89,9 @@
   .nxm-painel{max-width:760px;margin-inline:auto}
   .nxm-cheia .nxm-painel{max-width:none}
 }
+
+/* celular: na tela de questões a barra de abas inferior some e a navegação da questão ocupa a base */
+@media(max-width:700px){
+  body:has(#nxq-res) .access-bar{display:none}
+  body:has(#nxq-res) .nxm-nav{padding-bottom:calc(8px + env(safe-area-inset-bottom))}
+}
