@@ -1,6 +1,6 @@
-/* NEXO Lab — Questões no celular (até 700px) */
+/* NEXO Lab — Questões no celular e no tablet (até 1024px) */
 .nxm-folha[hidden],.nxm-nav,.nxm-barra{display:none}
-@media(max-width:700px){
+@media(max-width:1024px){
   body.nxm-trava{overflow:hidden}
   /* cabeçalho compacto */
   #view:has(#nxq-res) .library-heading{display:block;margin:6px 0 10px}
@@ -38,6 +38,12 @@
   #view.nxm-f1:has(#nxq-res) .practice-question-card .card.q{font-size:16px}
   #view.nxm-f2:has(#nxq-res) .practice-question-card .card.q{font-size:18px}
   #view.nxm-f3:has(#nxq-res) .practice-question-card .card.q{font-size:20px}
+  /* visual mais limpo: sem caixa de filtros, opções em cartões com destaque só na escolhida */
+  #view:has(#nxq-res) .practice-filter-shell.nxq{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+  #view:has(#nxq-res) .library-count{color:var(--nx-muted,#8aa39b)}
+  #view:has(#nxq-res) .practice-question-meta span{color:var(--nx-muted,#8aa39b)}
+  #view:has(#nxq-res) .practice-question-card label.opt{background:var(--nx-surface,#162320)!important;border:1px solid var(--nx-line,#2d3e3a)!important;box-shadow:none!important}
+  #view:has(#nxq-res) .practice-question-card label.opt:has(input:checked){border-color:var(--nx-accent,#3ec79a)!important}
   /* barra de navegação, acima da barra do app */
   .nxm-nav{position:fixed;left:0;right:0;bottom:var(--nxm-b,66px);z-index:36;display:flex;align-items:center;gap:6px;padding:8px 10px;background:color-mix(in srgb,var(--nx-bg,#0e1614) 94%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--nx-line,#2d3e3a)}
   .nxm-nav button{cursor:pointer;font:inherit;font-weight:600;font-size:13.5px;padding:11px 10px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--nx-ink,#eaf3f0);min-height:44px}
@@ -55,6 +61,9 @@
   .nxm-folha[hidden]{display:none}
   .nxm-fundo{position:absolute;inset:0;background:rgba(0,0,0,.55)}
   .nxm-painel{position:relative;width:100%;max-height:88vh;display:flex;flex-direction:column;background:var(--nx-surface,#162320);border-radius:20px 20px 0 0;border-top:1px solid var(--nx-line,#2d3e3a);padding:8px 16px calc(14px + env(safe-area-inset-bottom))}
+  .nxm-cheia .nxm-painel{height:100%;max-height:none;border-radius:0;border-top:0}
+  .nxm-cheia .nxm-alca{display:none}
+  .nxm-cheia .nxm-t b{font-size:15px;letter-spacing:.08em;text-transform:uppercase}
   .nxm-alca{width:42px;height:4px;border-radius:99px;background:var(--nx-line,#2d3e3a);margin:2px auto 8px}
   .nxm-sec{display:flex;flex-direction:column;min-height:0}.nxm-sec[hidden]{display:none}
   .nxm-t{display:flex;justify-content:space-between;align-items:center;padding:4px 0 10px}.nxm-t b{font-size:17px}
@@ -72,4 +81,11 @@
   .nxm-bt{cursor:pointer}
   .nxm-fs{display:flex;gap:8px}.nxm-fs button{cursor:pointer;font:inherit;font-weight:700;padding:8px 16px;border-radius:10px;border:1px solid var(--nx-line,#2d3e3a);background:var(--nx-surface-2,#1f2f2b);color:var(--nx-ink,#eaf3f0)}.nxm-fs button:disabled{opacity:.35}
   .nxm-det{padding:12px 4px;font-size:13.5px;color:var(--nx-ink-2,#cfe0da)}.nxm-det ul{margin:0;padding-left:18px;display:grid;gap:4px}
+}
+@media(min-width:701px) and (max-width:1024px){
+  #view:has(#nxq-res) #nxq-res{max-width:760px;margin-inline:auto}
+  #view:has(#nxq-res) .nxm-barra{max-width:760px;margin-inline:auto}
+  .nxm-nav{padding-inline:max(10px,calc((100% - 760px)/2))}
+  .nxm-painel{max-width:760px;margin-inline:auto}
+  .nxm-cheia .nxm-painel{max-width:none}
 }
