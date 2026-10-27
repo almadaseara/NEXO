@@ -38,6 +38,12 @@
   #view.nxm-f1:has(#nxq-res) .practice-question-card .card.q{font-size:16px}
   #view.nxm-f2:has(#nxq-res) .practice-question-card .card.q{font-size:18px}
   #view.nxm-f3:has(#nxq-res) .practice-question-card .card.q{font-size:20px}
+  /* visual mais limpo: sem caixa de filtros, opções em cartões com destaque só na escolhida */
+  #view:has(#nxq-res) .practice-filter-shell.nxq{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+  #view:has(#nxq-res) .library-count{color:var(--nx-muted,#8aa39b)}
+  #view:has(#nxq-res) .practice-question-meta span{color:var(--nx-muted,#8aa39b)}
+  #view:has(#nxq-res) .practice-question-card label.opt{background:var(--nx-surface,#162320)!important;border:1px solid var(--nx-line,#2d3e3a)!important;box-shadow:none!important}
+  #view:has(#nxq-res) .practice-question-card label.opt:has(input:checked){border-color:var(--nx-accent,#3ec79a)!important}
   /* barra de navegação, acima da barra do app */
   .nxm-nav{position:fixed;left:0;right:0;bottom:var(--nxm-b,66px);z-index:36;display:flex;align-items:center;gap:6px;padding:8px 10px;background:color-mix(in srgb,var(--nx-bg,#0e1614) 94%,transparent);backdrop-filter:blur(12px);border-top:1px solid var(--nx-line,#2d3e3a)}
   .nxm-nav button{cursor:pointer;font:inherit;font-weight:600;font-size:13.5px;padding:11px 10px;border-radius:11px;border:1px solid transparent;background:transparent;color:var(--nx-ink,#eaf3f0);min-height:44px}
