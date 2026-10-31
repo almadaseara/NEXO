@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Converte o PDF/HTML compilado de uma lei (salvo do Planalto) em data/vade/<id>.js para o Vade Mecum.
 
-Uso:  python3 tools/vade-extrair.py <arquivo.pdf|.txt> <id> "<nome curto>" "<prefixo usado nos temas>" <url-oficial>
+Se o PDF tiver redações antigas tachadas (Lei 8.112, por ex.), gere antes o texto limpo com tools/pdf-sem-tachado.py.
+Uso:  python3 tools/vade-extrair.py <arquivo.pdf|.txt> <id> "<nome curto>" "<prefixo usado nos temas>" <url-oficial> ["<ementa>"]
 Ex.:  python3 tools/vade-extrair.py L8429compilada.pdf l8429 "Lei 8.429/1992 — Improbidade administrativa" "Lei 8.429/1992" https://www.planalto.gov.br/ccivil_03/leis/l8429compilada.htm
 
 - Não altera o texto da lei: apenas separa caput, parágrafos, incisos e alíneas e guarda as notas de
@@ -13,6 +14,7 @@ import sys, re, json, subprocess, os, datetime
 if len(sys.argv) < 6:
     print(__doc__); sys.exit(1)
 src, lid, nome, prefixo, url = sys.argv[1:6]
+ementa_arg = sys.argv[6] if len(sys.argv) > 6 else None
 
 if src.lower().endswith('.pdf'):
     txt = subprocess.run(['pdftotext', '-layout', src, '-'], capture_output=True, text=True, check=True).stdout
@@ -34,7 +36,7 @@ for l in txt.split('\n'):
 # --- início do texto: depois de "Faço saber..." / antes disso fica o preâmbulo
 ini = 0
 for i, (s, _) in enumerate(linhas):
-    if re.search(r'decreta e eu sanciono|O PRESIDENTE DA REPÚBLICA', s): ini = i + 1
+    if re.search(r'decreta e eu sanciono|O PRESIDENTE DA REPÚBLICA', s): ini = i + 1; break
 cab = [s for s, _ in linhas[:ini] if s]
 titulo_lei = next((s for s in cab if re.match(r'^(LEI|DECRETO|CÓDIGO|CONSTITUIÇÃO|EMENDA)', s)), nome)
 ementa = ''
@@ -60,11 +62,19 @@ def fecha_bloco():
     if not bloco or art is None: bloco = None; return
     tipo, rot, t = bloco
     t = re.sub(r'\s+', ' ', t).strip()
+    t = re.sub(r'(?<!\()\bVigência encerrada\b(?!\))', '(Vigência encerrada)', t)  # rótulo do site vira nota
+    t = re.sub(r'\bencerrada\s+(?=\(Vigência encerrada\))', '', t)
+    t = re.sub(r'(\((?:Redação dada|Incluíd[oa]|Revogad[oa]|Vide|Vigência|Regulamento)[^()]*?)\s+(?=\((?:Vigência|Revogad|Vide|Regulamento|Incluíd|Redação))', r'\1) ', t)  # nota sem ")" antes da próxima
+    if re.search(r'\((?:Redação dada|Incluíd[oa]|Revogad[oa]|Vide|Vigência|Regulamento|Renumerad[oa]|Produção de efeito|Execução suspensa)[^()]*$', t): t += ')'  # o PDF às vezes perde o ")" final da nota
     notas = [re.sub(r'\s+', ' ', n).strip(' ,()') for n in NOTA.findall(t)]
     notas = ['(' + n + ')' if not n.startswith('(') else n for n in [re.sub(r'\s+', ' ', m.group(0)).strip(' ,') for m in NOTA.finditer(t)]]
     limpo = NOTA.sub(' ', t).strip()
     limpo = re.sub(r'\s+', ' ', limpo).strip(' ,')
+    limpo = re.sub(r'(\s+(Vigência|Regulamento))+\s*$', '', limpo)  # rótulos de link do site, não são texto da lei
+    limpo = re.sub(r'\s+§\s*$', '', limpo)
+    if re.fullmatch(r'[\s.;,:)]*', limpo): limpo = ''
     if limpo.count('(') > limpo.count(')'): limpo += ')'
+    if rot and re.fullmatch(r'[\s.;,:()]*', limpo) and not notas: limpo = '[texto tachado no original, sem nota — confira no Planalto]'
     it = {'k': tipo, 'r': rot, 't': limpo}
     if notas: it['n'] = notas
     if re.fullmatch(r'\(?(Revogad[oa]|VETADO)\)?\.?', limpo, re.I) or (re.fullmatch(r'[\s.;,:]*', limpo) and any('revogad' in n.lower() or 'vetado' in n.lower() for n in notas)):
@@ -87,7 +97,7 @@ for idx in range(ini, len(linhas)):
         fecha_art(); break
     if esperando_sub is not None and not re.match(r'^(Art\.|Seção|SEÇÃO|Subseção|SUBSEÇÃO|CAPÍTULO|TÍTULO)', s, re.I):
         esperando_sub['s'] = (esperando_sub['s'] + ' ' + s).strip(); continue
-    if ind > 14:  # título centralizado
+    if ind > 14 and not (re.match(r'^[.\s]*\(', s) and art is not None):  # título centralizado (nota entre parênteses solta é do dispositivo)
         if re.match(r'^(CAPÍTULO|TÍTULO|LIVRO|PARTE)\b', s, re.I):
             fecha_art(); cap = {'k': 'cap', 't': s, 's': ''}; itens.append(cap); esperando_sub = cap; continue
         if re.match(r'^(Seção|SEÇÃO|Subseção|SUBSEÇÃO)\b', s):
@@ -127,6 +137,7 @@ for a in itens:
     if a['k'] == 'art' and a['p']:
         a['p'][0]['k'] = 'cap'
 
+if ementa_arg: ementa = ementa_arg
 lei = {
     'id': lid, 'nome': nome, 'prefixo': prefixo, 'titulo': titulo_lei, 'ementa': ementa, 'fonte': url,
     'extraido': datetime.date.today().isoformat(),

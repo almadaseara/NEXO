@@ -9,7 +9,9 @@
 'use strict';
 
 var LEIS = [
-  { id:'l8429', nome:'Lei 8.429/1992', sub:'Improbidade administrativa (com a Lei 14.230/2021)', v:'20261031' }
+  { id:'l8429', nome:'Lei 8.429/1992', sub:'Improbidade administrativa (com a Lei 14.230/2021)', v:'20261031' },
+  { id:'l8112', nome:'Lei 8.112/1990', sub:'Servidores públicos civis da União, autarquias e fundações', v:'20261031' },
+  { id:'l14133', nome:'Lei 14.133/2021', sub:'Licitações e contratos administrativos', v:'20261031' }
 ];
 var K_PREF = 'nexo_vade_pref_v1', K_MARCAS = 'nexo_vade_marcas_v1', K_NOTAS = 'nexo_vade_notas_v1';
 var CORES = [['am','Amarelo'],['vd','Verde'],['rs','Rosa'],['az','Azul']];

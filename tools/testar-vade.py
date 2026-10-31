@@ -76,6 +76,16 @@ async def cenario(p, largura, altura, nome):
         conf('✕ oculta o sumário', await pg.evaluate("() => getComputedStyle(document.querySelector('.vd-ind')).display === 'none'"))
         await pg.click('[data-vd=indice].vd-t')
         conf('botão Sumário mostra de novo', await pg.evaluate("() => getComputedStyle(document.querySelector('.vd-ind')).display !== 'none'"))
+    # outras leis
+    for lid, narts, art in [('l8112', 263, '#vd-a132'), ('l14133', 196, '#vd-a75')]:
+        await pg.evaluate(f"() => nexoVade('{lid}')")
+        await pg.wait_for_selector(art)
+        n2 = await pg.evaluate("() => document.querySelectorAll('.vd-art').length")
+        conf(f'{lid}: {narts} artigos', n2 == narts, n2)
+        conf(f'{lid}: texto do artigo e ementa', await pg.evaluate(f"() => document.querySelector('{art} .vd-pc').textContent.length > 20 && document.querySelector('.vd-cab h2').textContent.includes('LEI')"))
+    conf('14.133 art. 75 tem botões ligados aos temas', await pg.evaluate("() => !!document.querySelector('#vd-a75 [data-pane]')"))
+    await pg.evaluate("() => nexoVade('l8429')")
+    await pg.wait_for_selector('#vd-a17')
     # busca
     await pg.fill('#vd-busca', '17-B')
     r = await pg.evaluate("() => [...document.querySelectorAll('.vd-art')].map(a => a.id)")
