@@ -13,7 +13,7 @@ Seção separada no menu lateral ("Vade Mecum"). Código em `ui/nexo-vade.js` e 
 ## Como acrescentar uma lei
 1. No Planalto, abra a versão **compilada** da lei e salve como PDF (o servidor do Claude não acessa o Planalto).
 2. Se o texto compilado tiver redações antigas tachadas (Lei 8.112, 14.133), gere antes o texto limpo: `python3 tools/pdf-sem-tachado.py lei.pdf lei.txt` (descarta o tachado já substituído e mantém só o rótulo + nota dos dispositivos revogados). Depois: `python3 tools/vade-extrair.py lei.txt l8112 "Lei 8.112/1990" "Lei 8.112/1990" https://www.planalto.gov.br/ccivil_03/leis/l8112consol.htm "<ementa>"`
-3. Inclua `{ id:'l8112', nome:'…', sub:'…', v:'AAAAMMDD' }` na lista `LEIS` de `ui/nexo-vade.js`.
+3. Inclua `{ id:'l8112', nome:'…', sub:'…', area:'Direito Administrativo', ano:1990, arts:263, v:'AAAAMMDD' }` na lista `LEIS` de `ui/nexo-vade.js`.
 4. `node tools/validar-vade.js l8112 texto-bruto.txt` (confere estrutura e fidelidade) e `python3 tools/testar-vade.py`.
 
 O `prefixo` (ex.: `Lei 8.429/1992`) liga os temas ao vade mecum: itens de `lei` cujo grupo começa com o prefixo e cujo `rot` começa com `Art. N` levam seus cards (`c`), julgados (`j`) e questões (`lei`) para o artigo N. Nada de conteúdo novo precisa ser escrito para a ligação.
@@ -25,3 +25,6 @@ O `prefixo` (ex.: `Lei 8.429/1992`) liga os temas ao vade mecum: itens de `lei` 
 
 ## Leis no Vade
 - Lei 8.429/1992 (35 artigos), Lei 8.112/1990 (263 artigos, texto compilado de 31/10/2026) e Lei 14.133/2021 (196 artigos), todas a partir dos PDFs compilados do Planalto. Dispositivos revogados aparecem como "(Revogado…)"; trechos tachados sem nota no original aparecem como "[texto tachado no original… confira no Planalto]".
+
+## Organização da lista
+A lista de leis é organizada por **área** (disciplina, na ordem de `AREAS`; dentro da área, da mais antiga para a mais recente), com alternativa **por ano** (mais recente primeiro) e **A–Z**; há busca por nome, assunto ou ano e o cartão "Continuar de onde parou" (última lei aberta). A escolha fica salva no aparelho.
