@@ -245,7 +245,6 @@ function aplicar(){
       el.className = 'nx-mk nx-mk-' + x.m.k + ' nx-c-' + (ehHex(x.m.c) ? 'am' : (x.m.c || 'am')) + (x.m.n ? ' nx-mk-temnota' : '');
       if(ehHex(x.m.c)) el.style.setProperty('--mk', x.m.c + '88');
       el.setAttribute('data-mk', x.m.id); el.tabIndex = -1;
-      if(x.m.n) el.title = 'Nota: ' + x.m.n;
       return el;
     });
   });
@@ -375,6 +374,21 @@ document.addEventListener('change', function(e){
   if(t.dataset.mkm === 'cor'){ var d = dados(), m = (d.marks || []).find(function(x){ return x.id === t.dataset.id; }); if(!m) return; m.c = t.value; m.k = 'hl'; guardar(d, 'Trocar cor'); fecharPop(); return; }
   if(pendente){ criar(pendente, 'hl', t.value); pendente = null; fecharPop(); }
 });
+/* janelinha da anotação ao passar o cursor num grifo com nota */
+var dicaNota = null;
+function fechaDicaNota(){ if(dicaNota){ dicaNota.remove(); dicaNota = null; } }
+document.addEventListener('mouseover', function(e){
+  var el = e.target.closest ? e.target.closest('.nx-mk[data-mk]') : null;
+  if(!el){ fechaDicaNota(); return; }
+  var d = chave() ? E().marcas(chave()) : null, x = d && (d.marks || []).find(function(k){ return k.id === el.getAttribute('data-mk'); });
+  if(!x || !x.n || document.querySelector('.nx-pop')){ fechaDicaNota(); return; }
+  fechaDicaNota();
+  dicaNota = document.createElement('div'); dicaNota.className = 'nx-dica-nota'; dicaNota.setAttribute('data-nx-skip', ''); dicaNota.textContent = x.n;
+  document.body.appendChild(dicaNota);
+  var r = el.getBoundingClientRect(), w = dicaNota.offsetWidth, h = dicaNota.offsetHeight, top = r.top - h - 8; if(top < 8) top = r.bottom + 8;
+  dicaNota.style.left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8)) + 'px'; dicaNota.style.top = top + 'px';
+});
+document.addEventListener('scroll', fechaDicaNota, true);
 document.addEventListener('mouseup', aoSoltar);
 document.addEventListener('touchend', function(){ setTimeout(aoSoltar, 30); });
 function aoSoltar(e){

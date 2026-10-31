@@ -299,6 +299,24 @@ document.addEventListener('selectionchange', function(){
     if(sel){ abrePop(sel.rect, null, sel); } else if(pop && !pop.getAttribute('data-id') && !(pop.contains(document.activeElement))) fechaPop();
   }, 350);
 });
+/* janelinha da anotação: aparece ao passar o cursor num grifo que tem nota */
+var dica = null;
+function fechaDica(){ if(dica){ dica.remove(); dica = null; } }
+document.addEventListener('mouseover', function(e){
+  if(atual() !== 'vade') return;
+  var m = e.target.closest ? e.target.closest('.vd-m') : null;
+  if(!m){ if(dica && !(e.target.closest && e.target.closest('.vd-dica-nota'))) fechaDica(); return; }
+  var reg = (marcas[S.leiId] || []).filter(function(x){ return x.id === m.getAttribute('data-id'); })[0];
+  if(!reg || !reg.n){ fechaDica(); return; }
+  if(pop) return;
+  fechaDica();
+  dica = document.createElement('div'); dica.className = 'vd-dica-nota'; dica.textContent = reg.n;
+  document.body.appendChild(dica);
+  var r = m.getBoundingClientRect(), w = dica.offsetWidth, h = dica.offsetHeight;
+  var top = r.top - h - 8; if(top < 8) top = r.bottom + 8;
+  dica.style.left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8)) + 'px'; dica.style.top = top + 'px';
+});
+document.addEventListener('scroll', fechaDica, true);
 document.addEventListener('mousedown', function(e){
   var b = e.target.closest && e.target.closest('.vd-pop button'); if(b) e.preventDefault();
 });

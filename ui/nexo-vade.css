@@ -153,3 +153,6 @@
 .vd-ib{font-size:13px;padding:2px}.vd-ib svg{width:15px;height:15px}
 .vd-extra,.vd-nt{padding:6px 8px;border-radius:12px}
 .vd-extra{width:max-content;max-width:100%;margin:0 auto}
+
+.vd-dica-nota{position:fixed;z-index:1001;max-width:min(320px,calc(100vw - 16px));padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:13px;line-height:1.45;color:var(--text);white-space:pre-wrap;pointer-events:none}
+.vd-dica-nota::before{content:'✎ Anotação';display:block;font-size:10.5px;font-weight:700;color:var(--gold);margin-bottom:3px}
