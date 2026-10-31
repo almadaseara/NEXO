@@ -21,4 +21,6 @@ python3 tools/testar-site.py         # tem que terminar com "OK" (requer playwri
 
 Módulo novo: inclua o `id` na constante `ARVORE` de `ui/nexo-ui.js` (árvore da barra lateral) e no tópico certo de `data/trilha/pcba.js` (trilha de estudos). Mudou cores no `index.html`? Rode `python3 tools/gerar-tema-escuro.py`.
 
+Vade Mecum (`ui/nexo-vade.js`, `data/vade/`): veja `docs/VADE-MECUM.md`; rode `node tools/validar-vade.js` e `python3 tools/testar-vade.py` ao mexer nele.
+
 Sempre rode `git pull --rebase origin main` antes de enviar.
