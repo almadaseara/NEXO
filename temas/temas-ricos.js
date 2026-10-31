@@ -120,6 +120,12 @@
      Só embrulha texto (não muda nenhuma letra), então os grifos do aluno continuam ancorados. */
   var RX_REF=/((?:arts?\.|Art\.)\s*\d+[º°]?(?:-[A-Z])?(?:,\s*(?:§\s*\d+[º°]?|parágrafo único|caput|[IVXL]+\b|[a-z]\)))*(?:\s*(?:e|a)\s*\d+[º°]?(?:-[A-Z])?)?(?:\s+d[oa]s?\s+(?:CP|CPP|CF|CTB|ECA|LCP|CPM|Lei de Drogas))?|Súmulas?(?:\s+Vinculantes?)?\s+(?:n[º°]\s*)?\d+(?:\s+do\s+(?:STF|STJ))?|Lei\s+(?:n[º°]\s*)?\d{1,2}\.?\d{3}(?:\/\d{2,4})?|\b(?:ADPF|ADI|RE|HC|REsp|AgRg)\s+(?:n[º°]\s*)?\d[\d.]*|§\s*\d+[º°]?)/g;
   var RX_NUM=/(\b\d+\/\d+\b(?:\s+(?:a|até)\s+\d+\/\d+\b)?|\b\d+\s+(?:a\s+\d+\s+)?(?:dias|meses|anos|horas)\b|\bum\s+(?:sexto|terço)\s+a\s+(?:um|dois)\s+terços?\b|\bmetade\b)/g;
+  /* um parágrafo com várias definições coladas ("X: ... . Y: ...") vira um parágrafo por definição */
+  function quebrarPar(html){
+    var s=String(html||'');
+    var partes=s.split(/(?<=[.;])\s+(?=(?:<b>[^<]{2,70}<\/b>:\s|Outras denomina[çc][õo]es\b))/);
+    return partes.length>1 ? partes : [s];
+  }
   function colorir(html){
     if(!html) return html;
     var partes=String(html).split(/(<[^>]+>)/), dentroI=0;
@@ -197,7 +203,7 @@
     T.secoes.forEach(function(s,i){
       h+='<section class="tr-card" id="tr-s-'+s.id+'"><h2><span class="tr-sl" aria-hidden="true">'+String.fromCharCode(65+i)+'</span>'+s.titulo+'</h2>';
       h+='<div class="tr-quick"><div class="tr-lbl">Em 30 segundos</div><ul>'+s.rapido.map(function(x){return '<li>'+colorir(x)+'</li>'}).join('')+'</ul></div>';
-      h+='<div class="tr-read tr-cor tr-topicos'+(s.teoria.length>1?'':' tr-um')+'">'+s.teoria.map(function(t,k){return '<article class="tr-topico" id="tr-t-'+s.id+'-'+k+'"><h3><span class="tr-tn" aria-hidden="true">'+String.fromCharCode(65+i)+'.'+(k+1)+'</span>'+t.h+'</h3>'+t.p.map(function(p){return '<p>'+colorir(p)+'</p>'}).join('')+'</article>'}).join('')+'</div>';
+      h+='<div class="tr-read tr-cor tr-topicos'+(s.teoria.length>1?'':' tr-um')+'">'+s.teoria.map(function(t,k){return '<article class="tr-topico" id="tr-t-'+s.id+'-'+k+'"><h3><span class="tr-tn" aria-hidden="true">'+String.fromCharCode(65+i)+'.'+(k+1)+'</span>'+t.h+'</h3>'+t.p.map(function(p){return quebrarPar(p).map(function(q){return '<p>'+colorir(q)+'</p>'}).join('')}).join('')+'</article>'}).join('')+'</div>';
       if(s.quadro) h+=tabela(s.quadro);
       h+=counts(T,s.id)+'</section>';
     });
