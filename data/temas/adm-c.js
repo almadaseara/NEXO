@@ -382,7 +382,41 @@ secoes:[
     { h:"Ressarcimento", p:[
       "Imprescritível a ação de <b>ressarcimento</b> por <b>ato doloso</b> de improbidade (Tema 897); ressarcimento por ilícito culposo ou comum prescreve.",
       "Vedada a reversão do ônus da prova (art. 17, §19, I — validado)."]}],
-  pegadinhas:["Prescrição: 8 anos — e a intercorrente pela metade caiu no STF (2026).","O ente lesado também pode propor a ação.","Ressarcimento por dolo é imprescritível."]}
+  pegadinhas:["Prescrição: 8 anos — e a intercorrente pela metade caiu no STF (2026).","O ente lesado também pode propor a ação.","Ressarcimento por dolo é imprescritível."]},
+{ id:"sujeito", titulo:"Sujeito ativo, terceiros e sucessores", curto:"Quem responde",
+  rapido:["<b>Agente público</b> (art. 2º) é conceito amplo: abrange agentes políticos, servidores, empregados e quem exerce mandato, cargo, emprego ou função, <b>ainda que transitoriamente ou sem remuneração</b>. Particulares ligados por convênio, contrato ou ajuste com o poder público também podem ser alcançados (confira o parágrafo único).",
+    "<b>Terceiro</b> (art. 3º) responde só se <b>induzir ou concorrer dolosamente</b> para o ato; não há responsabilidade do particular isolado, sem ligação com agente público.",
+    "<b>Sócios, cotistas, diretores e colaboradores</b> de pessoa jurídica respondem apenas na <b>medida da sua participação e do benefício obtido</b> (confira o art. 3º, §1º).",
+    "<b>Sucessores</b> (art. 8º) respondem somente pela obrigação de <b>ressarcir</b>, até o limite do patrimônio transferido; <b>sanções pessoais não passam</b> aos herdeiros.",
+    "Agentes políticos em geral respondem por improbidade, em regra; a questão do foro e das exceções constitucionais é ponto de <b>atenção</b> — confira a jurisprudência atual antes de afirmar em prova."],
+  teoria:[
+    { h:"Como as bancas cobram", p:[
+      "<b>AOCP</b> costuma exigir a literalidade: quem é agente público, a ideia de exercício transitório ou sem remuneração e a responsabilidade do sucessor limitada ao patrimônio transferido.",
+      "<b>Cebraspe</b> usa o certo/errado para trocar o alcance: afirmar que o sucessor sofre suspensão de direitos políticos, ou que o terceiro responde sem dolo, torna o item errado."]}],
+  pegadinhas:["Sucessor: só ressarcimento, nunca as sanções pessoais.","Terceiro: precisa ter induzido ou concorrido dolosamente.","Agente público inclui o transitório e o não remunerado.","Sócio responde na medida da participação e do benefício."]},
+{ id:"rito", titulo:"Rito da ação, acordo e legitimidade", curto:"Rito e ANPC",
+  rapido:["Legitimidade para a ação: <b>Ministério Público</b> e a <b>pessoa jurídica lesada</b> — concorrente, após as ADIs 7.042 e 7.043 do STF.",
+    "A <b>petição inicial</b> precisa <b>individualizar a conduta</b> de cada réu e indicar os fatos e as provas mínimas; inicial genérica é rejeitada (confira o art. 17).",
+    "Fluxo: inicial → <b>notificação/citação</b> → defesa → decisão de <b>recebimento</b> (ou rejeição) → instrução → sentença. Do recebimento cabe <b>agravo de instrumento</b> (confira).",
+    "O réu pode ser ouvido em interrogatório, mas <b>o silêncio não gera confissão</b> (confira).",
+    "<b>ANPC</b> (acordo de não persecução civil, art. 17-B): exige <b>ressarcimento integral</b>, reversão da vantagem e <b>oitiva do ente lesado</b>; precisa de <b>homologação judicial</b>. Descumprido, impede novo acordo por um período (confira prazo).",
+    "A sentença deve ser <b>proporcional</b>, individualizar as sanções e <b>não há solidariedade</b> entre os réus quanto às sanções; não há remessa necessária (art. 17-C — confira)."],
+  teoria:[
+    { h:"Pontos que caem", p:[
+      "<b>AOCP</b>: ordem das fases, quem propõe, necessidade de homologação judicial do acordo.",
+      "<b>Cebraspe</b>: legitimidade exclusiva do MP (errado hoje), acordo sem ressarcimento integral (errado) e confissão por silêncio (errado)."]}],
+  pegadinhas:["Legitimidade não é exclusiva do MP.","ANPC sem ressarcimento integral não existe.","Acordo precisa de homologação judicial.","Silêncio no interrogatório não é confissão.","Sanções não são solidárias."]},
+{ id:"esferas", titulo:"Independência das esferas", curto:"Esferas",
+  rapido:["As esferas <b>cível/improbidade, penal e administrativa</b> são, em regra, <b>independentes</b> (art. 21).",
+    "A <b>absolvição criminal</b> só afasta a improbidade quando reconhece <b>inexistência do fato</b>, <b>negativa de autoria</b> ou excludentes como legítima defesa, estado de necessidade, estrito cumprimento do dever legal e exercício regular de direito (confira o art. 21, §4º e as ADIs).",
+    "Absolvição por <b>falta de provas</b> não vincula a ação de improbidade.",
+    "A <b>aprovação de contas</b> pelo Tribunal de Contas ou pelo Legislativo <b>não impede</b> a ação (art. 21, confira).",
+    "Sanções aplicadas em outra esfera pelo mesmo fato devem ser <b>consideradas/compensadas</b> na dosimetria (confira)."],
+  teoria:[
+    { h:"Como as bancas cobram", p:[
+      "<b>Cebraspe</b> adora: \"a absolvição criminal sempre impede a improbidade\" — <b>errado</b>.",
+      "<b>AOCP</b> tende a cobrar a regra literal da independência e as hipóteses em que a absolvição vincula."]}],
+  pegadinhas:["Independência não é absoluta: absolvição por inexistência do fato ou negativa de autoria vincula.","Absolvição por falta de provas não vincula.","Aprovação de contas não blinda o agente."]}
 ],
 lei:[
 { art:"Lei 8.429/1992, art. 1º", nome:"Dolo como elemento", sec:"dolo", itens:[
@@ -410,7 +444,19 @@ cards:[
 { id:"im4", tipo:"caso", sec:"sancoes", f:"Agente condenado só por violação a princípios (art. 11). O juiz pode decretar a perda da função?", v:"<b>Não</b> — no art. 11 cabem multa (até 24x a remuneração) e proibição de contratar (até 4 anos).", lei:["lia12"] },
 { id:"im5", tipo:"numero", sec:"sancoes", f:"Suspensão máxima dos direitos políticos: arts. 9º e 10.", v:"Art. 9º: até <b>14 anos</b>. Art. 10: até <b>12 anos</b>. Art. 11: não há.", lei:["lia12"] },
 { id:"im6", tipo:"numero", sec:"acao", f:"Prazo prescricional da ação de improbidade.", v:"<b>8 anos</b> do fato ou da cessação da permanência. A intercorrente \"pela metade\" (4 anos) foi derrubada pelo STF (2026).", lei:["lia23"], j:["stf-adi7236"] },
-{ id:"im7", tipo:"caso", sec:"acao", f:"Município lesado quer propor ação de improbidade contra ex-prefeito. Tem legitimidade?", v:"<b>Sim</b> — o STF restabeleceu a legitimidade da pessoa jurídica interessada (ADIs 7.042 e 7.043), ao lado do MP.", lei:["lia23"] }
+{ id:"im7", tipo:"caso", sec:"acao", f:"Município lesado quer propor ação de improbidade contra ex-prefeito. Tem legitimidade?", v:"<b>Sim</b> — o STF restabeleceu a legitimidade da pessoa jurídica interessada (ADIs 7.042 e 7.043), ao lado do MP.", lei:["lia23"] },
+{ id:"im8", tipo:"distincao", sec:"dolo", f:"Art. 9º × art. 10 × art. 11: o que cada um protege e qual a ideia-chave?", v:"<b>Art. 9º</b>: enriquecimento ilícito (vantagem indevida). <b>Art. 10</b>: lesão ao erário (perda patrimonial efetiva). <b>Art. 11</b>: violação de princípios (rol taxativo). Todos exigem <b>dolo</b>." },
+{ id:"im9", tipo:"numero", sec:"sancoes", f:"Direitos políticos e proibição de contratar por art. (9º / 10 / 11).", v:"Suspensão: <b>14 / 12 / não há</b>. Proibição de contratar: <b>14 / 12 / 4 anos</b>. Multa: <b>valor do acréscimo / valor do dano / até 24× a remuneração</b>." },
+{ id:"im10", tipo:"distincao", sec:"sancoes", f:"Qual sanção é exclusiva do art. 9º e qual sanção só existe para o art. 10 se concorrer a circunstância?", v:"<b>Perda dos bens acrescidos ilicitamente</b>: sempre no art. 9º; no art. 10 só se concorrer esse acréscimo. No art. 11 não há perda de bens nem da função." },
+{ id:"im11", tipo:"ce", sec:"sujeito", f:"Certo ou errado: o sucessor do agente que enriqueceu ilicitamente responde por todas as sanções aplicadas ao falecido.", v:"<b>Errado.</b> Sucessor responde só pelo <b>ressarcimento</b>, até o limite da herança/patrimônio transferido (art. 8º; confira)." },
+{ id:"im12", tipo:"caso", sec:"sujeito", f:"Particular, sem ligação alguma com agente público, causa dano ao erário. Responde por improbidade?", v:"<b>Em regra, não</b>: o terceiro só responde se <b>induzir ou concorrer dolosamente</b> com agente público (art. 3º)." },
+{ id:"im13", tipo:"caso", sec:"sujeito", f:"Quem exerce função pública sem remuneração e por tempo transitório é agente público para a LIA?", v:"<b>Sim</b> — o art. 2º alcança o exercício ainda que <b>transitório ou sem remuneração</b>." },
+{ id:"im14", tipo:"ce", sec:"rito", f:"Certo ou errado: só o Ministério Público tem legitimidade para propor ação de improbidade.", v:"<b>Errado.</b> A legitimidade é <b>concorrente</b>: MP e pessoa jurídica lesada (ADIs 7.042 e 7.043)." },
+{ id:"im15", tipo:"caso", sec:"rito", f:"Réu propõe ANPC oferecendo devolver apenas parte do dano. Cabe o acordo?", v:"<b>Não</b> — o ANPC exige <b>ressarcimento integral</b> do dano e reversão da vantagem, com oitiva do ente lesado e <b>homologação judicial</b>." },
+{ id:"im16", tipo:"ce", sec:"rito", f:"Certo ou errado: o silêncio do réu no interrogatório implica confissão ficta.", v:"<b>Errado.</b> O silêncio <b>não</b> gera confissão (confira o art. 17)." },
+{ id:"im17", tipo:"ce", sec:"esferas", f:"Certo ou errado: a absolvição criminal sempre impede a ação de improbidade pelo mesmo fato.", v:"<b>Errado.</b> Só vincula se reconhecer <b>inexistência do fato, negativa de autoria</b> ou excludentes (confira o art. 21 e as ADIs). Falta de provas não vincula." },
+{ id:"im18", tipo:"caso", sec:"esferas", f:"Contas do prefeito foram aprovadas pelo Tribunal de Contas. A ação de improbidade fica inviabilizada?", v:"<b>Não</b> — a aprovação de contas <b>não impede</b> a ação de improbidade (art. 21; confira)." },
+{ id:"im19", tipo:"distincao", sec:"rito", f:"Quem pode propor × quem precisa homologar: ação de improbidade e ANPC.", v:"Ação: <b>MP</b> e <b>ente lesado</b> (concorrente). ANPC: celebrado pelo legitimado e <b>homologado pelo juiz</b>, ouvido o ente lesado." }
 ],
 importancia:{ nivel:5,
   texto:"A reforma da Lei 14.230/2021 e o julgamento do STF em 2026 geram muitas questões: dolo obrigatório, rol taxativo do art. 11, sanções por espécie, prescrição de 8 anos e legitimidade.",
