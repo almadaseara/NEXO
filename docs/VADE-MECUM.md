@@ -5,6 +5,7 @@ Seção separada no menu lateral ("Vade Mecum"). Código em `ui/nexo-vade.js` e 
 ## O que o aluno vê
 - Lista de leis → lei em texto compilado (caput, parágrafos, incisos, alíneas), com busca por artigo (`17-B`, `art 12`) ou palavra, índice por capítulo/seção e tamanho de letra.
 - **Modo leitura**: só o texto da lei (esconde botões, notas de alteração "Redação dada…/Vide ADI" e dispositivos revogados).
+- **Ocultar revogados**: botão que esconde dispositivos, artigos inteiros e títulos de seção revogados (o modo leitura também os esconde). Preferência salva no aparelho.
 - **Julgados, Cards e Questões**: ficam fechados. Cada artigo tem botões com contagem; só abrem ao clicar (e cada julgado/card abre de novo ao clicar).
 - **Grifos e notas**: só aparecem (e só podem ser criados) com o botão "Grifos e notas" ligado. Selecionar um trecho abre cores + anotação; há também nota por artigo. Ficam no aparelho (`localStorage`: `nexo_vade_marcas_v1`, `nexo_vade_notas_v1`).
 
