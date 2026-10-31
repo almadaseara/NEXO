@@ -179,3 +179,6 @@
 .vd-cab{position:static!important;z-index:auto!important}
 .vd-cab{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0 0 6px!important}
 .vd-nome{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
+
+.vd-ih{display:flex;align-items:center;justify-content:space-between;margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.vd-ix{background:none;border:0;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:6px}.vd-ix:hover{background:var(--panel)}
