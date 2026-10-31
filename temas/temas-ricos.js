@@ -23,6 +23,10 @@
   + '.tr-tbl th,.tr-tbl td{padding:7px 12px;border-top:1px solid var(--line,#e3e9e8);text-align:left;vertical-align:top}'
   + '.tr-tbl th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted,#778585);background:var(--panel2,#edf3f2)}'
   + '.tr-links{display:flex;flex-wrap:wrap;gap:6px;padding-top:6px;border-top:1px dashed var(--line,#e3e9e8)}'
+  + '.tr-inl{margin:8px 0 4px;padding:12px 14px;border:1px solid var(--line,#e3e9e8);border-left:3px solid var(--accent,#1f6f5c);border-radius:10px;background:var(--panel,#fff);font-size:14px;line-height:1.6;max-height:62vh;overflow:auto}'
+  + '.tr-inl h4{margin:4px 0 6px;font-size:15px}'
+  + '.tr-inl details{border-bottom:1px dashed var(--line,#e3e9e8);padding:6px 0}'
+  + '.tr-inl summary{cursor:pointer;font-weight:600}'
   + '.tr-chip{display:inline-flex;gap:5px;align-items:center;border:1px solid var(--line,#e3e9e8);background:var(--panel2,#edf3f2);color:inherit;border-radius:8px;padding:4px 9px;font-size:12.5px;cursor:pointer;font:inherit;font-size:12.5px}'
   + '.tr-chip:hover{border-color:var(--green,#24766b)}'
   + '.tr-chip b{color:var(--green,#24766b)}'
@@ -324,12 +328,61 @@
 
   function rerender(){ var m=modules.find(function(x){return x.id===lastModule}); if(m) window.renderTab(m,lastTab); }
   function focusEl(id){ var el=document.getElementById(id); if(!el) return; el.scrollIntoView({behavior:'smooth',block:'start'}); el.classList.remove('tr-flash'); void el.offsetWidth; el.classList.add('tr-flash'); }
+  /* conteúdo que abre dentro do próprio texto (jurisprudência, lei seca e flashcards ligados ao trecho) */
+  function jurisInline(T,id){
+    var j=(T.juris||[]).find(function(x){return x.id===id}); if(!j) return '';
+    return '<h4>'+esc(j.titulo)+'</h4><div class="muted small"><b>'+esc(j.trib)+'</b> · '+esc(j.tipo)+' · '+esc(j.num)+(j.data?' · '+esc(j.data):'')+'</div>'
+      +'<blockquote class="tr-quote">'+(j.sintese?'<b>Em síntese:</b> ':'')+esc(j.texto)+'</blockquote>'+(j.explica?'<div>'+esc(j.explica)+'</div>':'')
+      +'<div class="muted small"><a href="'+j.fonte+'" target="_blank" rel="noopener noreferrer">Conferir na fonte ↗</a></div>';
+  }
+  function leiInline(T,id){
+    var it=null; T.lei.forEach(function(a){ a.itens.forEach(function(i){ if(i.id===id) it=i; }); });
+    if(!it) return '';
+    return '<div class="tr-bar"><span class="tr-rot">'+it.rot+'</span></div><div class="tr-texto">'+gx(it.t)+'</div>'+(it.nota?'<div class="tr-nota">('+esc(it.nota)+')</div>':'');
+  }
+  /* Lei seca, Julgados e Flashcards de uma seção: só o que é desta seção, abertos no texto */
+  function secInline(T,trgo,sec){
+    if(trgo==='lei'){
+      return T.lei.filter(function(a){return a.sec===sec}).map(function(a){
+        return '<details><summary>'+esc(a.art)+' · '+esc(a.nome)+'</summary>'+a.itens.map(function(i){
+          return '<div class="tr-bar"><span class="tr-rot">'+i.rot+'</span></div><div class="tr-texto">'+gx(i.t)+'</div>'+(i.nota?'<div class="tr-nota">('+esc(i.nota)+')</div>':'');
+        }).join('')+'</details>';
+      }).join('');
+    }
+    if(trgo==='juris'){
+      return (T.juris||[]).filter(function(j){return j.sec===sec}).map(function(j){
+        return '<details><summary>'+esc(j.trib)+' · '+esc(j.num)+' — '+esc(j.titulo)+'</summary>'+jurisInline(T,j.id).replace(/^<h4>.*?<\/h4>/,'')+'</details>';
+      }).join('');
+    }
+    return cardsInline(T,T.cards.filter(function(c){return c.sec===sec}).map(function(c){return c.id}).join(','));
+  }
+  function cardsInline(T,ids){
+    var cs=String(ids).split(',').map(function(id){return T.cards.find(function(c){return c.id===id})}).filter(Boolean);
+    if(!cs.length) return '';
+    return cs.map(function(c){return '<details><summary>'+c.f+'</summary><p>'+c.v+'</p></details>'}).join('');
+  }
 
   document.addEventListener('click', function(e){
     var t = e.target.closest('[data-trgo],[data-trsec],[data-trjump],[data-trtoggle],[data-trjs],[data-trnav],[data-trflip],[data-trg],[data-trq],[data-trall]');
     if(!t || !lastModule) return;
     var m = modules.find(function(x){return x.id===lastModule}); if(!m || !m.rich) return;
     var T = m.rich, d = t.dataset;
+    /* jurisprudência, lei seca e flashcards abrem no próprio texto (como no Vade Mecum), sem trocar de aba */
+    if(d.trgo && (d.trgo==='juris'||d.trgo==='lei'||d.trgo==='flashcard_topico') && (d.trtarget||d.trcards||d.trsec2)){
+      var anc = t.closest('.tr-links') || t;
+      var idBox = 'tr-inl-' + (d.trgo + '-' + (d.trtarget || d.trcards || d.trsec2)).replace(/[^\w-]/g, '_');
+      var ja = document.getElementById(idBox);
+      if(ja){ ja.remove(); t.setAttribute('aria-expanded', 'false'); return; }
+      var conteudo;
+      if(d.trtarget) conteudo = d.trgo==='juris' ? jurisInline(T, d.trtarget.replace('tr-j-','')) : leiInline(T, d.trtarget.replace('tr-l-',''));
+      else if(d.trcards) conteudo = cardsInline(T, d.trcards);
+      else conteudo = secInline(T, d.trgo, d.trsec2);
+      if(!conteudo) return;
+      var caixa = document.createElement('div'); caixa.id = idBox; caixa.className = 'tr-inl'; caixa.innerHTML = conteudo;
+      anc.insertAdjacentElement('afterend', caixa);
+      t.setAttribute('aria-expanded', 'true');
+      return;
+    }
     if(d.trgo){
       UI.custom=false; UI.deck=null;
       if(d.trsec2) UI.sec=d.trsec2; else if(d.trtarget) UI.sec='todas';
