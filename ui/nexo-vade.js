@@ -12,7 +12,10 @@ var LEIS = [
   { id:'l8429', nome:'Lei 8.429/1992', sub:'Improbidade administrativa (com a Lei 14.230/2021)', v:'20261031' }
 ];
 var K_PREF = 'nexo_vade_pref_v1', K_MARCAS = 'nexo_vade_marcas_v1', K_NOTAS = 'nexo_vade_notas_v1';
-var CORES = [['am','Amarelo'],['vd','Verde'],['rs','Rosa'],['az','Azul'],['rx','Lilás']];
+var CORES = [['am','Amarelo'],['vd','Verde'],['rs','Rosa'],['az','Azul']];
+var CORES_X = [['rx','Lilás','#a78bfa'],['lj','Laranja','#fb923c'],['vm','Vermelho','#ef4444'],['tl','Turquesa','#14b8a6'],['ci','Cinza','#9ca3af'],['mr','Marrom','#a16207'],['lm','Limão','#d4e157'],['in','Índigo','#6366f1']];
+function corStyle(c){ return /^#[0-9a-f]{6}$/i.test(c) ? ' style="background:' + c + '66"' : ''; }
+function corClasse(c){ return /^#/.test(c) ? '' : ' vd-c-' + c; }
 var STATUS = { vigente:'Vigente', atencao:'Atenção', divergencia:'Divergência', pendente:'Em julgamento' };
 var TIPO_CARD = { caso:'Caso prático', numero:'Números e prazos', distincao:'Distinção', lacuna:'Complete a lei', ce:'Certo ou errado', juris:'Jurisprudência' };
 
@@ -81,7 +84,7 @@ function textoHTML(txt, a, i, q){
   ms.forEach(function(m){
     if(m.s < pos || m.e > txt.length) return;
     out += destaca(txt.slice(pos, m.s), q);
-    out += '<span class="vd-m vd-c-' + m.c + '" data-vd="marca" data-id="' + m.id + '">' + destaca(txt.slice(m.s, m.e), q) + (m.n ? '<sup class="vd-nm" title="Tem anotação">✎</sup>' : '') + '</span>';
+    out += '<span class="vd-m' + corClasse(m.c) + '"' + corStyle(m.c) + ' data-vd="marca" data-id="' + m.id + '">' + destaca(txt.slice(m.s, m.e), q) + (m.n ? '<sup class="vd-nm" title="Tem anotação">✎</sup>' : '') + '</span>';
     pos = m.e;
   });
   return out + destaca(txt.slice(pos), q);
@@ -260,15 +263,18 @@ function lerSelecao(){
 function abrePop(rect, existente, sel){
   fechaPop(); selAtual = sel || null;
   pop = document.createElement('div'); pop.className = 'vd-pop'; pop.setAttribute('role', 'dialog');
-  var h = '<div class="vd-cores">' + CORES.map(function(c){ return '<button type="button" class="vd-cor vd-c-' + c[0] + (existente && existente.c === c[0] ? ' on' : '') + '" data-vd="cor" data-c="' + c[0] + '" aria-label="' + c[1] + '" title="' + c[1] + '"></button>'; }).join('') + '</div>';
-  h += '<textarea class="vd-pn" rows="2" placeholder="Anotação (opcional)">' + esc(existente ? existente.n || '' : '') + '</textarea><div class="vd-pa">';
-  h += existente ? '<button type="button" class="vd-link" data-vd="salvar-nota">Salvar nota</button><button type="button" class="vd-link vd-del" data-vd="apagar">Remover grifo</button>' : '<button type="button" class="vd-link" data-vd="cancela">Cancelar</button>';
-  h += '</div>';
+  function dot(k, nome, hex){ var on = existente && existente.c === (hex || k); return '<button type="button" class="vd-cor vd-d-' + k + (on ? ' on' : '') + '" data-vd="cor" data-c="' + (hex || k) + '" aria-label="' + nome + '" title="' + nome + '"' + (hex ? ' style="background:' + hex + '"' : '') + '>' + (on ? '<svg viewBox="0 0 12 12" width="12" height="12"><path d="M2.5 6.5l2.2 2.2 4.8-5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '') + '</button>'; }
+  var h = '<div class="vd-pill"><div class="vd-cores">' + CORES.map(function(c){ return dot(c[0], c[1]); }).join('') +
+    '<button type="button" class="vd-cor vd-mais" data-vd="mais" aria-label="Mais cores" title="Mais cores / personalizar">+</button></div>';
+  if(existente) h += '<span class="vd-sep"></span><button type="button" class="vd-ib" data-vd="nota-pop" aria-label="Anotação" title="Anotação">✎</button><button type="button" class="vd-ib vd-del" data-vd="apagar" aria-label="Remover grifo" title="Remover grifo"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg></button>';
+  h += '</div><div class="vd-extra" hidden><div class="vd-cores">' + CORES_X.map(function(c){ return dot(c[0], c[1], c[2]); }).join('') +
+    '<label class="vd-cor vd-pers" title="Cor personalizada"><input type="color" data-vd="cor-livre" value="#ff8800" aria-label="Cor personalizada"></label></div></div>';
+  if(existente) h += '<div class="vd-nt" hidden><textarea class="vd-pn" rows="2" placeholder="Anotação (opcional)">' + esc(existente.n || '') + '</textarea><button type="button" class="vd-link" data-vd="salvar-nota">Salvar nota</button></div>';
   pop.innerHTML = h; pop.setAttribute('data-id', existente ? existente.id : '');
   document.body.appendChild(pop);
-  var w = Math.min(272, window.innerWidth - 16), left = Math.max(8, Math.min(rect.left + rect.width / 2 - w / 2, window.innerWidth - w - 8)), top = rect.bottom + 8;
-  if(top + 150 > window.innerHeight) top = rect.top - 150;
-  top = Math.max(8, Math.min(top, window.innerHeight - 160));
+  var w = Math.min(260, window.innerWidth - 16), left = Math.max(8, Math.min(rect.left + rect.width / 2 - w / 2, window.innerWidth - w - 8)), top = rect.bottom + 10;
+  if(top + 120 > window.innerHeight) top = rect.top - 60;
+  top = Math.max(8, Math.min(top, window.innerHeight - 120));
   pop.style.width = w + 'px'; pop.style.left = left + 'px'; pop.style.top = top + 'px';
 }
 function criaMarca(cor, nota){
@@ -295,6 +301,13 @@ document.addEventListener('selectionchange', function(){
 });
 document.addEventListener('mousedown', function(e){
   var b = e.target.closest && e.target.closest('.vd-pop button'); if(b) e.preventDefault();
+});
+document.addEventListener('change', function(e){
+  var t = e.target;
+  if(t && t.getAttribute && t.getAttribute('data-vd') === 'cor-livre' && pop){
+    var cor = t.value, pid = pop.getAttribute('data-id');
+    if(pid){ var m = (marcas[S.leiId] || []).filter(function(x){ return x.id === pid; })[0]; if(m){ m.c = cor; salvaMarcas(); var art = m.a; fechaPop(); refazArt(art); } } else criaMarca(cor, '');
+  }
 });
 document.addEventListener('input', function(e){
   var t = e.target;
@@ -333,10 +346,12 @@ document.addEventListener('click', function(e){
     case 'resp': var kr = b.getAttribute('data-k'); if(!S.aberto[kr]) S.aberto[kr] = b.getAttribute('data-r'); refazArt(b.closest('.vd-art').getAttribute('data-art')); break;
     case 'nota': var an = b.getAttribute('data-art'); S.nota[an] = !S.nota[an]; refazArt(an); break;
     case 'cor':
-      var nt = pop ? pop.querySelector('.vd-pn').value : '', cor = b.getAttribute('data-c'), pid = pop && pop.getAttribute('data-id');
-      if(pid){ var m = (marcas[S.leiId] || []).filter(function(x){ return x.id === pid; })[0]; if(m){ m.c = cor; m.n = nt; salvaMarcas(); var art = m.a; fechaPop(); refazArt(art); } }
+      var pn = pop && pop.querySelector('.vd-pn'), nt = pn ? pn.value : '', cor = b.getAttribute('data-c'), pid = pop && pop.getAttribute('data-id');
+      if(pid){ var m = (marcas[S.leiId] || []).filter(function(x){ return x.id === pid; })[0]; if(m){ m.c = cor; if(pn) m.n = nt; salvaMarcas(); var art = m.a; fechaPop(); refazArt(art); } }
       else criaMarca(cor, nt);
       break;
+    case 'mais': var ex = pop && pop.querySelector('.vd-extra'); if(ex) ex.hidden = !ex.hidden; break;
+    case 'nota-pop': var nn = pop && pop.querySelector('.vd-nt'); if(nn){ nn.hidden = !nn.hidden; var ta = nn.querySelector('textarea'); if(!nn.hidden && ta) ta.focus(); } break;
     case 'cancela': fechaPop(); try{ window.getSelection().removeAllRanges(); }catch(e){} break;
     case 'salvar-nota':
       var pid2 = pop && pop.getAttribute('data-id'), m2 = (marcas[S.leiId] || []).filter(function(x){ return x.id === pid2; })[0];

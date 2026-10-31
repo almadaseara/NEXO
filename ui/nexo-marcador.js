@@ -19,6 +19,15 @@ function LSg(k, d){ try{ var v = JSON.parse(localStorage.getItem(k)); return v =
 function LSs(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 
 var CORES = [['am', 'Amarelo'], ['vd', 'Verde'], ['rs', 'Rosa'], ['az', 'Azul'], ['rx', 'Lilás']];
+var CORES_PRINC = CORES.slice(0, 4);
+var CORES_EXTRA = [['rx', 'Lilás'], ['lj', 'Laranja'], ['vm', 'Vermelho'], ['tl', 'Turquesa'], ['ci', 'Cinza'], ['mr', 'Marrom'], ['lm', 'Limão'], ['in', 'Índigo']];
+function ehHex(c){ return /^#[0-9a-f]{6}$/i.test(c || ''); }
+/* bolinhas de cor do popup (estilo QConcursos): 4 principais + "+" que abre mais cores e cor personalizada */
+function bolinhas(attr, atual, extra){
+  function um(c){ return '<button type="button" class="nx-cor nx-c-' + c[0] + '" ' + attr + ' data-c="' + c[0] + '" aria-pressed="' + (atual === c[0]) + '" aria-label="' + c[1] + '" title="' + c[1] + '"></button>'; }
+  return CORES_PRINC.map(um).join('') + '<button type="button" class="nx-cor nx-cor-mais" data-mkp-mais aria-label="Mais cores" title="Mais cores / personalizar">+</button>'
+    + '<div class="nx-cores-x" hidden>' + CORES_EXTRA.map(um).join('') + '<label class="nx-cor nx-cor-livre" title="Cor personalizada"><input type="color" data-mk-livre ' + attr + ' value="' + (ehHex(atual) ? atual : '#ff8800') + '" aria-label="Cor personalizada"></label></div>';
+}
 var TIPOS = { hl:'Marca-texto', ul:'Sublinhado', st:'Tachado' };
 var ABA_NOME = { resumo:'Resumo', lei:'Lei seca', juris:'Jurisprudência', oficiais:'Questões oficiais', quest:'Questões do caderno', mapa:'Mapa mental', flashcard_topico:'Flashcards', oficial:'Fontes oficiais' };
 var IC = {
@@ -233,7 +242,8 @@ function aplicar(){
     var primeiro = true;
     envolver(mp2, i, i + x.m.q.length, function(){
       var el = document.createElement('span');
-      el.className = 'nx-mk nx-mk-' + x.m.k + ' nx-c-' + (x.m.c || 'am') + (x.m.n ? ' nx-mk-temnota' : '');
+      el.className = 'nx-mk nx-mk-' + x.m.k + ' nx-c-' + (ehHex(x.m.c) ? 'am' : (x.m.c || 'am')) + (x.m.n ? ' nx-mk-temnota' : '');
+      if(ehHex(x.m.c)) el.style.setProperty('--mk', x.m.c + '88');
       el.setAttribute('data-mk', x.m.id); el.tabIndex = -1;
       if(x.m.n) el.title = 'Nota: ' + x.m.n;
       return el;
@@ -324,7 +334,7 @@ function abrirPop(rect, html){
 }
 function popSelecao(sel){
   pendente = sel;
-  abrirPop(sel.rect, '<div class="nx-pop-row">' + CORES.map(function(c){ return '<button type="button" class="nx-cor nx-c-' + c[0] + '" data-mkp="hl" data-c="' + c[0] + '" aria-label="Marcar de ' + c[1].toLowerCase() + '" title="' + c[1] + '"></button>'; }).join('')
+  abrirPop(sel.rect, '<div class="nx-pop-row nx-pop-cores">' + bolinhas('data-mkp="hl"', null)
     + '<span class="nx-tsep v"></span><button type="button" class="nx-pbtn" data-mkp="ul" aria-label="Sublinhar" title="Sublinhar">' + IC.ul + '</button><button type="button" class="nx-pbtn" data-mkp="st" aria-label="Tachar" title="Tachar">' + IC.st + '</button><button type="button" class="nx-pbtn" data-mkp="nota" aria-label="Anotar" title="Anotar">' + IC.nota + '</button>'
     + (window.nexoFichas ? '<button type="button" class="nx-pbtn nx-pbtn-txt" data-mkp="ficha" title="Criar ficha de revisão com este trecho">+ Ficha</button>' : '') + '</div>');
 }
@@ -338,7 +348,7 @@ function popNota(rect, texto, alvo){
 }
 function popMarca(id, rect){
   var d = E().marcas(chave()), m = (d.marks || []).find(function(x){ return x.id === id; }); if(!m) return;
-  abrirPop(rect, '<div class="nx-pop-row">' + CORES.map(function(c){ return '<button type="button" class="nx-cor nx-c-' + c[0] + '" data-mkm="cor" data-c="' + c[0] + '" data-id="' + id + '" aria-pressed="' + (m.c === c[0]) + '" aria-label="Trocar para ' + c[1].toLowerCase() + '" title="' + c[1] + '"></button>'; }).join('')
+  abrirPop(rect, '<div class="nx-pop-row nx-pop-cores">' + bolinhas('data-mkm="cor" data-id="' + id + '"', m.c)
     + '<span class="nx-tsep v"></span><button type="button" class="nx-pbtn" data-mkm="nota" data-id="' + id + '" aria-label="' + (m.n ? 'Editar nota' : 'Anotar') + '" title="' + (m.n ? 'Editar nota' : 'Anotar') + '">' + IC.nota + '</button><button type="button" class="nx-pbtn perigo" data-mkm="tirar" data-id="' + id + '" aria-label="Remover marcação" title="Remover marcação">' + IC.lixo + '</button></div>'
     + (m.n ? '<p class="nx-pop-txt">' + escH(m.n) + '</p>' : ''));
 }
@@ -360,6 +370,11 @@ function abrirPainel(){
 }
 
 /* ---------- eventos ---------- */
+document.addEventListener('change', function(e){
+  var t = e.target; if(!t || !t.matches || !t.matches('[data-mk-livre]')) return;
+  if(t.dataset.mkm === 'cor'){ var d = dados(), m = (d.marks || []).find(function(x){ return x.id === t.dataset.id; }); if(!m) return; m.c = t.value; m.k = 'hl'; guardar(d, 'Trocar cor'); fecharPop(); return; }
+  if(pendente){ criar(pendente, 'hl', t.value); pendente = null; fecharPop(); }
+});
 document.addEventListener('mouseup', aoSoltar);
 document.addEventListener('touchend', function(){ setTimeout(aoSoltar, 30); });
 function aoSoltar(e){
@@ -389,6 +404,9 @@ document.addEventListener('click', function(e){
   }
   var cbt = t.closest && t.closest('[data-mkcor]');
   if(cbt){ cor = cbt.dataset.mkcor; LSs('nexo_mk_cor', cor); atualizarBarra(); return; }
+  var mais = t.closest && t.closest('[data-mkp-mais]');
+  if(mais){ var xx = mais.parentNode.querySelector('.nx-cores-x'); if(xx){ xx.hidden = !xx.hidden; var pp = mais.closest('.nx-pop'); if(pp){ var rr = pp.getBoundingClientRect(); if(rr.right > window.innerWidth - 8) pp.style.left = Math.max(8, window.innerWidth - rr.width - 8) + 'px'; } } return; }
+  if(t.closest && t.closest('[data-mk-livre]')) return;
   /* janelinha da seleção */
   var p = t.closest && t.closest('[data-mkp]');
   if(p){
