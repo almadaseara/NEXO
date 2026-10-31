@@ -8,10 +8,13 @@
 (function(){
 'use strict';
 
+/* Critério de organização: cada lei tem ÁREA (disciplina) e ANO; a lista pode ser agrupada por área, ordenada por ano ou A–Z.
+   Para incluir uma lei nova, preencha area, ano e tipo (ver docs/VADE-MECUM.md). */
+var AREAS = ['Direito Constitucional', 'Direito Administrativo', 'Direito Penal', 'Direito Processual Penal', 'Legislação Penal Especial', 'Outras'];
 var LEIS = [
-  { id:'l8429', nome:'Lei 8.429/1992', sub:'Improbidade administrativa (com a Lei 14.230/2021)', v:'20261031' },
-  { id:'l8112', nome:'Lei 8.112/1990', sub:'Servidores públicos civis da União, autarquias e fundações', v:'20261031' },
-  { id:'l14133', nome:'Lei 14.133/2021', sub:'Licitações e contratos administrativos', v:'20261031' }
+  { id:'l8112', nome:'Lei 8.112/1990', sub:'Servidores públicos civis da União, autarquias e fundações', area:'Direito Administrativo', ano:1990, arts:263, v:'20261031' },
+  { id:'l8429', nome:'Lei 8.429/1992', sub:'Improbidade administrativa (com a Lei 14.230/2021)', area:'Direito Administrativo', ano:1992, arts:35, v:'20261031' },
+  { id:'l14133', nome:'Lei 14.133/2021', sub:'Licitações e contratos administrativos', area:'Direito Administrativo', ano:2021, arts:196, v:'20261031' }
 ];
 var K_PREF = 'nexo_vade_pref_v1', K_MARCAS = 'nexo_vade_marcas_v1', K_NOTAS = 'nexo_vade_notas_v1';
 var CORES = [['am','Amarelo'],['vd','Verde'],['rs','Rosa'],['az','Azul']];
@@ -31,9 +34,9 @@ function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
 var pref = ls(K_PREF, {});
-var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, ver:{ acoes:!pref.ver || pref.ver.acoes !== false, notas:!pref.ver || pref.ver.notas !== false, ementa:!!(pref.ver && pref.ver.ementa), rodape:!!(pref.ver && pref.ver.rodape) }, aberto:{}, indice:false, nota:{}, ferr:false, sumario:pref.sumario !== false };
+var S = { ordem:pref.ordem || 'area', filtroLeis:'', leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, ver:{ acoes:!pref.ver || pref.ver.acoes !== false, notas:!pref.ver || pref.ver.notas !== false, ementa:!!(pref.ver && pref.ver.ementa), rodape:!!(pref.ver && pref.ver.rodape) }, aberto:{}, indice:false, nota:{}, ferr:false, sumario:pref.sumario !== false };
 var marcas = ls(K_MARCAS, {}), notas = ls(K_NOTAS, {});
-function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev, ver:S.ver, sumario:S.sumario }); }
+function salvaPref(){ sv(K_PREF, { ordem:S.ordem, ultima:pref.ultima, leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev, ver:S.ver, sumario:S.sumario }); }
 
 /* ---------- carregar a lei e ligar aos temas ---------- */
 function carregar(id, ok, falha){
@@ -208,10 +211,34 @@ function leiHTML(){
       '<footer class="vd-pe">Texto compilado conferido no <a href="' + esc(S.lei.fonte) + '" target="_blank" rel="noopener noreferrer">Planalto</a> (arquivo de ' + esc(S.lei.extraido) + '). Este texto não substitui o publicado no Diário Oficial. As notas de alteração abrem no botão “i” de cada dispositivo; os “Vide ADI” ficam visíveis (escondidos no modo leitura).</footer>' +
     '</div></div></div>';
 }
-function listaHTML(){
-  return '<div class="vd vd-lista-leis"><div class="hero"><span class="badge b-green">VADE MECUM</span><h1>Vade Mecum</h1><p class="muted">Leis em texto compilado, com busca por artigo e modo leitura. Julgados, cards e questões ficam fechados e só abrem ao clicar. Grifos e notas só aparecem quando você liga o botão.</p></div>' +
-    LEIS.map(function(l){ return '<button type="button" class="vd-lei card" data-vd="abrir" data-id="' + l.id + '"><b>' + esc(l.nome) + '</b><span class="muted">' + esc(l.sub) + '</span></button>'; }).join('') + '</div>';
+function leiCard(l){
+  return '<button type="button" class="vd-lei card" data-vd="abrir" data-id="' + l.id + '"><span class="vd-lei-n"><b>' + esc(l.nome) + '</b><span class="vd-chip">' + l.arts + ' arts.</span></span><span class="muted">' + esc(l.sub) + '</span></button>';
 }
+function leisCorpo(){
+  var q = fold(S.filtroLeis || ''), L = LEIS.filter(function(l){ return !q || fold(l.nome + ' ' + l.sub + ' ' + l.area + ' ' + l.ano).indexOf(q) >= 0; });
+  if(!L.length) return '<p class="vd-vazio">Nenhuma lei encontrada.</p>';
+  var h = '';
+  var ult = pref.ultima && LEIS.filter(function(l){ return l.id === pref.ultima; })[0];
+  if(ult && !q) h += '<p class="vd-gh">Continuar de onde parou</p>' + leiCard(ult);
+  if(S.ordem === 'area'){
+    AREAS.forEach(function(ar){
+      var g = L.filter(function(l){ return l.area === ar; }).sort(function(x, y){ return x.ano - y.ano; });
+      if(g.length) h += '<p class="vd-gh">' + esc(ar) + ' <span class="vd-chip">' + g.length + '</span></p>' + g.map(leiCard).join('');
+    });
+  } else if(S.ordem === 'ano'){
+    h += '<p class="vd-gh">Da mais recente para a mais antiga</p>' + L.slice().sort(function(x, y){ return y.ano - x.ano; }).map(leiCard).join('');
+  } else {
+    h += '<p class="vd-gh">Ordem alfabética</p>' + L.slice().sort(function(x, y){ return x.sub.localeCompare(y.sub, 'pt'); }).map(leiCard).join('');
+  }
+  return h;
+}
+function listaHTML(){
+  return '<div class="vd vd-lista-leis"><div class="vd-lh"><h1>Vade Mecum</h1><p class="muted">Leis em texto compilado, com busca por artigo e modo leitura.</p></div>' +
+    '<div class="vd-lbar"><input type="search" id="vd-fl" placeholder="Buscar lei, assunto ou ano…" value="' + esc(S.filtroLeis) + '" autocomplete="off" aria-label="Buscar lei">' +
+    '<span class="vd-seg" role="group" aria-label="Organizar leis">' + [['area', 'Por área'], ['ano', 'Por ano'], ['az', 'A–Z']].map(function(o){ return '<button type="button" class="vd-t" data-vd="ordem" data-o="' + o[0] + '" aria-pressed="' + (S.ordem === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</span></div>' +
+    '<div id="vd-leis">' + leisCorpo() + '</div></div>';
+}
+function refazLeis(){ var c = $('#vd-leis'); if(c) c.innerHTML = leisCorpo(); }
 
 /* ---------- navegação ---------- */
 function head(t){ var h = document.getElementById('head'); if(h) h.textContent = t; }
@@ -223,6 +250,7 @@ window.nexoVade = function(id){
   if(!id){ S.leiId = null; viewEl().innerHTML = listaHTML(); return; }
   viewEl().innerHTML = '<div class="vd"><p class="muted">Carregando a lei…</p></div>';
   carregar(id, function(lei){
+    pref.ultima = id; salvaPref();
     S.leiId = id; S.lei = lei; S.busca = ''; S.aberto = {}; S.nota = {}; S.indice = window.innerWidth >= 1100 && pref.sumario !== false;
     head('Vade Mecum — ' + lei.nome);
     viewEl().innerHTML = leiHTML();
@@ -338,7 +366,8 @@ document.addEventListener('change', function(e){
 });
 document.addEventListener('input', function(e){
   var t = e.target;
-  if(t && t.id === 'vd-busca'){
+  if(t && t.id === 'vd-fl'){ S.filtroLeis = t.value; refazLeis(); }
+  else if(t && t.id === 'vd-busca'){
     S.busca = t.value; refazLista();
   } else if(t && t.getAttribute && t.getAttribute('data-vd') === 'notatxt'){
     var id = t.getAttribute('data-art'); notas[S.leiId] = notas[S.leiId] || {};
@@ -358,6 +387,7 @@ document.addEventListener('click', function(e){
     case 'leitura': S.leitura = !S.leitura; salvaPref(); var r = $('#vd-raiz'); if(r) r.className = classes(); b.setAttribute('aria-pressed', S.leitura); break;
     case 'grifos': S.grifos = !S.grifos; salvaPref(); fechaPop(); refaz(); break;
     case 'semrev': S.semRev = !S.semRev; salvaPref(); var r5 = $('#vd-raiz'); if(r5) r5.className = classes(); b.setAttribute('aria-pressed', S.semRev); break;
+    case 'ordem': S.ordem = b.getAttribute('data-o'); salvaPref(); $$('[data-vd=ordem]').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); refazLeis(); break;
     case 'ferr': S.ferr = !S.ferr; var fp = $('.vd-ferr'); if(fp) fp.hidden = !S.ferr; b.setAttribute('aria-pressed', S.ferr); break;
     case 'ver': break;
     case 'indice': S.indice = !S.indice; if(window.innerWidth >= 1100){ S.sumario = S.indice; salvaPref(); } var bi = $('[data-vd="indice"].vd-t'); if(bi) bi.setAttribute('aria-pressed', S.indice); var r2 = $('#vd-raiz'); if(r2) r2.className = classes(); b.setAttribute('aria-pressed', S.indice); break;

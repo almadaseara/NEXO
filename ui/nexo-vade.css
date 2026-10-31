@@ -183,3 +183,13 @@
 .vd-ih{display:flex;align-items:center;justify-content:space-between;margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .vd-ix{background:none;border:0;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:6px}.vd-ix:hover{background:var(--panel)}
 .vd-col{margin-left:auto!important;margin-right:auto!important;width:100%}
+
+/* lista de leis organizada */
+.vd-lh h1{margin:0 0 4px;font-size:26px}.vd-lh p{margin:0 0 14px}
+.vd-lbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+.vd-lbar input{flex:1 1 240px;min-width:0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:inherit;font-size:14px}
+.vd-seg{display:inline-flex;gap:4px}
+.vd-gh{margin:20px 0 4px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.vd-chip{display:inline-block;padding:1px 8px;border-radius:999px;background:var(--bg);border:1px solid var(--line);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0;text-transform:none}
+.vd-lei-n{display:flex;align-items:center;gap:10px}
+.vd-lei{margin:6px 0}
