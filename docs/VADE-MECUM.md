@@ -7,6 +7,7 @@ Seção separada no menu lateral ("Vade Mecum"). Código em `ui/nexo-vade.js` e 
 - **Modo leitura**: só o texto da lei (esconde botões, notas de alteração "Redação dada…/Vide ADI" e dispositivos revogados).
 - **Ocultar revogados**: botão que esconde dispositivos, artigos inteiros e títulos de seção revogados (o modo leitura também os esconde). Preferência salva no aparelho.
 - **Julgados, Cards e Questões**: ficam fechados. Cada artigo tem botões com contagem; só abrem ao clicar (e cada julgado/card abre de novo ao clicar).
+- **Interface**: barra enxuta (busca, Índice, ⚙). O ⚙ abre Ferramentas (modo leitura, revogados, grifos, tamanho) e "Mostrar na tela" (botões dos artigos, notas de alteração, ementa, rodapé), guardado no aparelho.
 - **Grifos e notas (estilo QConcursos)**: selecione qualquer trecho e aparece o popup com cores + anotação (sem ligar modo nenhum). O botão "Grifos visíveis/ocultos" só mostra ou esconde. Há também nota por artigo. Ficam no aparelho (`localStorage`: `nexo_vade_marcas_v1`, `nexo_vade_notas_v1`).
 
 ## Como acrescentar uma lei

@@ -29,9 +29,9 @@ function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
 var pref = ls(K_PREF, {});
-var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, aberto:{}, indice:false, nota:{} };
+var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, ver:{ acoes:!pref.ver || pref.ver.acoes !== false, notas:!pref.ver || pref.ver.notas !== false, ementa:!!(pref.ver && pref.ver.ementa), rodape:!!(pref.ver && pref.ver.rodape) }, aberto:{}, indice:false, nota:{}, ferr:false };
 var marcas = ls(K_MARCAS, {}), notas = ls(K_NOTAS, {});
-function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev }); }
+function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev, ver:S.ver }); }
 
 /* ---------- carregar a lei e ligar aos temas ---------- */
 function carregar(id, ok, falha){
@@ -168,7 +168,7 @@ function corpoHTML(){
   }
   S.lei.itens.forEach(function(x){
     if(x.k === 'art') h += artHTML(x, '');
-    else h += '<div class="vd-tit vd-tit-' + x.k + (/revogad/i.test(x.s || '') ? ' vd-titrev' : '') + '"><b>' + esc(x.t) + '</b>' + (x.s ? '<span>' + esc(x.s) + '</span>' : '') + '</div>';
+    else h += '<div class="vd-nome vd-nome-' + x.k + (/revogad/i.test(x.s || '') ? ' vd-titrev' : '') + '"><b>' + esc(x.t) + '</b>' + (x.s ? '<span>' + esc(x.s) + '</span>' : '') + '</div>';
   });
   return h;
 }
@@ -180,23 +180,29 @@ function indiceHTML(){
   });
   return h + '</nav>';
 }
-function classes(){ return 'vd vd-t' + S.tam + (S.leitura ? ' vd-leitura' : '') + (S.semRev ? ' vd-semrev' : '') + (S.grifos ? ' vd-grifos' : '') + (S.indice ? ' vd-com-indice' : ''); }
+function classes(){ return 'vd vd-t' + S.tam + (S.leitura ? ' vd-leitura' : '') + (S.semRev ? ' vd-semrev' : '') + (S.grifos ? ' vd-grifos' : '') + (S.indice ? ' vd-com-indice' : '') + (S.ver.acoes ? '' : ' vd-sem-acoes') + (S.ver.notas ? '' : ' vd-sem-notas') + (S.ver.ementa ? '' : ' vd-sem-ementa') + (S.ver.rodape ? '' : ' vd-sem-rodape'); }
 function leiHTML(){
   var n = (marcas[S.leiId] || []).length;
   return '<div class="' + classes() + '" id="vd-raiz">' +
     '<div class="vd-barra">' +
-      '<div class="vd-b1"><button type="button" class="vd-link" data-vd="voltar">← Leis</button><h1>' + esc(S.lei.nome) + '</h1></div>' +
-      '<div class="vd-b2"><input type="search" id="vd-busca" placeholder="Buscar artigo (17-B) ou palavra…" value="' + esc(S.busca) + '" autocomplete="off" aria-label="Buscar na lei">' +
-        '<div class="vd-bts">' +
+      '<div class="vd-b2"><button type="button" class="vd-link" data-vd="voltar" aria-label="Voltar para a lista de leis">←</button><span class="vd-nome">' + esc(S.lei.nome) + '</span>' +
+        '<input type="search" id="vd-busca" placeholder="Buscar artigo ou palavra…" value="' + esc(S.busca) + '" autocomplete="off" aria-label="Buscar na lei">' +
         '<button type="button" class="vd-t" data-vd="indice" aria-pressed="' + S.indice + '">Índice</button>' +
+        '<button type="button" class="vd-t vd-tb" data-vd="ferr" aria-pressed="' + S.ferr + '" aria-label="Ferramentas" title="Ferramentas">⚙</button></div>' +
+      '<div class="vd-ferr"' + (S.ferr ? '' : ' hidden') + '>' +
+        '<p class="vd-fh">Ferramentas</p>' +
         '<button type="button" class="vd-t" data-vd="leitura" aria-pressed="' + S.leitura + '">Modo leitura</button>' +
         '<button type="button" class="vd-t" data-vd="semrev" aria-pressed="' + S.semRev + '">Ocultar revogados</button>' +
         '<button type="button" class="vd-t" data-vd="grifos" aria-pressed="' + S.grifos + '">' + (S.grifos ? 'Grifos visíveis' : 'Grifos ocultos') + (n ? ' · ' + n : '') + '</button>' +
-        '<span class="vd-tamb"><button type="button" class="vd-t" data-vd="tam-" aria-label="Diminuir letra">A−</button><button type="button" class="vd-t" data-vd="tam+" aria-label="Aumentar letra">A+</button></span></div></div>' +
+        '<span class="vd-tamb"><button type="button" class="vd-t" data-vd="tam-" aria-label="Diminuir letra">A−</button><button type="button" class="vd-t" data-vd="tam+" aria-label="Aumentar letra">A+</button></span>' +
+        '<p class="vd-fh">Mostrar na tela</p>' +
+        [['acoes','Botões Julgados · Cards · Questões · Nota'],['notas','Notas de alteração e “Vide”'],['ementa','Ementa da lei'],['rodape','Rodapé com a fonte']].map(function(v){ return '<label class="vd-ck"><input type="checkbox" data-vd="ver" data-k="' + v[0] + '"' + (S.ver[v[0]] ? ' checked' : '') + '> ' + v[1] + '</label>'; }).join('') +
+        '<p class="vd-fd">✎ Dica: selecione qualquer trecho da lei para grifar e anotar.</p>' +
+      '</div>' +
     '</div>' +
     '<div class="vd-corpo"><div class="vd-ind">' + indiceHTML() + '</div><div class="vd-col">' +
       '<header class="vd-cab"><h2>' + esc(S.lei.titulo) + '</h2><p>' + esc(S.lei.ementa) + '</p></header>' +
-      '<p class="vd-dica">✎ Selecione qualquer trecho para grifar e anotar.</p><div id="vd-lista">' + corpoHTML() + '</div>' +
+      '<div id="vd-lista">' + corpoHTML() + '</div>' +
       '<footer class="vd-pe">Texto compilado conferido no <a href="' + esc(S.lei.fonte) + '" target="_blank" rel="noopener noreferrer">Planalto</a> (arquivo de ' + esc(S.lei.extraido) + '). Este texto não substitui o publicado no Diário Oficial. As notas de alteração abrem no botão “i” de cada dispositivo; os “Vide ADI” ficam visíveis (escondidos no modo leitura).</footer>' +
     '</div></div></div>';
 }
@@ -322,6 +328,7 @@ document.addEventListener('mousedown', function(e){
 });
 document.addEventListener('change', function(e){
   var t = e.target;
+  if(t && t.getAttribute && t.getAttribute('data-vd') === 'ver'){ S.ver[t.getAttribute('data-k')] = t.checked; salvaPref(); var rv = $('#vd-raiz'); if(rv) rv.className = classes(); return; }
   if(t && t.getAttribute && t.getAttribute('data-vd') === 'cor-livre' && pop){
     var cor = t.value, pid = pop.getAttribute('data-id');
     if(pid){ var m = (marcas[S.leiId] || []).filter(function(x){ return x.id === pid; })[0]; if(m){ m.c = cor; salvaMarcas(); var art = m.a; fechaPop(); refazArt(art); } } else criaMarca(cor, '');
@@ -340,7 +347,7 @@ document.addEventListener('input', function(e){
 document.addEventListener('click', function(e){
   if(atual() !== 'vade') return;
   var b = e.target.closest ? e.target.closest('[data-vd]') : null;
-  if(!b){ if(pop && !pop.contains(e.target)) fechaPop(); return; }
+  if(!b){ if(pop && !pop.contains(e.target)) fechaPop(); if(S.ferr && !(e.target.closest && e.target.closest('.vd-ferr'))){ S.ferr = false; var fq = $('.vd-ferr'); if(fq) fq.hidden = true; var fb = $('[data-vd="ferr"]'); if(fb) fb.setAttribute('aria-pressed', 'false'); } return; }
   var acao = b.getAttribute('data-vd');
   if(pop && !pop.contains(b) && acao !== 'marca') fechaPop();
   switch(acao){
@@ -349,6 +356,8 @@ document.addEventListener('click', function(e){
     case 'leitura': S.leitura = !S.leitura; salvaPref(); var r = $('#vd-raiz'); if(r) r.className = classes(); b.setAttribute('aria-pressed', S.leitura); break;
     case 'grifos': S.grifos = !S.grifos; salvaPref(); fechaPop(); refaz(); break;
     case 'semrev': S.semRev = !S.semRev; salvaPref(); var r5 = $('#vd-raiz'); if(r5) r5.className = classes(); b.setAttribute('aria-pressed', S.semRev); break;
+    case 'ferr': S.ferr = !S.ferr; var fp = $('.vd-ferr'); if(fp) fp.hidden = !S.ferr; b.setAttribute('aria-pressed', S.ferr); break;
+    case 'ver': break;
     case 'indice': S.indice = !S.indice; var r2 = $('#vd-raiz'); if(r2) r2.className = classes(); b.setAttribute('aria-pressed', S.indice); break;
     case 'tam+': case 'tam-': S.tam = Math.max(-2, Math.min(4, S.tam + (acao === 'tam+' ? 1 : -1))); salvaPref(); var r3 = $('#vd-raiz'); if(r3) r3.className = classes(); break;
     case 'limpar': S.busca = ''; var i = $('#vd-busca'); if(i) i.value = ''; refazLista(); break;

@@ -58,10 +58,10 @@
 }
 .vd-cab h2{font-size:15px;margin:0 0 6px;color:var(--muted);letter-spacing:.3px}
 .vd-cab p{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.5}
-.vd-tit{margin:22px 0 8px;padding:8px 12px;border-left:3px solid var(--green);background:var(--panel);border-radius:0 10px 10px 0;display:flex;flex-direction:column;gap:2px}
-.vd-tit b{font-size:13px;letter-spacing:.5px}
-.vd-tit span{font-size:13px;color:var(--muted)}
-.vd-tit-sec{margin-left:14px;border-left-color:var(--blue)}
+.vd-nome{margin:22px 0 8px;padding:8px 12px;border-left:3px solid var(--green);background:var(--panel);border-radius:0 10px 10px 0;display:flex;flex-direction:column;gap:2px}
+.vd-nome b{font-size:13px;letter-spacing:.5px}
+.vd-nome span{font-size:13px;color:var(--muted)}
+.vd-nome-sec{margin-left:14px;border-left-color:var(--blue)}
 .vd-art{padding:12px 4px 10px;border-bottom:1px solid var(--line);scroll-margin-top:110px}
 .vd-rev{color:var(--muted);font-style:italic}
 .vd-busca{background:rgba(255,198,92,.55);color:inherit;border-radius:3px;padding:0 1px}
@@ -156,3 +156,26 @@
 
 .vd-dica-nota{position:fixed;z-index:1001;max-width:min(320px,calc(100vw - 16px));padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--gold);box-shadow:0 8px 24px rgba(0,0,0,.35);font-size:13px;line-height:1.45;color:var(--text);white-space:pre-wrap;pointer-events:none}
 .vd-dica-nota::before{content:'✎ Anotação';display:block;font-size:10.5px;font-weight:700;color:var(--gold);margin-bottom:3px}
+
+/* interface minimalista: barra enxuta + painel de ferramentas */
+.vd-barra{padding-bottom:8px}
+.vd-b2{flex-wrap:nowrap;margin-top:0;position:relative}
+.vd-nome{font-weight:700;font-size:15px;white-space:nowrap}
+.vd-b2 input{flex:1 1 120px;padding:8px 12px}
+.vd-tb{width:34px;height:34px;padding:0;display:inline-grid;place-items:center;font-size:16px;flex:none}
+.vd-b2 .vd-t{flex:none}
+@media(max-width:650px){.vd-nome{display:none}.vd-b2{gap:6px}}
+.vd-ferr{position:absolute;right:0;top:calc(100% + 6px);z-index:30;width:min(300px,calc(100vw - 24px));background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;box-shadow:0 12px 32px rgba(0,0,0,.4);display:flex;flex-wrap:wrap;gap:6px}
+.vd-ferr[hidden]{display:none}
+.vd-fh{flex-basis:100%;margin:6px 0 2px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.vd-fh:first-child{margin-top:0}
+.vd-ck{flex-basis:100%;display:flex;gap:8px;align-items:center;font-size:13px;cursor:pointer;padding:3px 0}
+.vd-fd{flex-basis:100%;margin:8px 0 0;font-size:12px;color:var(--muted)}
+.vd-sem-acoes .vd-acoes,.vd-sem-acoes .vd-nota{display:none}
+.vd-sem-notas .vd-vide,.vd-sem-notas .vd-alt,.vd-sem-notas .vd-i{display:none}
+.vd-sem-ementa .vd-cab p{display:none}
+.vd-sem-rodape .vd-pe{display:none}
+.vd-dica{display:none}
+.vd-cab{position:static!important;z-index:auto!important}
+.vd-cab{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0 0 6px!important}
+.vd-nome{background:none!important;border:0!important;box-shadow:none!important;padding:0!important}
