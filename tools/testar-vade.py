@@ -80,6 +80,13 @@ async def cenario(p, largura, altura, nome):
     conf('modo leitura esconde botões, notas de alteração e revogados', r == {'ac': 'none', 'alt': 'none', 'rev': 'none'}, r)
     if FOTOS: await pg.screenshot(path=os.path.join(FOTOS, f'{nome}-leitura.png'))
     await pg.click('[data-vd=leitura]')
+    # ocultar revogados
+    antes = await pg.evaluate("() => [...document.querySelectorAll('.vd-rev,.vd-artrev,.vd-titrev')].filter(e => e.offsetParent !== null).length")
+    await pg.click('[data-vd=semrev]')
+    depois = await pg.evaluate("() => [...document.querySelectorAll('.vd-rev,.vd-artrev,.vd-titrev')].filter(e => e.offsetParent !== null).length")
+    conf('ocultar revogados esconde dispositivos, artigos e títulos', antes > 0 and depois == 0, (antes, depois))
+    await pg.click('[data-vd=semrev]')
+    conf('revogados voltam ao desligar', await pg.evaluate("() => document.querySelector('#vd-a4').offsetParent !== null"))
     # grifos e notas
     await pg.click('[data-vd=grifos]')
     conf('botão de nota aparece com grifos ligados', await pg.evaluate("() => !!document.querySelector('#vd-a1 [data-vd=nota]')"))

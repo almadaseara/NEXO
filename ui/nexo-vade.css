@@ -94,6 +94,8 @@
 .vd-cor.on{border-color:var(--text)}
 .vd-pn{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:inherit;font-size:13px;resize:vertical}
 .vd-pa{display:flex;justify-content:space-between}
+/* ocultar revogados: dispositivos, artigos inteiros e títulos de seção revogados */
+.vd-semrev .vd-rev,.vd-semrev .vd-artrev,.vd-semrev .vd-titrev,.vd-leitura .vd-artrev,.vd-leitura .vd-titrev{display:none}
 /* modo leitura: só o texto da lei */
 .vd-leitura .vd-acoes,.vd-leitura .vd-alt,.vd-leitura .vd-rev,.vd-leitura .vd-pe{display:none}
 .vd-leitura .vd-col{max-width:44rem;margin:0 auto}

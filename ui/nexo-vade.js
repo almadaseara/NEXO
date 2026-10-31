@@ -26,9 +26,9 @@ function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
 var pref = ls(K_PREF, {});
-var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:!!pref.grifos, tam:typeof pref.tam === 'number' ? pref.tam : 0, aberto:{}, indice:false, nota:{} };
+var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:!!pref.grifos, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, aberto:{}, indice:false, nota:{} };
 var marcas = ls(K_MARCAS, {}), notas = ls(K_NOTAS, {});
-function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam }); }
+function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev }); }
 
 /* ---------- carregar a lei e ligar aos temas ---------- */
 function carregar(id, ok, falha){
@@ -90,7 +90,8 @@ function textoHTML(txt, a, i, q){
 /* ---------- desenho ---------- */
 function artHTML(a, q){
   var lig = ligacoes(S.lei)[a.id] || { juris:[], cards:[], quest:[] };
-  var h = '<article class="vd-art" id="vd-' + a.id + '" data-art="' + a.id + '">';
+  var todoRev = a.p.every(function(p){ return p.rev; });
+  var h = '<article class="vd-art' + (todoRev ? ' vd-artrev' : '') + '" id="vd-' + a.id + '" data-art="' + a.id + '">';
   a.p.forEach(function(p, i){
     var rev = p.rev ? ' vd-rev' : '';
     var numA = parseInt(a.n, 10), rot = p.k === 'cap' ? '<b class="vd-r">Art. ' + esc(a.n) + (numA >= 10 ? '.' : '') + '</b> ' : (p.r ? '<b class="vd-r">' + esc(p.r) + '</b> ' : '');
@@ -159,19 +160,19 @@ function corpoHTML(){
   }
   S.lei.itens.forEach(function(x){
     if(x.k === 'art') h += artHTML(x, '');
-    else h += '<div class="vd-tit vd-tit-' + x.k + '"><b>' + esc(x.t) + '</b>' + (x.s ? '<span>' + esc(x.s) + '</span>' : '') + '</div>';
+    else h += '<div class="vd-tit vd-tit-' + x.k + (/revogad/i.test(x.s || '') ? ' vd-titrev' : '') + '"><b>' + esc(x.t) + '</b>' + (x.s ? '<span>' + esc(x.s) + '</span>' : '') + '</div>';
   });
   return h;
 }
 function indiceHTML(){
   var h = '<nav class="vd-idx" aria-label="Índice da lei">';
   S.lei.itens.forEach(function(x){
-    if(x.k === 'art') h += '<button type="button" class="vd-ia" data-vd="ir" data-art="' + x.id + '">' + esc(x.n) + '</button>';
-    else h += '<div class="vd-ic vd-ic-' + x.k + '"><b>' + esc(x.t) + '</b>' + (x.s ? ' ' + esc(x.s) : '') + '</div>';
+    if(x.k === 'art') h += '<button type="button" class="vd-ia' + (x.p.every(function(p){ return p.rev; }) ? ' vd-artrev' : '') + '" data-vd="ir" data-art="' + x.id + '">' + esc(x.n) + '</button>';
+    else h += '<div class="vd-ic vd-ic-' + x.k + (/revogad/i.test(x.s || '') ? ' vd-titrev' : '') + '"><b>' + esc(x.t) + '</b>' + (x.s ? ' ' + esc(x.s) : '') + '</div>';
   });
   return h + '</nav>';
 }
-function classes(){ return 'vd vd-t' + S.tam + (S.leitura ? ' vd-leitura' : '') + (S.grifos ? ' vd-grifos' : '') + (S.indice ? ' vd-com-indice' : ''); }
+function classes(){ return 'vd vd-t' + S.tam + (S.leitura ? ' vd-leitura' : '') + (S.semRev ? ' vd-semrev' : '') + (S.grifos ? ' vd-grifos' : '') + (S.indice ? ' vd-com-indice' : ''); }
 function leiHTML(){
   var n = (marcas[S.leiId] || []).length;
   return '<div class="' + classes() + '" id="vd-raiz">' +
@@ -180,6 +181,7 @@ function leiHTML(){
       '<div class="vd-b2"><input type="search" id="vd-busca" placeholder="Buscar artigo (17-B) ou palavra…" value="' + esc(S.busca) + '" autocomplete="off" aria-label="Buscar na lei">' +
         '<button type="button" class="vd-t" data-vd="indice" aria-pressed="' + S.indice + '">Índice</button>' +
         '<button type="button" class="vd-t" data-vd="leitura" aria-pressed="' + S.leitura + '">Modo leitura</button>' +
+        '<button type="button" class="vd-t" data-vd="semrev" aria-pressed="' + S.semRev + '">Ocultar revogados</button>' +
         '<button type="button" class="vd-t" data-vd="grifos" aria-pressed="' + S.grifos + '">Grifos e notas' + (S.grifos && n ? ' · ' + n : '') + '</button>' +
         '<span class="vd-tamb"><button type="button" class="vd-t" data-vd="tam-" aria-label="Diminuir letra">A−</button><button type="button" class="vd-t" data-vd="tam+" aria-label="Aumentar letra">A+</button></span></div>' +
     '</div>' +
@@ -309,6 +311,7 @@ document.addEventListener('click', function(e){
     case 'voltar': window.nexoVade(); break;
     case 'leitura': S.leitura = !S.leitura; salvaPref(); var r = $('#vd-raiz'); if(r) r.className = classes(); b.setAttribute('aria-pressed', S.leitura); break;
     case 'grifos': S.grifos = !S.grifos; salvaPref(); fechaPop(); refaz(); break;
+    case 'semrev': S.semRev = !S.semRev; salvaPref(); var r5 = $('#vd-raiz'); if(r5) r5.className = classes(); b.setAttribute('aria-pressed', S.semRev); break;
     case 'indice': S.indice = !S.indice; var r2 = $('#vd-raiz'); if(r2) r2.className = classes(); b.setAttribute('aria-pressed', S.indice); break;
     case 'tam+': case 'tam-': S.tam = Math.max(-2, Math.min(4, S.tam + (acao === 'tam+' ? 1 : -1))); salvaPref(); var r3 = $('#vd-raiz'); if(r3) r3.className = classes(); break;
     case 'limpar': S.busca = ''; var i = $('#vd-busca'); if(i) i.value = ''; refazLista(); break;
