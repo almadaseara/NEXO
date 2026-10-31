@@ -248,7 +248,8 @@ var rt = window.renderTab;
 if(typeof rt === 'function'){
   window.renderTab = function(m, tab){
     var r = rt.apply(this, arguments);
-    try{ montar(m, tab || 'resumo'); }catch(e){}
+    var aba = tab === 'questoes' ? (m && m.rich ? 'quest' : 'oficiais') : (tab || 'resumo');
+    try{ montar(m, aba); }catch(e){}
     return r;
   };
 }

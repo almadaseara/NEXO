@@ -314,6 +314,8 @@
   var lastModule = null, lastTab = null;
   window.renderTab = function(m, tab){
     initTema(m);
+    /* aba única "Questões": o caderno nos temas ricos, as questões oficiais nos demais */
+    if(tab==='questoes') tab = (m && m.rich) ? 'quest' : 'oficiais';
     original(m, tab);
     if(!m || !m.rich || !RICH[tab]) return;
     /* não esconder questões já existentes no módulo quando o tema ainda não tem questões ligadas */
