@@ -937,3 +937,18 @@ html[data-theme="dark"]{--nx-mk-lj:rgba(251,146,60,.34);--nx-mk-vm:rgba(239,68,6
 
 .nx-dica-nota{position:fixed;z-index:70;max-width:min(320px,calc(100vw - 16px));padding:8px 10px;border-radius:10px;background:var(--nx-surface);border:1px solid var(--nx-accent);box-shadow:var(--nx-shadow);font-size:13px;line-height:1.45;color:var(--nx-ink);white-space:pre-wrap;pointer-events:none}
 .nx-dica-nota::before{content:'✎ Anotação';display:block;font-size:10.5px;font-weight:700;color:var(--nx-accent);margin-bottom:3px}
+
+/* Estudo completo (aba Estudo completo, conteúdo em data/estudo/) */
+.estudo-completo{max-width:960px;line-height:1.75;font-size:14.5px}
+.estudo-completo h2{font-size:20px;margin:30px 0 10px;letter-spacing:-.3px}
+.estudo-completo h3{font-size:17px;margin:24px 0 8px}
+.estudo-completo h4{font-size:15px;margin:18px 0 6px}
+.estudo-completo p,.estudo-completo li{margin:0 0 10px}
+.estudo-completo ul,.estudo-completo ol{padding-left:22px;margin:0 0 12px}
+.estudo-completo table{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:13px;display:block;overflow-x:auto}
+.estudo-completo th,.estudo-completo td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+.estudo-completo th{background:var(--panel-2, #f3f7f4)}
+.estudo-completo hr{border:0;border-top:1px solid var(--line);margin:26px 0}
+.estudo-completo blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted, #5d6f64)}
+.estudo-fonte{margin-top:26px;font-size:12px}
+@media(max-width:700px){.estudo-completo{font-size:14px}.estudo-completo table{font-size:12px}}
