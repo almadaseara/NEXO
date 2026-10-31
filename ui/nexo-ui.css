@@ -571,14 +571,23 @@ html[data-theme="dark"]{--nx-mk-am:rgba(247,214,74,.34);--nx-mk-vd:rgba(110,214,
 .lv-barra i{display:block;height:100%;border-radius:5px;transition:width .3s}
 .lv-caps{list-style:none;margin:0;padding:0 8px 16px;overflow-y:auto;flex:1;border-top:1px solid var(--nx-line)}
 .lv-cap{border-bottom:1px solid var(--nx-line)}
-.lv-caph{all:unset;box-sizing:border-box;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;width:100%;padding:11px 8px;cursor:pointer;color:var(--nx-ink-2)}
+.lv-caprow{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:6px}
+.lv-anelbtn{all:unset;box-sizing:border-box;display:grid;place-items:center;width:34px;height:34px;margin-left:6px;border-radius:50%;cursor:pointer}
+.lv-anelbtn:hover{background:var(--nx-surface-2)}
+.lv-anelbtn:focus-visible,.lv-pdot:focus-visible{outline:2px solid var(--nx-accent);outline-offset:1px}
+.lv-caph{all:unset;box-sizing:border-box;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;width:100%;padding:11px 8px 11px 0;cursor:pointer;color:var(--nx-ink-2)}
+.lv-prow{display:flex;align-items:center;gap:4px}
+.lv-prow .lv-parte{flex:1;min-width:0}
+.lv-pdot{all:unset;box-sizing:border-box;display:grid;place-items:center;width:22px;height:22px;margin-left:14px;border-radius:50%;border:2px solid var(--nx-line);color:#fff;cursor:pointer;flex-shrink:0}
+.lv-pdot.on{background:var(--nx-accent);border-color:var(--nx-accent)}
+.lv-pdot:hover{border-color:var(--nx-accent)}
 .lv-caph b{display:block;font-size:13px;line-height:1.35;color:var(--nx-ink);font-weight:600}
 .lv-caph small{font-size:11px;color:var(--nx-muted)}
 .lv-caph svg:last-child{transition:transform .15s;color:var(--nx-muted)}
 .lv-caph[aria-expanded="true"] svg:last-child{transform:rotate(90deg)}
 .lv-caph:hover b{color:var(--nx-accent)}
 .lv-caph:focus-visible,.lv-parte:focus-visible{outline:2px solid var(--nx-accent);outline-offset:-2px;border-radius:8px}
-.lv-cap.atual>.lv-caph b{font-weight:800}
+.lv-cap.atual .lv-caph b{font-weight:800}
 .lv-partes{list-style:none;margin:0 0 8px;padding:0}
 .lv-parte{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px 9px 18px;border-radius:8px;font-size:13px;color:var(--nx-ink);cursor:pointer}
 .lv-parte:hover{background:var(--nx-surface-2)}
