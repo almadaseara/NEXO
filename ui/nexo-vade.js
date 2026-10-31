@@ -29,9 +29,9 @@ function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
 var pref = ls(K_PREF, {});
-var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, ver:{ acoes:!pref.ver || pref.ver.acoes !== false, notas:!pref.ver || pref.ver.notas !== false, ementa:!!(pref.ver && pref.ver.ementa), rodape:!!(pref.ver && pref.ver.rodape) }, aberto:{}, indice:false, nota:{}, ferr:false };
+var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, ver:{ acoes:!pref.ver || pref.ver.acoes !== false, notas:!pref.ver || pref.ver.notas !== false, ementa:!!(pref.ver && pref.ver.ementa), rodape:!!(pref.ver && pref.ver.rodape) }, aberto:{}, indice:false, nota:{}, ferr:false, sumario:pref.sumario !== false };
 var marcas = ls(K_MARCAS, {}), notas = ls(K_NOTAS, {});
-function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev, ver:S.ver }); }
+function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev, ver:S.ver, sumario:S.sumario }); }
 
 /* ---------- carregar a lei e ligar aos temas ---------- */
 function carregar(id, ok, falha){
@@ -173,7 +173,7 @@ function corpoHTML(){
   return h;
 }
 function indiceHTML(){
-  var h = '<nav class="vd-idx" aria-label="Índice da lei">';
+  var h = '<div class="vd-ih"><b>Sumário</b><button type="button" class="vd-ix" data-vd="indice" aria-label="Ocultar sumário" title="Ocultar sumário">✕</button></div><nav class="vd-idx" aria-label="Sumário da lei">';
   S.lei.itens.forEach(function(x){
     if(x.k === 'art') h += '<button type="button" class="vd-ia' + (x.p.every(function(p){ return p.rev; }) ? ' vd-artrev' : '') + '" data-vd="ir" data-art="' + x.id + '">' + esc(x.n) + '</button>';
     else h += '<div class="vd-ic vd-ic-' + x.k + (/revogad/i.test(x.s || '') ? ' vd-titrev' : '') + '"><b>' + esc(x.t) + '</b>' + (x.s ? ' ' + esc(x.s) : '') + '</div>';
@@ -187,7 +187,7 @@ function leiHTML(){
     '<div class="vd-barra">' +
       '<div class="vd-b2"><button type="button" class="vd-link" data-vd="voltar" aria-label="Voltar para a lista de leis">←</button><span class="vd-nome">' + esc(S.lei.nome) + '</span>' +
         '<input type="search" id="vd-busca" placeholder="Buscar artigo ou palavra…" value="' + esc(S.busca) + '" autocomplete="off" aria-label="Buscar na lei">' +
-        '<button type="button" class="vd-t" data-vd="indice" aria-pressed="' + S.indice + '">Índice</button>' +
+        '<button type="button" class="vd-t" data-vd="indice" aria-pressed="' + S.indice + '">Sumário</button>' +
         '<button type="button" class="vd-t vd-tb" data-vd="ferr" aria-pressed="' + S.ferr + '" aria-label="Ferramentas" title="Ferramentas">⚙</button></div>' +
       '<div class="vd-ferr"' + (S.ferr ? '' : ' hidden') + '>' +
         '<p class="vd-fh">Ferramentas</p>' +
@@ -221,7 +221,7 @@ window.nexoVade = function(id){
   if(!id){ S.leiId = null; viewEl().innerHTML = listaHTML(); return; }
   viewEl().innerHTML = '<div class="vd"><p class="muted">Carregando a lei…</p></div>';
   carregar(id, function(lei){
-    S.leiId = id; S.lei = lei; S.busca = ''; S.aberto = {}; S.nota = {}; S.indice = window.innerWidth >= 1100;
+    S.leiId = id; S.lei = lei; S.busca = ''; S.aberto = {}; S.nota = {}; S.indice = window.innerWidth >= 1100 && pref.sumario !== false;
     head('Vade Mecum — ' + lei.nome);
     viewEl().innerHTML = leiHTML();
     var c = $('#view'); if(c) c.scrollTop = 0;
@@ -358,7 +358,7 @@ document.addEventListener('click', function(e){
     case 'semrev': S.semRev = !S.semRev; salvaPref(); var r5 = $('#vd-raiz'); if(r5) r5.className = classes(); b.setAttribute('aria-pressed', S.semRev); break;
     case 'ferr': S.ferr = !S.ferr; var fp = $('.vd-ferr'); if(fp) fp.hidden = !S.ferr; b.setAttribute('aria-pressed', S.ferr); break;
     case 'ver': break;
-    case 'indice': S.indice = !S.indice; var r2 = $('#vd-raiz'); if(r2) r2.className = classes(); b.setAttribute('aria-pressed', S.indice); break;
+    case 'indice': S.indice = !S.indice; if(window.innerWidth >= 1100){ S.sumario = S.indice; salvaPref(); } var bi = $('[data-vd="indice"].vd-t'); if(bi) bi.setAttribute('aria-pressed', S.indice); var r2 = $('#vd-raiz'); if(r2) r2.className = classes(); b.setAttribute('aria-pressed', S.indice); break;
     case 'tam+': case 'tam-': S.tam = Math.max(-2, Math.min(4, S.tam + (acao === 'tam+' ? 1 : -1))); salvaPref(); var r3 = $('#vd-raiz'); if(r3) r3.className = classes(); break;
     case 'limpar': S.busca = ''; var i = $('#vd-busca'); if(i) i.value = ''; refazLista(); break;
     case 'ir':
