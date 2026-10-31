@@ -1,0 +1,46 @@
+/* NEXO — barra lateral fluida: abre e fecha com animação (computador, tablet e celular). */
+:root{--nx-ease:cubic-bezier(.22,.8,.24,1)}
+
+/* ---------- computador e tablet: trilho que se expande ---------- */
+@media (min-width:701px){
+  aside{transition:width .34s var(--nx-ease) .14s,box-shadow .34s ease .14s}
+  aside:hover,aside:focus-within{transition-delay:.06s}
+  /* busca e títulos de seção: encolhem e esmaecem em vez de sumir de uma vez */
+  aside .search,aside .sec{max-height:90px;opacity:1;overflow:hidden;transition:max-height .34s var(--nx-ease),opacity .22s ease .06s,padding .34s var(--nx-ease)}
+  aside:not(:hover):not(:focus-within) .search,
+  aside:not(:hover):not(:focus-within) .sec{display:block!important;max-height:0;opacity:0;padding-top:0;padding-bottom:0;border:0;transition-delay:0s,0s,0s}
+  aside:not(:hover):not(:focus-within) .search input{pointer-events:none}
+  /* nomes dos itens: surgem com a largura */
+  aside .nav button{transition:background-color .2s ease,color .28s ease .06s}
+  aside:not(:hover):not(:focus-within) .nav button{transition-delay:0s}
+  aside .brand>span,aside .sidebar-footer>div,aside .folder-btn .arrow,aside .folder-btn .nx-count{transition:opacity .26s ease .1s}
+  aside:not(:hover):not(:focus-within) .brand>span,aside:not(:hover):not(:focus-within) .sidebar-footer>div{transition-delay:0s}
+  /* pastas: abrem sem salto */
+  aside .folder-list{animation:nxDrop .28s var(--nx-ease)}
+}
+@keyframes nxDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---------- celular: gaveta que desliza, com fundo que escurece e itens que entram em sequência ---------- */
+@media (max-width:700px){
+  aside{transition:transform .36s var(--nx-ease),visibility 0s linear .36s,box-shadow .36s ease;will-change:transform}
+  body.mobile-nav-open aside{transition:transform .36s var(--nx-ease),visibility 0s,box-shadow .36s ease}
+  body::after{content:"";position:fixed;inset:0;z-index:50;background:rgba(6,14,16,.58);opacity:0;pointer-events:none;transition:opacity .32s ease}
+  body.mobile-nav-open::after{opacity:1;pointer-events:auto}
+  aside .nav>*{opacity:0;transform:translateX(-12px);transition:opacity .2s ease,transform .2s ease}
+  body.mobile-nav-open aside .nav>*{opacity:1;transform:none;transition:opacity .34s ease,transform .4s var(--nx-ease)}
+  body.mobile-nav-open aside .nav>*:nth-child(1){transition-delay:.08s}
+  body.mobile-nav-open aside .nav>*:nth-child(2){transition-delay:.11s}
+  body.mobile-nav-open aside .nav>*:nth-child(3){transition-delay:.14s}
+  body.mobile-nav-open aside .nav>*:nth-child(4){transition-delay:.17s}
+  body.mobile-nav-open aside .nav>*:nth-child(5){transition-delay:.2s}
+  body.mobile-nav-open aside .nav>*:nth-child(6){transition-delay:.23s}
+  body.mobile-nav-open aside .nav>*:nth-child(7){transition-delay:.26s}
+  body.mobile-nav-open aside .nav>*:nth-child(8){transition-delay:.29s}
+  body.mobile-nav-open aside .nav>*:nth-child(n+9){transition-delay:.32s}
+  .mobile-menu-btn{transition:background-color .2s ease,transform .2s ease}
+  .mobile-menu-btn:active{transform:scale(.92)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  aside,aside *,body::after,.mobile-menu-btn{transition:none!important;animation:none!important}
+}
