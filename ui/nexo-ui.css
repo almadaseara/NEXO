@@ -324,9 +324,11 @@ html[data-theme="dark"] mark{background:#5f5a1c;color:#fff7c2}
 .dz-chart .pz-n{font-weight:800;fill:var(--nx-ink)}
 .dz-chart .pz{stroke:var(--nx-surface);stroke-width:2}
 
-/* barra de acesso rápido do topo retirada no computador (tudo está na barra lateral);
-   no celular ela continua como navegação inferior */
-@media (min-width:701px){ .access-bar{display:none!important} }
+/* barra de acesso rápido retirada (computador e celular): tudo está no menu lateral.
+   No celular o menu ganha Praticar questões, Lei seca e Desempenho (classe nx-so-cel). */
+.access-bar{display:none!important}
+#nav .nx-so-cel,.primary-nav.nx-so-cel{display:none!important}
+@media (max-width:700px){ #nav .nx-so-cel,.primary-nav.nx-so-cel{display:flex!important} }
 
 /* ---------- Praticar questões: filtro novo ---------- */
 .nxq-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 12px}
