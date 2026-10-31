@@ -1530,7 +1530,10 @@ function renderTab(m,tab){
   </div>`;
   let body='';
   if(tab==='estudo'){
-    body = `<div class="card"><h3>Estudo completo</h3><p class="muted">O material completo deste assunto, com o conteúdo do PDF de estudo escrito com outras palavras, tabelas, imagens e mapas, entra aqui. Em preparação.</p></div>`;
+    const estudoHtml = (window.NEXO_ESTUDO||{})[m.id];
+    body = estudoHtml
+      ? `<div class="card estudo-completo"><h3>Estudo completo</h3>${estudoHtml}<p class="muted estudo-fonte">Texto escrito com palavras próprias a partir do material de estudo. Questões comentadas ficam na aba Questões.</p></div>`
+      : `<div class="card"><h3>Estudo completo</h3><p class="muted">O material completo deste assunto, com o conteúdo do PDF de estudo escrito com outras palavras, tabelas, imagens e mapas, entra aqui. Em preparação.</p></div>`;
   } else if(tab==='questoes'){
     tab = 'oficiais';
   }
@@ -2400,6 +2403,7 @@ syncAccess();
 <script src="data/temas/ml-a.js"></script>
 <script src="data/temas/ml-b.js"></script>
 <script src="data/temas/ml-c.js"></script>
+<script src="data/estudo/medicina-legal.js"></script>
 <!--EXT-S-->
 <script src="data/temas/ext-a.js"></script>
 <script src="data/temas/ext-b.js"></script>
