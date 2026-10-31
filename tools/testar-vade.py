@@ -76,7 +76,7 @@ async def cenario(p, largura, altura, nome):
     conf('busca limpa volta tudo', await pg.evaluate("() => document.querySelectorAll('.vd-art').length") == 35)
     # modo leitura
     await pg.click('[data-vd=leitura]')
-    r = await pg.evaluate("() => ({ac: getComputedStyle(document.querySelector('.vd-acoes')).display, alt: getComputedStyle(document.querySelector('.vd-alt')).display, rev: getComputedStyle(document.querySelector('.vd-rev')).display})")
+    r = await pg.evaluate("() => ({ac: getComputedStyle(document.querySelector('.vd-acoes')).display, alt: getComputedStyle(document.querySelector('.vd-vide')).display, rev: getComputedStyle(document.querySelector('.vd-rev')).display})")
     conf('modo leitura esconde botões, notas de alteração e revogados', r == {'ac': 'none', 'alt': 'none', 'rev': 'none'}, r)
     if FOTOS: await pg.screenshot(path=os.path.join(FOTOS, f'{nome}-leitura.png'))
     await pg.click('[data-vd=leitura]')
