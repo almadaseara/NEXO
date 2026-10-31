@@ -181,10 +181,13 @@ function lateralHTML(m, key){
     + '<div class="lv-prog"><div class="lv-barra"><i style="width:' + pl + '%;background:' + L.cor + '"></i></div><span>' + pl + '% concluído</span></div>'
     + '<ol class="lv-caps">' + caps.map(function(id, i){
       var c = modulo(id), ps = partes(c), pc = pctModulo(id), atual = id === m.id, open = capAberto(id, atual);
-      return '<li class="lv-cap' + (atual ? ' atual' : '') + '"><button type="button" class="lv-caph" data-lv="cap" data-mod="' + id + '" aria-expanded="' + !!open + '">' + anel(pc, L.cor) + '<span><b>' + (i + 1) + '. ' + escH(c.title) + '</b><small>' + minutos(c) + ' min de leitura' + (pc ? ' · ' + pc + '%' : '') + '</small></span>' + IC.seta + '</button>'
+      return '<li class="lv-cap' + (atual ? ' atual' : '') + '"><div class="lv-caprow">'
+        + '<button type="button" class="lv-anelbtn" data-lv="capLido" data-mod="' + id + '" aria-pressed="' + (pc >= 100) + '" aria-label="' + (pc >= 100 ? 'Desmarcar capítulo como lido' : 'Marcar capítulo como lido') + '" title="' + (pc >= 100 ? 'Desmarcar capítulo' : 'Marcar capítulo como lido') + '">' + anel(pc, L.cor) + '</button>'
+        + '<button type="button" class="lv-caph" data-lv="cap" data-mod="' + id + '" aria-expanded="' + !!open + '"><span><b>' + (i + 1) + '. ' + escH(c.title) + '</b><small>' + minutos(c) + ' min de leitura' + (pc ? ' · ' + pc + '%' : '') + '</small></span>' + IC.seta + '</button>'
+        + '</div>'
         + (open ? '<ol class="lv-partes">' + ps.map(function(p, k){
           var l = lido(id, p.key), aqui = atual && p.key === key;
-          return '<li><button type="button" class="lv-parte' + (aqui ? ' aqui' : '') + (l ? ' lida' : '') + (p.questoes ? ' q' : '') + '" data-lv="parte" data-mod="' + id + '" data-key="' + escH(p.key) + '"' + (aqui ? ' aria-current="page"' : '') + '><span class="lv-dot">' + (l ? IC.ok : '') + '</span><span>' + (i + 1) + '.' + (k + 1) + ' ' + escH(p.nome) + (p.n ? ' <small>(' + p.n + ')</small>' : '') + '</span></button></li>';
+          return '<li class="lv-prow"><button type="button" class="lv-pdot' + (l ? ' on' : '') + '" data-lv="parteLido" data-mod="' + id + '" data-key="' + escH(p.key) + '" aria-pressed="' + !!l + '" aria-label="' + (l ? 'Desmarcar como lida' : 'Marcar como lida') + '" title="' + (l ? 'Desmarcar como lida' : 'Marcar como lida') + '">' + (l ? IC.ok : '') + '</button><button type="button" class="lv-parte' + (aqui ? ' aqui' : '') + (l ? ' lida' : '') + (p.questoes ? ' q' : '') + '" data-lv="parte" data-mod="' + id + '" data-key="' + escH(p.key) + '"' + (aqui ? ' aria-current="page"' : '') + '><span>' + (i + 1) + '.' + (k + 1) + ' ' + escH(p.nome) + (p.n ? ' <small>(' + p.n + ')</small>' : '') + '</span></button></li>';
         }).join('') + '</ol>' : '') + '</li>';
     }).join('') + '</ol>';
 }
@@ -255,6 +258,20 @@ document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-lv]'); if(!b || b.tagName === 'INPUT') return;
   var a = b.dataset.lv;
   if(a === 'cap'){ var id = b.dataset.mod; abertos[id] = !capAberto(id, id === pagina.mod); redesenharLateral(); return; }
+  /* bolinha do capítulo: marca ou desmarca todas as partes dele, sem abrir nem mudar de tela */
+  if(a === 'capLido'){
+    var idc = b.dataset.mod, mc = modulo(idc); if(!mc) return;
+    var concluido = pctModulo(idc) >= 100;
+    partes(mc).forEach(function(p){ marcar(idc, p.key, !concluido, true); });
+    try{ document.dispatchEvent(new CustomEvent('nexo:leitura', { detail:{ mod:idc } })); }catch(e){}
+    redesenharLateral(); return;
+  }
+  /* bolinha de uma parte: marca ou desmarca sem abrir a parte */
+  if(a === 'parteLido'){
+    var lp = lido(b.dataset.mod, b.dataset.key);
+    marcar(b.dataset.mod, b.dataset.key, !lp, true);
+    redesenharLateral(); return;
+  }
   if(a === 'parte'){ document.body.classList.remove('lv-gaveta'); pagina.rolar = true; abrir(b.dataset.mod, b.dataset.key || b.dataset.tab); return; }
   if(a === 'proximo'){
     marcar(pagina.mod, pagina.key, true);
