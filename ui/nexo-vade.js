@@ -92,12 +92,17 @@ function artHTML(a, q){
   var lig = ligacoes(S.lei)[a.id] || { juris:[], cards:[], quest:[] };
   var todoRev = a.p.every(function(p){ return p.rev; });
   var h = '<article class="vd-art' + (todoRev ? ' vd-artrev' : '') + '" id="vd-' + a.id + '" data-art="' + a.id + '">';
+  var numA = parseInt(a.n, 10);
+  h += '<h3 class="vd-ah">Art. ' + esc(a.n) + (numA >= 10 ? '.' : '') + '</h3>';
   a.p.forEach(function(p, i){
     var rev = p.rev ? ' vd-rev' : '';
-    var numA = parseInt(a.n, 10), rot = p.k === 'cap' ? '<b class="vd-r">Art. ' + esc(a.n) + (numA >= 10 ? '.' : '') + '</b> ' : (p.r ? '<b class="vd-r">' + esc(p.r) + '</b> ' : '');
+    var rot = p.k === 'cap' ? '' : (p.r ? '<b class="vd-r">' + esc(p.r) + '</b>' : '');
     var corpo = p.rev ? '<span class="vd-pt vd-revt">(Revogado)</span>' : '<span class="vd-pt" data-i="' + i + '">' + textoHTML(p.t, a.id, i, q) + '</span>';
-    var alt = (p.n && p.n.length) ? ' <span class="vd-alt">' + p.n.map(esc).join(' ') + '</span>' : '';
-    h += '<p class="vd-p vd-' + p.k + rev + '">' + rot + corpo + alt + '</p>';
+    var vide = (p.n || []).filter(function(n){ return /^\(Vide/i.test(n); }), outras = (p.n || []).filter(function(n){ return !/^\(Vide/i.test(n); });
+    var nk = 'n:' + a.id + ':' + i, nOn = S.aberto[nk];
+    var info = outras.length ? '<button type="button" class="vd-i' + (nOn ? ' on' : '') + '" data-vd="nt" data-k="' + nk + '" aria-expanded="' + !!nOn + '" aria-label="Notas de alteração" title="Notas de alteração">i</button>' : '';
+    var extra = (vide.length ? '<span class="vd-vide">' + vide.map(esc).join(' ') + '</span>' : '') + (nOn && outras.length ? '<span class="vd-alt">' + outras.map(esc).join(' ') + '</span>' : '');
+    h += '<div class="vd-p vd-' + p.k + rev + '">' + (rot ? '<span class="vd-rl">' + rot + '</span>' : '') + '<div class="vd-pc"><p>' + corpo + info + '</p>' + extra + '</div></div>';
   });
   var bt = '';
   function botao(pane, nome, n){ if(!n) return ''; var on = S.aberto[a.id + ':' + pane]; return '<button type="button" class="vd-btn' + (on ? ' on' : '') + '" data-vd="pane" data-art="' + a.id + '" data-pane="' + pane + '" aria-expanded="' + !!on + '">' + nome + ' <b>' + n + '</b></button>'; }
@@ -179,16 +184,17 @@ function leiHTML(){
     '<div class="vd-barra">' +
       '<div class="vd-b1"><button type="button" class="vd-link" data-vd="voltar">← Leis</button><h1>' + esc(S.lei.nome) + '</h1></div>' +
       '<div class="vd-b2"><input type="search" id="vd-busca" placeholder="Buscar artigo (17-B) ou palavra…" value="' + esc(S.busca) + '" autocomplete="off" aria-label="Buscar na lei">' +
+        '<div class="vd-bts">' +
         '<button type="button" class="vd-t" data-vd="indice" aria-pressed="' + S.indice + '">Índice</button>' +
         '<button type="button" class="vd-t" data-vd="leitura" aria-pressed="' + S.leitura + '">Modo leitura</button>' +
         '<button type="button" class="vd-t" data-vd="semrev" aria-pressed="' + S.semRev + '">Ocultar revogados</button>' +
         '<button type="button" class="vd-t" data-vd="grifos" aria-pressed="' + S.grifos + '">Grifos e notas' + (S.grifos && n ? ' · ' + n : '') + '</button>' +
-        '<span class="vd-tamb"><button type="button" class="vd-t" data-vd="tam-" aria-label="Diminuir letra">A−</button><button type="button" class="vd-t" data-vd="tam+" aria-label="Aumentar letra">A+</button></span></div>' +
+        '<span class="vd-tamb"><button type="button" class="vd-t" data-vd="tam-" aria-label="Diminuir letra">A−</button><button type="button" class="vd-t" data-vd="tam+" aria-label="Aumentar letra">A+</button></span></div></div>' +
     '</div>' +
     '<div class="vd-corpo"><div class="vd-ind">' + indiceHTML() + '</div><div class="vd-col">' +
       '<header class="vd-cab"><h2>' + esc(S.lei.titulo) + '</h2><p>' + esc(S.lei.ementa) + '</p></header>' +
       '<div id="vd-lista">' + corpoHTML() + '</div>' +
-      '<footer class="vd-pe">Texto compilado conferido no <a href="' + esc(S.lei.fonte) + '" target="_blank" rel="noopener noreferrer">Planalto</a> (arquivo de ' + esc(S.lei.extraido) + '). Este texto não substitui o publicado no Diário Oficial. Notas de alteração e “Vide ADI” aparecem em cinza (escondidas no modo leitura).</footer>' +
+      '<footer class="vd-pe">Texto compilado conferido no <a href="' + esc(S.lei.fonte) + '" target="_blank" rel="noopener noreferrer">Planalto</a> (arquivo de ' + esc(S.lei.extraido) + '). Este texto não substitui o publicado no Diário Oficial. As notas de alteração abrem no botão “i” de cada dispositivo; os “Vide ADI” ficam visíveis (escondidos no modo leitura).</footer>' +
     '</div></div></div>';
 }
 function listaHTML(){
@@ -322,6 +328,7 @@ document.addEventListener('click', function(e){
       if(window.innerWidth < 900){ S.indice = false; var r4 = $('#vd-raiz'); if(r4) r4.className = classes(); }
       break;
     case 'pane': var k = b.getAttribute('data-art') + ':' + b.getAttribute('data-pane'); S.aberto[k] = !S.aberto[k]; refazArt(b.getAttribute('data-art')); break;
+    case 'nt': var kn = b.getAttribute('data-k'); S.aberto[kn] = !S.aberto[kn]; refazArt(b.closest('.vd-art').getAttribute('data-art')); break;
     case 'tog': var kk = b.getAttribute('data-k'); S.aberto[kk] = !S.aberto[kk]; refazArt(b.closest('.vd-art').getAttribute('data-art')); break;
     case 'resp': var kr = b.getAttribute('data-k'); if(!S.aberto[kr]) S.aberto[kr] = b.getAttribute('data-r'); refazArt(b.closest('.vd-art').getAttribute('data-art')); break;
     case 'nota': var an = b.getAttribute('data-art'); S.nota[an] = !S.nota[an]; refazArt(an); break;

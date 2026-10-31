@@ -15,6 +15,8 @@
 .vd-t{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:7px 12px;font:inherit;font-size:13px;cursor:pointer}
 .vd-t[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:#06210f;font-weight:700}
 .vd-tamb{display:inline-flex;gap:4px}
+.vd-bts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+@media(max-width:650px){.vd-b2 input{flex-basis:100%}.vd-bts{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:none}.vd-bts .vd-t{flex:none;white-space:nowrap}}
 .vd-corpo{display:block}
 .vd-ind{display:none}
 .vd-com-indice .vd-ind{display:block}
@@ -28,7 +30,32 @@
   .vd-com-indice .vd-ind{position:sticky;top:104px}
   .vd-com-indice .vd-idx{max-height:calc(100vh - 180px);margin:0}
 }
-.vd-col{min-width:0}
+.vd-col{min-width:0;max-width:46rem}
+.vd-t-2{--vd-d:-2}.vd-t-1{--vd-d:-1}.vd-t1{--vd-d:1}.vd-t2{--vd-d:3}.vd-t3{--vd-d:5}.vd-t4{--vd-d:7}
+/* organização do texto: título do artigo, rótulos em coluna e recuos por nível */
+.vd-ah{margin:0 0 8px;font-size:calc(19px + var(--vd-d,0)*1px);font-weight:800;color:var(--green);letter-spacing:.2px}
+.vd-p{display:flex;gap:10px;margin:0 0 10px;font-family:Georgia,'Times New Roman',serif;font-size:calc(16px + var(--vd-d,0)*1px);line-height:1.72}
+.vd-pc{min-width:0;flex:1}
+.vd-pc p{margin:0}
+.vd-rl{flex:0 0 4.4em;text-align:right;font-family:Inter,'Segoe UI',Arial,sans-serif;font-size:.78em;padding-top:.28em;white-space:nowrap}
+.vd-r{color:var(--green);font-weight:800}
+.vd-par{margin-left:0}
+.vd-par .vd-pc{border-left:2px solid var(--line);padding-left:12px}
+.vd-cap .vd-pc{padding-left:0}
+.vd-inc{margin-left:calc(4.4em + 10px + 14px)}
+.vd-inc .vd-rl{flex-basis:2.6em}
+.vd-ali{margin-left:calc(4.4em + 10px + 14px + 2.6em + 10px)}
+.vd-ali .vd-rl{flex-basis:2em}
+.vd-vide{display:block;margin-top:3px;font-family:Inter,'Segoe UI',Arial,sans-serif;font-size:11.5px;color:var(--gold);line-height:1.4}
+.vd-alt{display:block;margin-top:3px;font-family:Inter,'Segoe UI',Arial,sans-serif;font-size:11.5px;color:var(--muted);line-height:1.4}
+.vd-i{margin-left:6px;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--muted);font:italic 700 11px Georgia,serif;line-height:1;cursor:pointer;padding:0;vertical-align:middle}
+.vd-i.on,.vd-i:hover{border-color:var(--green);color:var(--green)}
+@media(max-width:650px){
+  .vd-rl{flex-basis:3.4em}
+  .vd-inc{margin-left:10px}
+  .vd-ali{margin-left:24px}
+  .vd-p{gap:8px}
+}
 .vd-cab h2{font-size:15px;margin:0 0 6px;color:var(--muted);letter-spacing:.3px}
 .vd-cab p{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.5}
 .vd-tit{margin:22px 0 8px;padding:8px 12px;border-left:3px solid var(--green);background:var(--panel);border-radius:0 10px 10px 0;display:flex;flex-direction:column;gap:2px}
@@ -36,14 +63,7 @@
 .vd-tit span{font-size:13px;color:var(--muted)}
 .vd-tit-sec{margin-left:14px;border-left-color:var(--blue)}
 .vd-art{padding:12px 4px 10px;border-bottom:1px solid var(--line);scroll-margin-top:110px}
-.vd-p{margin:0 0 7px;line-height:1.65;font-size:calc(15px + var(--vd-d,0)*1px)}
-.vd-t-2{--vd-d:-2}.vd-t-1{--vd-d:-1}.vd-t1{--vd-d:1}.vd-t2{--vd-d:3}.vd-t3{--vd-d:5}.vd-t4{--vd-d:7}.vd-t-2 .vd-p{font-size:13px}
-.vd-r{color:var(--green)}
-.vd-par{padding-left:14px}
-.vd-inc{padding-left:30px}
-.vd-ali{padding-left:48px}
 .vd-rev{color:var(--muted);font-style:italic}
-.vd-alt{display:block;font-size:11.5px;color:var(--muted);line-height:1.4;margin-top:1px}
 .vd-busca{background:rgba(255,198,92,.55);color:inherit;border-radius:3px;padding:0 1px}
 .vd-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .vd-btn{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:5px 11px;font:inherit;font-size:12px;cursor:pointer}
@@ -97,9 +117,8 @@
 /* ocultar revogados: dispositivos, artigos inteiros e títulos de seção revogados */
 .vd-semrev .vd-rev,.vd-semrev .vd-artrev,.vd-semrev .vd-titrev,.vd-leitura .vd-artrev,.vd-leitura .vd-titrev{display:none}
 /* modo leitura: só o texto da lei */
-.vd-leitura .vd-acoes,.vd-leitura .vd-alt,.vd-leitura .vd-rev,.vd-leitura .vd-pe{display:none}
-.vd-leitura .vd-col{max-width:44rem;margin:0 auto}
-.vd-leitura .vd-p{font-family:Georgia,'Times New Roman',serif;line-height:1.85;margin-bottom:10px}
+.vd-leitura .vd-acoes,.vd-leitura .vd-alt,.vd-leitura .vd-vide,.vd-leitura .vd-i,.vd-leitura .vd-rev,.vd-leitura .vd-pe{display:none}
+.vd-leitura .vd-col{margin:0 auto}
+.vd-leitura .vd-p{line-height:1.85}
 .vd-leitura .vd-art{border-bottom:0;padding-top:6px}
-.vd-leitura .vd-r{color:inherit}
 .vd-leitura .vd-cab p{display:none}
