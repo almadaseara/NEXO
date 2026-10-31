@@ -67,6 +67,8 @@ async def cenario(p, largura, altura, nome):
     await pg.click('#vd-a17 .vd-card')
     conf('card vira ao clicar', await pg.evaluate("() => !!document.querySelector('#vd-a17 .vd-card.vira')"))
     if FOTOS: await pg.screenshot(path=os.path.join(FOTOS, f'{nome}-lei.png'))
+    r = await pg.evaluate("() => { const c = document.querySelector('.vd-col').getBoundingClientRect(), b = document.querySelector('.vd-barra').getBoundingClientRect(), i = document.querySelector('.vd-ind').getBoundingClientRect(); const ini = getComputedStyle(document.querySelector('.vd-ind')).display !== 'none' ? i.right : b.left; return [c.left - ini, b.right - c.right]; }")
+    conf('texto centralizado', abs(r[0] - r[1]) <= 24, r)
     # sumário: ocultar e mostrar (computador)
     if largura >= 1100:
         conf('sumário visível no computador', await pg.evaluate("() => getComputedStyle(document.querySelector('.vd-ind')).display !== 'none'"))
