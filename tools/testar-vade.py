@@ -29,6 +29,13 @@ def conf(nome, cond, extra=''):
     if not cond: falhas += 1
     print('✓' if cond else '✗', nome, extra if not cond else '')
 
+async def ferr(pg, abrir=True):
+    aberto = await pg.evaluate("() => !document.querySelector('.vd-ferr').hidden")
+    if aberto != abrir: await pg.click('[data-vd=ferr]')
+
+async def tool(pg, nome):
+    await ferr(pg); await pg.click(f'[data-vd={nome}]')
+
 async def cenario(p, largura, altura, nome):
     b = await p.chromium.launch()
     pg = await b.new_page(viewport={'width': largura, 'height': altura})
@@ -46,7 +53,7 @@ async def cenario(p, largura, altura, nome):
     n = await pg.evaluate("() => document.querySelectorAll('.vd-art').length")
     conf('35 artigos', n == 35, n)
     conf('julgados/cards fechados', await pg.evaluate("() => document.querySelectorAll('.vd-pane').length + document.querySelectorAll('.vd-j').length") == 0)
-    conf('dica de grifar visível e sem grifos ainda', await pg.evaluate("() => !!document.querySelector('.vd-dica') && document.querySelectorAll('.vd-m').length == 0"))
+    conf('barra enxuta (busca, índice, ferramentas) e painel fechado', await pg.evaluate("() => !!document.querySelector('#vd-busca') && !!document.querySelector('[data-vd=indice]') && document.querySelector('.vd-ferr').hidden && document.querySelectorAll('.vd-m').length == 0"))
     conf('botões de julgados no art. 23', await pg.evaluate("() => !!document.querySelector('#vd-a23 [data-pane=juris]')"))
     # abrir julgados só ao clicar
     await pg.click('#vd-a23 [data-pane=juris]')
@@ -75,20 +82,20 @@ async def cenario(p, largura, altura, nome):
     await pg.fill('#vd-busca', '')
     conf('busca limpa volta tudo', await pg.evaluate("() => document.querySelectorAll('.vd-art').length") == 35)
     # modo leitura
-    await pg.click('[data-vd=leitura]')
+    await tool(pg, 'leitura')
     r = await pg.evaluate("() => ({ac: getComputedStyle(document.querySelector('.vd-acoes')).display, alt: getComputedStyle(document.querySelector('.vd-vide')).display, rev: getComputedStyle(document.querySelector('.vd-rev')).display})")
     conf('modo leitura esconde botões, notas de alteração e revogados', r == {'ac': 'none', 'alt': 'none', 'rev': 'none'}, r)
     if FOTOS: await pg.screenshot(path=os.path.join(FOTOS, f'{nome}-leitura.png'))
-    await pg.click('[data-vd=leitura]')
+    await tool(pg, 'leitura')
     # ocultar revogados
     antes = await pg.evaluate("() => [...document.querySelectorAll('.vd-rev,.vd-artrev,.vd-titrev')].filter(e => e.offsetParent !== null).length")
-    await pg.click('[data-vd=semrev]')
+    await tool(pg, 'semrev')
     depois = await pg.evaluate("() => [...document.querySelectorAll('.vd-rev,.vd-artrev,.vd-titrev')].filter(e => e.offsetParent !== null).length")
     conf('ocultar revogados esconde dispositivos, artigos e títulos', antes > 0 and depois == 0, (antes, depois))
-    await pg.click('[data-vd=semrev]')
+    await tool(pg, 'semrev')
     conf('revogados voltam ao desligar', await pg.evaluate("() => document.querySelector('#vd-a4').offsetParent !== null"))
     # grifos e notas
-    await pg.click('[data-vd=grifos]'); await pg.click('[data-vd=grifos]')  # desliga e liga: o grifo vale sem modo prévio
+    await tool(pg, 'grifos'); await tool(pg, 'grifos')  # desliga e liga: o grifo vale sem modo prévio
     conf('botão de nota aparece com grifos visíveis', await pg.evaluate("() => !!document.querySelector('#vd-a1 [data-vd=nota]')"))
     await pg.evaluate("""() => {
       const pt = document.querySelector('#vd-a2 .vd-pt'); pt.scrollIntoView({block:'center'}); const w = pt.firstChild;
@@ -99,9 +106,9 @@ async def cenario(p, largura, altura, nome):
     await pg.click('.vd-pop .vd-d-vd')
     r = await pg.evaluate("() => ({m: document.querySelectorAll('#vd-a2 .vd-m').length, t: document.querySelector('#vd-a2 .vd-m').textContent, salvo: JSON.parse(localStorage.getItem('nexo_vade_marcas_v1')).l8429.length})")
     conf('grifo criado e salvo', r['m'] == 1 and r['salvo'] == 1 and len(r['t']) >= 20, r)
-    await pg.click('[data-vd=grifos]')
+    await tool(pg, 'grifos')
     conf('grifos somem ao desligar', await pg.evaluate("() => document.querySelectorAll('.vd-m').length") == 0)
-    await pg.click('[data-vd=grifos]')
+    await tool(pg, 'grifos')
     conf('grifos voltam ao ligar', await pg.evaluate("() => document.querySelectorAll('#vd-a2 .vd-m').length") == 1)
     # clicar no grifo: trocar cor, cor extra/personalizada e lixeira
     await pg.click('#vd-a2 .vd-m')
@@ -127,7 +134,7 @@ async def cenario(p, largura, altura, nome):
     await pg.mouse.move(5, 5)
     conf('janelinha some ao sair', await pg.evaluate("() => !document.querySelector('.vd-dica-nota')"))
     # selecionar com grifos ocultos também abre o popup e religa os grifos
-    await pg.click('[data-vd=grifos]')
+    await tool(pg, 'grifos')
     await pg.evaluate("""() => { const pt = document.querySelector('#vd-a11 .vd-pt'); pt.scrollIntoView({block:'center'}); const r = document.createRange(); r.setStart(pt.firstChild,0); r.setEnd(pt.firstChild,20); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }""")
     await pg.wait_for_selector('.vd-pop', timeout=3000)
     await pg.click('.vd-pop .vd-d-am')
@@ -138,10 +145,17 @@ async def cenario(p, largura, altura, nome):
     r = await pg.evaluate("() => JSON.parse(localStorage.getItem('nexo_vade_notas_v1')).l8429.a3")
     conf('nota do artigo salva', r == 'Terceiro só com dolo.', r)
     if FOTOS: await pg.screenshot(path=os.path.join(FOTOS, f'{nome}-grifos.png'))
-    await pg.click('[data-vd=grifos]')
+    await tool(pg, 'grifos')
     conf('nota some com grifos ocultos', await pg.evaluate("() => document.querySelectorAll('.vd-nota').length") == 0)
     sw = await pg.evaluate("() => document.documentElement.scrollWidth")
     conf('sem rolagem horizontal', sw <= largura + 1, sw)
+    # ocultar ferramentas
+    await ferr(pg)
+    for k, sel in [('acoes', '#vd-a1 .vd-acoes'), ('notas', '.vd-vide'), ('rodape', '.vd-pe')]:
+        antes = await pg.evaluate(f"() => {{ const e = document.querySelector('{sel}'); return !!e && getComputedStyle(e).display !== 'none'; }}")
+        await pg.evaluate(f"() => {{ const c = document.querySelector('[data-vd=ver][data-k={k}]'); c.click(); }}")
+        depois = await pg.evaluate(f"() => {{ const e = document.querySelector('{sel}'); return !!e && getComputedStyle(e).display !== 'none'; }}")
+        conf(f'painel oculta/mostra: {k}', (antes and not depois) if k != 'rodape' else (not antes and depois), (antes, depois))
     erros = [e for e in erros if 'createClient' not in e]
     conf('sem erro de JavaScript', not erros, erros)
     await b.close()
