@@ -3,7 +3,7 @@
    - Busca por artigo (ex.: "17-B") ou por palavra; índice por capítulo; modo leitura (só o texto da lei).
    - Julgados, flashcards e questões ficam fechados: só abrem ao clicar no botão do artigo. A ligação vem dos temas
      (window.NEXO_TEMAS): itens de "lei" cujo rótulo começa com "Art. N" da lei, com os cards (c), julgados (j) e questões (lei).
-   - Grifos e anotações pessoais só aparecem (e só podem ser feitos) com o botão "Grifos e notas" ligado.
+   - Grifos e anotações pessoais são feitos selecionando o texto (popup com cores e nota, estilo QConcursos); o botão mostra/oculta os grifos.
      Ficam guardados neste aparelho (localStorage). */
 (function(){
 'use strict';
@@ -26,7 +26,7 @@ function $(s, r){ return (r || document).querySelector(s); }
 function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
 var pref = ls(K_PREF, {});
-var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:!!pref.grifos, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, aberto:{}, indice:false, nota:{} };
+var S = { leiId:null, lei:null, busca:'', leitura:!!pref.leitura, grifos:pref.grifos !== false, tam:typeof pref.tam === 'number' ? pref.tam : 0, semRev:!!pref.semRev, aberto:{}, indice:false, nota:{} };
 var marcas = ls(K_MARCAS, {}), notas = ls(K_NOTAS, {});
 function salvaPref(){ sv(K_PREF, { leitura:S.leitura, grifos:S.grifos, tam:S.tam, semRev:S.semRev }); }
 
@@ -188,12 +188,12 @@ function leiHTML(){
         '<button type="button" class="vd-t" data-vd="indice" aria-pressed="' + S.indice + '">Índice</button>' +
         '<button type="button" class="vd-t" data-vd="leitura" aria-pressed="' + S.leitura + '">Modo leitura</button>' +
         '<button type="button" class="vd-t" data-vd="semrev" aria-pressed="' + S.semRev + '">Ocultar revogados</button>' +
-        '<button type="button" class="vd-t" data-vd="grifos" aria-pressed="' + S.grifos + '">Grifos e notas' + (S.grifos && n ? ' · ' + n : '') + '</button>' +
+        '<button type="button" class="vd-t" data-vd="grifos" aria-pressed="' + S.grifos + '">' + (S.grifos ? 'Grifos visíveis' : 'Grifos ocultos') + (n ? ' · ' + n : '') + '</button>' +
         '<span class="vd-tamb"><button type="button" class="vd-t" data-vd="tam-" aria-label="Diminuir letra">A−</button><button type="button" class="vd-t" data-vd="tam+" aria-label="Aumentar letra">A+</button></span></div></div>' +
     '</div>' +
     '<div class="vd-corpo"><div class="vd-ind">' + indiceHTML() + '</div><div class="vd-col">' +
       '<header class="vd-cab"><h2>' + esc(S.lei.titulo) + '</h2><p>' + esc(S.lei.ementa) + '</p></header>' +
-      '<div id="vd-lista">' + corpoHTML() + '</div>' +
+      '<p class="vd-dica">✎ Selecione qualquer trecho para grifar e anotar.</p><div id="vd-lista">' + corpoHTML() + '</div>' +
       '<footer class="vd-pe">Texto compilado conferido no <a href="' + esc(S.lei.fonte) + '" target="_blank" rel="noopener noreferrer">Planalto</a> (arquivo de ' + esc(S.lei.extraido) + '). Este texto não substitui o publicado no Diário Oficial. As notas de alteração abrem no botão “i” de cada dispositivo; os “Vide ADI” ficam visíveis (escondidos no modo leitura).</footer>' +
     '</div></div></div>';
 }
@@ -277,15 +277,15 @@ function criaMarca(cor, nota){
   var a = S.lei.itens.filter(function(x){ return x.id === selAtual.a; })[0], txt = a.p[selAtual.i].t;
   marcas[S.leiId] = L.filter(function(m){ return !(m.a === selAtual.a && m.i === selAtual.i && m.s < selAtual.e && m.e > selAtual.s); });
   marcas[S.leiId].push({ id:novoId(), a:selAtual.a, i:selAtual.i, s:selAtual.s, e:selAtual.e, c:cor, n:nota || '', t:txt.slice(selAtual.s, selAtual.e) });
-  salvaMarcas(); var art = selAtual.a; fechaPop(); try{ window.getSelection().removeAllRanges(); }catch(e){}
-  refazArt(art); atualizaContador();
+  salvaMarcas(); var art = selAtual.a, liga = !S.grifos; if(liga){ S.grifos = true; salvaPref(); } fechaPop(); try{ window.getSelection().removeAllRanges(); }catch(e){}
+  if(liga) refaz(); else refazArt(art); atualizaContador();
 }
-function atualizaContador(){ var b = $('[data-vd="grifos"]'); if(b){ var n = (marcas[S.leiId] || []).length; b.textContent = 'Grifos e notas' + (S.grifos && n ? ' · ' + n : ''); } }
+function atualizaContador(){ var b = $('[data-vd="grifos"]'); if(b){ var n = (marcas[S.leiId] || []).length; b.textContent = (S.grifos ? 'Grifos visíveis' : 'Grifos ocultos') + (n ? ' · ' + n : ''); } }
 
 /* ---------- eventos ---------- */
 var tSel = null;
 document.addEventListener('selectionchange', function(){
-  if(atual() !== 'vade' || !S.grifos) return;
+  if(atual() !== 'vade') return;
   clearTimeout(tSel);
   tSel = setTimeout(function(){
     if(pop && pop.contains(document.activeElement)) return;

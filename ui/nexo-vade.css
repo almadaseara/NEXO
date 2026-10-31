@@ -122,3 +122,6 @@
 .vd-leitura .vd-p{line-height:1.85}
 .vd-leitura .vd-art{border-bottom:0;padding-top:6px}
 .vd-leitura .vd-cab p{display:none}
+
+.vd-dica{margin:6px 0 10px;font-size:.82rem;color:var(--muted)}
+.vd-leitura .vd-dica{display:none}

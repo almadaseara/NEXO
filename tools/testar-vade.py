@@ -3,7 +3,7 @@
 
 Uso (na raiz do repositório):   python3 tools/testar-vade.py [--fotos pasta]
 Confere: menu, lista de leis, carregamento, busca por artigo e por palavra, modo leitura,
-julgados/cards fechados até clicar, grifos e notas só com o botão ligado, sem rolagem horizontal.
+julgados/cards fechados até clicar, grifar ao selecionar (popup) e botão mostra/oculta, sem rolagem horizontal.
 Falha (código 1) se algo não bater.
 """
 import asyncio, functools, http.server, socketserver, sys, threading, os, json
@@ -46,7 +46,7 @@ async def cenario(p, largura, altura, nome):
     n = await pg.evaluate("() => document.querySelectorAll('.vd-art').length")
     conf('35 artigos', n == 35, n)
     conf('julgados/cards fechados', await pg.evaluate("() => document.querySelectorAll('.vd-pane').length + document.querySelectorAll('.vd-j').length") == 0)
-    conf('sem grifos nem botão de nota', await pg.evaluate("() => document.querySelectorAll('.vd-m, .vd-nota, [data-vd=nota]').length") == 0)
+    conf('dica de grifar visível e sem grifos ainda', await pg.evaluate("() => !!document.querySelector('.vd-dica') && document.querySelectorAll('.vd-m').length == 0"))
     conf('botões de julgados no art. 23', await pg.evaluate("() => !!document.querySelector('#vd-a23 [data-pane=juris]')"))
     # abrir julgados só ao clicar
     await pg.click('#vd-a23 [data-pane=juris]')
@@ -88,8 +88,8 @@ async def cenario(p, largura, altura, nome):
     await pg.click('[data-vd=semrev]')
     conf('revogados voltam ao desligar', await pg.evaluate("() => document.querySelector('#vd-a4').offsetParent !== null"))
     # grifos e notas
-    await pg.click('[data-vd=grifos]')
-    conf('botão de nota aparece com grifos ligados', await pg.evaluate("() => !!document.querySelector('#vd-a1 [data-vd=nota]')"))
+    await pg.click('[data-vd=grifos]'); await pg.click('[data-vd=grifos]')  # desliga e liga: o grifo vale sem modo prévio
+    conf('botão de nota aparece com grifos visíveis', await pg.evaluate("() => !!document.querySelector('#vd-a1 [data-vd=nota]')"))
     await pg.evaluate("""() => {
       const pt = document.querySelector('#vd-a2 .vd-pt'); pt.scrollIntoView({block:'center'}); const w = pt.firstChild;
       const r = document.createRange(); r.setStart(w, 0); r.setEnd(w, 30);
@@ -103,6 +103,12 @@ async def cenario(p, largura, altura, nome):
     conf('grifos somem ao desligar', await pg.evaluate("() => document.querySelectorAll('.vd-m').length") == 0)
     await pg.click('[data-vd=grifos]')
     conf('grifos voltam ao ligar', await pg.evaluate("() => document.querySelectorAll('#vd-a2 .vd-m').length") == 1)
+    # selecionar com grifos ocultos também abre o popup e religa os grifos
+    await pg.click('[data-vd=grifos]')
+    await pg.evaluate("""() => { const pt = document.querySelector('#vd-a11 .vd-pt'); pt.scrollIntoView({block:'center'}); const r = document.createRange(); r.setStart(pt.firstChild,0); r.setEnd(pt.firstChild,20); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }""")
+    await pg.wait_for_selector('.vd-pop', timeout=3000)
+    await pg.click('.vd-pop .vd-cor.vd-c-am')
+    conf('selecionar com grifos ocultos grifa e religa', await pg.evaluate("() => document.querySelectorAll('.vd-m').length") == 2)
     # nota do artigo
     await pg.click('#vd-a3 [data-vd=nota]')
     await pg.fill('#vd-a3 textarea', 'Terceiro só com dolo.')
@@ -110,7 +116,7 @@ async def cenario(p, largura, altura, nome):
     conf('nota do artigo salva', r == 'Terceiro só com dolo.', r)
     if FOTOS: await pg.screenshot(path=os.path.join(FOTOS, f'{nome}-grifos.png'))
     await pg.click('[data-vd=grifos]')
-    conf('nota some com grifos desligados', await pg.evaluate("() => document.querySelectorAll('.vd-nota').length") == 0)
+    conf('nota some com grifos ocultos', await pg.evaluate("() => document.querySelectorAll('.vd-nota').length") == 0)
     sw = await pg.evaluate("() => document.documentElement.scrollWidth")
     conf('sem rolagem horizontal', sw <= largura + 1, sw)
     erros = [e for e in erros if 'createClient' not in e]
