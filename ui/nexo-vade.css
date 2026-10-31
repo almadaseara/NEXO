@@ -142,3 +142,14 @@
 .vd-ib{background:none;border:0;color:var(--muted);cursor:pointer;padding:4px;display:inline-flex;font-size:16px}
 .vd-ib.vd-del{color:#ef4444}
 .vd-nt textarea{width:100%;margin-bottom:6px}
+
+/* seletor compacto */
+.vd-pill{gap:4px;padding:4px 8px}
+.vd-cores{gap:6px}
+.vd-pop .vd-cor{width:20px;height:20px}
+.vd-pop .vd-cor svg{width:10px;height:10px}
+.vd-mais{font-size:14px}
+.vd-sep{height:16px}
+.vd-ib{font-size:13px;padding:2px}.vd-ib svg{width:15px;height:15px}
+.vd-extra,.vd-nt{padding:6px 8px;border-radius:12px}
+.vd-extra{width:max-content;max-width:100%;margin:0 auto}
