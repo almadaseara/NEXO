@@ -165,13 +165,22 @@ function anel(p, cor){
 
 /* ---------- painel "Capítulos deste livro" ao lado do conteúdo ---------- */
 var pagina = { mod:null, tab:null }, abertos = {};
+/* capítulo aberto: a escolha de quem lê vale; sem escolha, abre só o capítulo atual */
+function capAberto(id, atual){ return (id in abertos) ? abertos[id] : atual; }
+/* sumário lateral oculto só no computador; a escolha fica salva neste navegador */
+function lateralOculto(){ try{ return localStorage.getItem('nexo_livro_lateral_oculto') === '1'; }catch(e){ return false; } }
+function ocultarLateral(on){
+  document.body.classList.toggle('lv-oculto', !!on);
+  try{ localStorage.setItem('nexo_livro_lateral_oculto', on ? '1' : '0'); }catch(e){}
+}
+function computador(){ return window.matchMedia && window.matchMedia('(min-width:1101px)').matches; }
 function lateralHTML(m, key){
   var L = livroDoModulo(m), caps = capitulos(L.id), pl = pctLivro(L.id), tl = caps.reduce(function(a, id){ return a + minutos(modulo(id)); }, 0);
-  return '<div class="lv-topo"><span class="nt-sig" style="--c:' + L.cor + ';background:' + L.cor + '">' + icoDisc(L) + '</span><div><b>' + escH(L.nome) + '</b><small>Livro digital · ' + caps.length + ' capítulos</small></div><button type="button" class="lv-fechar" data-lv="fechar" aria-label="Fechar capítulos">' + IC.x + '</button></div>'
+  return '<div class="lv-topo"><span class="nt-sig" style="--c:' + L.cor + ';background:' + L.cor + '">' + icoDisc(L) + '</span><div><b>' + escH(L.nome) + '</b><small>Livro digital · ' + caps.length + ' capítulos</small></div><button type="button" class="lv-fechar" data-lv="fechar" aria-label="Ocultar capítulos" title="Ocultar capítulos">' + IC.x + '</button></div>'
     + '<div class="lv-tempo"><b>' + fmtTempo(minutos(m)) + '</b><span>Tempo estimado de leitura do capítulo</span><small>Livro inteiro: ' + fmtTempo(tl) + '</small></div>'
     + '<div class="lv-prog"><div class="lv-barra"><i style="width:' + pl + '%;background:' + L.cor + '"></i></div><span>' + pl + '% concluído</span></div>'
     + '<ol class="lv-caps">' + caps.map(function(id, i){
-      var c = modulo(id), ps = partes(c), pc = pctModulo(id), atual = id === m.id, open = atual || abertos[id];
+      var c = modulo(id), ps = partes(c), pc = pctModulo(id), atual = id === m.id, open = capAberto(id, atual);
       return '<li class="lv-cap' + (atual ? ' atual' : '') + '"><button type="button" class="lv-caph" data-lv="cap" data-mod="' + id + '" aria-expanded="' + !!open + '">' + anel(pc, L.cor) + '<span><b>' + (i + 1) + '. ' + escH(c.title) + '</b><small>' + minutos(c) + ' min de leitura' + (pc ? ' · ' + pc + '%' : '') + '</small></span>' + IC.seta + '</button>'
         + (open ? '<ol class="lv-partes">' + ps.map(function(p, k){
           var l = lido(id, p.key), aqui = atual && p.key === key;
@@ -218,6 +227,7 @@ function montar(m, tab){
   if(!lat){ lat = document.createElement('div'); lat.className = 'lv-lateral'; lat.setAttribute('role', 'complementary'); lat.setAttribute('aria-label', 'Capítulos deste livro'); document.body.appendChild(lat); }
   lat.innerHTML = lateralHTML(m, key); lat.hidden = false;
   document.body.classList.add('lv-on');
+  document.body.classList.toggle('lv-oculto', lateralOculto());
   rc.insertAdjacentHTML('afterbegin', cabecalhoHTML(m, key));
   rc.insertAdjacentHTML('beforeend', rodapeHTML(m, key));
   var at = lat.querySelector('.lv-parte.aqui') || lat.querySelector('.lv-cap.atual'); if(at && at.scrollIntoView) try{ at.scrollIntoView({ block:'nearest' }); }catch(e){}
@@ -244,7 +254,7 @@ new MutationObserver(function(){ if(!document.querySelector('#view .reading-cont
 document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-lv]'); if(!b || b.tagName === 'INPUT') return;
   var a = b.dataset.lv;
-  if(a === 'cap'){ var id = b.dataset.mod; if(id === pagina.mod){ abertos[id] = !abertos[id]; } else abertos[id] = !abertos[id]; redesenharLateral(); return; }
+  if(a === 'cap'){ var id = b.dataset.mod; abertos[id] = !capAberto(id, id === pagina.mod); redesenharLateral(); return; }
   if(a === 'parte'){ document.body.classList.remove('lv-gaveta'); pagina.rolar = true; abrir(b.dataset.mod, b.dataset.key || b.dataset.tab); return; }
   if(a === 'proximo'){
     marcar(pagina.mod, pagina.key, true);
@@ -252,8 +262,14 @@ document.addEventListener('click', function(e){
     return;
   }
   if(a === 'concluirLivro'){ marcar(pagina.mod, pagina.key, true); window.nexoLivros(); return; }
-  if(a === 'abrirLateral'){ document.body.classList.toggle('lv-gaveta'); return; }
-  if(a === 'fechar'){ document.body.classList.remove('lv-gaveta'); return; }
+  if(a === 'abrirLateral'){
+    if(computador() && document.body.classList.contains('lv-oculto')){ ocultarLateral(false); return; }
+    document.body.classList.toggle('lv-gaveta'); return;
+  }
+  if(a === 'fechar'){
+    if(computador()){ ocultarLateral(true); return; }
+    document.body.classList.remove('lv-gaveta'); return;
+  }
   if(a === 'livro'){ var c = continuar(b.dataset.livro); if(c){ pagina.rolar = true; abrir(c.mod, c.key); } return; }
   if(a === 'sumario'){ var L = b.dataset.livro; abertosLivros[L] = !abertosLivros[L]; window.nexoLivros(); return; }
 });
