@@ -120,6 +120,12 @@ async def cenario(p, largura, altura, nome):
     conf('lixeira remove o grifo', await pg.evaluate("() => document.querySelectorAll('.vd-m').length") == 0)
     await pg.evaluate("""() => { const pt = document.querySelector('#vd-a2 .vd-pt'); const r = document.createRange(); r.setStart(pt.firstChild,0); r.setEnd(pt.firstChild,30); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }""")
     await pg.wait_for_selector('.vd-pop', timeout=3000); await pg.click('.vd-pop .vd-d-vd')
+    # janelinha da anotação ao passar o mouse
+    await pg.click('#vd-a2 .vd-m'); await pg.click('.vd-pop [data-vd=nota-pop]'); await pg.fill('.vd-pop .vd-pn', 'Nota de teste'); await pg.click('.vd-pop [data-vd=salvar-nota]')
+    await pg.hover('#vd-a2 .vd-m')
+    conf('janelinha mostra a anotação ao passar o cursor', await pg.evaluate("() => (document.querySelector('.vd-dica-nota') || {}).textContent") == 'Nota de teste')
+    await pg.mouse.move(5, 5)
+    conf('janelinha some ao sair', await pg.evaluate("() => !document.querySelector('.vd-dica-nota')"))
     # selecionar com grifos ocultos também abre o popup e religa os grifos
     await pg.click('[data-vd=grifos]')
     await pg.evaluate("""() => { const pt = document.querySelector('#vd-a11 .vd-pt'); pt.scrollIntoView({block:'center'}); const r = document.createRange(); r.setStart(pt.firstChild,0); r.setEnd(pt.firstChild,20); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }""")
