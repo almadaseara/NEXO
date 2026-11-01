@@ -874,7 +874,7 @@ html[data-theme="dark"] .rv-card .rv-fig{background:rgba(255,255,255,.92);border
   body.study-focus header .pills,
   body.study-focus header .auth-actions{display:none!important}
   body.study-focus header #head{margin-right:auto}
-  body.study-focus .nx-rbar-wrap{left:12px!important}
+  body.study-focus .nx-rbar-wrap{left:calc(var(--nx-rail,76px) + 12px)!important}
   body.study-focus:has(.nx-rbar-wrap:not([hidden])) #view{padding-left:82px!important}
   body.study-focus #view>.reader-toolbar,
   body.study-focus #view>.hero,
