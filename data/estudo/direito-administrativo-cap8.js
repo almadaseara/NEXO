@@ -341,7 +341,7 @@ window.NEXO_ESTUDO["adm_contratos"] = "<hr />\n"
 + "<tbody>\n"
 + "<tr><td>Alcance</td><td>No ente federativo que aplicou</td><td>Todos os entes federativos</td></tr>\n"
 + "<tr><td>Prazo</td><td>Até 3 anos</td><td>De 3 a 6 anos</td></tr>\n"
-+ "<tr><td>Competência</td><td>Não definida no resumo do material</td><td>Exclusiva (art. 156, § 6º)</td></tr>\n"
++ "<tr><td>Competência</td><td>Não especificada na lei geral</td><td>Exclusiva (art. 156, § 6º)</td></tr>\n"
 + "</tbody>\n"
 + "</table>\n"
 + "<p>A aplicação de sanções não afasta o dever de reparar integralmente o dano causado à Administração (art. 156, § 9º). O ressarcimento não é penalidade, mas recomposição do patrimônio público.</p>\n"
@@ -365,6 +365,5 @@ window.NEXO_ESTUDO["adm_contratos"] = "<hr />\n"
 + "<p>O PNCP é o sítio eletrônico oficial destinado à divulgação centralizada e obrigatória dos atos exigidos pela lei, e à realização facultativa das contratações por órgãos dos Poderes Executivo, Legislativo e Judiciário de todos os entes federativos (art. 174, caput). Entre as informações obrigatórias estão os planos de contratação anuais, catálogos eletrônicos de padronização, editais de credenciamento, de pré-qualificação, avisos de contratação direta e editais de licitação com anexos, atas de registro de preços, contratos e termos aditivos, e notas fiscais eletrônicas quando cabível (art. 174, § 2º).</p>\n"
 + "<p>Entre as funcionalidades do PNCP estão o registro cadastral unificado; painel de consulta de preços, banco de preços em saúde e acesso à base nacional de notas fiscais eletrônicas; sistema de planejamento e gerenciamento das contratações; sistema eletrônico para sessões públicas; acesso ao Ceis e ao Cnep; e um sistema de gestão compartilhada com a sociedade, que permite comunicação com representantes da Administração e do contratado e a divulgação de relatório final sobre a consecução dos objetivos da contratação (art. 174, § 3º).</p>\n"
 + "<p>Os entes federativos podem manter sítio eletrônico complementar, desde que cumpram as divulgações obrigatórias no PNCP (art. 175). As contratações podem ser feitas por sistema eletrônico de pessoa jurídica pública ou privada, desde que integrado ao PNCP (art. 175, § 1º). O PNCP adota formato de dados abertos. Ele é gerido por um Comitê Gestor da Rede Nacional de Contratações Públicas, com representantes da União, dos Estados e do DF, e dos Municípios.</p>\n"
-+ "<p>Municípios com até 20 mil habitantes têm seis anos, a partir da publicação da lei, para cumprir as regras sobre requisitos dos agentes, licitação eletrônica obrigatória e divulgação em sítio oficial. Enquanto não adotarem o PNCP, devem publicar em diário oficial as informações exigidas, admitido o extrato, e disponibilizar a versão física dos documentos em suas repartições, sem cobrança além do custo de reprodução.</p>\n"
-+ "";
++ "<p>Municípios com até 20 mil habitantes têm seis anos, a partir da publicação da lei, para cumprir as regras sobre requisitos dos agentes, licitação eletrônica obrigatória e divulgação em sítio oficial. Enquanto não adotarem o PNCP, devem publicar em diário oficial as informações exigidas, admitido o extrato, e disponibilizar a versão física dos documentos em suas repartições, sem cobrança além do custo de reprodução.</p>\n";
 })();
