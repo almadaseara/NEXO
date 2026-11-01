@@ -951,13 +951,8 @@ html[data-theme="dark"]{--nx-mk-lj:rgba(251,146,60,.34);--nx-mk-vm:rgba(239,68,6
 .estudo-completo hr{border:0;border-top:1px solid var(--line);margin:26px 0}
 .estudo-completo blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted, #5d6f64)}
 @media(max-width:700px){.estudo-completo{font-size:14px}.estudo-completo table{font-size:12px}}
-
-/* Vade Mecum e livros digitais: a barra fica recolhida num ícone centralizado e abre ao passar o mouse */
+/* Vade Mecum e livros digitais (inclusive o Estudo completo): a barra lateral segue o padrão do site */
 @media (min-width:701px){
   body.nx-sessao-livro aside{display:flex!important}
-  body.nx-sessao-livro .study-focus main,body.nx-sessao-livro main{margin-left:var(--nx-rail)!important}
-  body.nx-sessao-livro aside:not(:hover):not(:focus-within) .search,
-  body.nx-sessao-livro aside:not(:hover):not(:focus-within) .nav,
-  body.nx-sessao-livro aside:not(:hover):not(:focus-within) .sidebar-footer{display:none!important}
-  body.nx-sessao-livro aside:not(:hover):not(:focus-within) .brand{display:none}
+  body.nx-sessao-livro main{margin-left:var(--nx-rail)!important}
 }
