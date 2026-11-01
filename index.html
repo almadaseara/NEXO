@@ -2480,5 +2480,18 @@ syncAccess();
 <script src="ui/nexo-sessao-lab.js?v=20261023m"></script>
 <script src="ui/nexo-simulado-lab.js?v=20261024p"></script>
 <script src="ui/nexo-questoes-contexto-lab.js?v=20261023b"></script>
+<script>
+/* Marca as telas do Vade Mecum e dos livros digitais, onde a barra lateral fica recolhida num ícone. */
+(function(){
+  function sessaoLivro(){
+    var h = document.getElementById('head');
+    var t = h ? h.textContent : '';
+    return /Vade Mecum|Livros digitais/i.test(t) || !!document.querySelector('#view .lv-cab');
+  }
+  function atualizar(){ document.body.classList.toggle('nx-sessao-livro', sessaoLivro()); }
+  atualizar();
+  new MutationObserver(atualizar).observe(document.body, { childList:true, subtree:true, characterData:true });
+})();
+</script>
 </body>
 </html>
