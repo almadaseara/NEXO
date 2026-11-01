@@ -2006,14 +2006,10 @@ function syncAccess() {
     if (button.classList.contains('active')) button.setAttribute('aria-current', 'page');
     else button.removeAttribute('aria-current');
   });
-  if (!studying) document.body.classList.remove('study-focus');
+  /* leitura de um tema: layout de foco é o padrão (sem botão de alternar); fora dela, navegação normal */
+  document.body.classList.toggle('study-focus', !!studying && !document.body.classList.contains('mobile-nav-open'));
   document.getElementById('view').classList.toggle('study-view', studying);
-  const focusButton = document.getElementById('focus-toggle');
-  if (focusButton) {
-    const focused = document.body.classList.contains('study-focus');
-    focusButton.setAttribute('aria-pressed', String(focused));
-    focusButton.innerHTML = `${workspaceIcon('focus')}<span>${focused ? 'Sair do foco' : 'Modo foco'}</span>`;
-  }
+
 }
 
 
@@ -2229,7 +2225,7 @@ function practiceRandom() {
 function readerToolbar(module) {
   const ordered = sortedModules();
   const index = ordered.findIndex(item => item.id === module.id);
-  return `<div class="reader-toolbar"><button type="button" class="reader-back" onclick="openLibrary(resourceOptions[activeResource]?activeResource:'resumo')">${icon('arrow')}<span>Biblioteca</span></button><span class="reader-position">${String(index + 1).padStart(2, '0')} <span>/ ${ordered.length} assuntos</span></span><div class="reader-actions"><div class="reading-size"><button type="button" aria-label="Diminuir tamanho do texto" onclick="changeReadingSize(-1)" ${readingSize <= 14 ? 'disabled' : ''}>A−</button><button type="button" aria-label="Aumentar tamanho do texto" onclick="changeReadingSize(1)" ${readingSize >= 20 ? 'disabled' : ''}>A+</button></div><button type="button" id="focus-toggle" class="focus-toggle" aria-pressed="${document.body.classList.contains('study-focus')}" onclick="toggleStudyFocus()">${workspaceIcon('focus')}<span>Modo foco</span></button><div class="reader-navigation"><button type="button" class="icon-button previous-module" aria-label="Assunto anterior" onclick="navigateModule(-1)" ${index === 0 ? 'disabled' : ''}>${icon('arrow')}</button><button type="button" class="icon-button" aria-label="Próximo assunto" onclick="navigateModule(1)" ${index === ordered.length - 1 ? 'disabled' : ''}>${icon('arrow')}</button></div></div></div>`;
+  return `<div class="reader-toolbar"><button type="button" class="reader-back" onclick="openLibrary(resourceOptions[activeResource]?activeResource:'resumo')">${icon('arrow')}<span>Biblioteca</span></button><span class="reader-position">${String(index + 1).padStart(2, '0')} <span>/ ${ordered.length} assuntos</span></span><div class="reader-actions"><div class="reading-size"><button type="button" aria-label="Diminuir tamanho do texto" onclick="changeReadingSize(-1)" ${readingSize <= 14 ? 'disabled' : ''}>A−</button><button type="button" aria-label="Aumentar tamanho do texto" onclick="changeReadingSize(1)" ${readingSize >= 20 ? 'disabled' : ''}>A+</button></div><div class="reader-navigation"><button type="button" class="icon-button previous-module" aria-label="Assunto anterior" onclick="navigateModule(-1)" ${index === 0 ? 'disabled' : ''}>${icon('arrow')}</button><button type="button" class="icon-button" aria-label="Próximo assunto" onclick="navigateModule(1)" ${index === ordered.length - 1 ? 'disabled' : ''}>${icon('arrow')}</button></div></div></div>`;
 }
 
 function navigateModule(direction) {
@@ -2248,11 +2244,6 @@ function changeReadingSize(amount) {
   announce(`Tamanho de leitura: ${readingSize} pixels.`);
 }
 
-function toggleStudyFocus() {
-  document.body.classList.toggle('study-focus');
-  syncAccess();
-  announce(document.body.classList.contains('study-focus') ? 'Modo foco ativado. A navegação está recolhida.' : 'Modo foco desativado.');
-}
 
 function announce(message) {
   const element = document.getElementById('workspace-message');
@@ -2354,10 +2345,6 @@ document.addEventListener('keydown', event => {
   if (((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') || (event.key === '/' && !editable)) {
     event.preventDefault();
     openCommand();
-  }
-  if (event.key === 'Escape' && document.body.classList.contains('study-focus') && !document.getElementById('command-dialog').open) {
-    document.body.classList.remove('study-focus');
-    syncAccess();
   }
 });
 
@@ -2492,5 +2479,6 @@ syncAccess();
 <script src="ui/nexo-questoes-lab.js?v=20261027c"></script>
 <script src="ui/nexo-sessao-lab.js?v=20261023m"></script>
 <script src="ui/nexo-simulado-lab.js?v=20261024p"></script>
-<script src="ui/nexo-questoes-contexto-lab.js?v=20261023b"></script></body>
+<script src="ui/nexo-questoes-contexto-lab.js?v=20261023b"></script><script src="ui/nexo-roda.js?v=20261101-roda"></script>
+</body>
 </html>
