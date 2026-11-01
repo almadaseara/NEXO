@@ -1523,14 +1523,6 @@ function openNexoMindmap(id){
  document.body.appendChild(d);d.showModal();
 }
 
-function estudoSumario(html){
-  const heads=[];
-  const nav=[...html.matchAll(/<h3 id="([^"]+)"[^>]*>([\s\S]*?)<\/h3>/g)].map(x=>({id:x[1],txt:x[2].replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim()}));
-  if(!nav.length) return html;
-  const lista=nav.map(h=>`<li><a href="#" onclick="document.getElementById(${JSON.stringify(h.id)}).scrollIntoView({behavior:'smooth',block:'start'});return false;">${h.txt}</a></li>`).join('');
-  return `<nav class="estudo-sumario" aria-label="Capítulos do estudo"><b>Capítulos deste estudo</b><ol>${lista}</ol></nav>${html}`;
-}
-
 function renderTab(m,tab){
   if(typeof activeResource!=='undefined') activeResource=tab;
   const tabs = `<div class="tabs">
@@ -1540,7 +1532,7 @@ function renderTab(m,tab){
   if(tab==='estudo'){
     const estudoHtml = (window.NEXO_ESTUDO||{})[m.id];
     body = estudoHtml
-      ? `<div class="card estudo-completo"><h3>Estudo completo</h3>${estudoSumario(estudoHtml)}</div>`
+      ? `<div class="card estudo-completo"><h3>Estudo completo</h3>${estudoHtml}</div>`
       : `<div class="card"><h3>Estudo completo</h3><p class="muted">O material completo deste assunto, com o conteúdo do PDF de estudo escrito com outras palavras, tabelas, imagens e mapas, entra aqui. Em preparação.</p></div>`;
   } else if(tab==='questoes'){
     tab = 'oficiais';
