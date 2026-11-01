@@ -2486,7 +2486,7 @@ syncAccess();
   function sessaoLivro(){
     var h = document.getElementById('head');
     var t = h ? h.textContent : '';
-    return /Vade Mecum|Livros digitais/i.test(t) || !!document.querySelector('#view .lv-cab');
+    return /Vade Mecum|Livros digitais/i.test(t) || document.body.classList.contains('lv-on') || !!document.querySelector('#view .lv-cab');
   }
   function atualizar(){ document.body.classList.toggle('nx-sessao-livro', sessaoLivro()); }
   atualizar();
