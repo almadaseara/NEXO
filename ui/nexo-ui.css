@@ -952,3 +952,9 @@ html[data-theme="dark"]{--nx-mk-lj:rgba(251,146,60,.34);--nx-mk-vm:rgba(239,68,6
 .estudo-completo blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted, #5d6f64)}
 .estudo-fonte{margin-top:26px;font-size:12px}
 @media(max-width:700px){.estudo-completo{font-size:14px}.estudo-completo table{font-size:12px}}
+.estudo-sumario{border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:6px 0 22px;font-size:13px;line-height:1.6}
+.estudo-sumario b{display:block;margin-bottom:6px}
+.estudo-sumario ol{margin:0;padding-left:20px;columns:2;column-gap:28px}
+.estudo-sumario li{break-inside:avoid;margin-bottom:4px}
+.estudo-sumario a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media(max-width:700px){.estudo-sumario ol{columns:1}}
