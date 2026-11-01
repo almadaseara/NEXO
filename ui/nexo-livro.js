@@ -74,7 +74,8 @@ function partes(m){
       var w = palavras(EST.slice(c.fim, fim));
       p.push({ key:'estudo#' + c.id, tab:'estudo', est:c.id, teoria:true, nome:c.txt + ' - Teoria', min:Math.max(3, Math.round(w / 160)) });
     });
-  }else if(T && (T.secoes || []).length){
+  }
+  if(T && (T.secoes || []).length){
     T.secoes.forEach(function(sc){
       var w = (sc.rapido || []).reduce(function(a, x){ return a + palavras(x); }, 0) + (sc.teoria || []).reduce(function(a, bl){ return a + (bl.p || []).reduce(function(c, x){ return c + palavras(x); }, 0); }, 0) + (sc.pegadinhas || []).reduce(function(a, x){ return a + palavras(x); }, 0) + (sc.quadro ? palavras(JSON.stringify(sc.quadro.rows)) : 0);
       p.push({ key:'resumo#' + sc.id, tab:'resumo', sec:sc.id, teoria:true, nome:curtoTitulo(sc.titulo) + ' - Teoria', min:Math.max(3, Math.round(w / 160)) });
@@ -83,7 +84,7 @@ function partes(m){
     [['_fecho1','Comparativo e nota de importância',['comparativo','importancia'],4],['_fecho2','Como cai em prova e pegadinhas',['prova','pegadinhas'],4],['_fecho3','Resumo e diagnóstico final',['resumo','diagnostico'],3]].forEach(function(f){
       p.push({ key:'resumo#' + f[0], tab:'resumo', blocos:f[2], nome:f[1] + ' - ' + nomeCap, min:f[3] });
     });
-  }else{
+  }else if(!EST){
     p.push({ key:'resumo', tab:'resumo', teoria:true, nome:nomeCap + ' - Teoria', min:Math.max(5, Math.round((m.summary || []).reduce(function(a, x){ return a + palavras(x); }, 0) / 160)) });
   }
   var nLei = T ? (T.lei || []).reduce(function(a, g){ return a + (g.itens || []).reduce(function(c, i){ return c + palavras(i.t); }, 0); }, 0) : (m.law_items || []).reduce(function(a, x){ return a + palavras(x[1]); }, 0);
