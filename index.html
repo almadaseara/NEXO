@@ -653,16 +653,16 @@ button:disabled { opacity: .35; cursor: not-allowed; }
 
 /* Botão de concursos segue o mesmo comportamento da barra retrátil do NEXO. */
 @media (min-width:701px){
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nx-con-nav{
+  aside:not(:hover):not(:focus-within) .nx-con-nav{
     width:52px!important;height:52px!important;min-width:52px!important;
     margin:8px 0 8px 12px!important;padding:0!important;
     justify-content:center!important;gap:0!important;
     overflow:hidden!important;white-space:nowrap!important;
   }
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nx-con-nav-label{
+  aside:not(:hover):not(:focus-within) .nx-con-nav-label{
     display:none!important;visibility:hidden!important;
   }
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nx-con-nav-icon{
+  aside:not(:hover):not(:focus-within) .nx-con-nav-icon{
     flex:0 0 19px!important;margin:0!important;color:var(--green)!important;
   }
   aside:hover .nx-con-nav,aside:focus-within .nx-con-nav{
@@ -943,7 +943,6 @@ html[data-theme="dark"] .nx-ed-view button:hover:not(.active){background:#343438
   <nav class="nav" id="nav" aria-label="Navegação principal"></nav>
   <div class="sidebar-footer"><span class="status-dot"></span><div>Um passo mais perto.<small>Sua aprovação começa na revisão.</small></div></div>
 </aside>
-<button id="nxLogo" class="nx-logo-btn" type="button" onclick="toggleMobileNav()" aria-label="Abrir menu de navegação" aria-controls="nav" aria-expanded="false">N</button>
 <main>
   <header>
     <button id="navToggle" class="mobile-menu-btn" type="button" onclick="toggleMobileNav()" aria-label="Abrir menu" aria-controls="nav" aria-expanded="false">☰</button>
@@ -992,22 +991,18 @@ const nexoSourceNotices = {
 function toggleMobileNav(){
   if(document.body.classList.contains('study-focus')){document.body.classList.remove('study-focus');if(typeof syncAccess==='function') syncAccess();}
   document.body.classList.toggle('mobile-nav-open');
-  const aberta=document.body.classList.contains('mobile-nav-open');
-  document.getElementById('navToggle').setAttribute('aria-expanded',aberta);
-  document.getElementById('nxLogo').setAttribute('aria-expanded',aberta);
+  document.getElementById('navToggle').setAttribute('aria-expanded',document.body.classList.contains('mobile-nav-open'));
 }
 function closeMobileNav(){
   document.body.classList.remove('mobile-nav-open');
   document.getElementById('navToggle').setAttribute('aria-expanded','false');
-  document.getElementById('nxLogo').setAttribute('aria-expanded','false');
 }
 document.addEventListener('keydown',function(event){if(event.key==='Escape') closeMobileNav();});
 document.addEventListener('click', function(e){
-  if(document.body.classList.contains('mobile-nav-open')){
+  if(window.innerWidth<=700 && document.body.classList.contains('mobile-nav-open')){
     const aside=document.querySelector('aside');
     const btn=document.getElementById('navToggle');
-    const logo=document.getElementById('nxLogo');
-    if(aside && !aside.contains(e.target) && btn && !btn.contains(e.target) && logo && !logo.contains(e.target)) closeMobileNav();
+    if(aside && !aside.contains(e.target) && btn && !btn.contains(e.target)) closeMobileNav();
   }
 });
 window.addEventListener('resize', function(){
@@ -2484,6 +2479,6 @@ syncAccess();
 <script src="ui/nexo-questoes-lab.js?v=20261027c"></script>
 <script src="ui/nexo-sessao-lab.js?v=20261023m"></script>
 <script src="ui/nexo-simulado-lab.js?v=20261024p"></script>
-<script src="ui/nexo-questoes-contexto-lab.js?v=20261023b"></script>
+<script src="ui/nexo-questoes-contexto-lab.js?v=20261023b"></script><script src="ui/nexo-roda.js?v=20261101-roda"></script>
 </body>
 </html>
