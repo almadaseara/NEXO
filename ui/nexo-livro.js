@@ -237,7 +237,18 @@ function montar(m, tab){
   if(p.est){
     /* seção do Estudo completo: a página inteira fica aberta e rola até a seção pedida */
     var alvo = p.est;
-    setTimeout(function(){ var el = document.getElementById(alvo); if(el && el.scrollIntoView) try{ el.scrollIntoView({ block:'start' }); }catch(e){} }, 0);
+    setTimeout(function(){
+      var el = document.getElementById(alvo), v = document.getElementById('view'), cab = document.querySelector('#view .lv-cab');
+      if(!el) return;
+      /* rola até a seção deixando o enquadramento do capítulo (lv-cab) visível logo acima dela */
+      var d = cab ? cab.offsetHeight + 28 : 16;
+      var rolavel = v && getComputedStyle(v).overflowY === 'auto' && v.scrollHeight > v.clientHeight;
+      if(rolavel){
+        v.scrollTop = Math.max(0, el.getBoundingClientRect().top - v.getBoundingClientRect().top + v.scrollTop - d);
+      }else{
+        window.scrollTo({ top: Math.max(0, el.getBoundingClientRect().top + window.pageYOffset - d) });
+      }
+    }, 0);
   }
   if(p.banca){
     (m.official_questions || []).forEach(function(q, i){ var c = document.getElementById('card_official_' + m.id + '_' + i); var w = c && (c.closest('.practice-question-card') || c); if(w) w.hidden = bancaQ(q) !== p.banca; });

@@ -594,7 +594,7 @@ html[data-theme="dark"]{--nx-mk-am:rgba(247,214,74,.34);--nx-mk-vd:rgba(110,214,
 .lv-parte.aqui{background:var(--nx-accent-soft);box-shadow:inset 3px 0 0 var(--nx-accent);font-weight:700}
 .lv-dot{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;border:2px solid var(--nx-line);flex-shrink:0;color:#fff}
 .lv-parte.lida .lv-dot{background:var(--nx-accent);border-color:var(--nx-accent)}
-.lv-cab{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--nx-muted);margin:0 0 12px}
+.lv-cab{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--nx-muted);margin:0 0 12px;position:sticky;top:0;z-index:3;background:var(--bg);padding:10px 0}
 .lv-cab>span:first-child{flex:1;min-width:200px}
 .lv-cab-pct{font-weight:800;color:var(--nx-accent)}
 .lv-abrir{display:none!important}
