@@ -211,7 +211,7 @@ var ROTULOS = {
   principios_fundamentais:'Princípios fundamentais e teoria da Constituição', normas_constitucionais:'Normas constitucionais: eficácia', teoria_direitos:'Teoria geral dos direitos fundamentais',
   art5_parte1:'Art. 5º, incisos I a XXXI', art5_parte2:'Art. 5º, incisos XXXII a LXXIX', direitos_politicos:'Cidadania e direitos políticos',
   organizacao_estado:'Organização político-administrativa', sistema_tributario_orcamento:'Sistema tributário e orçamento', ordem_economica_social:'Ordem econômica e social',
-  adm_regime_principios:'Regime jurídico-administrativo e princípios', adm_estatais_fundacoes:'Fundações, empresas públicas e sociedades de economia mista',
+  adm_regime_principios:'Regime jurídico-administrativo e princípios', adm_estatais_fundacoes:'Autarquias, fundações, empresas públicas e sociedades de economia mista',
   adm_licitacao_principios:'Princípios, modalidades e procedimento', adm_contratacao_direta:'Contratação direta', adm_improbidade:'Improbidade administrativa',
   ml_introducao:'Conceito, importância e divisões', ml_identificacao:'Identidade e identificação humana', ml_traumatologia:'Lesões e instrumentos',
   ml_tanatologia:'Morte e fenômenos cadavéricos', ml_sexologia:'Aspectos médico-legais dos crimes sexuais', ml_psicopatologia:'Modificadores e avaliação pericial',
