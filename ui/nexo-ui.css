@@ -953,6 +953,6 @@ html[data-theme="dark"]{--nx-mk-lj:rgba(251,146,60,.34);--nx-mk-vm:rgba(239,68,6
 @media(max-width:700px){.estudo-completo{font-size:14px}.estudo-completo table{font-size:12px}}
 /* Vade Mecum e livros digitais (inclusive o Estudo completo): a barra lateral segue o padrão do site */
 @media (min-width:701px){
-  body.nx-sessao-livro aside{display:flex!important}
-  body.nx-sessao-livro main{margin-left:var(--nx-rail)!important}
+  body.nx-sessao-livro aside,body.study-focus aside{display:flex!important}
+  body.nx-sessao-livro main,body.study-focus main{margin-left:var(--nx-rail)!important}
 }
