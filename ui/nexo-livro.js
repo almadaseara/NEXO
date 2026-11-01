@@ -64,7 +64,17 @@ function partes(m){
   var chaveC = m.id + ':' + (m.official_questions || []).length;
   if(cacheP[chaveC]) return cacheP[chaveC];
   var T = temas()[m.id], p = [], nomeCap = curtoTitulo(m.title);
-  if(T && (T.secoes || []).length){
+  var EST = (window.NEXO_ESTUDO || {})[m.id];
+  if(EST){
+    /* Estudo completo: cada seção numerada (h3) vira uma parte de teoria, na lateral do capítulo */
+    var cortes = [], rx = /<h3 id="([^"]+)"[^>]*>([\s\S]*?)<\/h3>/g, mm;
+    while((mm = rx.exec(EST))) cortes.push({ id:mm[1], txt:mm[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(), at:mm.index, fim:rx.lastIndex });
+    cortes.forEach(function(c, i){
+      var fim = i + 1 < cortes.length ? cortes[i + 1].at : EST.length;
+      var w = palavras(EST.slice(c.fim, fim));
+      p.push({ key:'estudo#' + c.id, tab:'estudo', est:c.id, teoria:true, nome:c.txt + ' - Teoria', min:Math.max(3, Math.round(w / 160)) });
+    });
+  }else if(T && (T.secoes || []).length){
     T.secoes.forEach(function(sc){
       var w = (sc.rapido || []).reduce(function(a, x){ return a + palavras(x); }, 0) + (sc.teoria || []).reduce(function(a, bl){ return a + (bl.p || []).reduce(function(c, x){ return c + palavras(x); }, 0); }, 0) + (sc.pegadinhas || []).reduce(function(a, x){ return a + palavras(x); }, 0) + (sc.quadro ? palavras(JSON.stringify(sc.quadro.rows)) : 0);
       p.push({ key:'resumo#' + sc.id, tab:'resumo', sec:sc.id, teoria:true, nome:curtoTitulo(sc.titulo) + ' - Teoria', min:Math.max(3, Math.round(w / 160)) });
@@ -222,6 +232,11 @@ function montar(m, tab){
     var barra = rc.querySelector('.tr-wrap > .tr-bar'); if(barra && cards.length) barra.hidden = true;
     Array.prototype.forEach.call(rc.querySelectorAll('[data-trbloco]'), function(b){ b.hidden = !(p.blocos && p.blocos.indexOf(b.getAttribute('data-trbloco')) >= 0); });
     var he = rc.querySelector('#tr-b-explicacao'); if(he) he.hidden = true;
+  }
+  if(p.est){
+    /* seção do Estudo completo: a página inteira fica aberta e rola até a seção pedida */
+    var alvo = p.est;
+    setTimeout(function(){ var el = document.getElementById(alvo); if(el && el.scrollIntoView) try{ el.scrollIntoView({ block:'start' }); }catch(e){} }, 0);
   }
   if(p.banca){
     (m.official_questions || []).forEach(function(q, i){ var c = document.getElementById('card_official_' + m.id + '_' + i); var w = c && (c.closest('.practice-question-card') || c); if(w) w.hidden = bancaQ(q) !== p.banca; });
