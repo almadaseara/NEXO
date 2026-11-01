@@ -59,21 +59,21 @@ html[data-theme="dark"]{
   main{margin-left:var(--nx-rail)}
   .study-focus main{margin-left:0}
   aside:hover,aside:focus-within{width:var(--nx-open)!important;box-shadow:18px 0 44px rgba(10,24,26,.28)}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .search,
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .sec{display:none}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .folder-wrap{margin:2px 0}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .sidebar-footer>div,
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .brand>span:not(.brand-mark),
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .folder-btn .arrow,
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .folder-btn .nx-count{opacity:0;pointer-events:none}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nav{overflow:hidden}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nav button{color:transparent!important;background:transparent!important;white-space:nowrap;overflow:hidden}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nav button .icon{color:#cfe0dc}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nav .primary-nav.active .icon{color:#fff}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .nav .primary-nav.active{background:rgba(255,255,255,.1)!important;width:52px}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .folder-list{display:none!important}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .folder-btn{border-color:transparent!important;background:transparent!important}
-  body:not(.mobile-nav-open) aside:not(:hover):not(:focus-within) .folder-btn .nx-mono{color:#fff}
+  aside:not(:hover):not(:focus-within) .search,
+  aside:not(:hover):not(:focus-within) .sec{display:none}
+  aside:not(:hover):not(:focus-within) .folder-wrap{margin:2px 0}
+  aside:not(:hover):not(:focus-within) .sidebar-footer>div,
+  aside:not(:hover):not(:focus-within) .brand>span:not(.brand-mark),
+  aside:not(:hover):not(:focus-within) .folder-btn .arrow,
+  aside:not(:hover):not(:focus-within) .folder-btn .nx-count{opacity:0;pointer-events:none}
+  aside:not(:hover):not(:focus-within) .nav{overflow:hidden}
+  aside:not(:hover):not(:focus-within) .nav button{color:transparent!important;background:transparent!important;white-space:nowrap;overflow:hidden}
+  aside:not(:hover):not(:focus-within) .nav button .icon{color:#cfe0dc}
+  aside:not(:hover):not(:focus-within) .nav .primary-nav.active .icon{color:#fff}
+  aside:not(:hover):not(:focus-within) .nav .primary-nav.active{background:rgba(255,255,255,.1)!important;width:52px}
+  aside:not(:hover):not(:focus-within) .folder-list{display:none!important}
+  aside:not(:hover):not(:focus-within) .folder-btn{border-color:transparent!important;background:transparent!important}
+  aside:not(:hover):not(:focus-within) .folder-btn .nx-mono{color:#fff}
   aside .search,aside .sec,aside .sidebar-footer>div,aside .brand>span{transition:opacity .15s}
 }
 
@@ -952,16 +952,16 @@ html[data-theme="dark"]{--nx-mk-lj:rgba(251,146,60,.34);--nx-mk-vm:rgba(239,68,6
 .estudo-completo blockquote{margin:12px 0;padding:8px 14px;border-left:3px solid var(--line);color:var(--muted, #5d6f64)}
 @media(max-width:700px){.estudo-completo{font-size:14px}.estudo-completo table{font-size:12px}}
 
-/* ---------- Menu recolhido: só a logomarca; ao tocar, a barra abre sobre a página ---------- */
-.nx-logo-btn{position:fixed;top:11px;left:14px;z-index:85;width:44px;height:44px;border:0;border-radius:50%;background:var(--nx-accent,#2f7968);color:var(--nx-accent-ink,#fff);font:800 21px/1 'Manrope',sans-serif;box-shadow:0 6px 18px #0b1d1a40;cursor:pointer;display:none;align-items:center;justify-content:center;padding:0;transition:opacity .15s ease}
-.nx-logo-btn:focus-visible{outline:2px solid var(--nx-accent);outline-offset:3px}
-@media (min-width:701px){
-  :root{--nx-rail:0px}
-  aside,aside:hover,aside:focus-within{width:0!important;box-shadow:none!important;border-right-color:transparent!important}
-  body.mobile-nav-open aside,body.mobile-nav-open aside:hover{width:var(--nx-open)!important;box-shadow:12px 0 36px #142b3060!important;border-right-color:var(--nx-line)!important;z-index:80}
-  body.mobile-nav-open::after{content:"";position:fixed;inset:0;z-index:70;background:#0006}
-  body.mobile-nav-open .nx-logo-btn{opacity:0;pointer-events:none}
-  .nx-logo-btn{display:flex}
-  header{padding-left:76px!important}
-  body:has(.nx-rbar-wrap:not([hidden])) #view{padding-left:28px!important}
-}
+/* ---------- Botão flutuante NEXO com a roda de áreas ---------- */
+.nx-roda{position:fixed;right:20px;bottom:84px;z-index:60;width:58px;height:58px}
+.nx-roda-botao{position:absolute;left:0;bottom:0;width:58px;height:58px;border-radius:50%;border:1px solid #cfe0d6;background:#fff;box-shadow:0 6px 18px #213b2b26;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:transform .2s ease}
+.nx-roda-botao:hover{transform:scale(1.05)}
+.nx-roda-botao:focus-visible,.nx-roda-item:focus-visible{outline:2px solid #296e5d;outline-offset:3px}
+.nx-roda-logo{display:block;width:26px;height:23px;background:linear-gradient(135deg,#a8d6cc,#21685b);clip-path:polygon(0 100%,0 0,21% 0,79% 65%,79% 0,100% 0,100% 100%,79% 100%,21% 35%,21% 100%)}
+.nx-roda-itens{position:absolute;left:0;bottom:0;width:0;height:0}
+.nx-roda-item{position:absolute;left:7px;bottom:7px;width:44px;height:44px;margin:0;border-radius:50%;border:1px solid #cfe0d6;background:#fff;color:#2f5d4f;box-shadow:0 4px 12px #213b2b1f;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;opacity:0;pointer-events:none;transform:translate(0,0) scale(.4);transition:transform .25s cubic-bezier(.2,.8,.2,1),opacity .2s ease}
+.nx-roda.aberta .nx-roda-item{opacity:1;pointer-events:auto;transform:translate(var(--x),var(--y)) scale(1)}
+.nx-roda-item:hover{background:#eef6f1;color:#1f4a3d}
+.nx-roda-rotulo{position:absolute;left:52px;top:50%;transform:translateY(-50%);white-space:nowrap;background:#1f3b33;color:#fff;font-size:12px;font-weight:600;padding:5px 9px;border-radius:7px;opacity:0;pointer-events:none;transition:opacity .15s ease}
+.nx-roda-item:hover .nx-roda-rotulo,.nx-roda-item:focus-visible .nx-roda-rotulo{opacity:1}
+@media (prefers-reduced-motion:reduce){.nx-roda-item,.nx-roda-botao{transition:none}}
