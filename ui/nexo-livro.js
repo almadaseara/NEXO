@@ -222,6 +222,7 @@ function montar(m, tab){
   var key = pedida && pedida.mod === m.id && parteDe(m, pedida.key) && parteDe(m, pedida.key).tab === tab ? pedida.key : null;
   if(!key && pagina.mod === m.id && pagina.key && parteDe(m, pagina.key) && parteDe(m, pagina.key).tab === tab) key = pagina.key;
   if(!key){ var pp = partes(m).find(function(x){ return x.tab === tab; }); key = pp ? pp.key : null; }
+  var vemDaLateral = !!(pedida && pedida.mod === m.id);
   pedida = null;
   if(!key){ tirar(); return; }
   var p = parteDe(m, key);
@@ -234,7 +235,7 @@ function montar(m, tab){
     Array.prototype.forEach.call(rc.querySelectorAll('[data-trbloco]'), function(b){ b.hidden = !(p.blocos && p.blocos.indexOf(b.getAttribute('data-trbloco')) >= 0); });
     var he = rc.querySelector('#tr-b-explicacao'); if(he) he.hidden = true;
   }
-  if(p.est){
+  if(p.est && vemDaLateral){
     /* seção do Estudo completo: a página inteira fica aberta e rola até a seção pedida */
     var alvo = p.est;
     setTimeout(function(){
