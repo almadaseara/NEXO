@@ -59,6 +59,21 @@ function montar(){
   });
   document.addEventListener('click', function(e){ if(!raiz.contains(e.target)) fechar(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fechar(); });
+
+  /* Só aparece no Vade Mecum e nos livros digitais. Nessas telas a barra lateral fica
+     recolhida e este botão passa a ser o acesso às áreas. */
+  function sessaoLivro(){
+    var h = document.getElementById('head');
+    var t = h ? h.textContent : '';
+    return /Vade Mecum|Livros digitais/i.test(t) || !!document.querySelector('#view .lv-cab');
+  }
+  function atualizar(){
+    var on = sessaoLivro();
+    document.body.classList.toggle('nx-sessao-livro', on);
+    if(!on) fechar();
+  }
+  atualizar();
+  new MutationObserver(atualizar).observe(document.body, { childList:true, subtree:true, characterData:true });
 }
 
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', montar);
