@@ -1,9 +1,6 @@
 // NEXO · Quiz entre amigos: lê o texto de um trecho de prova enviado pelo administrador e devolve as perguntas em JSON.
-// Não grava nada no banco. Aceita só usuário administrador (is_nexo_admin). Leitor: Gemini (camada gratuita), chave GEMINI_API_KEY.
-import { createClient } from "npm:@supabase/supabase-js@2";
+// Não grava nada no banco. Aceita qualquer conta logada no NEXO (o gateway exige JWT válido). Leitor: Gemini (camada gratuita), chave GEMINI_API_KEY.
 
-const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
-const ANON_KEY = Deno.env.get("SUPABASE_ANON_KEY")!;
 const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY") || "";
 const GEMINI_MODEL = Deno.env.get("GEMINI_MODEL") || "gemini-3.8-flash";
 
@@ -67,11 +64,9 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
   if (req.method !== "POST") return json({ status: "POST only" }, 405);
 
+  // verify_jwt=true no gateway: só chega aqui quem está logado no NEXO.
   const auth = req.headers.get("authorization") || "";
   if (!auth.toLowerCase().startsWith("bearer ")) return json({ status: "unauthorized" }, 401);
-  const userDb = createClient(SUPABASE_URL, ANON_KEY, { global: { headers: { Authorization: auth } } });
-  const { data: ehAdmin, error: erroAdmin } = await userDb.rpc("is_nexo_admin");
-  if (erroAdmin || ehAdmin !== true) return json({ status: "forbidden" }, 403);
 
   const body = await req.json().catch(() => ({}));
   const trecho = String(body?.text || "").slice(0, 20000);
