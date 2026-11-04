@@ -309,8 +309,9 @@ window.renderNav = function(){
   /* entrada "Quiz" logo depois de "Desempenho" */
   var ds = $$('.primary-nav', nav).find(function(b){ return /nexoDesempenho/.test(b.getAttribute('onclick') || ''); });
   var botaoQuiz = '<button type="button" class="primary-nav nx-nav-extra' + (cur() === 'quiz' ? ' active' : '') + '" onclick="nexoQuiz()">' + I.chart + ' Quiz</button>';
-  if(ds){ ds.insertAdjacentHTML('afterend', botaoQuiz); }
-  else if(fc){ fc.insertAdjacentHTML('afterend', botaoQuiz); }
+  var refQuiz = ds || fc || $$('.primary-nav', nav).pop();
+  if(refQuiz){ refQuiz.insertAdjacentHTML('afterend', botaoQuiz); }
+  else { nav.insertAdjacentHTML('afterbegin', botaoQuiz); }
   var lista = nav.querySelector('.nx-tree .nx-leaf.active');
   if(lista && lista.scrollIntoView && !q) try{ lista.scrollIntoView({ block:'nearest' }); }catch(e){}
 };
