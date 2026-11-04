@@ -11,7 +11,7 @@ var st = { tela:'inicio', uid:null, sala:null, perguntas:[], jog:[], canal:null,
 
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function view(){ return document.getElementById('view'); }
-function sb(){ return window.nexoSupabase; }
+function sb(){ try{ return typeof nexoSupabase !== 'undefined' ? nexoSupabase : null; }catch(e){ return null; } }
 function agora(){ return Date.now(); }
 function codigoAleatorio(){ var s = ''; for(var i = 0; i < 5; i++) s += CHARS.charAt(Math.floor(Math.random() * CHARS.length)); return s; }
 async function eu(){
