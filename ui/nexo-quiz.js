@@ -211,7 +211,7 @@ function telaInicio(){
     '<section class="qz-card"><h2>Criar sala</h2><p class="qz-muted">Você envia o PDF da prova. O NEXO lê as questões e você confere o gabarito antes de abrir a sala.</p>' +
       '<button class="qz-btn" data-q="criar">Criar sala com PDF</button></section>' +
     '<section class="qz-card"><h2>Entrar em sala</h2><p class="qz-muted">Digite o código que o anfitrião passou.</p>' +
-      '<label class="qz-f">Código<input id="qz-cod" maxlength="5" autocapitalize="characters" placeholder="ABCDE"></label>' +
+      '<label class="qz-f">Código<input id="qz-cod" maxlength="5" autocapitalize="characters" placeholder="ABCDE" value="' + esc(st.codigoPre || '') + '"></label>' +
       '<label class="qz-f">Apelido<input id="qz-nome" maxlength="20" placeholder="Como os amigos vão te ver"></label>' +
       '<button class="qz-btn" data-q="entrar">Entrar</button></section>' +
   '</div>' + msgHtml();
@@ -246,7 +246,10 @@ function telaLobby(){
   return '<section class="qz-card qz-wide qz-centro"><h2>Sala aberta</h2>' +
     '<p class="qz-muted">Mande este código para os amigos. Eles entram pela aba Quiz, em "Entrar em sala".</p>' +
     '<div class="qz-codigo">' + esc(st.sala.codigo) + '</div>' +
-    '<button class="qz-btn ghost" data-q="copiar">Copiar código</button></section>' +
+    '<p class="qz-muted">Ou mande o link (os amigos entram com o código já preenchido):</p>' +
+    '<div class="qz-row"><input id="qz-link" readonly value="' + esc(linkConvite(st.sala.codigo)) + '" style="flex:1;min-width:0"></div>' +
+    '<div class="qz-row"><button class="qz-btn ghost" data-q="copiar">Copiar código</button>' +
+    '<button class="qz-btn ghost" data-q="copiarLink">Copiar link</button></div></section>' +
     '<section class="qz-card qz-wide"><h2>Jogadores (' + st.jog.length + ')</h2>' +
     '<ol class="qz-rank">' + (st.jog.map(function(j){ return '<li>' + esc(j.nome) + '</li>'; }).join('') || '<li class="qz-muted">Esperando alguém entrar…</li>') + '</ol>' +
     '<button class="qz-btn" data-q="iniciar" ' + (st.jog.length ? '' : 'disabled') + '>Começar</button></section>' + msgHtml();
@@ -347,6 +350,7 @@ async function acao(ev){
   }
   if(a === 'criarSala') return criarSala();
   if(a === 'copiar'){ try{ await navigator.clipboard.writeText(st.sala.codigo); st.msg = 'Código copiado.'; }catch(e){ st.msg = 'Selecione e copie o código.'; } return desenhar(); }
+  if(a === 'copiarLink'){ try{ await navigator.clipboard.writeText(linkConvite(st.sala.codigo)); st.msg = 'Link copiado.'; }catch(e){ st.msg = 'Selecione e copie o link.'; } return desenhar(); }
   if(a === 'iniciar') return iniciar();
   if(a === 'revelar') return revelar();
   if(a === 'proxima') return proxima();
@@ -370,11 +374,20 @@ setInterval(function(){
   }
 }, 250);
 
+function linkConvite(codigo){
+  return 'https://almadaseara.github.io/NEXO/?quiz=' + encodeURIComponent(codigo);
+}
+function codigoDaUrl(){
+  try{ var c = new URLSearchParams(location.search).get('quiz'); return c ? c.toUpperCase().replace(/[^A-Z2-9]/g,'').slice(0,5) : ''; }catch(e){ return ''; }
+}
 window.nexoQuiz = function(){
   if(typeof fecharMenuMovel === 'function') fecharMenuMovel();
   if(typeof setCur === 'function') setCur('quiz');
   if(typeof renderNav === 'function') try{ renderNav(); }catch(e){}
   if(typeof setHead === 'function') setHead('Quiz entre amigos');
+  var cu = codigoDaUrl();
+  if(cu && st.tela === 'inicio'){ st.codigoPre = cu; }
   desenhar();
 };
+if(codigoDaUrl()){ setTimeout(function(){ try{ window.nexoQuiz(); }catch(e){} }, 1500); }
 })();
