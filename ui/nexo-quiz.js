@@ -167,6 +167,41 @@ async function lerQuestoes(texto){
     });
 }
 
+
+/* Leitura sem IA: questões e gabarito colados em texto (formato do PDF copiado). */
+function lerColado(texto){
+  var linhas = String(texto || '').replace(/\r/g, '').split('\n').map(function(l){ return l.trim(); });
+  var iG = -1;
+  for(var k = 0; k < linhas.length; k++){ if(/^gabarito\b/i.test(linhas[k])){ iG = k; break; } }
+  var corpo = iG >= 0 ? linhas.slice(0, iG) : linhas;
+  var gab = {}, g, rg = /(\d{1,3})\.\s*([A-E])\b/g;
+  if(iG >= 0){ var tg = linhas.slice(iG + 1).join(' '); while((g = rg.exec(tg))){ gab[+g[1]] = g[2]; } }
+  var qs = [], atual = null, esperado = 1;
+  corpo.forEach(function(l){
+    if(!l || /^100 Questões/i.test(l) || /^Questões sem comentário/i.test(l)) return;
+    var mQ = l.match(new RegExp('^' + esperado + '\\.\\s*(.*)$'));
+    if(mQ){
+      atual = { n: esperado, enun: [], alts: [] }; qs.push(atual); esperado++;
+      var resto = mQ[1].replace(/^\(CEBRASPE[^)]*\)\s*/, '').trim();
+      if(resto) atual.enun.push(resto);
+      return;
+    }
+    if(!atual) return;
+    var mA = l.match(/^([A-E])\)\s*(.*)$/);
+    if(mA && mA[1] === ALT.charAt(atual.alts.length)){ atual.alts.push(mA[2]); return; }
+    if(atual.alts.length) atual.alts[atual.alts.length - 1] += ' ' + l;
+    else atual.enun.push(l);
+  });
+  return qs.map(function(q){
+    var pergunta = q.enun.join(' ').replace(/\s+/g, ' ').trim();
+    var alts = q.alts.length ? q.alts.map(function(a){ return a.replace(/\s+/g, ' ').trim(); }) : ['Certo', 'Errado'];
+    var l = gab[q.n] || '', gi;
+    if(q.alts.length) gi = ALT.indexOf(l);
+    else gi = l === 'C' ? 0 : (l === 'E' ? 1 : -1);
+    return { pergunta: pergunta, alternativas: alts, gabarito: gi, disciplina: '' };
+  }).filter(function(q){ return q.pergunta; });
+}
+
 /* ---------- telas ---------- */
 function telaInicio(){
   return '' +
@@ -188,6 +223,8 @@ function telaRascunho(){
       '<label class="qz-f">Ou cole o texto da prova<textarea id="qz-texto" rows="7" placeholder="Cole aqui o texto das questões"></textarea></label>' +
       '<div class="qz-row"><button class="qz-btn" data-q="ler" ' + (st.lendo ? 'disabled' : '') + '>Ler questões</button>' +
       '<span class="qz-muted">' + esc(st.lendo) + '</span></div>' +
+      '<label class="qz-f">Ou cole as questões e o gabarito (sem IA)<textarea id="qz-colado" rows="7" placeholder="1. (CEBRASPE ...) texto da questão&#10;A) alternativa&#10;...&#10;Gabarito&#10;1. C  2. E"></textarea></label>' +
+      '<div class="qz-row"><button class="qz-btn ghost" data-q="colar">Usar texto colado (sem IA)</button></div>' +
       '<button class="qz-btn ghost" data-q="voltar">Voltar</button></section>' + msgHtml();
   }
   var falta = st.rascunho.filter(function(q){ return q.gabarito < 0; }).length;
@@ -292,6 +329,11 @@ async function acao(ev){
   st.msg = '';
   if(a === 'criar'){ st.tela = 'rascunho'; st.rascunho = null; return desenhar(); }
   if(a === 'voltar'){ st.tela = st.sala ? 'lobby' : 'inicio'; st.rascunho = null; return desenhar(); }
+  if(a === 'colar'){
+    var qc = lerColado((document.getElementById('qz-colado') || {}).value || '');
+    if(!qc.length){ st.msg = 'Não encontrei questões no texto colado.'; return desenhar(); }
+    st.rascunho = qc; return desenhar();
+  }
   if(a === 'ler'){
     try{
       var f = document.getElementById('qz-pdf'), txt = (document.getElementById('qz-texto').value || '').trim();
