@@ -174,9 +174,12 @@ var ARVORE = {
     ['Licitações e contratos', ['adm_licitacao_principios', 'adm_contratacao_direta', 'adm_contratos']]
   ],
   'Medicina Legal': [
-    ['Fundamentos e perícia', ['ml_introducao', 'ml_pericias', 'ml_documentos']],
-    ['Antropologia forense', ['ml_identificacao']],
-    ['Traumatologia forense', ['ml_traumatologia', 'ml_lesoes_corporais', 'ml_asfixiologia']],
+    ['Fundamentos da Medicina Legal', ['ml_introducao']],
+    ['Perícia médico-legal', ['ml_pericias']],
+    ['Documentos médico-legais', ['ml_documentos']],
+    ['Antropologia e identificação forense', ['ml_identificacao']],
+    ['Traumatologia forense', ['ml_traumatologia', 'ml_lesoes_corporais']],
+    ['Asfixiologia forense', ['ml_asfixiologia']],
     ['Tanatologia forense', ['ml_tanatologia']],
     ['Sexologia forense', ['ml_sexologia']],
     ['Psicopatologia forense', ['ml_psicopatologia']]
@@ -213,8 +216,10 @@ var ROTULOS = {
   organizacao_estado:'Organização político-administrativa', sistema_tributario_orcamento:'Sistema tributário e orçamento', ordem_economica_social:'Ordem econômica e social',
   adm_regime_principios:'Regime jurídico-administrativo e princípios', adm_estatais_fundacoes:'Autarquias, fundações, empresas públicas e sociedades de economia mista',
   adm_licitacao_principios:'Princípios, modalidades e procedimento', adm_contratacao_direta:'Contratação direta', adm_improbidade:'Improbidade administrativa',
-  ml_introducao:'Conceito, importância e divisões', ml_identificacao:'Identidade e identificação humana', ml_traumatologia:'Lesões e instrumentos',
-  ml_tanatologia:'Morte e fenômenos cadavéricos', ml_sexologia:'Aspectos médico-legais dos crimes sexuais', ml_psicopatologia:'Modificadores e avaliação pericial',
+  ml_introducao:'Conceito, importância e divisões', ml_pericias:'Perícias e peritos', ml_documentos:'Documentos médico-legais',
+  ml_identificacao:'Identidade e identificação humana', ml_traumatologia:'Lesões e instrumentos', ml_lesoes_corporais:'Lesões corporais',
+  ml_asfixiologia:'Asfixiologia forense', ml_tanatologia:'Morte e fenômenos cadavéricos',
+  ml_sexologia:'Aspectos médico-legais dos crimes sexuais', ml_psicopatologia:'Modificadores e avaliação pericial',
   penal_principios:'Princípios e fundamentos', penal_aplicacao:'Aplicação da lei penal e infração penal', penal_fato_tipico:'Fato típico', penal_dolo_culpa:'Dolo e culpa',
   penal_ilicitude:'Ilicitude e culpabilidade', penal_erros:'Erro de tipo e erro de proibição', penal_concurso:'Concurso de pessoas',
   penal_dosimetria:'Aplicação e dosimetria da pena', penal_punibilidade:'Extinção da punibilidade e prescrição', penal_pessoa:'Visão geral',
