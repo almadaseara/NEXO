@@ -176,8 +176,9 @@ var ARVORE = {
   'Medicina Legal': [
     ['Fundamentos e perícia', ['ml_introducao', 'ml_pericias', 'ml_documentos']],
     ['Antropologia forense', ['ml_identificacao']],
-    ['Traumatologia forense', ['ml_traumatologia', 'ml_lesoes_corporais', 'ml_asfixiologia']],
+    ['Traumatologia forense', ['ml_traumatologia', 'ml_lesoes_corporais']],
     ['Tanatologia forense', ['ml_tanatologia']],
+    ['Asfixiologia forense', ['ml_asfixiologia']],
     ['Sexologia forense', ['ml_sexologia']],
     ['Psicopatologia forense', ['ml_psicopatologia']]
   ],
