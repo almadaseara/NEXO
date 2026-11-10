@@ -190,7 +190,9 @@ Regras do padrão:
 
 ## 6. Próximos passos sugeridos
 
-- Direito Penal — faltam, pelo edital SAEB 02/2026 (Investigador PC-BA): concurso de crimes (arts. 69 a 71); penas (espécies, regimes, restritivas de direitos, sursis, livramento condicional); crimes contra a paz pública (arts. 286 a 288-A); crimes contra o Estado Democrático de Direito (arts. 359-I a 359-T). Para Delegado, também: propriedade imaterial, organização do trabalho, sentimento religioso e respeito aos mortos, família, multa, medidas de segurança, efeitos da condenação.
+- Concluído em 09/11/2026: módulos `penal_penas` e `penal_concurso_crimes` (arquivo `data/temas/penal-penas.js`). Pendente neles: transcrever a lei seca literal (campo `lei`) dos arts. 32 a 52, 69 a 72, 75 e 77 a 90 do CP.
+
+- Direito Penal — faltam, pelo edital SAEB 02/2026 (Investigador PC-BA): crimes contra a paz pública (arts. 286 a 288-A); crimes contra o Estado Democrático de Direito (arts. 359-I a 359-T). Para Delegado, também: propriedade imaterial, organização do trabalho, sentimento religioso e respeito aos mortos, família, multa, medidas de segurança, efeitos da condenação.
 - Processo Penal e Legislação Penal Extravagante (prioridade 1 para Investigador PC-BA e Delegado PCPE).
 - Legislação Geral da Bahia (Lei 6.677/94, Lei 14.634/23, Lei 12.209/11, Lei 11.370/09) e Igualdade Racial e de Gênero (todos os cargos da PC-BA).
 - Classificar mais questões do banco em `data/banco-classificacao.json` (hoje 145 das 298 publicadas; as demais são de outras matérias, repetidas ou com texto colado de várias provas).

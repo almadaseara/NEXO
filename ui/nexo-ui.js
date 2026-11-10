@@ -186,7 +186,7 @@ var ARVORE = {
     ['Parte Geral', [
       ['Fundamentos e aplicação da lei penal', ['penal_principios', 'penal_aplicacao']],
       ['Teoria do crime', ['penal_fato_tipico', 'penal_dolo_culpa', 'penal_ilicitude', 'penal_erros', 'penal_concurso']],
-      ['Pena e punibilidade', ['penal_dosimetria', 'penal_punibilidade']]
+      ['Pena e punibilidade', ['penal_dosimetria', 'penal_penas', 'penal_concurso_crimes', 'penal_punibilidade']]
     ]],
     ['Parte Especial', [
       ['Crimes contra a pessoa', ['penal_pessoa', 'penal_pessoa_01', 'penal_pessoa_02', 'penal_pessoa_03', 'penal_pessoa_04', 'penal_pessoa_05', 'penal_pessoa_06', 'penal_pessoa_07', 'penal_pessoa_08', 'penal_pessoa_09', 'penal_pessoa_10']],
@@ -218,7 +218,7 @@ var ROTULOS = {
   ml_tanatologia:'Morte e fenômenos cadavéricos', ml_sexologia:'Aspectos médico-legais dos crimes sexuais', ml_psicopatologia:'Modificadores e avaliação pericial',
   penal_principios:'Princípios e fundamentos', penal_aplicacao:'Aplicação da lei penal e infração penal', penal_fato_tipico:'Fato típico', penal_dolo_culpa:'Dolo e culpa',
   penal_ilicitude:'Ilicitude e culpabilidade', penal_erros:'Erro de tipo e erro de proibição', penal_concurso:'Concurso de pessoas',
-  penal_dosimetria:'Aplicação e dosimetria da pena', penal_punibilidade:'Extinção da punibilidade e prescrição', penal_pessoa:'Visão geral',
+  penal_dosimetria:'Aplicação e dosimetria da pena', penal_penas:'Das penas: regimes, restritivas, sursis e livramento', penal_concurso_crimes:'Concurso de crimes', penal_punibilidade:'Extinção da punibilidade e prescrição', penal_pessoa:'Visão geral',
   penal_patrimonio:'Crimes contra o patrimônio', penal_sexual:'Crimes contra a dignidade sexual', penal_incolumidade:'Crimes contra a incolumidade pública', penal_fe_publica:'Crimes contra a fé pública',
   penal_adm_func:'Praticados por funcionário público', penal_adm_particular:'Praticados por particular', penal_adm_justica:'Contra a administração da Justiça', penal_adm_financas:'Disposições complementares'
 };
