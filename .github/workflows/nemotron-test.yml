@@ -1,0 +1,24 @@
+name: NEXO Nemotron Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  api-smoke-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Python module syntax and configuration
+        run: |
+          python -m py_compile robot/nvidia_nemotron.py
+          python robot/nvidia_nemotron.py --dry-run
+      - name: Test NVIDIA API (without publishing)
+        if: ${{ env.NVIDIA_API_KEY != '' }}
+        env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+        run: python robot/nvidia_nemotron.py --text "Responda apenas: conexão NEXO NVIDIA funcionando."
+        # Never output or persist the API key.
