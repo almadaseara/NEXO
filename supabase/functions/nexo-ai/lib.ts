@@ -53,10 +53,11 @@ export const EXTRACTION_SCHEMA = {
       items: {
         type: "object",
         additionalProperties: false,
-        required: ["numero", "tipo", "contexto_id", "enunciado", "alternativas", "figuras", "pagina", "gabarito_lido", "anulada", "alertas"],
+        required: ["numero", "tipo", "disciplina", "contexto_id", "enunciado", "alternativas", "figuras", "pagina", "gabarito_lido", "anulada", "alertas"],
         properties: {
           numero: { type: "integer" },
           tipo: { type: "string", enum: ["multipla_escolha", "certo_errado"] },
+          disciplina: { ...nullableString, description: "Disciplina do cabeçalho do bloco da questão, como impressa no caderno; null se não houver." },
           contexto_id: nullableString,
           enunciado: { type: "string" },
           alternativas: {
@@ -118,6 +119,8 @@ export function buildExtractionInstructions(src: SourceMeta, range?: { from: num
     "7. Ignore capa, instruções gerais, folha de respostas e provas discursivas (registre em `caderno.observacoes`).",
     "8. `pagina`: página do PDF (começando em 1) onde a questão começa.",
     "9. Fórmulas e símbolos: escreva em texto legível com Unicode, sem LaTeX (ex.: Var(X − Y) = 2; P → (Q ∨ ¬R); √n · X̄ / σ; x² + 3x).",
+    "10. `disciplina`: copie o nome da disciplina do cabeçalho do bloco em que a questão aparece (ex.: \"Direito Penal\").",
+    "    Se o caderno não tiver cabeçalho de disciplina para a questão, use null. Não deduza a disciplina pelo assunto.",
   ];
   return lines.filter((l, i) => l !== "" || lines[i - 1] !== "").join("\n");
 }
