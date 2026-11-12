@@ -405,14 +405,14 @@ var PASSOS = [
 ];
 
 /* ---------- ESTADO ---------- */
-var S = {tela:"inicio", i:0, cap:0, fase:"aula", set:"quiz", qi:0, esc:null, acertos:0, total:0, tent:0, marks:[], erros:[], pontos:0, perguntas:0, res:{}, setNo:{}, pend:null};
+var S = {tela:"inicio", i:0, cap:0, fase:"aula", set:"quiz", qi:0, esc:null, acertos:0, total:0, tent:0, marks:[], erros:[], pontos:0, perguntas:0, res:{}, setNo:{}, pend:null, blk:0};
 var LET = ["A","B","C","D","E"];
 var $root=null,$main=null,$seg=null,$where=null;
 
 function capTitulo(c){ return NEXO.sec[CAPS[c].id].titulo; }
 function passosDoCap(c){ var o=[]; PASSOS.forEach(function(p,k){ if(p.cap===c) o.push(k); }); return o; }
 function alvoDe(p,id){ for (var k=0;k<p.alvos.length;k++) if (p.alvos[k].id===id) return p.alvos[k]; return null; }
-function resetPasso(){ S.fase="aula"; S.set="quiz"; S.qi=0; S.esc=null; S.acertos=0; S.total=0; S.tent=0; S.setNo={}; }
+function resetPasso(){ S.fase="aula"; S.set="quiz"; S.qi=0; S.esc=null; S.acertos=0; S.total=0; S.tent=0; S.setNo={}; S.blk=0; }
 function irPasso(k){ S.i=k; S.cap=PASSOS[k].cap; S.tela="aula"; resetPasso(); }
 function proximo(marca){
   S.marks[S.i]=marca;
@@ -478,25 +478,30 @@ function telaInicio(){
     '<ul>'+ps.map(function(k){return '<li>'+PASSOS[k].titulo+' <span class="ref">('+PASSOS[k].base+')</span></li>';}).join("")+'</ul>'+
     '<button class="btn primary" data-al="comecar" data-cap="'+ci+'">'+(ci===0?"Começar pelo capítulo 1":"Ir direto ao capítulo "+(ci+1))+'</button></div>';
   }).join("");
-  return '<section class="card"><p class="kicker">Lei 11.340/2006 · conteúdo do NEXO</p><h1 id="foco" tabindex="-1">Aula guiada: Lei Maria da Penha</h1>'+
-  '<p class="lead">'+NEXO.importancia.texto+'</p>'+
-  '<p>O estudo segue as mesmas '+CAPS.length+' divisões do módulo no NEXO (conferido em 25/10/2026). Em cada passo você vê <b>onde a banca pega</b>, lê o texto do NEXO e o texto da lei, responde questões de marcar e diz como foi. Ao fim de cada capítulo há um <b>resumo</b> com tabelas.</p>'+
-  '<div class="legend">'+
-  '<div><b style="color:var(--ok)">Entendi</b>: segue para o próximo assunto.</div>'+
-  '<div><b style="color:var(--warn)">Tive dúvidas</b>: resumo objetivo do que foi explicado e cobrado, começando pelos pontos em que você errou.</div>'+
-  '<div><b style="color:var(--bad)">Não entendi</b>: o conteúdo é explicado de outro jeito e você refaz questões novas.</div></div>'+
+  return '<section class="card"><p class="kicker">Lei 11.340/2006 · conteúdo do NEXO</p><h1 id="foco" tabindex="-1">Lei Maria da Penha</h1>'+
+  '<p class="lead">Mesmas '+CAPS.length+' divisões do módulo no NEXO. Em cada passo: pontos de atenção, texto, quadro, lei, questões e autoavaliação.</p>'+
+  '<div class="chips3"><span class="chip a"><b>Entendi</b> próximo assunto</span><span class="chip b"><b>Tive dúvidas</b> resumo objetivo</span><span class="chip c"><b>Não entendi</b> outra explicação</span></div>'+
   '<div class="caps">'+caps+'</div></section>';
 }
+function blocosAula(p){
+  var b=[{n:"Pontos de atenção",h:'<div class="alvos"><h3>Onde a banca pega neste assunto</h3>'+listaAlvos(p,false)+'</div>'},
+    {n:"Texto do NEXO",h:p.nexo.map(blocoNexo).join("")+p.teoria.map(blocoTeoria).join("")}];
+  var q=""; if (p.tab) q+='<h3>Quadro do assunto</h3>'+tabela(p.tab);
+  if (p.comp && p.comp.length) q+='<h3>Regra geral × violência doméstica (NEXO)</h3>'+tabelaComp(p.comp);
+  if (q) b.push({n:"Quadro",h:q});
+  var l=""; if (p.lei.length) l+='<h3>Texto da lei (NEXO)</h3>'+p.lei.map(blocoLei).join("");
+  if (p.juris.length) l+='<h3>Jurisprudência (NEXO)</h3>'+p.juris.map(blocoJuris).join("");
+  if (l) b.push({n:"Lei e súmulas",h:l});
+  return b;
+}
 function telaAula(){
-  var p=PASSOS[S.i];
+  var p=PASSOS[S.i], bl=blocosAula(p); if (S.blk>=bl.length) S.blk=bl.length-1;
   var h='<section class="card"><p class="kicker">Capítulo '+(S.cap+1)+' · '+capTitulo(S.cap)+'</p><h2 id="foco" tabindex="-1">'+p.titulo+' <span class="ref">'+p.base+'</span></h2>';
-  h+='<div class="alvos"><h3>Onde a banca pega neste assunto</h3>'+listaAlvos(p,false)+'</div>';
-  h+=p.nexo.map(blocoNexo).join("")+p.teoria.map(blocoTeoria).join("");
-  if (p.tab) h+='<h3>Quadro do assunto</h3>'+tabela(p.tab);
-  if (p.comp && p.comp.length) h+='<h3>Regra geral × violência doméstica (NEXO)</h3>'+tabelaComp(p.comp);
-  if (p.lei.length) h+='<details open><summary>Texto da lei (NEXO)</summary>'+p.lei.map(blocoLei).join("")+'</details>';
-  if (p.juris.length) h+='<details open><summary>Jurisprudência (NEXO)</summary>'+p.juris.map(blocoJuris).join("")+'</details>';
-  h+='<div class="actions"><button class="btn primary" data-al="questoes">Ir para as questões</button></div></section>';
+  h+='<div class="blks" role="tablist">'+bl.map(function(x,k){return '<button type="button" class="blk'+(k===S.blk?' on':'')+'" data-al="bloco" data-k="'+k+'"><i>'+(k+1)+'</i>'+x.n+'</button>';}).join("")+'</div>';
+  h+=bl[S.blk].h;
+  var ult=S.blk===bl.length-1;
+  h+='<div class="actions bar">'+(S.blk>0?'<button class="btn" data-al="bloco" data-k="'+(S.blk-1)+'">Voltar</button>':'')+
+    (ult?'<button class="btn primary" data-al="questoes">Ir para as questões</button>':'<button class="btn primary" data-al="bloco" data-k="'+(S.blk+1)+'">Continuar</button>')+'</div></section>';
   return h;
 }
 function telaAlt(){
@@ -584,7 +589,7 @@ function telaFim(){
 function render(){
   var h=S.tela==="inicio"?telaInicio():S.tela==="fim"?telaFim():S.tela==="cap"?telaCap():
     S.fase==="aula"?telaAula():S.fase==="quiz"?telaQuiz():S.fase==="auto"?telaAuto():S.fase==="alt"?telaAlt():telaResumo();
-  $main.innerHTML=h; seg();
+  $main.innerHTML=h; seg(); salvar();
   var f=$root.querySelector("#foco"); if (f){ try{ f.focus({preventScroll:true}); }catch(e){} }
   var v=document.getElementById("view"); if(v) v.scrollTop=0; window.scrollTo(0,0);
 }
@@ -601,6 +606,7 @@ document.addEventListener("click",function(ev){
     S.res[q.a]=S.setNo[q.a]?"no":"ok";
   }
   else if(a==="proxq"){ if(S.qi<p[S.set].length-1){ S.qi++; S.esc=null; } else { S.fase="auto"; } }
+  else if(a==="bloco"){ S.blk=+b.getAttribute("data-k"); }
   else if(a==="entendi"){ proximo("entendi"); return; }
   else if(a==="duvida"){ S.pend="duvida"; S.fase="resumo"; }
   else if(a==="naoentendi"){ if(S.tent<1){ S.tent++; S.fase="alt"; } else { S.pend="revisar"; S.fase="resumo"; } }
@@ -610,29 +616,57 @@ document.addEventListener("click",function(ev){
   render();
 });
 
-function montarAula(){
-  var rc=document.querySelector('#view .reading-content')||document.getElementById('view'); if(!rc||!NEXO) return;
-  rc.innerHTML='<div class="al" id="al-root"><div class="al-top"><div class="al-row"><span class="al-brand">Aula guiada · Lei Maria da Penha</span><button type="button" class="btn" data-al-sair>Sair da aula</button></div><div class="al-where" id="where"></div><div class="al-seg" id="seg" aria-hidden="true"></div></div><main id="main"></main></div>';
+
+/* ---------- progresso (neste navegador) ---------- */
+var KEY="nexo_aulas_v1";
+function carregar(){ try{ return JSON.parse(localStorage.getItem(KEY)||"{}").ext_mariapenha||null; }catch(e){ return null; } }
+function salvar(){ try{ if(S.tela==="inicio") return; var o=JSON.parse(localStorage.getItem(KEY)||"{}"); o.ext_mariapenha={marks:S.marks,i:S.i,cap:S.cap,pontos:S.pontos,perguntas:S.perguntas,t:Date.now()}; localStorage.setItem(KEY,JSON.stringify(o)); }catch(e){} }
+function feitos(sv){ return sv&&sv.marks?sv.marks.filter(Boolean).length:0; }
+
+/* ---------- página "Aulas guiadas" (item próprio do menu) ---------- */
+function setCurAulas(){ try{ current='aulas'; }catch(e){} try{ renderNav(); }catch(e){} var h=document.getElementById('head'); if(h) h.textContent='Aulas guiadas'; try{ if(typeof closeMobileNav==='function') closeMobileNav(); }catch(e){} document.body.classList.remove('lv-on'); var lat=document.querySelector('.lv-lateral'); if(lat) lat.hidden=true; document.body.classList.remove('al-on'); }
+window.nexoAulas=function(){
+  if(!NEXO) return; setCurAulas(); $root=null;
+  var sv=carregar(), n=feitos(sv), tot=PASSOS.length, pct=Math.round(n/tot*100);
+  var ca=CAPS.map(function(c,ci){ var ps=passosDoCap(ci), f=ps.filter(function(k){return sv&&sv.marks&&sv.marks[k];}).length; return '<li><span>Capítulo '+(ci+1)+' · '+capTitulo(ci)+'</span><small>'+f+'/'+ps.length+'</small></li>'; }).join("");
+  var breve=[["Contabilidade","Prioridade alta no edital"],["Estatística","Prioridade alta no edital"],["Medicina Legal","Prioridade alta no edital"]].map(function(x){ return '<div class="al-card dis"><span class="al-tag">Em preparo</span><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div>'; }).join("");
+  document.getElementById('view').innerHTML='<div class="nx-page al-page"><div class="nx-head"><div><h1>Aulas guiadas</h1><p>O professor conduz o assunto passo a passo: mostra onde a banca pega, você responde questões de marcar e diz se entendeu. Os capítulos seguem as mesmas divisões dos livros digitais.</p></div></div>'
+   +'<div class="al-grid"><div class="al-card"><span class="al-tag ok">Disponível</span><h3>Lei 11.340/2006: Lei Maria da Penha</h3><p>Legislação Extravagante · '+CAPS.length+' capítulos · '+tot+' passos · 44 questões</p>'
+   +'<div class="al-bar"><i style="width:'+pct+'%"></i></div><small>'+(n?pct+'% concluído · '+n+' de '+tot+' passos':'Ainda não iniciada')+'</small>'
+   +'<ul class="al-caps">'+ca+'</ul>'
+   +'<div class="al-acts"><button type="button" class="nx-btn primary" data-aula-abrir="'+(n?'continuar':'novo')+'">'+(n?'Continuar de onde parei':'Começar aula')+'</button>'+(n?'<button type="button" class="nx-btn" data-aula-abrir="novo">Recomeçar</button>':'')+'</div></div>'+breve+'</div></div>';
+};
+function abrirAula(modo){
+  if(!NEXO) return; setCurAulas(); document.body.classList.add('al-on');
+  var v=document.getElementById('view');
+  v.innerHTML='<div class="al" id="al-root"><div class="al-top"><div class="al-row"><button type="button" class="al-back" data-al-sair>← Aulas guiadas</button><span class="al-brand">Lei Maria da Penha</span><button type="button" class="btn" data-al-livro>Ver no livro</button></div><div class="al-where" id="where"></div><div class="al-seg" id="seg" aria-hidden="true"></div></div><div id="main"></div></div>';
   $root=document.getElementById('al-root'); $main=$root.querySelector('#main'); $seg=$root.querySelector('#seg'); $where=$root.querySelector('#where');
-  S.tela="inicio"; render();
+  var sv=modo==='continuar'?carregar():null;
+  S.marks=sv&&sv.marks||[]; S.erros=[]; S.pontos=sv?sv.pontos||0:0; S.perguntas=sv?sv.perguntas||0:0; S.res={};
+  if(sv){ irPasso(sv.i||0); } else { S.tela="inicio"; }
+  render();
 }
 document.addEventListener('click',function(e){
-  var b=e.target.closest&&e.target.closest('[data-aula-abrir]'); if(b){ e.preventDefault(); montarAula(); return; }
-  if(e.target.closest&&e.target.closest('[data-al-sair]')){ var m=modules.find(function(x){return x.id==='ext_mariapenha';}); $root=null; if(m) openModule(m.id,'resumo'); }
+  var t=e.target.closest&&e.target.closest.bind(e.target); if(!t) return;
+  var b=t('[data-aula-abrir]'); if(b){ e.preventDefault(); abrirAula(b.getAttribute('data-aula-abrir')); return; }
+  if(t('[data-al-sair]')){ document.body.classList.remove('al-on'); window.nexoAulas(); return; }
+  if(t('[data-al-livro]')){ document.body.classList.remove('al-on'); $root=null; if(window.nexoLivro) window.nexoLivro.abrir('ext_mariapenha','resumo#'+(CAPS[S.cap]||CAPS[0]).id); }
 });
-/* oferece a aula nos capítulos que têm roteiro */
-var rt=window.renderTab;
-window.renderTab=function(m,tab){
-  var r=rt.apply(this,arguments);
-  try{
-    if(m&&m.id==='ext_mariapenha'&&NEXO){
-      setTimeout(function(){
-        if(document.querySelector('.al-oferta')) return;
-        var cab=document.querySelector('#view .lv-cab'); if(!cab) return;
-        cab.insertAdjacentHTML('afterend','<div class="al-oferta" data-nx-skip><div><b>Estudar este capítulo como aula guiada</b><small>13 passos · 44 questões · o roteiro marca os pontos que mais caem e adapta a explicação ao que você errar</small></div><button type="button" class="nx-btn primary" data-aula-abrir>Começar aula</button></div>');
-      },0);
-    }
-  }catch(e){}
-  return r;
-};
+/* entrada no menu lateral, logo depois de "Livros digitais" */
+var rn=window.renderNav;
+if(typeof rn==='function'){
+  window.renderNav=function(){
+    var r=rn.apply(this,arguments);
+    try{
+      var nav=document.getElementById('nav'); if(!nav||nav.querySelector('.al-nav')) return r;
+      var ref=nav.querySelector('.lv-nav')||nav.querySelector('.primary-nav');
+      var on=(typeof current!=='undefined'&&current==='aulas');
+      var html='<button type="button" class="primary-nav nx-nav-extra al-nav'+(on?' active':'')+'" onclick="nexoAulas()"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V15c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/></svg> Aulas guiadas</button>';
+      if(ref) ref.insertAdjacentHTML('afterend',html);
+      if(on) Array.prototype.forEach.call(nav.querySelectorAll('.primary-nav.active:not(.al-nav)'),function(x){x.classList.remove('active');});
+    }catch(e){}
+    return r;
+  };
+}
+window.nexoAula={abrir:abrirAula,lista:window.nexoAulas};
 })();
