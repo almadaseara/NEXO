@@ -405,14 +405,14 @@ var PASSOS = [
 ];
 
 /* ---------- ESTADO ---------- */
-var S = {tela:"inicio", i:0, cap:0, fase:"aula", set:"quiz", qi:0, esc:null, acertos:0, total:0, tent:0, marks:[], erros:[], pontos:0, perguntas:0, res:{}, setNo:{}, pend:null, blk:0};
+var S = {tela:"inicio", i:0, cap:0, fase:"aula", set:"quiz", qi:0, esc:null, acertos:0, total:0, tent:0, marks:[], erros:[], pontos:0, perguntas:0, res:{}, setNo:{}, pend:null, blk:0, rev:{}};
 var LET = ["A","B","C","D","E"];
 var $root=null,$main=null,$seg=null,$where=null;
 
 function capTitulo(c){ return NEXO.sec[CAPS[c].id].titulo; }
 function passosDoCap(c){ var o=[]; PASSOS.forEach(function(p,k){ if(p.cap===c) o.push(k); }); return o; }
 function alvoDe(p,id){ for (var k=0;k<p.alvos.length;k++) if (p.alvos[k].id===id) return p.alvos[k]; return null; }
-function resetPasso(){ S.fase="aula"; S.set="quiz"; S.qi=0; S.esc=null; S.acertos=0; S.total=0; S.tent=0; S.setNo={}; S.blk=0; }
+function resetPasso(){ S.fase="aula"; S.set="quiz"; S.qi=0; S.esc=null; S.acertos=0; S.total=0; S.tent=0; S.setNo={}; S.blk=0; S.rev={}; }
 function irPasso(k){ S.i=k; S.cap=PASSOS[k].cap; S.tela="aula"; resetPasso(); }
 function proximo(marca){
   S.marks[S.i]=marca;
@@ -429,18 +429,18 @@ function fmtLei(s){
     .replace(/: (?=I - )/g,":<br>");
 }
 function seg(){
-  var h="";
-  for (var k=0;k<PASSOS.length;k++){
-    var cl = S.marks[k] || (S.tela==="aula" && k===S.i ? "now" : "");
-    h += '<i class="'+cl+'"'+(k>0 && PASSOS[k].cap!==PASSOS[k-1].cap?' style="margin-left:6px"':'')+'></i>';
-  }
-  $seg.innerHTML=h;
+  var nomes=["Conceito e assistência","Atendimento policial","Processo e medidas"];
+  $seg.innerHTML=CAPS.map(function(c,ci){
+    var ps=passosDoCap(ci), done=ps.every(function(k){return S.marks[k];}), now=S.tela!=="inicio"&&S.tela!=="fim"&&S.cap===ci;
+    return '<div class="mp'+(now?' now':'')+(done?' done':'')+'"><b>'+(ci+1)+'. '+nomes[ci]+'</b><span class="dots">'+ps.map(function(k){var m=S.marks[k]||(S.tela==="aula"&&k===S.i?"now":"");return '<i class="'+m+'"></i>';}).join("")+'</span></div>';
+  }).join("");
   var w="";
-  if (S.tela==="aula"){ var ps=passosDoCap(S.cap); w="Capítulo "+(S.cap+1)+" · passo "+(ps.indexOf(S.i)+1)+" de "+ps.length+" · "+PASSOS[S.i].base; }
+  if (S.tela==="aula"){ var ps2=passosDoCap(S.cap); w="Passo "+(ps2.indexOf(S.i)+1)+" de "+ps2.length+" · "+PASSOS[S.i].titulo+" · "+PASSOS[S.i].base; }
   else if (S.tela==="cap") w="Capítulo "+(S.cap+1)+" · resumo";
   else if (S.tela==="fim") w="Resultado";
   $where.textContent=w;
 }
+
 function tabela(t){
   return '<div class="tw"><table><tr>'+t.head.map(function(x){return '<th>'+x+'</th>';}).join("")+'</tr>'+
    t.rows.map(function(r){ var cor=COR[r[r.length-1]]||""; var cells=r.slice(0,t.head.length);
@@ -483,14 +483,23 @@ function telaInicio(){
   '<div class="chips3"><span class="chip a"><b>Entendi</b> próximo assunto</span><span class="chip b"><b>Tive dúvidas</b> resumo objetivo</span><span class="chip c"><b>Não entendi</b> outra explicação</span></div>'+
   '<div class="caps">'+caps+'</div></section>';
 }
+function cartoesQuadro(t){
+  return '<div class="vcards">'+t.rows.map(function(r){var cor=COR[r[r.length-1]]||"";
+    return '<div class="vc '+cor+'"><b>'+r[0]+'</b><p>'+r[1]+'</p>'+(r[2]?'<span class="ex"><i>Exemplo</i> '+r[2]+'</span>':'')+'</div>';}).join("")+'</div>';
+}
 function blocosAula(p){
-  var b=[{n:"Pontos de atenção",h:'<div class="alvos"><h3>Onde a banca pega neste assunto</h3>'+listaAlvos(p,false)+'</div>'},
-    {n:"Texto do NEXO",h:p.nexo.map(blocoNexo).join("")+p.teoria.map(blocoTeoria).join("")}];
-  var q=""; if (p.tab) q+='<h3>Quadro do assunto</h3>'+tabela(p.tab);
-  if (p.comp && p.comp.length) q+='<h3>Regra geral × violência doméstica (NEXO)</h3>'+tabelaComp(p.comp);
-  if (q) b.push({n:"Quadro",h:q});
-  var l=""; if (p.lei.length) l+='<h3>Texto da lei (NEXO)</h3>'+p.lei.map(blocoLei).join("");
-  if (p.juris.length) l+='<h3>Jurisprudência (NEXO)</h3>'+p.juris.map(blocoJuris).join("");
+  var a0=p.alvos[0], b=[];
+  var prof=p.alvos.map(function(a,k){
+    return '<div class="fala"><span class="av">Prof.</span><div class="bal"><span class="nv '+a.nv+'">'+NV[a.nv]+'</span> <b>'+a.rot+'</b><br><span class="ref">'+(k===0?'Cuidado: ':'A banca ')+(k===0?'a banca ':'')+a.banca.charAt(0).toLowerCase()+a.banca.slice(1)+'</span></div></div>';}).join("");
+  b.push({n:"Regra de ouro",h:'<div class="ouro"><span class="rot">Regra de ouro</span><p>'+a0.rot+'</p></div><p class="vlabel">O que o professor quer que você leve deste assunto</p>'+prof});
+  var ent=p.nexo.map(blocoNexo).join("")+p.teoria.map(blocoTeoria).join("");
+  if (p.tab) ent+='<h3>Em resumo</h3>'+(p.tab.rows.length<=4?cartoesQuadro(p.tab):tabela(p.tab));
+  if (p.comp && p.comp.length) ent+='<h3>Regra geral × violência doméstica</h3>'+tabelaComp(p.comp);
+  b.push({n:"Entenda",h:ent});
+  b.push({n:"Memorize",h:'<p class="vlabel">Toque no cartão para revelar a resposta certa</p><div class="rev">'+p.alvos.map(function(a,k){var on=S.rev&&S.rev[p.titulo+k];
+    return '<button type="button" class="rv'+(on?' on':'')+'" data-al="rev" data-k="'+k+'"><span class="q">A banca diz: '+a.banca+'</span><span class="r">'+(on?'<i>Certo:</i> '+a.rot:'Toque para revelar')+'</span></button>';}).join("")+'</div>'});
+  var l=""; if (p.lei.length) l+='<h3>Texto da lei</h3>'+p.lei.map(blocoLei).join("");
+  if (p.juris.length) l+='<h3>Jurisprudência</h3>'+p.juris.map(blocoJuris).join("");
   if (l) b.push({n:"Lei e súmulas",h:l});
   return b;
 }
@@ -606,6 +615,7 @@ document.addEventListener("click",function(ev){
     S.res[q.a]=S.setNo[q.a]?"no":"ok";
   }
   else if(a==="proxq"){ if(S.qi<p[S.set].length-1){ S.qi++; S.esc=null; } else { S.fase="auto"; } }
+  else if(a==="rev"){ var kk=PASSOS[S.i].titulo+b.getAttribute("data-k"); S.rev[kk]=!S.rev[kk]; }
   else if(a==="bloco"){ S.blk=+b.getAttribute("data-k"); }
   else if(a==="entendi"){ proximo("entendi"); return; }
   else if(a==="duvida"){ S.pend="duvida"; S.fase="resumo"; }
