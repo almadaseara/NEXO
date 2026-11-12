@@ -162,3 +162,10 @@ body.al-on .nx-rbar-wrap,body.al-on .nx-painel-mk{display:none!important}
 #al-root .actions.bar,#al-root .triple{bottom:-24px;padding-bottom:36px;z-index:4}#al-root .card{padding-bottom:0}
 #al-root .actions.bar,#al-root .triple{position:static!important;border-top:1px solid var(--line);padding:14px 0 18px;margin-top:18px}#al-root .card{padding-bottom:4px}
 .al-seg{grid-template-columns:repeat(3,minmax(0,1fr))!important}.al-seg .mp{min-width:0}
+.al{max-width:1120px!important;font-size:17px!important}
+.al-page{max-width:1120px}.al-card:first-child{max-width:none!important}
+#al-root .card{padding:28px 32px}
+#al-root .ouro p{font-size:1.9rem}
+#al-root .vcards{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+@media(min-width:1000px){#al-root .rev{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){#al-root .card{padding:20px 16px}}
