@@ -934,7 +934,7 @@ html[data-theme="dark"] .nx-ed-view button:hover:not(.active){background:#343438
     </div>
   </div>
   <section id="recursos" class="landing-features"><span class="section-kicker">UMA PLATAFORMA, UM FLUXO</span><h2>Do conteúdo à questão, sem perder o contexto.</h2><div class="feature-grid"><div class="feature-card"><div class="feature-icon">01</div><strong>Resumo estratégico</strong><p>Pontos-chave, exceções e pegadinhas organizados para revisão rápida.</p></div><div class="feature-card"><div class="feature-icon">02</div><strong>Lei seca conectada</strong><p>Dispositivos legais vinculados diretamente ao assunto que você está estudando.</p></div><div class="feature-card"><div class="feature-icon">03</div><strong>Questões oficiais</strong><p>Prática com enunciado, alternativas, gabarito e organização por tópico.</p></div><div class="feature-card"><div class="feature-icon">04</div><strong>Revisão visual</strong><p>Mapas mentais, flashcards e jurisprudência para consolidar memória e raciocínio.</p></div></div></section>
-  <footer class="landing-footer">NEXO Revisão · Plataforma privada de preparação para concursos.</footer>
+  <footer class="landing-footer">NEXO Revisão · Plataforma privada de preparação para concursos. · <a href="termos.html" style="color:inherit">Termos de uso</a> · <a href="privacidade.html" style="color:inherit">Privacidade</a></footer>
 </section>
 
 <aside>
@@ -1692,6 +1692,8 @@ function setAuthMode(mode){
   document.getElementById('auth-login-help').hidden = signup || recovery;
   document.getElementById('auth-switch-copy').innerHTML = recovery ? 'Lembrou sua senha? <button type="button" onclick="setAuthMode(\'login\')">Voltar ao login</button>' : signup ? 'Já tem uma conta? <button type="button" onclick="setAuthMode(\'login\')">Fazer login</button>' : 'Não tem uma conta? <button type="button" onclick="setAuthMode(\'signup\')">Criar uma conta</button>'; 
   document.getElementById('auth-signup-tip').hidden = !signup;
+  document.getElementById('auth-termos-wrap').style.display = signup ? 'flex' : 'none';
+  document.getElementById('auth-termos-wrap').hidden = !signup;
   setAuthStatus('');
 }
 function openAuthDialog(mode='login'){
@@ -1756,8 +1758,9 @@ async function submitNexoAuth(event){
       if(user){await loadNexoProfile(user);setTimeout(()=>closeAuthDialog(),500);}
     }else if(authUiMode==='signup'){
       if(!fullName){setAuthStatus('Informe seu nome completo.','error');btn.disabled=false;return;}
+      if(!document.getElementById('auth-termos-input').checked){setAuthStatus('Para criar a conta, marque que leu e aceita os termos de uso e a política de privacidade.','error');btn.disabled=false;return;}
       const emailRedirectTo='https://almadaseara.github.io/NEXO/';
-      const {data,error}=await nexoSupabase.auth.signUp({email,password,options:{data:{full_name:fullName},emailRedirectTo}});
+      const {data,error}=await nexoSupabase.auth.signUp({email,password,options:{data:{full_name:fullName,termos_aceitos_em:new Date().toISOString(),termos_versao:'2026-11-12'},emailRedirectTo}});
       if(error) throw error;
       if(data.session){
         await loadNexoProfile(data.user);
@@ -2367,6 +2370,7 @@ syncAccess();
       <label><span id="auth-password-label">Senha</span><input id="auth-password-input" type="password" autocomplete="current-password" required minlength="6" placeholder="Mínimo de 6 caracteres"></label>
       <label id="auth-confirm-wrap" hidden>Confirmar senha<input id="auth-confirm-input" type="password" autocomplete="new-password" minlength="6" placeholder="Repita a senha"></label>
       <div id="auth-signup-tip" class="auth-tip" hidden>Cadastros novos podem ficar aguardando liberação. E-mails já autorizados entram com as permissões previamente definidas.</div>
+      <label id="auth-termos-wrap" class="auth-tip" hidden style="display:none;gap:8px;align-items:flex-start;cursor:pointer;text-transform:none;letter-spacing:0;font-weight:500;font-size:12px;line-height:1.5"><input id="auth-termos-input" type="checkbox" style="width:auto;margin:2px 0 0;flex:none"><span>Li e aceito os <a href="termos.html" target="_blank" rel="noopener" style="color:#11805d;font-weight:700">termos de uso</a> e a <a href="privacidade.html" target="_blank" rel="noopener" style="color:#11805d;font-weight:700">política de privacidade</a>.</span></label>
       <button id="auth-submit" class="auth-submit" type="submit">Entrar</button>
       <div id="auth-login-help" class="auth-help"><button class="auth-linkbtn" type="button" onclick="requestPasswordReset()">Esqueci minha senha</button></div>
       <div id="auth-status" class="auth-status" role="status" aria-live="polite"></div>
@@ -2468,6 +2472,7 @@ syncAccess();
 <script src="ui/nexo-classificar.js?v=20261018b"></script>
 <script src="ui/nexo-revisar.js?v=20261018"></script>
 <script src="ui/nexo-importar.js?v=20261018"></script>
+<script src="ui/nexo-auditoria.js?v=20261112a"></script>
 <script src="ui/nexo-caderno.js?v=20261020a"></script>
 <script src="ui/nexo-revisar-aluno.js?v=20261020a"></script>
 <link rel="stylesheet" href="ui/nexo-vade.css?v=20261031k">
@@ -2475,23 +2480,23 @@ syncAccess();
 <script src="ui/nexo-vade.js?v=20261031i"></script>
 <script src="ui/nexo-menu-cel.js?v=20261031"></script>
 <script src="ui/nexo-sidebar.js?v=20261031"></script>
-<link rel="stylesheet" href="ui/nexo-home-lab.css?v=20261023n">
+<link rel="stylesheet" href="ui/nexo-home-lab.css?v=20261112a">
 <link rel="stylesheet" href="ui/nexo-edital-lab.css?v=20261024e">
 <link rel="stylesheet" href="ui/nexo-livros-lab.css?v=20261023f">
 <link rel="stylesheet" href="ui/nexo-turmas-lab.css?v=20261023o">
 <link rel="stylesheet" href="ui/nexo-sessao-lab.css?v=20261023m">
-<link rel="stylesheet" href="ui/nexo-simulado-lab.css?v=20261023q">
+<link rel="stylesheet" href="ui/nexo-simulado-lab.css?v=20261112a">
 <link rel="stylesheet" href="ui/nexo-quiz.css?v=20261103a">
 <link rel="stylesheet" href="ui/nexo-questoes-lab.css?v=20261027d">
 <link rel="stylesheet" href="ui/nexo-tema-claro-lab.css?v=20261023a">
 <link rel="stylesheet" href="ui/nexo-questoes-contexto-lab.css?v=20261023d">
 <script src="ui/nexo-concursos.js?v=20261023h"></script>
-<script src="ui/nexo-home-lab.js?v=20261025a"></script>
+<script src="ui/nexo-home-lab.js?v=20261112a"></script>
 <script src="ui/nexo-livros-lab.js?v=20261023f"></script>
 <script src="ui/nexo-turmas-lab.js?v=20261024c"></script>
 <script src="ui/nexo-questoes-lab.js?v=20261027c"></script>
 <script src="ui/nexo-sessao-lab.js?v=20261023m"></script>
-<script src="ui/nexo-simulado-lab.js?v=20261024p"></script>
+<script src="ui/nexo-simulado-lab.js?v=20261112a"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="ui/nexo-quiz.js?v=20261103a"></script>
 <script src="ui/nexo-questoes-contexto-lab.js?v=20261023b"></script>
