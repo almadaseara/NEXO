@@ -246,3 +246,18 @@
 .pn-s-tit{font-size:14px}.pn-s-tit small{font-size:12.5px}
 .pn-chipb{padding:5px 13px;font-size:12.5px;min-width:0}
 .pn-s-acoes{gap:7px}.pn-s-acoes .pn-chk{padding:5px 11px;font-size:12px}
+
+/* Hoje: sequência de estudo e revisão vencida */
+.pn-hoje{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.pn-hoje .pn-hj{display:flex;align-items:center;gap:14px;height:auto}
+.pn-hj-c{flex:1;min-width:0;display:grid;gap:3px}
+.pn-hj-c small{font-size:12.5px;color:var(--nx-ink-2)}
+.pn-hj-v{display:flex;align-items:baseline;gap:7px}
+.pn-hj-v b{font-size:28px;line-height:1.1}
+.pn-hj-v span{font-size:13.5px;color:var(--nx-ink-2)}
+.pn-hj-c p{margin:0;font-size:12.5px;color:var(--nx-muted,#8aa39d);line-height:1.4}
+.pn-hj.alerta{border-color:color-mix(in srgb,var(--nx-warn,#d99a2b) 60%,var(--nx-line))}
+.pn-hj.alerta .pn-hj-c p{color:var(--nx-warn,#d99a2b)}
+.pn-hj-b{flex:none;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--nx-accent);color:var(--nx-accent-ink,#04231a)}
+@media (max-width:860px){.pn-hoje{grid-template-columns:1fr}}
+@media (max-width:520px){.pn-hoje .pn-hj{flex-wrap:wrap}.pn-hj-b{width:100%}}

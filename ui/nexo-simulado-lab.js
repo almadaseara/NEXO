@@ -2,8 +2,10 @@
    Monta a prova com as questões que já existem no NEXO (cadernos e banco). A composição usa só dados reais do aluno:
    histórico de acertos por assunto (nexo_eventos), erros pendentes do caderno e o que ainda nunca foi resolvido.
    A prova é entregue em blocos de 10: ao fechar cada bloco, o próximo é recalculado com o desempenho do próprio simulado,
-   sem mostrar gabarito durante a prova. Resultados e histórico ficam neste aparelho; as respostas entram no desempenho
-   e no caderno de erros como nos outros simulados. Não altera questões, gabaritos nem Supabase. */
+   sem mostrar gabarito durante a prova. O histórico detalhado fica neste aparelho; as respostas entram no desempenho
+   e no caderno de erros como nos outros simulados. Com o aluno logado, o resumo de cada simulado entregue (acertos, tamanho
+   e tempo, sem as respostas) vai para a tabela simulado_resultados e alimenta o ranking
+   (docs/sql/2026-11-12-simulado-ranking-e-auditoria.sql). Não altera questões nem gabaritos. */
 (function(){
 'use strict';
 var KC='nexo_simulado_lab_cfg_v1', KH='nexo_simulados_lab_v1', BLK=10;
@@ -92,6 +94,43 @@ function cfgLer(){
   if(c.concurso&&!cs.some(function(x){return x.id===c.concurso}))c.concurso=pr?pr.id:'';
   if(!c.concurso&&pr)c.concurso=pr.id;
   return c;
+}
+
+/* ---------- ranking (Supabase) ----------
+   Vale o melhor simulado de cada aluno nos últimos 30 dias, com 20 questões ou mais. Só números reais:
+   sem login, sem a função no banco ou sem participantes, o cartão diz isso em vez de inventar posição. */
+var RK_MIN=20, RK={st:'',d:null,n:0};
+function sbc(){try{return nexoSupabase}catch(e){return null}}
+function logado(){try{return !!(nexoSupabase&&nexoProfile&&nexoProfile.active)}catch(e){return false}}
+function rankingHtml(){
+  var h='<section class="sa-card sa-rank" id="sa-rank" aria-live="polite"><h2>'+svg('alvo',20)+' Ranking dos últimos 30 dias</h2>';
+  if(RK.st==='off')h+='<p class="sa-vazio">Entre na sua conta para participar do ranking.</p>';
+  else if(RK.st==='load'||!RK.st)h+='<p class="sa-vazio">Carregando o ranking…</p>';
+  else if(RK.st==='erro')h+='<p class="sa-vazio">O ranking não está disponível agora. Seu resultado continua salvo neste aparelho.</p>';
+  else{
+    var d=RK.d||{},eu=d.eu,p=+d.participantes||0,top=Array.isArray(d.top)?d.top:[];
+    if(!p)h+='<p class="sa-vazio">Ninguém entregou um simulado de '+RK_MIN+' questões ou mais nos últimos 30 dias. Entregue o seu para abrir o ranking.</p>';
+    else{
+      h+='<div class="sa-rk-eu">'+(eu?'<b>'+eu.pos+'º</b><span>de '+p+' '+(p===1?'participante':'participantes')+'<small>Seu melhor simulado: '+eu.pct+'% ('+eu.acertos+' de '+eu.n+')'+(p>1&&d.media!=null?' · média dos participantes: '+d.media+'%':'')+'</small></span>'
+        :'<span>'+p+' '+(p===1?'participante':'participantes')+'<small>'+(RK.n&&RK.n<RK_MIN?'Este simulado tem menos de '+RK_MIN+' questões e não entra no ranking.':'Você ainda não tem um simulado de '+RK_MIN+' questões ou mais neste período.')+'</small></span>')+'</div>';
+      h+='<ol class="sa-rk">'+top.map(function(t){return '<li class="'+(t.eu?'eu':'')+'"><span class="sa-n">'+t.pos+'</span><span class="sa-rk-n">'+esc(t.nome)+(t.eu?' <em>você</em>':'')+'</span><b>'+t.pct+'% <em>('+t.acertos+' de '+t.n+')</em></b></li>'}).join('')+'</ol>';
+      if(eu&&RK.n&&RK.n<RK_MIN)h+='<p class="sa-nota">Este simulado tem menos de '+RK_MIN+' questões e não entra no ranking.</p>';
+    }
+    h+='<p class="sa-nota">Vale o melhor simulado de cada aluno, com '+RK_MIN+' questões ou mais. Os colegas veem só o seu primeiro nome e a inicial do sobrenome.</p>';
+  }
+  return h+'</section>';
+}
+function pintaRanking(){var el=document.getElementById('sa-rank');if(el)el.outerHTML=rankingHtml()}
+function rpcRanking(nome,args,n){
+  RK.n=n||0;
+  if(!logado()){RK.st='off';RK.d=null;pintaRanking();return}
+  RK.st='load';pintaRanking();
+  var fim=function(r){if(r&&!r.error&&r.data){RK.st='ok';RK.d=r.data}else{RK.st='erro';RK.d=null}pintaRanking()};
+  try{sbc().rpc(nome,args).then(fim,function(){fim(null)})}catch(e){fim(null)}
+}
+function carregarRanking(){rpcRanking('nexo_simulado_ranking',{p_concurso:null,p_dias:30},0)}
+function registrarRanking(reg,concurso){
+  rpcRanking('nexo_simulado_registrar',{p_concurso:concurso||null,p_modo:reg.modo,p_n:reg.n,p_respondidas:reg.resp,p_acertos:reg.ac,p_ms:Math.max(1,Math.round(reg.ms))},reg.n);
 }
 
 /* ---------- motor de composição ---------- */
@@ -199,7 +238,7 @@ function configHtml(){
     +(P.fracos.length?'<h3>Seus pontos mais fracos</h3><ul class="sa-fracos">'+P.fracos.map(function(f){return '<li><span>'+esc(f.t)+'</span><b>'+f.taxa+'% de erro <em>em '+f.n+' respostas</em></b></li>'}).join('')+'</ul>':'<p class="sa-nota">Ainda não há histórico suficiente. O simulado começa equilibrado e passa a se ajustar a partir do primeiro bloco.</p>')
     +'<p class="sa-nota">'+svg('raio',13)+' Ajuste adaptativo: a cada '+BLK+' questões, o próximo bloco é recalculado com os seus acertos neste simulado.</p>')
   +'</section></div>'
-  +'<section class="sa-card sa-hist-card"><h2>Seus últimos simulados</h2>'+historicoHtml()+'</section></div>';
+  +'<div class="sa-fim-g"><section class="sa-card sa-hist-card"><h2>Seus últimos simulados</h2>'+historicoHtml()+'</section>'+rankingHtml()+'</div></div>';
 }
 function mostrarConfig(){
   clearInterval(tick);
@@ -208,6 +247,7 @@ function mostrarConfig(){
   try{renderNav()}catch(e){}
   var h=document.getElementById('head');if(h)h.textContent='Simulado';
   V().innerHTML=configHtml();V().scrollTop=0;
+  carregarRanking();
 }
 
 /* ---------- prova ---------- */
@@ -307,7 +347,9 @@ function entregar(auto){
   var reg={t:S.fim,n:S.itens.length,ac:ac,resp:resp,ms:S.fim-S.inicio,modo:S.cfg.modo,auto:!!auto};
   h.push(reg);sv(KH,h.slice(-30));
   S.res={ac:ac,resp:resp,porD:porD,porM:porM,ant:ant,filtro:'todas'};
+  RK.st='';RK.d=null;RK.n=reg.n;
   resultado();
+  registrarRanking(reg,S.cfg.concurso);
 }
 function resultado(){
   var R=S.res,n=S.itens.length,pc=Math.round(R.ac/n*100),erros=R.resp-R.ac,br=n-R.resp,ms=S.fim-S.inicio,med=Math.round(ms/n/1000);
@@ -321,6 +363,7 @@ function resultado(){
   +'<div class="sa-res-top"><section class="sa-card sa-score"><div class="sa-anel"><svg viewBox="0 0 120 120" width="150" height="150" aria-hidden="true"><defs><linearGradient id="saG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7ae8c3"/><stop offset="1" stop-color="#2aa57f"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-opacity=".12" stroke-width="11"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#saG)" stroke-width="11" stroke-linecap="round" stroke-dasharray="'+dash+' '+C+'" transform="rotate(-90 60 60)"/></svg><div><b>'+pc+'<i>%</i></b><span>de acerto</span></div></div>'
    +'<div class="sa-score-d"><b>'+R.ac+' de '+n+' acertos</b>'+(ant==null?'<small>Primeiro simulado registrado. Os próximos serão comparados com este.</small>':'<small class="'+(pc>=ant?'up':'down')+'">'+(pc>=ant?'▲ +':'▼ ')+(pc-ant)+' pontos em relação ao simulado anterior ('+ant+'%)</small>')+'</div></section>'
    +'<section class="sa-card sa-kp2"><div><small>Acertos</small><b class="g">'+R.ac+'</b></div><div><small>Erros</small><b class="r">'+erros+'</b></div><div><small>Em branco</small><b>'+br+'</b></div><div><small>Tempo total</small><b>'+fmtT(ms)+'</b></div><div><small>Média por questão</small><b>'+med+' s</b><em>planejado '+S.seg+' s</em></div><div><small>Modo</small><b class="s">'+esc((MODOS.find(function(m){return m.id===S.cfg.modo})||{}).t)+'</b></div></section></div>'
+  +rankingHtml()
   +'<div class="sa-res-g"><section class="sa-card"><h2>Desempenho por disciplina</h2><ul class="sa-pd">'+disc.map(function(o){var v=o.v,p=Math.round(v.ac/v.n*100);return '<li><span class="sa-pdn"><i style="background:'+o.cor+'"></i>'+esc(o.d)+'</span><span class="sa-bar"><i style="width:'+p+'%;background:'+o.cor+'"></i></span><b>'+v.ac+'/'+v.n+' <em>'+p+'%</em></b></li>'}).join('')+'</ul></section>'
   +'<section class="sa-card"><h2>Onde reforçar</h2>'+(piores.length?'<ul class="sa-ref">'+piores.map(function(m){return '<li><span>'+esc(m.t)+'<small>'+m.er+' '+(m.er===1?'erro':'erros')+' de '+m.n+'</small></span><button type="button" class="sa-mini" data-sa="praticar" data-m="'+esc(m.id)+'">Praticar</button></li>'}).join('')+'</ul>':'<p class="sa-vazio">Nenhum erro neste simulado. Bom trabalho!</p>')+'</section></div>'
   +'<div class="sa-cta sa-cta-r"><button type="button" class="sa-go" data-sa="outro">'+svg('refazer',16)+' Novo simulado</button><button type="button" class="sa-novo" data-sa="erros">Ir ao caderno de erros</button></div>'

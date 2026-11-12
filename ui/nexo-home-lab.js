@@ -62,6 +62,34 @@ function semanaHtml(){
  return '<section class="pn-semana" aria-label="Semana de estudo"><div class="pn-dias">'+h+'</div></section>';
 }
 
+/* ---- Hoje: sequência de dias estudados e o que está vencido para revisar ----
+   Dados reais deste aluno: dias com estudo (questões, trilha ou marcação manual), erros pendentes do
+   caderno e fichas com revisão vencida. Sem dado, mostra o estado vazio. */
+function sequenciaDias(){
+ var f=diasEstudados(),hoje=d0(Date.now()),k=function(t){return dateKey(new Date(t+DIA/2))};
+ var estudouHoje=!!f[k(hoje)],t=estudouHoje?hoje:hoje-DIA,n=0;
+ while(f[k(t)]){n++;t-=DIA}
+ var dias=Object.keys(f).sort(),rec=0,run=0,ant=null;
+ dias.forEach(function(x){var tt=d0(new Date(x+'T12:00:00').getTime());run=(ant!=null&&Math.round((tt-ant)/DIA)===1)?run+1:1;if(run>rec)rec=run;ant=tt});
+ return {n:n,hoje:estudouHoje,recorde:Math.max(rec,n)};
+}
+function revisarHoje(){
+ var e=0,c=0;
+ try{e=window.nexoCadernoApi.erradas().length}catch(x){}
+ try{c=window.nexoFichasRevisao.devidas().length}catch(x){}
+ return {erros:e,fichas:c};
+}
+function hojeHtml(){
+ var s=sequenciaDias(),r=revisarHoje(),tem=r.erros+r.fichas>0;
+ var FOGO='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-1.6.6-2.8 1.5-3.8.3 1.5 1 2.3 2 2.8C10 9 10.5 6 12 3Z"/></svg>';
+ var REV='<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>';
+ var seq=s.n?'<b>'+s.n+'</b><span>'+(s.n===1?'dia seguido':'dias seguidos')+'</span>':'<b>0</b><span>dias seguidos</span>';
+ var dica=s.n?(s.hoje?'Hoje já conta. '+(s.recorde>s.n?'Seu recorde é de '+s.recorde+' dias.':'Este é o seu recorde.'):'Estude hoje para não perder a sequência.'):'Responda uma questão ou conclua uma tarefa da trilha para começar.';
+ var partes=[];if(r.erros)partes.push(r.erros+' '+(r.erros===1?'erro pendente':'erros pendentes'));if(r.fichas)partes.push(r.fichas+' '+(r.fichas===1?'flashcard vencido':'flashcards vencidos'));
+ return '<div class="pn-hoje"><section class="pn-panel pn-hj'+(s.n&&!s.hoje?' alerta':'')+'"><span class="pn-pico">'+FOGO+'</span><div class="pn-hj-c"><small>Sequência de estudo</small><div class="pn-hj-v">'+seq+'</div><p>'+dica+'</p></div></section>'
+  +'<section class="pn-panel pn-hj"><span class="pn-pico">'+REV+'</span><div class="pn-hj-c"><small>Para revisar hoje</small><div class="pn-hj-v">'+(tem?'<b>'+(r.erros+r.fichas)+'</b><span>'+(r.erros+r.fichas===1?'item':'itens')+'</span>':'<b>0</b><span>itens</span>')+'</div><p>'+(tem?partes.join(' · ')+'.':'Nada vencido. Os erros e os flashcards que você estudar voltam aqui na data certa.')+'</p></div>'+(tem?'<button type="button" class="pn-hj-b" data-lab="review">Revisar agora</button>':'')+'</section></div>';
+}
+
 var CLOCK='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
 function selo(t){
  try{var T=window.nexoTrilha;if(T&&T.edIcon&&t.discId&&t.sigla)return '<span class="nx-lab-pair" style="--badge:'+e(t.cor)+'"><span class="nx-lab-symbol">'+T.edIcon(t.discId)+'</span></span>'}catch(x){}
@@ -124,7 +152,7 @@ function show(){
  var x=get(),it=x.items.find(function(z){return z.id===x.principal})||x.items[0],s=plan();
  var match=!!(it&&s&&s.plan&&(window.nexoMesmoEdital?window.nexoMesmoEdital(s.plan.edital,it.id):s.plan.edital===it.id)&&s.plan.cargo===it.cargo);
  view.innerHTML='<div class="pn"><div class="pn-topo"><div class="pn-eyebrow">'+saudacao().toUpperCase()+', ESTUDANTE.</div><h1>Painel de <span>estudos</span></h1><p>Acompanhe sua trilha diária e mantenha o foco na sua aprovação.</p></div>'
-  +semanaHtml()+'<div class="pn-cols"><div class="pn-col">'+trilhaHtml(it,match)+numerosHtml()+'</div><div class="pn-col">'+concursosHtml(x,it)+'</div></div>'+acessoHtml()+'</div>';
+  +semanaHtml()+hojeHtml()+'<div class="pn-cols"><div class="pn-col">'+trilhaHtml(it,match)+numerosHtml()+'</div><div class="pn-col">'+concursosHtml(x,it)+'</div></div>'+acessoHtml()+'</div>';
  var hd=document.getElementById('head');if(hd)hd.textContent='Painel de estudos';
  view.scrollTop=0;
 }
