@@ -311,12 +311,44 @@ function semanaKeyDe(s, t){ return Object.keys(s.weeks || {}).sort().filter(func
 function semanaAtualKey(s){ return semanaKeyDe(s, hoje0()) || Object.keys(s.weeks || {}).sort().pop() || null; }
 /* uma vez por semana (ou se a semana atual ainda não existe), o resto do plano é recalculado com o que foi feito */
 function replanejarSeNecessario(s){
-  if(!s.plan) return false;
+  if(!s.plan || s.plan.pausa) return false;
   var h = hoje0(), k = semanaKeyDe(s, h);
   if(k && s.plan.replanejado === k) return false;
   var ini = k ? deIso(k) : h;
   if(!k){ /* passou do fim do plano: começa uma semana nova hoje */ ini = h; }
   gerarPlano(s, ini); E().salvarPlano(s); return true;
+}
+
+/* metas da semana atual com dia já passado e sem conclusão */
+function atrasadas(s){
+  var k = semanaAtualKey(s); if(!k || !s.weeks[k]) return [];
+  var h = hoje0(), ini = deIso(k);
+  return (s.weeks[k].tarefas || []).filter(function(t){ return !t.feito && ini + (t.d || 0) * DIA < h; });
+}
+/* simula o replanejamento e diz em que dia cada assunto atrasado volta a ser estudado e depois revisado */
+function sugestaoReplano(s){
+  var atr = atrasadas(s).filter(function(t){ return t.tipo === 'estudo' && t.un; }); if(!atr.length) return [];
+  var sim = clone(s), k = semanaAtualKey(s); gerarPlano(sim, k ? deIso(k) : hoje0());
+  var vistos = {}, out = [];
+  atr.forEach(function(t){
+    if(vistos[t.un]) return; vistos[t.un] = 1;
+    var est = null, rev = null, h = hoje0();
+    Object.keys(sim.weeks).sort().forEach(function(wk){ (sim.weeks[wk].tarefas || []).forEach(function(x){
+      if(x.un !== t.un || x.feito) return; var dt = deIso(wk) + (x.d || 0) * DIA; if(dt < h) return;
+      if(x.tipo === 'estudo' && (est == null || dt < est)) est = dt;
+      if((x.tipo === 'reforco' || x.tipo === 'revisao') && (rev == null || dt < rev)) rev = dt;
+    }); });
+    out.push({ nome:tituloTarefa(t), est:est, rev:rev });
+  });
+  return out;
+}
+function avisoPausaReplano(s){
+  if(s.plan.pausa) return '<p class="nt-aviso">Metas suspensas desde ' + dma(deIso(s.plan.pausa)) + '. Seus conteúdos continuam abertos. <button type="button" class="nx-btn primary small" data-nt="retomar">Retomar metas</button></p>';
+  var atr = atrasadas(s); if(!atr.length) return '';
+  var sug = sugestaoReplano(s).slice(0, 3);
+  var l = sug.map(function(x){ return '<li>' + escH(x.nome) + (x.est ? ': terminar em ' + dm(x.est) : '') + (x.rev ? ' e revisar em ' + dm(x.rev) : '') + '</li>'; }).join('');
+  return '<div class="nt-aviso"><b>Você tem ' + atr.length + (atr.length > 1 ? ' metas atrasadas.' : ' meta atrasada.') + '</b> Quer que eu replaneje? ' + (l ? '<ul>' + l + '</ul>' : '')
+    + '<button type="button" class="nx-btn primary small" data-nt="refazer">Replanejar agora</button> <button type="button" class="nx-btn ghost small" data-nt="pausar">Suspender metas</button></div>';
 }
 var aba = 'semana', aberta = null, editando = false, vendoSemana = null, rascunho = null;
 
@@ -702,8 +734,8 @@ window.nexoCronograma = function(a){
   if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEditalLab(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
   var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
-    + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>';
-  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
+    + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>' + (s.plan.pausa ? '' : '<button type="button" class="nx-btn ghost small" data-nt="pausar">Suspender metas</button>');
+  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + avisoPausaReplano(s) + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
 };
 
 function tarefaPorId(s, id){ for(var k in s.weeks){ var x = (s.weeks[k].tarefas || []).find(function(y){ return y.id === id; }); if(x) return { t:x, k:k }; } return null; }
@@ -793,6 +825,8 @@ document.addEventListener('click', function(e){
     var k = vendoSemana && a === 'refazer' && deIso(vendoSemana) <= hoje0() ? vendoSemana : semanaKeyDe(s, hoje0());
     gerarPlano(s, k ? deIso(k) : hoje0()); E().salvarPlano(s); vendoSemana = null; window.nexoCronograma('semana'); return;
   }
+  if(a === 'pausar'){ if(s.plan){ s.plan.pausa = iso(hoje0()); E().salvarPlano(s); } window.nexoCronograma('semana'); return; }
+  if(a === 'retomar'){ if(s.plan){ delete s.plan.pausa; var kr = semanaAtualKey(s); gerarPlano(s, kr ? deIso(kr) : hoje0()); E().salvarPlano(s); } window.nexoCronograma('semana'); return; }
   if(a === 'abrirCard'){ aberta = aberta === b.dataset.id ? null : b.dataset.id; window.nexoCronograma('semana'); return; }
   if(a === 'modulo'){ window.nexoTarefaAtiva = null; if(LV()) LV().abrir(b.dataset.mod, 'resumo'); return; }
   if(a === 'questoes'){ if(window.nexoPraticar) window.nexoPraticar({ mod:b.dataset.mod, status:'unsolved' }); return; }
