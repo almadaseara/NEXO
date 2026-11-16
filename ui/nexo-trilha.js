@@ -117,7 +117,7 @@ function progresso(st){
     (st.weeks[k].tarefas || []).forEach(function(t){
       if(!t.feito || !t.un) return;
       var x = reg(ch(t.un));
-      if(t.tipo === 'estudo'){ x.partes = Math.max(x.partes, t.parte || 1); if((t.parte || 1) >= (t.partes || 1)) x.e = Math.max(x.e, t.feito); x.u = Math.max(x.u, t.feito); }
+      if(t.tipo === 'estudo'){ x.partes = Math.max(x.partes, t.parte || 1); if((t.parte || 1) >= (t.partes || 1) && !t.maisTempo) x.e = Math.max(x.e, t.feito); x.u = Math.max(x.u, t.feito); }
       if(t.tipo === 'revisao' || t.tipo === 'reforco'){ x.r++; x.u = Math.max(x.u, t.feito); }
     });
   });
@@ -139,8 +139,10 @@ function teoriaLidaEm(st, mod){
   for(var i = 0; i < ps.length; i++){ var x = l[mod + '|' + ps[i].key]; if(!x) return 0; t = Math.max(t, x); }
   return t;
 }
-var INTERVALOS = [7, 15, 30];
-function proximaRevisao(x, prio){ if(!x || !x.e) return null; if(x.r >= Math.max(1, Math.min(3, prio || 2))) return null; return x.u + INTERVALOS[Math.min(x.r, INTERVALOS.length - 1)] * DIA; }
+/* revisões espaçadas em 1, 7, 15 e 30 dias após o estudo. A revisão rápida (reforço) é a de 1 dia; quantas revisões
+   o capítulo recebe depende da prioridade (alta: 4, média: 3, baixa: 2). */
+var INTERVALOS = [1, 7, 15, 30];
+function proximaRevisao(x, prio){ if(!x || !x.e) return null; if(x.r >= Math.max(2, Math.min(4, (prio || 2) + 1))) return null; return x.u + INTERVALOS[Math.min(x.r, INTERVALOS.length - 1)] * DIA; }
 function partesUn(u){ var n = Math.max(1, Math.ceil(u.min / 120)), cada = Math.round(u.min / n / 5) * 5, r = []; for(var i = 1; i <= n; i++) r.push({ min:cada, parte:i, partes:n }); return r; }
 function fila(discId, prog){
   var us = unidades(discId).filter(function(u){ return !(prog[ch(u.id)] && prog[ch(u.id)].e); });
@@ -251,7 +253,7 @@ function gerarSemana(st, inicio, op){
       if(cabe){
         cabe.d = dd; livre[dd] -= cabe.min; porDia[dd].push(cabe); restantes.splice(restantes.indexOf(cabe), 1); mudou = true;
         var un = unidade(cabe.un);
-        if(cabe.parte === cabe.partes && un && un.prio >= 2 && cabe.disc !== 'atualidades') reforcos.push(nova({ tipo:'reforco', un:cabe.un, mod:cabe.mod, top:cabe.top, disc:cabe.disc, min:20, desde:dd + 2 }));
+        if(cabe.parte === cabe.partes && un && un.prio >= 2 && cabe.disc !== 'atualidades') reforcos.push(nova({ tipo:'reforco', un:cabe.un, mod:cabe.mod, top:cabe.top, disc:cabe.disc, min:20, desde:dd + 1 }));
       }
     }
   }
@@ -416,8 +418,11 @@ function detalhe(t, d){
     else if(DISC_SITE[t.disc]) h += '<button type="button" class="nx-btn small ghost" data-nt="praticar" data-id="' + t.id + '">Praticar questões</button>';
     if(t.tipo !== 'estudo') h += '<button type="button" class="nx-btn small ghost" onclick="nexoMeusGrifos()">Meus grifos</button>';
   }
-  h += '<button type="button" class="nx-btn small ghost" data-nt="feito" data-id="' + t.id + '">' + (t.feito ? 'Desmarcar' : 'Concluir tarefa') + '</button></div></div>';
-  return h;
+  h += '<button type="button" class="nx-btn small ghost" data-nt="feito" data-id="' + t.id + '">' + (t.feito ? 'Desmarcar' : 'Concluir tarefa') + '</button>';
+  if(t.tipo === 'estudo' && !t.feito && u) h += '<button type="button" class="nx-btn small ghost" data-nt="maistempo" data-id="' + t.id + '">Concluir, mas preciso de mais tempo</button>';
+  h += '</div>';
+  if(t.tipo === 'estudo' && t.maisTempo) h += '<p class="nt-prio">Você pediu mais tempo neste assunto: ele volta como nova tarefa de estudo e, depois, entra nas revisões.</p>';
+  return h + '</div>';
 }
 
 function resumoPlano(s){
@@ -704,7 +709,7 @@ window.nexoCronograma = function(a){
 function tarefaPorId(s, id){ for(var k in s.weeks){ var x = (s.weeks[k].tarefas || []).find(function(y){ return y.id === id; }); if(x) return { t:x, k:k }; } return null; }
 /* concluir/desmarcar a tarefa e refletir no livro */
 function alternarFeito(s, t){
-  t.feito = t.feito ? 0 : Date.now();
+  t.feito = t.feito ? 0 : Date.now(); if(!t.feito) delete t.maisTempo;
   E().salvarPlano(s);
   if(t.tipo === 'estudo' && t.mod && LV() && (t.parte || 1) >= (t.partes || 1)) LV().marcarCapitulo(t.mod, !!t.feito);
 }
@@ -792,6 +797,12 @@ document.addEventListener('click', function(e){
   if(a === 'modulo'){ window.nexoTarefaAtiva = null; if(LV()) LV().abrir(b.dataset.mod, 'resumo'); return; }
   if(a === 'questoes'){ if(window.nexoPraticar) window.nexoPraticar({ mod:b.dataset.mod, status:'unsolved' }); return; }
   var r = b.dataset.id && tarefaPorId(s, b.dataset.id); if(!r) return;
+  if(a === 'maistempo'){
+    if(r.t.tipo !== 'estudo' || r.t.feito) return;
+    r.t.feito = Date.now(); r.t.maisTempo = 1;
+    var kw = semanaAtualKey(s); gerarPlano(s, kw ? deIso(kw) : hoje0()); E().salvarPlano(s);
+    aberta = null; if(curAtual() === 'cronograma') window.nexoCronograma('semana'); else marcarBanner(); return;
+  }
   if(a === 'feito'){ alternarFeito(s, r.t); if(curAtual() === 'cronograma') window.nexoCronograma('semana'); else marcarBanner(); return; }
   if(a === 'estudar'){ window.nexoTarefaAtiva = { id:r.t.id, mod:r.t.mod }; if(LV()) LV().abrir(r.t.mod, b.dataset.tab || 'resumo'); return; }
   if(a === 'praticar'){ if(window.nexoPraticar) window.nexoPraticar(r.t.mod ? { mod:r.t.mod, status:'unsolved' } : { disc:DISC_SITE[r.t.disc] || '', status:'unsolved' }); }
