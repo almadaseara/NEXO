@@ -350,6 +350,41 @@ function avisoPausaReplano(s){
   return '<div class="nt-aviso"><b>Você tem ' + atr.length + (atr.length > 1 ? ' metas atrasadas.' : ' meta atrasada.') + '</b> Quer que eu replaneje? ' + (l ? '<ul>' + l + '</ul>' : '')
     + '<button type="button" class="nx-btn primary small" data-nt="refazer">Replanejar agora</button> <button type="button" class="nx-btn ghost small" data-nt="pausar">Suspender metas</button></div>';
 }
+
+/* ---------- desempenho e registros manuais (guardados em plan.registros, sincronizados com o plano) ---------- */
+var META_ACERTO = 70;
+function nomeDisc(d){ return (ED.disciplinas[d] || {}).nome || d; }
+function resumoDesempenho(s){
+  var r = {}, get = function(d){ return r[d] || (r[d] = { min:0, tot:0, ok:0 }); };
+  Object.keys(s.weeks || {}).forEach(function(k){ (s.weeks[k].tarefas || []).forEach(function(t){ if(t.feito && t.disc && t.tipo !== 'questoes') get(t.disc).min += t.min || 0; }); });
+  ((s.plan && s.plan.registros) || []).forEach(function(x){ var g = get(x.disc); g.min += x.min || 0; g.tot += x.total || 0; g.ok += x.certas || 0; });
+  return r;
+}
+function telaDesempenho(s){
+  var discs = (s.plan.discs || []).filter(function(d){ return ED.disciplinas[d]; }), res = resumoDesempenho(s);
+  var opt = discs.map(function(d){ return '<option value="' + escH(d) + '">' + escH(nomeDisc(d)) + '</option>'; }).join('');
+  var form = '<form id="nt-reg" class="nt-form"><h3>Registrar estudo ou questões feitas fora do plano</h3>'
+    + '<label>Matéria <select name="disc">' + opt + '</select></label>'
+    + '<label>Tempo de estudo (min) <input name="min" type="number" min="0" max="600" value="0"></label>'
+    + '<label>Questões resolvidas <input name="total" type="number" min="0" max="1000" value="0"></label>'
+    + '<label>Questões certas <input name="certas" type="number" min="0" max="1000" value="0"></label>'
+    + '<p id="nt-reg-msg" class="nt-ja"></p><button type="submit" class="nx-btn primary small">Salvar registro</button></form>';
+  var linhas = discs.map(function(d){
+    var x = res[d] || { min:0, tot:0, ok:0 }, pc = x.tot ? Math.round(x.ok / x.tot * 100) : null;
+    return '<tr><td>' + escH(nomeDisc(d)) + '</td><td>' + fmtMin(x.min) + '</td><td>' + (x.tot || '—') + '</td><td>' + (pc == null ? '—' : '<b' + (pc >= META_ACERTO ? '' : ' style="color:#c0392b"') + '>' + pc + '%</b>' + (pc >= META_ACERTO ? ' ✓' : '')) + '</td></tr>';
+  }).join('');
+  var tab = '<h3>Desempenho por matéria</h3><p class="nt-ja">Referência: acima de ' + META_ACERTO + '% de acerto (AOCP e Cebraspe).</p><div style="overflow-x:auto"><table class="te-tab"><thead><tr><th>Matéria</th><th>Horas</th><th>Questões</th><th>Acerto</th></tr></thead><tbody>' + linhas + '</tbody></table></div>';
+  return form + tab;
+}
+document.addEventListener('submit', function(e){
+  var f = e.target; if(!f || f.id !== 'nt-reg') return; e.preventDefault();
+  var s = st(); if(!s.plan) return;
+  var n = function(x){ return Math.max(0, Math.round(Number(f[x].value) || 0)); };
+  var r = { t:Date.now(), disc:f.disc.value, min:n('min'), total:n('total'), certas:n('certas') }, msg = document.getElementById('nt-reg-msg');
+  if(r.certas > r.total){ if(msg) msg.textContent = 'As certas não podem passar do total de questões.'; return; }
+  if(!r.min && !r.total){ if(msg) msg.textContent = 'Informe o tempo de estudo ou as questões.'; return; }
+  s.plan.registros = (s.plan.registros || []).concat([r]); E().salvarPlano(s); window.nexoCronograma('desempenho');
+});
 var aba = 'semana', aberta = null, editando = false, vendoSemana = null, rascunho = null;
 
 /* ---------- telas ---------- */
@@ -733,9 +768,9 @@ window.nexoCronograma = function(a){
   var conta = E().conectado() ? '' : '<p class="nt-aviso">Seu plano está salvo neste navegador. Entre na sua conta para guardar o plano, o progresso dos livros e as marcações e usar em outros aparelhos.</p>';
   if(!s.plan && !editando && aba === 'edital'){ v.innerHTML = '<div class="nx-page nt">' + topo + '<div class="nt-tabsleg"><h2 class="nt-edtit">Edital verticalizado</h2>' + legendaPrio() + '</div>' + telaEditalLab(s) + '</div>'; v.scrollTop = 0; return; }
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
-  var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
+  var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['desempenho', 'Desempenho'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
     + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>' + (s.plan.pausa ? '' : '<button type="button" class="nx-btn ghost small" data-nt="pausar">Suspender metas</button>');
-  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + avisoPausaReplano(s) + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : telaSemana(s)) + '</div>';
+  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + avisoPausaReplano(s) + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : aba === 'desempenho' ? telaDesempenho(s) : telaSemana(s)) + '</div>';
 };
 
 function tarefaPorId(s, id){ for(var k in s.weeks){ var x = (s.weeks[k].tarefas || []).find(function(y){ return y.id === id; }); if(x) return { t:x, k:k }; } return null; }
