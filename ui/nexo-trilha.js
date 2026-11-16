@@ -178,7 +178,11 @@ function gerarSemana(st, inicio, op){
     var due = proximaRevisao(prog[id], u.prio); if(!due || due > inicio + 6 * DIA) return;
     cand.push({ u:u, due:due });
   });
-  cand.sort(function(a, b){ return b.u.prio - a.u.prio || a.due - b.due; });
+  Object.keys(plan.fracos || {}).forEach(function(id){
+    var u = unidade(id); if(!u || jaTem[id + ':revisao:1'] || plan.discs.indexOf(u.disc) < 0 || cand.some(function(x){ return x.u.id === id; })) return;
+    cand.push({ u:u, due:inicio, fraco:1 });
+  });
+  cand.sort(function(a, b){ return (b.fraco || 0) - (a.fraco || 0) || b.u.prio - a.u.prio || a.due - b.due; });
   var tetoRev = total * (op.soRevisao ? .7 : .3), somaRev = 0, revisoes = [];
   cand.forEach(function(x){
     var min = x.u.prio >= 3 ? 30 : 20; if(somaRev + min > tetoRev) return; somaRev += min;
@@ -317,6 +321,7 @@ function replanejarSeNecessario(s){
   var h = hoje0(), k = semanaKeyDe(s, h);
   if(k && s.plan.replanejado === k) return false;
   var ini = k ? deIso(k) : h;
+  atualizarFracos(s);
   if(!k){ /* passou do fim do plano: começa uma semana nova hoje */ ini = h; }
   gerarPlano(s, ini); E().salvarPlano(s); return true;
 }
@@ -365,7 +370,7 @@ var META_ACERTO = 70;
 function nomeDisc(d){ return (ED.disciplinas[d] || {}).nome || d; }
 function resumoDesempenho(s){
   var r = {}, get = function(d){ return r[d] || (r[d] = { est:0, rev:0, exe:0, tot:0, ok:0 }); };
-  Object.keys(s.weeks || {}).forEach(function(k){ (s.weeks[k].tarefas || []).forEach(function(t){ if(!t.feito || !t.disc) return; var g = get(t.disc), m = t.min || 0; if(t.tipo === 'estudo') g.est += m; else if(t.tipo === 'questoes') g.exe += m; else g.rev += m; }); });
+  Object.keys(s.weeks || {}).forEach(function(k){ (s.weeks[k].tarefas || []).forEach(function(t){ if(!t.feito || !t.disc) return; var g = get(t.disc), m = minutosDaTarefa(t.id) || t.min || 0; if(t.tipo === 'estudo') g.est += m; else if(t.tipo === 'questoes') g.exe += m; else g.rev += m; }); });
   ((s.plan && s.plan.registros) || []).forEach(function(x){ var g = get(x.disc), m = x.min || 0; if(x.tipo === 'revisao') g.rev += m; else if(x.tipo === 'exercicios' || (!x.tipo && x.total)) g.exe += m; else g.est += m; g.tot += x.total || 0; g.ok += x.certas || 0; });
   return r;
 }
@@ -395,6 +400,22 @@ document.addEventListener('submit', function(e){
   if(!r.min && !r.total){ if(msg) msg.textContent = 'Informe o tempo de estudo ou as questões.'; return; }
   s.plan.registros = (s.plan.registros || []).concat([r]); E().salvarPlano(s); window.nexoCronograma('desempenho');
 });
+
+/* ---------- cronômetro ligado à tarefa e desempenho nas questões ---------- */
+function eventosLocais(){ try{ var a = JSON.parse(localStorage.getItem('nexo_eventos') || '[]'); return Array.isArray(a) ? a : []; }catch(e){ return []; } }
+function minutosDaTarefa(id){ return Math.round(eventosLocais().reduce(function(a, e){ return a + (e.k === 't' && e.tf === id ? (e.ms || 0) : 0); }, 0) / 60000); }
+/* assuntos já estudados em que o acerto recente nas questões ficou abaixo da meta voltam como revisão */
+function atualizarFracos(s){
+  if(!s.plan) return;
+  var prog = progresso(s), ev = eventosLocais().filter(function(e){ return e.k === 'q' && e.m; }), h = hoje0(), fracos = {};
+  Object.keys(prog).forEach(function(id){
+    var u = unidade(id); if(!u || !u.mod || !prog[id].e || s.plan.discs.indexOf(u.disc) < 0) return;
+    var desde = Math.max(h - 28 * DIA, prog[id].u || 0), tot = 0, ok = 0;
+    ev.forEach(function(e){ if(e.m === u.mod && e.t >= desde){ tot++; if(e.ok) ok++; } });
+    if(tot >= 5 && ok / tot * 100 < META_ACERTO) fracos[id] = { tot:tot, pc:Math.round(ok / tot * 100) };
+  });
+  s.plan.fracos = fracos;
+}
 var aba = 'semana', aberta = null, editando = false, vendoSemana = null, rascunho = null;
 
 /* ---------- telas ---------- */
@@ -499,6 +520,10 @@ function detalhe(t, d){
   h += '<button type="button" class="nx-btn small ghost" data-nt="feito" data-id="' + t.id + '">' + (t.feito ? 'Desmarcar' : 'Concluir tarefa') + '</button>';
   if(t.tipo === 'estudo' && !t.feito && u) h += '<button type="button" class="nx-btn small ghost" data-nt="maistempo" data-id="' + t.id + '">Concluir, mas preciso de mais tempo</button>';
   h += '</div>';
+  var gasto = minutosDaTarefa(t.id);
+  if(gasto) h += '<p class="nt-prio">Tempo registrado no cronômetro: ' + fmtMin(gasto) + ' de ' + fmtMin(t.min) + ' planejados.</p>';
+  var fr = (st().plan.fracos || {})[ch(t.un || '')];
+  if(fr && (t.tipo === 'revisao' || t.tipo === 'reforco')) h += '<p class="nt-prio">Seu acerto nas questões deste capítulo está em ' + fr.pc + '% (meta: acima de ' + META_ACERTO + '%). Por isso a revisão entrou antes.</p>';
   var rr = tarefaPorId(st(), t.id);
   if(rr && rr.k){
     var ini0 = deIso(rr.k), op = '';
@@ -889,6 +914,7 @@ document.addEventListener('click', function(e){
   if(a === 'cancelar'){ editando = false; var sempl = !s.plan; rascunho = null; if(sempl && typeof window.nexoTurmasPainel === 'function'){ window.nexoTurmasPainel(); return; } window.nexoCronograma(); return; }
   if(a === 'sem'){ if(b.dataset.k){ vendoSemana = b.dataset.k; aberta = null; window.nexoCronograma('semana'); } return; }
   if(a === 'gerar' || a === 'refazer'){
+    atualizarFracos(s);
     var k = vendoSemana && a === 'refazer' && deIso(vendoSemana) <= hoje0() ? vendoSemana : semanaKeyDe(s, hoje0());
     gerarPlano(s, k ? deIso(k) : hoje0()); E().salvarPlano(s); vendoSemana = null; window.nexoCronograma('semana'); return;
   }
