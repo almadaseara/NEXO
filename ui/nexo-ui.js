@@ -353,7 +353,7 @@ function fmt(ms){
   var h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), ss = s % 60;
   return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
 }
-function registrarTempo(ms){ if(ms >= 5000) registrar({ k:'t', ms:Math.round(ms) }); }
+function registrarTempo(ms){ if(ms >= 5000){ var ta = window.nexoTarefaAtiva; registrar({ k:'t', ms:Math.round(ms), m:ta && ta.mod ? ta.mod : null, tf:ta && ta.id ? ta.id : null }); } }
 var audioCtx = null;
 function liberarSom(){ try{ var C = window.AudioContext || window.webkitAudioContext; if(!C) return; if(!audioCtx) audioCtx = new C(); if(audioCtx.state === 'suspended') audioCtx.resume(); }catch(e){} }
 function bip(){
