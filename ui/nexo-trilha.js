@@ -342,6 +342,13 @@ function sugestaoReplano(s){
   });
   return out;
 }
+function avisoAdiantar(s){
+  var k = semanaAtualKey(s), w = k && s.weeks[k]; if(!w) return '';
+  var d = Math.round((hoje0() - deIso(k)) / DIA); if(d < 0 || d > 5) return '';
+  var hoje = w.tarefas.filter(function(x){ return x.d === d; }), amanha = w.tarefas.filter(function(x){ return x.d === d + 1 && !x.feito; });
+  if(!hoje.length || hoje.some(function(x){ return !x.feito; }) || !amanha.length) return '';
+  return '<p class="nt-aviso">Parabéns, você bateu a meta de hoje! Quer adiantar as ' + amanha.length + ' tarefas de amanhã? <button type="button" class="nx-btn primary small" data-nt="adiantar">Adiantar tarefas de amanhã</button></p>';
+}
 function avisoPausaReplano(s){
   if(s.plan.pausa) return '<p class="nt-aviso">Metas suspensas desde ' + dma(deIso(s.plan.pausa)) + '. Seus conteúdos continuam abertos. <button type="button" class="nx-btn primary small" data-nt="retomar">Retomar metas</button></p>';
   var atr = atrasadas(s); if(!atr.length) return '';
@@ -488,6 +495,16 @@ function detalhe(t, d){
   h += '<button type="button" class="nx-btn small ghost" data-nt="feito" data-id="' + t.id + '">' + (t.feito ? 'Desmarcar' : 'Concluir tarefa') + '</button>';
   if(t.tipo === 'estudo' && !t.feito && u) h += '<button type="button" class="nx-btn small ghost" data-nt="maistempo" data-id="' + t.id + '">Concluir, mas preciso de mais tempo</button>';
   h += '</div>';
+  var rr = tarefaPorId(st(), t.id);
+  if(rr && rr.k){
+    var ini0 = deIso(rr.k), op = '';
+    for(var i = 0; i < 7; i++) op += '<option value="' + i + '"' + (i === t.d ? ' selected' : '') + '>' + DCURTO[new Date(ini0 + i * DIA).getDay()] + ' ' + dm(ini0 + i * DIA) + '</option>';
+    h += '<label class="nt-mover">Mover para <select data-ntmover="' + t.id + '">' + op + '</select></label>';
+  }
+  if(t.mod){
+    var cad = ((st().plan || {}).cadernos || {})[t.mod] || '';
+    h += '<label class="nt-mover">Onde parei / anotações <textarea data-ntcad="' + escH(t.mod) + '" rows="2" maxlength="600" placeholder="Ex.: parei na página 38">' + escH(cad) + '</textarea></label>';
+  }
   if(t.tipo === 'estudo' && t.maisTempo) h += '<p class="nt-prio">Você pediu mais tempo neste assunto: ele volta como nova tarefa de estudo e, depois, entra nas revisões.</p>';
   return h + '</div>';
 }
@@ -770,7 +787,7 @@ window.nexoCronograma = function(a){
   if(!s.plan || editando){ v.innerHTML = '<div class="nx-page nt">' + topo + conta + telaConfig(s) + '</div>'; totalForm(); v.scrollTop = 0; return; }
   var abas = '<div class="nt-tabsleg"><div class="nx-seg nt-abas" role="tablist">' + [['semana', 'Semana'], ['plano', 'Plano completo'], ['desempenho', 'Desempenho'], ['edital', 'Edital verticalizado']].map(function(x){ return '<button type="button" role="tab" aria-selected="' + (aba === x[0]) + '" aria-pressed="' + (aba === x[0]) + '" data-nt="aba" data-aba="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' + legendaPrio() + '</div>'
     + '<button type="button" class="nx-btn ghost small" data-nt="editar">Ajustar cronograma</button>' + (s.plan.pausa ? '' : '<button type="button" class="nx-btn ghost small" data-nt="pausar">Suspender metas</button>');
-  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + avisoPausaReplano(s) + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : aba === 'desempenho' ? telaDesempenho(s) : telaSemana(s)) + '</div>';
+  v.innerHTML = '<div class="nx-page nt">' + topo + conta + aviso2 + (recalculou ? '<p class="nt-aviso">O plano foi recalculado a partir desta semana com o que você já concluiu.</p>' : '') + avisoPausaReplano(s) + (aba === 'semana' ? avisoAdiantar(s) : '') + '<div class="nt-toolbar">' + abas + '</div>' + (aba === 'edital' ? telaEditalLab(s) : aba === 'plano' ? telaPlano(s) : aba === 'desempenho' ? telaDesempenho(s) : telaSemana(s)) + '</div>';
 };
 
 function tarefaPorId(s, id){ for(var k in s.weeks){ var x = (s.weeks[k].tarefas || []).find(function(y){ return y.id === id; }); if(x) return { t:x, k:k }; } return null; }
@@ -836,6 +853,17 @@ document.addEventListener('submit', function(e){
   var k = semanaKeyDe(s, hoje0());
   gerarPlano(s, k ? deIso(k) : hoje0()); E().salvarPlano(s); aba = 'semana'; vendoSemana = null; window.nexoCronograma();
 });
+document.addEventListener('change', function(e){
+  var el = e.target; if(!el || !el.dataset) return;
+  if(el.dataset.ntmover){
+    var s0 = st(), r0 = tarefaPorId(s0, el.dataset.ntmover); if(!r0) return;
+    r0.t.d = Math.max(0, Math.min(6, +el.value || 0)); E().salvarPlano(s0); window.nexoCronograma('semana');
+  }else if(el.dataset.ntcad){
+    var s1 = st(); if(!s1.plan) return; s1.plan.cadernos = s1.plan.cadernos || {};
+    if(el.value.trim()) s1.plan.cadernos[el.dataset.ntcad] = el.value.trim().slice(0, 600); else delete s1.plan.cadernos[el.dataset.ntcad];
+    E().salvarPlano(s1);
+  }
+});
 document.addEventListener('click', function(e){
   var b = e.target.closest && e.target.closest('[data-nt]'); if(!b || b.tagName === 'INPUT') return;
   var a = b.dataset.nt, s = st();
@@ -859,6 +887,11 @@ document.addEventListener('click', function(e){
   if(a === 'gerar' || a === 'refazer'){
     var k = vendoSemana && a === 'refazer' && deIso(vendoSemana) <= hoje0() ? vendoSemana : semanaKeyDe(s, hoje0());
     gerarPlano(s, k ? deIso(k) : hoje0()); E().salvarPlano(s); vendoSemana = null; window.nexoCronograma('semana'); return;
+  }
+  if(a === 'adiantar'){
+    var ka = semanaAtualKey(s), wa = ka && s.weeks[ka], da = ka ? Math.round((hoje0() - deIso(ka)) / DIA) : -1;
+    if(wa && da >= 0 && da < 6){ wa.tarefas.forEach(function(x){ if(x.d === da + 1 && !x.feito) x.d = da; }); E().salvarPlano(s); }
+    window.nexoCronograma('semana'); return;
   }
   if(a === 'pausar'){ if(s.plan){ s.plan.pausa = iso(hoje0()); E().salvarPlano(s); } window.nexoCronograma('semana'); return; }
   if(a === 'retomar'){ if(s.plan){ delete s.plan.pausa; var kr = semanaAtualKey(s); gerarPlano(s, kr ? deIso(kr) : hoje0()); E().salvarPlano(s); } window.nexoCronograma('semana'); return; }
