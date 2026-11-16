@@ -32,6 +32,7 @@ var DISC_SITE = { penal:'Direito Penal', constitucional:'Direito Constitucional'
 /* tópicos iguais em duas disciplinas do edital contam como um só */
 var IGUAIS = { 'top:da-lopc':'top:lg-11370', 'top:da-6677':'top:lg-6677', 'top:le-racismo':'top:ig-7716' };
 function ch(id){ return IGUAIS[id] || id; }
+var LEI_DISC = { penal:1, constitucional:1, administrativo:1, proc_penal:1, extravagante:1, leg_geral:1 };
 var TIPO = { estudo:'Estudo', revisao:'Revisão', reforco:'Revisão rápida', questoes:'Questões' };
 
 function escH(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]; }); }
@@ -116,6 +117,7 @@ function progresso(st){
   Object.keys(st.weeks || {}).forEach(function(k){
     (st.weeks[k].tarefas || []).forEach(function(t){
       if(!t.feito || !t.un) return;
+      var rv = ((st.plan || {}).reativar || {})[ch(t.un)]; if(rv && t.feito <= rv) return;
       var x = reg(ch(t.un));
       if(t.tipo === 'estudo'){ x.partes = Math.max(x.partes, t.parte || 1); if((t.parte || 1) >= (t.partes || 1) && !t.maisTempo) x.e = Math.max(x.e, t.feito); x.u = Math.max(x.u, t.feito); }
       if(t.tipo === 'revisao' || t.tipo === 'reforco'){ x.r++; x.u = Math.max(x.u, t.feito); }
@@ -362,9 +364,9 @@ function avisoPausaReplano(s){
 var META_ACERTO = 70;
 function nomeDisc(d){ return (ED.disciplinas[d] || {}).nome || d; }
 function resumoDesempenho(s){
-  var r = {}, get = function(d){ return r[d] || (r[d] = { min:0, tot:0, ok:0 }); };
-  Object.keys(s.weeks || {}).forEach(function(k){ (s.weeks[k].tarefas || []).forEach(function(t){ if(t.feito && t.disc && t.tipo !== 'questoes') get(t.disc).min += t.min || 0; }); });
-  ((s.plan && s.plan.registros) || []).forEach(function(x){ var g = get(x.disc); g.min += x.min || 0; g.tot += x.total || 0; g.ok += x.certas || 0; });
+  var r = {}, get = function(d){ return r[d] || (r[d] = { est:0, rev:0, exe:0, tot:0, ok:0 }); };
+  Object.keys(s.weeks || {}).forEach(function(k){ (s.weeks[k].tarefas || []).forEach(function(t){ if(!t.feito || !t.disc) return; var g = get(t.disc), m = t.min || 0; if(t.tipo === 'estudo') g.est += m; else if(t.tipo === 'questoes') g.exe += m; else g.rev += m; }); });
+  ((s.plan && s.plan.registros) || []).forEach(function(x){ var g = get(x.disc), m = x.min || 0; if(x.tipo === 'revisao') g.rev += m; else if(x.tipo === 'exercicios' || (!x.tipo && x.total)) g.exe += m; else g.est += m; g.tot += x.total || 0; g.ok += x.certas || 0; });
   return r;
 }
 function telaDesempenho(s){
@@ -372,22 +374,23 @@ function telaDesempenho(s){
   var opt = discs.map(function(d){ return '<option value="' + escH(d) + '">' + escH(nomeDisc(d)) + '</option>'; }).join('');
   var form = '<form id="nt-reg" class="nt-form"><h3>Registrar estudo ou questões feitas fora do plano</h3>'
     + '<label>Matéria <select name="disc">' + opt + '</select></label>'
-    + '<label>Tempo de estudo (min) <input name="min" type="number" min="0" max="600" value="0"></label>'
+    + '<label>Tipo <select name="tipo"><option value="estudo">Estudo</option><option value="revisao">Revisão</option><option value="exercicios">Exercícios</option></select></label>'
+    + '<label>Tempo (min) <input name="min" type="number" min="0" max="600" value="0"></label>'
     + '<label>Questões resolvidas <input name="total" type="number" min="0" max="1000" value="0"></label>'
     + '<label>Questões certas <input name="certas" type="number" min="0" max="1000" value="0"></label>'
     + '<p id="nt-reg-msg" class="nt-ja"></p><button type="submit" class="nx-btn primary small">Salvar registro</button></form>';
   var linhas = discs.map(function(d){
-    var x = res[d] || { min:0, tot:0, ok:0 }, pc = x.tot ? Math.round(x.ok / x.tot * 100) : null;
-    return '<tr><td>' + escH(nomeDisc(d)) + '</td><td>' + fmtMin(x.min) + '</td><td>' + (x.tot || '—') + '</td><td>' + (pc == null ? '—' : '<b' + (pc >= META_ACERTO ? '' : ' style="color:#c0392b"') + '>' + pc + '%</b>' + (pc >= META_ACERTO ? ' ✓' : '')) + '</td></tr>';
+    var x = res[d] || { est:0, rev:0, exe:0, tot:0, ok:0 }, pc = x.tot ? Math.round(x.ok / x.tot * 100) : null;
+    return '<tr><td>' + escH(nomeDisc(d)) + '</td><td>' + fmtMin(x.est) + '</td><td>' + fmtMin(x.rev) + '</td><td>' + fmtMin(x.exe) + '</td><td>' + (x.tot || '—') + '</td><td>' + (pc == null ? '—' : '<b' + (pc >= META_ACERTO ? '' : ' style="color:#c0392b"') + '>' + pc + '%</b>' + (pc >= META_ACERTO ? ' ✓' : '')) + '</td></tr>';
   }).join('');
-  var tab = '<h3>Desempenho por matéria</h3><p class="nt-ja">Referência: acima de ' + META_ACERTO + '% de acerto (AOCP e Cebraspe).</p><div style="overflow-x:auto"><table class="te-tab"><thead><tr><th>Matéria</th><th>Horas</th><th>Questões</th><th>Acerto</th></tr></thead><tbody>' + linhas + '</tbody></table></div>';
+  var tab = '<h3>Desempenho por matéria</h3><p class="nt-ja">Referência: acima de ' + META_ACERTO + '% de acerto (AOCP e Cebraspe).</p><div style="overflow-x:auto"><table class="te-tab"><thead><tr><th>Matéria</th><th>Estudo</th><th>Revisão</th><th>Exercícios</th><th>Questões</th><th>Acerto</th></tr></thead><tbody>' + linhas + '</tbody></table></div>';
   return form + tab;
 }
 document.addEventListener('submit', function(e){
   var f = e.target; if(!f || f.id !== 'nt-reg') return; e.preventDefault();
   var s = st(); if(!s.plan) return;
   var n = function(x){ return Math.max(0, Math.round(Number(f[x].value) || 0)); };
-  var r = { t:Date.now(), disc:f.disc.value, min:n('min'), total:n('total'), certas:n('certas') }, msg = document.getElementById('nt-reg-msg');
+  var r = { t:Date.now(), disc:f.disc.value, tipo:f.tipo.value, min:n('min'), total:n('total'), certas:n('certas') }, msg = document.getElementById('nt-reg-msg');
   if(r.certas > r.total){ if(msg) msg.textContent = 'As certas não podem passar do total de questões.'; return; }
   if(!r.min && !r.total){ if(msg) msg.textContent = 'Informe o tempo de estudo ou as questões.'; return; }
   s.plan.registros = (s.plan.registros || []).concat([r]); E().salvarPlano(s); window.nexoCronograma('desempenho');
@@ -478,6 +481,7 @@ function detalhe(t, d){
     var partes = LV() ? LV().partes(m) : [];
     if(t.tipo === 'estudo') h += '<p>Leia ' + (t.partes > 1 ? 'a parte ' + t.parte + ' do' : 'o') + ' capítulo ' + (numCap(t.mod) || '') + ' no livro digital: ' + partes.map(function(p){ return p.nome; }).join(', ') + '. Use "Marcar pontos importantes" na barra ao lado do texto e acrescente seus grifos.' + (abaQ ? ' Depois resolva as questões do capítulo.' : '') + '</p>';
     else if(t.tipo === 'questoes') h += '<p>' + (abaQ ? 'Resolva as questões do capítulo ' + (numCap(t.mod) || '') + '. Anote os erros: eles indicam o que revisar.' : 'Este capítulo ainda não tem questões no NEXO. Resolva questões do assunto no seu material.') + '</p>';
+    else if(t.tipo === 'reforco' && LEI_DISC[t.disc]) h += '<p>Revisão de 24 horas pela lei: releia a lei seca do assunto que você estudou ontem (artigos e incisos) e depois faça o resumo "Em 30 segundos" do capítulo.</p><p><button type="button" class="nx-btn small ghost" onclick="nexoVade()">Abrir o Vade Mecum</button></p>';
     else h += '<p>Releia seus grifos e o resumo "Em 30 segundos" de cada seção do capítulo e refaça as questões que errou.</p>';
   }else if(t.disc === 'atualidades'){
     h += '<p>Leia notícias de fontes confiáveis sobre o tema e anote o que pode virar questão (datas, números, nomes de leis e programas).</p>';
@@ -750,7 +754,7 @@ function telaEdital(s){
         var caps = uu.filter(function(u){ return u.mod; }).map(function(u){
           var xx = prog[ch(u.id)] || {}, pl = LV() ? LV().pctModulo(u.mod) : 0, q = abaQuestoes(u.mod);
           return '<span class="nt-capw"><button type="button" class="nt-capl' + (xx.e ? ' feito' : '') + '" data-nt="modulo" data-mod="' + u.mod + '">' + (xx.e ? '✓ ' : '') + 'Cap. ' + (numCap(u.mod) || '') + ' · ' + escH(u.nome) + (pl && !xx.e ? ' <small>' + pl + '% lido</small>' : '') + '</button>'
-            + (q ? '<button type="button" class="nt-capq" data-nt="questoes" data-mod="' + u.mod + '">Questões</button>' : '') + '</span>';
+            + (q ? '<button type="button" class="nt-capq" data-nt="questoes" data-mod="' + u.mod + '">Questões</button>' : '') + (xx.e && !semPlano ? '<button type="button" class="nt-capq" data-nt="reativar" data-un="' + u.id + '" title="Errei em simulado ou prova: volta a estudar a teoria e revisar">Rever assunto</button>' : '') + '</span>';
         }).join('');
         return '<li class="' + (todos ? 'feito' : '') + '"><span class="nt-pdot p' + t.prio + '" title="' + PRIO_NOME[t.prio] + (t.estimada ? ' (estimativa)' : '') + '"></span><span class="nt-edt">' + escH(t.nome) + pTexto + (caps ? '<span class="nt-caps">' + caps + '</span>' + detalhes : '<small class="nt-semmat">sem material no NEXO</small>') + '</span>'
           + (semPlano ? (todos ? '<span class="nt-ja">✓ lido</span>' : '<span></span>') : '<label class="nt-ja"><input type="checkbox" data-nt="ja" data-top="' + t.id + '"' + (ja ? ' checked' : '') +  + '> já estudei</label>') + '</li>';
@@ -887,6 +891,13 @@ document.addEventListener('click', function(e){
   if(a === 'gerar' || a === 'refazer'){
     var k = vendoSemana && a === 'refazer' && deIso(vendoSemana) <= hoje0() ? vendoSemana : semanaKeyDe(s, hoje0());
     gerarPlano(s, k ? deIso(k) : hoje0()); E().salvarPlano(s); vendoSemana = null; window.nexoCronograma('semana'); return;
+  }
+  if(a === 'reativar'){
+    var un = b.dataset.un, u9 = unidade(un); if(!u9 || !s.plan) return;
+    s.plan.reativar = s.plan.reativar || {}; s.plan.reativar[ch(un)] = Date.now();
+    if(s.plan.ja){ delete s.plan.ja[u9.top]; delete s.plan.ja[un]; }
+    if(u9.mod && LV() && LV().marcarCapitulo) LV().marcarCapitulo(u9.mod, false);
+    var kz = semanaAtualKey(s); gerarPlano(s, kz ? deIso(kz) : hoje0()); E().salvarPlano(s); window.nexoCronograma('edital'); return;
   }
   if(a === 'adiantar'){
     var ka = semanaAtualKey(s), wa = ka && s.weeks[ka], da = ka ? Math.round((hoje0() - deIso(ka)) / DIA) : -1;
